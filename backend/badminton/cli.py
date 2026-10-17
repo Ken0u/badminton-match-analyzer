@@ -59,6 +59,10 @@ def main():
     track.add_argument("--duration", type=float, default=10)
     track.add_argument("--stride", type=int, default=1)
     track.add_argument("--stage", choices=["players", "shuttle"], default="players")
+    segment = commands.add_parser(
+        "segments", help="Scan the full video for camera/timestamp boundaries"
+    )
+    segment.add_argument("video_id")
     evaluate = commands.add_parser(
         "evaluate", help="Measure saved runs against explicit human review labels"
     )
@@ -141,6 +145,26 @@ def main():
         from .api import create_app
 
         uvicorn.run(create_app(), host=args.host, port=args.port)
+    elif args.command == "segments":
+        from .segments import scan_video
+
+        store = Store(DATA)
+        video = store.video(args.video_id)
+
+        def task(job_id, progress):
+            return scan_video(
+                video,
+                ROOT,
+                DATA,
+                progress,
+                DATA / args.video_id / "runs" / f"{job_id}.json",
+            )
+
+        try:
+            summary = run_local_job(store, "segments", args.video_id, task)
+        except (ConflictError, ValueError) as exc:
+            parser.error(str(exc))
+        print(json.dumps(summary, indent=2))
     elif args.command == "track":
         from .shuttle import track_shuttle
         from .tracking import track_players

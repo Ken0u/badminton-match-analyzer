@@ -139,6 +139,24 @@ try {
   await page.waitForFunction(() => document.querySelector("#save").disabled);
   const firstDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
   assert.equal(firstDocument.events.length, 1);
+  // Exercise the real camera-scan UI in CI using the generated two-view video.
+  await page.locator("#camera-panel summary").click();
+  await page.locator("#scan-segments").click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#segment-status")
+      .textContent.includes("1 possible boundaries"),
+  );
+  await page.locator('[data-boundary="20"]').click();
+  assert.equal(await page.locator("#frame-number").inputValue(), "20");
+  assert.match(
+    await page.locator("#notice").textContent(),
+    /not a rally boundary/,
+  );
+  assert.deepEqual(
+    await api(`/api/videos/${firstVideo.id}/annotations`),
+    firstDocument,
+  );
   await page.locator("#upload-file").setInputFiles(fixtures.upload);
   await page.locator("#upload-form button[type=submit]").click();
   await ready(1, "upload-fixture.mp4");

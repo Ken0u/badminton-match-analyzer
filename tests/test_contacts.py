@@ -187,6 +187,12 @@ def test_visible_contacts_are_rejected_across_a_marked_camera_cut():
     assert propose_contacts(shuttle, players, video) == []
 
 
+def test_contacts_honor_cuts_detected_only_in_the_player_run():
+    shuttle, players, video = scene()
+    players["cut_frames"] = [12]
+    assert propose_contacts(shuttle, players, video) == []
+
+
 def test_suppression_does_not_cross_missing_observations():
     shuttle, players, video = scene()
     for index, row in enumerate(shuttle["frames"]):

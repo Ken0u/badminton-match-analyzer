@@ -158,6 +158,9 @@
                 aria-label="Court calibration and player tracking overlay"
               ></canvas>
               <div id="calibration-hint" hidden></div>
+              <div id="frame-loading" role="status" hidden>
+                Loading source frame…
+              </div>
             </div>
             <div class="transport">
               <button id="back-frame" title="Previous frame (←)">←</button
@@ -251,6 +254,22 @@
                 <small id="shuttle-status">No shuttle run loaded</small>
               </section>
             </div>
+            <details class="players-panel" id="camera-panel">
+              <summary>Camera changes</summary>
+              <p class="suggestion-help">
+                Scan the full video for camera edits. New tracking runs separate
+                detected views; confirm court calibration after a cut. Inspect
+                each candidate; replay, live play and rally boundaries remain
+                unknown.
+              </p>
+              <button type="button" id="scan-segments" disabled>
+                Scan camera changes
+              </button>
+              <small id="segment-status"
+                >Scan camera changes across the full video.</small
+              >
+              <div id="camera-boundaries"></div>
+            </details>
             <section class="suggestions-panel">
               <div class="section-label">
                 CONTACT SUGGESTIONS <span id="candidate-count">0</span>

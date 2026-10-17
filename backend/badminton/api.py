@@ -429,6 +429,20 @@ def create_app(
 
         return enqueue(body.stage, video_id, task)
 
+    @app.post("/api/videos/{video_id}/segments", status_code=202)
+    def segments(video_id: str):
+        from .segments import scan_video
+
+        video = store.video(video_id)
+        source(video)
+
+        def task(job_id, progress):
+            return scan_video(
+                video, root, data, progress, data / video_id / "runs" / f"{job_id}.json"
+            )
+
+        return enqueue("segments", video_id, task)
+
     def load_run(video_id, job_id, kind=None):
         job = next(
             (
@@ -516,7 +530,8 @@ def create_app(
         if not any(
             j["id"] == job_id
             and j["status"] == "completed"
-            and j["kind"] in ("players", "shuttle", "contacts", "recognition")
+            and j["kind"]
+            in ("players", "shuttle", "contacts", "recognition", "segments")
             for j in store.jobs(video_id)
         ):
             raise HTTPException(404)

@@ -258,6 +258,10 @@ def build_stroke_clip(video, times, player_run, shuttle_run, calibrations, frame
         row, observation = player_rows[index], shuttle_rows[index]
         if row.get("scene_cut") or observation.get("scene_cut"):
             return result | {"reason": "Contact context crosses a camera cut"}
+        if row.get("calibration_valid") is False:
+            return result | {
+                "reason": "Confirm court calibration for this camera segment"
+            }
         people = []
         for person in row["players"]:
             points = np.asarray(person.get("keypoints", []), np.float64)

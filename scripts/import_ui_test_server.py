@@ -24,9 +24,9 @@ def fixture(path, color):
         stream = container.add_stream("libx264", rate=25)
         stream.width = stream.height = 32
         stream.pix_fmt = "yuv420p"
-        for index in range(25):
+        for index in range(40):
             image = np.zeros((32, 32, 3), np.uint8)
-            image[:, :, color] = 60 + index * 5
+            image[:, :, color if index < 20 else (color + 1) % 3] = 60 + index * 5
             frame = av.VideoFrame.from_ndarray(image, format="rgb24")
             for packet in stream.encode(frame):
                 container.mux(packet)

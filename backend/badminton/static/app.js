@@ -1,6 +1,7 @@
 import { createReviewTools } from "./review-tools.js";
 import { createImportTools } from "./import-tools.js";
 import { createRecognitionTools } from "./recognition-tools.js";
+import { createSegmentTools } from "./segment-tools.js";
 const $ = (id) => document.getElementById(id);
 const state = {
   videos: [],
@@ -97,8 +98,10 @@ async function selectVideo(id) {
   if (state.dirty && !confirm("Discard unsaved edits and open another video?"))
     return;
   const generation = ++state.selectionGeneration;
+  segmentTools.reset();
   $("video").pause();
   $("exact-frame").hidden = true;
+  $("frame-loading").hidden = true;
   const [video, doc, times] = await Promise.all([
     api(`/api/videos/${id}`),
     api(`/api/videos/${id}/annotations`),
@@ -193,20 +196,27 @@ function showExact() {
   const videoId = state.video.id;
   const img = $("exact-frame");
   img.hidden = true;
+  $("frame-loading").hidden = false;
+  $("frame-loading").textContent = "Loading source frame…";
   img.onload = () => {
     if (
       state.video?.id === videoId &&
       state.frame === index &&
       $("video").paused
-    )
+    ) {
       img.hidden = false;
+      $("frame-loading").hidden = true;
+    }
   };
   img.onerror = () => {
-    if (state.video?.id === videoId && state.frame === index)
+    if (state.video?.id === videoId && state.frame === index) {
+      $("frame-loading").textContent =
+        "Source frame unavailable. Try again or use playback.";
       notice(
         "Could not load the source frame. Check whether the video changed or is unavailable.",
         true,
       );
+    }
   };
   img.src = `/api/videos/${state.video.id}/frame?index=${index}`;
 }
@@ -550,6 +560,7 @@ async function pollJobs() {
   $("track-shuttle").disabled = !!active;
   $("detect-contacts").disabled = !!active || !state.shuttleRun;
   importTools.updateJobs(jobs);
+  await segmentTools.refresh(jobs, active);
   if (active) {
     if (active.kind === "players" && active.video_id === state.video?.id)
       $("track-status").textContent =
@@ -597,7 +608,7 @@ async function pollJobs() {
     state.runMap = new Map(state.run.frames.map((f) => [f.frame, f]));
     reviewTools.render();
     $("track-status").textContent =
-      `${state.run.processed_frames} frames · ${state.run.inference_fps} fps · ${state.run.device}${state.run.calibrated ? " · court filter" : " · no court filter"}`;
+      `${state.run.processed_frames} frames · ${state.run.inference_fps} fps · ${state.run.device}${state.run.calibrated ? " · court filter" : ` · ${state.run.calibrated_frames ?? 0} frames with court filter`}${state.run.cut_frames?.length ? ` · ${state.run.cut_frames.length} camera changes; confirm calibration for each view` : ""}`;
     draw();
   }
   const shuttle = jobs.find(
@@ -618,7 +629,7 @@ async function pollJobs() {
     state.contactJob = null;
     renderCandidates();
     $("shuttle-status").textContent =
-      `${run.visible_frames}/${run.processed_frames} frames visible · ${run.inference_fps} fps · raw detections`;
+      `${run.visible_frames}/${run.processed_frames} frames visible · ${run.inference_fps} fps · raw detections${run.cut_frames?.length ? ` · ${run.cut_frames.length} camera changes; separate temporal contexts` : ""}`;
     draw();
   }
   const contacts = jobs.find(
@@ -766,6 +777,7 @@ $("play").onclick = () => {
   }
 };
 $("video").onplay = () => {
+  $("frame-loading").hidden = true;
   $("play").textContent = "Ⅱ Pause";
   $("exact-frame").hidden = true;
 };
@@ -1015,6 +1027,15 @@ const recognitionTools = createRecognitionTools({
   editEvent,
   seek,
   kindFields,
+});
+const segmentTools = createSegmentTools({
+  state,
+  $,
+  api,
+  notice,
+  seek,
+  escape,
+  clock,
 });
 await loadLibrary().catch(handleError);
 if (state.videos.length)

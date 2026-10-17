@@ -23,6 +23,7 @@ if __name__ == "__main__":
             "shuttle",
             "contacts",
             "recognition",
+            "segments",
         ):
             continue
         run = DATA / job["video_id"] / "runs" / f"{job['id']}.json"
