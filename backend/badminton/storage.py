@@ -112,6 +112,10 @@ class Store:
         for event in annotations.events:
             if event.frame >= len(times):
                 raise ValueError("Event frame exceeds the video")
+            if event.contact_end_frame is not None and event.contact_end_frame >= len(
+                times
+            ):
+                raise ValueError("Contact interval exceeds the video")
             event.time_s = times[event.frame]
         if any(c.end_frame > len(times) for c in annotations.calibrations):
             raise ValueError("Calibration exceeds the video")

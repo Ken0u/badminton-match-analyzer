@@ -85,6 +85,8 @@ Choose **Track shuttle** for the same window. This uses the official TrackNetV3 
 
 Then choose **Suggest contacts**. If a player run covers the window, suggestions include nearby temporary track IDs. Click a suggestion, inspect the surrounding frames, choose the rally/hitter/family/side, and add/save the event. Its original proposal remains linked in exported data. Suggestions do not modify annotations automatically and do not establish contact-detection accuracy. Use `unknown` for labels the footage cannot resolve.
 
+Short occlusions may produce **Review possible contact** cards with a frame range supported by trajectory and wrist evidence. Their navigation frame is an estimate. Review the entire interval; saved events retain editable inclusive timing bounds. Clear those bounds only after identifying the contact frame. The detector filters smooth apexes, preserves raw gaps, and still misses some hits. See [the contact report](docs/CONTACT_DETECTION_REPORT.md).
+
 The equivalent API is `POST /api/videos/<id>/track` with `stage: "players"` or `"shuttle"`, followed by `POST /api/videos/<id>/contacts` with `shuttle_run_id` and optional `player_run_id`. All processing jobs, including CLI ingestion, share admission control within the project database.
 
 ## Reviewed identities and accuracy

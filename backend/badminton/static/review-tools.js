@@ -352,11 +352,19 @@ export function createReviewTools({
       const metric = result.metrics;
       if (!metric)
         parts.push(
-          `<p>${title}: ${key === "contacts" ? "No complete live clip is fully covered by this run." : "No manually labeled shuttle frames in this run."}</p>`,
+          `<p>${title}: ${key === "contacts" ? (result.coverage.skipped_windows.some((w) => w.reason === "contact_timing_needs_adjudication") ? "Contact timing needs review before this clip can be scored." : "No complete live clip is fully covered by this run.") : "No manually labeled shuttle frames in this run."}</p>`,
         );
       else
         parts.push(
-          `<p><strong>${title} F1 ${percent(metric.f1)}</strong><br>Precision ${percent(metric.precision)} · recall ${percent(metric.recall)}<br>${metric.tp} matched · ${metric.fp} false · ${metric.fn} missed</p>`,
+          `<p><strong>${key === "contacts" ? "Contact proposals" : title} F1 ${percent(metric.f1)}</strong><br>Precision ${percent(metric.precision)} · recall ${percent(metric.recall)}<br>${metric.tp} matched · ${metric.fp} false · ${metric.fn} missed</p>`,
+        );
+      if (
+        metric &&
+        key === "contacts" &&
+        result.coverage.uncertain_candidate_count > 0
+      )
+        parts.push(
+          `<p>${result.coverage.uncertain_candidate_count} uncertain proposal(s) use navigation frames in this timing score. ${result.interval_coverage?.matched_count ?? 0} reviewed contact(s) lie within proposed frame ranges. Inspect the interval before assigning an exact contact.</p>`,
         );
       if (metric && key === "contacts")
         parts.push(

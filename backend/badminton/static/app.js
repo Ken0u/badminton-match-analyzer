@@ -337,7 +337,8 @@ function renderCandidates() {
             c.track_id,
             c.frame,
           );
-          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${added ? "Added" : "Review contact"}<small>${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
+          const uncertain = c.timing === "uncertain_interval";
+          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
         })
         .join("")
     : '<p class="empty">Track the shuttle, then suggest contacts.</p>';
@@ -350,6 +351,11 @@ function renderCandidates() {
         resetEditor("shot");
         state.pendingCandidate = { id: candidate.id, run_id: state.contactJob };
         $("event-frame").value = candidate.frame;
+        if (candidate.timing === "uncertain_interval") {
+          $("contact-start").value = candidate.start_frame;
+          $("contact-end").value = candidate.end_frame;
+          $("contact-uncertainty").open = true;
+        }
         $("event-player").value =
           reviewTools.playerForTrack(
             state.contactRun.player_run_id,
@@ -359,7 +365,9 @@ function renderCandidates() {
         $("event-notes").value =
           `Contact suggestion: ${candidate.reason}. Verify contact, hitter, and stroke.`;
         $("editor-hint").textContent =
-          `Suggested contact · frame ${candidate.frame} · verify before adding`;
+          candidate.timing === "uncertain_interval"
+            ? `Possible contact · frames ${candidate.start_frame}–${candidate.end_frame}. Navigation frame ${candidate.frame} is an estimate.`
+            : `Suggested contact · frame ${candidate.frame} · verify before adding`;
         seek(candidate.frame);
         notice(
           "Review the source frames, choose the hitter and stroke labels, then add the event.",
@@ -418,7 +426,7 @@ function renderEvents() {
     ? events
         .map((e) => {
           const player = state.doc.players.find((p) => p.id === e.player_id);
-          return `<button class="event-row ${state.selected === e.id ? "active" : ""}" data-event="${escape(e.id)}"><span class="event-dot ${e.kind}"></span><time>${clock(state.times[e.frame] || 0)}</time><span class="event-text">${escape(e.kind === "shot" ? pretty(e.family) : pretty(e.kind))}<small>${escape(e.rally_id)} · ${escape(player?.name || "—")}${e.side ? " · " + escape(pretty(e.side)) : ""}</small></span></button>`;
+          return `<button class="event-row ${state.selected === e.id ? "active" : ""}" data-event="${escape(e.id)}"><span class="event-dot ${e.kind}"></span><time>${clock(state.times[e.frame] || 0)}</time><span class="event-text">${escape(e.kind === "shot" ? pretty(e.family) : pretty(e.kind))}<small>${escape(e.rally_id)} · ${escape(player?.name || "—")}${e.side ? " · " + escape(pretty(e.side)) : ""}${e.contact_start_frame != null && e.contact_start_frame < e.contact_end_frame ? ` · timing ${e.contact_start_frame}–${e.contact_end_frame}` : ""}</small></span></button>`;
         })
         .join("")
     : '<p class="empty">No events yet. Mark the serve to begin a rally.</p>';
@@ -439,6 +447,7 @@ function kindFields() {
   $("family-label").hidden = kind !== "shot";
   $("side-label").hidden = kind === "rally_end";
   $("player-label").hidden = kind === "rally_end";
+  $("contact-uncertainty").hidden = kind === "rally_end";
 }
 function resetEditor(kind = "shot") {
   state.pendingCandidate = null;
@@ -448,6 +457,9 @@ function resetEditor(kind = "shot") {
   $("event-family").value = "unknown";
   $("event-side").value = "unknown";
   $("event-notes").value = "";
+  $("contact-start").value = "";
+  $("contact-end").value = "";
+  $("contact-uncertainty").open = false;
   $("apply-event").textContent = "Add event";
   $("delete-event").hidden = true;
   $("editor-hint").textContent =
@@ -476,6 +488,9 @@ function editEvent(id) {
   $("event-family").value = e.family || "unknown";
   $("event-side").value = e.side || "unknown";
   $("event-notes").value = e.notes;
+  $("contact-start").value = e.contact_start_frame ?? "";
+  $("contact-end").value = e.contact_end_frame ?? "";
+  $("contact-uncertainty").open = e.contact_start_frame != null;
   $("apply-event").textContent = "Update event";
   $("delete-event").hidden = false;
   $("editor-hint").textContent = `Editing ${pretty(e.kind)} · frame ${e.frame}`;
@@ -617,6 +632,30 @@ $("event-form").onsubmit = (e) => {
     return;
   }
   const existing = state.doc.events.find((e) => e.id === state.selected);
+  const contactStart =
+    $("contact-start").value === "" || kind === "rally_end"
+      ? null
+      : Number($("contact-start").value);
+  const contactEnd =
+    $("contact-end").value === "" || kind === "rally_end"
+      ? null
+      : Number($("contact-end").value);
+  if (
+    (contactStart === null) !== (contactEnd === null) ||
+    (contactStart !== null &&
+      (!Number.isInteger(contactStart) ||
+        !Number.isInteger(contactEnd) ||
+        contactStart < 0 ||
+        contactEnd >= state.times.length ||
+        contactStart > frame ||
+        contactEnd < frame))
+  ) {
+    notice(
+      "Enter both contact bounds, including the event frame, or clear the interval for exact timing.",
+      true,
+    );
+    return;
+  }
   const event = {
     id: state.selected || crypto.randomUUID(),
     rally_id: rally,
@@ -634,6 +673,8 @@ $("event-form").onsubmit = (e) => {
     source_run_id:
       existing?.source_run_id ?? state.pendingCandidate?.run_id ?? null,
     candidate_id: existing?.candidate_id ?? state.pendingCandidate?.id ?? null,
+    contact_start_frame: contactStart,
+    contact_end_frame: contactEnd,
   };
   state.doc.events = state.doc.events.filter((e) => e.id !== event.id);
   state.doc.events.push(event);
@@ -654,6 +695,13 @@ $("new-event").onclick = () => {
   renderEvents();
 };
 $("event-kind").onchange = kindFields;
+$("clear-contact-interval").onclick = () => {
+  $("contact-start").value = "";
+  $("contact-end").value = "";
+  notice(
+    "Contact timing set to the event frame. Update the event to keep this change.",
+  );
+};
 $("filter-rally").onchange = renderEvents;
 $("save").onclick = () => save().catch(handleError);
 $("play").onclick = () => {

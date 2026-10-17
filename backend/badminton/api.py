@@ -351,6 +351,8 @@ def create_app(
             "notes",
             "source_run_id",
             "candidate_id",
+            "contact_start_frame",
+            "contact_end_frame",
         ]
         writer = csv.DictWriter(buffer, fieldnames=fields)
         writer.writeheader()
@@ -439,7 +441,7 @@ def create_app(
 
     @app.post("/api/videos/{video_id}/contacts", status_code=202)
     def contacts(video_id: str, body: ContactsRequest):
-        from .contacts import propose_contacts
+        from .contacts import METHOD, propose_contacts
 
         v = store.video(video_id)
         shuttle_run = load_run(video_id, body.shuttle_run_id, "shuttle")
@@ -459,7 +461,8 @@ def create_app(
                 "player_run_id": body.player_run_id,
                 "start_frame": shuttle_run["start_frame"],
                 "end_frame": shuttle_run["end_frame"],
-                "method": "heuristic motion and pose proposals",
+                "method": METHOD,
+                "interval_bounds": "inclusive",
                 "candidates": candidates,
             }
             write_json(data / video_id / "runs" / f"{job_id}.json", result)

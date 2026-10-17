@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:ui": "node tests/browser.mjs && node tests/review-browser.mjs"
+    "test:ui": "node tests/browser.mjs && node tests/review-browser.mjs && node tests/contact-browser.mjs"
   },
   "devDependencies": {
     "playwright": "^1.56.0",

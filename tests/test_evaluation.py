@@ -155,6 +155,143 @@ def test_contacts_never_match_across_unreviewed_gaps():
     assert result["metrics"]["fp"] == result["metrics"]["fn"] == 1
 
 
+@pytest.mark.parametrize("status", ["reviewed", "corrected"])
+def test_unadjudicated_contact_timing_invalidates_the_complete_review_window(status):
+    labels = annotations(
+        [
+            event("certain", 1, 0.04),
+            event(
+                "uncertain",
+                5,
+                0.2,
+                status=status,
+                contact_start_frame=4,
+                contact_end_frame=6,
+            ),
+        ],
+        [window()],
+    )
+    result = evaluate_contacts(
+        video(), labels, contact_run([("a", 1, 0.04), ("b", 5, 0.2)])
+    )
+    assert result["status"] == "needs_complete_live_review"
+    assert result["metrics"] is None and result["interval_coverage"] is None
+    assert result["coverage"]["skipped_windows"] == [
+        {"id": "review-0", "reason": "contact_timing_needs_adjudication"}
+    ]
+    assert result["coverage"]["reviewed_contacts"] == 0
+    assert result["coverage"]["excluded_reviewed_contacts"] == 2
+
+
+def test_adjudication_skip_keeps_other_reliable_windows_and_ignores_predicted_labels():
+    labels = annotations(
+        [
+            event("uncertain", 5, 0.2, contact_start_frame=4, contact_end_frame=6),
+            event("certain", 25, 1, contact_start_frame=25, contact_end_frame=25),
+            event(
+                "predicted",
+                26,
+                1.04,
+                status="predicted",
+                contact_start_frame=25,
+                contact_end_frame=27,
+            ),
+        ],
+        [window(0, 10), window(20, 30)],
+    )
+    result = evaluate_contacts(
+        video(), labels, contact_run([("a", 5, 0.2), ("b", 25, 1)])
+    )
+    assert result["coverage"]["usable_window_ids"] == ["review-20"]
+    assert result["coverage"]["excluded_candidates"] == 1
+    assert result["metrics"]["tp"] == 1 and result["metrics"]["fp"] == 0
+    assert result["interval_coverage"]["matched_count"] == 1
+
+
+def test_uncertain_prediction_interval_coverage_is_not_strict_timing_accuracy():
+    run = contact_run([("gap", 12, 3.0)])
+    run["candidates"][0].update(
+        start_frame=3,
+        end_frame=13,
+        start_time_s=1,
+        end_time_s=3.5,
+        timing="uncertain_interval",
+    )
+    labels = annotations([event("a", 5, 1.5)], [window()])
+    result = evaluate_contacts(video(), labels, run)
+    assert result["coverage"]["uncertain_candidate_count"] == 1
+    assert "navigation" in result["prediction_timing"]["strict_metrics"]
+    assert result["metrics"]["tp"] == 0
+    assert result["metrics"]["fp"] == result["metrics"]["fn"] == 1
+    coverage = result["interval_coverage"]
+    assert coverage["matched_count"] == 1
+    assert coverage["matches"][0]["uncertain_candidate"] is True
+    assert coverage["matches"][0]["start_frame"] == 3
+    assert "metrics" not in coverage and "f1" not in coverage
+    assert "does not measure exact hit timing accuracy" in coverage["meaning"]
+
+
+def test_interval_coverage_maximizes_one_to_one_matches_and_never_reuses_a_gap():
+    labels = annotations([event("a", 5, 0.2), event("b", 10, 0.4)], [window()])
+    run = contact_run([("broad", 7, 0.28), ("early", 5, 0.2)])
+    run["candidates"][0].update(start_frame=0, end_frame=15)
+    run["candidates"][1].update(start_frame=4, end_frame=6)
+    result = evaluate_contacts(video(), labels, run)
+    coverage = result["interval_coverage"]
+    assert coverage["matched_count"] == 2
+    assert [
+        (match["event_id"], match["candidate_id"]) for match in coverage["matches"]
+    ] == [("a", "early"), ("b", "broad")]
+    result = evaluate_contacts(
+        video(), labels, run | {"candidates": run["candidates"][:1]}
+    )
+    assert result["interval_coverage"]["matched_count"] == 1
+    assert len(result["interval_coverage"]["unmatched_event_ids"]) == 1
+
+
+def test_old_artifacts_use_point_bounds_and_interval_coverage_does_not_cross_review_gaps():
+    result = evaluate_contacts(
+        video(),
+        annotations([event("a", 5, 0.2)], [window()]),
+        contact_run([("a", 6, 0.24)]),
+    )
+    assert result["metrics"]["tp"] == 1  # Existing time tolerance policy is unchanged.
+    assert result["coverage"]["uncertain_candidate_count"] == 0
+    assert (
+        result["interval_coverage"]["matched_count"] == 0
+    )  # Point frame 6 does not contain 5.
+    run = contact_run([("gap", 11, 0.44)])
+    run["candidates"][0].update(start_frame=8, end_frame=12)
+    result = evaluate_contacts(
+        video(),
+        annotations([event("a", 9, 0.36)], [window(0, 10), window(11, 20)]),
+        run,
+    )
+    assert result["interval_coverage"]["matched_count"] == 0
+
+
+@pytest.mark.parametrize(
+    "fields",
+    [
+        {"start_frame": 3},
+        {"start_frame": 8, "end_frame": 4},
+        {"start_frame": -1, "end_frame": 8},
+        {"start_frame": 3, "end_frame": 100},
+        {"start_frame": float("nan"), "end_frame": 8},
+        {"start_frame": 3, "end_frame": 4},
+        {"start_time_s": 0.1},
+        {"start_time_s": float("nan"), "end_time_s": 0.3},
+        {"start_time_s": 0.1, "end_time_s": float("inf")},
+        {"start_time_s": 0.3, "end_time_s": 0.4},
+    ],
+)
+def test_invalid_candidate_intervals_are_rejected_without_scores(fields):
+    run = contact_run([("invalid", 5, 0.2)])
+    run["candidates"][0].update(fields)
+    with pytest.raises(ValueError, match="interval"):
+        evaluate_contacts(video(), annotations(windows=[window()]), run)
+
+
 def point(frame, visible=True, x=0.5, y=0.5):
     return {
         "frame": frame,
