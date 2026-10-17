@@ -37,6 +37,13 @@ def test_published_bst_checkpoint_on_actual_source_aligned_tracks(tmp_path):
     revision, events = document.revision, document.model_dump()["events"]
     checksums = [hashlib.sha256(path.read_bytes()).hexdigest() for path in paths]
     players, shuttle = [json.loads(path.read_text(encoding="utf-8")) for path in paths]
+    targets = recognition_targets(
+        document,
+        start_frame=max(players["start_frame"], shuttle["start_frame"]),
+        end_frame=min(players["end_frame"], shuttle["end_frame"]),
+    )
+    if not targets:
+        pytest.skip("This check needs reviewed shots inside the cached pilot range")
     output = tmp_path / "recognition.json"
     summary = recognize_strokes(
         store.video(video_id),
@@ -44,13 +51,15 @@ def test_published_bst_checkpoint_on_actual_source_aligned_tracks(tmp_path):
         document,
         players,
         shuttle,
-        recognition_targets(document),
+        targets,
         "b8bdae17e8374a20bbf16f554c551f19",
         lambda value: None,
         output,
     )
-    assert summary["device"] == "cuda:0" and summary["candidate_count"] == len(events)
+    # Other rallies, saved serves and terminal events are not family targets.
+    assert summary["device"] == "cuda:0" and summary["candidate_count"] == len(targets)
     result = json.loads(output.read_text())
+    assert {c["id"] for c in result["candidates"]} == {t["id"] for t in targets}
     valid = [item for item in result["candidates"] if item.get("top_classes")]
     assert valid and all(
         item["side"] in ("forehand", "backhand", "unknown") for item in valid

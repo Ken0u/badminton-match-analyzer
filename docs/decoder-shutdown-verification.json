@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "purpose": "Source-frozen raw full-view perception and a decoder-shutdown reproduction; no event, pose or full-match accuracy claim.",
+  "raw_perception": {
+    "purpose": "Actual raw perception on frozen first full-court views; not a full-match accuracy benchmark.",
+    "boundary_manifest_sha256": "e88827aaa2672e8b2bf8c11a1e19a417d2d4d4c0dc698e057f57b69db5fd6001",
+    "videos": [
+      {
+        "video_id": "970dbd8adfe548d8",
+        "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+        "runs": {
+          "players": {
+            "id": "61a5386b55d04ed98adbcad2d7c013be",
+            "summary": {
+              "schema_version": 1,
+              "video_id": "970dbd8adfe548d8",
+              "stage": "players",
+              "model": "yolo11n-pose",
+              "device": "cuda:0",
+              "image_size": 1280,
+              "peak_gpu_memory_mb": 101.9,
+              "start_frame": 255,
+              "end_frame": 639,
+              "stride": 1,
+              "annotation_revision": 1,
+              "calibrated": true,
+              "calibrated_frames": 384,
+              "elapsed_s": 14.014,
+              "processed_frames": 384,
+              "inference_fps": 27.4,
+              "expected_players": 2,
+              "mean_detections": 1.99,
+              "cut_frames": [255],
+              "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+              "camera_ranges": [
+                {
+                  "start_frame": 255,
+                  "end_frame": 639,
+                  "scene": "unknown"
+                }
+              ],
+              "tracker_reset_at_cuts": true,
+              "raw_cut_frames": [255],
+              "applied_camera_corrections": [],
+              "camera_annotation_revision": 1,
+              "preceding_reviewed_cut_frame": null,
+              "requires_tracking_rerun": false,
+              "scene_annotation_revision": 1
+            }
+          },
+          "shuttle": {
+            "id": "d8ea631a9bd44eec8aa928b228f5fdb7",
+            "summary": {
+              "schema_version": 1,
+              "video_id": "970dbd8adfe548d8",
+              "stage": "shuttle",
+              "model": "TrackNetV3",
+              "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+              "device": "cuda:0",
+              "input_size": [512, 288],
+              "seq_len": 8,
+              "precision": "float16",
+              "ensemble": "weighted overlapping windows",
+              "start_frame": 255,
+              "end_frame": 639,
+              "processed_frames": 384,
+              "visible_frames": 344,
+              "repaired_frames": 0,
+              "cut_frames": [255],
+              "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+              "camera_ranges": [
+                {
+                  "start_frame": 255,
+                  "end_frame": 639,
+                  "scene": "unknown"
+                }
+              ],
+              "temporal_context_crosses_detected_cuts": false,
+              "elapsed_s": 29.277,
+              "inference_fps": 13.12,
+              "peak_gpu_memory_mb": 430.3,
+              "raw_cut_frames": [255],
+              "applied_camera_corrections": [],
+              "camera_annotation_revision": 1,
+              "preceding_reviewed_cut_frame": null,
+              "requires_tracking_rerun": false,
+              "scene_annotation_revision": 1
+            }
+          },
+          "contacts": {
+            "id": "c570ac3a8b3049d4b47fa904ba8110b8",
+            "summary": {
+              "schema_version": 1,
+              "stage": "contacts",
+              "video_id": "970dbd8adfe548d8",
+              "start_frame": 255,
+              "end_frame": 639,
+              "player_run_id": "61a5386b55d04ed98adbcad2d7c013be",
+              "shuttle_run_id": "d8ea631a9bd44eec8aa928b228f5fdb7",
+              "method": "gap-aware motion and pose proposals v2",
+              "candidate_count": 8
+            }
+          }
+        }
+      },
+      {
+        "video_id": "c406a1187130b845",
+        "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+        "runs": {
+          "players": {
+            "id": "0c47367dbbc24df29e4ddb66994bad30",
+            "summary": {
+              "schema_version": 1,
+              "video_id": "c406a1187130b845",
+              "stage": "players",
+              "model": "yolo11n-pose",
+              "device": "cuda:0",
+              "image_size": 1280,
+              "peak_gpu_memory_mb": 101.9,
+              "start_frame": 278,
+              "end_frame": 866,
+              "stride": 1,
+              "annotation_revision": 1,
+              "calibrated": true,
+              "calibrated_frames": 588,
+              "elapsed_s": 17.356,
+              "processed_frames": 588,
+              "inference_fps": 33.88,
+              "expected_players": 4,
+              "mean_detections": 3.82,
+              "cut_frames": [278],
+              "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+              "camera_ranges": [
+                {
+                  "start_frame": 278,
+                  "end_frame": 866,
+                  "scene": "unknown"
+                }
+              ],
+              "tracker_reset_at_cuts": true,
+              "raw_cut_frames": [278],
+              "applied_camera_corrections": [],
+              "camera_annotation_revision": 1,
+              "preceding_reviewed_cut_frame": null,
+              "requires_tracking_rerun": false,
+              "scene_annotation_revision": 1
+            }
+          },
+          "shuttle": {
+            "id": "19ceccbfe8914cc59b18110d96db9b06",
+            "summary": {
+              "schema_version": 1,
+              "video_id": "c406a1187130b845",
+              "stage": "shuttle",
+              "model": "TrackNetV3",
+              "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+              "device": "cuda:0",
+              "input_size": [512, 288],
+              "seq_len": 8,
+              "precision": "float16",
+              "ensemble": "weighted overlapping windows",
+              "start_frame": 278,
+              "end_frame": 866,
+              "processed_frames": 588,
+              "visible_frames": 440,
+              "repaired_frames": 0,
+              "cut_frames": [278],
+              "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+              "camera_ranges": [
+                {
+                  "start_frame": 278,
+                  "end_frame": 866,
+                  "scene": "unknown"
+                }
+              ],
+              "temporal_context_crosses_detected_cuts": false,
+              "elapsed_s": 45.297,
+              "inference_fps": 12.98,
+              "peak_gpu_memory_mb": 430.3,
+              "raw_cut_frames": [278],
+              "applied_camera_corrections": [],
+              "camera_annotation_revision": 1,
+              "preceding_reviewed_cut_frame": null,
+              "requires_tracking_rerun": false,
+              "scene_annotation_revision": 1
+            }
+          },
+          "contacts": {
+            "id": "7c2a2e5c18914d399b8a2791221eb9ef",
+            "summary": {
+              "schema_version": 1,
+              "stage": "contacts",
+              "video_id": "c406a1187130b845",
+              "start_frame": 278,
+              "end_frame": 866,
+              "player_run_id": "0c47367dbbc24df29e4ddb66994bad30",
+              "shuttle_run_id": "19ceccbfe8914cc59b18110d96db9b06",
+              "method": "gap-aware motion and pose proposals v2",
+              "candidate_count": 12
+            }
+          }
+        }
+      }
+    ]
+  },
+  "decoder_shutdown": {
+    "before": "Two matching native traces: main waits in avcodec_free_context, decoder worker waits for GIL in av.logging callback; task-owned worker interrupted after diagnosis.",
+    "after": "Same two source windows and114frames completed and all decoder contexts closed after native logging lifecycle fix and early vision-library initialization.",
+    "source_windows": [
+      [278, 342],
+      [800, 850]
+    ],
+    "research_comparison": {
+      "video_id": "c406a1187130b845",
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "checkpoint_sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+      "compared_frames": 114,
+      "elapsed_s": 5.856,
+      "peak_gpu_mb": 215.0,
+      "summaries": [
+        {
+          "start_frame": 278,
+          "end_frame": 320,
+          "n_counts": {
+            "3": 36,
+            "4": 6
+          },
+          "s_counts": {
+            "3": 14,
+            "4": 28
+          }
+        },
+        {
+          "start_frame": 320,
+          "end_frame": 342,
+          "n_counts": {
+            "3": 10,
+            "5": 2,
+            "4": 10
+          },
+          "s_counts": {
+            "4": 22
+          }
+        },
+        {
+          "start_frame": 800,
+          "end_frame": 824,
+          "n_counts": {
+            "4": 23,
+            "3": 1
+          },
+          "s_counts": {
+            "4": 24
+          }
+        },
+        {
+          "start_frame": 824,
+          "end_frame": 850,
+          "n_counts": {
+            "3": 9,
+            "4": 17
+          },
+          "s_counts": {
+            "3": 6,
+            "4": 20
+          }
+        }
+      ],
+      "accuracy_claim": false,
+      "source": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s-pose.pt",
+      "purpose": "Research comparison only; default app player model remains yolo11n-pose"
+    }
+  },
+  "main_annotations_unchanged": true
+}

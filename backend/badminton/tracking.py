@@ -21,6 +21,10 @@ def track_players(
     os.environ.setdefault("MPLCONFIGDIR", str(runtime / "matplotlib"))
     try:
         import torch
+
+        # Importing torchvision.io installs a Python FFmpeg logging callback.
+        # Finish that initialization before opening any threaded decoder.
+        import torchvision  # noqa: F401
         from ultralytics import YOLO
     except ImportError as exc:
         raise RuntimeError(

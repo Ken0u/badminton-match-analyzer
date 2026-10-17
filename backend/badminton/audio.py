@@ -5,6 +5,7 @@ import math
 import av
 import numpy as np
 
+from .av_runtime import open_media
 from .video import resolve_source
 
 RATE = 24000
@@ -116,7 +117,7 @@ def extract_audio_cues(video, root, start_s, end_s):
         expected = t + len(samples) / RATE
 
     try:
-        with av.open(str(path)) as container:
+        with open_media(str(path)) as container:
             if not container.streams.audio:
                 return result
             stream = container.streams.audio[0]

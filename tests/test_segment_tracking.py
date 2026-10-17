@@ -84,6 +84,7 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
         SimpleNamespace(cuda=SimpleNamespace(is_available=lambda: False)),
     )
     monkeypatch.setitem(sys.modules, "ultralytics", SimpleNamespace(YOLO=Model))
+    monkeypatch.setitem(sys.modules, "torchvision", SimpleNamespace())
     monkeypatch.setattr(tracking, "WEIGHTS", tmp_path)
     (tmp_path / "yolo11n-pose.pt").write_bytes(b"stub")
     data = tmp_path / "data"
