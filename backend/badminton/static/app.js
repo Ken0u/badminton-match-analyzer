@@ -331,6 +331,12 @@ function drawShuttle(ctx) {
 }
 function renderCandidates() {
   const candidates = state.contactRun?.candidates || [];
+  const audio = state.contactRun?.audio;
+  $("audio-status").textContent = audio
+    ? audio.status === "available"
+      ? "Audio support is experimental. Verify the sound source and contact interval."
+      : "No usable audio in this window. Showing visual suggestions."
+    : "";
   $("candidate-count").textContent = candidates.length;
   $("candidates").innerHTML = candidates.length
     ? candidates
@@ -345,7 +351,10 @@ function renderCandidates() {
             c.frame,
           );
           const uncertain = c.timing === "uncertain_interval";
-          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
+          const audioConflict = c.evidence?.audio_support?.some(
+            (item) => item.hitter_agrees === false,
+          );
+          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${c.evidence_source === "audio_shuttle_gap_and_pose" ? "Audio + vision · " : ""}${audioConflict ? "Audio hitter disagreement · " : ""}${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
         })
         .join("")
     : '<p class="empty">Track the shuttle, then suggest contacts.</p>';
@@ -916,11 +925,19 @@ $("detect-contacts").onclick = async () => {
         j.summary?.start_frame <= s.start_frame &&
         j.summary?.end_frame >= s.end_frame,
     );
+    if ($("contact-audio").checked && !playerJob) {
+      notice(
+        "Track players across this shuttle window before using audio support.",
+        true,
+      );
+      return;
+    }
     await api(`/api/videos/${state.video.id}/contacts`, {
       method: "POST",
       body: JSON.stringify({
         shuttle_run_id: state.shuttleJob,
         player_run_id: playerJob?.id ?? null,
+        include_audio: $("contact-audio").checked,
       }),
     });
     notice(

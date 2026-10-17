@@ -226,9 +226,46 @@ try {
   assert.equal(originalPrediction.start_frame, 2076);
   assert.equal(originalPrediction.end_frame, 2080);
   assert.equal(originalPrediction.timing, "uncertain_interval");
+  assert.equal(await page.locator("#contact-audio").isChecked(), false);
+  await page.locator("#contact-audio").check();
+  const audioRequest = page.waitForRequest(
+    (request) =>
+      request.url().endsWith(`${root}/contacts`) && request.method() === "POST",
+  );
+  await page.locator("#detect-contacts").click();
+  assert.equal((await audioRequest).postDataJSON().include_audio, true);
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#audio-status")
+      .textContent.includes("experimental"),
+  );
+  assert.ok(
+    await page
+      .locator("#candidates .candidate-row")
+      .filter({ hasText: "Audio hitter disagreement" })
+      .count(),
+  );
+  const audioCard = page
+    .locator("#candidates .candidate-row")
+    .filter({ hasText: "Audio + vision" })
+    .first();
+  assert.ok(await audioCard.count());
+  await audioCard.click();
+  assert.ok(await page.locator("#contact-start").inputValue());
+  assert.ok(await page.locator("#contact-end").inputValue());
+  assert.equal(await page.locator("#event-family").inputValue(), "unknown");
+  assert.equal(await page.locator("#event-side").inputValue(), "unknown");
+  assert.match(
+    await page.locator("#event-notes").inputValue(),
+    /verify sound source/i,
+  );
+  await page.screenshot({
+    path: fileURLToPath(new URL("audio-contacts.png", output)),
+    fullPage: true,
+  });
   assert.deepEqual(errors, []);
   console.log(
-    "Contact interval browser checks passed: gap proposal review, bounds validation/persistence/export, timing exclusion, exact timing update, immutable prediction view.",
+    "Contact browser checks passed: interval review, export, timing exclusion, immutable predictions, opt-in audio request and review.",
   );
 } finally {
   await browser.close();

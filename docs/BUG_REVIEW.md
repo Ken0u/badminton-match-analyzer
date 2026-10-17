@@ -2,7 +2,28 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
-The latest increment trains and packages an experimental forehand/backhand head
+The latest increment probes the actual public-source video through YOLO,
+TrackNet, and recognition. Both diagnostic windows abstain, and contact alignment
+remains unverified; the cached-feature benchmark must not be presented as
+raw-video accuracy. [The direct-video report](DIRECT_VIDEO_REPORT.md) records
+the source lineage, timing ambiguity, and actual CUDA artifacts.
+
+An opt-in audio/vision contact aid adds uncertain intervals containing the two
+previously missed singles pilot labels, with no reviewed labels changed.
+[The audio report](AUDIO_CONTACT_REPORT.md) records the four-contact development
+comparison, tighter timing results, doubles false-positive concern, and why audio
+remains default-off. Duplicate sounds near the same shuttle gap now share one
+proposal; conflicting hitter evidence cannot replace the visual hint. Audio
+decoding preserves the video's time origin and splits missing/discontinuous PTS.
+Missing audio falls back to visual suggestions; changed source bytes still fail.
+
+Current local checks: **299 backend tests passed**, two opt-in GPU tests skipped
+in the standard suite; both pass separately. The new source probe ran on CUDA;
+all four browser suites pass, including the optional audio request and review
+intervals. Source timing, complete-rally labels,
+YOLO-domain recognition quality, and full-video correctness remain open.
+
+The preceding increment trains and packages an experimental forehand/backhand head
 from pinned published MMPose features. [The side report](STROKE_SIDE_REPORT.md)
 records its 12,520 usable clips, frozen split/selection protocol, confidence
 coverage, rare-class gaps, and much lower conditional family/hitter/side result.
@@ -17,7 +38,7 @@ before committing its metadata pointer and shares processing admission with the
 app. A packaged CPU-loadable 161 KB head makes new installations usable without
 requiring the full training dataset.
 
-Current local checks: **269 backend tests passed**, two opt-in GPU tests skipped
+Previous increment's local checks: **269 backend tests passed**, two opt-in GPU tests skipped
 in the standard run; both real GPU checks passed separately, and all four browser
 suites passed. Direct-video alignment and YOLO-domain recognition accuracy remain
 unverified; these checks do not establish full-match correctness.
@@ -38,10 +59,11 @@ skipped; all four local browser suites passed, including recognition metrics and
 exclusion of classifier-assisted labels. The previous increment's real GPU
 inference checks remain applicable; this change adds no model/inference math.
 
-The latest increment adds an experimental pretrained singles family model through
+The first family-model increment added an experimental singles baseline through
 the CLI, API, and explicit review UI. [The recognition report](SHOT_RECOGNITION_REPORT.md)
 records the source mapping, seven-target CUDA smoke run, abstention behavior,
-and missing accuracy evidence. It does not predict stroke side or support doubles.
+and missing accuracy evidence. That original version predicted family only;
+doubles recognition remains unsupported.
 New regressions cover mismatched input lineage, missing context/cuts, duplicate
 targets, invalid classification provenance, and stale scores after contact/label
 changes. Hitter views now use the current reviewed identity mapping instead of

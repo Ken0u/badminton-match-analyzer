@@ -45,6 +45,7 @@ class TrackingRequest(StrictModel):
 class ContactsRequest(StrictModel):
     shuttle_run_id: str
     player_run_id: str | None = None
+    include_audio: bool = False
 
 
 class EvaluationRequest(StrictModel):
@@ -462,9 +463,24 @@ def create_app(
             if body.player_run_id
             else None
         )
+        if body.include_audio and player_run is None:
+            raise HTTPException(422, "Audio support needs a player/pose run")
 
         def task(job_id, progress):
             candidates = propose_contacts(shuttle_run, player_run, v)
+            audio = None
+            if body.include_audio:
+                from .audio import extract_audio_cues
+                from .audio_contacts import add_audio_support
+
+                times = timestamps_for(data, video_id)
+                start, end = shuttle_run["start_frame"], shuttle_run["end_frame"]
+                validate_range(v, times, start, end)
+                end_s = times[end] if end < len(times) else v["duration_s"]
+                audio = extract_audio_cues(v, root, times[start], end_s)
+                candidates = add_audio_support(
+                    candidates, shuttle_run, player_run, v, audio
+                )
             result = {
                 "schema_version": 1,
                 "stage": "contacts",
@@ -477,10 +493,16 @@ def create_app(
                 "interval_bounds": "inclusive",
                 "candidates": candidates,
             }
+            if audio is not None:
+                from .audio_contacts import METHOD as AUDIO_METHOD
+
+                result.update(audio=audio, audio_support_method=AUDIO_METHOD)
             write_json(data / video_id / "runs" / f"{job_id}.json", result)
-            return {k: v for k, v in result.items() if k != "candidates"} | {
-                "candidate_count": len(candidates)
-            }
+            return (
+                {k: v for k, v in result.items() if k not in ("candidates", "audio")}
+                | {"candidate_count": len(candidates)}
+                | ({"audio_status": audio["status"]} if audio is not None else {})
+            )
 
         return enqueue(
             "contacts",
