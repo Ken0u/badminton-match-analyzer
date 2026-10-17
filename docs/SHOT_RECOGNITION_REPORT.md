@@ -48,7 +48,8 @@ The non-target wrist-smash source label remains `other` under the current
 conservative mapping policy. There is no half-smash output class. This mapping
 still needs adjudication against the project guide. Scores sum softmax mass
 over source subtypes and court ends; they are uncalibrated rankings, not measured
-probabilities of correctness. The default suggestion threshold is 0.5. Stroke
+probabilities of correctness. Hitter hints use court-end mass within the selected
+family; ties remain unknown. The default suggestion threshold is 0.5. Stroke
 side is always unknown because this head has no forehand/backhand output.
 
 ## Processing and review contract

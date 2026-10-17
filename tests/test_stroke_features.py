@@ -14,6 +14,21 @@ from badminton.stroke_features import (
 )
 
 
+def test_hitter_hint_uses_selected_family_mass_instead_of_unrelated_top_class():
+    scores = np.zeros(35)
+    scores[2] = 0.4  # Strongest individual class: far smash.
+    scores[24], scores[25], scores[30] = 0.3, 0.2, 0.1  # Near drives total 0.6.
+    result = summarize_probabilities(scores)
+    assert result["family"] == "drive" and result["hitter_court_end"] == "near"
+    assert result["top_classes"][0]["court_end"] == "far"
+    scores[:] = 0
+    scores[7], scores[24] = 0.5, 0.5
+    assert summarize_probabilities(scores)["hitter_court_end"] is None
+    scores[:] = 0
+    scores[34] = 1
+    assert summarize_probabilities(scores)["hitter_court_end"] is None
+
+
 def clip_inputs():
     video = {
         "id": "sample",

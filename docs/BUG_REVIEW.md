@@ -14,11 +14,16 @@ recognition button until the selected video's runs load. Existing manual
 forehand/backhand values survive loading a suggestion; raw artifacts and real
 pilot annotations are unchanged.
 
-Current local checks: **236 backend tests passed**, two optional GPU tests skipped
+Current local checks: **237 backend tests passed**, two optional GPU tests skipped
 in the standard run; both opt-in CUDA tests passed separately. All three existing
 browser suites and the new real-model recognition browser suite pass. Lint,
 formatting, dependency consistency, and the built wheel's model/license/UI contents
 were checked. Container checks remain part of the feature PR's CI.
+
+Source-contract review also caught inconsistent hitter hints when the highest
+individual source class belonged to a different family than the winning summed
+family. Hitter court end now uses probability mass within the selected family;
+tied court ends remain unknown. A targeted regression covers that disagreement.
 
 The input/deployment increment adds bounded file uploads, YouTube imports, single-user authentication, persistent container configuration, and CI. [The import verification report](IMPORT_VERIFICATION.md) records an actual BWF YouTube-to-frame/playback API test. Import regressions caught a content-ID overwrite risk from publisher metadata and provenance loss on local-path re-import; publisher metadata is now nested and re-import retains it. Duplicate imports preserve reviewed revisions and do not accumulate duplicate source files. Shutdown admission failure also releases its job claim.
 

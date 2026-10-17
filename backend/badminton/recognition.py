@@ -149,7 +149,7 @@ def recognize_strokes(
                         prediction["reason"] = (
                             "The classifier did not separate a family confidently enough; inspect its ranked alternatives"
                         )
-                    court_end = summary["top_classes"][0]["court_end"]
+                    court_end = summary["hitter_court_end"]
                     hint_track = clip["contact_tracks"].get(court_end)
                     prediction["hitter_hint"] = {
                         "court_end": court_end,

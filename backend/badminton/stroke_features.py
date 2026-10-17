@@ -96,6 +96,13 @@ def summarize_probabilities(probabilities):
             probability
         )
     selected = max(families, key=families.get)
+    # The top individual subtype can belong to a different family/court end.
+    ends = dict.fromkeys(("far", "near"), 0.0)
+    for label, probability in zip(classes, values, strict=True):
+        family = "serve" if label["kind"] == "serve" else label["family"]
+        if family == selected and label["court_end"] in ends:
+            ends[label["court_end"]] += float(probability)
+    hitter_end = max(ends, key=ends.get) if ends["far"] != ends["near"] else None
     ranked = sorted(range(35), key=lambda index: float(values[index]), reverse=True)[:3]
     return {
         "kind": "serve" if selected == "serve" else "shot",
@@ -103,6 +110,7 @@ def summarize_probabilities(probabilities):
         "family_score": families[selected],
         "family_scores": families,
         "side": "unknown",
+        "hitter_court_end": hitter_end,
         "top_classes": [
             classes[index] | {"score": float(values[index])} for index in ranked
         ],
