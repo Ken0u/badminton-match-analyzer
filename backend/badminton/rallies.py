@@ -126,6 +126,7 @@ def _point(row):
     if (
         not observation.get("visible")
         or observation.get("repaired", False)
+        or observation.get("selection_context_excluded", False)
         or any(
             not isinstance(observation.get(axis), int | float)
             or not math.isfinite(observation[axis])

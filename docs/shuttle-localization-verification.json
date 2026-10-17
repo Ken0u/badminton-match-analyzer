@@ -1,0 +1,699 @@
+{
+  "schema_version": 1,
+  "baseline_source_commit": "4a6cf1bdd065b4023172feac832d65405f1bad08",
+  "baseline_code_sha256": "878047f6d6c1defadd39b114ba5d32ea9d35e22f9a6714ec7773bcc5d12abe8e",
+  "recipe": {
+    "method": "observed components with bounded source-motion selection v1",
+    "heatmap_threshold": 0.5,
+    "coordinate_method": "thresholded component bounding-box center",
+    "history_observations": 3,
+    "maximum_source_step_s": 0.1,
+    "maximum_speed_diagonals_per_s": 6,
+    "scene_context": "History resets at camera boundaries and reviewed scene starts/ends",
+    "switch_rule": "Largest component unreachable and exactly one observed alternative reachable",
+    "missing_points": "Never interpolated; history resets on missing observations or discontinuity"
+  },
+  "current_source_sha256": {
+    "shuttle.py": "967c67655d1431ae5a49efa0f1c82feea1e99bc966bf95aa08b789a01322dc5e",
+    "contacts.py": "d12ce5e01c569b9c18d80bc9c410727f8fbec70fdcc8742e452e2dacd328fea6",
+    "audio_contacts.py": "d5e3e7a8f5568be0478f59cacace5208f738d395449f0d373abf0c85b020ed01",
+    "scene_review.py": "126e5e533c6c89638da352bbe50dff5d6cceca3781d2eae02650b4adb8d67102",
+    "rallies.py": "376d804e4014b1f10e00e33b172fa46ca9ecb155201c8eb1e59e6d37420c96cd",
+    "stroke_features.py": "42c9294978ce72ea0895eb27fb27141bb5e528a986daaf385528c9471ec3a1f6"
+  },
+  "source_review": "data/manifests/shuttle_localization_review.json",
+  "source_review_canonical_json_sha256": "e04ac5727fae59bcb24c727977bdaefffd712cfe1e9865b127b2b26aff064329",
+  "source_review_precomparison_file_sha256": "43ac521f2735cc1e93146e9b13f5cac777789a624cacaab5672ea58ea2909ee8",
+  "review_limit": "Five assistant-reviewed visible source points; ten unresolved grid frames are not negatives. Prior model counts known, no human adjudication or held-out accuracy.",
+  "cases": [
+    {
+      "name": "public",
+      "source_video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+      "range": [
+        0,
+        390
+      ],
+      "player_run_id": "de3ea34d63454b22a958e33d96993118",
+      "native_shuttle_run_id": "b8af486602c444b28b4452a5b055b253",
+      "native_artifact_sha256": "90536763e4e9a7f601eb91be2c260ed61162ca7ebac79d8d5e65fd9953a54786",
+      "raw_heatmaps_sha256": "6b79f71fe4946f3ff6faee32d1d5d9c8db0cc713a51ae0292b36d1631d1a909b",
+      "raw_heatmap_shape": [
+        390,
+        288,
+        512
+      ],
+      "native_xy_confidence_visibility_reproduced": true,
+      "native_summary": {
+        "device": "cuda:0",
+        "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "elapsed_s": 30.593,
+        "inference_fps": 12.75,
+        "peak_gpu_memory_mb": 385.4,
+        "processed_frames": 390,
+        "visible_frames": 301,
+        "repaired_frames": 0
+      },
+      "switched_frames": [
+        {
+          "frame": 312,
+          "old": {
+            "visible": true,
+            "x": 658.75,
+            "y": 421.25,
+            "confidence": 0.711352527141571,
+            "components": 2,
+            "repaired": false
+          },
+          "new": {
+            "visible": true,
+            "x": 346.25,
+            "y": 388.75,
+            "confidence": 0.781811535358429,
+            "components": 2,
+            "component_candidates": [
+              {
+                "id": 1,
+                "x": 346.25,
+                "y": 388.75,
+                "confidence": 0.781811535358429,
+                "area_heatmap_pixels": 20,
+                "box_heatmap": [
+                  136,
+                  153,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 2,
+                "x": 658.75,
+                "y": 421.25,
+                "confidence": 0.711352527141571,
+                "area_heatmap_pixels": 21,
+                "box_heatmap": [
+                  261,
+                  166,
+                  5,
+                  5
+                ]
+              }
+            ],
+            "selected_component_id": 1,
+            "largest_component_id": 2,
+            "selection_reason": "unique_reachable_component",
+            "repaired": false,
+            "selection_context_start_frame": 309,
+            "selection_context_end_frame": 313,
+            "selection_context_frames": [
+              309,
+              310,
+              311
+            ]
+          }
+        },
+        {
+          "frame": 315,
+          "old": {
+            "visible": true,
+            "x": 658.75,
+            "y": 421.25,
+            "confidence": 0.7022460699081421,
+            "components": 2,
+            "repaired": false
+          },
+          "new": {
+            "visible": true,
+            "x": 331.25,
+            "y": 441.25,
+            "confidence": 0.759204089641571,
+            "components": 2,
+            "component_candidates": [
+              {
+                "id": 1,
+                "x": 658.75,
+                "y": 421.25,
+                "confidence": 0.7022460699081421,
+                "area_heatmap_pixels": 21,
+                "box_heatmap": [
+                  261,
+                  166,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 2,
+                "x": 331.25,
+                "y": 441.25,
+                "confidence": 0.759204089641571,
+                "area_heatmap_pixels": 20,
+                "box_heatmap": [
+                  130,
+                  174,
+                  5,
+                  5
+                ]
+              }
+            ],
+            "selected_component_id": 2,
+            "largest_component_id": 1,
+            "selection_reason": "unique_reachable_component",
+            "repaired": false,
+            "selection_context_start_frame": 309,
+            "selection_context_end_frame": 316,
+            "selection_context_frames": [
+              312,
+              313,
+              314
+            ]
+          }
+        },
+        {
+          "frame": 316,
+          "old": {
+            "visible": true,
+            "x": 658.75,
+            "y": 421.25,
+            "confidence": 0.696533203125,
+            "components": 2,
+            "repaired": false
+          },
+          "new": {
+            "visible": true,
+            "x": 326.25,
+            "y": 456.25,
+            "confidence": 0.728466808795929,
+            "components": 2,
+            "component_candidates": [
+              {
+                "id": 1,
+                "x": 658.75,
+                "y": 421.25,
+                "confidence": 0.696533203125,
+                "area_heatmap_pixels": 21,
+                "box_heatmap": [
+                  261,
+                  166,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 2,
+                "x": 326.25,
+                "y": 456.25,
+                "confidence": 0.728466808795929,
+                "area_heatmap_pixels": 21,
+                "box_heatmap": [
+                  128,
+                  180,
+                  5,
+                  5
+                ]
+              }
+            ],
+            "selected_component_id": 2,
+            "largest_component_id": 1,
+            "selection_reason": "unique_reachable_component",
+            "repaired": false,
+            "selection_context_start_frame": 309,
+            "selection_context_end_frame": 317,
+            "selection_context_frames": [
+              313,
+              314,
+              315
+            ]
+          }
+        },
+        {
+          "frame": 318,
+          "old": {
+            "visible": true,
+            "x": 658.75,
+            "y": 421.25,
+            "confidence": 0.688061535358429,
+            "components": 2,
+            "repaired": false
+          },
+          "new": {
+            "visible": true,
+            "x": 321.25,
+            "y": 473.75,
+            "confidence": 0.697460949420929,
+            "components": 2,
+            "component_candidates": [
+              {
+                "id": 1,
+                "x": 658.75,
+                "y": 421.25,
+                "confidence": 0.688061535358429,
+                "area_heatmap_pixels": 20,
+                "box_heatmap": [
+                  261,
+                  166,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 2,
+                "x": 321.25,
+                "y": 473.75,
+                "confidence": 0.697460949420929,
+                "area_heatmap_pixels": 19,
+                "box_heatmap": [
+                  126,
+                  187,
+                  5,
+                  5
+                ]
+              }
+            ],
+            "selected_component_id": 2,
+            "largest_component_id": 1,
+            "selection_reason": "unique_reachable_component",
+            "repaired": false,
+            "selection_context_start_frame": 309,
+            "selection_context_end_frame": 319,
+            "selection_context_frames": [
+              315,
+              316,
+              317
+            ]
+          }
+        },
+        {
+          "frame": 319,
+          "old": {
+            "visible": true,
+            "x": 658.75,
+            "y": 421.25,
+            "confidence": 0.6808837652206421,
+            "components": 2,
+            "repaired": false
+          },
+          "new": {
+            "visible": true,
+            "x": 317.5,
+            "y": 492.5,
+            "confidence": 0.6212524175643921,
+            "components": 2,
+            "component_candidates": [
+              {
+                "id": 1,
+                "x": 658.75,
+                "y": 421.25,
+                "confidence": 0.6808837652206421,
+                "area_heatmap_pixels": 20,
+                "box_heatmap": [
+                  261,
+                  166,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 2,
+                "x": 317.5,
+                "y": 492.5,
+                "confidence": 0.6212524175643921,
+                "area_heatmap_pixels": 13,
+                "box_heatmap": [
+                  125,
+                  195,
+                  4,
+                  4
+                ]
+              }
+            ],
+            "selected_component_id": 2,
+            "largest_component_id": 1,
+            "selection_reason": "unique_reachable_component",
+            "repaired": false,
+            "selection_context_start_frame": 309,
+            "selection_context_end_frame": 320,
+            "selection_context_frames": [
+              316,
+              317,
+              318
+            ]
+          }
+        },
+        {
+          "frame": 320,
+          "old": {
+            "visible": true,
+            "x": 658.75,
+            "y": 421.25,
+            "confidence": 0.6717529296875,
+            "components": 2,
+            "repaired": false
+          },
+          "new": {
+            "visible": true,
+            "x": 316.25,
+            "y": 505.0,
+            "confidence": 0.709228515625,
+            "components": 2,
+            "component_candidates": [
+              {
+                "id": 1,
+                "x": 658.75,
+                "y": 421.25,
+                "confidence": 0.6717529296875,
+                "area_heatmap_pixels": 20,
+                "box_heatmap": [
+                  261,
+                  166,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 2,
+                "x": 316.25,
+                "y": 505.0,
+                "confidence": 0.709228515625,
+                "area_heatmap_pixels": 18,
+                "box_heatmap": [
+                  124,
+                  200,
+                  5,
+                  4
+                ]
+              }
+            ],
+            "selected_component_id": 2,
+            "largest_component_id": 1,
+            "selection_reason": "unique_reachable_component",
+            "repaired": false,
+            "selection_context_start_frame": 309,
+            "selection_context_end_frame": 321,
+            "selection_context_frames": [
+              317,
+              318,
+              319
+            ]
+          }
+        },
+        {
+          "frame": 321,
+          "old": {
+            "visible": true,
+            "x": 658.75,
+            "y": 421.25,
+            "confidence": 0.660595715045929,
+            "components": 2,
+            "repaired": false
+          },
+          "new": {
+            "visible": true,
+            "x": 316.25,
+            "y": 498.75,
+            "confidence": 0.6936279535293579,
+            "components": 2,
+            "component_candidates": [
+              {
+                "id": 1,
+                "x": 658.75,
+                "y": 421.25,
+                "confidence": 0.660595715045929,
+                "area_heatmap_pixels": 20,
+                "box_heatmap": [
+                  261,
+                  166,
+                  5,
+                  5
+                ]
+              },
+              {
+                "id": 2,
+                "x": 316.25,
+                "y": 498.75,
+                "confidence": 0.6936279535293579,
+                "area_heatmap_pixels": 20,
+                "box_heatmap": [
+                  124,
+                  197,
+                  5,
+                  5
+                ]
+              }
+            ],
+            "selected_component_id": 2,
+            "largest_component_id": 1,
+            "selection_reason": "unique_reachable_component",
+            "repaired": false,
+            "selection_context_start_frame": 309,
+            "selection_context_end_frame": 322,
+            "selection_context_frames": [
+              318,
+              319,
+              320
+            ]
+          }
+        }
+      ],
+      "contacts_before": [
+        56,
+        72,
+        80,
+        117,
+        144,
+        210
+      ],
+      "contacts_after": [
+        56,
+        72,
+        80,
+        117,
+        144,
+        210
+      ],
+      "rallies_before": [
+        {
+          "kind": "serve",
+          "frame": 51,
+          "start_frame": 44,
+          "end_frame": 52
+        }
+      ],
+      "rallies_after": [
+        {
+          "kind": "serve",
+          "frame": 51,
+          "start_frame": 44,
+          "end_frame": 52
+        }
+      ],
+      "reviewed_points": [
+        {
+          "frame": 100,
+          "x": 755,
+          "y": 230,
+          "uncertainty_px": 3,
+          "old_error_px": 1.7677669529663689,
+          "new_error_px": 1.7677669529663689
+        },
+        {
+          "frame": 120,
+          "x": 728,
+          "y": 318,
+          "uncertainty_px": 3,
+          "old_error_px": 2.4748737341529163,
+          "new_error_px": 2.4748737341529163
+        },
+        {
+          "frame": 140,
+          "x": 682,
+          "y": 300,
+          "uncertainty_px": 3,
+          "old_error_px": 1.4577379737113252,
+          "new_error_px": 1.4577379737113252
+        },
+        {
+          "frame": 220,
+          "x": 497,
+          "y": 226,
+          "uncertainty_px": 3,
+          "old_error_px": 0.7905694150420949,
+          "new_error_px": 0.7905694150420949
+        },
+        {
+          "frame": 320,
+          "x": 316,
+          "y": 506,
+          "uncertainty_px": 5,
+          "old_error_px": 353.0724075880187,
+          "new_error_px": 1.0307764064044151
+        }
+      ]
+    },
+    {
+      "name": "singles",
+      "source_video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "range": [
+        255,
+        639
+      ],
+      "player_run_id": "38cfdedc74d248208727aff21d4c3e45",
+      "native_shuttle_run_id": "d5d6bd4519fa47829ef8b4cda1ca1020",
+      "native_artifact_sha256": "6e41ae7e3a1f3f586b5e15ecc1ccaa84b73cfe8c48b652a54d2786dda2fcfece",
+      "raw_heatmaps_sha256": "a145c094f12b1976151d362ed0cf53085a5010c13c492aaa06c491767d719977",
+      "raw_heatmap_shape": [
+        384,
+        288,
+        512
+      ],
+      "native_xy_confidence_visibility_reproduced": true,
+      "native_summary": {
+        "device": "cuda:0",
+        "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "elapsed_s": 38.809,
+        "inference_fps": 9.89,
+        "peak_gpu_memory_mb": 385.4,
+        "processed_frames": 384,
+        "visible_frames": 344,
+        "repaired_frames": 0
+      },
+      "switched_frames": [],
+      "contacts_before": [
+        303,
+        322,
+        352,
+        387,
+        417,
+        435,
+        487,
+        511,
+        535,
+        572,
+        585,
+        611
+      ],
+      "contacts_after": [
+        303,
+        322,
+        352,
+        387,
+        417,
+        435,
+        487,
+        511,
+        535,
+        572,
+        585,
+        611
+      ],
+      "rallies_before": [
+        {
+          "kind": "rally_end",
+          "frame": 610,
+          "start_frame": 607,
+          "end_frame": 621
+        }
+      ],
+      "rallies_after": [
+        {
+          "kind": "rally_end",
+          "frame": 610,
+          "start_frame": 607,
+          "end_frame": 621
+        }
+      ],
+      "cached_old_baseline_exact": true
+    },
+    {
+      "name": "doubles",
+      "source_video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "range": [
+        278,
+        866
+      ],
+      "player_run_id": "e67258122f424671980cc1e7afca11d5",
+      "native_shuttle_run_id": "c1ef0a737ba44b5baf039b15ec650da7",
+      "native_artifact_sha256": "a0a23b1d264152c0034d119d4abb2c5ad3fc51f6d660b8cd6ebc620103e9111d",
+      "raw_heatmaps_sha256": "11b3191025c10d8ceb6628fc8e1f1032b2bad18017c5d521a1b184a11914e08f",
+      "raw_heatmap_shape": [
+        588,
+        288,
+        512
+      ],
+      "native_xy_confidence_visibility_reproduced": true,
+      "native_summary": {
+        "device": "cuda:0",
+        "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "elapsed_s": 58.169,
+        "inference_fps": 10.11,
+        "peak_gpu_memory_mb": 385.4,
+        "processed_frames": 588,
+        "visible_frames": 440,
+        "repaired_frames": 0
+      },
+      "switched_frames": [],
+      "contacts_before": [
+        338,
+        419,
+        442,
+        453,
+        465,
+        473,
+        492,
+        518,
+        530,
+        543,
+        562,
+        607,
+        643,
+        656,
+        664,
+        683,
+        704,
+        741,
+        805,
+        817
+      ],
+      "contacts_after": [
+        338,
+        419,
+        442,
+        453,
+        465,
+        473,
+        492,
+        518,
+        530,
+        543,
+        562,
+        607,
+        643,
+        656,
+        664,
+        683,
+        704,
+        741,
+        805,
+        817
+      ],
+      "rallies_before": [
+        {
+          "kind": "serve",
+          "frame": 331,
+          "start_frame": 324,
+          "end_frame": 331
+        }
+      ],
+      "rallies_after": [
+        {
+          "kind": "serve",
+          "frame": 331,
+          "start_frame": 324,
+          "end_frame": 331
+        }
+      ],
+      "cached_old_baseline_exact": true
+    }
+  ],
+  "main_annotations_unchanged": true,
+  "accuracy_claim": false
+}

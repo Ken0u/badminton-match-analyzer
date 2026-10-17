@@ -313,6 +313,7 @@ def build_stroke_clip(video, times, player_run, shuttle_run, calibrations, frame
             valid_pose
             and point.get("visible")
             and not point.get("repaired", False)
+            and not point.get("selection_context_excluded", False)
             and all(
                 point.get(axis) is not None and math.isfinite(point[axis])
                 for axis in ("x", "y")

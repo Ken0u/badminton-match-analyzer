@@ -47,6 +47,25 @@ def test_adjacent_short_gaps_use_only_observed_samples_without_filling_points():
     assert shuttle == before
 
 
+def test_contact_evidence_includes_observed_component_selection_history():
+    shuttle, players, video, _ = motion_scene()
+    for row in shuttle["frames"]:
+        if 17 <= row["frame"] <= 23:
+            row["shuttle"]["selection_context_start_frame"] = 10
+    candidate = propose_contacts(shuttle, players, video)[0]
+    assert candidate["context_start_frame"] == 10
+    shuttle["cut_frames"] = [12]
+    assert propose_contacts(shuttle, players, video) == []
+    shuttle["cut_frames"] = []
+    players["frames"][12]["scene"] = "replay"
+    assert propose_contacts(shuttle, players, video) == []
+    players["frames"][12].pop("scene")
+    for row in shuttle["frames"]:
+        if 17 <= row["frame"] <= 23:
+            row["shuttle"]["selection_context_excluded"] = True
+    assert propose_contacts(shuttle, players, video) == []
+
+
 @pytest.mark.parametrize("kind", ["apex", "straight", "stationary"])
 @pytest.mark.parametrize("seed", range(6))
 def test_quantized_noisy_noncontacts_with_nearby_moving_wrist_abstain(kind, seed):
