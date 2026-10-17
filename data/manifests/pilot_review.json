@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "review_method": "Assistant visual inspection of actual source frames rendered without model overlays. Singles 2000-2099 and doubles 600-649 inspected frame by frame; singles contact neighborhoods additionally inspected at 1280x720. Existing model suggestions and source sample windows were known, so this is development review rather than blinded independent evaluation. No human second annotator has reviewed these labels.",
+  "limitations": [
+    "Two very small partial-rally development windows; not a held-out benchmark.",
+    "All shot families, stroke sides, and player handedness remain unknown. No serve or rally-ending labels were fabricated.",
+    "Contact times are nearest observable source frames with +/-1-2 frame uncertainty; raster blur and compression limit precision.",
+    "Shuttle point sample deliberately selects clearly visible positives and cannot estimate whole-video visibility recall or false detections. Coordinates describe center of visible streak, with approximately 3 px uncertainty.",
+    "Live/replay scene requires contextual judgment. Singles likely live is an explicit inference from score progression; conservative stored scene remains unknown. Doubles scene has not been contextually established."
+  ],
+  "videos": [
+    {
+      "video_id": "970dbd8adfe548d8",
+      "path": "singles.mp4",
+      "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "mode": "singles",
+      "player_descriptions": {
+        "A": "Near player in red at source frame 2000; same individual across reviewed window.",
+        "B": "Far player in yellow at source frame 2000; same individual across reviewed window."
+      },
+      "scene_assessment": {
+        "likely_scene": "live",
+        "basis": "Context sampled each second 68-92 s: score 12-11 during 71-77 s full-court exchange, near red player close-up 78-79 s, then new 12-12 full-court rally 80 s onward. Score progression and normal continuous exchange support live highlight rather than replay; this is inference, not an explicit LIVE graphic."
+      },
+      "review_windows": [
+        {
+          "id": "pilot-singles-2000-2100",
+          "start_frame": 2000,
+          "end_frame": 2100,
+          "contacts_complete": true,
+          "scene": "unknown",
+          "notes": "Every source frame 2000-2099 inspected for contacts; one continuous full-court partial rally with four observed contacts. Family/side labels intentionally unknown. No serve/end observed within interval. Context supports live inference from score 12-11 to 12-12 but no explicit live marker. Assistant visual review, not expert human double review."
+        }
+      ],
+      "events": [
+        {
+          "id": "pilot-singles-2007",
+          "rally_id": "pilot-singles-partial-1",
+          "kind": "shot",
+          "frame": 2007,
+          "time_s": 80.28,
+          "player_id": "B",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-1 frames. Far yellow player overhead swing; descending shuttle reaches raised racket around 2007 and then leaves on new flight. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        },
+        {
+          "id": "pilot-singles-2039",
+          "rally_id": "pilot-singles-partial-1",
+          "kind": "shot",
+          "frame": 2039,
+          "time_s": 81.56,
+          "player_id": "A",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-1 frames. Near red player jumping overhead; source 2034-2043 strip shows shuttle approach, forward racket extension around 2039, then flight toward far screen-left. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        },
+        {
+          "id": "pilot-singles-2048",
+          "rally_id": "pilot-singles-partial-1",
+          "kind": "shot",
+          "frame": 2048,
+          "time_s": 81.92,
+          "player_id": "B",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-2 frames. Far yellow player lunges screen-left with racket low; shuttle changes from descending to rising at roughly 2048-2049, before player drops to floor. Existing 2060 suggestion is later flight apex rather than a fresh contact. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        },
+        {
+          "id": "pilot-singles-2077",
+          "rally_id": "pilot-singles-partial-1",
+          "kind": "shot",
+          "frame": 2077,
+          "time_s": 83.08,
+          "player_id": "A",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-1 frames. Near red player lunges screen-left; low racket return around 2077 followed by clearly rising shuttle 2080-2083. Racket/body overlap limits exact frame. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        }
+      ],
+      "shuttle_points": [
+        {
+          "frame": 2003,
+          "visible": true,
+          "x": 0.6,
+          "y": 0.06666666666666667,
+          "notes": "Assistant visually localized source shuttle center without TrackNet overlay; approximately 3 source pixels uncertainty. Visible-only convenience sample, not a visibility recall benchmark."
+        },
+        {
+          "frame": 2004,
+          "visible": true,
+          "x": 0.600390625,
+          "y": 0.08194444444444444,
+          "notes": "Assistant visually localized source shuttle center without TrackNet overlay; approximately 3 source pixels uncertainty. Visible-only convenience sample, not a visibility recall benchmark."
+        },
+        {
+          "frame": 2056,
+          "visible": true,
+          "x": 0.38203125,
+          "y": 0.31180555555555556,
+          "notes": "Assistant visually localized source shuttle center without TrackNet overlay; approximately 3 source pixels uncertainty. Visible-only convenience sample, not a visibility recall benchmark."
+        },
+        {
+          "frame": 2059,
+          "visible": true,
+          "x": 0.371875,
+          "y": 0.31180555555555556,
+          "notes": "Assistant visually localized source shuttle center without TrackNet overlay; approximately 3 source pixels uncertainty. Visible-only convenience sample, not a visibility recall benchmark."
+        }
+      ],
+      "shuttle_point_evidence": {
+        "method": "Clearly visible white shuttle above far player or against empty blue floor, independently selected from source images without TrackNet overlay. A local brightness-component centroid refined manually selected points; no model coordinates used.",
+        "uncertainty_px": 3,
+        "selection_bias": "Visible-only convenience sample.",
+        "rejected_ambiguous_frames": [
+          2083
+        ]
+      },
+      "track_assignments": [
+        {
+          "run_id": "b8bdae17e8374a20bbf16f554c551f19",
+          "track_id": 1,
+          "player_id": "A",
+          "start_frame": 2000,
+          "end_frame": 2100
+        },
+        {
+          "run_id": "b8bdae17e8374a20bbf16f554c551f19",
+          "track_id": 3,
+          "player_id": "B",
+          "start_frame": 2000,
+          "end_frame": 2100
+        }
+      ],
+      "track_assignment_evidence": "Source player clothing and side remain distinct across all inspected 100 frames; stored bounding boxes at initial/contact samples align with near red track 1 and far yellow track 3. Assignments are scoped to this run and reviewed interval only.",
+      "source_audit_images": [
+        ".cache/pilot-review/singles-2000-2024.jpg",
+        ".cache/pilot-review/singles-2025-2049.jpg",
+        ".cache/pilot-review/singles-2050-2074.jpg",
+        ".cache/pilot-review/singles-2075-2099.jpg",
+        ".cache/pilot-review/singles-2003-2012.jpg",
+        ".cache/pilot-review/singles-2034-2043.jpg",
+        ".cache/pilot-review/singles-2045-2054.jpg",
+        ".cache/pilot-review/singles-2075-2084.jpg",
+        ".cache/pilot-review/singles-1700-2300.jpg"
+      ]
+    },
+    {
+      "video_id": "c406a1187130b845",
+      "path": "doubles.mp4",
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "mode": "doubles",
+      "player_descriptions": {
+        "A": "Near red team, initially screen-left at 600.",
+        "B": "Near red team, initially screen-right at 600.",
+        "C": "Far dark team, initially front/nearer net at 600.",
+        "D": "Far dark team, initially back/farther from net at 600."
+      },
+      "scene_assessment": {
+        "likely_scene": "unknown",
+        "basis": "Reviewed 602-649 is uncut normal-speed-looking full-court play with score 3-5. Context around rally and potential replay status was not established."
+      },
+      "review_windows": [
+        {
+          "id": "pilot-doubles-602-650",
+          "start_frame": 602,
+          "end_frame": 650,
+          "contacts_complete": true,
+          "scene": "unknown",
+          "notes": "Every source frame 600-649 inspected at 640x360 tiles; evaluation scope 602-649 excludes outgoing action at window opening. Four racket contacts observed; no serve/end within interval. Unknown live/replay status and all family/side labels unresolved. Assistant visual review needs knowledgeable human second review."
+        }
+      ],
+      "events": [
+        {
+          "id": "pilot-doubles-607",
+          "rally_id": "pilot-doubles-partial-1",
+          "kind": "shot",
+          "frame": 607,
+          "time_s": 24.28,
+          "player_id": "B",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-2 frames. Initially near-right red player makes defensive return; shuttle approaches from far rear player and leaves toward far front player as near-right racket swings. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        },
+        {
+          "id": "pilot-doubles-618",
+          "rally_id": "pilot-doubles-partial-1",
+          "kind": "shot",
+          "frame": 618,
+          "time_s": 24.72,
+          "player_id": "C",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-2 frames. Far front dark player reaches up/right for interception around 618 while rear teammate stays behind; shuttle leaves toward near-right red player. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        },
+        {
+          "id": "pilot-doubles-632",
+          "rally_id": "pilot-doubles-partial-1",
+          "kind": "shot",
+          "frame": 632,
+          "time_s": 25.28,
+          "player_id": "B",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-2 frames. Near-right red player raises racket and strikes around 632, then steps forward while shuttle travels to far screen-left rear player. Not present among existing model suggestions. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        },
+        {
+          "id": "pilot-doubles-643",
+          "rally_id": "pilot-doubles-partial-1",
+          "kind": "shot",
+          "frame": 643,
+          "time_s": 25.72,
+          "player_id": "D",
+          "family": "unknown",
+          "side": "unknown",
+          "status": "reviewed",
+          "confidence": null,
+          "notes": "Assistant visual source-frame review; contact timing +/-2 frames. Initially rear far dark player moves screen-left and makes stretched return around 643; front dark teammate remains to screen-right. Family and stroke side not resolved; partial rally, serve and ending outside reviewed interval. Needs knowledgeable human second review."
+        }
+      ],
+      "shuttle_points": [],
+      "track_assignments": [
+        {
+          "run_id": "1e69e804c60d4d5c8e4fb490afaffa3a",
+          "track_id": 1,
+          "player_id": "A",
+          "start_frame": 602,
+          "end_frame": 650
+        },
+        {
+          "run_id": "1e69e804c60d4d5c8e4fb490afaffa3a",
+          "track_id": 2,
+          "player_id": "B",
+          "start_frame": 602,
+          "end_frame": 650
+        },
+        {
+          "run_id": "1e69e804c60d4d5c8e4fb490afaffa3a",
+          "track_id": 3,
+          "player_id": "C",
+          "start_frame": 602,
+          "end_frame": 650
+        },
+        {
+          "run_id": "1e69e804c60d4d5c8e4fb490afaffa3a",
+          "track_id": 4,
+          "player_id": "D",
+          "start_frame": 602,
+          "end_frame": 650
+        }
+      ],
+      "track_assignment_evidence": "All 50 source frames 600-649 visually inspected: near teammates stay left (A)/right (B) in this interval; far initially front C moves right as initially rear D moves left. Bounding boxes at frames 600, 618, 632, 643, and 649 corroborate tracks 1=A, 2=B, 3=C, 4=D. Scope restricted to frames 602-650, not later crossings.",
+      "source_audit_images": [
+        ".cache/pilot-review/doubles-600-624.jpg",
+        ".cache/pilot-review/doubles-625-649.jpg"
+      ]
+    }
+  ]
+}

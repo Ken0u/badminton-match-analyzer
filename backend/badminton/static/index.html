@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Court Notes · Badminton analyzer</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-icon">⌁</span>
+        <div>Court Notes<small>BADMINTON ANALYZER</small></div>
+      </div>
+      <div class="section-label">
+        VIDEO LIBRARY <span id="library-count">0</span>
+      </div>
+      <div id="library"></div>
+      <details class="import-panel">
+        <summary>＋ Import local video</summary>
+        <form id="import-form">
+          <label
+            >Path inside project<input
+              id="import-path"
+              placeholder="singles.mp4"
+              required
+          /></label>
+          <label
+            >Format<select id="import-mode">
+              <option>singles</option>
+              <option>doubles</option>
+            </select></label
+          >
+          <button type="submit">Inspect & import</button>
+        </form>
+      </details>
+      <div class="sidebar-bottom">
+        <span class="live-dot"></span> Local workspace<small
+          >Your edits stay on this computer.</small
+        >
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <div class="eyebrow">MATCH WORKSPACE</div>
+          <h1 id="title">Review your match</h1>
+          <p id="video-info">Import a video to begin.</p>
+        </div>
+        <div class="header-actions">
+          <span id="save-state">Saved</span
+          ><button id="save" class="primary" disabled>Save annotations</button>
+        </div>
+      </header>
+      <div id="notice" role="status" aria-live="polite">
+        Choose a video from the library.
+      </div>
+      <div id="workspace" hidden>
+        <div class="workspace-grid">
+          <section class="review-panel">
+            <div class="panel-bar">
+              <span><span class="live-dot"></span> VIDEO REVIEW</span>
+              <div>
+                <label class="inline"
+                  ><input id="show-tracks" type="checkbox" checked />
+                  Tracks</label
+                ><label class="inline"
+                  ><input
+                    id="show-shuttle"
+                    type="checkbox"
+                    checked
+                  />Shuttle</label
+                ><button id="audit" class="quiet">Contact sheet ↗</button>
+              </div>
+            </div>
+            <div id="stage">
+              <video id="video" playsinline preload="metadata"></video
+              ><img id="exact-frame" alt="Exact source frame" hidden /><canvas
+                id="overlay"
+                aria-label="Court calibration and player tracking overlay"
+              ></canvas>
+              <div id="calibration-hint" hidden></div>
+            </div>
+            <div class="transport">
+              <button id="back-frame" title="Previous frame (←)">←</button
+              ><button id="play" class="play">▶ Play</button
+              ><button id="next-frame" title="Next frame (→)">→</button
+              ><span id="clock">0:00.00</span
+              ><span class="frame-label"
+                >FRAME
+                <input
+                  id="frame-number"
+                  type="number"
+                  min="0"
+                  value="0"
+                  aria-label="Source frame" /></span
+              ><select id="speed" aria-label="Playback speed">
+                <option value=".25">0.25×</option>
+                <option value=".5">0.5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option>
+              </select>
+            </div>
+            <input
+              id="scrubber"
+              type="range"
+              min="0"
+              max="1"
+              value="0"
+              aria-label="Video position in source frames"
+            />
+            <div id="event-markers" aria-label="Event markers"></div>
+            <div class="mark-bar">
+              <span>MARK CURRENT FRAME</span
+              ><button data-mark="serve">Serve <kbd>1</kbd></button
+              ><button data-mark="shot">Shot <kbd>2</kbd></button
+              ><button data-mark="rally_end">Rally end <kbd>3</kbd></button>
+            </div>
+            <div class="tools-grid">
+              <section class="tool-card">
+                <div class="section-label">COURT CALIBRATION</div>
+                <p>
+                  Click corners around the court: far left, far right, near
+                  right, near left.
+                </p>
+                <div class="row">
+                  <label
+                    >Start frame<input
+                      id="court-start"
+                      type="number"
+                      min="0"
+                      value="0" /></label
+                  ><label
+                    >End frame (exclusive)<input
+                      id="court-end"
+                      type="number"
+                      min="1"
+                  /></label>
+                </div>
+                <div class="row">
+                  <button id="calibrate">Select 4 corners</button
+                  ><button id="clear-court" class="quiet">Clear range</button>
+                </div>
+                <small id="court-status">No court calibration</small>
+              </section>
+              <section class="tool-card">
+                <div class="section-label">PLAYER & SHUTTLE TRACKING</div>
+                <p>
+                  Run a short window from the current frame. Tracker IDs need
+                  player assignment during review.
+                </p>
+                <div class="row">
+                  <label
+                    >Duration<select id="track-duration">
+                      <option value="5">5 seconds</option>
+                      <option value="10" selected>10 seconds</option>
+                      <option value="30">30 seconds</option>
+                    </select></label
+                  ><button id="track">Track players</button>
+                </div>
+                <small id="track-status">No tracking run loaded</small>
+                <div class="row">
+                  <button id="track-shuttle">Track shuttle</button
+                  ><button id="detect-contacts" disabled>
+                    Suggest contacts
+                  </button>
+                </div>
+                <small id="shuttle-status">No shuttle run loaded</small>
+              </section>
+            </div>
+            <section class="suggestions-panel">
+              <div class="section-label">
+                CONTACT SUGGESTIONS <span id="candidate-count">0</span>
+              </div>
+              <p class="suggestion-help">
+                Review proposed contacts before adding events. Hitter identity
+                and shot type need confirmation.
+              </p>
+              <div id="candidates">
+                <p class="empty">Track the shuttle, then suggest contacts.</p>
+              </div>
+            </section>
+            <details class="players-panel">
+              <summary>Player names, teams & handedness</summary>
+              <div id="players"></div>
+            </details>
+            <details class="players-panel" id="identity-panel">
+              <summary>Assign tracks to players</summary>
+              <p>
+                Confirm each player's identity for a frame range. Check
+                crossings and end changes before extending a mapping.
+              </p>
+              <div class="row">
+                <label>Tracker<select id="identity-track"></select></label
+                ><label>Player<select id="identity-player"></select></label>
+              </div>
+              <div class="row">
+                <label
+                  >Start frame<input
+                    id="identity-start"
+                    type="number"
+                    min="0" /></label
+                ><label
+                  >End frame (exclusive)<input
+                    id="identity-end"
+                    type="number"
+                    min="1"
+                /></label>
+              </div>
+              <button id="assign-identity">Assign player</button>
+              <div id="identity-list"></div>
+            </details>
+            <details class="players-panel" id="review-panel">
+              <summary>Reviewed clips & accuracy</summary>
+              <p>
+                Review every contact, adding missed hits and removing false
+                ones. Mark a clip complete only after checking every frame.
+              </p>
+              <div class="row">
+                <label
+                  >Start frame<input
+                    id="review-start"
+                    type="number"
+                    min="0" /></label
+                ><label
+                  >End frame (exclusive)<input
+                    id="review-end"
+                    type="number"
+                    min="1"
+                /></label>
+              </div>
+              <label
+                >Footage<select id="review-scene">
+                  <option value="unknown">Unconfirmed</option>
+                  <option value="live">Live play</option>
+                  <option value="replay">Replay</option>
+                </select></label
+              >
+              <label class="inline"
+                ><input id="review-complete" type="checkbox" />Every contact in
+                this clip is labeled</label
+              >
+              <label
+                >Review notes<input
+                  id="review-notes"
+                  maxlength="2000"
+                  placeholder="Partial rally, uncertainty, or camera changes"
+              /></label>
+              <button id="add-review">Save reviewed clip</button>
+              <div id="review-list"></div>
+              <hr />
+              <p>
+                For shuttle accuracy, hide the model overlay and label separate
+                source frames. Skip ambiguous positions.
+              </p>
+              <div class="row">
+                <button id="label-shuttle">Mark visible shuttle</button
+                ><button id="label-invisible">Shuttle not visible</button
+                ><button id="clear-shuttle-label" class="quiet">
+                  Clear frame label
+                </button>
+              </div>
+              <small id="shuttle-label-status"
+                >No manually labeled shuttle frames</small
+              >
+              <hr />
+              <button id="evaluate">Measure saved labels</button
+              ><a id="download-evaluation" hidden>Download report</a>
+              <div id="evaluation-results" role="status"></div>
+            </details>
+          </section>
+          <aside class="events-panel">
+            <div class="panel-bar">
+              <span>EVENT EDITOR</span><span id="event-count">0 events</span>
+            </div>
+            <form id="event-form">
+              <p id="editor-hint">Mark a frame or choose an event to edit.</p>
+              <label
+                >Rally<input id="rally-id" value="R1" maxlength="64" required
+              /></label>
+              <label
+                >Event<select id="event-kind">
+                  <option value="serve">Serve / rally start</option>
+                  <option value="shot" selected>Shot</option>
+                  <option value="rally_end">Rally end</option>
+                </select></label
+              >
+              <label
+                >Source frame<input
+                  id="event-frame"
+                  type="number"
+                  min="0"
+                  value="0"
+                  required
+              /></label>
+              <label id="player-label"
+                >Hitter<select id="event-player"></select
+              ></label>
+              <label id="family-label"
+                >Shot family<select id="event-family">
+                  <option value="unknown">Unknown / needs review</option>
+                  <option value="clear">Clear</option>
+                  <option value="lift">Lift</option>
+                  <option value="net">Net</option>
+                  <option value="drop">Drop</option>
+                  <option value="smash">Smash</option>
+                  <option value="drive">Drive</option>
+                  <option value="other">Other</option>
+                </select></label
+              >
+              <label id="side-label"
+                >Stroke side<select id="event-side">
+                  <option value="unknown">Unknown / needs review</option>
+                  <option value="forehand">Forehand</option>
+                  <option value="backhand">Backhand</option>
+                </select></label
+              >
+              <label
+                >Notes<textarea
+                  id="event-notes"
+                  rows="2"
+                  maxlength="2000"
+                  placeholder="Visibility, uncertainty, or context"
+                ></textarea>
+              </label>
+              <div class="row">
+                <button id="apply-event" class="primary" type="submit">
+                  Add event</button
+                ><button id="new-event" type="button" class="quiet">New</button
+                ><button id="delete-event" type="button" class="danger" hidden>
+                  Delete
+                </button>
+              </div>
+            </form>
+            <div class="list-header">
+              RALLY TIMELINE
+              <select id="filter-rally" aria-label="Filter rallies">
+                <option value="">All rallies</option>
+              </select>
+            </div>
+            <div id="events">
+              <p class="empty">
+                No events yet. Mark the serve to begin a rally.
+              </p>
+            </div>
+            <div class="export-bar">
+              <span>EXPORT REVIEWED DATA</span><a id="export-json">JSON ↗</a
+              ><a id="export-csv">CSV ↗</a>
+            </div>
+          </aside>
+        </div>
+        <footer>
+          <span
+            >← → Frame step · Space Play / pause · 1 2 3 Mark events · Ctrl S
+            Save</span
+          ><span>Source timestamps preserved</span>
+        </footer>
+      </div>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

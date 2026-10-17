@@ -1,0 +1,20 @@
+{
+  "player_pose": {
+    "name": "yolo11n-pose.pt",
+    "source": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n-pose.pt",
+    "sha256": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+    "publisher": "Ultralytics",
+    "terms": "https://www.ultralytics.com/license",
+    "purpose": "Initial person, pose, and ByteTrack baseline; no badminton shot classifier"
+  },
+  "shuttle": {
+    "name": "TrackNet_best.pt",
+    "source": "https://drive.google.com/file/d/1CfzE87a0f6LhBp0kniSl1-89zaLCZ8cA/view",
+    "archive_member": "ckpts/TrackNet_best.pt",
+    "sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+    "publisher": "qaz812345/TrackNetV3",
+    "terms": "https://github.com/qaz812345/TrackNetV3/blob/6eda442ada1740573f200f836d93edc9a541ee86/LICENSE",
+    "purpose": "Raw shuttle localization, no trajectory repair"
+  },
+  "shot_classifier": null
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "purpose": "Development footage and initial visually inspected tracking windows; not a final test set",
+  "videos": [
+    {
+      "path": "singles.mp4",
+      "mode": "singles",
+      "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "edited_highlights": true,
+      "initial_tracking_window": {"start_s": 80, "end_s": 90},
+      "notes": "Full-court window visually sampled each second. Near player red, far player yellow. Other portions include close-ups, replays, and an end change."
+    },
+    {
+      "path": "doubles.mp4",
+      "mode": "doubles",
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "edited_highlights": true,
+      "initial_tracking_window": {"start_s": 24, "end_s": 34},
+      "notes": "Full-court window visually sampled each second. Near team red, far team dark. Teammates cross and overlap. Other portions include close-ups and replay angles."
+    }
+  ]
+}
