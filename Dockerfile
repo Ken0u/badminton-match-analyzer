@@ -50,6 +50,7 @@ RUN python -m pip install --no-cache-dir \
     && python -m pip install --no-cache-dir ".[tracking,recognition]" \
     && python -m pip check \
     && python -c "import torch; from badminton.vendor.bst.bst import BST_0; assert torch.version.cuda is None; assert BST_0(in_dim=72, seq_len=30, n_class=35)(torch.zeros(1,30,2,72), torch.zeros(1,30,2), torch.tensor([30])).shape == (1,35)"
+RUN python -c "from badminton.stroke_side import load_side_predictor; assert load_side_predictor('cpu') is not None"
 USER 10001:10001
 
 FROM review AS gpu
