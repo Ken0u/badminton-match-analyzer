@@ -1,19 +1,53 @@
 """Player/pose baseline. Identity labels remain unassigned until reviewed."""
 
+import hashlib
+import json
 import os
 import time
 
 import cv2
 import numpy as np
 
-from .config import WEIGHTS
+from .config import MODEL_MANIFEST, WEIGHTS
+from .rallies import context_signature
 from .scene_review import corrected_boundaries, reviewed_run
 from .segments import scan_boundaries
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
 
+def player_checkpoint(variant):
+    keys = {"small": "player_pose_small", "nano": "player_pose"}
+    if variant not in keys:
+        raise ValueError("Choose small or nano for the player model")
+    entry = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))[keys[variant]]
+    folder = WEIGHTS.resolve()
+    path = (folder / entry["name"]).resolve()
+    if not path.is_relative_to(folder) or path.parent != folder:
+        raise ValueError("Player checkpoint must be inside the weights directory")
+    if not path.is_file():
+        raise RuntimeError(
+            f"Player model missing. Run scripts/download_models.py --kind player --player-model {variant}"
+        )
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    if digest.hexdigest() != entry["sha256"]:
+        raise RuntimeError("Player checkpoint does not match its pinned model manifest")
+    return path, entry
+
+
 def track_players(
-    video, root, data, annotations, start_frame, end_frame, stride, progress, output
+    video,
+    root,
+    data,
+    annotations,
+    start_frame,
+    end_frame,
+    stride,
+    progress,
+    output,
+    player_model="small",
 ):
     runtime = data / "runtime"
     runtime.mkdir(exist_ok=True)
@@ -30,11 +64,7 @@ def track_players(
         raise RuntimeError(
             "Install the tracking dependencies first; see README.md"
         ) from exc
-    weights = WEIGHTS / "yolo11n-pose.pt"
-    if not weights.exists():
-        raise RuntimeError(
-            "Player model missing. Run scripts/download_models.py first."
-        )
+    weights, checkpoint = player_checkpoint(player_model)
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     if device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
@@ -150,7 +180,14 @@ def track_players(
             "schema_version": 1,
             "video_id": video["id"],
             "stage": "players",
-            "model": "yolo11n-pose",
+            "video_sha256": video["sha256"],
+            "calibration_signature": context_signature(
+                annotations, start_frame, end_frame
+            )["court"],
+            "model": checkpoint["name"].removesuffix(".pt"),
+            "model_variant": player_model,
+            "checkpoint_sha256": checkpoint["sha256"],
+            "model_source": checkpoint["source"],
             "device": device,
             "image_size": 1280,
             "peak_gpu_memory_mb": round(torch.cuda.max_memory_allocated() / 1e6, 1)

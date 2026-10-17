@@ -40,12 +40,18 @@ class TrackingRequest(StrictModel):
     end_frame: int = Field(gt=0)
     stride: int = Field(default=1, ge=1, le=10)
     stage: Literal["players", "shuttle"] = "players"
+    player_model: Literal["small", "nano"] = "small"
 
 
 class ContactsRequest(StrictModel):
     shuttle_run_id: str
     player_run_id: str | None = None
     include_audio: bool = False
+
+
+class RalliesRequest(StrictModel):
+    player_run_id: str
+    shuttle_run_id: str
 
 
 class EvaluationRequest(StrictModel):
@@ -424,6 +430,7 @@ def create_app(
                     body.stride,
                     progress,
                     output,
+                    player_model=body.player_model,
                 )
             return track_shuttle(
                 v,
@@ -549,6 +556,37 @@ def create_app(
             task,
         )
 
+    @app.post("/api/videos/{video_id}/rallies", status_code=202)
+    def rallies(video_id: str, body: RalliesRequest):
+        from .rallies import generate_rallies, validate_rally_inputs
+
+        video = store.video(video_id)
+        source(video)
+        players = load_run(video_id, body.player_run_id, "players")
+        shuttle = load_run(video_id, body.shuttle_run_id, "shuttle")
+        snapshot = store.annotations(video_id)
+        times = timestamps_for(data, video_id)
+        # Validate inputs before admission; inference remains in the shared worker.
+        try:
+            validate_rally_inputs(video, players, shuttle, snapshot, times)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+        return enqueue(
+            "rallies",
+            video_id,
+            lambda job_id, progress: generate_rallies(
+                video,
+                players,
+                shuttle,
+                snapshot,
+                body.player_run_id,
+                body.shuttle_run_id,
+                data / video_id / "runs" / f"{job_id}.json",
+                times,
+            ),
+        )
+
     @app.get("/api/videos/{video_id}/runs/{job_id}")
     def run(video_id: str, job_id: str):
         store.video(video_id)
@@ -556,7 +594,7 @@ def create_app(
             j["id"] == job_id
             and j["status"] == "completed"
             and j["kind"]
-            in ("players", "shuttle", "contacts", "recognition", "segments")
+            in ("players", "shuttle", "contacts", "recognition", "segments", "rallies")
             for j in store.jobs(video_id)
         ):
             raise HTTPException(404)
@@ -574,6 +612,10 @@ def create_app(
             from .scene_review import reviewed_run
 
             result = reviewed_run(result, doc)
+        elif result.get("stage") == "rallies":
+            from .rallies import reviewed_rallies
+
+            result = reviewed_rallies(result, doc)
         elif result.get("stage") == "contacts":
             from .scene_review import reviewed_contacts
 

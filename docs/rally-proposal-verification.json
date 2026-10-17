@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "purpose": "Development output inspection, not independent accuracy evaluation",
+  "boundary_manifest_sha256": "e88827aaa2672e8b2bf8c11a1e19a417d2d4d4c0dc698e057f57b69db5fd6001",
+  "source_labels_changed": false,
+  "videos": [
+    {
+      "schema_version": 1,
+      "stage": "rallies",
+      "video_id": "970dbd8adfe548d8",
+      "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "start_frame": 255,
+      "end_frame": 639,
+      "method": "observed shuttle transition and pose context v1",
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1
+      },
+      "interval_bounds": "inclusive",
+      "meaning": "Experimental boundary review intervals, not verified rallies or exact terminal times",
+      "candidates": [
+        {
+          "id": "rally_end-610",
+          "kind": "rally_end",
+          "frame": 610,
+          "time_s": 24.4,
+          "start_frame": 607,
+          "end_frame": 621,
+          "start_time_s": 24.28,
+          "end_time_s": 24.84,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "stationary_context_s": 0.48,
+            "stationary_radius_px": 7.34,
+            "quiet_player_followup_s": 0.6,
+            "quiet_followup_delay_s": 0.0,
+            "full_player_quiet_fraction": 0.9,
+            "stationary_observation_fraction": 1.0,
+            "piecewise_rmse_px": 3.261,
+            "quadratic_rmse_px": 6.372,
+            "tail_speed_diagonals_per_s": 0.0151,
+            "meaning": "Observed settling unlike a smooth flight apex, followed by quieter full-player motion; terminal contact/fault remains unverified"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "diagnostics": {
+        "eligible_frames": 384,
+        "complete_player_body_frames": 378,
+        "quiet_pose_frames": 120,
+        "camera_context_count": 1,
+        "abstention_policy": "No boundary from missing detections, invalid calibration, non-live scenes, camera/source gaps or clip edges alone"
+      },
+      "player_run_id": "38cfdedc74d248208727aff21d4c3e45",
+      "shuttle_run_id": "d8ea631a9bd44eec8aa928b228f5fdb7",
+      "annotation_revision": 1,
+      "source_timestamps_validated": true,
+      "context_start_frame": 255,
+      "context_end_frame": 639,
+      "input_models": {
+        "players": {
+          "model": "yolo11s-pose",
+          "model_variant": "small",
+          "checkpoint_sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+          "model_source": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s-pose.pt"
+        },
+        "shuttle": {
+          "model": "TrackNetV3",
+          "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a"
+        }
+      },
+      "calibration_provenance": "legacy_unverified_snapshot",
+      "proposal_elapsed_s": 0.245,
+      "input_artifact_sha256": [
+        "b8708d4502589eadf1c2d2da960f019b08a41a10cee06e5015377b6d64075e79",
+        "eeb7138e1a45dd8e88919f0642fd2d8e530e41878c22916b8238c36ad1664914"
+      ],
+      "observed_small_player_inference": {
+        "schema_version": 1,
+        "video_id": "970dbd8adfe548d8",
+        "stage": "players",
+        "model": "yolo11s-pose",
+        "model_variant": "small",
+        "checkpoint_sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+        "model_source": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s-pose.pt",
+        "device": "cuda:0",
+        "image_size": 1280,
+        "peak_gpu_memory_mb": 175.6,
+        "start_frame": 255,
+        "end_frame": 639,
+        "stride": 1,
+        "annotation_revision": 1,
+        "calibrated": true,
+        "calibrated_frames": 384,
+        "elapsed_s": 17.099,
+        "processed_frames": 384,
+        "inference_fps": 22.46,
+        "expected_players": 2,
+        "mean_detections": 1.99,
+        "cut_frames": [
+          255
+        ],
+        "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "camera_ranges": [
+          {
+            "start_frame": 255,
+            "end_frame": 639,
+            "scene": "unknown"
+          }
+        ],
+        "tracker_reset_at_cuts": true,
+        "raw_cut_frames": [
+          255
+        ],
+        "applied_camera_corrections": [],
+        "camera_annotation_revision": 1,
+        "preceding_reviewed_cut_frame": null,
+        "requires_tracking_rerun": false,
+        "scene_annotation_revision": 1
+      }
+    },
+    {
+      "schema_version": 1,
+      "stage": "rallies",
+      "video_id": "c406a1187130b845",
+      "video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "start_frame": 278,
+      "end_frame": 866,
+      "method": "observed shuttle transition and pose context v1",
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1
+      },
+      "interval_bounds": "inclusive",
+      "meaning": "Experimental boundary review intervals, not verified rallies or exact terminal times",
+      "candidates": [
+        {
+          "id": "serve-331",
+          "kind": "serve",
+          "frame": 331,
+          "time_s": 13.24,
+          "start_frame": 324,
+          "end_frame": 331,
+          "start_time_s": 12.96,
+          "end_time_s": 13.24,
+          "timing": "uncertain_interval",
+          "track_id": 8,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "quiet_context_s": 0.6,
+            "observed_quiet_fraction": 0.933,
+            "full_player_context_fraction": 0.933,
+            "partial_player_context": false,
+            "observed_departure_frames": 6,
+            "possible_track_ids": [
+              8
+            ],
+            "hitter_hint_status": "unconfirmed_track",
+            "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+            "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+          }
+        }
+      ],
+      "candidate_count": 1,
+      "diagnostics": {
+        "eligible_frames": 588,
+        "complete_player_body_frames": 537,
+        "quiet_pose_frames": 125,
+        "camera_context_count": 1,
+        "abstention_policy": "No boundary from missing detections, invalid calibration, non-live scenes, camera/source gaps or clip edges alone"
+      },
+      "player_run_id": "e67258122f424671980cc1e7afca11d5",
+      "shuttle_run_id": "19ceccbfe8914cc59b18110d96db9b06",
+      "annotation_revision": 1,
+      "source_timestamps_validated": true,
+      "context_start_frame": 278,
+      "context_end_frame": 866,
+      "input_models": {
+        "players": {
+          "model": "yolo11s-pose",
+          "model_variant": "small",
+          "checkpoint_sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+          "model_source": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s-pose.pt"
+        },
+        "shuttle": {
+          "model": "TrackNetV3",
+          "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a"
+        }
+      },
+      "calibration_provenance": "legacy_unverified_snapshot",
+      "proposal_elapsed_s": 0.227,
+      "input_artifact_sha256": [
+        "af1ac4b93e547362ab81d03923c142fcdb99ea2498f79b4c89e6bc074df952e4",
+        "f63224f308bebb6a69feeda787a673a9175eab42a63bcb0ac228175d45610627"
+      ],
+      "observed_small_player_inference": {
+        "schema_version": 1,
+        "video_id": "c406a1187130b845",
+        "stage": "players",
+        "model": "yolo11s-pose",
+        "model_variant": "small",
+        "checkpoint_sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+        "model_source": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s-pose.pt",
+        "device": "cuda:0",
+        "image_size": 1280,
+        "peak_gpu_memory_mb": 175.6,
+        "start_frame": 278,
+        "end_frame": 866,
+        "stride": 1,
+        "annotation_revision": 1,
+        "calibrated": true,
+        "calibrated_frames": 588,
+        "elapsed_s": 22.442,
+        "processed_frames": 588,
+        "inference_fps": 26.2,
+        "expected_players": 4,
+        "mean_detections": 3.91,
+        "cut_frames": [
+          278
+        ],
+        "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "camera_ranges": [
+          {
+            "start_frame": 278,
+            "end_frame": 866,
+            "scene": "unknown"
+          }
+        ],
+        "tracker_reset_at_cuts": true,
+        "raw_cut_frames": [
+          278
+        ],
+        "applied_camera_corrections": [],
+        "camera_annotation_revision": 1,
+        "preceding_reviewed_cut_frame": null,
+        "requires_tracking_rerun": false,
+        "scene_annotation_revision": 1
+      }
+    }
+  ]
+}

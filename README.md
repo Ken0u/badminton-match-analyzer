@@ -70,7 +70,13 @@ The equivalent CLI experiments are:
 .\.venv\Scripts\python.exe -m badminton.cli track c406a1187130b845 --start 24 --duration 10
 ```
 
-This baseline uses the publisher's `yolo11n-pose.pt` checkpoint and ByteTrack. Results include bounding boxes, keypoints, confidence, source frame/time, model/device, processing speed, and the calibration revision. Tracker IDs are intentionally separate from the annotation's persistent player IDs. Initial runs are limited to two minutes.
+Standard player tracking uses pinned `yolo11s-pose.pt` and ByteTrack. Choose Lightweight in the viewer or `--player-model nano` on track/download commands for `yolo11n-pose.pt`. Both checkpoints are verified by SHA256 before loading. Results retain boxes, keypoints, confidence, source frame/time, actual model/device, speed and court snapshot. Tracker IDs are separate from persistent players. Runs are limited to two minutes.
+
+After tracking players and the shuttle at every frame in a calibrated view, choose **Suggest rally boundaries**. Experimental serve/end intervals open as drafts; inspect the source, add and save explicitly. Hitter identity stays unknown. Missing candidates do not establish that no rally occurred. Camera, scene or court edits invalidate affected cached proposals. See [the rally proposal report](docs/RALLY_PROPOSAL_REPORT.md) for actual outputs, tests and accuracy limits.
+
+```powershell
+.\.venv\Scripts\python.exe -m badminton.cli rallies VIDEO_ID --players-run PLAYER_JOB_ID --shuttle-run SHUTTLE_JOB_ID
+```
 
 The first runs processed both 250-frame windows at about 23 frames per second. The model input size is 1280 because the initial 640-size run missed the far singles player. See [the baseline report](docs/BASELINE_REPORT.md) for observations and limitations.
 

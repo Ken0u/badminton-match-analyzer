@@ -2,6 +2,7 @@ import { createReviewTools } from "./review-tools.js";
 import { createImportTools } from "./import-tools.js";
 import { createRecognitionTools } from "./recognition-tools.js";
 import { createSegmentTools } from "./segment-tools.js";
+import { createRallyTools } from "./rally-tools.js";
 const $ = (id) => document.getElementById(id);
 const state = {
   videos: [],
@@ -70,6 +71,7 @@ function changed() {
   $("save").disabled = false;
   reviewTools.render();
   recognitionTools.render();
+  rallyTools.render();
   segmentTools.render();
   renderCandidates();
 }
@@ -164,6 +166,7 @@ async function selectVideo(id) {
   renderCandidates();
   reviewTools.reset();
   recognitionTools.reset();
+  rallyTools.reset();
   segmentTools.render();
   draw();
   await loadLibrary();
@@ -647,7 +650,7 @@ async function pollJobs() {
     state.runMap = new Map(state.run.frames.map((f) => [f.frame, f]));
     reviewTools.render();
     $("track-status").textContent =
-      `${state.run.processed_frames} frames · ${state.run.inference_fps} fps · ${state.run.device}${state.run.calibrated ? " · court filter" : ` · ${state.run.calibrated_frames ?? 0} frames with court filter`}${state.run.cut_frames?.length ? ` · ${state.run.cut_frames.length} camera changes; confirm calibration for each view` : ""}`;
+      `${state.run.processed_frames} frames · ${state.run.inference_fps} fps · ${state.run.device}${state.run.model ? ` · ${state.run.model}` : ""}${state.run.calibrated ? " · court filter" : ` · ${state.run.calibrated_frames ?? 0} frames with court filter`}${state.run.cut_frames?.length ? ` · ${state.run.cut_frames.length} camera changes; confirm calibration for each view` : ""}`;
     draw();
   }
   const shuttle = jobs.find(
@@ -689,6 +692,7 @@ async function pollJobs() {
   }
   $("detect-contacts").disabled = !!active || !state.shuttleRun;
   await recognitionTools.refresh(jobs, active);
+  await rallyTools.refresh(jobs, active);
 }
 $("event-form").onsubmit = (e) => {
   e.preventDefault();
@@ -953,6 +957,9 @@ async function startTracking(stage) {
         ),
         stride: 1,
         stage,
+        ...(stage === "players"
+          ? { player_model: $("player-model").value }
+          : {}),
       }),
     });
     $(stage === "players" ? "track-status" : "shuttle-status").textContent =
@@ -1069,6 +1076,16 @@ const recognitionTools = createRecognitionTools({
   editEvent,
   seek,
   kindFields,
+});
+const rallyTools = createRallyTools({
+  state,
+  $,
+  api,
+  notice,
+  escape,
+  clock,
+  resetEditor,
+  seek,
 });
 const segmentTools = createSegmentTools({
   state,

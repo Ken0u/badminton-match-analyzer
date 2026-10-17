@@ -87,6 +87,14 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
     monkeypatch.setitem(sys.modules, "torchvision", SimpleNamespace())
     monkeypatch.setattr(tracking, "WEIGHTS", tmp_path)
     (tmp_path / "yolo11n-pose.pt").write_bytes(b"stub")
+    monkeypatch.setattr(
+        tracking,
+        "player_checkpoint",
+        lambda variant: (
+            tmp_path / "yolo11n-pose.pt",
+            {"name": "yolo11n-pose.pt", "sha256": "fixture", "source": "fixture"},
+        ),
+    )
     data = tmp_path / "data"
     data.mkdir()
     write_json(data / "test" / "timestamps.json", [i * 0.04 for i in range(12)])
@@ -137,6 +145,7 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
     )
     video = {
         "id": "test",
+        "sha256": "fixture",
         "width": 96,
         "height": 64,
         "mode": "singles",
