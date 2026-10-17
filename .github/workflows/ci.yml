@@ -1,0 +1,81 @@
+name: Checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: pyproject.toml
+      - name: Install codec and OpenCV system libraries
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg libgl1 libglib2.0-0
+      - name: Install review, import, and test dependencies
+        run: python -m pip install ".[dev,youtube]"
+      - name: Verify dependencies and source
+        run: |
+          python -m pip check
+          python -m ruff check backend tests scripts
+          python -m ruff format --check backend tests scripts
+      - name: Test with generated media, without sample files or model weights
+        env:
+          BADMINTON_GPU_TESTS: "0"
+        run: python -m pytest -q --basetemp .cache/pytest
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - name: Check browser source formatting
+        run: npx prettier --check "backend/badminton/static/*" "tests/*.mjs" "scripts/*.mjs"
+
+  container:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the review image without media or weights
+        run: docker build --target review --tag badminton-review:ci .
+      - name: Start with single-user authentication
+        run: |
+          docker run --detach --name badminton-review \
+            --publish 127.0.0.1:8000:8000 \
+            --env BADMINTON_USERNAME=reviewer \
+            --env BADMINTON_PASSWORD=ci-only-generated-environment \
+            badminton-review:ci
+      - name: Check health, authentication, static UI, and an empty catalog
+        shell: bash
+        run: |
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8000/api/health; then break; fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:8000/api/health
+          test "$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:8000/api/videos)" = 401
+          curl --fail --silent --user reviewer:ci-only-generated-environment --output /tmp/badminton-index.html http://127.0.0.1:8000/
+          grep -q '<html' /tmp/badminton-index.html
+          test "$(curl --fail --silent --user reviewer:ci-only-generated-environment http://127.0.0.1:8000/api/videos)" = '[]'
+          docker exec badminton-review python -m pip check
+      - name: Container logs
+        if: always()
+        run: docker logs badminton-review
+      - name: Stop container
+        if: always()
+        run: docker rm --force badminton-review
