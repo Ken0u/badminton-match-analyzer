@@ -116,6 +116,10 @@ class Store:
                 times
             ):
                 raise ValueError("Contact interval exceeds the video")
+            if event.terminal_end_frame is not None and event.terminal_end_frame >= len(
+                times
+            ):
+                raise ValueError("Rally-end interval exceeds the video")
             event.time_s = times[event.frame]
         if any(c.end_frame > len(times) for c in annotations.calibrations):
             raise ValueError("Calibration exceeds the video")

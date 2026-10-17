@@ -363,6 +363,8 @@ def create_app(
             "candidate_id",
             "contact_start_frame",
             "contact_end_frame",
+            "terminal_start_frame",
+            "terminal_end_frame",
             "classification_run_id",
             "classification_candidate_id",
             "family_score",

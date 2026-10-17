@@ -89,6 +89,8 @@ Then choose **Suggest contacts**. If a player run covers the window, suggestions
 
 Short occlusions may produce **Review possible contact** cards with a frame range supported by trajectory and wrist evidence. Their navigation frame is an estimate. Review the entire interval; saved events retain editable inclusive timing bounds. Clear those bounds only after identifying the contact frame. The detector filters smooth apexes, preserves raw gaps, and still misses some hits. See [the contact report](docs/CONTACT_DETECTION_REPORT.md).
 
+For an obscured terminal moment, select **Rally end** and expand **Rally end timing uncertainty**. Keep inclusive earliest/latest source frames containing the event's navigation frame; a final racket contact alone does not establish the ending. Bounds survive editing, history, and JSON/CSV export. [The first boundary audit](docs/RALLY_BOUNDARY_REPORT.md) records source-reviewed opening/terminal intervals for the first full-court view in each sample, with unresolved timing and human adjudication pending. It does not establish automatic serve/end detection or exhaustive shot truth.
+
 The equivalent API is `POST /api/videos/<id>/track` with `stage: "players"` or `"shuttle"`, followed by `POST /api/videos/<id>/contacts` with `shuttle_run_id` and optional `player_run_id`. All processing jobs, including CLI ingestion, share admission control within the project database.
 
 ## Experimental singles shot labels

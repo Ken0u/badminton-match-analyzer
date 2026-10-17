@@ -62,6 +62,8 @@ class Event(StrictModel):
     candidate_id: str | None = Field(default=None, max_length=64)
     contact_start_frame: int | None = Field(default=None, ge=0)
     contact_end_frame: int | None = Field(default=None, ge=0)
+    terminal_start_frame: int | None = Field(default=None, ge=0)
+    terminal_end_frame: int | None = Field(default=None, ge=0)
     classification_run_id: str | None = Field(default=None, min_length=1, max_length=64)
     classification_candidate_id: str | None = Field(
         default=None, min_length=1, max_length=64
@@ -88,6 +90,15 @@ class Event(StrictModel):
             if not self.contact_start_frame <= self.frame <= self.contact_end_frame:
                 raise ValueError(
                     "The event frame must lie inside its inclusive contact interval"
+                )
+        if (self.terminal_start_frame is None) != (self.terminal_end_frame is None):
+            raise ValueError("Rally-end uncertainty requires both start and end frames")
+        if self.terminal_start_frame is not None:
+            if self.kind != "rally_end":
+                raise ValueError("Only rally endings can carry a terminal interval")
+            if not self.terminal_start_frame <= self.frame <= self.terminal_end_frame:
+                raise ValueError(
+                    "The event frame must lie inside its inclusive terminal interval"
                 )
         if (self.source_run_id is None) != (self.candidate_id is None):
             raise ValueError("Proposal provenance requires both run and candidate IDs")

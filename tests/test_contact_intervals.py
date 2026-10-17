@@ -1,4 +1,4 @@
-"""Contact uncertainty intervals stay explicit across validation and revisions."""
+"""Event uncertainty intervals stay explicit across validation and revisions."""
 
 import csv
 import io
@@ -105,6 +105,66 @@ def test_rally_end_cannot_contain_contact_uncertainty():
             contact_start_frame=1,
             contact_end_frame=3,
         )
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"terminal_start_frame": 1},
+        {"terminal_end_frame": 3},
+        {"terminal_start_frame": 3, "terminal_end_frame": 4},
+        {"terminal_start_frame": 0, "terminal_end_frame": 1},
+        {"terminal_start_frame": -1, "terminal_end_frame": 3},
+        {"kind": "serve", "terminal_start_frame": 1, "terminal_end_frame": 3},
+    ],
+)
+def test_terminal_intervals_require_rally_end_and_paired_bounds(changes):
+    with pytest.raises(ValidationError):
+        Event.model_validate(
+            {"id": "end", "rally_id": "R1", "kind": "rally_end", "frame": 2} | changes
+        )
+
+
+def test_terminal_interval_history_exports_removal_and_vfr_time(interval_workspace):
+    root, data, store, video = interval_workspace
+    url = f"/api/videos/{video['id']}"
+    with TestClient(create_app(root, data)) as client:
+        initial = client.get(url + "/annotations").json()
+        initial["events"] = [
+            {
+                "id": "terminal",
+                "rally_id": "R1",
+                "kind": "rally_end",
+                "frame": 2,
+                "time_s": 99,
+                "terminal_start_frame": 1,
+                "terminal_end_frame": 5,
+            }
+        ]
+        first = client.put(url + "/annotations", json=initial)
+        assert first.status_code == 200, first.text
+        assert first.json()["events"][0]["time_s"] == pytest.approx(0.12)
+        invalid = first.json()
+        invalid["events"][0]["terminal_end_frame"] = 6
+        assert client.put(url + "/annotations", json=invalid).status_code == 422
+        assert store.annotations(video["id"]).revision == 1
+        assert client.get(url + "/export").json()["annotations"] == first.json()
+        row = next(
+            csv.DictReader(io.StringIO(client.get(url + "/export?format=csv").text))
+        )
+        assert row["terminal_start_frame"] == "1"
+        assert row["terminal_end_frame"] == "5"
+        assert row["contact_start_frame"] == "" and row["contact_end_frame"] == ""
+        cleared = first.json()
+        cleared["events"][0] |= {
+            "terminal_start_frame": None,
+            "terminal_end_frame": None,
+        }
+        response = client.put(url + "/annotations", json=cleared)
+        assert response.status_code == 200, response.text
+        assert client.get(url + "/revisions/1").json() == first.json()
+        assert response.json()["events"][0]["terminal_end_frame"] is None
+        assert client.put(url + "/annotations", json=first.json()).status_code == 409
 
 
 @pytest.mark.parametrize(
