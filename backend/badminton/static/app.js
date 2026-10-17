@@ -1,4 +1,5 @@
 import { createReviewTools } from "./review-tools.js";
+import { createImportTools } from "./import-tools.js";
 const $ = (id) => document.getElementById(id);
 const state = {
   videos: [],
@@ -120,6 +121,7 @@ async function selectVideo(id) {
     shuttleLabeling: false,
   });
   $("workspace").hidden = false;
+  $("onboarding").hidden = true;
   $("title").textContent = video.name;
   $("video-info").textContent =
     `${pretty(video.mode)} · ${video.width} × ${video.height} · ${video.fps.toFixed(2).replace(".00", "")} fps · ${clock(video.duration_s)} · ${video.frame_count.toLocaleString()} source frames`;
@@ -514,7 +516,7 @@ async function pollJobs() {
   $("track").disabled = !!active;
   $("track-shuttle").disabled = !!active;
   $("detect-contacts").disabled = !!active || !state.shuttleRun;
-  $("import-form").querySelector("button").disabled = !!active;
+  importTools.updateJobs(jobs);
   if (active) {
     if (active.kind === "players" && active.video_id === state.video?.id)
       $("track-status").textContent =
@@ -839,24 +841,6 @@ $("detect-contacts").onclick = async () => {
     handleError(e);
   }
 };
-$("import-form").onsubmit = async (e) => {
-  e.preventDefault();
-  try {
-    await api("/api/import", {
-      method: "POST",
-      body: JSON.stringify({
-        path: $("import-path").value,
-        mode: $("import-mode").value,
-      }),
-    });
-    notice(
-      "Video inspection queued. It will appear in the library when ready.",
-    );
-    await pollJobs();
-  } catch (e) {
-    handleError(e);
-  }
-};
 for (const id of ["export-json", "export-csv"])
   $(id).onclick = (e) => {
     if (state.dirty) {
@@ -906,6 +890,13 @@ const reviewTools = createReviewTools({
   notice,
   escape,
   renderCandidates,
+});
+const importTools = createImportTools({
+  $,
+  api,
+  notice,
+  pollJobs,
+  loadLibrary,
 });
 await loadLibrary().catch(handleError);
 if (state.videos.length)

@@ -16,23 +16,63 @@
         VIDEO LIBRARY <span id="library-count">0</span>
       </div>
       <div id="library"></div>
-      <details class="import-panel">
-        <summary>＋ Import local video</summary>
-        <form id="import-form">
+      <details class="import-panel" open>
+        <summary>＋ Add a match</summary>
+        <form id="upload-form">
           <label
-            >Path inside project<input
-              id="import-path"
-              placeholder="singles.mp4"
+            >Video file<input
+              id="upload-file"
+              type="file"
+              accept=".mp4,.mov,.mkv,.avi,.webm"
               required
           /></label>
           <label
-            >Format<select id="import-mode">
+            >Format<select id="upload-mode">
               <option>singles</option>
               <option>doubles</option>
             </select></label
           >
-          <button type="submit">Inspect & import</button>
+          <button type="submit">Upload match</button>
         </form>
+        <div class="import-divider">or use a YouTube link</div>
+        <form id="youtube-form">
+          <label
+            >YouTube video<input
+              id="youtube-url"
+              type="url"
+              placeholder="https://youtu.be/…"
+              required
+          /></label>
+          <label
+            >Format<select id="youtube-mode">
+              <option>singles</option>
+              <option>doubles</option>
+            </select></label
+          >
+          <button type="submit">Import from YouTube</button>
+        </form>
+        <p id="import-status" role="status" aria-live="polite">
+          MP4, MOV, MKV, AVI, or WebM.
+        </p>
+        <progress id="upload-progress" max="100" value="0" hidden></progress>
+        <details class="local-import">
+          <summary>Import from server folder</summary>
+          <form id="import-form">
+            <label
+              >Path inside project<input
+                id="import-path"
+                placeholder="singles.mp4"
+                required
+            /></label>
+            <label
+              >Format<select id="import-mode">
+                <option>singles</option>
+                <option>doubles</option>
+              </select></label
+            >
+            <button type="submit">Inspect & import</button>
+          </form>
+        </details>
       </details>
       <div class="sidebar-bottom">
         <span class="live-dot"></span> Local workspace<small
@@ -55,6 +95,44 @@
       <div id="notice" role="status" aria-live="polite">
         Choose a video from the library.
       </div>
+      <section id="onboarding" class="onboarding">
+        <div class="eyebrow">YOUR NEXT MATCH, FRAME BY FRAME</div>
+        <h2>Bring your match into view.</h2>
+        <p>
+          Add a video, follow the players and shuttle, and build a reviewed
+          timeline of rallies and shots.
+        </p>
+        <div class="onboarding-actions">
+          <button id="choose-upload" class="primary">Upload a match</button
+          ><button id="choose-youtube">Use a YouTube link</button>
+        </div>
+        <div class="onboarding-steps">
+          <article>
+            <span>01</span>
+            <h3>Add your footage</h3>
+            <p>
+              Choose singles or doubles. Keep the original frame timing
+              throughout review.
+            </p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Follow the play</h3>
+            <p>
+              Calibrate the court, track movement, and inspect possible racket
+              contacts.
+            </p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Make it yours</h3>
+            <p>
+              Review rally and shot labels, assign players, and export your
+              annotations.
+            </p>
+          </article>
+        </div>
+      </section>
       <div id="workspace" hidden>
         <div class="workspace-grid">
           <section class="review-panel">

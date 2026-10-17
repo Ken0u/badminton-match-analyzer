@@ -2,18 +2,20 @@ import csv
 import io
 import json
 import logging
+import os
 from concurrent.futures import ThreadPoolExecutor
 from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import Literal
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import Field
 
 from . import config
+from .access import AccessMiddleware
 from .ingest import inspect_video, read_frame
 from .schemas import Annotations, StrictModel
 from .storage import ConflictError, Store
@@ -52,7 +54,29 @@ class EvaluationRequest(StrictModel):
     tolerance_diagonal: float = Field(default=0.005, gt=0, le=0.1, allow_inf_nan=False)
 
 
-def create_app(root: Path = config.ROOT, data: Path = config.DATA):
+class YoutubeRequest(StrictModel):
+    url: str = Field(min_length=1, max_length=2048)
+    mode: Literal["singles", "doubles"] = "singles"
+
+
+def create_app(
+    root: Path = config.ROOT,
+    data: Path = config.DATA,
+    *,
+    max_media_bytes: int = config.MAX_MEDIA_BYTES,
+    username: str | None = None,
+    password: str | None = None,
+):
+    if type(max_media_bytes) is not int or max_media_bytes <= 0:
+        raise ValueError("Media byte limit must be a positive integer")
+    username = (
+        username if username is not None else os.environ.get("BADMINTON_USERNAME")
+    )
+    password = (
+        password if password is not None else os.environ.get("BADMINTON_PASSWORD")
+    )
+    if bool(username) != bool(password):
+        raise ValueError("Set both BADMINTON_USERNAME and BADMINTON_PASSWORD")
     root, data = Path(root).resolve(), Path(data).resolve()
     store = Store(data)
     executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="analysis")
@@ -64,7 +88,17 @@ def create_app(root: Path = config.ROOT, data: Path = config.DATA):
         executor.shutdown(wait=False, cancel_futures=True)
 
     app = FastAPI(title="Badminton match analyzer", lifespan=lifespan)
+    app.add_middleware(
+        AccessMiddleware,
+        username=username,
+        password=password,
+        max_bytes=max_media_bytes,
+    )
     app.state.store = store
+
+    @app.get("/api/health")
+    def health():
+        return {"status": "ok"}
 
     @app.exception_handler(KeyError)
     async def missing(request, exc):
@@ -109,8 +143,105 @@ def create_app(root: Path = config.ROOT, data: Path = config.DATA):
                 job.update(status="failed", message=str(exc))
             store.put_job(job)
 
-        executor.submit(run)
+        try:
+            executor.submit(run)
+        except RuntimeError as exc:
+            job.update(
+                status="failed", message="Worker is shutting down. Retry after restart."
+            )
+            store.put_job(job)
+            raise HTTPException(503, job["message"]) from exc
         return dict(job)
+
+    def register_media(path, mode, progress, provenance):
+        prior = {v["id"]: v for v in store.videos()}
+        try:
+            document = inspect_video(path, mode, store, root, progress)
+            existing = prior.get(document["id"])
+            if existing and existing["path"] != document["path"]:
+                try:
+                    resolve_source(existing, root)
+                except (ValueError, FileNotFoundError):
+                    pass
+                else:
+                    document["path"] = existing["path"]
+                    path.unlink(missing_ok=True)
+            document["source"] = provenance
+            document["source_type"] = provenance["source_type"]
+            document["name"] = (
+                provenance.get("name") or provenance.get("title") or document["name"]
+            )
+            write_json(data / document["id"] / "metadata.json", document)
+            store.register(document)
+            return document
+        except BaseException:
+            if not any(
+                v["path"] == path.relative_to(root).as_posix() for v in store.videos()
+            ):
+                path.unlink(missing_ok=True)
+            raise
+
+    @app.post("/api/upload", status_code=202)
+    def upload(
+        file: UploadFile = File(...),
+        mode: Literal["singles", "doubles"] = Form("singles"),
+    ):
+        from .media_import import MediaTooLargeError, save_upload
+
+        try:
+            path = save_upload(
+                file.file,
+                file.filename or "",
+                root / ".media",
+                max_bytes=max_media_bytes,
+            )
+        except MediaTooLargeError as exc:
+            raise HTTPException(413, str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        finally:
+            file.file.close()
+        try:
+            return enqueue(
+                "import",
+                None,
+                lambda job_id, progress: register_media(
+                    path,
+                    mode,
+                    progress,
+                    {
+                        "name": (file.filename or "Uploaded match")
+                        .replace("\\", "/")
+                        .rsplit("/", 1)[-1][:200],
+                        "source_type": "upload",
+                    },
+                ),
+            )
+        except BaseException:
+            path.unlink(missing_ok=True)
+            raise
+
+    @app.post("/api/import/youtube", status_code=202)
+    def youtube(body: YoutubeRequest):
+        from .media_import import canonical_youtube_url, download_youtube
+
+        try:
+            canonical = canonical_youtube_url(body.url)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+        def task(job_id, progress):
+            path, provenance = download_youtube(
+                canonical,
+                root / ".media",
+                max_bytes=max_media_bytes,
+                progress=lambda value: progress(value * 0.45),
+            )
+            return register_media(
+                path, body.mode, lambda value: progress(0.45 + value * 0.55), provenance
+            )
+
+        return enqueue("import", None, task)
 
     @app.get("/api/videos")
     def videos():
@@ -124,7 +255,7 @@ def create_app(root: Path = config.ROOT, data: Path = config.DATA):
         if (
             not path.is_relative_to(root)
             or not path.is_file()
-            or path.suffix.lower() not in (".mp4", ".mov", ".mkv", ".avi")
+            or path.suffix.lower() not in (".mp4", ".mov", ".mkv", ".avi", ".webm")
         ):
             raise HTTPException(422, "Choose a video path inside the project folder")
         return enqueue(

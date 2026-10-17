@@ -8,6 +8,8 @@ from functools import lru_cache
 
 import av
 
+from .orientation import orient_frame
+
 
 class SourceChangedError(ValueError):
     pass
@@ -90,7 +92,17 @@ def iter_frames(video, root, times, start, end):
                 raise SourceChangedError(
                     "Decoded timestamps do not match the imported source"
                 )
-            yield index, times[index], frame
+            display_frame = orient_frame(
+                frame, expected_rotation=video.get("rotation", 0)
+            )
+            if (display_frame.width, display_frame.height) != (
+                video["width"],
+                video["height"],
+            ):
+                raise SourceChangedError(
+                    "Decoded display dimensions do not match the imported source. Reimport the video."
+                )
+            yield index, times[index], display_frame
 
 
 def write_json(path, document):

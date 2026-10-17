@@ -11,6 +11,8 @@ models/weights/
 *.mov
 *.mkv
 *.avi
+*.webm
+.media/
 .env
 node_modules/
 .cache/

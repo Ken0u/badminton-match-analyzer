@@ -4,6 +4,10 @@ Prepared October 17, 2026.
 
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 
+End-state requirement: a polished, deployable application that accepts uploaded videos and YouTube match links and correctly annotates supported singles and doubles footage throughout each match. Keep expanding difficult camera/visibility cases toward that full objective; the existing review tools and small pilot are intermediate deliverables. Claims of complete correctness require verified end-to-end evidence on unseen full matches. Each implementation increment uses a feature branch, focused commits, a tested PR, and a merge into main. Run regression checks and investigate failures continuously.
+
+The input/deployment increment adds bounded video uploads, single-video YouTube imports with source provenance, authentication for a network listener, configurable persistent storage, container targets, and CI checks. Full automatic analysis, playback proxies, camera/replay segmentation, complete-rally labels, and classifier training remain open requirements.
+
 Implementation has begun: video ingestion, the annotation/review application, GPU player/pose tracking, TrackNetV3 shuttle tracking, and reviewable contact proposals are working. See [the initial baseline report](docs/BASELINE_REPORT.md) and [the bug review and latest results](docs/BUG_REVIEW.md) for completed work, measurements, and remaining milestones.
 
 The next increment adds reviewed tracker-to-player mappings, exhaustive clip review coverage, manual shuttle points, and source-aligned contact/localization evaluation through the UI, API, and CLI. A small visually reviewed development pilot now covers partial singles and doubles rallies; [its report](docs/PILOT_REPORT.md) distinguishes measured failures from unvalidated accuracy. Full-rally labeling and more reliable contact detection remain the immediate prerequisites for training the shot classifier.

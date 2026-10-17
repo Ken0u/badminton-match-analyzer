@@ -1,6 +1,6 @@
 # Badminton match analyzer
 
-A local workspace for inspecting badminton videos, tracking players and the shuttle, and creating reviewed rally and shot annotations.
+A badminton analysis app with file uploads, YouTube imports, player/shuttle tracking, and a reviewable rally and shot timeline. Complete automatic shot/rally analysis remains in development; current predictions need review.
 
 The six target shot families are **clear, lift, net, drop, smash, and drive**, each with a separate forehand/backhand label. Serves and rally endings are separate events.
 
@@ -16,6 +16,12 @@ Open **http://127.0.0.1:8000**. The two supplied videos have been inspected and 
 
 The viewer supports video playback, exact source-frame stepping, event creation/editing, per-camera court calibration, player names and handedness, annotation history, and JSON/CSV export. Save edits before exporting or starting a tracking run. Arrow keys step frames; Space toggles playback; 1/2/3 prepare a serve/shot/rally-ending event; Ctrl+S saves annotations.
 
+Use **Add a match** to upload a video or paste a YouTube video link and choose singles/doubles. Import progress and failures appear beside the form; completed videos appear in the library. Supported uploads are MP4, MOV, MKV, AVI, and WebM, limited to 2 GiB by default. Original content hashes and presentation timestamps are retained. Duplicate content preserves reviewed annotations and reuses the original source file. Some containers/codecs require exact-frame review when the browser cannot play them; playback transcoding is still pending.
+
+YouTube support requires `pip install '.[youtube]'` and Node.js 22 or later. Public completed videos are supported; videos requiring sign-in, active streams, and playlists return an actionable error. The importer records the canonical URL, title, and channel separately from the local content ID. A real BWF rally import has been verified through download, decoding, exact-frame extraction, and HTTP media playback. Availability still depends on YouTube access from the server and downloader compatibility.
+
+For containers, single-user authentication, persistent storage, model installation, and deployment checks, see [DEPLOYMENT.md](docs/DEPLOYMENT.md). Binding a non-loopback interface requires configured credentials or an explicit private-proxy override.
+
 Player tracking draws tracker IDs and pose skeletons. Reviewed frame ranges map them to persistent players; contact suggestions use those mappings as hitter hints. Shuttle tracking adds a gold trajectory and visible/missing observations. Reviewed clips and manually marked shuttle points support reproducible accuracy reports. Automatic identity recovery, serve/end detection, and stroke classification remain pending. See [PROJECT_PLAN.md](PROJECT_PLAN.md), [the annotation guide](docs/ANNOTATION_GUIDE.md), and [the pilot evaluation](docs/PILOT_REPORT.md).
 
 ## Fresh environment
@@ -24,14 +30,14 @@ The initial environment uses Windows, Python 3.10, and an NVIDIA GPU. Basic vide
 
 ```powershell
 py -3.10 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e '.[dev]'
+.\.venv\Scripts\python.exe -m pip install -e '.[dev,youtube]'
 ```
 
 For the GPU tracking environment used on this laptop:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install torch==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cu126
-.\.venv\Scripts\python.exe -m pip install -e '.[dev,tracking,download]'
+.\.venv\Scripts\python.exe -m pip install -e '.[dev,tracking,download,youtube]'
 .\.venv\Scripts\python.exe scripts/download_models.py --kind all
 ```
 
