@@ -4,6 +4,8 @@ A badminton analysis app with file uploads, YouTube imports, player/shuttle trac
 
 The six target shot families are **clear, lift, net, drop, smash, and drive**, each with a separate forehand/backhand label. Serves and rally endings are separate events.
 
+The [doubles data audit](docs/S2_DOUBLES_REPORT.md) adds a pinned public-label importer and an actual new-camera probe. It fixes single-stroke serve-fault exclusions and documents severe contact misses; it does not yet provide a trained doubles classifier.
+
 ## Run the current application
 
 From the project folder in PowerShell:
@@ -139,11 +141,13 @@ The pinned ShuttleSet importer creates a separate local label index for recognit
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/fetch_shuttleset.py
-.\.venv\Scripts\python.exe -m badminton.cli import-shuttleset data/datasets/shuttleset/source --output data/datasets/shuttleset/v1
+.\.venv\Scripts\python.exe -m badminton.cli import-shuttleset data/datasets/shuttleset/source --output data/datasets/shuttleset/v2
 .\.venv\Scripts\python.exe -m badminton.cli evaluate 970dbd8adfe548d8 --recognition-run 69bf12fd32c74b359b9cb4bfcf6866d7 --output .cache/recognition-evaluation.json
 ```
 
 [The data/evaluation report](docs/STROKE_DATA_REPORT.md) describes the actual imported counts, side-label convention, known-error quarantine, FPS discrepancies, evaluation gates, and required footage alignment. Raw public labels and videos stay outside Git.
+
+Mapping v2 preserves legitimate single-stroke terminal serves; the original side-head report and feature recipe use their unchanged v1 index. Importers refuse to overwrite an existing output directory with different source, mapping or split provenance. Keep new experiments in separately named directories. [The doubles audit](docs/S2_DOUBLES_REPORT.md) provides the additional doubles commands and current data limits.
 
 ## Storage
 

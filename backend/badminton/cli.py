@@ -95,8 +95,36 @@ def main():
     )
     dataset.add_argument("source", type=Path)
     dataset.add_argument("--output", type=Path, required=True)
+    doubles = commands.add_parser(
+        "import-s2doubles",
+        help="Normalize pinned doubles labels without certifying media alignment",
+    )
+    doubles.add_argument("source", type=Path)
+    doubles.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "import-shuttleset":
+    if args.command == "import-s2doubles":
+        from .doubles_data import import_doubles
+
+        try:
+            report = import_doubles(args.source, args.output)
+        except (ValueError, OSError, KeyError) as exc:
+            parser.error(str(exc))
+        print(
+            json.dumps(
+                {
+                    key: report[key]
+                    for key in (
+                        "record_count",
+                        "rally_count",
+                        "label_eligible_records",
+                        "training_ready_records",
+                        "media_alignment",
+                    )
+                },
+                indent=2,
+            )
+        )
+    elif args.command == "import-shuttleset":
         from .datasets import import_shuttleset
 
         try:

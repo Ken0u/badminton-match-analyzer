@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "dataset": "S2Doubles",
+  "repository": "HuangYuHsien/S2DoublesDataset",
+  "commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
+  "mapping_version": 1,
+  "files": {
+    "Match 001/RallySeg.csv": "d40378dcd74835fd535289218d1caf228f139641",
+    "Match 001/label/set1.csv": "2f6b736f24a20ba8b3b8fe74500b061ac6ccbfed",
+    "Match 001/label/set2.csv": "197e6d145d464bf80a0590cc5f8a2fc10ba2c603",
+    "Match 002/RallySeg.csv": "73141a1a324fde1331ebe53697ac2c355c8ee68a",
+    "Match 002/label/set1.csv": "cc6c44f72719f7d3faeb3398617389591926a605",
+    "Match 002/label/set2.csv": "c990e694e1b26bc0461528b165ce20d0d1db44b9",
+    "Match 003/RallySeg.csv": "9d885067fd83c12210b76e757e2c0f9704436d83",
+    "Match 003/label/set1.csv": "f56aaeb5d0828a27876d2e77b1507b1616f939f9",
+    "Match 003/label/set2.csv": "7df893eb09f211f9b98ae28888a142f39fd3d27c",
+    "Match.csv": "df71918b487c297aa1aa53edb57e369b283187d5",
+    "README.md": "81fae6c7e58f2b0d7327b146da16c05cc6637b3c"
+  },
+  "splits": {
+    "train": [
+      1
+    ],
+    "validation": [
+      2
+    ],
+    "test": [
+      3
+    ]
+  },
+  "split_policy": "Project-frozen by original match before model training; only three matches, not a generalization benchmark.",
+  "source_fps_requirement": 30,
+  "frame_origin": "undocumented; do not certify decode ordinal without source verification",
+  "interval_bounds": "undocumented",
+  "side_policy": "Only explicit 0/1 values become forehand/backhand; blanks remain unknown.",
+  "rally_end_policy": "RallySeg windows and final-stroke markers do not certify exact terminal times.",
+  "terms_status": "No license file in pinned repository; retain local research sources, do not bundle labels or derived weights as redistributable assets."
+}

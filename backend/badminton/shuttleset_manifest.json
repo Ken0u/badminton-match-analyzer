@@ -3,7 +3,7 @@
   "dataset": "ShuttleSet",
   "repository": "wywyWang/CoachAI-Projects",
   "commit": "45517f7d4cb936b03f3eabf939cc7959d39226fe",
-  "mapping_version": 1,
+  "mapping_version": 2,
   "paper": "https://arxiv.org/abs/2306.04948",
   "files": {
     "ShuttleSet/README.md": "4274e40b666e3c67fbd06f899979bb3c6cf4ffcf",
