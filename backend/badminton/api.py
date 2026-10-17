@@ -484,10 +484,11 @@ def create_app(
 
     @app.post("/api/videos/{video_id}/contacts", status_code=202)
     def contacts(video_id: str, body: ContactsRequest):
-        from .contacts import METHOD, propose_contacts
+        from .contacts import METHOD, proposal_recipe, propose_contacts
         from .scene_review import camera_review_signature, reviewed_run
 
         v = store.video(video_id)
+        source(v)
         shuttle_run = load_run(video_id, body.shuttle_run_id, "shuttle")
         player_run = (
             load_run(video_id, body.player_run_id, "players")
@@ -531,6 +532,7 @@ def create_app(
                 "start_frame": shuttle_run["start_frame"],
                 "end_frame": shuttle_run["end_frame"],
                 "method": METHOD,
+                "recipe": proposal_recipe(),
                 "interval_bounds": "inclusive",
                 "candidates": candidates,
                 "scene_annotation_revision": snapshot.revision,

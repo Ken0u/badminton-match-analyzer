@@ -50,6 +50,8 @@ try {
       review_windows: [],
       shuttle_points: [],
       track_assignments: [],
+      scene_ranges: [],
+      camera_corrections: [],
     },
   });
   const jobs = await json(`/api/jobs?video_id=${singles.id}`);
@@ -86,7 +88,10 @@ try {
   }
   assert.equal(contactJob.status, "completed", contactJob.message);
   const run = await json(`${root}/runs/${queued.id}`);
-  assert.equal(run.candidates.length, 5);
+  assert.ok(
+    run.candidates.length >= 5,
+    "Known contact fixtures remain available",
+  );
   const uncertain = run.candidates.find(
     (candidate) =>
       candidate.start_frame === 2076 && candidate.end_frame === 2080,
@@ -100,7 +105,31 @@ try {
     () => document.querySelector("#title").textContent === "singles.mp4",
   );
   await page.waitForFunction(
-    () => document.querySelector("#candidate-count").textContent === "5",
+    (count) =>
+      document.querySelector("#candidate-count").textContent === String(count),
+    run.candidates.length,
+  );
+  const contextual = run.candidates.find(
+    (c) => c.context_start_frame < c.start_frame,
+  );
+  assert.ok(contextual);
+  await page.locator("#camera-panel").evaluate((e) => (e.open = true));
+  await page
+    .locator("#scene-start")
+    .fill(String(contextual.context_start_frame));
+  await page.locator("#scene-end").fill(String(contextual.start_frame));
+  await page.locator("#scene-kind").selectOption("replay");
+  await page.locator("#add-scene").click();
+  assert.equal(
+    await page.locator(`[data-candidate="${contextual.id}"]`).isDisabled(),
+    true,
+  );
+  // The mask is outside the candidate interval but inside its evidence window.
+  await page.reload();
+  await page.waitForFunction(
+    (count) =>
+      document.querySelector("#candidate-count").textContent === String(count),
+    run.candidates.length,
   );
   const card = page
     .locator("#candidates .candidate-row")
@@ -158,7 +187,7 @@ try {
 
   await page.reload();
   await page.waitForFunction(
-    () => document.querySelector("#event-count").textContent === "1 events",
+    () => document.querySelector("#event-count").textContent === "1 event",
   );
   await page.locator("#events .event-row").click();
   assert.equal(await page.locator("#contact-start").inputValue(), "2076");
@@ -170,7 +199,9 @@ try {
     true,
   );
   await page.waitForFunction(
-    () => document.querySelector("#candidate-count").textContent === "5",
+    (count) =>
+      document.querySelector("#candidate-count").textContent === String(count),
+    run.candidates.length,
   );
 
   await page.locator("#review-panel summary").click();

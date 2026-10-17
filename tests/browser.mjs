@@ -206,7 +206,8 @@ try {
   await page.reload();
   await page.waitForFunction(
     (count) =>
-      document.querySelector("#event-count").textContent === `${count} events`,
+      document.querySelector("#event-count").textContent ===
+      `${count} ${count === 1 ? "event" : "events"}`,
     expectedEventCount,
   );
   await page.getByRole("button", { name: /doubles.mp4/ }).click();

@@ -88,6 +88,15 @@ jobs:
           done
           curl --fail --silent http://127.0.0.1:8003/api/health
           node tests/rally-browser.mjs
+          python scripts/contact_ui_test_server.py > .cache/contact-ui.log 2>&1 &
+          contact_pid=$!
+          trap 'kill "$server_pid" "$rally_pid" "$contact_pid" 2>/dev/null || true' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8004/api/health; then break; fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:8004/api/health
+          node tests/contact-profile-browser.mjs
       - name: Import browser artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -96,8 +105,10 @@ jobs:
           path: |
             .cache/import-ui.log
             .cache/rally-ui.log
+            .cache/contact-ui.log
             data/processed/qa/import-*.png
             data/processed/qa/rally-browser.png
+            data/processed/qa/contact-profile-browser.png
 
   container:
     runs-on: ubuntu-latest

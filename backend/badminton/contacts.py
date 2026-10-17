@@ -11,9 +11,31 @@ import math
 
 import numpy as np
 
-METHOD = "gap-aware motion and pose proposals v2"
+METHOD = "subframe and short-gap motion/pose proposals v3"
 MAX_FRAME_STEP_S = 0.1
 MAX_GAP_S = 0.24
+PROFILE_STEPS = 25
+MIN_PROFILE_GAIN = 6
+MAX_PROFILE_ERROR_DIAGONALS = 0.005
+MAX_FLANK_S = 0.20
+MIN_WRIST_SAMPLES = 3
+
+
+def proposal_recipe():
+    return {
+        "observed_window_frames": 7,
+        "maximum_source_step_s": MAX_FRAME_STEP_S,
+        "maximum_gap_s": MAX_GAP_S,
+        "profile_grid_steps": PROFILE_STEPS,
+        "minimum_penalized_fit_gain": MIN_PROFILE_GAIN,
+        "maximum_profile_rmse_diagonals": MAX_PROFILE_ERROR_DIAGONALS,
+        "maximum_rmse_ratio_to_quadratic": 0.65,
+        "minimum_rmse_gain_px": 0.75,
+        "minimum_rmse_gain_diagonals": 0.0005,
+        "maximum_flank_context_s": MAX_FLANK_S,
+        "minimum_moving_wrist_samples": MIN_WRIST_SAMPLES,
+        "uncertainty": "Profile support plus source-frame quantization; not a calibrated confidence interval",
+    }
 
 
 def _hitter_hint(point, players, diagonal):
@@ -53,7 +75,7 @@ def _raw_visible(row):
     )
 
 
-def _valid_window(window, cuts, diagonal):
+def _valid_window(window, cuts, diagonal, excluded_frames=()):
     """Reject discontinuous timestamps, explicit cuts and impossible jumps."""
     times = np.asarray([row["time_s"] for row in window])
     frames = np.asarray([row["frame"] for row in window])
@@ -65,6 +87,7 @@ def _valid_window(window, cuts, diagonal):
         or any(window[0]["frame"] < cut <= window[-1]["frame"] for cut in cuts)
         or any(row.get("cut") or row.get("scene_cut") for row in window[1:])
         or any(row.get("scene", "live") != "live" for row in window)
+        or any(row["frame"] in excluded_frames for row in window)
     ):
         return False
     visible = [row for row in window if _raw_visible(row)]
@@ -136,11 +159,14 @@ def _nearest_players(players, player_times, time_s):
         key=lambda index: abs(player_times[index] - time_s),
     )
     return (
-        players[index]["players"] if abs(player_times[index] - time_s) <= 0.08 else []
+        players[index]["players"]
+        if abs(player_times[index] - time_s) <= 0.08
+        and players[index].get("scene", "live") == "live"
+        else []
     )
 
 
-def _gap_pose(point, player_rows, left, right, diagonal):
+def _pose_evidence(point, player_rows, left, right, diagonal):
     """Require a nearby confident wrist and measurable wrist movement.
 
     Box-only proximity is insufficient evidence for an unobserved contact. The
@@ -148,7 +174,7 @@ def _gap_pose(point, player_rows, left, right, diagonal):
     """
     samples = {}
     for row in player_rows:
-        if not left <= row["time_s"] <= right:
+        if not left <= row["time_s"] <= right or row.get("scene", "live") != "live":
             continue
         for player in row["players"]:
             if player.get("track_id") is None:
@@ -189,12 +215,140 @@ def _gap_pose(point, player_rows, left, right, diagonal):
                     "pose_samples": len(observations),
                 }
             )
-    return (
-        min(evidence, key=lambda item: item["wrist_distance_px"]) if evidence else None
+    return sorted(evidence, key=lambda item: item["wrist_distance_px"])
+
+
+def _gap_pose(point, player_rows, left, right, diagonal):
+    evidence = _pose_evidence(point, player_rows, left, right, diagonal)
+    return evidence[0] if evidence else None
+
+
+def _subframe_fit(times, points, left, right, diagonal):
+    """Profile a shared 2D knot, penalizing its extra fitted parameter.
+
+    The small-sample residual criterion counts the common noise scale as well:
+    eight parameters for the broken line, seven for the smooth quadratic.
+    Its gain is heuristic evidence, not a probability or an accuracy estimate.
+    """
+    smooth = np.column_stack([np.ones(len(times)), times, times**2])
+    residual = smooth @ np.linalg.lstsq(smooth, points, rcond=None)[0] - points
+    smooth_sse = float(np.sum(residual**2))
+    n = points.size
+
+    def penalty(k):
+        return 2 * k + 2 * k * (k + 1) / (n - k - 1)
+
+    if n <= 9:
+        return None
+    accepted = []
+    for knot in np.linspace(left, right, PROFILE_STEPS):
+        centered = times - knot
+        design = np.column_stack(
+            [np.ones(len(times)), centered, np.maximum(centered, 0)]
+        )
+        weights = np.linalg.lstsq(design, points, rcond=None)[0]
+        sse = float(np.sum((design @ weights - points) ** 2))
+        error, smooth_error = (
+            math.sqrt(sse / len(times)),
+            math.sqrt(smooth_sse / len(times)),
+        )
+        gain = (
+            n * math.log(max(smooth_sse, 1e-12) / max(sse, 1e-12))
+            + penalty(7)
+            - penalty(8)
+        )
+        motion = _motion(weights[1], weights[1] + weights[2], diagonal)
+        if (
+            motion is None
+            or error > diagonal * MAX_PROFILE_ERROR_DIAGONALS
+            or error > smooth_error * 0.65
+            or smooth_error - error < max(0.75, diagonal * 0.0005)
+            or gain < MIN_PROFILE_GAIN
+        ):
+            continue
+        accepted.append((sse, float(knot), weights, motion, gain))
+    if not accepted:
+        return None
+    _, knot, weights, motion, gain = min(accepted, key=lambda sample: sample[0])
+    return {
+        "knot": knot,
+        "point": weights[0],
+        "motion": motion,
+        "knot_bounds": (min(a[1] for a in accepted), max(a[1] for a in accepted)),
+        "evidence": {
+            "piecewise_rmse_px": round(
+                math.sqrt(min(a[0] for a in accepted) / len(times)), 3
+            ),
+            "quadratic_rmse_px": round(math.sqrt(smooth_sse / len(times)), 3),
+            "penalized_fit_gain": round(gain, 3),
+            "fit_parameter_counts_including_noise": {"broken_line": 8, "quadratic": 7},
+            "timing_model": "profiled subframe junction; interval is not a confidence interval",
+        },
+    }
+
+
+def _profile_candidate(
+    window, observed, origin, left, right, players, diagonal, source, segment
+):
+    times, points = _observations(observed, origin)
+    fitted = _subframe_fit(times, points, left - origin, right - origin, diagonal)
+    if fitted is None:
+        return None
+    # Additional uncertain proposals need observed wrist motion, not box-only
+    # proximity. Multiple credible tracks leave the hitter unconfirmed.
+    poses = _pose_evidence(
+        fitted["point"],
+        players,
+        max(window[0]["time_s"], left - 0.08),
+        min(window[-1]["time_s"], right + 0.08),
+        diagonal,
     )
+    poses = [pose for pose in poses if pose["pose_samples"] >= MIN_WRIST_SAMPLES]
+    if not poses:
+        return None
+    possible = sorted({pose["track_id"] for pose in poses})
+    hint = {
+        "track_id": possible[0] if len(possible) == 1 else None,
+        "distance_px": poses[0]["wrist_distance_px"],
+        "pose": poses[0],
+    }
+    ts = [r["time_s"] for r in window]
+    quantization = max(b - a for a, b in itertools.pairwise(ts)) / 2
+    lo, hi = (origin + t for t in fitted["knot_bounds"])
+    first = window[max(0, bisect.bisect_right(ts, lo - quantization) - 1)]
+    last = window[min(len(window) - 1, bisect.bisect_left(ts, hi + quantization))]
+    navigation = min(window, key=lambda r: abs(r["time_s"] - origin - fitted["knot"]))
+    evidence = fitted["evidence"] | {
+        "possible_track_ids": possible,
+        "hitter_hint_status": "ambiguous_proximity"
+        if len(possible) > 1
+        else "unconfirmed_track",
+        "observed_context_frames": [r["frame"] for r in observed],
+        "missing_frames": [r["frame"] for r in window if not _raw_visible(r)],
+    }
+    candidate = _candidate(
+        navigation,
+        first,
+        last,
+        fitted["motion"],
+        evidence,
+        hint,
+        diagonal,
+        source,
+        segment,
+        window,
+    )
+    candidate.update(
+        id=f"contact-profile-{first['frame']}-{last['frame']}",
+        timing="uncertain_interval",
+        reason="possible contact between source observations; review timing and hitter",
+    )
+    return candidate
 
 
-def _candidate(row, left, right, motion, fit, hint, diagonal, evidence_source, segment):
+def _candidate(
+    row, left, right, motion, fit, hint, diagonal, evidence_source, segment, context
+):
     angle, ratio = motion
     distance = hint["distance_px"] if hint else diagonal * 0.075
     proximity = 1 - min(1, distance / (diagonal * 0.075))
@@ -212,6 +366,8 @@ def _candidate(row, left, right, motion, fit, hint, diagonal, evidence_source, s
         "end_frame": right["frame"],
         "start_time_s": left["time_s"],
         "end_time_s": right["time_s"],
+        "context_start_frame": context[0]["frame"],
+        "context_end_frame": context[-1]["frame"] + 1,
         "interval_bounds": "inclusive",
         "timing": "uncertain_interval" if gap else "observed_motion_change",
         "score": round(score, 3),
@@ -242,6 +398,12 @@ def propose_contacts(shuttle_run, player_run, video):
     cuts = set(shuttle_run.get("cut_frames", [])) | set(
         player_run.get("cut_frames", []) if player_run else []
     )
+    cuts.update(
+        row["frame"] for row in players if row.get("cut") or row.get("scene_cut")
+    )
+    excluded_frames = {
+        row["frame"] for row in players if row.get("scene", "live") != "live"
+    }
     diagonal = math.hypot(video["width"], video["height"])
     candidates = []
     segment_ids = []
@@ -260,7 +422,7 @@ def propose_contacts(shuttle_run, player_run, video):
     for index in range(3, len(rows) - 3):
         window = rows[index - 3 : index + 4]
         if not all(_raw_visible(row) for row in window) or not _valid_window(
-            window, cuts, diagonal
+            window, cuts, diagonal, excluded_frames
         ):
             continue
         row = rows[index]
@@ -292,6 +454,7 @@ def propose_contacts(shuttle_run, player_run, video):
                 diagonal,
                 "observed_trajectory",
                 segment_ids[index],
+                window,
             )
         )
 
@@ -317,7 +480,7 @@ def propose_contacts(shuttle_run, player_run, video):
         )
         if not all(
             _raw_visible(row) for row in before_rows + after_rows
-        ) or not _valid_window(window, cuts, diagonal):
+        ) or not _valid_window(window, cuts, diagonal, excluded_frames):
             continue
         origin = left["time_s"]
         before_times, before_points = _observations(before_rows, origin)
@@ -390,6 +553,7 @@ def propose_contacts(shuttle_run, player_run, video):
                 diagonal,
                 "short_gap_trajectory_and_pose",
                 ("gap", missing_start),
+                window,
             )
         )
 
@@ -405,4 +569,103 @@ def propose_contacts(shuttle_run, player_run, video):
             selected.append(candidate)
     for candidate in selected:
         candidate.pop("_segment")
+    # Additional uncertain proposals keep the strong existing observations.
+    # Profile within one source-frame interval; the extra knot parameter must
+    # earn its fit gain and have observed moving-wrist support.
+    extra = []
+    if players:
+        for index in range(3, len(rows) - 3):
+            window = rows[index - 3 : index + 4]
+            if not all(_raw_visible(r) for r in window) or not _valid_window(
+                window, cuts, diagonal, excluded_frames
+            ):
+                continue
+            candidate = _profile_candidate(
+                window,
+                window,
+                rows[index]["time_s"],
+                rows[index - 1]["time_s"],
+                rows[index + 1]["time_s"],
+                players,
+                diagonal,
+                "subframe_trajectory_and_pose",
+                segment_ids[index],
+            )
+            if candidate:
+                extra.append(candidate)
+
+        # Nearby short gaps need not leave exactly three consecutive detections
+        # immediately on each side. Gather bounded *observed* samples and keep
+        # the entire original window for continuity/scene/cut checks.
+        index = 0
+        while index < len(rows):
+            if _raw_visible(rows[index]):
+                index += 1
+                continue
+            start = index
+            while index < len(rows) and not _raw_visible(rows[index]):
+                index += 1
+            left, right = start - 1, index
+            if (
+                left < 0
+                or right >= len(rows)
+                or rows[right]["time_s"] - rows[left]["time_s"] > MAX_GAP_S + 1e-9
+            ):
+                continue
+            before, after = [], []
+            for j in range(left, -1, -1):
+                if (
+                    rows[left]["time_s"] - rows[j]["time_s"] > MAX_FLANK_S + 1e-9
+                    or len(before) == 4
+                ):
+                    break
+                if _raw_visible(rows[j]):
+                    before.append(j)
+            for j in range(right, len(rows)):
+                if (
+                    rows[j]["time_s"] - rows[right]["time_s"] > MAX_FLANK_S + 1e-9
+                    or len(after) == 4
+                ):
+                    break
+                if _raw_visible(rows[j]):
+                    after.append(j)
+            if min(len(before), len(after)) < 3:
+                continue
+            before.reverse()
+            window = rows[before[0] : after[-1] + 1]
+            if not _valid_window(window, cuts, diagonal, excluded_frames):
+                continue
+            candidate = _profile_candidate(
+                window,
+                [rows[j] for j in before + after],
+                rows[left]["time_s"],
+                rows[left]["time_s"],
+                rows[right]["time_s"],
+                players,
+                diagonal,
+                "bounded_gap_trajectory_and_pose",
+                ("profile", left, right),
+            )
+            if candidate:
+                extra.append(candidate)
+    for candidate in sorted(extra, key=lambda c: c["score"], reverse=True):
+        # Overlapping review intervals describe one unresolved transition, not
+        # several events. This also avoids duplicating a strong v2 proposal.
+        overlapping = [
+            c
+            for c in selected
+            if candidate["start_frame"] <= c["end_frame"]
+            and c["start_frame"] <= candidate["end_frame"]
+        ]
+        if (
+            len(overlapping) == 1
+            and overlapping[0]["evidence_source"] == "observed_trajectory"
+        ):
+            # Moving-wrist support and the penalized subframe fit justify an
+            # uncertain interval rather than retaining a sampled exact point.
+            selected.remove(overlapping[0])
+        elif overlapping:
+            continue
+        candidate.pop("_segment")
+        selected.append(candidate)
     return sorted(selected, key=lambda item: item["frame"])

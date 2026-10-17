@@ -159,6 +159,108 @@ def test_existing_contacts_are_flagged_without_deletion_or_source_mutation():
     assert result["candidates"][1]["scene_excluded"] is False
 
 
+def test_contact_scene_review_checks_evidence_outside_its_navigation_interval():
+    raw = {
+        "candidates": [
+            {
+                "id": "profile",
+                "frame": 30,
+                "start_frame": 29,
+                "end_frame": 31,
+                "context_start_frame": 26,
+                "context_end_frame": 35,
+            }
+        ]
+    }
+    before = copy.deepcopy(raw)
+    result = reviewed_contacts(raw, {"scene_ranges": [scene(26, 28)]})
+    assert result["candidates"][0]["scene_excluded"] is True
+    assert raw == before
+    assert (
+        reviewed_contacts(raw, {"scene_ranges": [scene(35, 40)]})["candidates"][0][
+            "scene_excluded"
+        ]
+        is False
+    )
+
+
+def test_legacy_motion_candidate_gets_a_conservative_review_context_without_rewrite():
+    raw = {
+        "start_frame": 20,
+        "end_frame": 40,
+        "candidates": [
+            {"id": "old", "frame": 30, "evidence_source": "observed_trajectory"}
+        ],
+    }
+    before = copy.deepcopy(raw)
+    result = reviewed_contacts(raw, {"scene_ranges": [scene(27, 29)]})
+    candidate = result["candidates"][0]
+    assert candidate["scene_excluded"] is True
+    assert (
+        candidate["context_start_frame"] == 27 and candidate["context_end_frame"] == 34
+    )
+    assert candidate["context_provenance"] == "conservative_legacy_window"
+    assert raw == before
+
+
+def test_context_mask_blocks_recognition_and_counts_a_live_contact_as_missed():
+    doc = empty_annotations("singles").model_dump()
+    doc["scene_ranges"] = [scene(44, 46)]
+    doc["events"] = [
+        {
+            "id": "truth",
+            "rally_id": "R",
+            "kind": "shot",
+            "family": "unknown",
+            "side": "unknown",
+            "frame": 50,
+            "time_s": 2,
+            "status": "reviewed",
+        }
+    ]
+    doc["review_windows"] = [
+        {
+            "id": "live",
+            "start_frame": 48,
+            "end_frame": 60,
+            "scene": "live",
+            "contacts_complete": True,
+        }
+    ]
+    run = {
+        "video_id": "v",
+        "stage": "contacts",
+        "start_frame": 0,
+        "end_frame": 100,
+        "candidates": [
+            {
+                "id": "cached",
+                "frame": 50,
+                "time_s": 2,
+                "start_frame": 50,
+                "end_frame": 50,
+                "context_start_frame": 44,
+                "context_end_frame": 55,
+            }
+        ],
+    }
+    before = copy.deepcopy(run)
+    assert (
+        recognition_targets(
+            Annotations.model_validate(doc), run, include_reviewed=False
+        )
+        == []
+    )
+    # Independently reviewed events remain valid; predicted context is separate.
+    assert len(recognition_targets(Annotations.model_validate(doc), run)) == 1
+    report = evaluate_contacts(
+        {"id": "v", "sha256": "a" * 64, "frame_count": 100}, doc, run
+    )
+    assert report["metrics"]["tp"] == 0 and report["metrics"]["fn"] == 1
+    assert report["coverage"]["scene_context_excluded_candidate_ids"] == ["cached"]
+    assert run == before
+
+
 def test_recognition_targets_and_strict_metrics_honor_scene_exclusions():
     doc = empty_annotations("singles").model_dump()
     doc["events"] = [

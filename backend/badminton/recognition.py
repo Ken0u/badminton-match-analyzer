@@ -8,7 +8,12 @@ import numpy as np
 
 from .config import MODEL_MANIFEST, WEIGHTS
 from .identity import resolve_contact_player
-from .scene_review import camera_review_signature, excluded_scene, reviewed_run
+from .scene_review import (
+    camera_review_signature,
+    excluded_scene,
+    reviewed_contacts,
+    reviewed_run,
+)
 from .stroke_features import build_stroke_clip, summarize_probabilities
 from .video import write_json
 
@@ -37,7 +42,14 @@ def recognition_targets(
                     "contact_end_frame": event.contact_end_frame,
                 }
             )
-    for candidate in contact_run.get("candidates", []) if contact_run else []:
+    candidates = (
+        reviewed_contacts(contact_run, annotations).get("candidates", [])
+        if contact_run
+        else []
+    )
+    for candidate in candidates:
+        if candidate.get("scene_excluded"):
+            continue
         if any(
             candidate.get("start_frame", candidate["frame"])
             <= frame

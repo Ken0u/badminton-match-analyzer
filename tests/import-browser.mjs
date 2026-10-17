@@ -153,7 +153,7 @@ try {
     await page.locator("#notice").textContent(),
     /both timing bounds/,
   );
-  assert.equal(await page.locator("#event-count").textContent(), "1 events");
+  assert.equal(await page.locator("#event-count").textContent(), "1 event");
   await page.locator("#contact-end").fill("35");
   await page
     .locator("#event-notes")

@@ -381,8 +381,9 @@ function renderCandidates() {
           const sceneExcluded = (state.doc.scene_ranges ?? []).some(
             (r) =>
               r.scene !== "live" &&
-              r.start_frame <= (c.end_frame ?? c.frame) &&
-              (c.start_frame ?? c.frame) < r.end_frame,
+              r.start_frame <
+                (c.context_end_frame ?? (c.end_frame ?? c.frame) + 1) &&
+              (c.context_start_frame ?? c.start_frame ?? c.frame) < r.end_frame,
           );
           const audioConflict = c.evidence?.audio_support?.some(
             (item) => item.hitter_agrees === false,
@@ -470,7 +471,8 @@ function renderEvents() {
     .filter(
       (e) => !$("filter-rally").value || e.rally_id === $("filter-rally").value,
     );
-  $("event-count").textContent = `${state.doc.events.length} events`;
+  $("event-count").textContent =
+    `${state.doc.events.length} ${state.doc.events.length === 1 ? "event" : "events"}`;
   $("events").innerHTML = events.length
     ? events
         .map((e) => {
@@ -508,7 +510,7 @@ function kindFields() {
   $("timing-uncertainty-help").textContent =
     kind === "rally_end"
       ? "Keep the possible terminal frame range when ground contact or a fault is obscured. The final racket contact alone is not a rally ending."
-      : "For an occluded contact, keep the possible frame range. Clear it once you can identify the contact frame.";
+      : "When contact timing is unclear, keep the possible frame range. Clear it once you can identify one source frame.";
   $("clear-contact-interval").textContent =
     kind === "rally_end"
       ? "Use exact rally-end frame"
