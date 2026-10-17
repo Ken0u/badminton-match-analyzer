@@ -55,13 +55,22 @@ try {
           rally_id: "QA1",
           kind: "shot",
           frame: 2077,
-          family: "unknown",
+          family: "clear",
           side: "backhand",
           notes: "Synthetic workflow fixture; not a gold label.",
         },
       ],
       track_assignments: [],
-      review_windows: [],
+      review_windows: [
+        {
+          id: "qa-recognition",
+          start_frame: 2000,
+          end_frame: 2250,
+          scene: "live",
+          contacts_complete: true,
+          notes: "Synthetic workflow coverage; not real gold labels.",
+        },
+      ],
       shuttle_points: [],
       calibrations: [
         {
@@ -125,6 +134,21 @@ try {
   );
   const card = page.locator(`[data-stroke="${prediction.id}"]`);
   await card.waitFor();
+  await page.locator("#review-panel summary").click();
+  await page.locator("#evaluate").click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#evaluation-results")
+      .textContent.includes("Shot-family F1"),
+  );
+  assert.match(
+    await page.locator("#evaluation-results").textContent(),
+    /1\/6 target families/,
+  );
+  assert.match(
+    await page.locator("#evaluation-results").textContent(),
+    /conditional on the supplied contacts/,
+  );
   await card.click();
   assert.equal(
     await page.locator("#event-family").inputValue(),
@@ -146,6 +170,16 @@ try {
   assert.equal(applied.family_score, prediction.family_score);
   assert.equal(applied.side, "backhand");
   assert.equal(await card.isDisabled(), true);
+  await page.locator("#evaluate").click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#evaluation-results")
+      .textContent.includes("classifier-assisted label(s) excluded"),
+  );
+  assert.match(
+    await page.locator("#evaluation-results").textContent(),
+    /add independent family labels/,
+  );
   const csv = await page.request.get(`${base}${root}/export?format=csv`);
   assert.ok((await csv.text()).includes(job.id));
   await page.locator("#event-frame").fill("2076");

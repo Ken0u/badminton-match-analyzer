@@ -65,6 +65,9 @@ def main():
     evaluate.add_argument("video_id")
     evaluate.add_argument("--contacts-run", help="Completed contact proposal job ID")
     evaluate.add_argument("--shuttle-run", help="Completed shuttle tracking job ID")
+    evaluate.add_argument(
+        "--recognition-run", help="Completed shot-family recognition job ID"
+    )
     evaluate.add_argument("--output", type=Path, help="Also save the JSON report")
     recognize = commands.add_parser(
         "recognize",
@@ -75,8 +78,37 @@ def main():
     recognize.add_argument("--shuttle-run", required=True)
     recognize.add_argument("--contacts-run")
     recognize.add_argument("--min-family-score", type=float, default=0.5)
+    dataset = commands.add_parser(
+        "import-shuttleset",
+        help="Normalize pinned public stroke labels; source video alignment remains separate",
+    )
+    dataset.add_argument("source", type=Path)
+    dataset.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "ingest":
+    if args.command == "import-shuttleset":
+        from .datasets import import_shuttleset
+
+        try:
+            report = import_shuttleset(args.source, args.output)
+        except (ValueError, OSError, KeyError) as exc:
+            parser.error(str(exc))
+        print(
+            json.dumps(
+                {
+                    key: report[key]
+                    for key in (
+                        "record_count",
+                        "rally_count",
+                        "family_eligible_records",
+                        "side_eligible_records",
+                        "training_ready_records",
+                        "media_alignment",
+                    )
+                },
+                indent=2,
+            )
+        )
+    elif args.command == "ingest":
         from .ingest import inspect_video
 
         store = Store(DATA)
@@ -209,9 +241,10 @@ def main():
         print(json.dumps(summary, indent=2))
     elif args.command == "evaluate":
         from .evaluation import evaluate_contacts, evaluate_shuttle
+        from .recognition_evaluation import evaluate_recognition
 
-        if not args.contacts_run and not args.shuttle_run:
-            parser.error("Supply --contacts-run, --shuttle-run, or both")
+        if not any((args.contacts_run, args.shuttle_run, args.recognition_run)):
+            parser.error("Supply --contacts-run, --shuttle-run, or --recognition-run")
         store = Store(DATA)
         try:
             video = store.video(args.video_id)
@@ -223,6 +256,14 @@ def main():
                 "video_sha256": video["sha256"],
                 "annotation_revision": annotations["revision"],
             }
+            if args.recognition_run:
+                report["recognition"] = evaluate_recognition(
+                    video,
+                    annotations,
+                    load_evaluation_run(
+                        store, args.video_id, args.recognition_run, "recognition"
+                    ),
+                )
             if args.contacts_run:
                 report["contacts"] = evaluate_contacts(
                     video,

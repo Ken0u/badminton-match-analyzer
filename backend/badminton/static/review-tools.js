@@ -306,7 +306,7 @@ export function createReviewTools({
     try {
       if (state.dirty)
         throw Error("Save annotations before measuring accuracy.");
-      if (!state.contactJob && !state.shuttleJob)
+      if (!state.contactJob && !state.shuttleJob && !state.recognitionJob)
         throw Error("Run shuttle tracking and contact proposals first.");
       const videoId = state.video.id,
         generation = state.selectionGeneration,
@@ -317,6 +317,7 @@ export function createReviewTools({
         body: JSON.stringify({
           contacts_run_id: state.contactJob,
           shuttle_run_id: state.shuttleJob,
+          recognition_run_id: state.recognitionJob,
         }),
       });
       if (
@@ -374,6 +375,39 @@ export function createReviewTools({
         parts.push(
           `<small>${result.coverage.labeled_frames} labeled frames · ${result.tolerance_px.toFixed(1)} px tolerance</small>`,
         );
+    }
+    if (report.recognition) {
+      const result = report.recognition,
+        family = result.family;
+      const supported = family.supported_classes.length;
+      if (family.known_contact_count) {
+        parts.push(
+          `<p><strong>Shot-family F1 ${percent(family.macro_f1_supported)}</strong><br>${supported}/6 target families have independent labels.<br>${family.answered_contact_count}/${family.known_contact_count} labeled contacts answered.</p>`,
+        );
+        if (supported < 6)
+          parts.push(
+            "<small>Only represented target families contribute to this average. This is not a six-family benchmark.</small>",
+          );
+      } else {
+        parts.push(
+          "<p>Shot families: add independent family labels in a complete live clip before measuring accuracy.</p>",
+        );
+      }
+      if (result.labels.excluded_model_assisted_event_ids.length)
+        parts.push(
+          `<small>${result.labels.excluded_model_assisted_event_ids.length} classifier-assisted label(s) excluded from accuracy scoring.</small>`,
+        );
+      if (result.side.balanced_accuracy != null)
+        parts.push(
+          `<p>Stroke-side balanced accuracy ${percent(result.side.balanced_accuracy)}</p>`,
+        );
+      if (result.complete_event)
+        parts.push(
+          `<p>Complete shot-event F1 ${percent(result.complete_event.f1)}<br>${result.complete_event_label_count} contacts have family, side, and hitter labels.</p>`,
+        );
+      parts.push(
+        "<small>Recognition scores are conditional on the supplied contacts. See the downloaded report for per-class errors, missing outputs, and input provenance.</small>",
+      );
     }
     $("evaluation-results").innerHTML = parts.join("");
   }

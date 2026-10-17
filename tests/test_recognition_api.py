@@ -327,3 +327,89 @@ def test_recognition_hitter_view_uses_current_reviewed_mapping_without_rewriting
             == "B"
         )
     assert path.read_bytes() == before
+
+
+def test_recognition_evaluation_api_excludes_model_assisted_labels_and_reports_missing_side(
+    catalog,
+):
+    root, data, store, video = catalog
+    artifact = {
+        "stage": "recognition",
+        "video_id": video["id"],
+        "video_sha256": video["sha256"],
+        "start_frame": 0,
+        "end_frame": 100,
+        "candidates": [
+            {
+                "id": "c",
+                "frame": 30,
+                "time_s": 1.2,
+                "kind": "shot",
+                "family": "clear",
+                "side": "unknown",
+                "status": "predicted",
+                "hitter_hint": {"player_id": "A"},
+            }
+        ],
+    }
+    write_json(data / video["id"] / "runs" / "model.json", artifact)
+    store.put_job(
+        {
+            "id": "model",
+            "kind": "recognition",
+            "video_id": video["id"],
+            "status": "completed",
+        }
+    )
+    url = f"/api/videos/{video['id']}"
+    with TestClient(create_app(root, data)) as client:
+        doc = client.get(url + "/annotations").json()
+        doc["events"] = [
+            {
+                "id": "gold",
+                "rally_id": "R",
+                "frame": 30,
+                "kind": "shot",
+                "family": "clear",
+                "side": "backhand",
+                "player_id": "A",
+            }
+        ]
+        doc["review_windows"] = [
+            {
+                "id": "w",
+                "start_frame": 0,
+                "end_frame": 100,
+                "scene": "live",
+                "contacts_complete": True,
+            }
+        ]
+        saved = client.put(url + "/annotations", json=doc)
+        assert saved.status_code == 200, saved.text
+        response = client.post(url + "/evaluate", json={"recognition_run_id": "model"})
+        assert response.status_code == 200, response.text
+        result = response.json()["recognition"]
+        assert (
+            result["run_id"] == "model"
+            and result["family"]["per_class"]["clear"]["f1"] == 1
+        )
+        assert (
+            result["complete_event"]["f1"] == 0
+            and result["side"]["balanced_accuracy"] is None
+        )
+        doc = saved.json()
+        doc["events"][0].update(
+            classification_run_id="model", classification_candidate_id="c"
+        )
+        assert client.put(url + "/annotations", json=doc).status_code == 200
+        result = client.post(
+            url + "/evaluate", json={"recognition_run_id": "model"}
+        ).json()["recognition"]
+        assert result["family"]["macro_f1_supported"] is None
+        assert result["labels"]["excluded_model_assisted_event_ids"] == ["gold"]
+        assert (
+            client.post(
+                url + "/evaluate", json={"recognition_run_id": "players"}
+            ).status_code
+            == 404
+        )

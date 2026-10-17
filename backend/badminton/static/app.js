@@ -25,6 +25,7 @@ const state = {
   contactJob: null,
   pendingCandidate: null,
   pendingClassification: null,
+  recognitionJob: null,
   shuttleLabeling: false,
 };
 const escape = (s) =>
@@ -122,6 +123,7 @@ async function selectVideo(id) {
     contactJob: null,
     pendingCandidate: null,
     pendingClassification: null,
+    recognitionJob: null,
     shuttleLabeling: false,
   });
   $("workspace").hidden = false;
