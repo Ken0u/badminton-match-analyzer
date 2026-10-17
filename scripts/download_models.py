@@ -1,4 +1,4 @@
-"""Fetch pinned player/shuttle checkpoints and record their provenance."""
+"""Fetch pinned player, shuttle, and stroke checkpoints with provenance."""
 
 import argparse
 import hashlib
@@ -12,14 +12,20 @@ from badminton.config import MODEL_MANIFEST, WEIGHTS
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--kind", choices=["player", "shuttle", "all"], default="player"
+        "--kind", choices=["player", "shuttle", "stroke", "all"], default="player"
     )
     args = parser.parse_args()
     manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
     folder = WEIGHTS
     folder.mkdir(parents=True, exist_ok=True)
-    for kind in ["player", "shuttle"] if args.kind == "all" else [args.kind]:
-        entry = manifest["player_pose" if kind == "player" else "shuttle"]
+    for kind in ["player", "shuttle", "stroke"] if args.kind == "all" else [args.kind]:
+        entry = manifest[
+            {
+                "player": "player_pose",
+                "shuttle": "shuttle",
+                "stroke": "shot_classifier",
+            }[kind]
+        ]
         target = folder / entry["name"]
         if not target.exists():
             temp = target.with_suffix(".download")
@@ -30,6 +36,18 @@ def main():
                 ):
                     for chunk in iter(lambda: response.read(1024 * 1024), b""):
                         out.write(chunk)
+            elif kind == "stroke":
+                import gdown
+
+                if (
+                    gdown.download(
+                        id=entry["google_drive_id"], output=str(temp), use_cookies=False
+                    )
+                    is None
+                ):
+                    raise RuntimeError(
+                        "Unable to download the official stroke checkpoint"
+                    )
             else:
                 import gdown
 

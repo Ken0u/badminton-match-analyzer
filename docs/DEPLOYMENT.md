@@ -2,13 +2,14 @@
 
 The app supports a local workstation or a persistent, single-user container. It
 uses one application process, one analysis worker, and a SQLite catalog. A public
-multi-user service, distributed job queue, per-user storage, and automatic shot
-classification are not implemented. Keep this distinction when sharing a demo.
+multi-user service, distributed job queue, and per-user storage are not implemented.
+Shot-family suggestions are experimental and singles-only; complete automatic
+match annotation remains unverified. Keep this distinction when sharing a demo.
 
 ## Build and run
 
 Docker must be running in Linux-container mode. The default image includes CPU
-tracking dependencies; model checkpoints are downloaded separately into the
+tracking and singles family-recognition dependencies; model checkpoints are downloaded separately into the
 persistent state volume. Build `review` for playback, imports, annotations, and
 evaluation without PyTorch, or `gpu` for the CUDA 12.6 build.
 
@@ -145,6 +146,7 @@ service.
 | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Ultralytics package and player checkpoint | Upstream AGPL-3.0 or separately obtained enterprise terms. CPU/GPU targets install this component. The review target omits it. See [Ultralytics licensing](https://www.ultralytics.com/license).     |
 | Vendored TrackNetV3 model                 | MIT text and pinned source manifest are included under `backend/badminton/vendor/`. The checkpoint source/hash/terms are in the packaged model manifest.                                             |
+| Vendored BST-0 model                      | MIT text and pinned source manifest are included under `backend/badminton/vendor/bst/`. The official checkpoint source/hash and singles-only scope are in the packaged model manifest. See [the recognition report](SHOT_RECOGNITION_REPORT.md). |
 | PyTorch / torchvision                     | Their installed distributions retain upstream license notices. CPU and CUDA packages are installed from PyTorch's official indexes.                                                                  |
 | yt-dlp                                    | Installed from PyPI with upstream package notices. Its source/wheel is Unlicense; optional dependencies carry their own terms. See [upstream licensing](https://github.com/yt-dlp/yt-dlp#licensing). |
 | Node.js and FFmpeg                        | Node's license is copied to `/usr/local/share/licenses/node/LICENSE`; Debian copyright/license notices remain under `/usr/share/doc/`. FFmpeg licensing depends on the distributed build.            |

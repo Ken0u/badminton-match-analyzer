@@ -1,5 +1,6 @@
 import { createReviewTools } from "./review-tools.js";
 import { createImportTools } from "./import-tools.js";
+import { createRecognitionTools } from "./recognition-tools.js";
 const $ = (id) => document.getElementById(id);
 const state = {
   videos: [],
@@ -23,6 +24,7 @@ const state = {
   contactRun: null,
   contactJob: null,
   pendingCandidate: null,
+  pendingClassification: null,
   shuttleLabeling: false,
 };
 const escape = (s) =>
@@ -65,6 +67,7 @@ function changed() {
   $("save-state").textContent = "Unsaved edits";
   $("save").disabled = false;
   reviewTools.render();
+  recognitionTools.render();
 }
 function handleError(e) {
   notice(e.message || String(e), true);
@@ -118,6 +121,7 @@ async function selectVideo(id) {
     contactRun: null,
     contactJob: null,
     pendingCandidate: null,
+    pendingClassification: null,
     shuttleLabeling: false,
   });
   $("workspace").hidden = false;
@@ -152,6 +156,7 @@ async function selectVideo(id) {
   renderEvents();
   renderCandidates();
   reviewTools.reset();
+  recognitionTools.reset();
   draw();
   await loadLibrary();
   if (generation !== state.selectionGeneration) return;
@@ -450,6 +455,7 @@ function kindFields() {
   $("contact-uncertainty").hidden = kind === "rally_end";
 }
 function resetEditor(kind = "shot") {
+  state.pendingClassification = null;
   state.pendingCandidate = null;
   state.selected = null;
   $("event-kind").value = kind;
@@ -477,6 +483,7 @@ function mark(kind) {
   );
 }
 function editEvent(id) {
+  state.pendingClassification = null;
   state.pendingCandidate = null;
   const e = state.doc.events.find((e) => e.id === id);
   if (!e) return;
@@ -616,6 +623,7 @@ async function pollJobs() {
     renderCandidates();
   }
   $("detect-contacts").disabled = !!active || !state.shuttleRun;
+  await recognitionTools.refresh(jobs, active);
 }
 $("event-form").onsubmit = (e) => {
   e.preventDefault();
@@ -673,6 +681,34 @@ $("event-form").onsubmit = (e) => {
     source_run_id:
       existing?.source_run_id ?? state.pendingCandidate?.run_id ?? null,
     candidate_id: existing?.candidate_id ?? state.pendingCandidate?.id ?? null,
+    classification_run_id:
+      kind === "rally_end"
+        ? null
+        : (state.pendingClassification?.run_id ??
+          existing?.classification_run_id ??
+          null),
+    classification_candidate_id:
+      kind === "rally_end"
+        ? null
+        : (state.pendingClassification?.id ??
+          existing?.classification_candidate_id ??
+          null),
+    family_score:
+      kind === "rally_end"
+        ? null
+        : state.pendingClassification
+          ? frame === state.pendingClassification.frame &&
+            kind === state.pendingClassification.kind &&
+            (kind !== "shot" ||
+              $("event-family").value === state.pendingClassification.family)
+            ? (state.pendingClassification.score ?? null)
+            : null
+          : existing?.frame === frame &&
+              existing?.kind === kind &&
+              existing?.family ===
+                (kind === "shot" ? $("event-family").value : null)
+            ? (existing?.family_score ?? null)
+            : null,
     contact_start_frame: contactStart,
     contact_end_frame: contactEnd,
   };
@@ -945,6 +981,17 @@ const importTools = createImportTools({
   notice,
   pollJobs,
   loadLibrary,
+});
+const recognitionTools = createRecognitionTools({
+  state,
+  $,
+  api,
+  notice,
+  escape,
+  resetEditor,
+  editEvent,
+  seek,
+  kindFields,
 });
 await loadLibrary().catch(handleError);
 if (state.videos.length)

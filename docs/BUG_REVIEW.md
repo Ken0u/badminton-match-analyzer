@@ -2,6 +2,29 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The latest increment adds an experimental pretrained singles family model through
+the CLI, API, and explicit review UI. [The recognition report](SHOT_RECOGNITION_REPORT.md)
+records the source mapping, seven-target CUDA smoke run, abstention behavior,
+and missing accuracy evidence. It does not predict stroke side or support doubles.
+New regressions cover mismatched input lineage, missing context/cuts, duplicate
+targets, invalid classification provenance, and stale scores after contact/label
+changes. Hitter views now use the current reviewed identity mapping instead of
+retaining an old recognition hint. Video switching immediately disables the
+recognition button until the selected video's runs load. Existing manual
+forehand/backhand values survive loading a suggestion; raw artifacts and real
+pilot annotations are unchanged.
+
+Current local checks: **237 backend tests passed**, two optional GPU tests skipped
+in the standard run; both opt-in CUDA tests passed separately. All three existing
+browser suites and the new real-model recognition browser suite pass. Lint,
+formatting, dependency consistency, and the built wheel's model/license/UI contents
+were checked. Container checks remain part of the feature PR's CI.
+
+Source-contract review also caught inconsistent hitter hints when the highest
+individual source class belonged to a different family than the winning summed
+family. Hitter court end now uses probability mass within the selected family;
+tied court ends remain unknown. A targeted regression covers that disagreement.
+
 The input/deployment increment adds bounded file uploads, YouTube imports, single-user authentication, persistent container configuration, and CI. [The import verification report](IMPORT_VERIFICATION.md) records an actual BWF YouTube-to-frame/playback API test. Import regressions caught a content-ID overwrite risk from publisher metadata and provenance loss on local-path re-import; publisher metadata is now nested and re-import retains it. Duplicate imports preserve reviewed revisions and do not accumulate duplicate source files. Shutdown admission failure also releases its job claim.
 
 Additional input bugs fixed: rotated phone footage now uses one display orientation for browser-aligned review and CV coordinates; source bytes and timestamps remain unchanged. Download progress accumulates small updates until a visible update is due instead of staying at zero. Generated MP4 orientation tests and a Chromium comparison cover the rotation path. CI also exposed fresh-checkout directory and installed-package root assumptions; fixture paths and test setup now make those boundaries explicit.
@@ -52,5 +75,5 @@ Contact suggestions combine changes in shuttle motion with nearby player boxes/w
 - Both full 250-frame shuttle experiments completed on the local GPU. Player and shuttle overlays and the proposal panels were inspected visually.
 - Python lint, frontend formatting, and dependency consistency checks pass.
 
-The first small partial-rally pilot, evaluator, and reviewed player-to-track assignments are implemented. Contact recall on that singles pilot is poor, so the next milestone is better contact detection plus a larger, independently reviewed set of complete rallies. Automated serve/end detection, the six-family stroke classifier, automatic identity recovery, and full-highlight replay/camera segmentation remain pending. All current pilot family/side labels remain unknown.
+The first small partial-rally pilot, evaluator, and reviewed player-to-track assignments are implemented. Contact recall on that singles pilot is poor, so the next milestone is better contact detection plus a larger, independently reviewed set of complete rallies. A pretrained singles family baseline now exists, but held-out family evaluation, automated serve/end detection, stroke-side prediction, doubles recognition, automatic identity recovery, and full-highlight replay/camera segmentation remain pending. All real pilot family/side labels remain unknown.
 

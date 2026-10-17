@@ -830,6 +830,22 @@ footer {
 #download-evaluation {
   margin-left: 12px;
 }
+#recognition-status {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin: 10px 0;
+}
+#stroke-predictions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 8px;
+  max-height: 300px;
+  overflow: auto;
+}
+.stroke-row small {
+  line-height: 1.5;
+}
 @media (min-width: 1600px) {
   main {
     padding: 35px 45px;

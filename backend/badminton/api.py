@@ -59,6 +59,14 @@ class YoutubeRequest(StrictModel):
     mode: Literal["singles", "doubles"] = "singles"
 
 
+class RecognitionRequest(StrictModel):
+    player_run_id: str
+    shuttle_run_id: str
+    contacts_run_id: str | None = None
+    include_reviewed: bool = True
+    min_family_score: float = Field(default=0.5, ge=0, le=1, allow_inf_nan=False)
+
+
 def create_app(
     root: Path = config.ROOT,
     data: Path = config.DATA,
@@ -353,6 +361,9 @@ def create_app(
             "candidate_id",
             "contact_start_frame",
             "contact_end_frame",
+            "classification_run_id",
+            "classification_candidate_id",
+            "family_score",
         ]
         writer = csv.DictWriter(buffer, fieldnames=fields)
         writer.writeheader()
@@ -482,7 +493,7 @@ def create_app(
         if not any(
             j["id"] == job_id
             and j["status"] == "completed"
-            and j["kind"] in ("players", "shuttle", "contacts")
+            and j["kind"] in ("players", "shuttle", "contacts", "recognition")
             for j in store.jobs(video_id)
         ):
             raise HTTPException(404)
@@ -504,8 +515,81 @@ def create_app(
                     doc.track_assignments,
                     result.get("player_run_id"),
                 )
+        elif result.get("stage") == "recognition":
+            for candidate in result["candidates"]:
+                if hint := candidate.get("hitter_hint"):
+                    hint["player_id"] = resolve_contact_player(
+                        candidate["frame"],
+                        hint.get("track_id"),
+                        doc.track_assignments,
+                        result.get("player_run_id"),
+                    )
         result["identity_annotation_revision"] = doc.revision
         return result
+
+    @app.post("/api/videos/{video_id}/recognize", status_code=202)
+    def recognize(video_id: str, body: RecognitionRequest):
+        from .recognition import recognition_targets, recognize_strokes
+
+        v = store.video(video_id)
+        source(v)
+        if v["mode"] != "singles":
+            raise HTTPException(
+                422,
+                "The pretrained family model currently supports singles; doubles needs its own validated model",
+            )
+        players = load_run(video_id, body.player_run_id, "players")
+        shuttle = load_run(video_id, body.shuttle_run_id, "shuttle") | {
+            "run_id": body.shuttle_run_id
+        }
+        if players.get("stride", 1) != 1:
+            raise HTTPException(
+                422, "Classifying strokes requires player tracking at stride 1"
+            )
+        contacts = (
+            load_run(video_id, body.contacts_run_id, "contacts")
+            if body.contacts_run_id
+            else None
+        )
+        if contacts and (
+            contacts.get("shuttle_run_id") != body.shuttle_run_id
+            or contacts.get("player_run_id") not in (None, body.player_run_id)
+        ):
+            raise HTTPException(
+                422, "Contact proposals must use these same tracking runs"
+            )
+        snapshot = store.annotations(video_id)
+        targets = recognition_targets(
+            snapshot,
+            contacts,
+            body.include_reviewed,
+            start_frame=max(players["start_frame"], shuttle["start_frame"]),
+            end_frame=min(players["end_frame"], shuttle["end_frame"]),
+        )
+        if not targets:
+            raise HTTPException(
+                422,
+                "Review shot contacts or generate contact suggestions before classifying",
+            )
+        if len(targets) > 500:
+            raise HTTPException(422, "Classify at most 500 contacts per run")
+        return enqueue(
+            "recognition",
+            video_id,
+            lambda job_id, progress: recognize_strokes(
+                v,
+                timestamps_for(data, video_id),
+                snapshot,
+                players,
+                shuttle,
+                targets,
+                body.player_run_id,
+                progress,
+                data / video_id / "runs" / f"{job_id}.json",
+                body.min_family_score,
+                contacts_run_id=body.contacts_run_id,
+            ),
+        )
 
     @app.post("/api/videos/{video_id}/evaluate")
     def evaluate(video_id: str, body: EvaluationRequest):

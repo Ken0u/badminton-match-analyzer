@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # Use --target review for video review/imports without the ML dependencies.
-# Use --target cpu (the default) or --target gpu for tracking support.
+# Use --target cpu (the default) or --target gpu for tracking and family suggestions.
 FROM node:24-bookworm-slim AS javascript
 
 FROM python:3.12-slim-bookworm AS review
@@ -47,9 +47,9 @@ USER root
 RUN python -m pip install --no-cache-dir \
         torch==2.8.0 torchvision==0.23.0 \
         --index-url https://download.pytorch.org/whl/cpu \
-    && python -m pip install --no-cache-dir ".[tracking]" \
+    && python -m pip install --no-cache-dir ".[tracking,recognition]" \
     && python -m pip check \
-    && python -c "import torch; assert torch.version.cuda is None"
+    && python -c "import torch; from badminton.vendor.bst.bst import BST_0; assert torch.version.cuda is None; assert BST_0(in_dim=72, seq_len=30, n_class=35)(torch.zeros(1,30,2,72), torch.zeros(1,30,2), torch.tensor([30])).shape == (1,35)"
 USER 10001:10001
 
 FROM review AS gpu
@@ -57,7 +57,7 @@ USER root
 RUN python -m pip install --no-cache-dir \
         torch==2.8.0 torchvision==0.23.0 \
         --index-url https://download.pytorch.org/whl/cu126 \
-    && python -m pip install --no-cache-dir ".[tracking]" \
+    && python -m pip install --no-cache-dir ".[tracking,recognition]" \
     && python -m pip check \
     && python -c "import torch; assert torch.version.cuda == '12.6'"
 USER 10001:10001

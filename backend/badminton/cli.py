@@ -66,6 +66,15 @@ def main():
     evaluate.add_argument("--contacts-run", help="Completed contact proposal job ID")
     evaluate.add_argument("--shuttle-run", help="Completed shuttle tracking job ID")
     evaluate.add_argument("--output", type=Path, help="Also save the JSON report")
+    recognize = commands.add_parser(
+        "recognize",
+        help="Suggest singles shot families from cached pose and shuttle runs",
+    )
+    recognize.add_argument("video_id")
+    recognize.add_argument("--players-run", required=True)
+    recognize.add_argument("--shuttle-run", required=True)
+    recognize.add_argument("--contacts-run")
+    recognize.add_argument("--min-family-score", type=float, default=0.5)
     args = parser.parse_args()
     if args.command == "ingest":
         from .ingest import inspect_video
@@ -137,6 +146,65 @@ def main():
         try:
             summary = run_local_job(store, args.stage, args.video_id, task)
         except ConflictError as exc:
+            parser.error(str(exc))
+        print(json.dumps(summary, indent=2))
+    elif args.command == "recognize":
+        from .recognition import recognition_targets, recognize_strokes
+
+        store = Store(DATA)
+        try:
+            video = store.video(args.video_id)
+            resolve_source(video, ROOT)
+            if video["mode"] != "singles":
+                raise ValueError(
+                    "The current pretrained classifier supports singles only"
+                )
+            players = load_evaluation_run(
+                store, args.video_id, args.players_run, "players"
+            )
+            shuttle = load_evaluation_run(
+                store, args.video_id, args.shuttle_run, "shuttle"
+            ) | {"run_id": args.shuttle_run}
+            contacts = (
+                load_evaluation_run(store, args.video_id, args.contacts_run, "contacts")
+                if args.contacts_run
+                else None
+            )
+            if contacts and (
+                contacts.get("shuttle_run_id") != args.shuttle_run
+                or contacts.get("player_run_id") not in (None, args.players_run)
+            ):
+                raise ValueError("Contact proposals must use these same tracking runs")
+            annotations = store.annotations(args.video_id)
+            targets = recognition_targets(
+                annotations,
+                contacts,
+                start_frame=max(players["start_frame"], shuttle["start_frame"]),
+                end_frame=min(players["end_frame"], shuttle["end_frame"]),
+            )
+            if not targets:
+                raise ValueError(
+                    "Review shot contacts or generate contact suggestions first"
+                )
+            summary = run_local_job(
+                store,
+                "recognition",
+                args.video_id,
+                lambda job_id, progress: recognize_strokes(
+                    video,
+                    timestamps_for(DATA, args.video_id),
+                    annotations,
+                    players,
+                    shuttle,
+                    targets,
+                    args.players_run,
+                    progress,
+                    DATA / args.video_id / "runs" / f"{job_id}.json",
+                    args.min_family_score,
+                    contacts_run_id=args.contacts_run,
+                ),
+            )
+        except (KeyError, ValueError, OSError, RuntimeError, ConflictError) as exc:
             parser.error(str(exc))
         print(json.dumps(summary, indent=2))
     elif args.command == "evaluate":

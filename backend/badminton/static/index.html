@@ -262,6 +262,21 @@
               <summary>Player names, teams & handedness</summary>
               <div id="players"></div>
             </details>
+            <section class="suggestions-panel" id="recognition-tools">
+              <div class="section-label">
+                SHOT FAMILY SUGGESTIONS <span id="stroke-count">0</span>
+              </div>
+              <p class="suggestion-help">
+                Experimental singles classifier. Review every suggestion;
+                forehand/backhand needs separate confirmation. Scores are model
+                rankings, not verified accuracy.
+              </p>
+              <button id="recognize" disabled>Suggest shot families</button>
+              <small id="recognition-status"
+                >Track players and the shuttle first.</small
+              >
+              <div id="stroke-predictions"></div>
+            </section>
             <details class="players-panel" id="identity-panel">
               <summary>Assign tracks to players</summary>
               <p>

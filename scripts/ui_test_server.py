@@ -22,6 +22,7 @@ if __name__ == "__main__":
             "players",
             "shuttle",
             "contacts",
+            "recognition",
         ):
             continue
         run = DATA / job["video_id"] / "runs" / f"{job['id']}.json"
