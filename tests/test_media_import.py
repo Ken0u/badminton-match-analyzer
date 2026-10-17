@@ -198,6 +198,15 @@ def fake_youtube(monkeypatch, video_bytes):
             if state.behavior != "missing_file":
                 path.write_bytes(state.body)
             if state.behavior != "no_hook":
+                if state.behavior == "incremental":
+                    for index in range(1, 201):
+                        state.options["progress_hooks"][0](
+                            {
+                                "status": "downloading",
+                                "downloaded_bytes": index * 5000,
+                                "total_bytes": 1000000,
+                            }
+                        )
                 state.options["progress_hooks"][0](
                     {
                         "status": "finished",
@@ -243,6 +252,20 @@ def test_youtube_download_is_bounded_single_file_and_preserves_public_provenance
     assert "max_downloads" not in options
     assert options["allowed_extractors"] == ["youtube"]
     assert "cookiefile" not in options and "cookiesfrombrowser" not in options
+
+
+def test_small_download_updates_accumulate_into_visible_progress(
+    tmp_path, fake_youtube
+):
+    fake_youtube.behavior = "incremental"
+    progress = []
+    download_youtube(
+        "https://youtu.be/abcdefghI_1", tmp_path / ".media", progress=progress.append
+    )
+    assert progress[0] == 0 and progress[-1] == 1
+    assert len(progress) > 20
+    assert any(0.25 < value < 0.75 for value in progress)
+    assert progress == sorted(progress)
 
 
 @pytest.mark.parametrize(

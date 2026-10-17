@@ -228,7 +228,7 @@ def download_youtube(url, media_root, max_bytes=MAX_MEDIA_BYTES, progress=None):
         value = max(last_progress, min(1.0, max(0.0, float(value))))
         if progress and value - last_progress >= 0.01:
             progress(value)
-        last_progress = value
+            last_progress = value
 
     def check_info(info, *, incomplete=False):
         if not incomplete:

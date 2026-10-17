@@ -2,6 +2,8 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The input/deployment increment adds bounded file uploads, YouTube imports, single-user authentication, persistent container configuration, and CI. [The import verification report](IMPORT_VERIFICATION.md) records an actual BWF YouTube-to-frame/playback API test. Import regressions caught a content-ID overwrite risk from publisher metadata and provenance loss on local-path re-import; publisher metadata is now nested and re-import retains it. Duplicate imports preserve reviewed revisions and do not accumulate duplicate source files. Shutdown admission failure also releases its job claim.
+
 Latest increment: reviewed identity mappings, clip completeness, manual shuttle labels, and contact/localization evaluation now work through the UI and API, with a CLI evaluator. Eight visually reviewed development contacts and six identity mappings are saved at annotation revision 2 across the two samples. See [the pilot report](PILOT_REPORT.md) for measured failures and remaining labeling work.
 
 Two additional artifact bugs were found and fixed during this increment: player assignments could accept an artifact whose internal video or stage contradicted its completed job, and evaluation could return a server error for that mismatch. Both now return actionable validation errors. The editor also preserves `corrected` status across repeated edits.

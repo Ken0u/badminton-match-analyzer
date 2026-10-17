@@ -158,15 +158,17 @@ records upstream terms rather than granting any additional permissions.
 ## Verification and current limits
 
 CI runs Python tests on generated media without the supplied videos or model
-weights, checks browser source formatting, and builds/starts the review image to
+weights, checks browser source formatting, and builds/starts the review and CPU images to
 check its health, authentication, UI response, and empty catalog. These checks
 do not claim trained-model accuracy, live YouTube availability, or GPU inference.
 The Windows/CUDA `requirements.lock` is not a Linux container lock; container
 dependencies resolve from `pyproject.toml`, with PyTorch variants pinned above.
 
-At implementation time the Docker CLI was present, but the local Docker Desktop
-Linux daemon was stopped/unavailable. The image has not been built locally yet;
-the committed CI workflow supplies the build/smoke checks when run on a Docker
-host. CPU/GPU target installation and real GPU inference still require explicit
-validation on their destination host. Keep that limitation visible when handing
-off the deployment.
+The review image built successfully on GitHub Actions and passed startup,
+health, authentication, static UI, empty catalog, and dependency checks in
+[this CI run](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39015501445).
+The local Docker Desktop Linux daemon was unavailable, so no local image build is
+claimed. The workflow also builds the CPU target; check the latest run for its
+result. GPU image installation and real GPU inference still require explicit
+validation on the destination host. A passing container smoke check does not
+establish video-analysis accuracy.

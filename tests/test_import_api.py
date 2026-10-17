@@ -155,7 +155,9 @@ def test_repeated_upload_preserves_review_revision_and_one_original_source(
     assert media_files(root) == original_source
 
 
-def test_local_path_reimport_preserves_uploaded_name_and_source_provenance(import_context):
+def test_local_path_reimport_preserves_uploaded_name_and_source_provenance(
+    import_context,
+):
     root, data, content = import_context
     store = Store(data)
     with TestClient(create_app(root, data)) as client:
