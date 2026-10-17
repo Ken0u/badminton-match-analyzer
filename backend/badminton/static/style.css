@@ -980,3 +980,23 @@ footer {
     font-size: 8px;
   }
 }
+#camera-boundaries {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: 12px;
+}
+#frame-loading {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  background: #101b21;
+  color: #b5ef91;
+}
+#frame-loading[hidden] {
+  display: none;
+}

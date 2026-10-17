@@ -105,6 +105,8 @@ Scores are uncalibrated model rankings. Both models transfer published MMPose fe
 
 ## Reviewed identities and accuracy
 
+Expand **Camera changes** and choose **Scan camera changes** for a full-video list of possible edits. Click a candidate and step across the source frames to inspect it. New tracking runs automatically separate detected views: player IDs reset into disjoint ranges, shuttle windows/backgrounds are separate, and old court calibration expires after a detected cut. Confirm the court again for each view. Camera cuts do not imply rally boundaries or identify replays. Older tracking artifacts need rerunning to gain this behavior. CLI: `python -m badminton.cli segments <video-id>`; API: `POST /api/videos/<id>/segments`. [The camera report](docs/CAMERA_BOUNDARY_REPORT.md) records the sample/GPU checks and detection limits.
+
 Expand **Assign tracks to players** to map a loaded run's tracker to A/B/C/D for a reviewed source-frame range. Mapping ranges include the start and exclude the end. Confirm crossings and end changes; mappings never extend into another run automatically. Removing a mapping clears that identity from the overlay and future hints without changing saved events or raw model artifacts.
 
 In **Reviewed clips & accuracy**, record a continuous clip, its live/replay status, and whether **every contact** is labeled. Inspect the full interval and add missed contacts before checking completeness. Contact scoring uses only complete live clips fully covered by the selected run. Unknown scenes, replays, incomplete clips, and unlabeled parts of the video are excluded explicitly.

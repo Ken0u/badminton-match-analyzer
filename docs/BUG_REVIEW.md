@@ -2,7 +2,28 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
-The latest increment probes the actual public-source video through YOLO,
+The latest increment adds queued full-video camera scans and separates new
+tracking runs at detected edits. [The camera report](CAMERA_BOUNDARY_REPORT.md)
+records 65/69 candidate cuts on the samples, six inspected transition pairs, and
+an 80-frame CUDA probe across two edits. ByteTrack IDs no longer collide after
+reset, TrackNet backgrounds/windows stay within each detected view, and stale
+court calibration expires. Contacts now honor player-run cuts as well as shuttle
+cuts. These are camera/timestamp boundaries, not replay or rally labels.
+
+Browser inspection found a source-review mismatch while seeking: the old image
+could remain visible with the newly selected frame number. A loading cover now
+hides that stale view until the requested exact source image arrives. A delayed
+request regression checks both the pending and loaded states.
+
+Current local checks: **313 backend tests passed**, two opt-in GPU tests skipped
+in the standard suite and passed separately. Browser checks include full-video
+boundary navigation and generated two-view upload media for CI. Source hashes,
+VFR timestamps, incomplete decoding, artifact lineage, shared job admission,
+tracker reset, short temporal segments, and calibration renewal are covered.
+Independent cut accuracy, scene corrections/live-replay recognition, and the full
+automatic match pipeline remain open.
+
+The preceding increment probes the actual public-source video through YOLO,
 TrackNet, and recognition. Both diagnostic windows abstain, and contact alignment
 remains unverified; the cached-feature benchmark must not be presented as
 raw-video accuracy. [The direct-video report](DIRECT_VIDEO_REPORT.md) records
@@ -17,7 +38,7 @@ proposal; conflicting hitter evidence cannot replace the visual hint. Audio
 decoding preserves the video's time origin and splits missing/discontinuous PTS.
 Missing audio falls back to visual suggestions; changed source bytes still fail.
 
-Current local checks: **299 backend tests passed**, two opt-in GPU tests skipped
+Previous increment's checks: **299 backend tests passed**, two opt-in GPU tests skipped
 in the standard suite; both pass separately. The new source probe ran on CUDA;
 all four browser suites pass, including the optional audio request and review
 intervals. Source timing, complete-rally labels,

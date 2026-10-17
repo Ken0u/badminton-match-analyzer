@@ -11,6 +11,7 @@ import numpy as np
 from PIL import Image
 
 from .config import MODEL_MANIFEST, WEIGHTS
+from .segments import scan_boundaries
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
 WIDTH, HEIGHT = 512, 288
@@ -46,6 +47,53 @@ def _rgb(frame):
     return np.asarray(frame.to_image().resize((WIDTH, HEIGHT)), dtype=np.uint8)
 
 
+def infer_camera_segment(frames, background, length, predict, width, height):
+    """Bounded temporal ensemble for exactly one camera view.
+
+    The caller supplies a fresh background and source-frame iterator for each
+    half-open segment. No real frame or heatmap can leak across its boundary.
+    Only a short segment's final frame is repeated for model shape padding.
+    """
+    buffer = deque()
+    sums, denominators = {}, {}
+    weights = np.minimum(np.arange(1, length + 1), np.arange(length, 0, -1)).astype(
+        np.float32
+    )
+    emitted = False
+
+    def predict_window(items):
+        padded = items + [items[-1]] * (length - len(items))
+        heatmaps = predict([background] + [item[2] for item in padded])
+        for offset, (index, timestamp, _image) in enumerate(items):
+            weighted = heatmaps[offset] * weights[offset]
+            if index not in sums:
+                sums[index] = (timestamp, weighted)
+                denominators[index] = weights[offset]
+            else:
+                sums[index] = (timestamp, sums[index][1] + weighted)
+                denominators[index] += weights[offset]
+
+    def finish(index):
+        timestamp, heat = sums.pop(index)
+        return {
+            "frame": index,
+            "time_s": timestamp,
+            "shuttle": locate_shuttle(heat / denominators.pop(index), width, height),
+        }
+
+    for index, timestamp, frame in frames:
+        buffer.append((index, timestamp, _rgb(frame)))
+        if len(buffer) == length:
+            predict_window(list(buffer))
+            yield finish(buffer[0][0])
+            emitted = True
+            buffer.popleft()
+    if not emitted and buffer:
+        predict_window(list(buffer))
+    for index in sorted(sums):
+        yield finish(index)
+
+
 def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
     import torch
 
@@ -53,6 +101,10 @@ def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
 
     times = timestamps_for(data, video["id"])
     validate_range(video, times, start_frame, end_frame)
+    began = time.perf_counter()
+    boundaries = scan_boundaries(
+        video, root, data, start_frame, end_frame, lambda value: progress(value * 0.1)
+    )
     weights = WEIGHTS / "TrackNet_best.pt"
     if not weights.exists():
         raise RuntimeError(
@@ -76,49 +128,10 @@ def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
     model = model.to(device).eval()
     if device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
-    began = time.perf_counter()
     rows = []
     try:
-        # Match upstream preprocessing: median at source resolution, then PIL resize.
-        sample_budget = max(
-            1, (128 * 1024 * 1024) // (video["width"] * video["height"] * 3)
-        )
-        sample_ids = set(
-            np.linspace(
-                start_frame,
-                end_frame - 1,
-                min(48, sample_budget, end_frame - start_frame),
-                dtype=int,
-            ).tolist()
-        )
-        samples = []
-        for index, t, frame in iter_frames(video, root, times, start_frame, end_frame):
-            if index in sample_ids:
-                samples.append(frame.to_ndarray(format="rgb24"))
-            progress(0.15 * (index - start_frame + 1) / (end_frame - start_frame))
-        median = np.median(np.stack(samples), axis=0).astype(np.uint8)
-        background = np.asarray(Image.fromarray(median).resize((WIDTH, HEIGHT)))
-        del samples, median
-        buffer = deque()
-        sums, denominators = {}, {}
-        temporal_weights = np.minimum(
-            np.arange(1, length + 1), np.arange(length, 0, -1)
-        ).astype(np.float32)
 
-        def finish(index):
-            heat = sums.pop(index) / denominators.pop(index)
-            rows.append(
-                {
-                    "frame": index,
-                    "time_s": times[index],
-                    "shuttle": locate_shuttle(heat, video["width"], video["height"]),
-                }
-            )
-
-        def predict_window(items):
-            real = len(items)
-            padded = items + [items[-1]] * (length - real)
-            images = [background] + [item[1] for item in padded]
+        def predict(images):
             array = np.concatenate(
                 [np.moveaxis(img, -1, 0) for img in images], axis=0
             ).copy()
@@ -134,29 +147,43 @@ def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
                 else nullcontext()
             )
             with torch.inference_mode(), context:
-                heatmaps = model(tensor)[0].float().cpu().numpy()
-            for offset, (index, img) in enumerate(items):
-                weighted = heatmaps[offset] * temporal_weights[offset]
-                if index not in sums:
-                    sums[index] = weighted
-                    denominators[index] = temporal_weights[offset]
-                else:
-                    sums[index] += weighted
-                    denominators[index] += temporal_weights[offset]
+                return model(tensor)[0].float().cpu().numpy()
 
-        for index, t, frame in iter_frames(video, root, times, start_frame, end_frame):
-            buffer.append((index, _rgb(frame)))
-            if len(buffer) == length:
-                predict_window(list(buffer))
-                finish(buffer[0][0])
-                buffer.popleft()
-            progress(
-                0.15 + 0.85 * (index - start_frame + 1) / (end_frame - start_frame)
+        for segment in boundaries["camera_ranges"]:
+            first, last = segment["start_frame"], segment["end_frame"]
+            offset = 0.1 + 0.9 * (first - start_frame) / (end_frame - start_frame)
+            fraction = 0.9 * (last - first) / (end_frame - start_frame)
+            # Match upstream median-at-source-resolution preprocessing, separately
+            # for each view. Never mix a close-up into the court background.
+            sample_budget = max(
+                1, (128 * 1024 * 1024) // (video["width"] * video["height"] * 3)
             )
-        if not rows and buffer:
-            predict_window(list(buffer))
-        for index in sorted(sums):
-            finish(index)
+            sample_ids = set(
+                np.linspace(
+                    first, last - 1, min(48, sample_budget, last - first), dtype=int
+                ).tolist()
+            )
+            samples = []
+            for index, _t, frame in iter_frames(video, root, times, first, last):
+                if index in sample_ids:
+                    samples.append(frame.to_ndarray(format="rgb24"))
+                progress(
+                    offset + fraction * 0.15 * (index - first + 1) / (last - first)
+                )
+            median = np.median(np.stack(samples), axis=0).astype(np.uint8)
+            background = np.asarray(Image.fromarray(median).resize((WIDTH, HEIGHT)))
+            del samples, median
+            frames = iter_frames(video, root, times, first, last)
+            for row in infer_camera_segment(
+                frames, background, length, predict, video["width"], video["height"]
+            ):
+                row["camera_segment_start_frame"] = first
+                rows.append(row)
+                progress(
+                    offset
+                    + fraction
+                    * (0.15 + 0.85 * (row["frame"] - first + 1) / (last - first))
+                )
         if len(rows) != end_frame - start_frame:
             raise RuntimeError(
                 "Shuttle output did not cover the requested source frames"
@@ -178,6 +205,10 @@ def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
             "processed_frames": len(rows),
             "visible_frames": sum(row["shuttle"]["visible"] for row in rows),
             "repaired_frames": 0,
+            "cut_frames": boundaries["cut_frames"],
+            "camera_boundary_method": boundaries["method"],
+            "camera_ranges": boundaries["camera_ranges"],
+            "temporal_context_crosses_detected_cuts": False,
             "elapsed_s": round(elapsed, 3),
             "inference_fps": round(len(rows) / max(elapsed, 0.001), 2),
             "peak_gpu_memory_mb": round(torch.cuda.max_memory_allocated() / 1e6, 1)

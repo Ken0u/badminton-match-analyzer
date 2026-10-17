@@ -1,0 +1,1855 @@
+{
+  "schema_version": 1,
+  "development_only": true,
+  "accuracy_established": false,
+  "videos": [
+    {
+      "run_id": "1325f7713f9b4ca4915af024cdfaac5e",
+      "artifact": {
+        "schema_version": 1,
+        "stage": "segments",
+        "video_id": "970dbd8adfe548d8",
+        "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+        "start_frame": 0,
+        "end_frame": 12023,
+        "method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "recipe": {
+          "width": 320,
+          "adaptive_threshold": 3.0,
+          "min_content_val": 15.0,
+          "min_scene_len": 15,
+          "window_width": 2
+        },
+        "cut_frames": [
+          130,
+          255,
+          639,
+          683,
+          1133,
+          1368,
+          1718,
+          1764,
+          1938,
+          1990,
+          2405,
+          2460,
+          2730,
+          2806,
+          3494,
+          3524,
+          3570,
+          3667,
+          3970,
+          4036,
+          4232,
+          4257,
+          4560,
+          4611,
+          4639,
+          4795,
+          5374,
+          5508,
+          5720,
+          6214,
+          6280,
+          6750,
+          6797,
+          6920,
+          6977,
+          7076,
+          7164,
+          7541,
+          7662,
+          8069,
+          8149,
+          8338,
+          8607,
+          8676,
+          8902,
+          8937,
+          9122,
+          9167,
+          9255,
+          9693,
+          9762,
+          9966,
+          10114,
+          10164,
+          10205,
+          10349,
+          10662,
+          10722,
+          10931,
+          11010,
+          11053,
+          11258,
+          11547,
+          11849,
+          11963
+        ],
+        "boundaries": [
+          {
+            "frame": 130,
+            "time_s": 5.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 255,
+            "time_s": 10.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 639,
+            "time_s": 25.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 683,
+            "time_s": 27.32,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1133,
+            "time_s": 45.32,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1368,
+            "time_s": 54.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1718,
+            "time_s": 68.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1764,
+            "time_s": 70.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1938,
+            "time_s": 77.52,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1990,
+            "time_s": 79.6,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2405,
+            "time_s": 96.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2460,
+            "time_s": 98.4,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2730,
+            "time_s": 109.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2806,
+            "time_s": 112.24,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3494,
+            "time_s": 139.76,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3524,
+            "time_s": 140.96,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3570,
+            "time_s": 142.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3667,
+            "time_s": 146.68,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3970,
+            "time_s": 158.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4036,
+            "time_s": 161.44,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4232,
+            "time_s": 169.28,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4257,
+            "time_s": 170.28,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4560,
+            "time_s": 182.4,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4611,
+            "time_s": 184.44,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4639,
+            "time_s": 185.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4795,
+            "time_s": 191.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5374,
+            "time_s": 214.96,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5508,
+            "time_s": 220.32,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5720,
+            "time_s": 228.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6214,
+            "time_s": 248.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6280,
+            "time_s": 251.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6750,
+            "time_s": 270.0,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6797,
+            "time_s": 271.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6920,
+            "time_s": 276.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6977,
+            "time_s": 279.08,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7076,
+            "time_s": 283.04,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7164,
+            "time_s": 286.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7541,
+            "time_s": 301.64,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7662,
+            "time_s": 306.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8069,
+            "time_s": 322.76,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8149,
+            "time_s": 325.96,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8338,
+            "time_s": 333.52,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8607,
+            "time_s": 344.28,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8676,
+            "time_s": 347.04,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8902,
+            "time_s": 356.08,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8937,
+            "time_s": 357.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9122,
+            "time_s": 364.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9167,
+            "time_s": 366.68,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9255,
+            "time_s": 370.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9693,
+            "time_s": 387.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9762,
+            "time_s": 390.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9966,
+            "time_s": 398.64,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10114,
+            "time_s": 404.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10164,
+            "time_s": 406.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10205,
+            "time_s": 408.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10349,
+            "time_s": 413.96,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10662,
+            "time_s": 426.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10722,
+            "time_s": 428.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10931,
+            "time_s": 437.24,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11010,
+            "time_s": 440.4,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11053,
+            "time_s": 442.12,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11258,
+            "time_s": 450.32,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11547,
+            "time_s": 461.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11849,
+            "time_s": 473.96,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11963,
+            "time_s": 478.52,
+            "reason": "visual_cut",
+            "reviewed": false
+          }
+        ],
+        "camera_ranges": [
+          {
+            "start_frame": 0,
+            "end_frame": 130,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 130,
+            "end_frame": 255,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 255,
+            "end_frame": 639,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 639,
+            "end_frame": 683,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 683,
+            "end_frame": 1133,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1133,
+            "end_frame": 1368,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1368,
+            "end_frame": 1718,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1718,
+            "end_frame": 1764,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1764,
+            "end_frame": 1938,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1938,
+            "end_frame": 1990,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1990,
+            "end_frame": 2405,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2405,
+            "end_frame": 2460,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2460,
+            "end_frame": 2730,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2730,
+            "end_frame": 2806,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2806,
+            "end_frame": 3494,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3494,
+            "end_frame": 3524,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3524,
+            "end_frame": 3570,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3570,
+            "end_frame": 3667,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3667,
+            "end_frame": 3970,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3970,
+            "end_frame": 4036,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4036,
+            "end_frame": 4232,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4232,
+            "end_frame": 4257,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4257,
+            "end_frame": 4560,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4560,
+            "end_frame": 4611,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4611,
+            "end_frame": 4639,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4639,
+            "end_frame": 4795,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4795,
+            "end_frame": 5374,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5374,
+            "end_frame": 5508,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5508,
+            "end_frame": 5720,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5720,
+            "end_frame": 6214,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6214,
+            "end_frame": 6280,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6280,
+            "end_frame": 6750,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6750,
+            "end_frame": 6797,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6797,
+            "end_frame": 6920,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6920,
+            "end_frame": 6977,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6977,
+            "end_frame": 7076,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7076,
+            "end_frame": 7164,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7164,
+            "end_frame": 7541,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7541,
+            "end_frame": 7662,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7662,
+            "end_frame": 8069,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8069,
+            "end_frame": 8149,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8149,
+            "end_frame": 8338,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8338,
+            "end_frame": 8607,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8607,
+            "end_frame": 8676,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8676,
+            "end_frame": 8902,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8902,
+            "end_frame": 8937,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8937,
+            "end_frame": 9122,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9122,
+            "end_frame": 9167,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9167,
+            "end_frame": 9255,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9255,
+            "end_frame": 9693,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9693,
+            "end_frame": 9762,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9762,
+            "end_frame": 9966,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9966,
+            "end_frame": 10114,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10114,
+            "end_frame": 10164,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10164,
+            "end_frame": 10205,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10205,
+            "end_frame": 10349,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10349,
+            "end_frame": 10662,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10662,
+            "end_frame": 10722,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10722,
+            "end_frame": 10931,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10931,
+            "end_frame": 11010,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11010,
+            "end_frame": 11053,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11053,
+            "end_frame": 11258,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11258,
+            "end_frame": 11547,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11547,
+            "end_frame": 11849,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11849,
+            "end_frame": 11963,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11963,
+            "end_frame": 12023,
+            "scene": "unknown"
+          }
+        ],
+        "elapsed_s": 24.802,
+        "decoded_frames": 12023,
+        "scope": "Camera/timestamp boundaries only; live, replay and rally status unknown"
+      },
+      "visually_inspected_candidate_pairs": [
+        {
+          "before_frame": 129,
+          "after_frame": 130,
+          "observed": "visible edit",
+          "reviewer": "assistant first visual pass"
+        },
+        {
+          "before_frame": 254,
+          "after_frame": 255,
+          "observed": "visible edit",
+          "reviewer": "assistant first visual pass"
+        },
+        {
+          "before_frame": 638,
+          "after_frame": 639,
+          "observed": "visible edit",
+          "reviewer": "assistant first visual pass"
+        }
+      ],
+      "pilot_window_cut_count": 0
+    },
+    {
+      "run_id": "292891d122ad47e0b393cb41bdb76039",
+      "artifact": {
+        "schema_version": 1,
+        "stage": "segments",
+        "video_id": "c406a1187130b845",
+        "video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+        "start_frame": 0,
+        "end_frame": 12148,
+        "method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "recipe": {
+          "width": 320,
+          "adaptive_threshold": 3.0,
+          "min_content_val": 15.0,
+          "min_scene_len": 15,
+          "window_width": 2
+        },
+        "cut_frames": [
+          153,
+          278,
+          866,
+          895,
+          1093,
+          1385,
+          1495,
+          1805,
+          1851,
+          2023,
+          2176,
+          2306,
+          2445,
+          2653,
+          2702,
+          2837,
+          2902,
+          3205,
+          3261,
+          3446,
+          3481,
+          3598,
+          3838,
+          3911,
+          4157,
+          4579,
+          4637,
+          5110,
+          5340,
+          5408,
+          5597,
+          5658,
+          5838,
+          6018,
+          6064,
+          6344,
+          6406,
+          6590,
+          6755,
+          6820,
+          6885,
+          6940,
+          7293,
+          7397,
+          7617,
+          7918,
+          7974,
+          8167,
+          8486,
+          8542,
+          8895,
+          8961,
+          9175,
+          9262,
+          9384,
+          9616,
+          9797,
+          10247,
+          10286,
+          10337,
+          11073,
+          11116,
+          11339,
+          11443,
+          11587,
+          11656,
+          11902,
+          12006,
+          12117
+        ],
+        "boundaries": [
+          {
+            "frame": 153,
+            "time_s": 6.12,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 278,
+            "time_s": 11.12,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 866,
+            "time_s": 34.64,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 895,
+            "time_s": 35.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1093,
+            "time_s": 43.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1385,
+            "time_s": 55.4,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1495,
+            "time_s": 59.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1805,
+            "time_s": 72.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 1851,
+            "time_s": 74.04,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2023,
+            "time_s": 80.92,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2176,
+            "time_s": 87.04,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2306,
+            "time_s": 92.24,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2445,
+            "time_s": 97.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2653,
+            "time_s": 106.12,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2702,
+            "time_s": 108.08,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2837,
+            "time_s": 113.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 2902,
+            "time_s": 116.08,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3205,
+            "time_s": 128.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3261,
+            "time_s": 130.44,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3446,
+            "time_s": 137.84,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3481,
+            "time_s": 139.24,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3598,
+            "time_s": 143.92,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3838,
+            "time_s": 153.52,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 3911,
+            "time_s": 156.44,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4157,
+            "time_s": 166.28,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4579,
+            "time_s": 183.16,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 4637,
+            "time_s": 185.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5110,
+            "time_s": 204.4,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5340,
+            "time_s": 213.6,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5408,
+            "time_s": 216.32,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5597,
+            "time_s": 223.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5658,
+            "time_s": 226.32,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 5838,
+            "time_s": 233.52,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6018,
+            "time_s": 240.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6064,
+            "time_s": 242.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6344,
+            "time_s": 253.76,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6406,
+            "time_s": 256.24,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6590,
+            "time_s": 263.6,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6755,
+            "time_s": 270.2,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6820,
+            "time_s": 272.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6885,
+            "time_s": 275.4,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 6940,
+            "time_s": 277.6,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7293,
+            "time_s": 291.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7397,
+            "time_s": 295.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7617,
+            "time_s": 304.68,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7918,
+            "time_s": 316.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 7974,
+            "time_s": 318.96,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8167,
+            "time_s": 326.68,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8486,
+            "time_s": 339.44,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8542,
+            "time_s": 341.68,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8895,
+            "time_s": 355.8,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 8961,
+            "time_s": 358.44,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9175,
+            "time_s": 367.0,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9262,
+            "time_s": 370.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9384,
+            "time_s": 375.36,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9616,
+            "time_s": 384.64,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 9797,
+            "time_s": 391.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10247,
+            "time_s": 409.88,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10286,
+            "time_s": 411.44,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 10337,
+            "time_s": 413.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11073,
+            "time_s": 442.92,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11116,
+            "time_s": 444.64,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11339,
+            "time_s": 453.56,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11443,
+            "time_s": 457.72,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11587,
+            "time_s": 463.48,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11656,
+            "time_s": 466.24,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 11902,
+            "time_s": 476.08,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 12006,
+            "time_s": 480.24,
+            "reason": "visual_cut",
+            "reviewed": false
+          },
+          {
+            "frame": 12117,
+            "time_s": 484.68,
+            "reason": "visual_cut",
+            "reviewed": false
+          }
+        ],
+        "camera_ranges": [
+          {
+            "start_frame": 0,
+            "end_frame": 153,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 153,
+            "end_frame": 278,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 278,
+            "end_frame": 866,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 866,
+            "end_frame": 895,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 895,
+            "end_frame": 1093,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1093,
+            "end_frame": 1385,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1385,
+            "end_frame": 1495,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1495,
+            "end_frame": 1805,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1805,
+            "end_frame": 1851,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 1851,
+            "end_frame": 2023,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2023,
+            "end_frame": 2176,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2176,
+            "end_frame": 2306,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2306,
+            "end_frame": 2445,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2445,
+            "end_frame": 2653,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2653,
+            "end_frame": 2702,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2702,
+            "end_frame": 2837,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2837,
+            "end_frame": 2902,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 2902,
+            "end_frame": 3205,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3205,
+            "end_frame": 3261,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3261,
+            "end_frame": 3446,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3446,
+            "end_frame": 3481,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3481,
+            "end_frame": 3598,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3598,
+            "end_frame": 3838,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3838,
+            "end_frame": 3911,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 3911,
+            "end_frame": 4157,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4157,
+            "end_frame": 4579,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4579,
+            "end_frame": 4637,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 4637,
+            "end_frame": 5110,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5110,
+            "end_frame": 5340,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5340,
+            "end_frame": 5408,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5408,
+            "end_frame": 5597,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5597,
+            "end_frame": 5658,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5658,
+            "end_frame": 5838,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 5838,
+            "end_frame": 6018,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6018,
+            "end_frame": 6064,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6064,
+            "end_frame": 6344,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6344,
+            "end_frame": 6406,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6406,
+            "end_frame": 6590,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6590,
+            "end_frame": 6755,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6755,
+            "end_frame": 6820,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6820,
+            "end_frame": 6885,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6885,
+            "end_frame": 6940,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 6940,
+            "end_frame": 7293,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7293,
+            "end_frame": 7397,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7397,
+            "end_frame": 7617,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7617,
+            "end_frame": 7918,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7918,
+            "end_frame": 7974,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 7974,
+            "end_frame": 8167,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8167,
+            "end_frame": 8486,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8486,
+            "end_frame": 8542,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8542,
+            "end_frame": 8895,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8895,
+            "end_frame": 8961,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 8961,
+            "end_frame": 9175,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9175,
+            "end_frame": 9262,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9262,
+            "end_frame": 9384,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9384,
+            "end_frame": 9616,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9616,
+            "end_frame": 9797,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 9797,
+            "end_frame": 10247,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10247,
+            "end_frame": 10286,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10286,
+            "end_frame": 10337,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 10337,
+            "end_frame": 11073,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11073,
+            "end_frame": 11116,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11116,
+            "end_frame": 11339,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11339,
+            "end_frame": 11443,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11443,
+            "end_frame": 11587,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11587,
+            "end_frame": 11656,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11656,
+            "end_frame": 11902,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 11902,
+            "end_frame": 12006,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 12006,
+            "end_frame": 12117,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 12117,
+            "end_frame": 12148,
+            "scene": "unknown"
+          }
+        ],
+        "elapsed_s": 19.737,
+        "decoded_frames": 12148,
+        "scope": "Camera/timestamp boundaries only; live, replay and rally status unknown"
+      },
+      "visually_inspected_candidate_pairs": [
+        {
+          "before_frame": 152,
+          "after_frame": 153,
+          "observed": "visible edit",
+          "reviewer": "assistant first visual pass"
+        },
+        {
+          "before_frame": 277,
+          "after_frame": 278,
+          "observed": "visible edit",
+          "reviewer": "assistant first visual pass"
+        },
+        {
+          "before_frame": 865,
+          "after_frame": 866,
+          "observed": "visible edit",
+          "reviewer": "assistant first visual pass"
+        }
+      ],
+      "pilot_window_cut_count": 0
+    }
+  ],
+  "gpu_probe": {
+    "video_id": "970dbd8adfe548d8",
+    "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+    "start_frame": 630,
+    "end_frame": 710,
+    "qa_only": true,
+    "runs": {
+      "players": {
+        "id": "c376068c27d24130b88267f10d976366",
+        "summary": {
+          "schema_version": 1,
+          "video_id": "970dbd8adfe548d8",
+          "stage": "players",
+          "model": "yolo11n-pose",
+          "device": "cuda:0",
+          "image_size": 1280,
+          "peak_gpu_memory_mb": 101.9,
+          "start_frame": 630,
+          "end_frame": 710,
+          "stride": 1,
+          "annotation_revision": 1,
+          "calibrated": false,
+          "calibrated_frames": 9,
+          "elapsed_s": 5.611,
+          "processed_frames": 80,
+          "inference_fps": 14.26,
+          "expected_players": 2,
+          "mean_detections": 3.26,
+          "cut_frames": [
+            639,
+            683
+          ],
+          "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+          "camera_ranges": [
+            {
+              "start_frame": 630,
+              "end_frame": 639,
+              "scene": "unknown"
+            },
+            {
+              "start_frame": 639,
+              "end_frame": 683,
+              "scene": "unknown"
+            },
+            {
+              "start_frame": 683,
+              "end_frame": 710,
+              "scene": "unknown"
+            }
+          ],
+          "tracker_reset_at_cuts": true
+        }
+      },
+      "shuttle": {
+        "id": "3a78b8c68c3a4a02b2328dea7de57caf",
+        "summary": {
+          "schema_version": 1,
+          "video_id": "970dbd8adfe548d8",
+          "stage": "shuttle",
+          "model": "TrackNetV3",
+          "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "device": "cuda:0",
+          "input_size": [
+            512,
+            288
+          ],
+          "seq_len": 8,
+          "precision": "float16",
+          "ensemble": "weighted overlapping windows",
+          "start_frame": 630,
+          "end_frame": 710,
+          "processed_frames": 80,
+          "visible_frames": 0,
+          "repaired_frames": 0,
+          "cut_frames": [
+            639,
+            683
+          ],
+          "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+          "camera_ranges": [
+            {
+              "start_frame": 630,
+              "end_frame": 639,
+              "scene": "unknown"
+            },
+            {
+              "start_frame": 639,
+              "end_frame": 683,
+              "scene": "unknown"
+            },
+            {
+              "start_frame": 683,
+              "end_frame": 710,
+              "scene": "unknown"
+            }
+          ],
+          "temporal_context_crosses_cuts": false,
+          "elapsed_s": 7.583,
+          "inference_fps": 10.55,
+          "peak_gpu_memory_mb": 430.3
+        }
+      }
+    },
+    "tracker_ids_per_view": [
+      [
+        1,
+        2
+      ],
+      [
+        3,
+        4,
+        5,
+        13,
+        23
+      ],
+      [
+        24,
+        25,
+        26,
+        27,
+        28,
+        52
+      ]
+    ]
+  },
+  "limitations": [
+    "Candidate counts do not establish cut precision/recall.",
+    "Only six candidate pairs inspected; no exhaustive ground-truth boundaries.",
+    "Live/replay/non-play and rally semantics remain unknown.",
+    "GPU probe calibration is QA-only, not new reviewed court or event ground truth.",
+    "Short/gradual transitions and camera movement remain unvalidated."
+  ]
+}

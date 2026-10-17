@@ -239,7 +239,9 @@ def propose_contacts(shuttle_run, player_run, video):
         else []
     )
     player_times = [row["time_s"] for row in players]
-    cuts = set(shuttle_run.get("cut_frames", []))
+    cuts = set(shuttle_run.get("cut_frames", [])) | set(
+        player_run.get("cut_frames", []) if player_run else []
+    )
     diagonal = math.hypot(video["width"], video["height"])
     candidates = []
     segment_ids = []

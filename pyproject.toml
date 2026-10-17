@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "badminton-match-analyzer"
-version = "0.7.0"
+version = "0.8.0"
 description = "Local badminton video inspection, tracking, and annotation"
 requires-python = ">=3.10"
 dependencies = [
@@ -16,6 +16,7 @@ dependencies = [
   "Pillow>=11,<13",
   "psutil>=5.8,<8",
   "python-multipart>=0.0.22,<1",
+  "scenedetect==0.7.2",
 ]
 
 [project.optional-dependencies]

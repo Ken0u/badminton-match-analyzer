@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 
 from .config import WEIGHTS
+from .segments import scan_boundaries
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
 
@@ -32,23 +33,44 @@ def track_players(
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     if device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
-    model = YOLO(str(weights))
     timestamps = timestamps_for(data, video["id"])
     validate_range(video, timestamps, start_frame, end_frame)
     began = time.perf_counter()
+    boundaries = scan_boundaries(
+        video, root, data, start_frame, end_frame, lambda value: progress(value * 0.1)
+    )
+    cut_frames = set(boundaries["cut_frames"])
     rows, counts = [], []
     calibrated_frames = 0
+    segment_start = start_frame
+    last_cut = start_frame if start_frame in cut_frames else None
+    track_offset, largest_track = 0, 0
+    pending_reset = False
+    model = YOLO(str(weights))
     try:
         for index, timestamp, frame in iter_frames(
             video, root, timestamps, start_frame, end_frame
         ):
+            if index in cut_frames and index > start_frame:
+                segment_start = index
+                last_cut = index
+                pending_reset = True
             if (index - start_frame) % stride:
                 continue
+            if pending_reset:
+                # Ultralytics' tracker reset also resets its numeric ID counter.
+                # Allocate a disjoint namespace so reviewed identities cannot
+                # silently attach to a different person after the edit.
+                for tracker in getattr(model.predictor, "trackers", []):
+                    tracker.reset()
+                track_offset = largest_track
+                pending_reset = False
             calibration = next(
                 (
                     c
                     for c in annotations.calibrations
                     if c.start_frame <= index < c.end_frame
+                    and (last_cut is None or c.start_frame >= last_cut)
                 ),
                 None,
             )
@@ -89,18 +111,30 @@ def track_players(
                 )
                 players.append(
                     {
-                        "track_id": int(box.id.item()) if box.id is not None else None,
+                        "track_id": int(box.id.item()) + track_offset
+                        if box.id is not None
+                        else None,
                         "player_id": None,
                         "box": [x1, y1, x2, y2],
                         "confidence": float(box.conf.item()),
                         "keypoints": points,
                     }
                 )
+                if players[-1]["track_id"] is not None:
+                    largest_track = max(largest_track, players[-1]["track_id"])
             rows.append(
-                {"frame": index, "time_s": timestamps[index], "players": players}
+                {
+                    "frame": index,
+                    "time_s": timestamps[index],
+                    "players": players,
+                    "camera_segment_start_frame": segment_start,
+                    "calibration_valid": calibration is not None,
+                }
             )
             counts.append(len(players))
-            progress((index - start_frame + 1) / max(1, end_frame - start_frame))
+            progress(
+                0.1 + 0.9 * (index - start_frame + 1) / max(1, end_frame - start_frame)
+            )
         elapsed = time.perf_counter() - began
         result = {
             "schema_version": 1,
@@ -123,6 +157,10 @@ def track_players(
             "inference_fps": round(len(rows) / max(elapsed, 0.001), 2),
             "expected_players": 2 if video["mode"] == "singles" else 4,
             "mean_detections": round(sum(counts) / max(1, len(counts)), 2),
+            "cut_frames": boundaries["cut_frames"],
+            "camera_boundary_method": boundaries["method"],
+            "camera_ranges": boundaries["camera_ranges"],
+            "tracker_reset_at_cuts": True,
             "frames": rows,
         }
         write_json(output, result)
