@@ -159,6 +159,8 @@ New-Item -ItemType Directory -Path .cache -Force | Out-Null
 .\.venv\Scripts\ruff.exe check backend tests scripts
 ```
 
+[The decoder reliability report](docs/DECODER_SHUTDOWN_REPORT.md) records the native threaded-shutdown fix and source-video checks. Media contexts retain native FFmpeg diagnostics and complete vision-library initialization before player decoding.
+
 The real-checkpoint GPU test is opt-in and uses an isolated database:
 
 ```powershell

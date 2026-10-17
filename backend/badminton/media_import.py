@@ -9,6 +9,8 @@ from uuid import uuid4
 
 import av
 
+from .av_runtime import open_media
+
 MAX_MEDIA_BYTES = 2 * 1024**3
 SUPPORTED_EXTENSIONS = frozenset({".mp4", ".mov", ".mkv", ".avi", ".webm"})
 _VIDEO_ID = re.compile(r"[A-Za-z0-9_-]{11}\Z")
@@ -35,7 +37,7 @@ def _validate_video(path, suffix):
     inspection performed by the ingester.
     """
     try:
-        with av.open(
+        with open_media(
             str(path), options={"protocol_whitelist": "file,pipe"}
         ) as container:
             formats = set(container.format.name.split(","))

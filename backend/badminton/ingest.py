@@ -4,9 +4,9 @@ import hashlib
 import itertools
 from pathlib import Path
 
-import av
 from PIL import Image, ImageDraw
 
+from .av_runtime import open_media
 from .orientation import (
     OrientationError,
     display_dimensions,
@@ -35,7 +35,7 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
         )
     folder = store.data / video_id
     folder.mkdir(parents=True, exist_ok=True)
-    with av.open(str(path)) as container:
+    with open_media(str(path)) as container:
         stream = container.streams.video[0]
         stream.thread_type = "AUTO"
         origin = float((stream.start_time or 0) * stream.time_base)
@@ -125,7 +125,7 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
 
 
 def read_frame(path: Path, time_s: float, origin: float = 0):
-    with av.open(str(path)) as container:
+    with open_media(str(path)) as container:
         stream = container.streams.video[0]
         stream.thread_type = "AUTO"
         target = time_s + origin

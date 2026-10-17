@@ -6,8 +6,7 @@ import json
 import math
 from functools import lru_cache
 
-import av
-
+from .av_runtime import open_media
 from .orientation import orient_frame
 
 
@@ -74,7 +73,7 @@ def seconds_to_frames(video, times, start, duration):
 
 
 def iter_frames(video, root, times, start, end):
-    with av.open(str(resolve_source(video, root))) as container:
+    with open_media(str(resolve_source(video, root))) as container:
         stream = container.streams.video[0]
         stream.thread_type = "AUTO"
         target = times[start] + video["source_start_s"]

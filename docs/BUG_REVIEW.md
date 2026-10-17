@@ -2,6 +2,22 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The latest native run found a decoder-shutdown deadlock after its final frame.
+Two native traces confirmed a main thread waiting for FFmpeg teardown while a
+decoder worker waited for the Python logging callback's GIL. Torchvision can
+install that callback during lazy initialization. Managed media contexts now
+restore FFmpeg's native callback before opening/closing; player tracking finishes
+vision-library initialization before any decoder starts. This preserves threaded
+source decoding and prevents this callback/teardown cycle.
+
+[The decoder report](DECODER_SHUTDOWN_REPORT.md) records the reproduced failure,
+completed 114-frame CUDA rerun, and actual full-view perception findings. Current
+checks: **340 standard tests passed**, two optional GPU tests skipped and passed
+separately, plus fresh generated-media browser checks. Native diagnostic/error
+behavior and repeated threaded seek/early-close have bounded subprocess
+regressions. The opt-in recognition fixture now compares candidate IDs/counts
+with actual in-range shot targets, preserving newly saved serves/endings.
+
 The latest source audit exposed an annotation gap: an occluded rally ending could
 only be saved as an exact frame plus free-text notes. The editor and contract now
 preserve separate inclusive terminal bounds for rally endings. Those bounds
