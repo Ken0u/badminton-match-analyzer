@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "dataset": "ShuttleSet",
+  "match_id": 1,
+  "set_id": 1,
+  "split": "train",
+  "source_url": "https://www.youtube.com/watch?v=O669aZhH0LI",
+  "source_format_id": "398",
+  "source_average_rate": "25",
+  "source_time_base": "1/12800",
+  "source_start_pts": 0,
+  "derived_path": "data/datasets/shuttleset/media/match1-anchor.mp4",
+  "derived_sha256": "1ae761b4f2f46b0168ff0193a9ac79d2a98f6564a5d64e18ce2e9243285c3a79",
+  "parent_time_range_s": [
+    458.0,
+    464.48
+  ],
+  "derived_frame_count": 163,
+  "reference_source_frames": [
+    11496,
+    11582
+  ],
+  "status": "needs_contact_adjudication",
+  "verified_contact_count": 0,
+  "reviewer": "assistant first visual pass",
+  "notes": "Decoded stream confirms 25 fps. The first supplied serve reference does not establish an unambiguous racket-contact frame in the visual review. FPS agreement alone is insufficient; no direct-video labels are certified by this audit."
+}

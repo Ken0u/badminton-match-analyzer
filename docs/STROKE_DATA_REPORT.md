@@ -5,6 +5,10 @@ training the missing stroke-side head and validating family recognition. It does
 not train a new model, certify imported video alignment, or establish full-match
 accuracy. Real app annotations remain unchanged at pilot revision 2.
 
+The subsequent [side-head baseline](STROKE_SIDE_REPORT.md) trains from the original
+publishers' separately pinned feature archive. It does not change this raw-video
+alignment gate or convert unverified source frames into application annotations.
+
 ## Source and interpretation
 
 The source is the authors' [ShuttleSet repository](https://github.com/wywyWang/CoachAI-Projects/tree/45517f7d4cb936b03f3eabf939cc7959d39226fe/ShuttleSet),

@@ -22,7 +22,7 @@ YouTube support requires `pip install '.[youtube]'` and Node.js 22 or later. Pub
 
 For containers, single-user authentication, persistent storage, model installation, and deployment checks, see [DEPLOYMENT.md](docs/DEPLOYMENT.md). Binding a non-loopback interface requires configured credentials or an explicit private-proxy override.
 
-Player tracking draws tracker IDs and pose skeletons. Reviewed frame ranges map them to persistent players; contact suggestions use those mappings as hitter hints. Shuttle tracking adds a gold trajectory and visible/missing observations. An experimental pretrained singles model suggests shot families for review. Reviewed clips and manually marked shuttle points support reproducible contact/localization reports. Automatic identity recovery, reliable serve/end detection, doubles recognition, and learned stroke-side prediction remain pending. See [PROJECT_PLAN.md](PROJECT_PLAN.md), [the annotation guide](docs/ANNOTATION_GUIDE.md), and [the pilot evaluation](docs/PILOT_REPORT.md).
+Player tracking draws tracker IDs and pose skeletons. Reviewed frame ranges map them to persistent players; contact suggestions use those mappings as hitter hints. Shuttle tracking adds a gold trajectory and visible/missing observations. Experimental singles models suggest shot families and forehand/backhand labels for review. Reviewed clips and manually marked shuttle points support reproducible reports. Automatic identity recovery, reliable serve/end detection, doubles recognition, and validated recognition on the app's YOLO inputs remain pending. See [PROJECT_PLAN.md](PROJECT_PLAN.md), [the annotation guide](docs/ANNOTATION_GUIDE.md), and [the pilot evaluation](docs/PILOT_REPORT.md).
 
 ## Fresh environment
 
@@ -41,7 +41,7 @@ For the GPU tracking environment used on this laptop:
 .\.venv\Scripts\python.exe scripts/download_models.py --kind all
 ```
 
-The CUDA wheels are a large download. For a different machine, select a suitable PyTorch build using its [official installation instructions](https://pytorch.org/get-started/locally/). Inference falls back to CPU when CUDA is unavailable. Model files and generated data stay outside Git; the download script records and checks each checkpoint's SHA-256. The vendored TrackNet and BST models include their upstream MIT licenses and pinned source manifests.
+The CUDA wheels are a large download. For a different machine, select a suitable PyTorch build using its [official installation instructions](https://pytorch.org/get-started/locally/). Inference falls back to CPU when CUDA is unavailable. Large pretrained weights and generated data stay outside Git; the download script records and checks each checkpoint's SHA-256. The small project-trained side head and its training report are packaged under `backend/badminton/assets/`. The vendored TrackNet and BST models include their upstream MIT licenses and pinned source manifests.
 
 `requirements.lock` records the verified Windows/Python 3.10/CUDA environment. Recreate that exact environment with `python -m pip install -r requirements.lock` after creating the virtual environment. The lock includes the optional tracking and test packages.
 
@@ -89,9 +89,9 @@ Short occlusions may produce **Review possible contact** cards with a frame rang
 
 The equivalent API is `POST /api/videos/<id>/track` with `stage: "players"` or `"shuttle"`, followed by `POST /api/videos/<id>/contacts` with `shuttle_run_id` and optional `player_run_id`. All processing jobs, including CLI ingestion, share admission control within the project database.
 
-## Experimental singles shot families
+## Experimental singles shot labels
 
-After tracking both players and the shuttle on every frame of the same calibrated window, choose **Suggest shot families**. The BST-0 checkpoint uses a centered one-second pose/shuttle clip around saved reviewed shots and contact proposals. Missing context, camera cuts, or insufficient observations produce an abstention. Select a result to load an editor draft, inspect the footage, correct the family/hitter/timing/side, then update and save. Inference never saves labels automatically. Existing manually entered forehand/backhand labels are preserved; model stroke side remains `unknown`.
+After tracking both players and the shuttle on every frame of the same calibrated window, choose **Suggest shot labels**. The BST-0 checkpoint uses a centered one-second pose/shuttle clip around saved reviewed shots and contact proposals. Missing context, camera cuts, or insufficient observations produce an abstention. A separate small head proposes forehand/backhand for confident target-family results, using the predicted hitter court end. Select a result to load an editor draft, inspect the footage, correct the family/hitter/timing/side, then update and save. Inference never saves labels automatically. Existing manually entered stroke sides are preserved. An unknown side is filled only when its reviewed hitter mapping agrees with the suggestion; conflicting or unresolved hitters keep it unknown in the editor.
 
 Install the `tracking,recognition` extras and fetch `scripts/download_models.py --kind stroke` (also included in `--kind all`). The CPU/GPU container targets include these dependencies. The review target keeps working without PyTorch. API: `POST /api/videos/<id>/recognize` with `player_run_id`, `shuttle_run_id`, and optional matching `contacts_run_id`. CLI example using the cached sample runs:
 
@@ -99,7 +99,7 @@ Install the `tracking,recognition` extras and fetch `scripts/download_models.py 
 .\.venv\Scripts\python.exe -m badminton.cli recognize 970dbd8adfe548d8 --players-run b8bdae17e8374a20bbf16f554c551f19 --shuttle-run ad0696c19b4b4be0beddf592a641cca0 --contacts-run 1f287c4134aa4633ad694d33c2ce9b42
 ```
 
-Family scores are uncalibrated model rankings. This integration transfers a model trained with MMPose to YOLO poses, and has no held-out family accuracy result yet. It supports singles only and cannot establish complete rally annotations. [The recognition report](docs/SHOT_RECOGNITION_REPORT.md) records source classes, mapping, measured smoke checks, and the remaining evaluation work.
+Scores are uncalibrated model rankings. Both models transfer published MMPose features to the app's YOLO poses, and direct-video recognition accuracy remains unvalidated. On a filtered published-feature test subset, family macro F1 is 0.827 and the side head's closed-set balanced accuracy is 0.942 with known hitter court end. These component results do not establish uploaded-video accuracy. [The side-training report](docs/STROKE_SIDE_REPORT.md) includes coverage, strict misses, rare-class support, and the 0.718 conditional family/court-end/side tuple result. The app supports singles recognition only; complete rally annotations remain unfinished.
 
 ## Reviewed identities and accuracy
 
