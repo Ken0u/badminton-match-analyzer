@@ -188,7 +188,7 @@ try {
   );
   assert.match(
     await page.locator("#evaluation-results").textContent(),
-    /Contacts F1/,
+    /Contact proposals F1/,
   );
   assert.match(
     await page.locator("#evaluation-results").textContent(),

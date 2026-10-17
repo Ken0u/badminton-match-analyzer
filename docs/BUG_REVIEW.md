@@ -10,7 +10,9 @@ Latest increment: reviewed identity mappings, clip completeness, manual shuttle 
 
 Two additional artifact bugs were found and fixed during this increment: player assignments could accept an artifact whose internal video or stage contradicted its completed job, and evaluation could return a server error for that mismatch. Both now return actionable validation errors. The editor also preserves `corrected` status across repeated edits.
 
-Latest checks: **84 standard backend tests pass, one optional GPU test is skipped**, both browser suites pass, and lint/format checks pass. The real-GPU results below are retained from the preceding increment; model inference code has not changed.
+Review/evaluation milestone checks: **84 standard backend tests passed**, with one optional GPU test skipped and both original browser suites passing. Subsequent import and contact increments add their focused regressions and CI checks; see their reports for current evidence.
+
+Contact detection now handles supported short gaps as uncertain proposals and rejects smooth apex curvature. Timing bounds persist through review/export, and unresolved reviewed intervals cannot be used as exact evaluation labels. [The contact report](CONTACT_DETECTION_REPORT.md) records the unchanged pilot comparison: the false apex is removed, one additional hit is covered by an interval, and two hits remain missed.
 
 | Confirmed issue | Resulting fix | Verification |
 | --- | --- | --- |

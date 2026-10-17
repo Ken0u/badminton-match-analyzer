@@ -374,6 +374,31 @@
               <label id="player-label"
                 >Hitter<select id="event-player"></select
               ></label>
+              <details id="contact-uncertainty">
+                <summary>Contact timing uncertainty</summary>
+                <p class="suggestion-help">
+                  For an occluded contact, keep the possible frame range. Clear
+                  it once you can identify the contact frame.
+                </p>
+                <div class="row">
+                  <label
+                    >Earliest frame<input
+                      id="contact-start"
+                      type="number"
+                      min="0"
+                      placeholder="Exact timing" /></label
+                  ><label
+                    >Latest frame (inclusive)<input
+                      id="contact-end"
+                      type="number"
+                      min="0"
+                      placeholder="Exact timing"
+                  /></label>
+                </div>
+                <button id="clear-contact-interval" type="button" class="quiet">
+                  Use exact contact frame
+                </button>
+              </details>
               <label id="family-label"
                 >Shot family<select id="event-family">
                   <option value="unknown">Unknown / needs review</option>

@@ -60,9 +60,20 @@ class Event(StrictModel):
     notes: str = Field(default="", max_length=2000)
     source_run_id: str | None = Field(default=None, max_length=64)
     candidate_id: str | None = Field(default=None, max_length=64)
+    contact_start_frame: int | None = Field(default=None, ge=0)
+    contact_end_frame: int | None = Field(default=None, ge=0)
 
     @model_validator(mode="after")
     def valid_kind_fields(self):
+        if (self.contact_start_frame is None) != (self.contact_end_frame is None):
+            raise ValueError("Contact uncertainty requires both start and end frames")
+        if self.contact_start_frame is not None:
+            if self.kind == "rally_end":
+                raise ValueError("Rally endings cannot carry a contact interval")
+            if not self.contact_start_frame <= self.frame <= self.contact_end_frame:
+                raise ValueError(
+                    "The event frame must lie inside its inclusive contact interval"
+                )
         if (self.source_run_id is None) != (self.candidate_id is None):
             raise ValueError("Proposal provenance requires both run and candidate IDs")
         if self.kind == "shot" and (self.family is None or self.side is None):

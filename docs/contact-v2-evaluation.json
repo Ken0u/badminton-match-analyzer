@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-17T08:09:27.318306+00:00",
+  "video_id": "970dbd8adfe548d8",
+  "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+  "annotation_revision": 2,
+  "shuttle_run_id": "ad0696c19b4b4be0beddf592a641cca0",
+  "player_run_id": "b8bdae17e8374a20bbf16f554c551f19",
+  "baseline_run_id": "70357b1ea6ca48288dacfea0a02c65ba",
+  "method": "gap-aware motion and pose proposals v2",
+  "raw_observations_modified": false,
+  "limitations": [
+    "Development pilot, not an independent accuracy benchmark.",
+    "Occlusion representative frames are navigation locations, not measured hit times.",
+    "Explicit cut metadata is honored; camera cuts are not automatically detected here."
+  ],
+  "baseline": {
+    "representative_time_evaluation": {
+      "video_id": "970dbd8adfe548d8",
+      "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "annotation_revision": 2,
+      "run_id": "70357b1ea6ca48288dacfea0a02c65ba",
+      "run_start_frame": 2000,
+      "run_end_frame": 2250,
+      "stage": "contacts",
+      "status": "scored",
+      "ground_truth": "reviewed/corrected serve and shot events",
+      "prediction_timing": {
+        "strict_metrics": "Representative source times within tolerance; uncertain proposal times are navigation locations, not measured hit times",
+        "uncertain_candidate_time_s": "Navigation frame only; review the entire possible-contact interval",
+        "interval_bounds": "inclusive"
+      },
+      "matching": "maximum cardinality, then minimum total absolute source-time error",
+      "coverage": {
+        "usable_window_ids": ["pilot-singles-2000-2100"],
+        "skipped_windows": [],
+        "frame_ranges": [[2000, 2100]],
+        "reviewed_frames": 100,
+        "reviewed_contacts": 4,
+        "evaluated_candidates": 2,
+        "uncertain_candidate_count": 0,
+        "excluded_reviewed_contacts": 0,
+        "excluded_candidates": 6
+      },
+      "tolerance_s": 0.12,
+      "metrics": {
+        "tp": 1,
+        "fp": 1,
+        "fn": 3,
+        "precision": 0.5,
+        "recall": 0.25,
+        "f1": 0.3333333333333333
+      },
+      "tighter_tolerance": {
+        "tolerance_s": 0.04,
+        "metrics": {
+          "tp": 1,
+          "fp": 1,
+          "fn": 3,
+          "precision": 0.5,
+          "recall": 0.25,
+          "f1": 0.3333333333333333
+        },
+        "matches": [
+          {
+            "event_id": "pilot-singles-2007",
+            "candidate_id": "contact-2007",
+            "event_frame": 2007,
+            "candidate_frame": 2007,
+            "event_time_s": 80.28,
+            "candidate_time_s": 80.28,
+            "signed_error_s": 0.0,
+            "absolute_error_s": 0.0
+          }
+        ],
+        "unmatched_event_ids": [
+          "pilot-singles-2039",
+          "pilot-singles-2048",
+          "pilot-singles-2077"
+        ],
+        "unmatched_candidate_ids": ["contact-2060"],
+        "mean_absolute_error_s": 0.0,
+        "max_absolute_error_s": 0.0
+      },
+      "interval_coverage": {
+        "meaning": "A proposal interval contains a reviewed point contact; this does not measure exact hit timing accuracy",
+        "matching": "one-to-one maximum-cardinality inclusive-frame containment within reviewed ranges",
+        "reviewed_contact_count": 4,
+        "candidate_count": 2,
+        "matched_count": 1,
+        "matches": [
+          {
+            "event_id": "pilot-singles-2007",
+            "event_frame": 2007,
+            "candidate_id": "contact-2007",
+            "start_frame": 2007,
+            "end_frame": 2007,
+            "uncertain_candidate": false
+          }
+        ],
+        "unmatched_event_ids": [
+          "pilot-singles-2039",
+          "pilot-singles-2048",
+          "pilot-singles-2077"
+        ],
+        "unmatched_candidate_ids": ["contact-2060"]
+      },
+      "matches": [
+        {
+          "event_id": "pilot-singles-2007",
+          "candidate_id": "contact-2007",
+          "event_frame": 2007,
+          "candidate_frame": 2007,
+          "event_time_s": 80.28,
+          "candidate_time_s": 80.28,
+          "signed_error_s": 0.0,
+          "absolute_error_s": 0.0
+        }
+      ],
+      "unmatched_event_ids": [
+        "pilot-singles-2039",
+        "pilot-singles-2048",
+        "pilot-singles-2077"
+      ],
+      "unmatched_candidate_ids": ["contact-2060"],
+      "mean_absolute_error_s": 0.0,
+      "max_absolute_error_s": 0.0
+    },
+    "interval_coverage": {
+      "meaning": "A proposal interval contains a reviewed point contact; this does not measure exact hit timing accuracy",
+      "matching": "one-to-one maximum-cardinality inclusive-frame containment within reviewed ranges",
+      "reviewed_contact_count": 4,
+      "candidate_count": 2,
+      "matched_count": 1,
+      "matches": [
+        {
+          "event_id": "pilot-singles-2007",
+          "event_frame": 2007,
+          "candidate_id": "contact-2007",
+          "start_frame": 2007,
+          "end_frame": 2007,
+          "uncertain_candidate": false
+        }
+      ],
+      "unmatched_event_ids": [
+        "pilot-singles-2039",
+        "pilot-singles-2048",
+        "pilot-singles-2077"
+      ],
+      "unmatched_candidate_ids": ["contact-2060"]
+    }
+  },
+  "updated": {
+    "representative_time_evaluation": {
+      "video_id": "970dbd8adfe548d8",
+      "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "annotation_revision": 2,
+      "run_id": "benchmark-v2-unsaved-proposals",
+      "run_start_frame": 2000,
+      "run_end_frame": 2250,
+      "stage": "contacts",
+      "status": "scored",
+      "ground_truth": "reviewed/corrected serve and shot events",
+      "prediction_timing": {
+        "strict_metrics": "Representative source times within tolerance; uncertain proposal times are navigation locations, not measured hit times",
+        "uncertain_candidate_time_s": "Navigation frame only; review the entire possible-contact interval",
+        "interval_bounds": "inclusive"
+      },
+      "matching": "maximum cardinality, then minimum total absolute source-time error",
+      "coverage": {
+        "usable_window_ids": ["pilot-singles-2000-2100"],
+        "skipped_windows": [],
+        "frame_ranges": [[2000, 2100]],
+        "reviewed_frames": 100,
+        "reviewed_contacts": 4,
+        "evaluated_candidates": 2,
+        "uncertain_candidate_count": 1,
+        "excluded_reviewed_contacts": 0,
+        "excluded_candidates": 3
+      },
+      "tolerance_s": 0.12,
+      "metrics": {
+        "tp": 2,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666
+      },
+      "tighter_tolerance": {
+        "tolerance_s": 0.04,
+        "metrics": {
+          "tp": 2,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6666666666666666
+        },
+        "matches": [
+          {
+            "event_id": "pilot-singles-2007",
+            "candidate_id": "contact-2007",
+            "event_frame": 2007,
+            "candidate_frame": 2007,
+            "event_time_s": 80.28,
+            "candidate_time_s": 80.28,
+            "signed_error_s": 0.0,
+            "absolute_error_s": 0.0
+          },
+          {
+            "event_id": "pilot-singles-2077",
+            "candidate_id": "contact-gap-2076-2080",
+            "event_frame": 2077,
+            "candidate_frame": 2078,
+            "event_time_s": 83.08,
+            "candidate_time_s": 83.12,
+            "signed_error_s": 0.04000000000000625,
+            "absolute_error_s": 0.04000000000000625
+          }
+        ],
+        "unmatched_event_ids": ["pilot-singles-2039", "pilot-singles-2048"],
+        "unmatched_candidate_ids": [],
+        "mean_absolute_error_s": 0.020000000000003126,
+        "max_absolute_error_s": 0.04000000000000625
+      },
+      "interval_coverage": {
+        "meaning": "A proposal interval contains a reviewed point contact; this does not measure exact hit timing accuracy",
+        "matching": "one-to-one maximum-cardinality inclusive-frame containment within reviewed ranges",
+        "reviewed_contact_count": 4,
+        "candidate_count": 2,
+        "matched_count": 2,
+        "matches": [
+          {
+            "event_id": "pilot-singles-2007",
+            "event_frame": 2007,
+            "candidate_id": "contact-2007",
+            "start_frame": 2007,
+            "end_frame": 2007,
+            "uncertain_candidate": false
+          },
+          {
+            "event_id": "pilot-singles-2077",
+            "event_frame": 2077,
+            "candidate_id": "contact-gap-2076-2080",
+            "start_frame": 2076,
+            "end_frame": 2080,
+            "uncertain_candidate": true
+          }
+        ],
+        "unmatched_event_ids": ["pilot-singles-2039", "pilot-singles-2048"],
+        "unmatched_candidate_ids": []
+      },
+      "matches": [
+        {
+          "event_id": "pilot-singles-2007",
+          "candidate_id": "contact-2007",
+          "event_frame": 2007,
+          "candidate_frame": 2007,
+          "event_time_s": 80.28,
+          "candidate_time_s": 80.28,
+          "signed_error_s": 0.0,
+          "absolute_error_s": 0.0
+        },
+        {
+          "event_id": "pilot-singles-2077",
+          "candidate_id": "contact-gap-2076-2080",
+          "event_frame": 2077,
+          "candidate_frame": 2078,
+          "event_time_s": 83.08,
+          "candidate_time_s": 83.12,
+          "signed_error_s": 0.04000000000000625,
+          "absolute_error_s": 0.04000000000000625
+        }
+      ],
+      "unmatched_event_ids": ["pilot-singles-2039", "pilot-singles-2048"],
+      "unmatched_candidate_ids": [],
+      "mean_absolute_error_s": 0.020000000000003126,
+      "max_absolute_error_s": 0.04000000000000625
+    },
+    "interval_coverage": {
+      "meaning": "A proposal interval contains a reviewed point contact; this does not measure exact hit timing accuracy",
+      "matching": "one-to-one maximum-cardinality inclusive-frame containment within reviewed ranges",
+      "reviewed_contact_count": 4,
+      "candidate_count": 2,
+      "matched_count": 2,
+      "matches": [
+        {
+          "event_id": "pilot-singles-2007",
+          "event_frame": 2007,
+          "candidate_id": "contact-2007",
+          "start_frame": 2007,
+          "end_frame": 2007,
+          "uncertain_candidate": false
+        },
+        {
+          "event_id": "pilot-singles-2077",
+          "event_frame": 2077,
+          "candidate_id": "contact-gap-2076-2080",
+          "start_frame": 2076,
+          "end_frame": 2080,
+          "uncertain_candidate": true
+        }
+      ],
+      "unmatched_event_ids": ["pilot-singles-2039", "pilot-singles-2048"],
+      "unmatched_candidate_ids": []
+    },
+    "candidates": [
+      {
+        "id": "contact-2007",
+        "frame": 2007,
+        "time_s": 80.28,
+        "start_frame": 2007,
+        "end_frame": 2007,
+        "start_time_s": 80.28,
+        "end_time_s": 80.28,
+        "interval_bounds": "inclusive",
+        "timing": "observed_motion_change",
+        "score": 0.74,
+        "angle_deg": 159.9,
+        "speed_ratio": 1.74,
+        "track_id": 3,
+        "player_id": null,
+        "evidence_source": "observed_trajectory",
+        "evidence": { "piecewise_rmse_px": 2.775, "quadratic_rmse_px": 5.998 },
+        "reason": "abrupt motion change near player",
+        "reviewed": false
+      },
+      {
+        "id": "contact-gap-2076-2080",
+        "frame": 2078,
+        "time_s": 83.12,
+        "start_frame": 2076,
+        "end_frame": 2080,
+        "start_time_s": 83.04,
+        "end_time_s": 83.2,
+        "interval_bounds": "inclusive",
+        "timing": "uncertain_interval",
+        "score": 0.831,
+        "angle_deg": 163.6,
+        "speed_ratio": 2.56,
+        "track_id": 1,
+        "player_id": null,
+        "evidence_source": "short_gap_trajectory_and_pose",
+        "evidence": {
+          "piecewise_rmse_px": 8.613,
+          "quadratic_rmse_px": 21.281,
+          "trajectory_junction_separation_px": 1.176,
+          "missing_frames": [2078, 2079],
+          "pose": {
+            "track_id": 1,
+            "wrist_index": 10,
+            "wrist_distance_px": 54.88,
+            "wrist_confidence": 0.882,
+            "median_wrist_speed_px_s": 415.61,
+            "pose_samples": 4
+          }
+        },
+        "reason": "possible contact during shuttle occlusion; review entire interval",
+        "reviewed": false
+      },
+      {
+        "id": "contact-2130",
+        "frame": 2130,
+        "time_s": 85.2,
+        "start_frame": 2130,
+        "end_frame": 2130,
+        "start_time_s": 85.2,
+        "end_time_s": 85.2,
+        "interval_bounds": "inclusive",
+        "timing": "observed_motion_change",
+        "score": 0.693,
+        "angle_deg": 171.5,
+        "speed_ratio": 1.05,
+        "track_id": 1,
+        "player_id": null,
+        "evidence_source": "observed_trajectory",
+        "evidence": { "piecewise_rmse_px": 1.62, "quadratic_rmse_px": 3.799 },
+        "reason": "abrupt motion change near player",
+        "reviewed": false
+      },
+      {
+        "id": "contact-2154",
+        "frame": 2154,
+        "time_s": 86.16,
+        "start_frame": 2154,
+        "end_frame": 2154,
+        "start_time_s": 86.16,
+        "end_time_s": 86.16,
+        "interval_bounds": "inclusive",
+        "timing": "observed_motion_change",
+        "score": 0.919,
+        "angle_deg": 167.8,
+        "speed_ratio": 4.75,
+        "track_id": 3,
+        "player_id": null,
+        "evidence_source": "observed_trajectory",
+        "evidence": { "piecewise_rmse_px": 7.177, "quadratic_rmse_px": 12.353 },
+        "reason": "abrupt motion change near player",
+        "reviewed": false
+      },
+      {
+        "id": "contact-2229",
+        "frame": 2229,
+        "time_s": 89.16,
+        "start_frame": 2229,
+        "end_frame": 2229,
+        "start_time_s": 89.16,
+        "end_time_s": 89.16,
+        "interval_bounds": "inclusive",
+        "timing": "observed_motion_change",
+        "score": 0.808,
+        "angle_deg": 142.0,
+        "speed_ratio": 1.63,
+        "track_id": 1,
+        "player_id": null,
+        "evidence_source": "observed_trajectory",
+        "evidence": { "piecewise_rmse_px": 3.885, "quadratic_rmse_px": 6.848 },
+        "reason": "abrupt motion change near player",
+        "reviewed": false
+      }
+    ]
+  }
+}

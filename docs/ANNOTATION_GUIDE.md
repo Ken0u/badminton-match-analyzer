@@ -10,6 +10,8 @@ A `serve` event is the opening contact and starts a rally. It has a hitter and s
 
 Keep the same rally ID for its serve, subsequent shots, and ending. A cut-off rally may have no serve or no ending. Do not fabricate missing events. When an end is occluded, put the best observed frame in the event and describe the uncertainty in notes; structured uncertainty intervals are a later extension.
 
+For an occluded **contact**, use the editor's **Contact timing uncertainty** bounds. Both are inclusive, and the event's navigation frame must lie within them. Suggestions supported across a short gap populate those bounds automatically. Inspect the entire interval, preserve uncertainty when the actual contact is hidden, and clear it with **Use exact contact frame** only once the source evidence supports a point annotation. Structured rally-ending uncertainty remains a later extension.
+
 ## Stroke families
 
 | Family | Working convention |
@@ -56,5 +58,7 @@ Use **Reviewed clips & accuracy** to define a nonoverlapping source-frame interv
 Set footage to live, replay, or unconfirmed based on the source context. Record the evidence if inferred. Contact metrics include only complete live clips fully covered by the evaluated run. Replays and unconfirmed scenes are excluded, and the report lists why. A null metric means insufficient eligible evidence, not zero accuracy.
 
 For shuttle localization, mark the center of the observed shuttle or blur streak on the exact source image. Marking a visible shuttle hides the model overlay. Use **Shuttle not visible** only after inspecting the image; a missing model detection is insufficient evidence. Leave an ambiguous frame unlabeled. Include easy and difficult visible examples plus invisible frames in the eventual evaluation sample, selected independently of predictions.
+
+A complete clip containing a reviewed contact interval is excluded from strict timing metrics until the contact timing is adjudicated. Proposal navigation-time scores and one-to-one interval containment are separate report fields; an interval containing a true hit is useful for review but is not evidence of an exactly timed detection.
 
 Save annotations, then choose **Measure saved labels**. Default contact matching is one-to-one within 120 ms, with a 40 ms comparison in the downloaded report. Shuttle localization uses 0.5% of the source-frame diagonal (about 7.34 px for these samples). A wrong localization counts as both a false detection and a miss. Four easy positive frames cannot establish general shuttle accuracy. The current assistant-reviewed pilot needs knowledgeable human adjudication before use as a trusted benchmark or training set.
