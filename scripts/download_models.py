@@ -14,6 +14,7 @@ def main():
     parser.add_argument(
         "--kind", choices=["player", "shuttle", "stroke", "all"], default="player"
     )
+    parser.add_argument("--player-model", choices=["small", "nano"], default="small")
     args = parser.parse_args()
     manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
     folder = WEIGHTS
@@ -21,7 +22,9 @@ def main():
     for kind in ["player", "shuttle", "stroke"] if args.kind == "all" else [args.kind]:
         entry = manifest[
             {
-                "player": "player_pose",
+                "player": "player_pose_small"
+                if args.player_model == "small"
+                else "player_pose",
                 "shuttle": "shuttle",
                 "stroke": "shot_classifier",
             }[kind]

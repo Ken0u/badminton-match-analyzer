@@ -230,6 +230,12 @@
                   Run a short window from the current frame. Tracker IDs need
                   player assignment during review.
                 </p>
+                <label
+                  >Player model<select id="player-model">
+                    <option value="small" selected>Standard</option>
+                    <option value="nano">Lightweight</option>
+                  </select></label
+                >
                 <div class="row">
                   <label
                     >Duration<select id="track-duration">
@@ -336,6 +342,23 @@
               <div id="candidates">
                 <p class="empty">Track the shuttle, then suggest contacts.</p>
               </div>
+            </section>
+            <section class="suggestions-panel" id="rally-tools">
+              <div class="section-label">
+                RALLY BOUNDARIES <span id="rally-count">0</span>
+              </div>
+              <p class="suggestion-help">
+                Experimental serve and ending intervals. Inspect the source,
+                timing and hitter before adding an event. A camera change or
+                missing shuttle is not an ending.
+              </p>
+              <button id="suggest-rallies" disabled>
+                Suggest rally boundaries
+              </button>
+              <small id="rally-status"
+                >Track players and the shuttle at every frame first.</small
+              >
+              <div id="rally-candidates"></div>
             </section>
             <details class="players-panel">
               <summary>Player names, teams & handedness</summary>

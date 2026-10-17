@@ -59,10 +59,17 @@ def main():
     track.add_argument("--duration", type=float, default=10)
     track.add_argument("--stride", type=int, default=1)
     track.add_argument("--stage", choices=["players", "shuttle"], default="players")
+    track.add_argument("--player-model", choices=["small", "nano"], default="small")
     segment = commands.add_parser(
         "segments", help="Scan the full video for camera/timestamp boundaries"
     )
     segment.add_argument("video_id")
+    rallies = commands.add_parser(
+        "rallies", help="Propose uncertain serve and rally-end review intervals"
+    )
+    rallies.add_argument("video_id")
+    rallies.add_argument("--players-run", required=True)
+    rallies.add_argument("--shuttle-run", required=True)
     evaluate = commands.add_parser(
         "evaluate", help="Measure saved runs against explicit human review labels"
     )
@@ -196,12 +203,47 @@ def main():
                     args.stride,
                     progress,
                     output,
+                    player_model=args.player_model,
                 )
             return track_shuttle(video, ROOT, DATA, start, end, progress, output)
 
         try:
             summary = run_local_job(store, args.stage, args.video_id, task)
         except ConflictError as exc:
+            parser.error(str(exc))
+        print(json.dumps(summary, indent=2))
+    elif args.command == "rallies":
+        from .rallies import generate_rallies, validate_rally_inputs
+
+        store = Store(DATA)
+        try:
+            video = store.video(args.video_id)
+            resolve_source(video, ROOT)
+            players = load_evaluation_run(
+                store, args.video_id, args.players_run, "players"
+            )
+            shuttle = load_evaluation_run(
+                store, args.video_id, args.shuttle_run, "shuttle"
+            )
+            snapshot = store.annotations(args.video_id)
+            times = timestamps_for(DATA, args.video_id)
+            validate_rally_inputs(video, players, shuttle, snapshot, times)
+            summary = run_local_job(
+                store,
+                "rallies",
+                args.video_id,
+                lambda job_id, progress: generate_rallies(
+                    video,
+                    players,
+                    shuttle,
+                    snapshot,
+                    args.players_run,
+                    args.shuttle_run,
+                    DATA / args.video_id / "runs" / f"{job_id}.json",
+                    times,
+                ),
+            )
+        except (ConflictError, ValueError) as exc:
             parser.error(str(exc))
         print(json.dumps(summary, indent=2))
     elif args.command == "recognize":

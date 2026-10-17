@@ -109,7 +109,8 @@
   line-height: 1.6;
   margin: 0 0 12px;
 }
-#candidates {
+#candidates,
+#rally-candidates {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 8px;
@@ -830,7 +831,8 @@ footer {
 #download-evaluation {
   margin-left: 12px;
 }
-#recognition-status {
+#recognition-status,
+#rally-status {
   display: block;
   color: var(--muted);
   font-size: 11px;

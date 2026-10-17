@@ -201,6 +201,7 @@ def track_shuttle(
             "schema_version": 1,
             "video_id": video["id"],
             "stage": "shuttle",
+            "video_sha256": video["sha256"],
             "model": "TrackNetV3",
             "checkpoint_sha256": checksum,
             "device": device,

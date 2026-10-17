@@ -2,7 +2,17 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
-The latest native run found a decoder-shutdown deadlock after its final frame.
+The rally increment adds experimental serve/end proposals and pinned standard/
+lightweight pose selection. [The report](RALLY_PROPOSAL_REPORT.md) records actual
+outputs and missing boundaries. A variable-rate timing regression caught a
+pose-lag lookup that shortened quiet-motion windows; source PTS now controls the
+lag. Isolated shuttle jumps cannot supply sustained launch evidence. Scene,
+camera and court edits invalidate proposal context, including unsaved drafts;
+new player runs preserve court snapshots and reject stale geometry. Current
+checks:379 standard tests passed,4 optional CUDA checks passed separately,
+plus generated-media boundary browser checks. Real labels remain unchanged.
+
+The preceding native run found a decoder-shutdown deadlock after its final frame.
 Two native traces confirmed a main thread waiting for FFmpeg teardown while a
 decoder worker waited for the Python logging callback's GIL. Torchvision can
 install that callback during lazy initialization. Managed media contexts now

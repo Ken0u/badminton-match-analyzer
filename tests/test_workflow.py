@@ -257,6 +257,14 @@ def test_calibration_summary_only_counts_the_selected_clip(workspace, monkeypatc
     weights.mkdir()
     (weights / "yolo11n-pose.pt").write_bytes(b"unit-test-placeholder")
     monkeypatch.setattr(tracking, "WEIGHTS", weights)
+    monkeypatch.setattr(
+        tracking,
+        "player_checkpoint",
+        lambda variant: (
+            weights / "yolo11n-pose.pt",
+            {"name": "yolo11n-pose.pt", "sha256": "fixture", "source": "fixture"},
+        ),
+    )
     doc = store.annotations(v["id"])
     doc.calibrations = [
         Calibration(
