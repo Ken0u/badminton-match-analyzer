@@ -11,6 +11,7 @@ from badminton.cli import load_evaluation_run
 from badminton.config import DATA, ROOT
 from badminton.contacts import propose_contacts
 from badminton.evaluation import evaluate_contacts
+from badminton.scene_review import reviewed_run
 from badminton.storage import Store
 from badminton.video import timestamps_for, validate_range, write_json
 
@@ -29,13 +30,24 @@ def main():
     shuttle = load_evaluation_run(store, args.video_id, args.shuttle_run, "shuttle")
     players = load_evaluation_run(store, args.video_id, args.players_run, "players")
     original = copy.deepcopy((shuttle, players, annotations))
+    shuttle_view, player_view = (
+        reviewed_run(shuttle, annotations),
+        reviewed_run(players, annotations),
+    )
+    if (
+        shuttle_view["requires_tracking_rerun"]
+        or player_view["requires_tracking_rerun"]
+    ):
+        raise ValueError(
+            "Camera corrections changed these inputs; rerun tracking before benchmarking"
+        )
     times = timestamps_for(args.data, args.video_id)
     start, end = shuttle["start_frame"], shuttle["end_frame"]
     validate_range(video, times, start, end)
     end_s = times[end] if end < len(times) else video["duration_s"]
     audio = extract_audio_cues(video, ROOT, times[start], end_s)
-    visual = propose_contacts(shuttle, players, video)
-    supported = add_audio_support(visual, shuttle, players, video, audio)
+    visual = propose_contacts(shuttle_view, player_view, video)
+    supported = add_audio_support(visual, shuttle_view, player_view, video, audio)
     result = {
         "schema_version": 1,
         "video_id": args.video_id,

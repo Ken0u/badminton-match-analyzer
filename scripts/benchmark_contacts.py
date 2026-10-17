@@ -19,6 +19,7 @@ from badminton.cli import load_evaluation_run
 from badminton.config import DATA
 from badminton.contacts import METHOD, propose_contacts
 from badminton.evaluation import evaluate_contacts
+from badminton.scene_review import reviewed_run
 from badminton.storage import Store
 from badminton.video import write_json
 
@@ -38,7 +39,18 @@ def main():
     players = load_evaluation_run(store, args.video_id, args.players_run, "players")
     baseline = load_evaluation_run(store, args.video_id, args.baseline_run, "contacts")
     source_copy = copy.deepcopy(shuttle)
-    candidates = propose_contacts(shuttle, players, video)
+    shuttle_view, player_view = (
+        reviewed_run(shuttle, annotations),
+        reviewed_run(players, annotations),
+    )
+    if (
+        shuttle_view["requires_tracking_rerun"]
+        or player_view["requires_tracking_rerun"]
+    ):
+        raise ValueError(
+            "Camera corrections changed these inputs; rerun tracking before benchmarking"
+        )
+    candidates = propose_contacts(shuttle_view, player_view, video)
     assert shuttle == source_copy, "Contact proposals must preserve raw observations"
     updated = {
         "stage": "contacts",

@@ -256,6 +256,10 @@ def build_stroke_clip(video, times, player_run, shuttle_run, calibrations, frame
     contact_tracks = None
     for index in range(start, end):
         row, observation = player_rows[index], shuttle_rows[index]
+        if any(item.get("scene", "live") != "live" for item in (row, observation)):
+            return result | {
+                "reason": "Contact context overlaps reviewed replay, non-play or unknown footage"
+            }
         if row.get("scene_cut") or observation.get("scene_cut"):
             return result | {"reason": "Contact context crosses a camera cut"}
         if row.get("calibration_valid") is False:

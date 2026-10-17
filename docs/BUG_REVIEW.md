@@ -2,7 +2,28 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
-The latest increment adds queued full-video camera scans and separates new
+The reviewed-scene increment adds editable camera corrections and half-open
+live/replay/non-play/unknown ranges. [The scene report](SCENE_REVIEW_REPORT.md)
+records the source-verified 250-frame intro review and an isolated real CUDA
+override probe. Raw model artifacts and reviewed events remain intact. Changed
+effective boundaries require new tracking; masked scenes suppress contact and
+recognition suggestions and conflicting exhaustive evaluation windows.
+
+The bug review fixed two reversible-view issues: applying a review twice could
+clear an already-stale tracking flag, and removing a scene override could discard
+the original scene evidence. Staleness now remains latched until tracking is
+rerun, and removing an override restores its original scene value. Benchmark
+helpers now use the same scene masks and stale-input guards as the app. Browser
+fixtures regenerate proposals to avoid depending on a previous test's filters.
+
+Current standard checks: **329 backend tests passed**, two opt-in GPU tests
+skipped and passed separately. Camera/scene browser checks cover draft masks,
+overlap validation, save/history/export preservation, stale-input rejection,
+and editing/removing corrections. The source scenes are a first visual pass,
+not adjudicated event truth. Automatic live/replay classification, full-rally
+evaluation, and full-match correctness remain unproven.
+
+The preceding increment adds queued full-video camera scans and separates new
 tracking runs at detected edits. [The camera report](CAMERA_BOUNDARY_REPORT.md)
 records 65/69 candidate cuts on the samples, six inspected transition pairs, and
 an 80-frame CUDA probe across two edits. ByteTrack IDs no longer collide after

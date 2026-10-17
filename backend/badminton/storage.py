@@ -123,6 +123,18 @@ class Store:
             raise ValueError("Review window exceeds the video")
         if any(p.frame >= len(times) for p in annotations.shuttle_points):
             raise ValueError("Shuttle label exceeds the video")
+        if any(r.end_frame > len(times) for r in annotations.scene_ranges):
+            raise ValueError("Scene range exceeds the video")
+        gap_threshold = max(0.1, 2.5 / video.get("fps", 25))
+        for correction in annotations.camera_corrections:
+            if correction.frame >= len(times):
+                raise ValueError("Camera correction exceeds the video")
+            if (
+                not correction.is_cut
+                and times[correction.frame] - times[correction.frame - 1]
+                > gap_threshold + 1e-8
+            ):
+                raise ValueError("Cannot join a source timestamp discontinuity")
         from .identity import validate_assignments
 
         validate_assignments(

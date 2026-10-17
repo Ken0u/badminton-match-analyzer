@@ -94,7 +94,16 @@ def test_audio_is_opt_in_and_never_changes_annotations(
         job = wait(store, response.json()["id"])
         assert job["status"] == "completed", job
         result = client.get(base + "/runs/" + job["id"]).json()
-        assert result["candidates"] == visual
+        assert result["candidates"] == [
+            c | {"scene_excluded": False, "scene_exclusion_reason": None}
+            for c in visual
+        ]
+        import json
+
+        raw = json.loads(
+            (data / video["id"] / "runs" / f"{job['id']}.json").read_text()
+        )
+        assert raw["candidates"] == visual
         assert "audio" not in job["summary"]
         if enabled:
             assert calls == [(video["sha256"], root, 0, 1)]

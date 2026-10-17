@@ -70,6 +70,8 @@ function changed() {
   $("save").disabled = false;
   reviewTools.render();
   recognitionTools.render();
+  segmentTools.render();
+  renderCandidates();
 }
 function handleError(e) {
   notice(e.message || String(e), true);
@@ -162,6 +164,7 @@ async function selectVideo(id) {
   renderCandidates();
   reviewTools.reset();
   recognitionTools.reset();
+  segmentTools.render();
   draw();
   await loadLibrary();
   if (generation !== state.selectionGeneration) return;
@@ -348,6 +351,17 @@ function renderCandidates() {
       : "No usable audio in this window. Showing visual suggestions."
     : "";
   $("candidate-count").textContent = candidates.length;
+  const cameraSignature = (state.doc.camera_corrections ?? [])
+    .filter(
+      (c) =>
+        c.frame < (state.contactRun?.end_frame ?? 0) &&
+        (c.frame >= (state.contactRun?.start_frame ?? 0) || c.is_cut),
+    )
+    .sort((a, b) => a.frame - b.frame)
+    .map((c) => [c.frame, c.is_cut]);
+  const cameraStale =
+    JSON.stringify(cameraSignature) !==
+    JSON.stringify(state.contactRun?.camera_review_signature ?? []);
   $("candidates").innerHTML = candidates.length
     ? candidates
         .map((c) => {
@@ -361,10 +375,16 @@ function renderCandidates() {
             c.frame,
           );
           const uncertain = c.timing === "uncertain_interval";
+          const sceneExcluded = (state.doc.scene_ranges ?? []).some(
+            (r) =>
+              r.scene !== "live" &&
+              r.start_frame <= (c.end_frame ?? c.frame) &&
+              (c.start_frame ?? c.frame) < r.end_frame,
+          );
           const audioConflict = c.evidence?.audio_support?.some(
             (item) => item.hitter_agrees === false,
           );
-          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${c.evidence_source === "audio_shuttle_gap_and_pose" ? "Audio + vision · " : ""}${audioConflict ? "Audio hitter disagreement · " : ""}${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
+          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added || sceneExcluded || cameraStale ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${cameraStale ? "Camera review changed; request new contacts" : sceneExcluded ? "Excluded by scene review" : added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${c.evidence_source === "audio_shuttle_gap_and_pose" ? "Audio + vision · " : ""}${audioConflict ? "Audio hitter disagreement · " : ""}${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
         })
         .join("")
     : '<p class="empty">Track the shuttle, then suggest contacts.</p>';
@@ -1036,6 +1056,7 @@ const segmentTools = createSegmentTools({
   seek,
   escape,
   clock,
+  changed,
 });
 await loadLibrary().catch(handleError);
 if (state.videos.length)

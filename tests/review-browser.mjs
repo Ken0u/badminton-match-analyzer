@@ -65,6 +65,8 @@ try {
     data: {
       ...previous,
       events: [],
+      scene_ranges: [],
+      camera_corrections: [],
       review_windows: [],
       shuttle_points: [],
       track_assignments: [],
@@ -86,6 +88,17 @@ try {
       Number(document.querySelector("#candidate-count").textContent) > 0,
   );
   assert.equal(await page.locator("#event-count").textContent(), "0 events");
+  // A prior scene test may have generated an intentionally filtered run. Build
+  // fresh proposals for this fixture instead of depending on historical jobs.
+  const rebuilding = page.waitForResponse(
+    (r) =>
+      r.url().endsWith(`${root}/contacts`) && r.request().method() === "POST",
+  );
+  await page.locator("#detect-contacts").click();
+  assert.equal((await rebuilding).status(), 202);
+  await page.waitForFunction(
+    () => document.querySelector("#candidate-count").textContent === "5",
+  );
 
   await page.locator("#identity-panel summary").click();
   await page.waitForFunction(

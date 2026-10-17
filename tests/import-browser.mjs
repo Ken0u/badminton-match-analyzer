@@ -137,7 +137,7 @@ try {
   await page.locator("#apply-event").click();
   await page.locator("#save").click();
   await page.waitForFunction(() => document.querySelector("#save").disabled);
-  const firstDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
+  let firstDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
   assert.equal(firstDocument.events.length, 1);
   // Exercise the real camera-scan UI in CI using the generated two-view video.
   await page.locator("#camera-panel summary").click();
@@ -145,7 +145,7 @@ try {
   await page.waitForFunction(() =>
     document
       .querySelector("#segment-status")
-      .textContent.includes("1 possible boundaries"),
+      .textContent.includes("1 possible boundary"),
   );
   await page.locator('[data-boundary="20"]').click();
   assert.equal(await page.locator("#frame-number").inputValue(), "20");
@@ -156,6 +156,27 @@ try {
   assert.deepEqual(
     await api(`/api/videos/${firstVideo.id}/annotations`),
     firstDocument,
+  );
+  await page.locator("#camera-decision").selectOption("not_cut");
+  await page
+    .locator("#camera-notes")
+    .fill("QA ONLY: correction workflow, not real scene truth.");
+  await page.locator("#camera-apply").click();
+  await page.locator("#scene-start").fill("0");
+  await page.locator("#scene-end").fill("20");
+  await page.locator("#scene-kind").selectOption("non_play");
+  await page
+    .locator("#scene-notes")
+    .fill("QA ONLY: generated solid-color view.");
+  await page.locator("#add-scene").click();
+  await page.locator("#save").click();
+  await page.waitForFunction(() => document.querySelector("#save").disabled);
+  firstDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
+  assert.equal(firstDocument.camera_corrections[0].is_cut, false);
+  assert.equal(firstDocument.scene_ranges[0].scene, "non_play");
+  assert.match(
+    await page.locator('[data-boundary="20"]').textContent(),
+    /Rejected cut/,
   );
   await page.locator("#upload-file").setInputFiles(fixtures.upload);
   await page.locator("#upload-form button[type=submit]").click();

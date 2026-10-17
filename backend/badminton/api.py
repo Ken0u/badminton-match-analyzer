@@ -424,7 +424,14 @@ def create_app(
                     output,
                 )
             return track_shuttle(
-                v, root, data, body.start_frame, body.end_frame, progress, output
+                v,
+                root,
+                data,
+                body.start_frame,
+                body.end_frame,
+                progress,
+                output,
+                snapshot,
             )
 
         return enqueue(body.stage, video_id, task)
@@ -469,6 +476,7 @@ def create_app(
     @app.post("/api/videos/{video_id}/contacts", status_code=202)
     def contacts(video_id: str, body: ContactsRequest):
         from .contacts import METHOD, propose_contacts
+        from .scene_review import camera_review_signature, reviewed_run
 
         v = store.video(video_id)
         shuttle_run = load_run(video_id, body.shuttle_run_id, "shuttle")
@@ -479,6 +487,16 @@ def create_app(
         )
         if body.include_audio and player_run is None:
             raise HTTPException(422, "Audio support needs a player/pose run")
+        snapshot = store.annotations(video_id)
+        shuttle_run = reviewed_run(shuttle_run, snapshot)
+        player_run = reviewed_run(player_run, snapshot) if player_run else None
+        if any(
+            run and run["requires_tracking_rerun"] for run in (shuttle_run, player_run)
+        ):
+            raise HTTPException(
+                422,
+                "Camera corrections changed these inputs; rerun tracking before suggesting contacts",
+            )
 
         def task(job_id, progress):
             candidates = propose_contacts(shuttle_run, player_run, v)
@@ -506,6 +524,11 @@ def create_app(
                 "method": METHOD,
                 "interval_bounds": "inclusive",
                 "candidates": candidates,
+                "scene_annotation_revision": snapshot.revision,
+                "scene_ranges": [r.model_dump() for r in snapshot.scene_ranges],
+                "camera_review_signature": camera_review_signature(
+                    snapshot, shuttle_run["start_frame"], shuttle_run["end_frame"]
+                ),
             }
             if audio is not None:
                 from .audio_contacts import METHOD as AUDIO_METHOD
@@ -545,7 +568,14 @@ def create_app(
 
         if result.get("stage", "players") == "players":
             result = apply_assignments(result, doc.track_assignments, job_id)
+        if result.get("stage") in ("players", "shuttle"):
+            from .scene_review import reviewed_run
+
+            result = reviewed_run(result, doc)
         elif result.get("stage") == "contacts":
+            from .scene_review import reviewed_contacts
+
+            result = reviewed_contacts(result, doc)
             for candidate in result["candidates"]:
                 candidate["player_id"] = resolve_contact_player(
                     candidate["frame"],
@@ -597,6 +627,17 @@ def create_app(
                 422, "Contact proposals must use these same tracking runs"
             )
         snapshot = store.annotations(video_id)
+        from .scene_review import reviewed_run
+
+        players, shuttle = (
+            reviewed_run(players, snapshot),
+            reviewed_run(shuttle, snapshot),
+        )
+        if players["requires_tracking_rerun"] or shuttle["requires_tracking_rerun"]:
+            raise HTTPException(
+                422,
+                "Camera corrections changed these inputs; rerun tracking before classifying",
+            )
         targets = recognition_targets(
             snapshot,
             contacts,

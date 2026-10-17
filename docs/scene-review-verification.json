@@ -1,0 +1,137 @@
+{
+  "qa_only": true,
+  "video_id": "970dbd8adfe548d8",
+  "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+  "runs": {
+    "players": {
+      "id": "f207621e06ba45dea3e394665e4c9aa5",
+      "summary": {
+        "schema_version": 1,
+        "video_id": "970dbd8adfe548d8",
+        "stage": "players",
+        "model": "yolo11n-pose",
+        "device": "cuda:0",
+        "image_size": 1280,
+        "peak_gpu_memory_mb": 101.9,
+        "start_frame": 630,
+        "end_frame": 710,
+        "stride": 1,
+        "annotation_revision": 2,
+        "calibrated": false,
+        "calibrated_frames": 20,
+        "elapsed_s": 5.594,
+        "processed_frames": 80,
+        "inference_fps": 14.3,
+        "expected_players": 2,
+        "mean_detections": 3.08,
+        "cut_frames": [650, 683],
+        "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "camera_ranges": [
+          {
+            "start_frame": 630,
+            "end_frame": 650,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 650,
+            "end_frame": 683,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 683,
+            "end_frame": 710,
+            "scene": "unknown"
+          }
+        ],
+        "tracker_reset_at_cuts": true,
+        "raw_cut_frames": [639, 683],
+        "applied_camera_corrections": [
+          {
+            "frame": 639,
+            "is_cut": false,
+            "notes": "QA ONLY: deliberately reject a real cut to verify override behavior"
+          },
+          {
+            "frame": 650,
+            "is_cut": true,
+            "notes": "QA ONLY: synthetic missing cut, not boundary ground truth"
+          }
+        ],
+        "camera_annotation_revision": 2,
+        "preceding_reviewed_cut_frame": null,
+        "requires_tracking_rerun": false,
+        "scene_annotation_revision": 2
+      }
+    },
+    "shuttle": {
+      "id": "3d1d2ac781b94ec2a346b420244921f0",
+      "summary": {
+        "schema_version": 1,
+        "video_id": "970dbd8adfe548d8",
+        "stage": "shuttle",
+        "model": "TrackNetV3",
+        "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "device": "cuda:0",
+        "input_size": [512, 288],
+        "seq_len": 8,
+        "precision": "float16",
+        "ensemble": "weighted overlapping windows",
+        "start_frame": 630,
+        "end_frame": 710,
+        "processed_frames": 80,
+        "visible_frames": 5,
+        "repaired_frames": 0,
+        "cut_frames": [650, 683],
+        "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "camera_ranges": [
+          {
+            "start_frame": 630,
+            "end_frame": 650,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 650,
+            "end_frame": 683,
+            "scene": "unknown"
+          },
+          {
+            "start_frame": 683,
+            "end_frame": 710,
+            "scene": "unknown"
+          }
+        ],
+        "temporal_context_crosses_detected_cuts": false,
+        "elapsed_s": 8.315,
+        "inference_fps": 9.62,
+        "peak_gpu_memory_mb": 430.3,
+        "raw_cut_frames": [639, 683],
+        "applied_camera_corrections": [
+          {
+            "frame": 639,
+            "is_cut": false,
+            "notes": "QA ONLY: deliberately reject a real cut to verify override behavior"
+          },
+          {
+            "frame": 650,
+            "is_cut": true,
+            "notes": "QA ONLY: synthetic missing cut, not boundary ground truth"
+          }
+        ],
+        "camera_annotation_revision": 2,
+        "preceding_reviewed_cut_frame": null,
+        "requires_tracking_rerun": false,
+        "scene_annotation_revision": 2
+      }
+    }
+  },
+  "annotation_revision": 2,
+  "purpose": "Deliberately incorrect QA-only camera and replay overrides; verifies behavior, not cut, scene, player or shuttle accuracy.",
+  "synthetic_scene_range": {
+    "start_frame": 650,
+    "end_frame": 683,
+    "scene": "replay",
+    "tagged_rows_per_stage": 33,
+    "ground_truth": false
+  },
+  "main_catalog_unchanged_during_probe": true
+}
