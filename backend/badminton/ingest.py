@@ -94,8 +94,12 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
         if n == 0:
             img.save(folder / "poster.jpg", quality=88)
     sheet.save(folder / "contact-sheet.jpg", quality=90)
-    if existing and "review_start_frame" in existing:
-        document["review_start_frame"] = existing["review_start_frame"]
+    if existing:
+        for field in ("review_start_frame", "source", "source_type"):
+            if field in existing:
+                document[field] = existing[field]
+        if existing.get("source_type") and existing.get("name"):
+            document["name"] = existing["name"]
     write_json(folder / "timestamps.json", timestamps)
     write_json(folder / "metadata.json", document)
     store.register(document)

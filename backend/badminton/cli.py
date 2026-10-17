@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 from pathlib import Path
 
 from .config import DATA, ROOT
@@ -44,6 +45,12 @@ def main():
     ingest.add_argument("--mode", choices=["singles", "doubles"], required=True)
     serve = commands.add_parser("serve", help="Start the local review application")
     serve.add_argument("--port", type=int, default=8000)
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument(
+        "--allow-unauthenticated",
+        action="store_true",
+        help="Allow a non-loopback listener behind an authenticated private proxy",
+    )
     track = commands.add_parser(
         "track", help="Run player/pose baseline on a registered clip"
     )
@@ -77,11 +84,22 @@ def main():
             parser.error(str(exc))
         print(json.dumps(result, indent=2))
     elif args.command == "serve":
+        if (
+            args.host not in ("127.0.0.1", "::1", "localhost")
+            and not (
+                os.environ.get("BADMINTON_USERNAME")
+                and os.environ.get("BADMINTON_PASSWORD")
+            )
+            and not args.allow_unauthenticated
+        ):
+            parser.error(
+                "Set BADMINTON_USERNAME and BADMINTON_PASSWORD before binding a network interface, or explicitly use --allow-unauthenticated behind an authenticated proxy"
+            )
         import uvicorn
 
         from .api import create_app
 
-        uvicorn.run(create_app(), host="127.0.0.1", port=args.port)
+        uvicorn.run(create_app(), host=args.host, port=args.port)
     elif args.command == "track":
         from .shuttle import track_shuttle
         from .tracking import track_players

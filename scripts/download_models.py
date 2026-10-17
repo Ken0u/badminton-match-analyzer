@@ -4,10 +4,9 @@ import argparse
 import hashlib
 import json
 import zipfile
-from pathlib import Path
 from urllib.request import urlopen
 
-ROOT = Path(__file__).resolve().parents[1]
+from badminton.config import MODEL_MANIFEST, WEIGHTS
 
 
 def main():
@@ -16,8 +15,8 @@ def main():
         "--kind", choices=["player", "shuttle", "all"], default="player"
     )
     args = parser.parse_args()
-    manifest = json.loads((ROOT / "models/manifest.json").read_text(encoding="utf-8"))
-    folder = ROOT / "models/weights"
+    manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
+    folder = WEIGHTS
     folder.mkdir(parents=True, exist_ok=True)
     for kind in ["player", "shuttle"] if args.kind == "all" else [args.kind]:
         entry = manifest["player_pose" if kind == "player" else "shuttle"]

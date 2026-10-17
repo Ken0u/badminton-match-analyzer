@@ -16,23 +16,63 @@
         VIDEO LIBRARY <span id="library-count">0</span>
       </div>
       <div id="library"></div>
-      <details class="import-panel">
-        <summary>＋ Import local video</summary>
-        <form id="import-form">
+      <details class="import-panel" open>
+        <summary>＋ Add a match</summary>
+        <form id="upload-form">
           <label
-            >Path inside project<input
-              id="import-path"
-              placeholder="singles.mp4"
+            >Video file<input
+              id="upload-file"
+              type="file"
+              accept=".mp4,.mov,.mkv,.avi,.webm"
               required
           /></label>
           <label
-            >Format<select id="import-mode">
+            >Format<select id="upload-mode">
               <option>singles</option>
               <option>doubles</option>
             </select></label
           >
-          <button type="submit">Inspect & import</button>
+          <button type="submit">Upload match</button>
         </form>
+        <div class="import-divider">or use a YouTube link</div>
+        <form id="youtube-form">
+          <label
+            >YouTube video<input
+              id="youtube-url"
+              type="url"
+              placeholder="https://youtu.be/…"
+              required
+          /></label>
+          <label
+            >Format<select id="youtube-mode">
+              <option>singles</option>
+              <option>doubles</option>
+            </select></label
+          >
+          <button type="submit">Import from YouTube</button>
+        </form>
+        <p id="import-status" role="status" aria-live="polite">
+          MP4, MOV, MKV, AVI, or WebM.
+        </p>
+        <progress id="upload-progress" max="100" value="0" hidden></progress>
+        <details class="local-import">
+          <summary>Import from server folder</summary>
+          <form id="import-form">
+            <label
+              >Path inside project<input
+                id="import-path"
+                placeholder="singles.mp4"
+                required
+            /></label>
+            <label
+              >Format<select id="import-mode">
+                <option>singles</option>
+                <option>doubles</option>
+              </select></label
+            >
+            <button type="submit">Inspect & import</button>
+          </form>
+        </details>
       </details>
       <div class="sidebar-bottom">
         <span class="live-dot"></span> Local workspace<small

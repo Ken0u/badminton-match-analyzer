@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
-from .config import ROOT, WEIGHTS
+from .config import MODEL_MANIFEST, WEIGHTS
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
 WIDTH, HEIGHT = 512, 288
@@ -58,9 +58,7 @@ def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
         raise RuntimeError(
             "Shuttle model missing. Run scripts/download_models.py --kind shuttle."
         )
-    manifest = json.loads((ROOT / "models/manifest.json").read_text(encoding="utf-8"))[
-        "shuttle"
-    ]
+    manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))["shuttle"]
     checksum = hashlib.sha256(weights.read_bytes()).hexdigest()
     if not manifest or checksum != manifest["sha256"]:
         raise RuntimeError("Shuttle checkpoint does not match the model manifest")
