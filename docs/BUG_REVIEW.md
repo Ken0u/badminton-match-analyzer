@@ -2,6 +2,22 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The data/evaluation increment adds a source-verified ShuttleSet label index and
+recognition metrics that exclude classifier-assisted labels. Tests cover the
+risk of accepting a model draft and then reporting it as correct ground truth;
+that event is now explicitly excluded from recognition accuracy. Abstentions
+remain misses in supported-class and complete-event metrics. Unrepresented
+families never receive an invented six-class macro score. Published known-error
+records quarantine whole affected rallies; original labels remain intact.
+The source snapshot contains both 25- and 30-fps evidence, so the importer keeps
+source frame/time references and leaves media alignment unverified. See
+[the data report](STROKE_DATA_REPORT.md) for counts, conventions, and remaining work.
+
+Latest local checks: **259 backend tests passed**, with two optional GPU tests
+skipped; all four local browser suites passed, including recognition metrics and
+exclusion of classifier-assisted labels. The previous increment's real GPU
+inference checks remain applicable; this change adds no model/inference math.
+
 The latest increment adds an experimental pretrained singles family model through
 the CLI, API, and explicit review UI. [The recognition report](SHOT_RECOGNITION_REPORT.md)
 records the source mapping, seven-target CUDA smoke run, abstention behavior,

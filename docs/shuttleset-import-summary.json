@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "dataset": "ShuttleSet",
+  "mapping_version": 1,
+  "source_repository": "wywyWang/CoachAI-Projects",
+  "source_commit": "45517f7d4cb936b03f3eabf939cc7959d39226fe",
+  "source_manifest_sha256": "b8e4a3b817036b5130733b43c8c1841dd97d37451eae1e60c4cdbad4c25018cf",
+  "index_sha256": "cd89e188faadb7104b453303288fe7dfef8ed1ce15d53cdd5722a01e83a72c75",
+  "record_count": 36484,
+  "rally_count": 3683,
+  "family_eligible_records": 21709,
+  "side_eligible_records": 21709,
+  "eligible_family_counts": {
+    "serve": 2132,
+    "clear": 1685,
+    "other": 5594,
+    "smash": 1609,
+    "drive": 1073,
+    "net": 4860,
+    "lift": 3471,
+    "drop": 1285
+  },
+  "eligible_side_counts": {
+    "backhand": 8930,
+    "forehand": 12779
+  },
+  "exclusion_counts": {
+    "unresolved_source_type": 2763,
+    "published_issue: serious error": 25,
+    "source_flaw_flag": 11522,
+    "serve_marker_disagrees_with_type": 1276,
+    "duplicate_source_frame": 2093,
+    "published_issue: non-courtview": 17,
+    "nonmonotonic_source_frames": 559,
+    "published_issue: time & frame_num not in order": 264,
+    "incomplete_or_duplicate_stroke_order": 45,
+    "published_issue: listed twice in original csv": 30,
+    "published_issue: frame num gap": 39,
+    "match_quarantined_by_published_split": 2996,
+    "published_issue: whole labeling incorrect": 1221,
+    "published_issue: all frame numbers incorrect": 680,
+    "published_issue: video removed": 1095,
+    "invalid_or_conflicting_side_flags": 1
+  },
+  "training_ready_records": 0,
+  "media_alignment": "All video alignments remain unverified. Label eligibility alone does not make frames ready for training or app evaluation.",
+  "rally_end_policy": "Terminal stroke markers are not exported as rally-end times.",
+  "splits": {
+    "train": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      11,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "validation": [
+      35,
+      36,
+      37,
+      38,
+      41
+    ],
+    "test": [
+      39,
+      40,
+      42,
+      43,
+      44
+    ],
+    "quarantine": [
+      9,
+      10,
+      12,
+      27
+    ]
+  },
+  "split_source": {
+    "repository": "Va6lue/BST-Badminton-Stroke-type-Transformer",
+    "commit": "c93acfa736ed784ba7bea4ec9d360001dea9b728",
+    "path": "ShuttleSet/gen_my_dataset.py"
+  },
+  "source_file_count": 105,
+  "reference_count": 2,
+  "set_count": 104,
+  "fps_diagnostic_match_counts": {
+    "25": 19,
+    "29.97": 1,
+    "30": 24
+  },
+  "split_counts": {
+    "train": {
+      "match_count": 30,
+      "raw_records": 25748,
+      "family_eligible_records": 17436,
+      "side_eligible_records": 17436
+    },
+    "validation": {
+      "match_count": 5,
+      "raw_records": 4241,
+      "family_eligible_records": 2117,
+      "side_eligible_records": 2117
+    },
+    "test": {
+      "match_count": 5,
+      "raw_records": 3499,
+      "family_eligible_records": 2156,
+      "side_eligible_records": 2156
+    },
+    "quarantine": {
+      "match_count": 4,
+      "raw_records": 2996,
+      "family_eligible_records": 0,
+      "side_eligible_records": 0
+    }
+  }
+}

@@ -50,6 +50,7 @@ class ContactsRequest(StrictModel):
 class EvaluationRequest(StrictModel):
     contacts_run_id: str | None = None
     shuttle_run_id: str | None = None
+    recognition_run_id: str | None = None
     tolerance_s: float = Field(default=0.12, gt=0, le=1, allow_inf_nan=False)
     tolerance_diagonal: float = Field(default=0.005, gt=0, le=0.1, allow_inf_nan=False)
 
@@ -594,9 +595,14 @@ def create_app(
     @app.post("/api/videos/{video_id}/evaluate")
     def evaluate(video_id: str, body: EvaluationRequest):
         from .evaluation import evaluate_contacts, evaluate_shuttle
+        from .recognition_evaluation import evaluate_recognition
 
-        if not body.contacts_run_id and not body.shuttle_run_id:
-            raise HTTPException(422, "Choose a contact or shuttle run to evaluate")
+        if not any(
+            (body.contacts_run_id, body.shuttle_run_id, body.recognition_run_id)
+        ):
+            raise HTTPException(
+                422, "Choose a contact, shuttle, or recognition run to evaluate"
+            )
         v = store.video(video_id)
         source(v)
         doc = store.annotations(video_id).model_dump()
@@ -606,6 +612,13 @@ def create_app(
             "annotation_revision": doc["revision"],
         }
         try:
+            if body.recognition_run_id:
+                artifact = load_run(
+                    video_id, body.recognition_run_id, "recognition"
+                ) | {"run_id": body.recognition_run_id}
+                result["recognition"] = evaluate_recognition(
+                    v, doc, artifact, body.tolerance_s
+                )
             if body.contacts_run_id:
                 artifact = load_run(video_id, body.contacts_run_id, "contacts")
                 result["contacts"] = evaluate_contacts(

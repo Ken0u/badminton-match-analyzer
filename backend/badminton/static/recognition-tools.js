@@ -14,6 +14,7 @@ export function createRecognitionTools({
   function reset() {
     run = null;
     jobId = null;
+    state.recognitionJob = null;
     $("recognize").disabled = true;
     $("recognition-status").textContent =
       "Track players and the shuttle to suggest shot families.";
@@ -136,6 +137,7 @@ export function createRecognitionTools({
       if (run) {
         run = null;
         jobId = null;
+        state.recognitionJob = null;
         render();
       }
       return;
@@ -148,6 +150,7 @@ export function createRecognitionTools({
     if (generation !== state.selectionGeneration) return;
     run = result;
     jobId = completed.id;
+    state.recognitionJob = completed.id;
     $("recognition-status").textContent =
       `${result.predicted_count}/${result.candidate_count} family suggestions · saved revision ${result.annotation_revision} · experimental model scores`;
     render();
