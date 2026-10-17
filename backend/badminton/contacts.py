@@ -68,6 +68,7 @@ def _raw_visible(row):
     return (
         shuttle["visible"]
         and not shuttle.get("repaired", False)
+        and not shuttle.get("selection_context_excluded", False)
         and all(
             shuttle.get(axis) is not None and math.isfinite(shuttle[axis])
             for axis in ("x", "y")
@@ -79,15 +80,24 @@ def _valid_window(window, cuts, diagonal, excluded_frames=()):
     """Reject discontinuous timestamps, explicit cuts and impossible jumps."""
     times = np.asarray([row["time_s"] for row in window])
     frames = np.asarray([row["frame"] for row in window])
+    context_start = min(
+        row["shuttle"].get("selection_context_start_frame", row["frame"])
+        for row in window
+    )
     if (
         not np.isfinite(times).all()
         or np.any(np.diff(times) <= 0)
         or np.max(np.diff(times)) > MAX_FRAME_STEP_S + 1e-9
         or np.any(np.diff(frames) != 1)
-        or any(window[0]["frame"] < cut <= window[-1]["frame"] for cut in cuts)
+        or any(context_start < cut <= window[-1]["frame"] for cut in cuts)
         or any(row.get("cut") or row.get("scene_cut") for row in window[1:])
         or any(row.get("scene", "live") != "live" for row in window)
-        or any(row["frame"] in excluded_frames for row in window)
+        or any(
+            context_start <= frame <= window[-1]["frame"] for frame in excluded_frames
+        )
+        or any(
+            row["shuttle"].get("selection_context_excluded", False) for row in window
+        )
     ):
         return False
     visible = [row for row in window if _raw_visible(row)]
@@ -366,7 +376,10 @@ def _candidate(
         "end_frame": right["frame"],
         "start_time_s": left["time_s"],
         "end_time_s": right["time_s"],
-        "context_start_frame": context[0]["frame"],
+        "context_start_frame": min(
+            row["shuttle"].get("selection_context_start_frame", row["frame"])
+            for row in context
+        ),
         "context_end_frame": context[-1]["frame"] + 1,
         "interval_bounds": "inclusive",
         "timing": "uncertain_interval" if gap else "observed_motion_change",
@@ -404,6 +417,9 @@ def propose_contacts(shuttle_run, player_run, video):
     excluded_frames = {
         row["frame"] for row in players if row.get("scene", "live") != "live"
     }
+    excluded_frames.update(
+        row["frame"] for row in rows if row.get("scene", "live") != "live"
+    )
     diagonal = math.hypot(video["width"], video["height"])
     candidates = []
     segment_ids = []

@@ -115,6 +115,11 @@ def add_audio_support(candidates, shuttle_run, player_run, video, cues):
                 "end_frame": right["frame"],
                 "start_time_s": left["time_s"],
                 "end_time_s": right["time_s"],
+                "context_start_frame": min(
+                    row["shuttle"].get("selection_context_start_frame", row["frame"])
+                    for row in window
+                ),
+                "context_end_frame": window[-1]["frame"] + 1,
                 "interval_bounds": "inclusive",
                 "timing": "uncertain_interval",
                 "track_id": pose["track_id"],

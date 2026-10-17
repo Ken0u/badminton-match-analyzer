@@ -55,13 +55,20 @@ try {
   assert.equal(candidate.evidence_source, "subframe_trajectory_and_pose");
   assert.equal(candidate.timing, "uncertain_interval");
   assert.ok(candidate.context_start_frame < candidate.start_frame);
+  const observedStart = Math.min(...candidate.evidence.observed_context_frames);
+  assert.ok(candidate.context_start_frame < observedStart);
+  const shuttle = await json(root + "/runs/qa-shuttle");
+  assert.equal(
+    shuttle.frames[20].shuttle.selection_reason,
+    "unique_reachable_component",
+  );
   assert.deepEqual(await json(root + "/annotations"), before);
   await ready();
   await page.locator("#camera-panel").evaluate((e) => (e.open = true));
   await page
     .locator("#scene-start")
     .fill(String(candidate.context_start_frame));
-  await page.locator("#scene-end").fill(String(candidate.start_frame));
+  await page.locator("#scene-end").fill(String(observedStart));
   await page.locator("#scene-kind").selectOption("replay");
   await page.locator("#add-scene").click();
   assert.equal(await page.locator("#candidates button").isDisabled(), true);

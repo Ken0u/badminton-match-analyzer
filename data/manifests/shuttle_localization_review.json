@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "source_video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+  "source_clip": "data/datasets/s2doubles/media/match1-first-rally.mp4",
+  "width": 1280,
+  "height": 720,
+  "selection": "Uniform local source-frame grid 40..320 inclusive, step20, independent of whether a model emitted a point.",
+  "review_method": "Assistant inspected source-only decoded frames and nearest-neighbor enlarged crops, no model overlays or coordinates. Five clearly located shuttle centers retained; other ten frames are unresolved, NOT invisible/negative labels. Existing baseline/contact output counts were known, so this is development review, not blinded or held-out evaluation. Centers frozen before any new localizer comparison.",
+  "human_review": "pending",
+  "coordinate_convention": "Source pixel centers of visible shuttle/streak; uncertainty is a visual review tolerance, not a confidence interval.",
+  "reviewed_frames": [
+    {
+      "frame": 40,
+      "status": "unresolved"
+    },
+    {
+      "frame": 60,
+      "status": "unresolved"
+    },
+    {
+      "frame": 80,
+      "status": "unresolved"
+    },
+    {
+      "frame": 100,
+      "status": "visible"
+    },
+    {
+      "frame": 120,
+      "status": "visible"
+    },
+    {
+      "frame": 140,
+      "status": "visible"
+    },
+    {
+      "frame": 160,
+      "status": "unresolved"
+    },
+    {
+      "frame": 180,
+      "status": "unresolved"
+    },
+    {
+      "frame": 200,
+      "status": "unresolved"
+    },
+    {
+      "frame": 220,
+      "status": "visible"
+    },
+    {
+      "frame": 240,
+      "status": "unresolved"
+    },
+    {
+      "frame": 260,
+      "status": "unresolved"
+    },
+    {
+      "frame": 280,
+      "status": "unresolved"
+    },
+    {
+      "frame": 300,
+      "status": "unresolved"
+    },
+    {
+      "frame": 320,
+      "status": "visible"
+    }
+  ],
+  "points": [
+    {
+      "frame": 100,
+      "x": 755,
+      "y": 230,
+      "uncertainty_px": 3
+    },
+    {
+      "frame": 120,
+      "x": 728,
+      "y": 318,
+      "uncertainty_px": 3
+    },
+    {
+      "frame": 140,
+      "x": 682,
+      "y": 300,
+      "uncertainty_px": 3
+    },
+    {
+      "frame": 220,
+      "x": 497,
+      "y": 226,
+      "uncertainty_px": 3
+    },
+    {
+      "frame": 320,
+      "x": 316,
+      "y": 506,
+      "uncertainty_px": 5
+    }
+  ],
+  "visibility_complete": false,
+  "contact_truth": false
+}

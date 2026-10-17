@@ -14,6 +14,43 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 
+def test_component_selection_dependency_is_masked_without_rewriting_raw_points():
+    from badminton.contacts import _raw_visible
+    from badminton.rallies import _point
+
+    doc = empty_annotations("singles").model_dump()
+    run = {
+        "stage": "shuttle",
+        "start_frame": 0,
+        "end_frame": 10,
+        "frames": [
+            {
+                "frame": 6,
+                "time_s": 0.24,
+                "shuttle": {
+                    "visible": True,
+                    "x": 100,
+                    "y": 120,
+                    "selection_context_start_frame": 1,
+                    "selection_context_end_frame": 7,
+                },
+            }
+        ],
+    }
+    before = copy.deepcopy(run)
+    doc["scene_ranges"] = [scene(1, 2)]
+    masked = reviewed_run(run, doc)
+    point = masked["frames"][0]
+    assert point["shuttle"]["visible"] and point["shuttle"]["x"] == 100
+    assert point["shuttle"]["selection_context_excluded"]
+    assert not _raw_visible(point) and _point(point) is None
+    assert run == before
+    doc["scene_ranges"] = []
+    assert not reviewed_run(masked, doc)["frames"][0]["shuttle"][
+        "selection_context_excluded"
+    ]
+
+
 def scene(start=20, end=30, kind="replay"):
     return {
         "id": "scene-test",

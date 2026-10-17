@@ -13,6 +13,7 @@ from badminton.api import create_app
 from badminton.config import ROOT
 from badminton.ingest import inspect_video
 from badminton.schemas import Calibration
+from badminton.shuttle import _ComponentSelector, localization_recipe, locate_shuttle
 from badminton.storage import Store
 from badminton.video import write_json
 
@@ -22,6 +23,16 @@ from contact_profile_fixture import motion_scene
 
 def prepare(root, data):
     shuttle, players, _, _ = motion_scene()
+    selector = _ComponentSelector(640, 360)
+    for row in shuttle["frames"]:
+        point = row["shuttle"]
+        heat = np.zeros((360, 640), np.float32)
+        heat[round(point["y"]), round(point["x"])] = 0.9
+        if 17 <= row["frame"] <= 23:
+            heat[20:23, 20:23] = 0.95  # Deliberate detector ghost, not video truth.
+        row["shuttle"] = selector.select(
+            locate_shuttle(heat, 640, 360), row["frame"], row["time_s"]
+        )
     path = root / "contact-profile-qa.mp4"
     with av.open(str(path), "w") as container:
         stream = container.add_stream("libx264", rate=30)
@@ -70,6 +81,7 @@ def prepare(root, data):
                 row["players"][0]["confidence"] = 0.95
         else:
             run["visible_frames"] = 45
+            run["localization"] = localization_recipe()
         write_json(data / video["id"] / "runs" / f"{job_id}.json", run)
         store.put_job(
             {

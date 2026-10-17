@@ -80,6 +80,17 @@ def clip_inputs():
     return video, times, players, shuttle, calibrations
 
 
+def test_excluded_component_history_cannot_be_used_as_shuttle_features():
+    video, times, players, shuttle, calibrations = clip_inputs()
+    for row in shuttle["frames"]:
+        row["shuttle"]["selection_context_excluded"] = True
+    before = copy.deepcopy(shuttle)
+    result = build_stroke_clip(video, times, players, shuttle, calibrations, 30)
+    assert result["coverage"]["visible_shuttle_frames"] == 0
+    assert result["status"] == "abstained"
+    assert shuttle == before
+
+
 def test_source_label_contract_has_explicit_non_target_mapping_and_no_stroke_side():
     labels = source_classes()
     assert len(labels) == 35 and labels[0]["source_type"] == "net shot"

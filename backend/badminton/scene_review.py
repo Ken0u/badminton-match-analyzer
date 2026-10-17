@@ -96,6 +96,22 @@ def reviewed_run(run, annotations):
             row["scene_before_review"] = row.get("scene")
             row["scene"] = ranges[position]["scene"]
             row["reviewed_scene_range_id"] = ranges[position]["id"]
+        point = row.get("shuttle", {})
+        if "selection_context_start_frame" in point:
+            left, right = (
+                point["selection_context_start_frame"],
+                point.get("selection_context_end_frame"),
+            )
+            valid = (
+                type(left) is int
+                and type(right) is int
+                and start <= left <= row["frame"] < right <= end
+            )
+            point["selection_context_excluded"] = (
+                not valid
+                or excluded_scene(doc, left, right) is not None
+                or any(left < cut < right for cut in result["cut_frames"])
+            )
     result["scene_annotation_revision"] = doc.get("revision", 0)
     return result
 

@@ -231,3 +231,5 @@ Stages 1–2 should produce the first useful rally/contact prototype. Do not spe
 6. Record an error report and choose the next work from evidence: tracking adaptation, event detection, or additional labels.
 
 The first end-to-end acceptance example is a held-out singles rally that opens in the viewer with a correctly timed serve, ordered and attributed shots, a rally end, editable family/side labels, and a consistent JSON export. The same contract then applies to a doubles rally with four persistent players.
+
+The shuttle-selection increment retains all thresholded components and uses source-time reachability to replace an impossible jump only when one observed alternative is plausible. A source-first coordinate pass exposes a court-logo ghost; [the report](docs/SHUTTLE_LOCALIZATION_REPORT.md) records its corrected 353-to-1-pixel error and the narrow development limits. Component history is preserved transitively in review/inference context. Contact and rally counts remain unchanged: out-of-court endings, plausible ghosts and missed contacts still require work, followed by doubles/domain recognition and whole-match processing.

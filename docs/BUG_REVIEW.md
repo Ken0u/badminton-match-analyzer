@@ -2,6 +2,15 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The shuttle-selection increment fixes a verified jump to a stationary court-logo
+component even though the true shuttle is present as a smaller observed blob.
+Source-time reachability selects a unique plausible alternative while retaining
+all raw component evidence. Full transitive history now controls scene exclusions
+and downstream contact/rally/recognition inputs. [The report](SHUTTLE_LOCALIZATION_REPORT.md)
+records the 353-to-1-pixel development example, unchanged original excerpts,
+460 passing standard tests, a real GPU API check and generated browser coverage.
+The missing contacts and outside-sideline ending remain open.
+
 The contact-timing increment fixes a sampled-frame assumption that rejected
 between-frame transitions, and short gaps no longer require consecutive immediate
 observations on both sides. Profiled proposals carry uncertain timing and leave

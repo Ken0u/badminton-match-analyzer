@@ -6,6 +6,8 @@ The six target shot families are **clear, lift, net, drop, smash, and drive**, e
 
 The [doubles data audit](docs/S2_DOUBLES_REPORT.md) adds a pinned public-label importer and an actual new-camera probe. It fixes single-stroke serve-fault exclusions and documents severe contact misses; it does not yet provide a trained doubles classifier.
 
+The [shuttle localization update](docs/SHUTTLE_LOCALIZATION_REPORT.md) preserves observed blob candidates and fixes an implausible jump to a court-logo ghost. A source-reviewed point improves from 353 px error to 1 px; missing contacts and the out-of-court ending remain unresolved.
+
 The [contact timing update](docs/SUBFRAME_CONTACT_REPORT.md) adds between-frame and adjacent-gap review intervals with moving-wrist support and full evidence-context scene filtering. The public development rally now produces six contact proposals instead of one; substantial misses and uncertain hitter identities remain.
 
 ## Run the current application
