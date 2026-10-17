@@ -472,7 +472,7 @@ function renderEvents() {
     ? events
         .map((e) => {
           const player = state.doc.players.find((p) => p.id === e.player_id);
-          return `<button class="event-row ${state.selected === e.id ? "active" : ""}" data-event="${escape(e.id)}"><span class="event-dot ${e.kind}"></span><time>${clock(state.times[e.frame] || 0)}</time><span class="event-text">${escape(e.kind === "shot" ? pretty(e.family) : pretty(e.kind))}<small>${escape(e.rally_id)} · ${escape(player?.name || "—")}${e.side ? " · " + escape(pretty(e.side)) : ""}${e.contact_start_frame != null && e.contact_start_frame < e.contact_end_frame ? ` · timing ${e.contact_start_frame}–${e.contact_end_frame}` : ""}</small></span></button>`;
+          return `<button class="event-row ${state.selected === e.id ? "active" : ""}" data-event="${escape(e.id)}"><span class="event-dot ${e.kind}"></span><time>${clock(state.times[e.frame] || 0)}</time><span class="event-text">${escape(e.kind === "shot" ? pretty(e.family) : pretty(e.kind))}<small>${escape(e.rally_id)} · ${escape(player?.name || "—")}${e.side ? " · " + escape(pretty(e.side)) : ""}${eventTiming(e)}</small></span></button>`;
         })
         .join("")
     : '<p class="empty">No events yet. Mark the serve to begin a rally.</p>';
@@ -488,12 +488,28 @@ function renderEvents() {
       (b) => (b.onclick = () => editEvent(b.dataset.event || b.dataset.jump)),
     );
 }
+function eventTiming(event) {
+  const start = event.terminal_start_frame ?? event.contact_start_frame;
+  const end = event.terminal_end_frame ?? event.contact_end_frame;
+  return start != null && start < end ? ` · timing ${start}–${end}` : "";
+}
 function kindFields() {
   const kind = $("event-kind").value;
   $("family-label").hidden = kind !== "shot";
   $("side-label").hidden = kind === "rally_end";
   $("player-label").hidden = kind === "rally_end";
-  $("contact-uncertainty").hidden = kind === "rally_end";
+  $("timing-uncertainty-title").textContent =
+    kind === "rally_end"
+      ? "Rally end timing uncertainty"
+      : "Contact timing uncertainty";
+  $("timing-uncertainty-help").textContent =
+    kind === "rally_end"
+      ? "Keep the possible terminal frame range when ground contact or a fault is obscured. The final racket contact alone is not a rally ending."
+      : "For an occluded contact, keep the possible frame range. Clear it once you can identify the contact frame.";
+  $("clear-contact-interval").textContent =
+    kind === "rally_end"
+      ? "Use exact rally-end frame"
+      : "Use exact contact frame";
 }
 function resetEditor(kind = "shot") {
   state.pendingClassification = null;
@@ -536,9 +552,12 @@ function editEvent(id) {
   $("event-family").value = e.family || "unknown";
   $("event-side").value = e.side || "unknown";
   $("event-notes").value = e.notes;
-  $("contact-start").value = e.contact_start_frame ?? "";
-  $("contact-end").value = e.contact_end_frame ?? "";
-  $("contact-uncertainty").open = e.contact_start_frame != null;
+  $("contact-start").value =
+    (e.kind === "rally_end" ? e.terminal_start_frame : e.contact_start_frame) ??
+    "";
+  $("contact-end").value =
+    (e.kind === "rally_end" ? e.terminal_end_frame : e.contact_end_frame) ?? "";
+  $("contact-uncertainty").open = $("contact-start").value !== "";
   $("apply-event").textContent = "Update event";
   $("delete-event").hidden = false;
   $("editor-hint").textContent = `Editing ${pretty(e.kind)} · frame ${e.frame}`;
@@ -687,13 +706,9 @@ $("event-form").onsubmit = (e) => {
   }
   const existing = state.doc.events.find((e) => e.id === state.selected);
   const contactStart =
-    $("contact-start").value === "" || kind === "rally_end"
-      ? null
-      : Number($("contact-start").value);
+    $("contact-start").value === "" ? null : Number($("contact-start").value);
   const contactEnd =
-    $("contact-end").value === "" || kind === "rally_end"
-      ? null
-      : Number($("contact-end").value);
+    $("contact-end").value === "" ? null : Number($("contact-end").value);
   if (
     (contactStart === null) !== (contactEnd === null) ||
     (contactStart !== null &&
@@ -705,7 +720,7 @@ $("event-form").onsubmit = (e) => {
         contactEnd < frame))
   ) {
     notice(
-      "Enter both contact bounds, including the event frame, or clear the interval for exact timing.",
+      "Enter both timing bounds, including the event frame, or clear the interval for exact timing.",
       true,
     );
     return;
@@ -755,8 +770,10 @@ $("event-form").onsubmit = (e) => {
                 (kind === "shot" ? $("event-family").value : null)
             ? (existing?.family_score ?? null)
             : null,
-    contact_start_frame: contactStart,
-    contact_end_frame: contactEnd,
+    contact_start_frame: kind === "rally_end" ? null : contactStart,
+    contact_end_frame: kind === "rally_end" ? null : contactEnd,
+    terminal_start_frame: kind === "rally_end" ? contactStart : null,
+    terminal_end_frame: kind === "rally_end" ? contactEnd : null,
   };
   state.doc.events = state.doc.events.filter((e) => e.id !== event.id);
   state.doc.events.push(event);
@@ -776,12 +793,17 @@ $("new-event").onclick = () => {
   resetEditor();
   renderEvents();
 };
-$("event-kind").onchange = kindFields;
+$("event-kind").onchange = () => {
+  $("contact-start").value = "";
+  $("contact-end").value = "";
+  $("contact-uncertainty").open = false;
+  kindFields();
+};
 $("clear-contact-interval").onclick = () => {
   $("contact-start").value = "";
   $("contact-end").value = "";
   notice(
-    "Contact timing set to the event frame. Update the event to keep this change.",
+    "Timing set to the event frame. Update the event to keep this change.",
   );
 };
 $("filter-rally").onchange = renderEvents;

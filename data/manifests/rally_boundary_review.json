@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "reviewer": "assistant source-frame first pass; human timing and identity adjudication pending",
+  "purpose": "Opening/terminal boundary audit of the first full-court view in each highlight, selected before running perception on these views. This is not an exhaustive shot annotation or a trusted training/test benchmark.",
+  "method": "Sampled both complete views from service preparation through stopped play; inspected opening and terminal neighborhoods frame by frame at native source scale. No model predictions were used to choose boundary times. Existing doubles pilot labels were already known, so this is not a blinded review.",
+  "videos": [
+    {
+      "video_id": "970dbd8adfe548d8",
+      "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "inspected_view": { "start_frame": 255, "end_frame": 639 },
+      "contacts_complete": false,
+      "scene_assessment": "Likely live first highlighted exchange at 2-2; not independently adjudicated. No exhaustive-live coverage is created by this manifest.",
+      "events": [
+        {
+          "id": "opening-singles-serve",
+          "rally_id": "opening-singles",
+          "kind": "serve",
+          "frame": 260,
+          "player_id": "A",
+          "side": "unknown",
+          "contact_start_frame": 259,
+          "contact_end_frame": 263,
+          "notes": "Source-only first pass: near red player opens from service preparation; racket/contact motion is between source frames 259 and 263. Frame 260 is a navigation location, not an adjudicated exact contact. Stroke side remains unknown. Human review pending. Intermediate shots are not exhaustively labeled."
+        },
+        {
+          "id": "opening-singles-end",
+          "rally_id": "opening-singles",
+          "kind": "rally_end",
+          "frame": 612,
+          "terminal_start_frame": 590,
+          "terminal_end_frame": 620,
+          "notes": "Source-only first pass: after near red player's final return around 587, the shuttle descends near the net and both players stop. The exact net-fault/ground-contact terminal moment is unresolved; preserve the broad 590-620 interval rather than treating the final racket hit or frame 612 as exact. Human adjudication pending."
+        }
+      ]
+    },
+    {
+      "video_id": "c406a1187130b845",
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "inspected_view": { "start_frame": 278, "end_frame": 866 },
+      "contacts_complete": false,
+      "scene_assessment": "Likely live: service preparation at 3-5, continuous full-court exchange, terminal dive, then scoreboard changes to 4-5 at 854. Human scene adjudication pending; existing doubles review window stays unknown/unscored.",
+      "events": [
+        {
+          "id": "opening-doubles-serve",
+          "rally_id": "R1",
+          "kind": "serve",
+          "frame": 328,
+          "player_id": null,
+          "side": "unknown",
+          "contact_start_frame": 325,
+          "contact_end_frame": 330,
+          "notes": "Source-only first pass: far front player in dark kit serves toward near left receiver. Contact is obscured/small; 328 navigates the inclusive 325-330 interval. Persistent player identity and stroke side are unadjudicated, so remain unknown. The continuous view includes the original R1 pilot shots at 607/618/632/643. Intermediate contacts are not exhaustively labeled."
+        },
+        {
+          "id": "opening-doubles-end",
+          "rally_id": "R1",
+          "kind": "rally_end",
+          "frame": 816,
+          "terminal_start_frame": 810,
+          "terminal_end_frame": 824,
+          "notes": "Source-only first pass: near right defender dives during the final attack and the exchange stops; by 824 play has ceased. Shuttle/ground contact is partly obscured. Keep inclusive 810-824 as unresolved terminal timing; 816 is navigation only. Subsequent scoreboard update is contextual evidence, not the rally-end timestamp. Human adjudication pending."
+        }
+      ]
+    }
+  ]
+}

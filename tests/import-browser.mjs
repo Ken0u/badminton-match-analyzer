@@ -139,6 +139,68 @@ try {
   await page.waitForFunction(() => document.querySelector("#save").disabled);
   let firstDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
   assert.equal(firstDocument.events.length, 1);
+  // Terminal timing is separate from a racket contact, including in exports.
+  await page.locator('[data-mark="rally_end"]').click();
+  await page.locator("#event-frame").fill("30");
+  await page.locator("#contact-uncertainty summary").click();
+  assert.match(
+    await page.locator("#timing-uncertainty-title").textContent(),
+    /Rally end/,
+  );
+  await page.locator("#contact-start").fill("28");
+  await page.locator("#apply-event").click();
+  assert.match(
+    await page.locator("#notice").textContent(),
+    /both timing bounds/,
+  );
+  assert.equal(await page.locator("#event-count").textContent(), "1 events");
+  await page.locator("#contact-end").fill("35");
+  await page
+    .locator("#event-notes")
+    .fill("QA ONLY: synthetic terminal interval.");
+  await page.locator("#apply-event").click();
+  await page.locator("#save").click();
+  await page.waitForFunction(() => document.querySelector("#save").disabled);
+  firstDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
+  const terminal = firstDocument.events.find((e) => e.kind === "rally_end");
+  assert.equal(terminal.terminal_start_frame, 28);
+  assert.equal(terminal.terminal_end_frame, 35);
+  assert.equal(terminal.contact_start_frame, null);
+  await page.reload();
+  await page.locator(`[data-event="${terminal.id}"]`).click();
+  assert.equal(await page.locator("#contact-end").inputValue(), "35");
+  assert.equal(await page.locator("#player-label").isHidden(), true);
+  assert.equal(await page.locator("#side-label").isHidden(), true);
+  await page.locator("#clear-contact-interval").click();
+  await page.locator("#apply-event").click();
+  await page.locator("#save").click();
+  await page.waitForFunction(() => document.querySelector("#save").disabled);
+  const exactDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
+  assert.equal(
+    exactDocument.events.find((e) => e.id === terminal.id).terminal_start_frame,
+    null,
+  );
+  const originalRevision = await api(
+    `/api/videos/${firstVideo.id}/revisions/${firstDocument.revision}`,
+  );
+  assert.equal(
+    originalRevision.events.find((e) => e.id === terminal.id)
+      .terminal_end_frame,
+    35,
+  );
+  await page.locator("#contact-uncertainty summary").click();
+  await page.locator("#contact-start").fill("28");
+  await page.locator("#contact-end").fill("35");
+  await page.locator("#apply-event").click();
+  await page.locator("#save").click();
+  await page.waitForFunction(() => document.querySelector("#save").disabled);
+  firstDocument = await api(`/api/videos/${firstVideo.id}/annotations`);
+  await page.locator("#event-kind").selectOption("shot");
+  assert.equal(await page.locator("#contact-start").inputValue(), "");
+  assert.match(
+    await page.locator("#timing-uncertainty-title").textContent(),
+    /Contact timing/,
+  );
   // Exercise the real camera-scan UI in CI using the generated two-view video.
   await page.locator("#camera-panel summary").click();
   await page.locator("#scan-segments").click();
@@ -273,7 +335,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "Import browser checks passed: upload/progress/media, duplicate persistence, actionable invalid file/URL errors, queued YouTube fixture import, content identity, mobile layout.",
+    "Import browser checks passed: upload/progress/media, terminal intervals/history/kind switch, camera/scene corrections, duplicate persistence, invalid file/URL errors, queued YouTube fixture import, content identity, mobile layout.",
   );
 } finally {
   await browser.close();

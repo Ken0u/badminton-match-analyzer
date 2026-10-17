@@ -2,6 +2,21 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The latest source audit exposed an annotation gap: an occluded rally ending could
+only be saved as an exact frame plus free-text notes. The editor and contract now
+preserve separate inclusive terminal bounds for rally endings. Those bounds
+survive reload, edits, history, and JSON/CSV export; invalid/mixed contact and
+terminal intervals are rejected. Changing event kind clears draft timing so a
+racket-contact interval cannot silently become terminal timing.
+
+[The boundary report](RALLY_BOUNDARY_REPORT.md) records four source-only opening/
+ending intervals, with unresolved timing and human adjudication pending. It does
+not certify every intervening contact or an automatic rally detector. Current
+standard checks: **338 tests passed**, with the two optional CUDA checks skipped;
+this increment changes annotation contracts/UI and no model inference math.
+Generated-media browser checks exercise terminal add/reload/clear/history/kind
+changes and duplicate-import preservation.
+
 The reviewed-scene increment adds editable camera corrections and half-open
 live/replay/non-play/unknown ranges. [The scene report](SCENE_REVIEW_REPORT.md)
 records the source-verified 250-frame intro review and an isolated real CUDA
