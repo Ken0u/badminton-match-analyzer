@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "stage": "recognition",
+  "video_id": "1ae761b4f2f46b01",
+  "video_sha256": "1ae761b4f2f46b0168ff0193a9ac79d2a98f6564a5d64e18ce2e9243285c3a79",
+  "annotation_revision": 1,
+  "model": "BST-0 singles ShuttleSet 35-class",
+  "checkpoint_sha256": "5291095b880088ebb9aa5ec8a868ba1e0ced0cd57285b508feb495d94582cbe0",
+  "device": "cuda:0",
+  "min_family_score": 0.5,
+  "sequence_length": 30,
+  "pose_adapter": "YOLO COCO-17 to published MMPose normalization; domain transfer unvalidated",
+  "side_model": {
+    "name": "stroke-side-bst-descriptor-v1",
+    "checkpoint_sha256": "209204baf8660c03b3ed8de8f4cc6b4aec2578f412fd7f39edb7cdaffdec4842",
+    "threshold": 0.8,
+    "domain": "Published MMPose features; runtime YOLO transfer unvalidated"
+  },
+  "player_run_id": "2c03946740f443f4b237794c04a380a5",
+  "shuttle_run_id": "f8de56b4b83f4fae8cbc56310fa4c540",
+  "contacts_run_id": null,
+  "start_frame": 0,
+  "end_frame": 163,
+  "score_meaning": "uncalibrated family softmax mass; not verified accuracy",
+  "elapsed_s": 0.277,
+  "candidates": [
+    {
+      "id": "probe-46",
+      "frame": 46,
+      "event_id": null,
+      "player_id": null,
+      "contact_candidate_id": null,
+      "contact_start_frame": null,
+      "contact_end_frame": null,
+      "time_s": 1.84,
+      "status": "abstained",
+      "clip_start_frame": 34,
+      "clip_end_frame": 59,
+      "coverage": {
+        "source_frames": 25,
+        "two_player_frames": 25,
+        "visible_shuttle_frames": 0,
+        "pose_fraction": 1.0,
+        "shuttle_fraction": 0.0
+      },
+      "reason": "Insufficient two-player pose or shuttle visibility in contact context"
+    },
+    {
+      "id": "probe-132",
+      "frame": 132,
+      "event_id": null,
+      "player_id": null,
+      "contact_candidate_id": null,
+      "contact_start_frame": null,
+      "contact_end_frame": null,
+      "time_s": 5.28,
+      "status": "abstained",
+      "clip_start_frame": 120,
+      "clip_end_frame": 145,
+      "coverage": {
+        "source_frames": 25,
+        "two_player_frames": 25,
+        "visible_shuttle_frames": 17,
+        "pose_fraction": 1.0,
+        "shuttle_fraction": 0.68
+      },
+      "sampled_frames": [
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144
+      ],
+      "contact_tracks": {
+        "far": 2,
+        "near": 1
+      },
+      "kind": "shot",
+      "family": "other",
+      "family_score": 0.46579243685118854,
+      "family_scores": {
+        "clear": 0.24318767111981288,
+        "lift": 0.13250199309550226,
+        "net": 0.012119099730625749,
+        "drop": 0.06216916162520647,
+        "smash": 0.009534330107271671,
+        "drive": 0.028316432260908186,
+        "other": 0.46579243685118854,
+        "unknown": 0.016547400504350662,
+        "serve": 0.029831565683707595
+      },
+      "side": "unknown",
+      "hitter_court_end": "far",
+      "top_classes": [
+        {
+          "index": 11,
+          "court_end": "far",
+          "source_type": "push",
+          "kind": "shot",
+          "family": "other",
+          "score": 0.44000059366226196
+        },
+        {
+          "index": 6,
+          "court_end": "far",
+          "source_type": "clear",
+          "kind": "shot",
+          "family": "clear",
+          "score": 0.2423727810382843
+        },
+        {
+          "index": 4,
+          "court_end": "far",
+          "source_type": "lob",
+          "kind": "shot",
+          "family": "lift",
+          "score": 0.10937435179948807
+        }
+      ],
+      "reason": "The classifier did not separate a family confidently enough; inspect its ranked alternatives",
+      "hitter_hint": {
+        "court_end": "far",
+        "track_id": 2,
+        "player_id": null
+      },
+      "side_status": "abstained",
+      "side_reason": "Side model is limited to confident target-family suggestions"
+    }
+  ],
+  "candidate_count": 2,
+  "predicted_count": 0,
+  "side_prediction_count": 0,
+  "probe_only": true,
+  "target_semantics": "unverified reference frames",
+  "strict_accuracy": null,
+  "source_contact_adjudication": "required",
+  "perception_baseline": {
+    "video_id": "1ae761b4f2f46b01",
+    "video_sha256": "1ae761b4f2f46b0168ff0193a9ac79d2a98f6564a5d64e18ce2e9243285c3a79",
+    "runs": {
+      "players": {
+        "id": "2c03946740f443f4b237794c04a380a5",
+        "summary": {
+          "schema_version": 1,
+          "video_id": "1ae761b4f2f46b01",
+          "stage": "players",
+          "model": "yolo11n-pose",
+          "device": "cuda:0",
+          "image_size": 1280,
+          "peak_gpu_memory_mb": 101.9,
+          "start_frame": 0,
+          "end_frame": 163,
+          "stride": 1,
+          "annotation_revision": 1,
+          "calibrated": true,
+          "calibrated_frames": 163,
+          "elapsed_s": 6.532,
+          "processed_frames": 163,
+          "inference_fps": 24.96,
+          "expected_players": 2,
+          "mean_detections": 2.0
+        },
+        "path": "data\\datasets\\shuttleset\\direct-video-v1\\1ae761b4f2f46b01\\runs\\2c03946740f443f4b237794c04a380a5.json"
+      },
+      "shuttle": {
+        "id": "f8de56b4b83f4fae8cbc56310fa4c540",
+        "summary": {
+          "schema_version": 1,
+          "video_id": "1ae761b4f2f46b01",
+          "stage": "shuttle",
+          "model": "TrackNetV3",
+          "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "device": "cuda:0",
+          "input_size": [
+            512,
+            288
+          ],
+          "seq_len": 8,
+          "precision": "float16",
+          "ensemble": "weighted overlapping windows",
+          "start_frame": 0,
+          "end_frame": 163,
+          "processed_frames": 163,
+          "visible_frames": 28,
+          "repaired_frames": 0,
+          "elapsed_s": 12.421,
+          "inference_fps": 13.12,
+          "peak_gpu_memory_mb": 430.3
+        },
+        "path": "data\\datasets\\shuttleset\\direct-video-v1\\1ae761b4f2f46b01\\runs\\f8de56b4b83f4fae8cbc56310fa4c540.json"
+      }
+    },
+    "candidate_count": 0,
+    "candidates": [],
+    "method": "gap-aware motion and pose proposals v2",
+    "source": "ShuttleSet match 1 clip; timing alignment and labels still unverified"
+  },
+  "alignment_manifest": "data/manifests/source_alignment_pilot.json",
+  "verified_contact_count": 0
+}
