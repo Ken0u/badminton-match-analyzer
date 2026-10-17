@@ -109,11 +109,19 @@ def recognize_strokes(
         raise RuntimeError("Stroke checkpoint does not match the pinned model manifest")
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     model = BST_0(in_dim=72, seq_len=30, n_class=35)
+    side_predictor = None
     try:
+        from .stroke_side import (
+            forward_with_descriptor,
+            load_side_predictor,
+            predict_side,
+        )
+
         model.load_state_dict(
             torch.load(path, map_location="cpu", weights_only=True), strict=True
         )
         model = model.to(device).eval()
+        side_predictor = load_side_predictor(device)
         candidates = []
         began = time.perf_counter()
         with torch.inference_mode():
@@ -131,7 +139,8 @@ def recognize_strokes(
                     key: value for key, value in clip.items() if key not in private
                 }
                 if clip["status"] == "ready":
-                    logits = model(
+                    logits, descriptor = forward_with_descriptor(
+                        model,
                         torch.from_numpy(clip["pose"]).unsqueeze(0).to(device),
                         torch.from_numpy(clip["shuttle"]).unsqueeze(0).to(device),
                         torch.tensor([clip["length"]], device=device),
@@ -161,6 +170,23 @@ def recognize_strokes(
                             player_run_id,
                         ),
                     }
+                    if prediction["status"] == "predicted" and prediction["family"] in (
+                        "clear",
+                        "lift",
+                        "net",
+                        "drop",
+                        "smash",
+                        "drive",
+                    ):
+                        prediction.update(
+                            predict_side(side_predictor, descriptor, court_end)
+                        )
+                    else:
+                        prediction.update(
+                            side="unknown",
+                            side_status="abstained",
+                            side_reason="Side model is limited to confident target-family suggestions",
+                        )
                 candidates.append(prediction)
                 progress((number + 1) / max(1, len(targets)))
         result = {
@@ -175,7 +201,14 @@ def recognize_strokes(
             "min_family_score": min_family_score,
             "sequence_length": 30,
             "pose_adapter": "YOLO COCO-17 to published MMPose normalization; domain transfer unvalidated",
-            "side_model": None,
+            "side_model": None
+            if side_predictor is None
+            else {
+                "name": "stroke-side-bst-descriptor-v1",
+                "checkpoint_sha256": side_predictor["metadata"]["checkpoint_sha256"],
+                "threshold": side_predictor["metadata"]["recipe"]["threshold"],
+                "domain": "Published MMPose features; runtime YOLO transfer unvalidated",
+            },
             "player_run_id": player_run_id,
             "shuttle_run_id": shuttle_run.get("run_id"),
             "contacts_run_id": contacts_run_id,
@@ -186,10 +219,13 @@ def recognize_strokes(
             "candidates": candidates,
             "candidate_count": len(candidates),
             "predicted_count": sum(c["status"] == "predicted" for c in candidates),
+            "side_prediction_count": sum(
+                c.get("side") in ("forehand", "backhand") for c in candidates
+            ),
         }
         write_json(output, result)
         return {key: value for key, value in result.items() if key != "candidates"}
     finally:
-        del model
+        del model, side_predictor
         if device.startswith("cuda"):
             torch.cuda.empty_cache()

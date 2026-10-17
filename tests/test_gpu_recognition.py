@@ -52,7 +52,10 @@ def test_published_bst_checkpoint_on_actual_source_aligned_tracks(tmp_path):
     assert summary["device"] == "cuda:0" and summary["candidate_count"] == len(events)
     result = json.loads(output.read_text())
     valid = [item for item in result["candidates"] if item.get("top_classes")]
-    assert valid and all(item["side"] == "unknown" for item in valid)
+    assert valid and all(
+        item["side"] in ("forehand", "backhand", "unknown") for item in valid
+    )
+    assert result["side_model"]["checkpoint_sha256"]
     assert all(0 <= item["family_score"] <= 1 for item in valid)
     assert store.annotations(video_id).revision == revision
     assert store.annotations(video_id).model_dump()["events"] == events

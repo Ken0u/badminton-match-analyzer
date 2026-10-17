@@ -17,7 +17,7 @@ export function createRecognitionTools({
     state.recognitionJob = null;
     $("recognize").disabled = true;
     $("recognition-status").textContent =
-      "Track players and the shuttle to suggest shot families.";
+      "Track players and the shuttle to suggest shot labels.";
     render();
   }
   function render() {
@@ -48,7 +48,10 @@ export function createRecognitionTools({
                   `${item.source_type} ${(item.score * 100).toFixed(0)}%`,
               )
               .join(", ");
-            return `<button class="candidate-row stroke-row" data-stroke="${escape(c.id)}" ${applied || stale ? "disabled" : ""}><time>F${c.frame}</time><span>${applied ? "Applied" : stale ? "Contact changed; classify again" : escape(result)}<small>${escape(c.reason ?? alternatives)}${c.family_score != null ? ` · family score ${c.family_score.toFixed(2)}` : ""} · stroke side needs review</small></span></button>`;
+            const side = ["forehand", "backhand"].includes(c.side)
+              ? `possible ${c.side} (${c.side_score.toFixed(2)})`
+              : "stroke side unresolved";
+            return `<button class="candidate-row stroke-row" data-stroke="${escape(c.id)}" ${applied || stale ? "disabled" : ""}><time>F${c.frame}</time><span>${applied ? "Applied" : stale ? "Contact changed; classify again" : escape(result)}<small>${escape(c.reason ?? alternatives)}${c.family_score != null ? ` · family score ${c.family_score.toFixed(2)}` : ""} · ${escape(side)} · verify mechanics</small></span></button>`;
           })
           .join("")
       : '<p class="empty">Family suggestions appear here. They never replace your saved labels automatically.</p>';
@@ -80,6 +83,16 @@ export function createRecognitionTools({
           if (c.status === "predicted") {
             $("event-kind").value = c.kind;
             $("event-family").value = c.family ?? "unknown";
+            const hitter = c.hitter_hint?.player_id;
+            if (!$("event-player").value && hitter)
+              $("event-player").value = hitter;
+            if (
+              $("event-side").value === "unknown" &&
+              hitter &&
+              $("event-player").value === hitter &&
+              ["forehand", "backhand"].includes(c.side)
+            )
+              $("event-side").value = c.side;
           }
           state.pendingClassification = {
             run_id: jobId,
@@ -168,7 +181,7 @@ export function createRecognitionTools({
         }),
       });
       notice(
-        "Classifying shot families from the saved contacts and tracks. Stroke side remains for review.",
+        "Classifying from saved contacts and tracks. Review every family, hitter and stroke-side suggestion.",
       );
     } catch (e) {
       notice(e.message, true);
