@@ -10,7 +10,7 @@ from badminton.rallies import (
     propose_rallies,
     reviewed_rallies,
 )
-from rally_fixture import scene
+from rally_fixture import scene, surround_scene
 
 
 def kinds(args):
@@ -38,6 +38,68 @@ def test_observed_launch_and_stop_propose_intervals_without_reading_labels(mode)
         {"kind": "serve", "frame": 99},
     ]
     assert propose_rallies(*args) == run
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize(
+    "terminal", [(170, 440), (830, 440), (575, 40), (575, 560), (170, 40)]
+)
+def test_observed_settling_beside_each_court_edge_is_an_uncertain_ending(
+    mode, terminal
+):
+    args = surround_scene(mode, terminal)
+    before = deepcopy(args)
+    run = propose_rallies(*args)
+    endings = [c for c in run["candidates"] if c["kind"] == "rally_end"]
+    assert len(endings) == 1
+    c = endings[0]
+    assert c["start_frame"] <= 40 <= c["end_frame"]
+    assert c["timing"] == "uncertain_interval" and c["player_id"] is None
+    assert c["evidence"]["settled_region"] == "near_court_surround"
+    assert c["evidence"]["line_call_verified"] is False
+    assert run["recipe"]["terminal_court_margin_fraction"] == 0.12
+    assert args == before
+
+
+@pytest.mark.parametrize("terminal", [(10, 440), (990, 440), (575, 0), (575, 600)])
+def test_beyond_the_bounded_surround_cannot_create_an_ending(terminal):
+    assert "rally_end" not in kinds(surround_scene(terminal=terminal))
+
+
+def test_surround_ending_preserves_variable_source_pts_and_unknown_line_call():
+    times, t = [], 0
+    for i in range(110):
+        times.append(t)
+        t += 0.02 if i % 2 else 0.06
+    run = propose_rallies(*surround_scene(times=times))
+    c = next(c for c in run["candidates"] if c["kind"] == "rally_end")
+    assert c["time_s"] == times[c["frame"]]
+    assert c["start_time_s"] <= 1.6 <= c["end_time_s"]
+    assert not c["evidence"]["line_call_verified"]
+
+
+@pytest.mark.parametrize(
+    "failure", ["ghost", "apex", "missing", "no_people", "cut", "nonlive"]
+)
+def test_near_court_point_still_needs_motion_settling_and_complete_context(failure):
+    args = surround_scene()
+    _, players, shuttle, doc = args
+    if failure == "cut":
+        shuttle["cut_frames"] = [40]
+    elif failure == "nonlive":
+        doc["scene_ranges"] = [
+            {"id": "masked", "start_frame": 35, "end_frame": 80, "scene": "replay"}
+        ]
+    for pose, row in zip(players["frames"], shuttle["frames"]):
+        if failure == "ghost":
+            row["shuttle"]["x"] = 170
+        elif failure == "apex":
+            row["shuttle"]["x"] = 170 + 80 * (row["time_s"] - 2) ** 2
+        elif failure == "missing" and row["frame"] >= 39:
+            row["shuttle"]["visible"] = False
+        elif failure == "no_people":
+            pose["players"] = []
+    assert "rally_end" not in kinds(args)
 
 
 @pytest.mark.parametrize(

@@ -18,7 +18,7 @@ import numpy as np
 from .scene_review import camera_review_signature, reviewed_run
 from .video import write_json
 
-METHOD = "observed shuttle transition and pose context v1"
+METHOD = "observed shuttle transition and bounded court surround v2"
 POSE_LAG_S = 0.16
 QUIET_S = 0.60
 SETTLED_S = 0.48
@@ -26,6 +26,7 @@ MIN_CONTEXT_COVERAGE = 0.75
 MOVING_DIAGONALS_PER_S = 0.08
 STILL_RADIUS_DIAGONALS = 0.005
 MAX_FRAME_STEP_S = 0.10
+TERMINAL_COURT_MARGIN = 0.12
 
 
 def context_signature(annotations, start, end):
@@ -137,9 +138,29 @@ def _point(row):
     return np.asarray([observation["x"], observation["y"]], dtype=float)
 
 
-def _inside_court(point, frame, annotations, video):
+def _terminal_region(point, frame, annotations, video):
+    """Bound a possible settled floor location without asserting a line call.
+
+    Out shots can end beside or behind the court. This calibrated surround is
+    only a proposal search region; perspective projection alone cannot prove
+    ground contact, identify a fault or decide whether a shot was in or out.
+    """
     position = _court_position(point, frame, annotations, video)
-    return position is not None and all(0 <= x <= 1 for x in position)
+    if (
+        position is None
+        or not np.isfinite(position).all()
+        or not all(
+            -TERMINAL_COURT_MARGIN <= x <= 1 + TERMINAL_COURT_MARGIN for x in position
+        )
+    ):
+        return None
+    return {
+        "settled_region": "court"
+        if all(0 <= x <= 1 for x in position)
+        else "near_court_surround",
+        "court_plane_position_hint": [round(float(x), 5) for x in position],
+        "line_call_verified": False,
+    }
 
 
 def _court_position(point, frame, annotations, video):
@@ -464,10 +485,11 @@ def _ending(rows, times, index, diagonal, annotations, video):
     if len(points) < 4:
         return None
     center = np.median(points, axis=0)
-    if max(
-        float(np.linalg.norm(p - center)) for p in points
-    ) > diagonal * STILL_RADIUS_DIAGONALS or not _inside_court(
-        center, row["frame"], annotations, video
+    region = _terminal_region(center, row["frame"], annotations, video)
+    if (
+        region is None
+        or max(float(np.linalg.norm(p - center)) for p in points)
+        > diagonal * STILL_RADIUS_DIAGONALS
     ):
         return None
     incoming = _window(rows, times, row["time_s"] - 1.20, row["time_s"])
@@ -506,6 +528,7 @@ def _ending(rows, times, index, diagonal, annotations, video):
             "stationary_observation_fraction": round(
                 _fraction(settled, "visible_point"), 3
             ),
+            **region,
             **fit,
             "meaning": "Observed settling unlike a smooth flight apex, followed by quieter full-player motion; terminal contact/fault remains unverified",
         },
@@ -606,6 +629,8 @@ def propose_rallies(video, player_run, shuttle_run, annotations, source_times=No
             "moving_diagonals_per_s": MOVING_DIAGONALS_PER_S,
             "still_radius_diagonals": STILL_RADIUS_DIAGONALS,
             "max_frame_step_s": MAX_FRAME_STEP_S,
+            "terminal_court_margin_fraction": TERMINAL_COURT_MARGIN,
+            "terminal_region_meaning": "Bounded search region around calibrated court, not proof of floor contact or an in/out call",
         },
         "interval_bounds": "inclusive",
         "meaning": "Experimental boundary review intervals, not verified rallies or exact terminal times",

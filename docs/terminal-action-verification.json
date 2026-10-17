@@ -1,0 +1,450 @@
+{
+  "baseline_source_commit": "cacc4d16b23a3a9c2999e76f80e507b86f473604",
+  "baseline_code_sha256": "376d804e4014b1f10e00e33b172fa46ca9ecb155201c8eb1e59e6d37420c96cd",
+  "current_code_sha256": "75e1441a57bcc46c71030ecc4caebbc55df53fdb149470dcd2acc559fccf294b",
+  "cases": [
+    {
+      "name": "public",
+      "source_video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+      "player_run_id": "de3ea34d63454b22a958e33d96993118",
+      "input_artifact_sha256": [
+        "c8b24e2332902c575d583117965da5868a5896ad13e91e38e03ed874f5f12c5b",
+        "d406e13f86d53489c8f4ddf42d3c5a6f1c1e18228481629fab6058fbe4fe4afa"
+      ],
+      "previous_candidates": [
+        {
+          "id": "serve-51",
+          "kind": "serve",
+          "frame": 51,
+          "time_s": 1.7,
+          "start_frame": 44,
+          "end_frame": 52,
+          "start_time_s": 1.46666667,
+          "end_time_s": 1.73333333,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "quiet_context_s": 0.6,
+            "observed_quiet_fraction": 1.0,
+            "full_player_context_fraction": 1.0,
+            "partial_player_context": false,
+            "observed_departure_frames": 6,
+            "possible_track_ids": [
+              3,
+              4
+            ],
+            "hitter_hint_status": "ambiguous_proximity",
+            "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+            "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+          }
+        }
+      ],
+      "current_candidates": [
+        {
+          "id": "serve-51",
+          "kind": "serve",
+          "frame": 51,
+          "time_s": 1.7,
+          "start_frame": 44,
+          "end_frame": 52,
+          "start_time_s": 1.46666667,
+          "end_time_s": 1.73333333,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "quiet_context_s": 0.6,
+            "observed_quiet_fraction": 1.0,
+            "full_player_context_fraction": 1.0,
+            "partial_player_context": false,
+            "observed_departure_frames": 6,
+            "possible_track_ids": [
+              3,
+              4
+            ],
+            "hitter_hint_status": "ambiguous_proximity",
+            "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+            "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+          }
+        },
+        {
+          "id": "rally_end-319",
+          "kind": "rally_end",
+          "frame": 319,
+          "time_s": 10.63333333,
+          "start_frame": 316,
+          "end_frame": 330,
+          "start_time_s": 10.53333333,
+          "end_time_s": 11.0,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "stationary_context_s": 0.48,
+            "stationary_radius_px": 7.34,
+            "quiet_player_followup_s": 0.6,
+            "quiet_followup_delay_s": 0.067,
+            "full_player_quiet_fraction": 0.75,
+            "stationary_observation_fraction": 1.0,
+            "settled_region": "near_court_surround",
+            "court_plane_position_hint": [
+              -0.04489,
+              0.71295
+            ],
+            "line_call_verified": false,
+            "piecewise_rmse_px": 4.379,
+            "quadratic_rmse_px": 9.118,
+            "tail_speed_diagonals_per_s": 0.017,
+            "meaning": "Observed settling unlike a smooth flight apex, followed by quieter full-player motion; terminal contact/fault remains unverified"
+          }
+        }
+      ],
+      "current_elapsed_s": 0.172,
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1,
+        "terminal_court_margin_fraction": 0.12,
+        "terminal_region_meaning": "Bounded search region around calibrated court, not proof of floor contact or an in/out call"
+      }
+    },
+    {
+      "name": "singles",
+      "source_video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "player_run_id": "38cfdedc74d248208727aff21d4c3e45",
+      "input_artifact_sha256": [
+        "b8708d4502589eadf1c2d2da960f019b08a41a10cee06e5015377b6d64075e79",
+        "04d9d309a60b8eecdf7b46e188f9b42f346396f19a2a3bca9cd8d80beb61182b"
+      ],
+      "previous_candidates": [
+        {
+          "id": "rally_end-610",
+          "kind": "rally_end",
+          "frame": 610,
+          "time_s": 24.4,
+          "start_frame": 607,
+          "end_frame": 621,
+          "start_time_s": 24.28,
+          "end_time_s": 24.84,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "stationary_context_s": 0.48,
+            "stationary_radius_px": 7.34,
+            "quiet_player_followup_s": 0.6,
+            "quiet_followup_delay_s": 0.0,
+            "full_player_quiet_fraction": 0.9,
+            "stationary_observation_fraction": 1.0,
+            "piecewise_rmse_px": 3.261,
+            "quadratic_rmse_px": 6.372,
+            "tail_speed_diagonals_per_s": 0.0151,
+            "meaning": "Observed settling unlike a smooth flight apex, followed by quieter full-player motion; terminal contact/fault remains unverified"
+          }
+        }
+      ],
+      "current_candidates": [
+        {
+          "id": "rally_end-610",
+          "kind": "rally_end",
+          "frame": 610,
+          "time_s": 24.4,
+          "start_frame": 607,
+          "end_frame": 621,
+          "start_time_s": 24.28,
+          "end_time_s": 24.84,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "stationary_context_s": 0.48,
+            "stationary_radius_px": 7.34,
+            "quiet_player_followup_s": 0.6,
+            "quiet_followup_delay_s": 0.0,
+            "full_player_quiet_fraction": 0.9,
+            "stationary_observation_fraction": 1.0,
+            "settled_region": "court",
+            "court_plane_position_hint": [
+              0.16499,
+              0.32107
+            ],
+            "line_call_verified": false,
+            "piecewise_rmse_px": 3.261,
+            "quadratic_rmse_px": 6.372,
+            "tail_speed_diagonals_per_s": 0.0151,
+            "meaning": "Observed settling unlike a smooth flight apex, followed by quieter full-player motion; terminal contact/fault remains unverified"
+          }
+        }
+      ],
+      "current_elapsed_s": 0.099,
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1,
+        "terminal_court_margin_fraction": 0.12,
+        "terminal_region_meaning": "Bounded search region around calibrated court, not proof of floor contact or an in/out call"
+      }
+    },
+    {
+      "name": "doubles",
+      "source_video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "player_run_id": "e67258122f424671980cc1e7afca11d5",
+      "input_artifact_sha256": [
+        "af1ac4b93e547362ab81d03923c142fcdb99ea2498f79b4c89e6bc074df952e4",
+        "363058b8502e12ba65909ea240bcbe12a13079465e70e7c8fc69a0e1c441d525"
+      ],
+      "previous_candidates": [
+        {
+          "id": "serve-331",
+          "kind": "serve",
+          "frame": 331,
+          "time_s": 13.24,
+          "start_frame": 324,
+          "end_frame": 331,
+          "start_time_s": 12.96,
+          "end_time_s": 13.24,
+          "timing": "uncertain_interval",
+          "track_id": 8,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "quiet_context_s": 0.6,
+            "observed_quiet_fraction": 0.933,
+            "full_player_context_fraction": 0.933,
+            "partial_player_context": false,
+            "observed_departure_frames": 6,
+            "possible_track_ids": [
+              8
+            ],
+            "hitter_hint_status": "unconfirmed_track",
+            "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+            "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+          }
+        }
+      ],
+      "current_candidates": [
+        {
+          "id": "serve-331",
+          "kind": "serve",
+          "frame": 331,
+          "time_s": 13.24,
+          "start_frame": 324,
+          "end_frame": 331,
+          "start_time_s": 12.96,
+          "end_time_s": 13.24,
+          "timing": "uncertain_interval",
+          "track_id": 8,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "quiet_context_s": 0.6,
+            "observed_quiet_fraction": 0.933,
+            "full_player_context_fraction": 0.933,
+            "partial_player_context": false,
+            "observed_departure_frames": 6,
+            "possible_track_ids": [
+              8
+            ],
+            "hitter_hint_status": "unconfirmed_track",
+            "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+            "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+          }
+        }
+      ],
+      "current_elapsed_s": 0.239,
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1,
+        "terminal_court_margin_fraction": 0.12,
+        "terminal_region_meaning": "Bounded search region around calibrated court, not proof of floor contact or an in/out call"
+      }
+    },
+    {
+      "name": "singles-pilot",
+      "source_video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "player_run_id": "b8bdae17e8374a20bbf16f554c551f19",
+      "input_artifact_sha256": [
+        "0601ce57b529e8f2fc4c3a6fe4d55c6958ad3336a2ef05e81c2b74aea6333309",
+        "19abfd609fbc6de6899850fe6659d032191ea3e96e89f65dad03d7aeddc036e2"
+      ],
+      "previous_candidates": [],
+      "current_candidates": [],
+      "current_elapsed_s": 0.018,
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1,
+        "terminal_court_margin_fraction": 0.12,
+        "terminal_region_meaning": "Bounded search region around calibrated court, not proof of floor contact or an in/out call"
+      }
+    },
+    {
+      "name": "doubles-pilot",
+      "source_video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "player_run_id": "1e69e804c60d4d5c8e4fb490afaffa3a",
+      "input_artifact_sha256": [
+        "32a903654c9e56737e8b363fcc9ebe9e7731e9f11c8000af182417931854544d",
+        "7853ab4abd3d9c01ba5ceea17e6d4e6705eb0671850ecae5a9cf98d24f68a76d"
+      ],
+      "previous_candidates": [],
+      "current_candidates": [],
+      "current_elapsed_s": 0.034,
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1,
+        "terminal_court_margin_fraction": 0.12,
+        "terminal_region_meaning": "Bounded search region around calibrated court, not proof of floor contact or an in/out call"
+      }
+    },
+    {
+      "name": "public-old-shuttle",
+      "source_video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+      "player_run_id": "de3ea34d63454b22a958e33d96993118",
+      "input_artifact_sha256": [
+        "c8b24e2332902c575d583117965da5868a5896ad13e91e38e03ed874f5f12c5b",
+        "1a70899258a21a644be9d867b5c1cebfdd9b4a54b73c9708b5d4a21cdb1af2fc"
+      ],
+      "previous_candidates": [
+        {
+          "id": "serve-51",
+          "kind": "serve",
+          "frame": 51,
+          "time_s": 1.7,
+          "start_frame": 44,
+          "end_frame": 52,
+          "start_time_s": 1.46666667,
+          "end_time_s": 1.73333333,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "quiet_context_s": 0.6,
+            "observed_quiet_fraction": 1.0,
+            "full_player_context_fraction": 1.0,
+            "partial_player_context": false,
+            "observed_departure_frames": 6,
+            "possible_track_ids": [
+              3,
+              4
+            ],
+            "hitter_hint_status": "ambiguous_proximity",
+            "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+            "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+          }
+        }
+      ],
+      "current_candidates": [
+        {
+          "id": "serve-51",
+          "kind": "serve",
+          "frame": 51,
+          "time_s": 1.7,
+          "start_frame": 44,
+          "end_frame": 52,
+          "start_time_s": 1.46666667,
+          "end_time_s": 1.73333333,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "player_id": null,
+          "needs_review": true,
+          "evidence": {
+            "quiet_context_s": 0.6,
+            "observed_quiet_fraction": 1.0,
+            "full_player_context_fraction": 1.0,
+            "partial_player_context": false,
+            "observed_departure_frames": 6,
+            "possible_track_ids": [
+              3,
+              4
+            ],
+            "hitter_hint_status": "ambiguous_proximity",
+            "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+            "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+          }
+        }
+      ],
+      "current_elapsed_s": 0.151,
+      "recipe": {
+        "pose_lag_s": 0.16,
+        "quiet_context_s": 0.6,
+        "settled_context_s": 0.48,
+        "minimum_context_coverage": 0.75,
+        "moving_diagonals_per_s": 0.08,
+        "still_radius_diagonals": 0.005,
+        "max_frame_step_s": 0.1,
+        "terminal_court_margin_fraction": 0.12,
+        "terminal_region_meaning": "Bounded search region around calibrated court, not proof of floor contact or an in/out call"
+      }
+    }
+  ],
+  "accuracy_claim": false,
+  "main_annotations_unchanged": true,
+  "schema_version": 1,
+  "source_review": {
+    "manifest": "data/manifests/s2_source_anchor_review.json",
+    "canonical_json_sha256": "9f663c07f4a4a0abb4851ef0fbc70f049b347b99e54bfdae1904c04ba1d7e9c7",
+    "source_video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+    "preexisting_first_pass_ending_interval": [
+      300,
+      330
+    ],
+    "human_review": "pending",
+    "exhaustive_contact_truth": false,
+    "meaning": "Source-first broad interval predates model inference. No exact terminal-contact or line-call truth claimed."
+  },
+  "real_api": {
+    "run_id": "0bc6ab5c6348475593f76486b86c9a41",
+    "artifact_sha256": "471970b1fbcb9ae263d9a3ed97ec51d71fa6af8b27f939912d3e407ba3e5166d",
+    "source_timestamps_validated": true,
+    "review_annotations_unchanged": true,
+    "main_annotations_unchanged": true
+  },
+  "validation": {
+    "standard_tests_passed": 481,
+    "unchanged_opt_in_gpu_checks_skipped": 4,
+    "generated_browser_passed": true,
+    "new_perception_inference": false,
+    "data_scope": "Cached real CUDA inputs: public development rally, two original first views, two partial pilots and old-ghost negative. No held-out event accuracy."
+  },
+  "current_ui_sha256": "fb0925367b6f9aa5e5f2c2a20c42fb2395d4042c0906f80d368c45839933218f",
+  "diagnosis": {
+    "settling_anchor_frame": 330,
+    "stationary_radius_px": 7.0710678118654755,
+    "allowed_stationary_radius_px": 7.34,
+    "settled_court_plane_hint": [
+      -0.0448910743,
+      0.7129531503
+    ],
+    "strict_inside_court_rejected": true,
+    "other_motion_fit_visibility_and_quiet_thresholds_unchanged": true
+  }
+}

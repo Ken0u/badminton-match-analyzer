@@ -97,9 +97,21 @@ try {
     (j) => j.kind === "rallies" && j.status === "completed",
   );
   const run = await json(root + `/runs/${job.id}`);
+  const ending = run.candidates.find((c) => c.kind === "rally_end");
+  assert.equal(ending.evidence.settled_region, "near_court_surround");
+  assert.equal(ending.evidence.line_call_verified, false);
+  assert.match(
+    await page.locator(`[data-rally-candidate="${ending.id}"]`).textContent(),
+    /near court edge/,
+  );
   for (const kind of ["serve", "rally_end"]) {
     const c = run.candidates.find((c) => c.kind === kind);
     await page.locator(`[data-rally-candidate="${c.id}"]`).click();
+    if (kind === "rally_end")
+      assert.match(
+        await page.locator("#event-notes").inputValue(),
+        /line call are unverified/,
+      );
     assert.equal(await page.locator("#event-kind").inputValue(), kind);
     assert.equal(await page.locator("#event-player").inputValue(), "");
     assert.equal(await page.locator("#event-family").inputValue(), "unknown");
@@ -126,6 +138,8 @@ try {
     assert.equal(event.source_run_id, job.id);
     assert.equal(event.candidate_id, c.id);
     assert.equal(event.player_id, null);
+    if (event.kind === "rally_end")
+      assert.match(event.notes, /line call are unverified/);
     const prefix = event.kind === "rally_end" ? "terminal" : "contact";
     assert.equal(event[`${prefix}_start_frame`], c.start_frame);
     assert.equal(event[`${prefix}_end_frame`], c.end_frame);
