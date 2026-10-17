@@ -162,6 +162,46 @@ class Store:
                     for row in run["frames"]
                 ):
                     raise ValueError("Assigned tracker is absent from that frame range")
+        for run_id in {
+            e.classification_run_id
+            for e in annotations.events
+            if e.classification_run_id
+        }:
+            if not any(
+                j["id"] == run_id
+                and j["kind"] == "recognition"
+                and j["status"] == "completed"
+                for j in self.jobs(video_id)
+            ):
+                raise ValueError(
+                    "Classification provenance requires a completed recognition run for this video"
+                )
+            path = self.data / video_id / "runs" / f"{run_id}.json"
+            if not path.is_file():
+                raise ValueError("Classification artifact is unavailable")
+            run = json.loads(path.read_text(encoding="utf-8"))
+            if run.get("video_id") != video_id or run.get("stage") != "recognition":
+                raise ValueError(
+                    "Classification artifact must match its video and stage"
+                )
+            candidates = {c["id"]: c for c in run["candidates"]}
+            for event in annotations.events:
+                if event.classification_run_id != run_id:
+                    continue
+                candidate = candidates.get(event.classification_candidate_id)
+                if candidate is None:
+                    raise ValueError(
+                        "Classification candidate is absent from its source run"
+                    )
+                if event.family_score is not None and (
+                    event.frame != candidate.get("frame")
+                    or event.kind != candidate.get("kind")
+                    or event.family != candidate.get("family")
+                    or event.family_score != candidate.get("family_score")
+                ):
+                    raise ValueError(
+                        "Clear the model family score after changing the contact or label"
+                    )
         result = annotations.model_copy(deep=True)
         result.events.sort(key=lambda e: (e.frame, e.id))
         with self.connect() as db:

@@ -62,9 +62,24 @@ class Event(StrictModel):
     candidate_id: str | None = Field(default=None, max_length=64)
     contact_start_frame: int | None = Field(default=None, ge=0)
     contact_end_frame: int | None = Field(default=None, ge=0)
+    classification_run_id: str | None = Field(default=None, min_length=1, max_length=64)
+    classification_candidate_id: str | None = Field(
+        default=None, min_length=1, max_length=64
+    )
+    family_score: float | None = Field(default=None, ge=0, le=1, allow_inf_nan=False)
 
     @model_validator(mode="after")
     def valid_kind_fields(self):
+        if (self.classification_run_id is None) != (
+            self.classification_candidate_id is None
+        ):
+            raise ValueError(
+                "Classification provenance requires both run and candidate IDs"
+            )
+        if self.family_score is not None and not self.classification_run_id:
+            raise ValueError("A model family score requires classification provenance")
+        if self.kind == "rally_end" and self.classification_run_id:
+            raise ValueError("Rally endings cannot carry a stroke classification")
         if (self.contact_start_frame is None) != (self.contact_end_frame is None):
             raise ValueError("Contact uncertainty requires both start and end frames")
         if self.contact_start_frame is not None:
@@ -162,6 +177,13 @@ class Annotations(StrictModel):
         ]
         if len(set(proposals)) != len(proposals):
             raise ValueError("A contact suggestion can only be added once")
+        classifications = [
+            (e.classification_run_id, e.classification_candidate_id)
+            for e in self.events
+            if e.classification_run_id
+        ]
+        if len(set(classifications)) != len(classifications):
+            raise ValueError("A classification suggestion can only be applied once")
         if any(e.player_id is not None and e.player_id not in ids for e in self.events):
             raise ValueError("Unknown player ID")
         for rally in {e.rally_id for e in self.events}:

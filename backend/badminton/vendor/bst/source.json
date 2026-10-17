@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/Va6lue/BST-Badminton-Stroke-type-Transformer",
+  "commit": "c93acfa736ed784ba7bea4ec9d360001dea9b728",
+  "license": "MIT",
+  "changes": [
+    "bst.py imports .tempose from its vendored package; architecture and preprocessing math unchanged"
+  ],
+  "files": {
+    "bst.py": {
+      "upstream_path": "stroke_classification/model/bst.py",
+      "upstream_sha256": "4313f9f411a90da24bfeead81f88b83894363bfd5248a75132a8c60ec3905b74",
+      "local_sha256": "2061745f52579f4c3ab6cb6fa9b98d049e5d85f4190a39c02650fac6f8ae478e"
+    },
+    "tempose.py": {
+      "upstream_path": "stroke_classification/model/tempose.py",
+      "upstream_sha256": "0f3274bb4c0ec1b3f4a068b066993b7f1c0d58349bb580b55d0e0919e3821bc6",
+      "local_sha256": "0f3274bb4c0ec1b3f4a068b066993b7f1c0d58349bb580b55d0e0919e3821bc6"
+    }
+  }
+}

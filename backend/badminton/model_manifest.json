@@ -16,5 +16,17 @@
     "terms": "https://github.com/qaz812345/TrackNetV3/blob/6eda442ada1740573f200f836d93edc9a541ee86/LICENSE",
     "purpose": "Raw shuttle localization, no trajectory repair"
   },
-  "shot_classifier": null
+  "shot_classifier": {
+    "name": "bst_0_JnB_bone_2.pt",
+    "source": "https://drive.google.com/file/d/1VvK8RFk2LFmwn6Ys-NER1kwXxOSIyznM/view",
+    "google_drive_id": "1VvK8RFk2LFmwn6Ys-NER1kwXxOSIyznM",
+    "sha256": "5291095b880088ebb9aa5ec8a868ba1e0ced0cd57285b508feb495d94582cbe0",
+    "publisher": "Va6lue/BST-Badminton-Stroke-type-Transformer",
+    "terms": "https://github.com/Va6lue/BST-Badminton-Stroke-type-Transformer/blob/c93acfa736ed784ba7bea4ec9d360001dea9b728/LICENSE",
+    "architecture": "BST_0",
+    "sequence_length": 30,
+    "classes": 35,
+    "pose_style": "JnB_bone",
+    "purpose": "Experimental singles shot-family suggestions; no forehand/backhand head or doubles validation"
+  }
 }
