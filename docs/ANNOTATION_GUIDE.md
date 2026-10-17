@@ -62,3 +62,19 @@ For shuttle localization, mark the center of the observed shuttle or blur streak
 A complete clip containing a reviewed contact interval is excluded from strict timing metrics until the contact timing is adjudicated. Proposal navigation-time scores and one-to-one interval containment are separate report fields; an interval containing a true hit is useful for review but is not evidence of an exactly timed detection.
 
 Save annotations, then choose **Measure saved labels**. Default contact matching is one-to-one within 120 ms, with a 40 ms comparison in the downloaded report. Shuttle localization uses 0.5% of the source-frame diagonal (about 7.34 px for these samples). A wrong localization counts as both a false detection and a miss. Four easy positive frames cannot establish general shuttle accuracy. The current assistant-reviewed pilot needs knowledgeable human adjudication before use as a trusted benchmark or training set.
+
+With a recognition run loaded, the same action measures independently entered
+family/side labels. Events carrying classification provenance, including corrected
+model drafts, are excluded from these accuracy metrics. Build evaluation labels
+without consulting the classifier; keep model-assisted review work for a separate
+annotation workflow. Unknown truth remains excluded, whereas missing predictions
+and abstentions count as unanswered. A full six-family macro F1 is available only
+when every requested family has labeled support. Complete-event scoring also
+requires known hitter and stroke side, and does not accept unresolved prediction
+timing as an exact contact. These measurements remain conditional on input
+contacts and reviewed identity mappings, as recorded in the report.
+
+Public labels in `data/datasets/` are separate source references. Their frame
+numbers must be aligned to the actual downloaded video's timestamps and frame
+origin before use in this editor or in model training. A terminal-stroke marker
+does not establish the moment the rally ended.

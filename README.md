@@ -109,7 +109,9 @@ In **Reviewed clips & accuracy**, record a continuous clip, its live/replay stat
 
 Mark shuttle positions on separate exact source frames, or label the shuttle not visible. Marking a position hides the model trajectory; ambiguous frames can remain unlabeled. Cyan crosshairs show saved review points. **Measure saved labels** reports precision, recall, F1, and sample counts. Download the JSON report for matching errors, coverage, tolerances, source hashes, run IDs, and annotation revision. Wrong shuttle localization counts as both a false detection and a miss; missing output never earns a correct-absence result.
 
-The equivalent API is `POST /api/videos/<id>/evaluate` with optional `contacts_run_id` and `shuttle_run_id` (at least one required). CLI usage:
+When a recognition run is loaded, **Measure saved labels** also reports per-family errors, abstention coverage, stroke-side results, and complete-event F1 where independent labels exist. Classifier-assisted labels are excluded to prevent self-evaluation. Missing family truth yields unavailable metrics. A supported-class average with fewer than six represented families is not a six-family benchmark. Recognition results are conditional on supplied contacts and reviewed track-player mappings, rather than unattended video accuracy.
+
+The equivalent API is `POST /api/videos/<id>/evaluate` with optional `contacts_run_id`, `shuttle_run_id`, and `recognition_run_id` (at least one required). CLI usage:
 
 ```powershell
 .\.venv\Scripts\python.exe -m badminton.cli evaluate 970dbd8adfe548d8 --contacts-run 70357b1ea6ca48288dacfea0a02c65ba --shuttle-run ad0696c19b4b4be0beddf592a641cca0 --output .cache/singles-evaluation.json
@@ -117,12 +119,25 @@ The equivalent API is `POST /api/videos/<id>/evaluate` with optional `contacts_r
 
 Run IDs above refer to the cached local experiments. Use the IDs returned by your jobs after rerunning models. The small development pilot is recorded in `data/manifests/pilot_review.json`; [the pilot report](docs/PILOT_REPORT.md) describes its evidence, limits, and reproducible import command.
 
+## Public stroke labels
+
+The pinned ShuttleSet importer creates a separate local label index for recognition training and evaluation. It preserves original rows, source frames/times, subtype labels, and player identities; applies published quality exclusions; and freezes splits by original match. It does not populate the app's annotations or certify video alignment.
+
+```powershell
+.\.venv\Scripts\python.exe scripts/fetch_shuttleset.py
+.\.venv\Scripts\python.exe -m badminton.cli import-shuttleset data/datasets/shuttleset/source --output data/datasets/shuttleset/v1
+.\.venv\Scripts\python.exe -m badminton.cli evaluate 970dbd8adfe548d8 --recognition-run 69bf12fd32c74b359b9cb4bfcf6866d7 --output .cache/recognition-evaluation.json
+```
+
+[The data/evaluation report](docs/STROKE_DATA_REPORT.md) describes the actual imported counts, side-label convention, known-error quarantine, FPS discrepancies, evaluation gates, and required footage alignment. Raw public labels and videos stay outside Git.
+
 ## Storage
 
 ```text
 data/manifests/                 Sample provenance and inspected windows (tracked)
 data/processed/catalog.sqlite3  Video catalog, annotation revisions, and jobs
 data/processed/<video-id>/      Timestamp map, audit images, and tracking runs
+data/datasets/                 Pinned public source labels and normalized indexes
 models/weights/                Locally downloaded model files
 ```
 
@@ -157,6 +172,7 @@ npm ci
 $env:PLAYWRIGHT_BROWSERS_PATH = Join-Path (Get-Location) '.cache\ms-playwright'
 npx playwright install chromium
 npm run test:ui
+npm run test:recognition
 ```
 
 These checks exercise playback, exact-frame images, event correction/export, reviewed identities, clip completeness, shuttle marking, accuracy reports, switching, and responsive layout. The review-tools check requires cached player/shuttle/contact runs for both samples and is restricted to the isolated server on port 8001. Screenshots go to `data/processed/qa/`. The isolated QA annotations are illustrative test events, not badminton ground truth.
