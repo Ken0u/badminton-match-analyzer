@@ -23,6 +23,17 @@ export function createRecognitionTools({
   function render() {
     if (!state.doc) return;
     const candidates = run?.candidates ?? [];
+    const cameraSignature = (state.doc.camera_corrections ?? [])
+      .filter(
+        (c) =>
+          c.frame < (run?.end_frame ?? 0) &&
+          (c.frame >= (run?.start_frame ?? 0) || c.is_cut),
+      )
+      .sort((a, b) => a.frame - b.frame)
+      .map((c) => [c.frame, c.is_cut]);
+    const cameraStale =
+      JSON.stringify(cameraSignature) !==
+      JSON.stringify(run?.camera_review_signature ?? []);
     $("stroke-count").textContent = candidates.length;
     $("stroke-predictions").innerHTML = candidates.length
       ? candidates
@@ -36,6 +47,12 @@ export function createRecognitionTools({
               c.event_id && state.doc.events.find((e) => e.id === c.event_id);
             const stale =
               c.event_id && (!sourceEvent || sourceEvent.frame !== c.frame);
+            const sceneExcluded = (state.doc.scene_ranges ?? []).some(
+              (r) =>
+                r.scene !== "live" &&
+                r.start_frame < (c.clip_end_frame ?? c.frame + 1) &&
+                (c.clip_start_frame ?? c.frame) < r.end_frame,
+            );
             const result =
               c.status === "predicted"
                 ? c.kind === "serve"
@@ -51,7 +68,7 @@ export function createRecognitionTools({
             const side = ["forehand", "backhand"].includes(c.side)
               ? `possible ${c.side} (${c.side_score.toFixed(2)})`
               : "stroke side unresolved";
-            return `<button class="candidate-row stroke-row" data-stroke="${escape(c.id)}" ${applied || stale ? "disabled" : ""}><time>F${c.frame}</time><span>${applied ? "Applied" : stale ? "Contact changed; classify again" : escape(result)}<small>${escape(c.reason ?? alternatives)}${c.family_score != null ? ` · family score ${c.family_score.toFixed(2)}` : ""} · ${escape(side)} · verify mechanics</small></span></button>`;
+            return `<button class="candidate-row stroke-row" data-stroke="${escape(c.id)}" ${applied || stale || sceneExcluded || cameraStale ? "disabled" : ""}><time>F${c.frame}</time><span>${cameraStale ? "Camera review changed; request new shot labels" : sceneExcluded ? "Excluded by scene review" : applied ? "Applied" : stale ? "Contact changed; classify again" : escape(result)}<small>${escape(c.reason ?? alternatives)}${c.family_score != null ? ` · family score ${c.family_score.toFixed(2)}` : ""} · ${escape(side)} · verify mechanics</small></span></button>`;
           })
           .join("")
       : '<p class="empty">Family suggestions appear here. They never replace your saved labels automatically.</p>';

@@ -256,6 +256,13 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
     for window in annotations.get("review_windows", []):
         if window["scene"] != "live":
             reason = "scene_is_not_live"
+        elif any(
+            r["scene"] != "live"
+            and r["start_frame"] < window["end_frame"]
+            and window["start_frame"] < r["end_frame"]
+            for r in annotations.get("scene_ranges", [])
+        ):
+            reason = "reviewed_scene_excludes_window"
         elif not window["contacts_complete"]:
             reason = "contacts_not_exhaustively_reviewed"
         elif window["start_frame"] < start or window["end_frame"] > end:

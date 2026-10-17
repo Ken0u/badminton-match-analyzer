@@ -11,6 +11,7 @@ import numpy as np
 from PIL import Image
 
 from .config import MODEL_MANIFEST, WEIGHTS
+from .scene_review import corrected_boundaries, reviewed_run
 from .segments import scan_boundaries
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
@@ -94,7 +95,9 @@ def infer_camera_segment(frames, background, length, predict, width, height):
         yield finish(index)
 
 
-def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
+def track_shuttle(
+    video, root, data, start_frame, end_frame, progress, output, annotations=None
+):
     import torch
 
     from .vendor.tracknet_model import TrackNet
@@ -105,6 +108,11 @@ def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
     boundaries = scan_boundaries(
         video, root, data, start_frame, end_frame, lambda value: progress(value * 0.1)
     )
+    if annotations is None:
+        from .storage import Store
+
+        annotations = Store(data).annotations(video["id"])
+    boundaries = corrected_boundaries(boundaries, annotations, start_frame, end_frame)
     weights = WEIGHTS / "TrackNet_best.pt"
     if not weights.exists():
         raise RuntimeError(
@@ -216,6 +224,18 @@ def track_shuttle(video, root, data, start_frame, end_frame, progress, output):
             else None,
             "frames": rows,
         }
+        result.update(
+            {
+                key: boundaries[key]
+                for key in (
+                    "raw_cut_frames",
+                    "applied_camera_corrections",
+                    "camera_annotation_revision",
+                    "preceding_reviewed_cut_frame",
+                )
+            }
+        )
+        result = reviewed_run(result, annotations)
         write_json(output, result)
         return {k: v for k, v in result.items() if k != "frames"}
     finally:

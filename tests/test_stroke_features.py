@@ -146,7 +146,16 @@ def test_source_clip_sorts_court_ends_preserves_gaps_and_never_changes_raw_track
 
 @pytest.mark.parametrize(
     "failure",
-    ["context", "calibration", "cut", "pose", "shuttle", "output", "stale_calibration"],
+    [
+        "context",
+        "calibration",
+        "cut",
+        "pose",
+        "shuttle",
+        "output",
+        "stale_calibration",
+        "scene",
+    ],
 )
 def test_missing_or_incompatible_context_abstains_instead_of_fabricating_features(
     failure,
@@ -168,6 +177,8 @@ def test_missing_or_incompatible_context_abstains_instead_of_fabricating_feature
         args[3]["frames"].pop(30)
     if failure == "stale_calibration":
         args[2]["frames"][30]["calibration_valid"] = False
+    if failure == "scene":
+        args[3]["frames"][30]["scene"] = "replay"
     result = build_stroke_clip(*args, 30)
     assert result["status"] == "abstained" and result["reason"] and "pose" not in result
 

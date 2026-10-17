@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "reviewer": "assistant first visual pass; human adjudication pending",
+  "method": "Every source frame in both ranges inspected in a contact sheet, with larger source-frame samples and adjacent cut pairs. No model predictions copied into event ground truth.",
+  "videos": [
+    {
+      "video_id": "970dbd8adfe548d8",
+      "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "scene_ranges": [
+        {
+          "id": "intro-singles-130-255",
+          "start_frame": 130,
+          "end_frame": 255,
+          "scene": "non_play",
+          "notes": "Assistant visual review of all 125 source frames: animated player graphic followed by BWF highlights title card. Adjacent cut pairs inspected. Not a live rally or a replay of play; human adjudication pending."
+        }
+      ]
+    },
+    {
+      "video_id": "c406a1187130b845",
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "scene_ranges": [
+        {
+          "id": "intro-doubles-153-278",
+          "start_frame": 153,
+          "end_frame": 278,
+          "scene": "non_play",
+          "notes": "Assistant visual review of all 125 source frames: animated player graphic followed by BWF highlights title card. Adjacent cut pairs inspected. Not a live rally or a replay of play; human adjudication pending."
+        }
+      ]
+    }
+  ]
+}

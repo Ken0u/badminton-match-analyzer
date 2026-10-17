@@ -988,6 +988,15 @@ footer {
   overflow-y: auto;
   margin-top: 12px;
 }
+.boundary-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.boundary-row > button:first-child {
+  flex: 1;
+  text-align: left;
+}
 #frame-loading {
   position: absolute;
   inset: 0;

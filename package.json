@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test:ui": "node tests/browser.mjs && node tests/review-browser.mjs && node tests/contact-browser.mjs && node tests/segment-browser.mjs",
+    "test:ui": "node tests/browser.mjs && node tests/review-browser.mjs && node tests/contact-browser.mjs && node tests/segment-browser.mjs && node tests/scene-browser.mjs",
     "test:recognition": "node tests/recognition-browser.mjs"
   },
   "devDependencies": {

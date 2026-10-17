@@ -269,6 +269,61 @@
                 >Scan camera changes across the full video.</small
               >
               <div id="camera-boundaries"></div>
+              <div class="row">
+                <label
+                  >First frame of new view<input
+                    id="camera-frame"
+                    type="number"
+                    min="1"
+                /></label>
+                <label
+                  >Decision<select id="camera-decision">
+                    <option value="cut">Cut confirmed / missing cut</option>
+                    <option value="not_cut">Not a cut</option>
+                  </select></label
+                >
+              </div>
+              <label
+                >Review notes<input id="camera-notes" maxlength="2000"
+              /></label>
+              <div class="row">
+                <button type="button" id="camera-use-frame">
+                  Use current frame</button
+                ><button type="button" id="camera-apply">
+                  Add / update correction
+                </button>
+              </div>
+              <p class="suggestion-help">
+                Save corrections, then rerun affected tracking windows.
+                Timestamp gaps cannot be joined. Raw scan results remain
+                available.
+              </p>
+              <div class="row">
+                <label
+                  >Scene start<input id="scene-start" type="number" min="0"
+                /></label>
+                <label
+                  >End (exclusive)<input id="scene-end" type="number" min="1"
+                /></label>
+                <label
+                  >Scene<select id="scene-kind">
+                    <option value="live">Live play</option>
+                    <option value="replay">Replay</option>
+                    <option value="non_play">Non-play / graphics</option>
+                    <option value="unknown">Unknown / hold for review</option>
+                  </select></label
+                >
+              </div>
+              <label
+                >Scene notes<input id="scene-notes" maxlength="2000"
+              /></label>
+              <button type="button" id="add-scene">Add scene range</button>
+              <p class="suggestion-help">
+                Inspect the entire range before labeling it. Replay, non-play
+                and explicitly unknown scenes are excluded from event
+                suggestions. Live status does not declare contacts complete.
+              </p>
+              <div id="scene-ranges"></div>
             </details>
             <section class="suggestions-panel">
               <div class="section-label">

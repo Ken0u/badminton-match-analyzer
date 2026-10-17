@@ -8,6 +8,7 @@ import numpy as np
 
 from .config import MODEL_MANIFEST, WEIGHTS
 from .identity import resolve_contact_player
+from .scene_review import camera_review_signature, excluded_scene, reviewed_run
 from .stroke_features import build_stroke_clip, summarize_probabilities
 from .video import write_json
 
@@ -67,6 +68,18 @@ def recognition_targets(
             for target in targets
             if (start_frame is None or target["frame"] >= start_frame)
             and (end_frame is None or target["frame"] < end_frame)
+            and not excluded_scene(
+                annotations,
+                target["contact_start_frame"]
+                if target.get("contact_start_frame") is not None
+                else target["frame"],
+                (
+                    target.get("contact_end_frame")
+                    if target.get("contact_end_frame") is not None
+                    else target["frame"]
+                )
+                + 1,
+            )
         ),
         key=lambda target: target["frame"],
     )
@@ -91,6 +104,14 @@ def recognize_strokes(
         )
     if video["mode"] != "singles":
         raise ValueError("The current pretrained classifier supports singles only")
+    player_run, shuttle_run = (
+        reviewed_run(player_run, annotations),
+        reviewed_run(shuttle_run, annotations),
+    )
+    if player_run["requires_tracking_rerun"] or shuttle_run["requires_tracking_rerun"]:
+        raise ValueError(
+            "Camera corrections changed these inputs; rerun tracking before classifying"
+        )
     try:
         import torch
 
@@ -218,6 +239,12 @@ def recognize_strokes(
             "elapsed_s": round(time.perf_counter() - began, 3),
             "candidates": candidates,
             "candidate_count": len(candidates),
+            "camera_review_signature": camera_review_signature(
+                annotations,
+                max(player_run["start_frame"], shuttle_run["start_frame"]),
+                min(player_run["end_frame"], shuttle_run["end_frame"]),
+            ),
+            "scene_ranges": [r.model_dump() for r in annotations.scene_ranges],
             "predicted_count": sum(c["status"] == "predicted" for c in candidates),
             "side_prediction_count": sum(
                 c.get("side") in ("forehand", "backhand") for c in candidates

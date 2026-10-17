@@ -142,6 +142,18 @@ class TrackAssignment(FrameRange):
     player_id: str = Field(min_length=1, max_length=32)
 
 
+class CameraCorrection(StrictModel):
+    frame: int = Field(ge=1)
+    is_cut: bool
+    notes: str = Field(default="", max_length=2000)
+
+
+class SceneRange(FrameRange):
+    id: str = Field(min_length=1, max_length=64)
+    scene: Literal["live", "replay", "non_play", "unknown"]
+    notes: str = Field(default="", max_length=2000)
+
+
 class Annotations(StrictModel):
     schema_version: Literal[1] = 1
     revision: int = Field(default=0, ge=0)
@@ -152,9 +164,22 @@ class Annotations(StrictModel):
     review_windows: list[ReviewWindow] = Field(default_factory=list)
     shuttle_points: list[ShuttlePoint] = Field(default_factory=list)
     track_assignments: list[TrackAssignment] = Field(default_factory=list)
+    camera_corrections: list[CameraCorrection] = Field(default_factory=list)
+    scene_ranges: list[SceneRange] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def consistent(self):
+        if len({c.frame for c in self.camera_corrections}) != len(
+            self.camera_corrections
+        ):
+            raise ValueError("Only one camera correction is allowed per source frame")
+        if len({r.id for r in self.scene_ranges}) != len(self.scene_ranges):
+            raise ValueError("Scene range IDs must be unique")
+        scene_ranges = sorted(self.scene_ranges, key=lambda r: r.start_frame)
+        if any(
+            a.end_frame > b.start_frame for a, b in itertools.pairwise(scene_ranges)
+        ):
+            raise ValueError("Reviewed scene ranges must not overlap")
         expected = 2 if self.mode == "singles" else 4
         if (
             len(self.players) != expected

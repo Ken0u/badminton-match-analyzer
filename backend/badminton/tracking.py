@@ -7,6 +7,7 @@ import cv2
 import numpy as np
 
 from .config import WEIGHTS
+from .scene_review import corrected_boundaries, reviewed_run
 from .segments import scan_boundaries
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
@@ -39,11 +40,16 @@ def track_players(
     boundaries = scan_boundaries(
         video, root, data, start_frame, end_frame, lambda value: progress(value * 0.1)
     )
+    boundaries = corrected_boundaries(boundaries, annotations, start_frame, end_frame)
     cut_frames = set(boundaries["cut_frames"])
     rows, counts = [], []
     calibrated_frames = 0
     segment_start = start_frame
-    last_cut = start_frame if start_frame in cut_frames else None
+    last_cut = (
+        start_frame
+        if start_frame in cut_frames
+        else boundaries["preceding_reviewed_cut_frame"]
+    )
     track_offset, largest_track = 0, 0
     pending_reset = False
     model = YOLO(str(weights))
@@ -163,6 +169,18 @@ def track_players(
             "tracker_reset_at_cuts": True,
             "frames": rows,
         }
+        result.update(
+            {
+                key: boundaries[key]
+                for key in (
+                    "raw_cut_frames",
+                    "applied_camera_corrections",
+                    "camera_annotation_revision",
+                    "preceding_reviewed_cut_frame",
+                )
+            }
+        )
+        result = reviewed_run(result, annotations)
         write_json(output, result)
         return {k: v for k, v in result.items() if k != "frames"}
     finally:
