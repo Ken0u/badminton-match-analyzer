@@ -1,9 +1,13 @@
 # Experimental singles shot-family baseline
 
 October 17, 2026. This increment adds learned family suggestions to the existing
-review pipeline. It does **not** establish family accuracy, automatic stroke side,
+review pipeline. It does **not** establish family or stroke-side accuracy on app inputs,
 complete rally detection, or doubles recognition. The real pilot's reviewed
 family/side labels remain unknown at revision 2; predictions were saved separately.
+
+The later [stroke-side increment](STROKE_SIDE_REPORT.md) adds a separately trained,
+packaged side head and published-feature component benchmarks. This report records
+the original family-head integration; its 35-class checkpoint still has no side head.
 
 ## Published model and adaptation
 
@@ -50,7 +54,8 @@ still needs adjudication against the project guide. Scores sum softmax mass
 over source subtypes and court ends; they are uncalibrated rankings, not measured
 probabilities of correctness. Hitter hints use court-end mass within the selected
 family; ties remain unknown. The default suggestion threshold is 0.5. Stroke
-side is always unknown because this head has no forehand/backhand output.
+side is unknown from this family checkpoint alone; the separate side head now
+provides experimental proposals as described in the later report.
 
 ## Processing and review contract
 

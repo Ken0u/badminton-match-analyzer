@@ -45,7 +45,7 @@ try {
   );
   const root = `/api/videos/${singles.id}`;
   const previous = await json(`${root}/annotations`);
-  const doc = await json(`${root}/annotations`, {
+  let doc = await json(`${root}/annotations`, {
     method: "PUT",
     data: {
       ...previous,
@@ -127,7 +127,15 @@ try {
   const raw = await json(`${root}/runs/${job.id}`);
   const prediction = raw.candidates.find((c) => c.event_id === "qa-stroke");
   assert.equal(prediction.status, "predicted");
-  assert.equal(prediction.side, "unknown");
+  assert.ok(["forehand", "backhand", "unknown"].includes(prediction.side));
+  const manualSide = prediction.side === "backhand" ? "forehand" : "backhand";
+  doc = await json(`${root}/annotations`, {
+    method: "PUT",
+    data: {
+      ...doc,
+      events: doc.events.map((e) => ({ ...e, side: manualSide })),
+    },
+  });
   await page.goto(base);
   await page.waitForFunction(
     () => document.querySelector("#title").textContent === "singles.mp4",
@@ -156,7 +164,7 @@ try {
   );
   assert.equal(
     await page.locator("#event-side").inputValue(),
-    "backhand",
+    manualSide,
     "Keep manually entered stroke side.",
   );
   assert.deepEqual(
@@ -168,7 +176,7 @@ try {
   const applied = (await json(`${root}/annotations`)).events[0];
   assert.equal(applied.classification_run_id, job.id);
   assert.equal(applied.family_score, prediction.family_score);
-  assert.equal(applied.side, "backhand");
+  assert.equal(applied.side, manualSide);
   assert.equal(await card.isDisabled(), true);
   await page.locator("#evaluate").click();
   await page.waitForFunction(() =>
@@ -204,6 +212,45 @@ try {
   delete after.identity_annotation_revision;
   delete raw.identity_annotation_revision;
   assert.deepEqual(after, raw, "Review cannot rewrite predictions.");
+  const resolved = await json(`${root}/annotations`);
+  Object.assign(resolved.events[0], {
+    frame: 2077,
+    side: "unknown",
+    family: "unknown",
+    player_id: "A",
+    family_score: null,
+  });
+  resolved.track_assignments = [
+    {
+      run_id: players.id,
+      track_id: 1,
+      player_id: "A",
+      start_frame: 2000,
+      end_frame: 2250,
+    },
+  ];
+  await json(`${root}/annotations`, { method: "PUT", data: resolved });
+  await page.reload();
+  await card.waitFor();
+  await card.click();
+  assert.equal(
+    await page.locator("#event-side").inputValue(),
+    prediction.side,
+    "An unknown side may use the compatible hitter's suggestion.",
+  );
+  assert.equal(await page.locator("#event-player").inputValue(), "A");
+  const differentHitter = await json(`${root}/annotations`);
+  differentHitter.events[0].player_id = "B";
+  await json(`${root}/annotations`, { method: "PUT", data: differentHitter });
+  await page.reload();
+  await card.waitFor();
+  await card.click();
+  assert.equal(
+    await page.locator("#event-side").inputValue(),
+    "unknown",
+    "A side suggestion for another hitter cannot fill this event.",
+  );
+  assert.equal(await page.locator("#event-player").inputValue(), "B");
   await page.setViewportSize({ width: 768, height: 1024 });
   assert.equal(
     await page.evaluate(

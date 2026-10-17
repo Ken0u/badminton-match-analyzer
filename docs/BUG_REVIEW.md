@@ -2,6 +2,26 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The latest increment trains and packages an experimental forehand/backhand head
+from pinned published MMPose features. [The side report](STROKE_SIDE_REPORT.md)
+records its 12,520 usable clips, frozen split/selection protocol, confidence
+coverage, rare-class gaps, and much lower conditional family/hitter/side result.
+The editor preserves an existing manual side even when the model disagrees and
+does not apply another hitter's side suggestion. Family logits are unchanged by
+descriptor capture; all seven cached singles family outputs matched exactly.
+
+New regressions cover archive traversal/links, altered feature bytes, duplicate
+joins, match leakage, train-only normalization, nonfinite inputs, partial model
+installs, and checkpoint-pointer traversal. Training now writes a versioned model
+before committing its metadata pointer and shares processing admission with the
+app. A packaged CPU-loadable 161 KB head makes new installations usable without
+requiring the full training dataset.
+
+Current local checks: **269 backend tests passed**, two opt-in GPU tests skipped
+in the standard run; both real GPU checks passed separately, and all four browser
+suites passed. Direct-video alignment and YOLO-domain recognition accuracy remain
+unverified; these checks do not establish full-match correctness.
+
 The data/evaluation increment adds a source-verified ShuttleSet label index and
 recognition metrics that exclude classifier-assisted labels. Tests cover the
 risk of accepting a model draft and then reporting it as correct ground truth;

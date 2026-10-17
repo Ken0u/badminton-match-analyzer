@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "name": "stroke-side-bst-descriptor-v1",
+  "feature_archive": {
+    "url": "https://drive.google.com/file/d/1396RVvMxdUzMztiKA7leUvBJM95EF9LP/view",
+    "google_drive_id": "1396RVvMxdUzMztiKA7leUvBJM95EF9LP",
+    "name": "dataset_npy.rar",
+    "bytes": 461684919,
+    "sha256": "383ad8c17507046a45128d46c55f195fd008ce9db0f20ff23592239c31a253dc",
+    "source": "https://github.com/Va6lue/BST-Badminton-Stroke-type-Transformer/tree/c93acfa736ed784ba7bea4ec9d360001dea9b728",
+    "pose_source": "published MMPose COCO-17; no runtime YOLO validation"
+  },
+  "label_index_sha256": "cd89e188faadb7104b453303288fe7dfef8ed1ce15d53cdd5722a01e83a72c75",
+  "base_checkpoint_sha256": "5291095b880088ebb9aa5ec8a868ba1e0ced0cd57285b508feb495d94582cbe0",
+  "target_families": [
+    "clear",
+    "lift",
+    "net",
+    "drop",
+    "smash",
+    "drive"
+  ],
+  "labels": [
+    "forehand",
+    "backhand"
+  ],
+  "feature_dim": 302,
+  "descriptor_dim": 300,
+  "input_gate": {
+    "pose_fraction": 0.8,
+    "shuttle_fraction": 0.5
+  },
+  "seed": 2026,
+  "epochs": 40,
+  "patience": 8,
+  "batch_size": 512,
+  "learning_rate": 0.001,
+  "threshold": 0.8,
+  "selection": "validation balanced accuracy, then validation cross entropy; test is not used for tuning",
+  "deployment_status": "experimental; published-feature validation does not establish YOLO-domain accuracy"
+}

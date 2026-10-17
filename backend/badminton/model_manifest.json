@@ -28,5 +28,14 @@
     "classes": 35,
     "pose_style": "JnB_bone",
     "purpose": "Experimental singles shot-family suggestions; no forehand/backhand head or doubles validation"
+  },
+  "stroke_side": {
+    "name": "stroke_side_v1.pt",
+    "source": "packaged:badminton/assets/stroke_side_v1.pt",
+    "metadata": "assets/stroke_side_v1.json",
+    "recipe": "side_training_manifest.json",
+    "sha256": "209204baf8660c03b3ed8de8f4cc6b4aec2578f412fd7f39edb7cdaffdec4842",
+    "publisher": "Project training run on pinned public MMPose descriptors",
+    "purpose": "Experimental singles forehand/backhand proposals for the six target families; YOLO transfer unvalidated"
   }
 }

@@ -3,14 +3,15 @@
 The app supports a local workstation or a persistent, single-user container. It
 uses one application process, one analysis worker, and a SQLite catalog. A public
 multi-user service, distributed job queue, and per-user storage are not implemented.
-Shot-family suggestions are experimental and singles-only; complete automatic
+Family/side suggestions are experimental and singles-only; complete automatic
 match annotation remains unverified. Keep this distinction when sharing a demo.
 
 ## Build and run
 
 Docker must be running in Linux-container mode. The default image includes CPU
-tracking and singles family-recognition dependencies; model checkpoints are downloaded separately into the
-persistent state volume. Build `review` for playback, imports, annotations, and
+tracking and singles recognition dependencies. External checkpoints are downloaded
+into the persistent state volume; the small stroke-side head is packaged with the app.
+Build `review` for playback, imports, annotations, and
 evaluation without PyTorch, or `gpu` for the CUDA 12.6 build.
 
 ```powershell
@@ -32,8 +33,10 @@ docker run --detach --name badminton --restart unless-stopped --publish 127.0.0.
 Open **http://127.0.0.1:8000** and sign in using the browser's authentication
 prompt. Upload a local video or paste one public YouTube video URL and select
 singles/doubles. Imports are asynchronous jobs; the video appears when source
-inspection completes. No supplied sample videos, checkpoint files, or existing
-annotations are included in the image.
+inspection completes. Source match videos and annotation data are supplied separately.
+The image includes the small project-trained side head and its report. Download
+the external player, shuttle, and family checkpoints into the state volume before
+running recognition.
 
 The review target uses the same command with `badminton-review`. For a small CPU
 host, start there. CPU tracking is supported but can take substantially longer
@@ -147,6 +150,7 @@ service.
 | Ultralytics package and player checkpoint | Upstream AGPL-3.0 or separately obtained enterprise terms. CPU/GPU targets install this component. The review target omits it. See [Ultralytics licensing](https://www.ultralytics.com/license).     |
 | Vendored TrackNetV3 model                 | MIT text and pinned source manifest are included under `backend/badminton/vendor/`. The checkpoint source/hash/terms are in the packaged model manifest.                                             |
 | Vendored BST-0 model                      | MIT text and pinned source manifest are included under `backend/badminton/vendor/bst/`. The official checkpoint source/hash and singles-only scope are in the packaged model manifest. See [the recognition report](SHOT_RECOGNITION_REPORT.md). |
+| Project-trained stroke-side head          | A 161 KB experimental head, pinned training recipe, source feature/label hashes, and report ship under `backend/badminton/assets/`. See [the side report](STROKE_SIDE_REPORT.md) for the source-input conditions and missing YOLO validation. |
 | PyTorch / torchvision                     | Their installed distributions retain upstream license notices. CPU and CUDA packages are installed from PyTorch's official indexes.                                                                  |
 | yt-dlp                                    | Installed from PyPI with upstream package notices. Its source/wheel is Unlicense; optional dependencies carry their own terms. See [upstream licensing](https://github.com/yt-dlp/yt-dlp#licensing). |
 | Node.js and FFmpeg                        | Node's license is copied to `/usr/local/share/licenses/node/LICENSE`; Debian copyright/license notices remain under `/usr/share/doc/`. FFmpeg licensing depends on the distributed build.            |
