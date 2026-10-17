@@ -2,6 +2,14 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The terminal-action increment removes an incorrect in-court-only ending gate:
+a true shuttle can settle beside a sideline. The bounded surround retains every
+existing motion, visibility and quiet-player requirement. The public development
+excerpt now proposes end 319 [316,330], with line call and exact landing unverified;
+original first views and partial pilots are unchanged. [The report](TERMINAL_ACTION_REPORT.md)
+records 481 passing standard tests, real cached-input API and generated browser
+checks. Missing contacts, faults and the original doubles ending remain open.
+
 The shuttle-selection increment fixes a verified jump to a stationary court-logo
 component even though the true shuttle is present as a smaller observed blob.
 Source-time reachability selects a unique plausible alternative while retaining

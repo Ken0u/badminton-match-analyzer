@@ -93,6 +93,20 @@ def scene(mode="singles", times=None):
     return video, players, shuttle, doc
 
 
+def surround_scene(mode="singles", terminal=(170, 440), times=None):
+    video, players, shuttle, doc = scene(mode, times)
+    doc["calibrations"][0]["corners"] = [
+        {"x": x, "y": y} for x, y in ((0.2, 0.1), (0.8, 0.1), (0.8, 0.9), (0.2, 0.9))
+    ]
+    for row in shuttle["frames"]:
+        fraction = min(max((row["time_s"] - 1) / 0.6, 0), 1)
+        row["shuttle"].update(
+            x=350 + fraction * (terminal[0] - 350),
+            y=440 + fraction * (terminal[1] - 440),
+        )
+    return video, players, shuttle, doc
+
+
 def catalog(root, data):
     """Create real source media plus deliberately generated perception artifacts."""
     source = root / "rally-qa.mp4"
@@ -112,7 +126,7 @@ def catalog(root, data):
             container.mux(packet)
     store = Store(data)
     video = inspect_video(source, "singles", store, root)
-    _, players, shuttle, doc = scene()
+    _, players, shuttle, doc = surround_scene()
     saved = store.annotations(video["id"]).model_dump()
     saved["calibrations"] = doc["calibrations"]
     saved = store.save_annotations(video["id"], Annotations.model_validate(saved))

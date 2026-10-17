@@ -53,7 +53,9 @@ export function createRallyTools({
             const added = state.doc.events.some(
               (e) => e.source_run_id === jobId && e.candidate_id === c.id,
             );
-            return `<button class="candidate-row" data-rally-candidate="${escape(c.id)}" ${stale || added ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${stale ? "Review context changed; request new boundaries" : added ? "Added" : c.kind === "serve" ? "Review possible serve" : "Review possible rally end"}<small>Frames ${c.start_frame}–${c.end_frame} · timing uncertain${c.kind === "serve" ? " · hitter unconfirmed" : ""}</small></span></button>`;
+            const surround =
+              c.evidence?.settled_region === "near_court_surround";
+            return `<button class="candidate-row" data-rally-candidate="${escape(c.id)}" ${stale || added ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${stale ? "Review context changed; request new boundaries" : added ? "Added" : c.kind === "serve" ? "Review possible serve" : "Review possible rally end"}<small>Frames ${c.start_frame}–${c.end_frame} · timing uncertain${c.kind === "serve" ? " · hitter unconfirmed" : surround ? " · near court edge; verify landing" : ""}</small></span></button>`;
           })
           .join("")
       : '<p class="empty">Boundary suggestions appear here. Missing proposals do not mean there was no rally.</p>';
@@ -69,7 +71,10 @@ export function createRallyTools({
         $("contact-end").value = c.end_frame;
         $("contact-uncertainty").open = true;
         $("event-notes").value =
-          `Experimental ${c.kind === "serve" ? "serve" : "rally-end"} suggestion; verify the source and uncertain timing.`;
+          `Experimental ${c.kind === "serve" ? "serve" : "rally-end"} suggestion; verify the source and uncertain timing.` +
+          (c.evidence?.settled_region === "near_court_surround"
+            ? " Shuttle settled near a court edge; landing, fault and line call are unverified."
+            : "");
         state.pendingCandidate = { id: c.id, run_id: jobId };
         seek(c.frame);
         $("editor-hint").textContent =
