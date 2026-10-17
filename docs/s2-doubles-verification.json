@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "dataset_audit": {
+    "schema_version": 1,
+    "dataset": "S2Doubles",
+    "mapping_version": 1,
+    "repository": "HuangYuHsien/S2DoublesDataset",
+    "commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
+    "source_files": {
+      "README.md": {
+        "git_blob_sha1": "81fae6c7e58f2b0d7327b146da16c05cc6637b3c",
+        "sha256": "8e505b15df10a2f838a3488a3658788b067408e4ebbeb9aa372a4342040c0c94"
+      },
+      "Match.csv": {
+        "git_blob_sha1": "df71918b487c297aa1aa53edb57e369b283187d5",
+        "sha256": "e90f3ecb4bf499937eef3fcbb75c160dd83754673199b339b47b0f0a18e361c3"
+      },
+      "Match 001/RallySeg.csv": {
+        "git_blob_sha1": "d40378dcd74835fd535289218d1caf228f139641",
+        "sha256": "21ed1b5d1a50d2c22b4bc7a1821903ea5f570d82ca95dc34a9b29903a635e762"
+      },
+      "Match 001/label/set1.csv": {
+        "git_blob_sha1": "2f6b736f24a20ba8b3b8fe74500b061ac6ccbfed",
+        "sha256": "1f5aba801710ed8c5610e61144be462007737bc029addd6112ea7b8867bedadf"
+      },
+      "Match 001/label/set2.csv": {
+        "git_blob_sha1": "197e6d145d464bf80a0590cc5f8a2fc10ba2c603",
+        "sha256": "11d6fb3d93ce846dd03068b74dc88dd8b2b064cb5e2f54fa82e35124b4a811ff"
+      },
+      "Match 002/RallySeg.csv": {
+        "git_blob_sha1": "73141a1a324fde1331ebe53697ac2c355c8ee68a",
+        "sha256": "a321fcb8ce44f779aed4b1c4bdbd304452a768bd44058bb685b6a15ffdcf8c42"
+      },
+      "Match 002/label/set1.csv": {
+        "git_blob_sha1": "cc6c44f72719f7d3faeb3398617389591926a605",
+        "sha256": "8047c18209777f64e3db0e50433e101b2db36f4c4cafd922088770c82a8307d6"
+      },
+      "Match 002/label/set2.csv": {
+        "git_blob_sha1": "c990e694e1b26bc0461528b165ce20d0d1db44b9",
+        "sha256": "732aa2f50e0d9cb39f85ff4a6ce35c8ce256eae86dccfae2d1b497e31af05a7b"
+      },
+      "Match 003/RallySeg.csv": {
+        "git_blob_sha1": "9d885067fd83c12210b76e757e2c0f9704436d83",
+        "sha256": "79363e45e228e1ad60443f393077cac0602369cbe9d3a4c694ca163c93db8427"
+      },
+      "Match 003/label/set1.csv": {
+        "git_blob_sha1": "f56aaeb5d0828a27876d2e77b1507b1616f939f9",
+        "sha256": "4860b33762b2aebd83fedcb1708f87a4b634ecf54e11d8471ff2185fc9fc559f"
+      },
+      "Match 003/label/set2.csv": {
+        "git_blob_sha1": "7df893eb09f211f9b98ae28888a142f39fd3d27c",
+        "sha256": "2879692eb2c82ed714f42f71efa053117cf6573a82dec55d8190a354c92272af"
+      }
+    },
+    "source_manifest_sha256": "432aca35c100e6a5cc9d16091690fdf8910d7d09c56b05e96bfc4db7d6155fe0",
+    "splits": {
+      "train": [
+        1
+      ],
+      "validation": [
+        2
+      ],
+      "test": [
+        3
+      ]
+    },
+    "split_policy": "Project-frozen by original match before model training; only three matches, not a generalization benchmark.",
+    "record_count": 1907,
+    "rally_count": 207,
+    "coarse_time_consistent_at_documented_fps": 1907,
+    "label_eligible_records": 1854,
+    "single_stroke_terminal_serves": 9,
+    "eligible_family_counts": {
+      "serve": 203,
+      "drive": 415,
+      "other": 236,
+      "net": 407,
+      "lift": 265,
+      "smash": 238,
+      "clear": 18,
+      "drop": 72
+    },
+    "eligible_family_side_counts": {
+      "drive:backhand": 226,
+      "other:forehand": 169,
+      "net:forehand": 196,
+      "lift:forehand": 87,
+      "smash:forehand": 237,
+      "drive:forehand": 189,
+      "lift:backhand": 178,
+      "other:backhand": 67,
+      "clear:forehand": 14,
+      "net:backhand": 211,
+      "drop:forehand": 68,
+      "clear:backhand": 4,
+      "smash:backhand": 1,
+      "drop:backhand": 4
+    },
+    "row_issue_counts": {
+      "invalid_shot_interval": 1
+    },
+    "rally_issue_counts": {
+      "missing_or_misplaced_terminal_marker": 2,
+      "shot_outside_rally_window": 1,
+      "source_segment_problem_flag": 1
+    },
+    "index_sha256": {
+      "strokes.jsonl": "d58ac04a72a43dd019bcc2c99e8a3cafce4463eefdabab1d8596187faf68800d",
+      "rallies.jsonl": "2a8ee869b79d95b1d6231f8624e644f276e02c0302c5ea9fd3d1a1c637db637b"
+    },
+    "source_fps_requirement": 30,
+    "interval_bounds": "undocumented",
+    "frame_origin": "undocumented; do not certify decode ordinal without source verification",
+    "rally_end_policy": "RallySeg windows and final-stroke markers do not certify exact terminal times.",
+    "terms_status": "No license file in pinned repository; retain local research sources, do not bundle labels or derived weights as redistributable assets.",
+    "media_alignment": "unverified",
+    "training_ready_records": 0,
+    "coordinate_policy": "Projected hitting/landing points are not observed shuttle-localization truth; TrackNet files not imported."
+  },
+  "singles_terminal_serve_fix": {
+    "source_terminal_serves": 20,
+    "single_stroke_terminal_serves": 20,
+    "newly_eligible": 17,
+    "old_eligible": 21709,
+    "new_eligible": 21726,
+    "mapping_version": 2,
+    "original_v1_index_verified": true
+  },
+  "source_excerpt": {
+    "source_url": "https://www.youtube.com/watch?v=EpLD0HrwDJU",
+    "source_id": "EpLD0HrwDJU",
+    "title": "DAIHATSU Indonesia Masters 2022 | Liang/Wang (CHN) vs. Alfian/Ardianto (INA) [5] | F",
+    "channel": "BWF TV",
+    "format_id": "136",
+    "source_stream": {
+      "width": 1280,
+      "height": 720,
+      "average_rate": "30",
+      "time_base": "1/15360",
+      "start_pts": 0
+    },
+    "source_start_s": 409,
+    "source_end_s_exclusive": 422,
+    "clip_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+    "alignment_status": "unverified; CFR frame hints are not certified full-stream decode ordinals"
+  },
+  "source_first_review_sha256": "f6ef0c96a96e9a59e23dd25e98c145e945eee3aab637a33a2edae6b74e1c241e",
+  "native_probe": {
+    "video_id": "b45c2a05f4455d9a",
+    "video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+    "review_manifest_sha256": "f6ef0c96a96e9a59e23dd25e98c145e945eee3aab637a33a2edae6b74e1c241e",
+    "runs": {
+      "players": "de3ea34d63454b22a958e33d96993118",
+      "shuttle": "f5dfa8d67dec4927aed059aed7564bd2"
+    },
+    "summaries": {
+      "players": {
+        "schema_version": 1,
+        "video_id": "b45c2a05f4455d9a",
+        "stage": "players",
+        "video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+        "calibration_signature": [
+          [
+            0,
+            390,
+            [
+              [
+                0.34265625,
+                0.3794444444444444
+              ],
+              [
+                0.6590625,
+                0.38055555555555554
+              ],
+              [
+                0.77234375,
+                0.9152777777777777
+              ],
+              [
+                0.231875,
+                0.9141666666666667
+              ]
+            ]
+          ]
+        ],
+        "model": "yolo11s-pose",
+        "model_variant": "small",
+        "checkpoint_sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+        "model_source": "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11s-pose.pt",
+        "device": "cuda:0",
+        "image_size": 1280,
+        "peak_gpu_memory_mb": 175.6,
+        "start_frame": 0,
+        "end_frame": 390,
+        "stride": 1,
+        "annotation_revision": 1,
+        "calibrated": true,
+        "calibrated_frames": 390,
+        "elapsed_s": 16.003,
+        "processed_frames": 390,
+        "inference_fps": 24.37,
+        "expected_players": 4,
+        "mean_detections": 3.98,
+        "cut_frames": [],
+        "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "camera_ranges": [
+          {
+            "start_frame": 0,
+            "end_frame": 390,
+            "scene": "unknown"
+          }
+        ],
+        "tracker_reset_at_cuts": true,
+        "raw_cut_frames": [],
+        "applied_camera_corrections": [],
+        "camera_annotation_revision": 1,
+        "preceding_reviewed_cut_frame": null,
+        "requires_tracking_rerun": false,
+        "scene_annotation_revision": 1
+      },
+      "shuttle": {
+        "schema_version": 1,
+        "video_id": "b45c2a05f4455d9a",
+        "stage": "shuttle",
+        "video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+        "model": "TrackNetV3",
+        "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "device": "cuda:0",
+        "input_size": [
+          512,
+          288
+        ],
+        "seq_len": 8,
+        "precision": "float16",
+        "ensemble": "weighted overlapping windows",
+        "start_frame": 0,
+        "end_frame": 390,
+        "processed_frames": 390,
+        "visible_frames": 301,
+        "repaired_frames": 0,
+        "cut_frames": [],
+        "camera_boundary_method": "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1",
+        "camera_ranges": [
+          {
+            "start_frame": 0,
+            "end_frame": 390,
+            "scene": "unknown"
+          }
+        ],
+        "temporal_context_crosses_detected_cuts": false,
+        "elapsed_s": 31.567,
+        "inference_fps": 12.35,
+        "peak_gpu_memory_mb": 457.7,
+        "raw_cut_frames": [],
+        "applied_camera_corrections": [],
+        "camera_annotation_revision": 1,
+        "preceding_reviewed_cut_frame": null,
+        "requires_tracking_rerun": false,
+        "scene_annotation_revision": 1
+      }
+    },
+    "contact_candidates": [
+      {
+        "id": "contact-210",
+        "frame": 210,
+        "time_s": 7.0,
+        "start_frame": 210,
+        "end_frame": 210,
+        "start_time_s": 7.0,
+        "end_time_s": 7.0,
+        "interval_bounds": "inclusive",
+        "timing": "observed_motion_change",
+        "score": 0.899,
+        "angle_deg": 141.1,
+        "speed_ratio": 3.22,
+        "track_id": 3,
+        "player_id": null,
+        "evidence_source": "observed_trajectory",
+        "evidence": {
+          "piecewise_rmse_px": 1.715,
+          "quadratic_rmse_px": 3.605
+        },
+        "reason": "abrupt motion change near player",
+        "reviewed": false
+      }
+    ],
+    "rally_candidates": [
+      {
+        "id": "serve-51",
+        "kind": "serve",
+        "frame": 51,
+        "time_s": 1.7,
+        "start_frame": 44,
+        "end_frame": 52,
+        "start_time_s": 1.46666667,
+        "end_time_s": 1.73333333,
+        "timing": "uncertain_interval",
+        "track_id": null,
+        "player_id": null,
+        "needs_review": true,
+        "evidence": {
+          "quiet_context_s": 0.6,
+          "observed_quiet_fraction": 1.0,
+          "full_player_context_fraction": 1.0,
+          "partial_player_context": false,
+          "observed_departure_frames": 6,
+          "possible_track_ids": [
+            3,
+            4
+          ],
+          "hitter_hint_status": "ambiguous_proximity",
+          "service_posture_hint": "low wrist, service-area feet and an observed opponent",
+          "meaning": "Observed quiet-player context and low near-wrist launch; serve mechanics and identity still need review"
+        }
+      }
+    ],
+    "accuracy_claim": false
+  },
+  "contact_gate_diagnostics": {
+    "missing_observation": 139,
+    "fit": 43,
+    "motion": 185,
+    "passed": 1,
+    "discontinuous_or_jump": 16
+  },
+  "main_annotations_unchanged": true,
+  "accuracy_claim": false
+}

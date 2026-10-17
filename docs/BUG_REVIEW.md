@@ -2,6 +2,20 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The doubles source audit found a concrete normalization bug: a one-stroke serve
+fault carries terminal phase 3, but the existing importer rejected that serve.
+Mapping version 2 preserves the serve and terminal roles, recovering 17 otherwise
+eligible ShuttleSet rows without changing old indices or models. The new doubles
+importer also handles nine such rows and preserves unknown timing/side semantics.
+[The audit](S2_DOUBLES_REPORT.md) records the pinned labels and an actual public
+source excerpt. Native contact inference finds only one proposal against 13
+published references; timing is not yet adjudicated. Missing observations and
+the abrupt-fit gate are concrete next targets, alongside out-shot endings.
+Current checks: 400 standard tests passed with four unchanged opt-in GPU tests
+skipped, plus actual CUDA processing of the new 390-frame source excerpt and
+both real label-import CLI paths. The new wheel preserves existing tracking,
+decoder and model-asset bytes; source/mapping/split overwrite guards are tested.
+
 The rally increment adds experimental serve/end proposals and pinned standard/
 lightweight pose selection. [The report](RALLY_PROPOSAL_REPORT.md) records actual
 outputs and missing boundaries. A variable-rate timing regression caught a
@@ -199,8 +213,8 @@ Added the official TrackNetV3 model architecture and checkpoint, with the upstre
 
 | Inspected window | Source frames | Visible detections | Processing time | Throughput | Contact proposals |
 | --- | --- | --- | --- | --- | --- |
-| Singles, 80–90 s | 250 | 227 | 30.449 s | 8.21 frames/s | 8 |
-| Doubles, 24–34 s | 250 | 211 | 28.819 s | 8.67 frames/s | 9 |
+| Singles, 80â€“90 s | 250 | 227 | 30.449 s | 8.21 frames/s | 8 |
+| Doubles, 24â€“34 s | 250 | 211 | 28.819 s | 8.67 frames/s | 9 |
 
 The model used CUDA with float16 inference and peaked at approximately 385 MB of PyTorch-allocated GPU memory; this excludes driver/library memory. The timings cover background estimation, decoding, inference, and processing-loop progress writes, and exclude loading the model. These are measurements of the selected local windows.
 

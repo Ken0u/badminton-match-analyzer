@@ -46,6 +46,18 @@ def test_source_side_convention_and_terminal_stroke_are_preserved_without_invent
     assert around["around_head"] and around["side"] == "forehand"
 
 
+def test_single_stroke_terminal_serve_fault_is_still_a_serve():
+    row = normalize([stroke(server="3")])[0]
+    assert row["kind"] == "serve" and row["terminal_stroke_marker"]
+    assert row["family_eligible"] and row["side_eligible"]
+    assert row["media_alignment"] == "unverified"
+    assert "frame" not in row and "time_s" not in row
+    # The exception applies only to a single-stroke rally, not a misplaced
+    # terminal serve in an otherwise ordinary multi-stroke sequence.
+    multi = normalize([stroke(server="3"), stroke(2, 125)])
+    assert "serve_marker_disagrees_with_type" in multi[0]["issues"]
+
+
 @pytest.mark.parametrize(
     "changes,reason",
     [
@@ -160,6 +172,16 @@ def test_import_is_deterministic_verifies_inputs_and_keeps_media_unverified(snap
     with pytest.raises(ValueError, match="hash mismatch"):
         import_shuttleset(source, target, manifest=spec)
     assert (target / "strokes.jsonl").read_bytes() == data
+
+
+def test_new_mapping_cannot_silently_overwrite_a_previous_model_dataset(snapshot):
+    source, target, spec = snapshot
+    import_shuttleset(source, target, manifest=spec)
+    before = {p.name: p.read_bytes() for p in target.iterdir()}
+    spec = spec | {"mapping_version": 2}
+    with pytest.raises(ValueError, match="new directory"):
+        import_shuttleset(source, target, manifest=spec)
+    assert {p.name: p.read_bytes() for p in target.iterdir()} == before
 
 
 def test_original_match_cannot_cross_splits_or_write_into_immutable_source(snapshot):

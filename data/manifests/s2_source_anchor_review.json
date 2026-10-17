@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "dataset": "S2Doubles",
+  "source_commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
+  "match_id": 1,
+  "set_id": 1,
+  "rally_id": 1,
+  "selection": "First chronological rally, selected from public labels before model inference",
+  "source_url": "https://www.youtube.com/watch?v=EpLD0HrwDJU",
+  "clip_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+  "clip_start_source_s": 409,
+  "clip_end_source_s_exclusive": 422,
+  "frame_mapping_status": "Source PTS times preserved. CFR hints are not certified full-stream decode ordinals.",
+  "source_interval_status": "Shot start/end conventions and frame origin undocumented; no automatic point-truth conversion.",
+  "reviewed_observations": [
+    "BWF TV match/title and first 0-0 court view visually match the source catalog.",
+    "Near red jerseys visibly identify F Alfian and M R Ardianto; far white pair serves.",
+    "First serve is visually later than the published shot-start cue; exact contact timing needs adjudication.",
+    "Terminal shuttle appears outside the near left sideline before players walk; precise landing/fault unresolved."
+  ],
+  "serve_first_pass_local_interval": [
+    42,
+    47
+  ],
+  "ending_first_pass_local_interval": [
+    300,
+    330
+  ],
+  "published_stroke_reference_count": 13,
+  "exhaustive_contact_truth": false,
+  "family_side_truth_status": "Published labels retained separately; no independently adjudicated mechanics truth",
+  "human_review": "pending",
+  "model_predictions_used_for_review": false
+}

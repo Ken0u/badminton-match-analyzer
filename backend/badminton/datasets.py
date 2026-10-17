@@ -38,6 +38,18 @@ def pinned_source():
     return json.loads(SOURCE_MANIFEST.read_text(encoding="utf-8"))
 
 
+def verify_output_version(destination, spec):
+    """A new mapping/split/source snapshot needs a separate output directory."""
+    manifest = Path(destination) / "manifest.json"
+    if manifest.is_file():
+        previous = json.loads(manifest.read_text(encoding="utf-8"))
+        expected = hashlib.sha256(json.dumps(spec, sort_keys=True).encode()).hexdigest()
+        if previous.get("source_manifest_sha256") != expected:
+            raise ValueError(
+                "Output contains a different source/mapping version; choose a new directory"
+            )
+
+
 def blob_sha(data):
     return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
 
@@ -181,8 +193,9 @@ def normalize_set(rows, match, set_id, split, known_issues=()):
             issues.append("invalid_or_conflicting_side_flags")
         else:
             side = "backhand" if backhand else "forehand"
-        if raw["server"] not in ("1", "2", "3") or (raw["server"] == "1") != (
-            kind == "serve"
+        if raw["server"] not in ("1", "2", "3") or (
+            (raw["server"] == "1") != (kind == "serve")
+            and not (raw["server"] == "3" and kind == "serve")
         ):
             issues.append("serve_marker_disagrees_with_type")
         if raw["flaw"].strip() and rally is not None:
@@ -226,6 +239,12 @@ def normalize_set(rows, match, set_id, split, known_issues=()):
             for record in repeated:
                 bad_rallies[record["rally_id"]].add("duplicate_source_frame")
     for rally, group in rallies.items():
+        # A serve fault can be the rally's only stroke. Source phase code 3
+        # then marks terminal status, while its service type still marks serve.
+        if len(group) != 1:
+            for record in group:
+                if record["kind"] == "serve" and record["raw"]["server"] == "3":
+                    record["issues"].append("serve_marker_disagrees_with_type")
         if [r["stroke_order"] for r in group] != list(range(1, len(group) + 1)):
             bad_rallies[rally].add("incomplete_or_duplicate_stroke_order")
     for record in records:
@@ -324,6 +343,7 @@ def import_shuttleset(source, output, *, manifest=None):
         raise ValueError(
             "Write the normalized dataset outside the immutable source directory"
         )
+    verify_output_version(destination, spec)
     destination.mkdir(parents=True, exist_ok=True)
     data = "".join(
         json.dumps(row, ensure_ascii=False, separators=(",", ":")) + "\n"
