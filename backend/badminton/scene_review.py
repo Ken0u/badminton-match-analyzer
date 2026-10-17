@@ -103,10 +103,27 @@ def reviewed_run(run, annotations):
 def reviewed_contacts(run, annotations):
     result = deepcopy(run)
     for candidate in result.get("candidates", []):
+        if "context_start_frame" not in candidate and candidate.get(
+            "evidence_source"
+        ) in ("observed_trajectory", "short_gap_trajectory_and_pose"):
+            pad = 3 if candidate["evidence_source"] == "observed_trajectory" else 2
+            candidate["context_start_frame"] = max(
+                result.get("start_frame", 0),
+                candidate.get("start_frame", candidate["frame"]) - pad,
+            )
+            candidate["context_end_frame"] = min(
+                result.get("end_frame", candidate["frame"] + pad + 1),
+                candidate.get("end_frame", candidate["frame"]) + pad + 1,
+            )
+            candidate["context_provenance"] = "conservative_legacy_window"
         blocked = excluded_scene(
             annotations,
-            candidate.get("start_frame", candidate["frame"]),
-            candidate.get("end_frame", candidate["frame"]) + 1,
+            candidate.get(
+                "context_start_frame", candidate.get("start_frame", candidate["frame"])
+            ),
+            candidate.get(
+                "context_end_frame", candidate.get("end_frame", candidate["frame"]) + 1
+            ),
         )
         candidate["scene_excluded"] = blocked is not None
         candidate["scene_exclusion_reason"] = (

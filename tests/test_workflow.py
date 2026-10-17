@@ -223,6 +223,12 @@ def test_changed_video_is_rejected_before_streaming_or_tracking(workspace):
         assert client.get(f"/api/videos/{v['id']}/frame?index=0").status_code == 409
         assert (
             client.post(
+                f"/api/videos/{v['id']}/contacts", json={"shuttle_run_id": "cached"}
+            ).status_code
+            == 409
+        )
+        assert (
+            client.post(
                 f"/api/videos/{v['id']}/track", json={"start_frame": 0, "end_frame": 3}
             ).status_code
             == 409

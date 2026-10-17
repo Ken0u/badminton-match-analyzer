@@ -10,6 +10,8 @@ representative times, which are navigation locations for occlusion proposals.
 
 import math
 
+from .scene_review import reviewed_contacts
+
 
 def _base(video, annotations, run, stage):
     if run.get("video_id") != video["id"] or run.get("stage") != stage:
@@ -137,6 +139,24 @@ def _validate_candidate(candidate, video, run):
     start, end = _frame_bounds(candidate, video["frame_count"])
     if not run["start_frame"] <= start <= end < run["end_frame"]:
         raise ValueError("Contact candidate interval must lie within its run")
+    if "context_start_frame" in candidate or "context_end_frame" in candidate:
+        left, right = (
+            candidate.get("context_start_frame"),
+            candidate.get("context_end_frame"),
+        )
+        if (
+            type(left) is not int
+            or type(right) is not int
+            or not run["start_frame"]
+            <= left
+            <= start
+            <= end
+            < right
+            <= run["end_frame"]
+        ):
+            raise ValueError(
+                "Contact evidence context must contain its interval and lie within its run"
+            )
     time = candidate["time_s"]
     if not isinstance(time, int | float) or not math.isfinite(time) or time < 0:
         raise ValueError("Contact timestamps must be finite source times")
@@ -252,6 +272,12 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
     ]
     if len({item["id"] for item in all_candidates}) != len(all_candidates):
         raise ValueError("Contact candidate IDs must be unique")
+    excluded_context_ids = [
+        c["id"]
+        for c in reviewed_contacts(contact_run, annotations)["candidates"]
+        if c["scene_excluded"]
+    ]
+    all_candidates = [c for c in all_candidates if c["id"] not in excluded_context_ids]
     usable, skipped = [], []
     for window in annotations.get("review_windows", []):
         if window["scene"] != "live":
@@ -315,6 +341,7 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
             ),
             "excluded_reviewed_contacts": len(all_events) - len(events),
             "excluded_candidates": len(contact_run["candidates"]) - len(candidates),
+            "scene_context_excluded_candidate_ids": excluded_context_ids,
         },
         tolerance_s=tolerance_s,
         metrics=None,

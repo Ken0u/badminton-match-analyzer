@@ -95,9 +95,23 @@ try {
       r.url().endsWith(`${root}/contacts`) && r.request().method() === "POST",
   );
   await page.locator("#detect-contacts").click();
-  assert.equal((await rebuilding).status(), 202);
+  const rebuiltResponse = await rebuilding;
+  assert.equal(rebuiltResponse.status(), 202);
+  const rebuiltId = (await rebuiltResponse.json()).id;
+  let refreshedJob;
+  for (let attempt = 0; attempt < 100; attempt++) {
+    refreshedJob = (await json(`/api/jobs?video_id=${singles.id}`)).find(
+      (j) => j.id === rebuiltId,
+    );
+    if (!["queued", "running"].includes(refreshedJob.status)) break;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+  assert.equal(refreshedJob.status, "completed", refreshedJob.message);
+  const rebuiltRun = await json(`${root}/runs/${rebuiltId}`);
   await page.waitForFunction(
-    () => document.querySelector("#candidate-count").textContent === "5",
+    (count) =>
+      document.querySelector("#candidate-count").textContent === String(count),
+    rebuiltRun.candidates.length,
   );
 
   await page.locator("#identity-panel summary").click();

@@ -60,6 +60,21 @@ def annotations(events=None, windows=None, points=None):
     }
 
 
+@pytest.mark.parametrize(
+    "context",
+    [
+        {"context_start_frame": 12, "context_end_frame": 15},
+        {"context_start_frame": 5},
+        {"context_start_frame": 5, "context_end_frame": 101},
+    ],
+)
+def test_contact_evidence_context_must_contain_its_candidate_within_run(context):
+    run = contact_run([("p", 10, 0.4)])
+    run["candidates"][0].update(context)
+    with pytest.raises(ValueError, match="evidence context"):
+        evaluate_contacts(video(), annotations(windows=[window()]), run)
+
+
 def test_contact_matching_maximizes_count_before_timing_error():
     # Matching nearest-first would give the second candidate to event a, losing b.
     labels = annotations([event("a", 2, 0.10), event("b", 4, 0.20)], [window()])

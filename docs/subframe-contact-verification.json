@@ -1,0 +1,1019 @@
+{
+  "schema_version": 1,
+  "method": "subframe and short-gap motion/pose proposals v3",
+  "recipe": {
+    "observed_window_frames": 7,
+    "maximum_source_step_s": 0.1,
+    "maximum_gap_s": 0.24,
+    "profile_grid_steps": 25,
+    "minimum_penalized_fit_gain": 6,
+    "maximum_profile_rmse_diagonals": 0.005,
+    "maximum_rmse_ratio_to_quadratic": 0.65,
+    "minimum_rmse_gain_px": 0.75,
+    "minimum_rmse_gain_diagonals": 0.0005,
+    "maximum_flank_context_s": 0.2,
+    "minimum_moving_wrist_samples": 3,
+    "uncertainty": "Profile support plus source-frame quantization; not a calibrated confidence interval"
+  },
+  "baseline_source_commit": "78498c681aacd77e22e26e00ca95ebfc20ceef2b",
+  "baseline_code_sha256": "c07915955bea190840ae687ff6fb4820e87afa7caabe634bc2cc6e70ea29c8e9",
+  "current_code_sha256": "b8091a5b25836cb0d20db679e332b860aa980d2831ff156a9dbde8c47799bad8",
+  "accuracy_claim": false,
+  "cases": [
+    {
+      "name": "public-doubles",
+      "video_id": "b45c2a05f4455d9a",
+      "source_video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+      "player_run_id": "de3ea34d63454b22a958e33d96993118",
+      "shuttle_run_id": "f5dfa8d67dec4927aed059aed7564bd2",
+      "input_artifact_sha256": [
+        "c8b24e2332902c575d583117965da5868a5896ad13e91e38e03ed874f5f12c5b",
+        "1a70899258a21a644be9d867b5c1cebfdd9b4a54b73c9708b5d4a21cdb1af2fc"
+      ],
+      "baseline_frames": [
+        210
+      ],
+      "baseline_count": 1,
+      "current_count": 6,
+      "current_elapsed_s": 0.291,
+      "current_candidates": [
+        {
+          "id": "contact-profile-55-57",
+          "frame": 56,
+          "start_frame": 55,
+          "end_frame": 57,
+          "time_s": 1.86666667,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 52,
+          "context_end_frame": 59,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-71-73",
+          "frame": 72,
+          "start_frame": 71,
+          "end_frame": 73,
+          "time_s": 2.4,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 69,
+          "context_end_frame": 79,
+          "evidence_source": "bounded_gap_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-79-81",
+          "frame": 80,
+          "start_frame": 79,
+          "end_frame": 81,
+          "time_s": 2.66666667,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 77,
+          "context_end_frame": 86,
+          "evidence_source": "bounded_gap_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-116-118",
+          "frame": 117,
+          "start_frame": 116,
+          "end_frame": 118,
+          "time_s": 3.9,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 113,
+          "context_end_frame": 120,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-142-145",
+          "frame": 144,
+          "start_frame": 142,
+          "end_frame": 145,
+          "time_s": 4.8,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 140,
+          "context_end_frame": 147,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-209-211",
+          "frame": 210,
+          "start_frame": 209,
+          "end_frame": 211,
+          "time_s": 7.0,
+          "timing": "uncertain_interval",
+          "track_id": 3,
+          "context_start_frame": 208,
+          "context_end_frame": 215,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "name": "singles-fullview",
+      "video_id": "970dbd8adfe548d8",
+      "source_video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "player_run_id": "38cfdedc74d248208727aff21d4c3e45",
+      "shuttle_run_id": "d8ea631a9bd44eec8aa928b228f5fdb7",
+      "input_artifact_sha256": [
+        "b8708d4502589eadf1c2d2da960f019b08a41a10cee06e5015377b6d64075e79",
+        "eeb7138e1a45dd8e88919f0642fd2d8e530e41878c22916b8238c36ad1664914"
+      ],
+      "baseline_frames": [
+        352,
+        387,
+        435,
+        487,
+        535,
+        572,
+        585,
+        611
+      ],
+      "baseline_count": 8,
+      "current_count": 12,
+      "current_elapsed_s": 0.365,
+      "current_candidates": [
+        {
+          "id": "contact-profile-302-305",
+          "frame": 303,
+          "start_frame": 302,
+          "end_frame": 305,
+          "time_s": 12.12,
+          "timing": "uncertain_interval",
+          "track_id": 1,
+          "context_start_frame": 300,
+          "context_end_frame": 307,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1
+          ]
+        },
+        {
+          "id": "contact-profile-321-324",
+          "frame": 322,
+          "start_frame": 321,
+          "end_frame": 324,
+          "time_s": 12.88,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 319,
+          "context_end_frame": 326,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        },
+        {
+          "id": "contact-profile-351-353",
+          "frame": 352,
+          "start_frame": 351,
+          "end_frame": 353,
+          "time_s": 14.08,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 348,
+          "context_end_frame": 355,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1,
+            2
+          ]
+        },
+        {
+          "id": "contact-gap-386-388",
+          "frame": 387,
+          "start_frame": 386,
+          "end_frame": 388,
+          "time_s": 15.48,
+          "timing": "uncertain_interval",
+          "track_id": 50,
+          "context_start_frame": 384,
+          "context_end_frame": 391,
+          "evidence_source": "short_gap_trajectory_and_pose",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-profile-416-419",
+          "frame": 417,
+          "start_frame": 416,
+          "end_frame": 419,
+          "time_s": 16.68,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 414,
+          "context_end_frame": 421,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        },
+        {
+          "id": "contact-profile-434-436",
+          "frame": 435,
+          "start_frame": 434,
+          "end_frame": 436,
+          "time_s": 17.4,
+          "timing": "uncertain_interval",
+          "track_id": 50,
+          "context_start_frame": 432,
+          "context_end_frame": 439,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            50
+          ]
+        },
+        {
+          "id": "contact-profile-486-488",
+          "frame": 487,
+          "start_frame": 486,
+          "end_frame": 488,
+          "time_s": 19.48,
+          "timing": "uncertain_interval",
+          "track_id": 50,
+          "context_start_frame": 484,
+          "context_end_frame": 491,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            50
+          ]
+        },
+        {
+          "id": "contact-profile-510-512",
+          "frame": 511,
+          "start_frame": 510,
+          "end_frame": 512,
+          "time_s": 20.44,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 508,
+          "context_end_frame": 515,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        },
+        {
+          "id": "contact-profile-534-536",
+          "frame": 535,
+          "start_frame": 534,
+          "end_frame": 536,
+          "time_s": 21.4,
+          "timing": "uncertain_interval",
+          "track_id": 50,
+          "context_start_frame": 531,
+          "context_end_frame": 538,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            50
+          ]
+        },
+        {
+          "id": "contact-profile-571-573",
+          "frame": 572,
+          "start_frame": 571,
+          "end_frame": 573,
+          "time_s": 22.88,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 568,
+          "context_end_frame": 575,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        },
+        {
+          "id": "contact-profile-584-586",
+          "frame": 585,
+          "start_frame": 584,
+          "end_frame": 586,
+          "time_s": 23.4,
+          "timing": "uncertain_interval",
+          "track_id": 50,
+          "context_start_frame": 583,
+          "context_end_frame": 590,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            50
+          ]
+        },
+        {
+          "id": "contact-profile-610-612",
+          "frame": 611,
+          "start_frame": 610,
+          "end_frame": 612,
+          "time_s": 24.44,
+          "timing": "uncertain_interval",
+          "track_id": 50,
+          "context_start_frame": 607,
+          "context_end_frame": 614,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            50
+          ]
+        }
+      ]
+    },
+    {
+      "name": "doubles-fullview",
+      "video_id": "c406a1187130b845",
+      "source_video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "player_run_id": "e67258122f424671980cc1e7afca11d5",
+      "shuttle_run_id": "19ceccbfe8914cc59b18110d96db9b06",
+      "input_artifact_sha256": [
+        "af1ac4b93e547362ab81d03923c142fcdb99ea2498f79b4c89e6bc074df952e4",
+        "f63224f308bebb6a69feeda787a673a9175eab42a63bcb0ac228175d45610627"
+      ],
+      "baseline_frames": [
+        338,
+        453,
+        473,
+        492,
+        562,
+        607,
+        643,
+        656,
+        664,
+        683,
+        704,
+        741
+      ],
+      "baseline_count": 12,
+      "current_count": 20,
+      "current_elapsed_s": 0.449,
+      "current_candidates": [
+        {
+          "id": "contact-profile-337-339",
+          "frame": 338,
+          "start_frame": 337,
+          "end_frame": 339,
+          "time_s": 13.52,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 334,
+          "context_end_frame": 341,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            3,
+            8
+          ]
+        },
+        {
+          "id": "contact-profile-417-420",
+          "frame": 419,
+          "start_frame": 417,
+          "end_frame": 420,
+          "time_s": 16.76,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 415,
+          "context_end_frame": 422,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            8
+          ]
+        },
+        {
+          "id": "contact-profile-441-444",
+          "frame": 442,
+          "start_frame": 441,
+          "end_frame": 444,
+          "time_s": 17.68,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 439,
+          "context_end_frame": 446,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1,
+            2,
+            3,
+            8
+          ]
+        },
+        {
+          "id": "contact-profile-452-454",
+          "frame": 453,
+          "start_frame": 452,
+          "end_frame": 454,
+          "time_s": 18.12,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 449,
+          "context_end_frame": 456,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            3,
+            8
+          ]
+        },
+        {
+          "id": "contact-profile-464-466",
+          "frame": 465,
+          "start_frame": 464,
+          "end_frame": 466,
+          "time_s": 18.6,
+          "timing": "uncertain_interval",
+          "track_id": 1,
+          "context_start_frame": 461,
+          "context_end_frame": 468,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1
+          ]
+        },
+        {
+          "id": "contact-profile-472-474",
+          "frame": 473,
+          "start_frame": 472,
+          "end_frame": 474,
+          "time_s": 18.92,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 471,
+          "context_end_frame": 478,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            8,
+            17
+          ]
+        },
+        {
+          "id": "contact-492",
+          "frame": 492,
+          "start_frame": 492,
+          "end_frame": 492,
+          "time_s": 19.68,
+          "timing": "observed_motion_change",
+          "track_id": 1,
+          "context_start_frame": 489,
+          "context_end_frame": 496,
+          "evidence_source": "observed_trajectory",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-profile-517-519",
+          "frame": 518,
+          "start_frame": 517,
+          "end_frame": 519,
+          "time_s": 20.72,
+          "timing": "uncertain_interval",
+          "track_id": 19,
+          "context_start_frame": 515,
+          "context_end_frame": 524,
+          "evidence_source": "bounded_gap_trajectory_and_pose",
+          "possible_track_ids": [
+            19
+          ]
+        },
+        {
+          "id": "contact-profile-529-531",
+          "frame": 530,
+          "start_frame": 529,
+          "end_frame": 531,
+          "time_s": 21.2,
+          "timing": "uncertain_interval",
+          "track_id": 1,
+          "context_start_frame": 526,
+          "context_end_frame": 533,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1
+          ]
+        },
+        {
+          "id": "contact-profile-542-544",
+          "frame": 543,
+          "start_frame": 542,
+          "end_frame": 544,
+          "time_s": 21.72,
+          "timing": "uncertain_interval",
+          "track_id": 8,
+          "context_start_frame": 540,
+          "context_end_frame": 547,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            8
+          ]
+        },
+        {
+          "id": "contact-gap-561-564",
+          "frame": 562,
+          "start_frame": 561,
+          "end_frame": 564,
+          "time_s": 22.48,
+          "timing": "uncertain_interval",
+          "track_id": 1,
+          "context_start_frame": 560,
+          "context_end_frame": 567,
+          "evidence_source": "short_gap_trajectory_and_pose",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-profile-606-608",
+          "frame": 607,
+          "start_frame": 606,
+          "end_frame": 608,
+          "time_s": 24.28,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 604,
+          "context_end_frame": 611,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        },
+        {
+          "id": "contact-profile-642-644",
+          "frame": 643,
+          "start_frame": 642,
+          "end_frame": 644,
+          "time_s": 25.72,
+          "timing": "uncertain_interval",
+          "track_id": 19,
+          "context_start_frame": 641,
+          "context_end_frame": 648,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            19
+          ]
+        },
+        {
+          "id": "contact-profile-655-657",
+          "frame": 656,
+          "start_frame": 655,
+          "end_frame": 657,
+          "time_s": 26.24,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 652,
+          "context_end_frame": 659,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1,
+            8,
+            19
+          ]
+        },
+        {
+          "id": "contact-profile-663-665",
+          "frame": 664,
+          "start_frame": 663,
+          "end_frame": 665,
+          "time_s": 26.56,
+          "timing": "uncertain_interval",
+          "track_id": 8,
+          "context_start_frame": 660,
+          "context_end_frame": 667,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            8
+          ]
+        },
+        {
+          "id": "contact-profile-682-684",
+          "frame": 683,
+          "start_frame": 682,
+          "end_frame": 684,
+          "time_s": 27.32,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 681,
+          "context_end_frame": 688,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            19
+          ]
+        },
+        {
+          "id": "contact-gap-703-705",
+          "frame": 704,
+          "start_frame": 703,
+          "end_frame": 705,
+          "time_s": 28.16,
+          "timing": "uncertain_interval",
+          "track_id": 19,
+          "context_start_frame": 701,
+          "context_end_frame": 708,
+          "evidence_source": "short_gap_trajectory_and_pose",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-gap-738-744",
+          "frame": 741,
+          "start_frame": 738,
+          "end_frame": 744,
+          "time_s": 29.64,
+          "timing": "uncertain_interval",
+          "track_id": 19,
+          "context_start_frame": 736,
+          "context_end_frame": 747,
+          "evidence_source": "short_gap_trajectory_and_pose",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-profile-804-806",
+          "frame": 805,
+          "start_frame": 804,
+          "end_frame": 806,
+          "time_s": 32.2,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 803,
+          "context_end_frame": 810,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            8,
+            19
+          ]
+        },
+        {
+          "id": "contact-profile-815-818",
+          "frame": 817,
+          "start_frame": 815,
+          "end_frame": 818,
+          "time_s": 32.68,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 814,
+          "context_end_frame": 821,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        }
+      ]
+    },
+    {
+      "name": "singles-pilot",
+      "video_id": "970dbd8adfe548d8",
+      "source_video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "player_run_id": "b8bdae17e8374a20bbf16f554c551f19",
+      "shuttle_run_id": "ad0696c19b4b4be0beddf592a641cca0",
+      "input_artifact_sha256": [
+        "0601ce57b529e8f2fc4c3a6fe4d55c6958ad3336a2ef05e81c2b74aea6333309",
+        "19abfd609fbc6de6899850fe6659d032191ea3e96e89f65dad03d7aeddc036e2"
+      ],
+      "baseline_frames": [
+        2007,
+        2078,
+        2130,
+        2154,
+        2229
+      ],
+      "baseline_count": 5,
+      "current_count": 6,
+      "current_elapsed_s": 0.234,
+      "current_candidates": [
+        {
+          "id": "contact-profile-2006-2008",
+          "frame": 2007,
+          "start_frame": 2006,
+          "end_frame": 2008,
+          "time_s": 80.28,
+          "timing": "uncertain_interval",
+          "track_id": 3,
+          "context_start_frame": 2005,
+          "context_end_frame": 2012,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            3
+          ]
+        },
+        {
+          "id": "contact-gap-2076-2080",
+          "frame": 2078,
+          "start_frame": 2076,
+          "end_frame": 2080,
+          "time_s": 83.12,
+          "timing": "uncertain_interval",
+          "track_id": 1,
+          "context_start_frame": 2075,
+          "context_end_frame": 2083,
+          "evidence_source": "short_gap_trajectory_and_pose",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-profile-2129-2131",
+          "frame": 2130,
+          "start_frame": 2129,
+          "end_frame": 2131,
+          "time_s": 85.2,
+          "timing": "uncertain_interval",
+          "track_id": 1,
+          "context_start_frame": 2126,
+          "context_end_frame": 2133,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1
+          ]
+        },
+        {
+          "id": "contact-profile-2153-2155",
+          "frame": 2154,
+          "start_frame": 2153,
+          "end_frame": 2155,
+          "time_s": 86.16,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 2151,
+          "context_end_frame": 2158,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1,
+            3
+          ]
+        },
+        {
+          "id": "contact-profile-2205-2207",
+          "frame": 2206,
+          "start_frame": 2205,
+          "end_frame": 2207,
+          "time_s": 88.24,
+          "timing": "uncertain_interval",
+          "track_id": 3,
+          "context_start_frame": 2204,
+          "context_end_frame": 2211,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            3
+          ]
+        },
+        {
+          "id": "contact-profile-2228-2230",
+          "frame": 2229,
+          "start_frame": 2228,
+          "end_frame": 2230,
+          "time_s": 89.16,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 2227,
+          "context_end_frame": 2234,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "name": "doubles-pilot",
+      "video_id": "c406a1187130b845",
+      "source_video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "player_run_id": "1e69e804c60d4d5c8e4fb490afaffa3a",
+      "shuttle_run_id": "0fb7ae5a420041b396e2030bd107a671",
+      "input_artifact_sha256": [
+        "32a903654c9e56737e8b363fcc9ebe9e7731e9f11c8000af182417931854544d",
+        "7853ab4abd3d9c01ba5ceea17e6d4e6705eb0671850ecae5a9cf98d24f68a76d"
+      ],
+      "baseline_frames": [
+        607,
+        643,
+        656,
+        664,
+        683,
+        704,
+        741
+      ],
+      "baseline_count": 7,
+      "current_count": 9,
+      "current_elapsed_s": 0.2,
+      "current_candidates": [
+        {
+          "id": "contact-profile-606-608",
+          "frame": 607,
+          "start_frame": 606,
+          "end_frame": 608,
+          "time_s": 24.28,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 604,
+          "context_end_frame": 611,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        },
+        {
+          "id": "contact-profile-642-644",
+          "frame": 643,
+          "start_frame": 642,
+          "end_frame": 644,
+          "time_s": 25.72,
+          "timing": "uncertain_interval",
+          "track_id": 4,
+          "context_start_frame": 641,
+          "context_end_frame": 648,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-655-657",
+          "frame": 656,
+          "start_frame": 655,
+          "end_frame": 657,
+          "time_s": 26.24,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 652,
+          "context_end_frame": 659,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            1,
+            3,
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-663-665",
+          "frame": 664,
+          "start_frame": 663,
+          "end_frame": 665,
+          "time_s": 26.56,
+          "timing": "uncertain_interval",
+          "track_id": 3,
+          "context_start_frame": 661,
+          "context_end_frame": 668,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            3
+          ]
+        },
+        {
+          "id": "contact-profile-682-684",
+          "frame": 683,
+          "start_frame": 682,
+          "end_frame": 684,
+          "time_s": 27.32,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 681,
+          "context_end_frame": 688,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2,
+            4
+          ]
+        },
+        {
+          "id": "contact-gap-703-705",
+          "frame": 704,
+          "start_frame": 703,
+          "end_frame": 705,
+          "time_s": 28.16,
+          "timing": "uncertain_interval",
+          "track_id": 4,
+          "context_start_frame": 701,
+          "context_end_frame": 708,
+          "evidence_source": "short_gap_trajectory_and_pose",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-gap-738-744",
+          "frame": 741,
+          "start_frame": 738,
+          "end_frame": 744,
+          "time_s": 29.64,
+          "timing": "uncertain_interval",
+          "track_id": 4,
+          "context_start_frame": 736,
+          "context_end_frame": 747,
+          "evidence_source": "short_gap_trajectory_and_pose",
+          "possible_track_ids": null
+        },
+        {
+          "id": "contact-profile-804-806",
+          "frame": 805,
+          "start_frame": 804,
+          "end_frame": 806,
+          "time_s": 32.2,
+          "timing": "uncertain_interval",
+          "track_id": null,
+          "context_start_frame": 803,
+          "context_end_frame": 810,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            3,
+            4
+          ]
+        },
+        {
+          "id": "contact-profile-815-818",
+          "frame": 817,
+          "start_frame": 815,
+          "end_frame": 818,
+          "time_s": 32.68,
+          "timing": "uncertain_interval",
+          "track_id": 2,
+          "context_start_frame": 814,
+          "context_end_frame": 821,
+          "evidence_source": "subframe_trajectory_and_pose",
+          "possible_track_ids": [
+            2
+          ]
+        }
+      ]
+    }
+  ],
+  "synthetic": {
+    "generator_sha256": "bb68296ef3ee21f6cdb9e1fdff9087526bff1007e66640e48d1c9fec157a1028",
+    "numpy_version": "2.2.6",
+    "seeds_per_kind": 100,
+    "kinds": {
+      "contact": {
+        "v2": {
+          "scenes_with_proposals": 9,
+          "known_contact_scenes_matched": 9,
+          "navigation_scenes_within_half_source_frame": 9,
+          "unmatched_positive_proposals": 0
+        },
+        "v3": {
+          "scenes_with_proposals": 97,
+          "known_contact_scenes_matched": 97,
+          "navigation_scenes_within_half_source_frame": 92,
+          "unmatched_positive_proposals": 0
+        }
+      },
+      "apex": {
+        "v2": {
+          "scenes_with_proposals": 0,
+          "known_contact_scenes_matched": null,
+          "navigation_scenes_within_half_source_frame": null,
+          "unmatched_positive_proposals": null
+        },
+        "v3": {
+          "scenes_with_proposals": 0,
+          "known_contact_scenes_matched": null,
+          "navigation_scenes_within_half_source_frame": null,
+          "unmatched_positive_proposals": null
+        }
+      },
+      "straight": {
+        "v2": {
+          "scenes_with_proposals": 0,
+          "known_contact_scenes_matched": null,
+          "navigation_scenes_within_half_source_frame": null,
+          "unmatched_positive_proposals": null
+        },
+        "v3": {
+          "scenes_with_proposals": 0,
+          "known_contact_scenes_matched": null,
+          "navigation_scenes_within_half_source_frame": null,
+          "unmatched_positive_proposals": null
+        }
+      },
+      "stationary": {
+        "v2": {
+          "scenes_with_proposals": 0,
+          "known_contact_scenes_matched": null,
+          "navigation_scenes_within_half_source_frame": null,
+          "unmatched_positive_proposals": null
+        },
+        "v3": {
+          "scenes_with_proposals": 0,
+          "known_contact_scenes_matched": null,
+          "navigation_scenes_within_half_source_frame": null,
+          "unmatched_positive_proposals": null
+        }
+      }
+    },
+    "meaning": "Controlled mathematical motion checks, not badminton accuracy; point match within half source frame, interval match contains the known knot."
+  },
+  "main_annotations_unchanged": true
+}
