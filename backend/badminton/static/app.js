@@ -121,6 +121,7 @@ async function selectVideo(id) {
     shuttleLabeling: false,
   });
   $("workspace").hidden = false;
+  $("onboarding").hidden = true;
   $("title").textContent = video.name;
   $("video-info").textContent =
     `${pretty(video.mode)} · ${video.width} × ${video.height} · ${video.fps.toFixed(2).replace(".00", "")} fps · ${clock(video.duration_s)} · ${video.frame_count.toLocaleString()} source frames`;

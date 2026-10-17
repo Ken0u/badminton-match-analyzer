@@ -7,6 +7,12 @@ from pathlib import Path
 import av
 from PIL import Image, ImageDraw
 
+from .orientation import (
+    OrientationError,
+    display_dimensions,
+    frame_rotation,
+    orient_frame,
+)
 from .video import write_json
 
 
@@ -40,7 +46,15 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
         )
         sample_times = [nominal_duration * i / 18 for i in range(18)]
         timestamps, samples = [], []
+        rotation = None
         for index, frame in enumerate(container.decode(stream)):
+            decoded_rotation = frame_rotation(frame)
+            if rotation is None:
+                rotation = decoded_rotation
+            elif rotation != decoded_rotation:
+                raise OrientationError(
+                    "Video display rotation changes within the source"
+                )
             if frame.pts is None:
                 raise ValueError("Video has frames without presentation timestamps")
             timestamp = max(0.0, float(frame.pts * stream.time_base) - origin)
@@ -53,13 +67,14 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
                 len(samples) < len(sample_times)
                 and timestamp >= sample_times[len(samples)]
             ):
-                img = frame.to_image()
+                img = orient_frame(frame, expected_rotation=rotation).to_image()
                 img.thumbnail((384, 216))
                 samples.append((index, timestamp, img))
             if progress and index % 250 == 0:
                 progress(min(timestamp / max(nominal_duration, 0.001), 0.99))
         if not timestamps:
             raise ValueError("No video frames were decoded")
+        width, height = display_dimensions(stream.width, stream.height, rotation)
         step = (
             timestamps[-1] - timestamps[-2]
             if len(timestamps) > 1
@@ -70,8 +85,11 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
             "name": path.name,
             "path": relative.as_posix(),
             "mode": mode,
-            "width": stream.width,
-            "height": stream.height,
+            "width": width,
+            "height": height,
+            "source_width": stream.width,
+            "source_height": stream.height,
+            "rotation": rotation,
             "fps": float(stream.average_rate or 1 / step),
             "frame_count": len(timestamps),
             "duration_s": round(timestamps[-1] + step, 8),
@@ -117,5 +135,5 @@ def read_frame(path: Path, time_s: float, origin: float = 0):
                 frame.pts is not None
                 and float(frame.pts * stream.time_base) >= target - 0.00001
             ):
-                return frame.to_image()
+                return orient_frame(frame).to_image()
     raise ValueError("Could not decode requested frame")

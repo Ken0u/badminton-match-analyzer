@@ -158,7 +158,8 @@ records upstream terms rather than granting any additional permissions.
 ## Verification and current limits
 
 CI runs Python tests on generated media without the supplied videos or model
-weights, checks browser source formatting, and builds/starts the review and CPU images to
+weights, checks browser source formatting, exercises the upload/import UI in
+Chromium using synthetic videos and a stubbed downloader, and builds/starts the review and CPU images to
 check its health, authentication, UI response, and empty catalog. These checks
 do not claim trained-model accuracy, live YouTube availability, or GPU inference.
 The Windows/CUDA `requirements.lock` is not a Linux container lock; container

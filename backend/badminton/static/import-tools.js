@@ -1,4 +1,13 @@
 export function createImportTools({ $, api, notice, pollJobs, loadLibrary }) {
+  $("choose-upload").onclick = () => {
+    document.querySelector(".import-panel").open = true;
+    $("upload-file").click();
+  };
+  $("choose-youtube").onclick = () => {
+    document.querySelector(".import-panel").open = true;
+    $("youtube-url").focus();
+    $("youtube-url").scrollIntoView({ block: "center", behavior: "smooth" });
+  };
   let sending = false;
   let pendingJob = null;
   let active = false;

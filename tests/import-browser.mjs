@@ -70,6 +70,13 @@ try {
     "Start a fresh scripts/import_ui_test_server.py before running.",
   );
   await page.goto(base);
+  assert.equal(await page.locator("#onboarding").isVisible(), true);
+  await page.locator("#choose-youtube").click();
+  await page.waitForFunction(() => document.activeElement.id === "youtube-url");
+  await page.screenshot({
+    path: fileURLToPath(new URL("import-empty.png", output)),
+    fullPage: true,
+  });
   assert.equal(await page.locator("#workspace").isHidden(), true);
   assert.equal(await page.locator("#library-count").textContent(), "0");
   const statusLog = [];
