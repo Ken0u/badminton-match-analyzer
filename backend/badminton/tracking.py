@@ -2,8 +2,10 @@
 
 import hashlib
 import json
+import math
 import os
 import time
+from types import SimpleNamespace
 
 import cv2
 import numpy as np
@@ -15,10 +17,91 @@ from .calibration_context import (
 )
 from .config import MODEL_MANIFEST, WEIGHTS
 from .court_detection import calibrate_ranges
-from .scene_review import corrected_boundaries, reviewed_run
+from .scene_review import corrected_boundaries, reviewed_run, scene_review_signature
 from .schemas import Calibration
 from .segments import scan_boundaries, slice_camera_scan
+from .track_consensus import RECIPE as CONSENSUS_RECIPE
+from .track_consensus import corroborate_tracks
 from .video import iter_frames, timestamps_for, validate_range, write_json
+
+BYTE_TRACK_CONFIG = {
+    "tracker_type": "bytetrack",
+    "track_high_thresh": 0.25,
+    "track_low_thresh": 0.1,
+    "new_track_thresh": 0.25,
+    "track_buffer": 30,
+    "match_thresh": 0.8,
+    "fuse_score": True,
+}
+TRACKER_CONFIG = {
+    **BYTE_TRACK_CONFIG,
+    "tracker_type": "botsort",
+    "gmc_method": "sparseOptFlow",
+    "proximity_thresh": 0.5,
+    "appearance_thresh": 0.8,
+    "with_reid": False,
+    "model": "auto",
+}
+TRACKING_RECIPE = {
+    "method": "baseline observations with motion-corroborated continuity v4",
+    "detector_confidence": 0.1,
+    "observation_confidence": 0.25,
+    "tracker_config": TRACKER_CONFIG,
+    "baseline_config": BYTE_TRACK_CONFIG,
+    "baseline_detector_confidence": 0.25,
+    "weak_observations": "Tracker association only; absent from published player rows",
+    "appearance_reidentification": False,
+    "continuity_recipe": CONSENSUS_RECIPE,
+}
+
+
+def association_trackers():
+    from ultralytics.trackers.bot_sort import BOTSORT
+    from ultralytics.trackers.byte_tracker import BYTETracker
+
+    # Initialize both engines before any frame. Their IDs are separate evidence
+    # namespaces (numeric overlap is valid); reset both only at a camera cut.
+    return (
+        BYTETracker(SimpleNamespace(**BYTE_TRACK_CONFIG)),
+        BOTSORT(SimpleNamespace(**TRACKER_CONFIG)),
+    )
+
+
+def associate_observations(result, tracker, image, threshold, offset, pose=True):
+    """Preserve detector/pose indices through score filtering and association."""
+    detections = result.boxes.cpu().numpy()
+    indices = np.flatnonzero(detections.conf >= threshold)
+    selected = detections[indices]
+    tracks = tracker.update(selected, image)
+    # Match Ultralytics' handling of newly unconfirmed tracks. When there is no
+    # association at all, retain a raw strong detection with an unknown ID.
+    if not len(tracks) and any(not t.is_activated for t in tracker.tracked_stracks):
+        return []
+    observations = (
+        [(int(t[-1]), t[:4].tolist(), int(t[4]) + offset, float(t[5])) for t in tracks]
+        if len(tracks)
+        else [
+            (i, box.tolist(), None, float(selected.conf[i]))
+            for i, box in enumerate(selected.xyxy)
+        ]
+    )
+    players = []
+    for index, box, identity, confidence in observations:
+        points = (
+            result.keypoints.data[int(indices[index])].cpu().tolist()
+            if pose and result.keypoints is not None
+            else []
+        )
+        players.append(
+            {
+                "track_id": identity,
+                "player_id": None,
+                "box": box,
+                "confidence": confidence,
+                "keypoints": points,
+            }
+        )
+    return players
 
 
 def player_checkpoint(variant):
@@ -59,6 +142,9 @@ def track_players(
 ):
     runtime = data / "runtime"
     runtime.mkdir(exist_ok=True)
+    # Keep the baseline high-score associations; only the corroborating tracker
+    # receives the weak band. Persist settings rather than mutable library defaults.
+    write_json(runtime / "badminton-dual-trackers-v1.json", TRACKING_RECIPE)
     os.environ.setdefault("YOLO_CONFIG_DIR", str(runtime / "ultralytics"))
     os.environ.setdefault("MPLCONFIGDIR", str(runtime / "matplotlib"))
     try:
@@ -121,6 +207,7 @@ def track_players(
     calibrations = [Calibration.model_validate(c) for c in effective["calibrations"]]
     rows, counts = [], []
     calibrated_frames = 0
+    weak_observations = 0
     segment_start = start_frame
     last_cut = (
         start_frame
@@ -132,6 +219,7 @@ def track_players(
     track_offset, largest_track = 0, 0
     pending_reset = False
     model = YOLO(str(weights))
+    trackers = association_trackers()
     try:
         for index, timestamp, frame in iter_frames(
             video, root, timestamps, start_frame, end_frame
@@ -146,7 +234,7 @@ def track_players(
                 # Ultralytics' tracker reset also resets its numeric ID counter.
                 # Allocate a disjoint namespace so reviewed identities cannot
                 # silently attach to a different person after the edit.
-                for tracker in getattr(model.predictor, "trackers", []):
+                for tracker in trackers:
                     tracker.reset()
                 track_offset = largest_track
                 pending_reset = False
@@ -171,54 +259,54 @@ def track_players(
                 else None
             )
             calibrated_frames += polygon is not None
-            result = model.track(
-                frame.to_ndarray(format="bgr24"),
-                persist=True,
-                tracker="bytetrack.yaml",
-                conf=0.25,
+            image = frame.to_ndarray(format="bgr24")
+            result = model.predict(
+                image,
+                conf=TRACKING_RECIPE["detector_confidence"],
                 imgsz=1280,
                 device=device,
                 verbose=False,
             )[0]
-            players = []
-            for i, box in enumerate(result.boxes):
-                x1, y1, x2, y2 = box.xyxy[0].cpu().tolist()
-                if (
-                    polygon is not None
-                    and cv2.pointPolygonTest(polygon, ((x1 + x2) / 2, y2), True)
-                    < -video["height"] * 0.08
-                ):
-                    continue
-                points = (
-                    result.keypoints.data[i].cpu().tolist()
-                    if result.keypoints is not None
-                    else []
+            groups = []
+            for tracker, threshold, pose in (
+                (trackers[0], TRACKING_RECIPE["baseline_detector_confidence"], True),
+                (trackers[1], TRACKING_RECIPE["detector_confidence"], False),
+            ):
+                observed = associate_observations(
+                    result, tracker, image, threshold, track_offset, pose
                 )
-                players.append(
-                    {
-                        "track_id": int(box.id.item()) + track_offset
-                        if box.id is not None
-                        else None,
-                        "player_id": None,
-                        "box": [x1, y1, x2, y2],
-                        "confidence": float(box.conf.item()),
-                        "keypoints": points,
-                    }
-                )
-                if players[-1]["track_id"] is not None:
-                    largest_track = max(largest_track, players[-1]["track_id"])
+                players = []
+                for person in observed:
+                    if person["track_id"] is not None:
+                        largest_track = max(largest_track, person["track_id"])
+                    x1, _y1, x2, y2 = person["box"]
+                    if (
+                        polygon is not None
+                        and cv2.pointPolygonTest(polygon, ((x1 + x2) / 2, y2), True)
+                        < -video["height"] * 0.08
+                    ):
+                        continue
+                    confidence = person["confidence"]
+                    if not math.isfinite(confidence) or not 0 <= confidence <= 1:
+                        continue
+                    if confidence < TRACKING_RECIPE["observation_confidence"]:
+                        weak_observations += 1
+                        continue
+                    players.append(person)
+                groups.append(players)
             rows.append(
                 {
                     "frame": index,
                     "time_s": timestamps[index],
-                    "players": players,
+                    "players": groups[0],
+                    "motion_players": groups[1],
                     "camera_segment_start_frame": segment_start,
                     "calibration_valid": calibration is not None,
                 }
             )
-            counts.append(len(players))
+            counts.append(len(groups[0]))
             progress(
-                0.2 + 0.8 * (index - start_frame + 1) / max(1, end_frame - start_frame)
+                0.2 + 0.75 * (index - start_frame + 1) / max(1, end_frame - start_frame)
             )
         elapsed = time.perf_counter() - began
         result = {
@@ -237,6 +325,8 @@ def track_players(
             "model_source": checkpoint["source"],
             "device": device,
             "image_size": 1280,
+            "tracking_recipe": TRACKING_RECIPE,
+            "weak_court_observations_hidden": weak_observations,
             "peak_gpu_memory_mb": round(torch.cuda.max_memory_allocated() / 1e6, 1)
             if device.startswith("cuda")
             else None,
@@ -272,6 +362,22 @@ def track_players(
             }
         )
         result = reviewed_run(result, annotations)
+        mapping, evidence = corroborate_tracks(
+            video, result["frames"], stride, lambda value: progress(0.95 + value * 0.05)
+        )
+        for row in result["frames"]:
+            for person in row["players"]:
+                person["baseline_track_id"] = person["track_id"]
+                person["track_id"] = mapping.get(person["track_id"], person["track_id"])
+        result["track_continuity"] = evidence
+        evidence["scene_signature"] = scene_review_signature(
+            annotations, start_frame, end_frame
+        )
+        result["continuity_scene_signature"] = evidence["scene_signature"]
+        result["uses_motion_continuity"] = bool(evidence["links"])
+        elapsed = time.perf_counter() - began
+        result["elapsed_s"] = round(elapsed, 3)
+        result["inference_fps"] = round(len(rows) / max(elapsed, 0.001), 2)
         write_json(output, result)
         return {k: v for k, v in result.items() if k != "frames"}
     finally:

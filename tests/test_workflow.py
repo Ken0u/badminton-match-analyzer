@@ -289,10 +289,12 @@ def test_calibration_summary_only_counts_the_selected_clip(workspace, monkeypatc
         def __init__(self, path):
             pass
 
-        def track(self, *args, **kwargs):
+        def predict(self, *args, **kwargs):
             return [SimpleNamespace(boxes=[])]
 
     monkeypatch.setitem(sys.modules, "ultralytics", SimpleNamespace(YOLO=FakeModel))
+    monkeypatch.setattr(tracking, "association_trackers", lambda: (None, None))
+    monkeypatch.setattr(tracking, "associate_observations", lambda *_: [])
     monkeypatch.setattr(torch.cuda, "is_available", lambda: False)
     summary = track_players(
         v, root, data, doc, 0, 3, 1, lambda p: None, data / "run.json"

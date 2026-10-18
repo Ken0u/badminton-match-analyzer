@@ -47,13 +47,6 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
 ):
     from badminton import tracking
 
-    class Scalar:
-        def __init__(self, value):
-            self.value = value
-
-        def item(self):
-            return self.value
-
     class Array:
         def __init__(self, value):
             self.value = value
@@ -66,17 +59,50 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
 
     resets = []
 
-    class Model:
-        def __init__(self, _path):
-            self.predictor = SimpleNamespace(
-                trackers=[SimpleNamespace(reset=lambda: resets.append(True))]
+    class Boxes:
+        def __init__(self, rows):
+            self.rows = np.asarray(rows)
+            self.xyxy, self.conf = self.rows[:, :4], self.rows[:, 4]
+
+        def cpu(self):
+            return self
+
+        def numpy(self):
+            return self
+
+        def __getitem__(self, index):
+            return Boxes(self.rows[index])
+
+    class Tracker:
+        tracked_stracks = ()
+
+        def reset(self):
+            resets.append(True)
+
+        def update(self, selected, image):
+            return np.asarray(
+                [
+                    [*box, 1 if confidence >= 0.25 else 2, confidence, 0, i]
+                    for i, (box, confidence) in enumerate(
+                        zip(selected.xyxy, selected.conf)
+                    )
+                ]
             )
 
-        def track(self, *_args, **_kwargs):
-            box = SimpleNamespace(
-                id=Scalar(1), xyxy=[Array([30, 20, 50, 50])], conf=Scalar(0.9)
-            )
-            return [SimpleNamespace(boxes=[box], keypoints=None)]
+    class Model:
+        def __init__(self, _path):
+            pass
+
+        def predict(self, *_args, **kwargs):
+            assert kwargs["conf"] == 0.1
+            return [
+                SimpleNamespace(
+                    boxes=Boxes([[70, 20, 85, 50, 0.2], [30, 20, 50, 50, 0.9]]),
+                    keypoints=SimpleNamespace(
+                        data=[Array([[75, 30, 0.1]]), Array([[40, 30, 0.9]])]
+                    ),
+                )
+            ]
 
     monkeypatch.setitem(
         sys.modules,
@@ -85,6 +111,9 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
     )
     monkeypatch.setitem(sys.modules, "ultralytics", SimpleNamespace(YOLO=Model))
     monkeypatch.setitem(sys.modules, "torchvision", SimpleNamespace())
+    monkeypatch.setattr(
+        tracking, "association_trackers", lambda: (Tracker(), Tracker())
+    )
     monkeypatch.setattr(tracking, "WEIGHTS", tmp_path)
     (tmp_path / "yolo11n-pose.pt").write_bytes(b"stub")
     monkeypatch.setattr(
@@ -150,6 +179,7 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
         "height": 64,
         "mode": "singles",
         "duration_s": 0.48,
+        "frame_count": 12,
     }
     output = data / "players.json"
     tracking.track_players(
@@ -165,14 +195,14 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
         auto_calibrate=False,
     )
     result = json.loads(output.read_text())
-    assert len(resets) == 1
+    assert len(resets) == 2
     assert [row["players"][0]["track_id"] for row in result["frames"]] == [
         1,
         1,
         1,
-        2,
-        2,
-        2,
+        3,
+        3,
+        3,
     ]
     assert [row["calibration_valid"] for row in result["frames"]] == [
         True,
@@ -185,6 +215,16 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
     assert result["frames"][3]["camera_segment_start_frame"] == 5
     assert result["calibrated_frames"] == 3
     assert result["tracker_reset_at_cuts"] is True
+    assert result["weak_court_observations_hidden"] == 6
+    assert (
+        json.loads((data / "runtime/badminton-dual-trackers-v1.json").read_text())
+        == tracking.TRACKING_RECIPE
+    )
+    assert result["tracking_recipe"] == tracking.TRACKING_RECIPE
+    assert all(len(row["players"]) == 1 for row in result["frames"])
+    assert all(
+        row["players"][0]["keypoints"] == [[40, 30, 0.9]] for row in result["frames"]
+    )
 
     # A cut exactly at the requested start also expires a calibration that
     # began in a preceding view, even though there is no in-run tracker reset.

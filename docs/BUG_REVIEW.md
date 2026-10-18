@@ -2,6 +2,15 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [player tracking study](PLAYER_TRACKING_RECOVERY_REPORT.md) catches our
+detector gate disabling weak association, but also rejects the direct fix after
+new source breaks and rejects a motion-tracker replacement after a doubles ID
+swap. The current candidate corroborates short joins while retaining baseline
+observations and rejecting conflicting branches. It also invalidates remote
+identity evidence after scene edits, restoring baseline IDs before reviewed
+names are applied. Native and regression evidence is recorded in the report;
+complete player identity remains unproven.
+
 The [actor-continuity work](ACTOR_CONTINUITY_REPORT.md) removes automatic-ID
 discontinuity at overlapping processing windows. Co-present tracks cannot merge,
 ambiguous correspondence stays unresolved and camera cuts remain separate.

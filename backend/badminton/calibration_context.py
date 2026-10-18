@@ -107,6 +107,8 @@ def court_run_context(run):
                 "known_preceding_timestamp_gaps",
                 "automatic_calibrations",
                 "court_context_version",
+                "continuity_scene_signature",
+                "uses_motion_continuity",
             )
             if key in run
         }
@@ -115,6 +117,18 @@ def court_run_context(run):
 
 def court_context_changed(annotations, artifact):
     context = artifact.get("court_context")
+    if context is not None and context.get("uses_motion_continuity"):
+        # Identity corroboration depends on the whole player window, including
+        # short conflicting branches away from a particular contact proposal.
+        doc = _plain(annotations)
+        scenes = sorted(
+            [r["start_frame"], r["end_frame"], r["scene"]]
+            for item in doc.get("scene_ranges", [])
+            if (r := _plain(item))["start_frame"] < context["end_frame"]
+            and context["start_frame"] < r["end_frame"]
+        )
+        if context.get("continuity_scene_signature") != scenes:
+            return True
     return context is not None and artifact.get(
         "calibration_signature"
     ) != court_signature(

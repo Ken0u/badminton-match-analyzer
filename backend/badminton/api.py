@@ -705,8 +705,11 @@ def create_app(
         from .identity import apply_assignments, resolve_contact_player
 
         if result.get("stage", "players") == "players":
+            from .scene_review import reviewed_run
+
+            result = reviewed_run(result, doc)
             result = apply_assignments(result, doc.track_assignments, job_id)
-        if result.get("stage") in ("players", "shuttle"):
+        elif result.get("stage") == "shuttle":
             from .scene_review import reviewed_run
 
             result = reviewed_run(result, doc)
