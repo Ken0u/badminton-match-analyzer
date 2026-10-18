@@ -2,6 +2,16 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The October 18 [wrist-reach regression](WRIST_REACH_REPORT.md) removes a
+source-inspected floor-bounce proposal that player-box proximity incorrectly
+supported despite repeated distant wrists. Both arms need complete temporal
+evidence before excluding a hitter; missing pose preserves the fallback and
+other players remain eligible. Five cached comparison excerpts are unchanged,
+and the real cached-input API preserves saved labels. This is a development
+negative control, not full contact accuracy. The shared feature-preparation
+banner also no longer incorrectly describes every preparation job as side-model
+training.
+
 An October 18 source audit found a real close-up-to-court edit at frame 14 that
 the detector suppressed during startup. The corrected scanner and a real CUDA
 rerun now separate tracker IDs, calibration and shuttle context at that cut.

@@ -4,6 +4,8 @@ A badminton analysis app with file uploads, YouTube imports, player/shuttle trac
 
 The six target shot families are **clear, lift, net, drop, smash, and drive**, each with a separate forehand/backhand label. Serves and rally endings are separate events.
 
+The [wrist-reach correction](docs/WRIST_REACH_REPORT.md) removes a reviewed floor-bounce contact when repeated observations of both wrists contradict player-box proximity. Missing pose keeps the fallback available. These suggestions still require review; full contact accuracy is unverified.
+
 The [camera-context update](docs/EARLY_CAMERA_CUT_REPORT.md) fixes a missed early broadcast edit and preserves the complete evidence range for temporal contact features. Corrected source preparation now isolates unsupported close-ups from court views. Contact and doubles family/side learning remain experiments awaiting held-out results.
 
 The [doubles data audit](docs/S2_DOUBLES_REPORT.md) adds a pinned public-label importer and an actual new-camera probe. It fixes single-stroke serve-fault exclusions and documents severe contact misses; it does not yet provide a trained doubles classifier.

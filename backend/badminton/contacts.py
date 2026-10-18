@@ -11,7 +11,7 @@ import math
 
 import numpy as np
 
-METHOD = "subframe and short-gap motion/pose proposals v3"
+METHOD = "subframe and short-gap motion/pose proposals v4"
 MAX_FRAME_STEP_S = 0.1
 MAX_GAP_S = 0.24
 PROFILE_STEPS = 25
@@ -19,6 +19,8 @@ MIN_PROFILE_GAIN = 6
 MAX_PROFILE_ERROR_DIAGONALS = 0.005
 MAX_FLANK_S = 0.20
 MIN_WRIST_SAMPLES = 3
+WRIST_REACH_DIAGONALS = 0.10
+WRIST_REACH_BODY_DIAGONALS = 0.6
 
 
 def proposal_recipe():
@@ -34,6 +36,13 @@ def proposal_recipe():
         "minimum_rmse_gain_diagonals": 0.0005,
         "maximum_flank_context_s": MAX_FLANK_S,
         "minimum_moving_wrist_samples": MIN_WRIST_SAMPLES,
+        "observed_contact_wrist_guard": {
+            "minimum_samples_per_wrist": MIN_WRIST_SAMPLES,
+            "minimum_confidence": 0.3,
+            "reach_image_diagonals": WRIST_REACH_DIAGONALS,
+            "reach_body_diagonals": WRIST_REACH_BODY_DIAGONALS,
+            "missing_or_ambiguous_pose": "retain proximity fallback",
+        },
         "uncertainty": "Profile support plus source-frame quantization; not a calibrated confidence interval",
     }
 
@@ -61,6 +70,53 @@ def _hitter_hint(point, players, diagonal):
     if best is None or best[0] > diagonal * 0.075:
         return None
     return best
+
+
+def _wrist_reach_contradicted(point, player, rows, origin, source_step, diagonal):
+    """Reject box-only proximity contradicted by repeated observations of both arms.
+
+    This conservative image-space heuristic is not a measured racket reach.
+    Missing, ambiguous or one-sided pose evidence leaves the fallback available.
+    All observations must belong to the already validated trajectory window.
+    """
+    track_id = player.get("track_id")
+    if track_id is None:
+        return False
+    x1, y1, x2, y2 = player["box"]
+    reach = max(
+        diagonal * WRIST_REACH_DIAGONALS,
+        math.hypot(x2 - x1, y2 - y1) * WRIST_REACH_BODY_DIAGONALS,
+    )
+    wrists = {9: [], 10: []}
+    for row in rows:
+        matches = [p for p in row["players"] if p.get("track_id") == track_id]
+        if len(matches) != 1 or row.get("scene", "live") != "live":
+            continue
+        keypoints = matches[0].get("keypoints", [])
+        for wrist, observations in wrists.items():
+            if wrist >= len(keypoints) or len(keypoints[wrist]) < 3:
+                continue
+            x, y, confidence = keypoints[wrist][:3]
+            if confidence < 0.3 or not all(
+                math.isfinite(value) for value in (x, y, confidence)
+            ):
+                continue
+            observations.append((row["time_s"], math.hypot(x - point[0], y - point[1])))
+    for observations in wrists.values():
+        if len(observations) < MIN_WRIST_SAMPLES:
+            return False
+        if not observations[0][0] < origin < observations[-1][0]:
+            return False
+        if min(abs(t - origin) for t, _ in observations) > source_step + 1e-9:
+            return False
+        if any(
+            not 0 < after[0] - before[0] <= MAX_FRAME_STEP_S + 1e-9
+            for before, after in itertools.pairwise(observations)
+        ):
+            return False
+        if min(distance for _, distance in observations) <= reach:
+            return False
+    return True
 
 
 def _raw_visible(row):
@@ -451,9 +507,20 @@ def propose_contacts(shuttle_run, player_run, video):
             continue
         hint = None
         if players:
+            left = bisect.bisect_left(player_times, window[0]["time_s"])
+            right = bisect.bisect_right(player_times, window[-1]["time_s"])
+            pose_window = players[left:right]
+            source_step = float(np.max(np.diff(times)))
+            possible_hitters = [
+                player
+                for player in _nearest_players(players, player_times, row["time_s"])
+                if not _wrist_reach_contradicted(
+                    points[3], player, pose_window, row["time_s"], source_step, diagonal
+                )
+            ]
             nearby = _hitter_hint(
                 points[3],
-                _nearest_players(players, player_times, row["time_s"]),
+                possible_hitters,
                 diagonal,
             )
             if nearby is None:
