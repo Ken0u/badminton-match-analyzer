@@ -165,6 +165,19 @@ The pinned ShuttleSet importer creates a separate local label index for recognit
 
 Mapping v2 preserves legitimate single-stroke terminal serves; the original side-head report and feature recipe use their unchanged v1 index. Importers refuse to overwrite an existing output directory with different source, mapping or split provenance. Keep new experiments in separately named directories. [The doubles audit](docs/S2_DOUBLES_REPORT.md) provides the additional doubles commands and current data limits.
 
+The [FineBadminton source audit](docs/FINEBADMINTON_REPORT.md) adds a pinned
+singles action/side index with 20,757 records and a separate exact join to 414
+published contact-frame references. Action intervals never become contact times
+or rally endings. Raw labels, missing fields and cross-publication discrepancies
+remain visible; training readiness and match splits require separate verification.
+
+```powershell
+.\.venv\Scripts\python.exe -m badminton.cli import-finebadminton LOCAL_SOURCE_DIR --output data/datasets/finebadminton/v1
+```
+
+The report specifies the two pinned source publications and expected local file
+layout. No dataset video, automatic download or new model is bundled.
+
 ## Storage
 
 ```text

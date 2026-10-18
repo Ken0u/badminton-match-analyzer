@@ -2,6 +2,15 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [FineBadminton source audit](FINEBADMINTON_REPORT.md) catches a misleading
+`kill` translation, contact-frame fields omitted from the larger release and
+one side label missing from that release. The adapter verifies both publications,
+keeps action intervals separate from contact times, and preserves omissions and
+malformed rows. Native inputs and a controlled training comparison are recorded;
+the new model fails the promotion comparison and remains outside the app.
+All 611 standard checks pass, with four optional GPU skips; the packaged CLI
+also reproduces the complete normalized index.
+
 The [full-match processing work](FULL_MATCH_PROCESSING_REPORT.md) fixes cancellation
 being lost to older progress snapshots and preceding detected cuts disappearing
 at new processing windows. Cached native output now requires complete source
