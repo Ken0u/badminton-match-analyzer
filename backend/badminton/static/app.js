@@ -328,7 +328,12 @@ function draw() {
       p.track_id,
       state.frame,
     );
-    const label = `${player ? `Player ${player} · ` : ""}Track ${p.track_id ?? "?"} · ${Math.round(p.confidence * 100)}%`;
+    const actor = processingTools.actorForTrack(
+      state.lastJob,
+      p.track_id,
+      state.frame,
+    );
+    const label = `${player ? `Player ${player} · ` : actor ? `${actor.label}? · ` : ""}Track ${p.track_id ?? "?"} · ${Math.round(p.confidence * 100)}%`;
     ctx.fillStyle = "#14231cdd";
     ctx.fillRect(
       x1,
@@ -410,6 +415,11 @@ function renderCandidates() {
             c.track_id,
             c.frame,
           );
+          const actor = processingTools.actorForTrack(
+            state.contactRun.player_run_id,
+            c.track_id,
+            c.frame,
+          );
           const uncertain = c.timing === "uncertain_interval";
           const sceneExcluded = (state.doc.scene_ranges ?? []).some(
             (r) =>
@@ -421,7 +431,7 @@ function renderCandidates() {
           const audioConflict = c.evidence?.audio_support?.some(
             (item) => item.hitter_agrees === false,
           );
-          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added || sceneExcluded || cameraStale || courtStale ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${courtStale ? "Court changed; rerun tracking and contacts" : cameraStale ? "Camera review changed; request new contacts" : sceneExcluded ? "Excluded by scene review" : added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${c.evidence_source === "audio_shuttle_gap_and_pose" ? "Audio + vision · " : ""}${audioConflict ? "Audio hitter disagreement · " : ""}${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
+          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added || sceneExcluded || cameraStale || courtStale ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${courtStale ? "Court changed; rerun tracking and contacts" : cameraStale ? "Camera review changed; request new contacts" : sceneExcluded ? "Excluded by scene review" : added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${c.evidence_source === "audio_shuttle_gap_and_pose" ? "Audio + vision · " : ""}${audioConflict ? "Audio hitter disagreement · " : ""}${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : actor ? `${escape(actor.label)}? · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
         })
         .join("")
     : '<p class="empty">Track the shuttle, then suggest contacts.</p>';

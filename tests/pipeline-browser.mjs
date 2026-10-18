@@ -7,6 +7,14 @@ const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage({ viewport: { width: 1440, height: 1080 } });
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
+await page.addInitScript(() => {
+  window.trackText = [];
+  const original = CanvasRenderingContext2D.prototype.fillText;
+  CanvasRenderingContext2D.prototype.fillText = function (text, ...args) {
+    if (String(text).includes("Track ")) window.trackText.push(String(text));
+    return original.call(this, text, ...args);
+  };
+});
 async function get(path) {
   const r = await page.request.get(base + path);
   assert.ok(r.ok(), await r.text());
@@ -33,6 +41,16 @@ async function completed(id) {
     await page.waitForTimeout(100);
   }
   assert.fail(`The same processing job ${id} did not finish`);
+}
+async function completedInViewer(id) {
+  await page.waitForFunction((current) => {
+    const status = document.querySelector("#analysis-status");
+    return (
+      status.dataset.jobId === current &&
+      status.dataset.jobStatus === "completed" &&
+      status.textContent.includes("Processing complete")
+    );
+  }, id);
 }
 async function seek(frame) {
   await page.locator("#frame-number").fill(String(frame));
@@ -65,12 +83,12 @@ try {
   assert.deepEqual(await get(root + "/annotations"), before);
   const resumed = await start();
   await completed(resumed);
-  await page.waitForFunction(() =>
-    document
-      .querySelector("#analysis-status")
-      .textContent.includes("Processing complete"),
-  );
+  await completedInViewer(resumed);
   assert.equal(await page.locator("#analysis-windows option").count(), 3);
+  assert.match(
+    await page.locator("#analysis-status").textContent(),
+    /2 overlap-linked actor groups/,
+  );
   assert.deepEqual(await get(root + "/annotations"), before);
   await seek(599);
   await page.waitForFunction(
@@ -84,6 +102,37 @@ try {
     await page.locator('[data-candidate="qa-contact-600"]').count(),
     1,
   );
+  assert.match(
+    await page.locator('[data-candidate="qa-contact-600"]').textContent(),
+    /Actor \d+\?/,
+  );
+  const plan = await get(root + "/analysis/" + resumed);
+  const part = plan.parts.find((p) => p.window.core_start_frame === 600);
+  const poses = await get(root + "/runs/" + part.stages.players.run_id);
+  const track = poses.frames.find((r) => r.frame === 605).players[0].track_id;
+  await page.evaluate(() => (window.trackText = []));
+  await seek(605);
+  await page.waitForFunction(
+    (id) => window.trackText.some((s) => s.includes(`Track ${id} `)),
+    track,
+  );
+  assert.ok(
+    (
+      await page.evaluate(
+        (id) => window.trackText.filter((s) => s.includes(`Track ${id} `)),
+        track,
+      )
+    ).every((s) => !s.includes("Actor ")),
+  );
+  await page.evaluate(() => (window.trackText = []));
+  await seek(610);
+  await page.waitForFunction(
+    (id) =>
+      window.trackText.some(
+        (s) => s.includes(`Track ${id} `) && s.includes("Actor "),
+      ),
+    track,
+  );
   await page.locator('[data-candidate="qa-contact-600"]').click();
   await page.locator("#apply-event").click();
   await page.locator("#save").click();
@@ -92,17 +141,18 @@ try {
   assert.equal(reviewed.events.length, 1);
   assert.equal(reviewed.events[0].frame, 600);
   assert.equal(reviewed.events[0].family, "unknown");
+  assert.equal(reviewed.events[0].player_id, null);
   const verified = await start();
   await completed(verified);
-  await page.waitForFunction(() =>
-    document
-      .querySelector("#analysis-status")
-      .textContent.includes("Processing complete"),
-  );
+  await completedInViewer(verified);
   const jobs = await get("/api/jobs");
   const latest = jobs.find((j) => j.id === verified);
   assert.equal(latest.status, "completed");
-  assert.equal(latest.summary.reused_stages, 16);
+  assert.equal(latest.summary.reused_stages, 17);
+  assert.match(
+    await page.locator("#notice").textContent(),
+    /Full-match processing complete\./,
+  );
   assert.deepEqual(await get(root + "/annotations"), reviewed);
   await seek(1200);
   await page.waitForFunction(

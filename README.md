@@ -34,6 +34,13 @@ The viewer supports video playback, exact source-frame stepping, event creation/
 
 For the whole video, expand **Full-match processing** and choose **Process / resume full match**. Completed stages are retained after a pause or restart; compatible tracking is reused if experimental recognition is turned off. Seek normally or choose a review window to load its overlays and proposals. Use **Use window tools** to return to separate short runs. Tracker IDs remain local to their window, and every proposed event or label needs review. CLI: `python -m badminton.cli process <video-id>`. See [the processing report](docs/FULL_MATCH_PROCESSING_REPORT.md) for validation status and remaining limits.
 
+Completed full-match runs also link repeated player observations across window
+overlaps. Provisional **Actor N?** labels appear on qualifying tracks and contact
+hints; they stay separate from reviewed player names and saved hitters. Weak or
+excluded observations and camera changes remain unresolved. See the
+[actor-continuity report](docs/ACTOR_CONTINUITY_REPORT.md) for the source checks
+and identity limits.
+
 Use **Add a match** to upload a video or paste a YouTube video link and choose singles/doubles. Import progress and failures appear beside the form; completed videos appear in the library. Supported uploads are MP4, MOV, MKV, AVI, and WebM, limited to 2 GiB by default. Original content hashes and presentation timestamps are retained. Duplicate content preserves reviewed annotations and reuses the original source file. Some containers/codecs require exact-frame review when the browser cannot play them; playback transcoding is still pending.
 
 YouTube support requires `pip install '.[youtube]'` and Node.js 22 or later. Public completed videos are supported; videos requiring sign-in, active streams, and playlists return an actionable error. The importer records the canonical URL, title, and channel separately from the local content ID. A real BWF rally import has been verified through download, decoding, exact-frame extraction, and HTTP media playback. Availability still depends on YouTube access from the server and downloader compatibility.

@@ -18,6 +18,7 @@ from badminton.config import ROOT
 from badminton.ingest import inspect_video
 from badminton.rallies import context_signature
 from badminton.scene_review import corrected_boundaries
+from badminton.schemas import Calibration
 from badminton.segments import slice_camera_scan
 from badminton.storage import Store
 from badminton.video import timestamps_for, write_json
@@ -57,6 +58,20 @@ def prepare(root, data):
     store = Store(data)
     video = inspect_video(source, "singles", store, root)
     times = timestamps_for(data, video["id"])
+    doc = store.annotations(video["id"])
+    doc.calibrations = [
+        Calibration(
+            start_frame=0,
+            end_frame=len(times),
+            corners=[
+                {"x": 0.1, "y": 0.1},
+                {"x": 0.9, "y": 0.1},
+                {"x": 0.9, "y": 0.9},
+                {"x": 0.1, "y": 0.9},
+            ],
+        )
+    ]
+    store.save_annotations(video["id"], doc)
 
     def players(v, _root, _data, doc, first, last, stride, callback, output, **kwargs):
         for i in range(30):
@@ -76,15 +91,34 @@ def prepare(root, data):
             "device": "qa_fixture",
             "processed_frames": last - first,
             "inference_fps": 100,
-            "calibrated_frames": 0,
-            "calibrated": False,
+            "calibrated_frames": last - first,
+            "calibrated": True,
             "calibration_signature": context_signature(doc, first, last)["court"],
             "frames": [
                 {
                     "frame": i,
                     "time_s": times[i],
-                    "players": [],
-                    "calibration_valid": False,
+                    "camera_segment_start_frame": max(
+                        [0]
+                        + [
+                            c
+                            for c in boundaries["cut_frames"]
+                            + boundaries.get("known_preceding_cut_frames", [])
+                            if c <= i
+                        ]
+                    ),
+                    "players": [
+                        {
+                            "track_id": first * 10 + k,
+                            "confidence": 0.1 if k == 1 and 605 <= i < 610 else 0.9,
+                            "keypoints": [],
+                            "box": box,
+                        }
+                        for k, box in enumerate(
+                            ([100, 80, 140, 160], [300, 180, 350, 280]), 1
+                        )
+                    ],
+                    "calibration_valid": True,
                 }
                 for i in range(first, last)
             ],
@@ -159,7 +193,9 @@ def prepare(root, data):
                 "end_frame": f + 1,
                 "context_start_frame": f - 3,
                 "context_end_frame": f + 4,
-                "track_id": None,
+                "track_id": _players["frames"][f - _players["start_frame"]]["players"][
+                    0
+                ]["track_id"],
                 "score": 0.6,
                 "reason": "Generated QA cue",
                 "evidence_source": "observed_trajectory",
