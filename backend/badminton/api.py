@@ -16,6 +16,7 @@ from pydantic import Field
 
 from . import config
 from .access import AccessMiddleware
+from .calibration_context import court_context_changed, court_run_context
 from .ingest import inspect_video, read_frame
 from .schemas import Annotations, StrictModel
 from .storage import ConflictError, Store
@@ -41,6 +42,7 @@ class TrackingRequest(StrictModel):
     stride: int = Field(default=1, ge=1, le=10)
     stage: Literal["players", "shuttle"] = "players"
     player_model: Literal["small", "nano"] = "small"
+    auto_calibrate: bool = True
 
 
 class ContactsRequest(StrictModel):
@@ -431,6 +433,7 @@ def create_app(
                     progress,
                     output,
                     player_model=body.player_model,
+                    auto_calibrate=body.auto_calibrate,
                 )
             return track_shuttle(
                 v,
@@ -505,7 +508,7 @@ def create_app(
         ):
             raise HTTPException(
                 422,
-                "Camera corrections changed these inputs; rerun tracking before suggesting contacts",
+                "Camera corrections or court calibration changed these inputs; rerun tracking before suggesting contacts",
             )
 
         def task(job_id, progress):
@@ -541,6 +544,11 @@ def create_app(
                     snapshot, shuttle_run["start_frame"], shuttle_run["end_frame"]
                 ),
             }
+            if player_run and "calibration_signature" in player_run:
+                result.update(
+                    court_context=court_run_context(player_run),
+                    calibration_signature=player_run["calibration_signature"],
+                )
             if audio is not None:
                 from .audio_contacts import METHOD as AUDIO_METHOD
 
@@ -630,6 +638,7 @@ def create_app(
                     result.get("player_run_id"),
                 )
         elif result.get("stage") == "recognition":
+            result["requires_context_rerun"] = court_context_changed(doc, result)
             for candidate in result["candidates"]:
                 if hint := candidate.get("hitter_hint"):
                     hint["player_id"] = resolve_contact_player(
@@ -682,7 +691,7 @@ def create_app(
         if players["requires_tracking_rerun"] or shuttle["requires_tracking_rerun"]:
             raise HTTPException(
                 422,
-                "Camera corrections changed these inputs; rerun tracking before classifying",
+                "Camera corrections or court calibration changed these inputs; rerun tracking before classifying",
             )
         targets = recognition_targets(
             snapshot,

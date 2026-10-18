@@ -1,3 +1,5 @@
+import { courtSignature } from "./court-context.js";
+
 export function createRallyTools({
   state,
   $,
@@ -23,14 +25,7 @@ export function createRallyTools({
         .filter((r) => r.start_frame < end && start < r.end_frame)
         .sort((a, b) => a.start_frame - b.start_frame)
         .map((r) => [r.start_frame, r.end_frame, r.scene]),
-      court: (state.doc.calibrations ?? [])
-        .filter((c) => c.start_frame < end && start < c.end_frame)
-        .sort((a, b) => a.start_frame - b.start_frame)
-        .map((c) => [
-          c.start_frame,
-          c.end_frame,
-          c.corners.map((p) => [p.x, p.y]),
-        ]),
+      court: courtSignature(state.doc, run.court_context, start, end),
     };
   }
   function reset() {

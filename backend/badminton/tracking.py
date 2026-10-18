@@ -8,9 +8,15 @@ import time
 import cv2
 import numpy as np
 
+from .calibration_context import (
+    court_signature,
+    effective_annotations,
+    uncovered_ranges,
+)
 from .config import MODEL_MANIFEST, WEIGHTS
-from .rallies import context_signature
+from .court_detection import calibrate_ranges
 from .scene_review import corrected_boundaries, reviewed_run
+from .schemas import Calibration
 from .segments import scan_boundaries
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
@@ -48,6 +54,7 @@ def track_players(
     progress,
     output,
     player_model="small",
+    auto_calibrate=True,
 ):
     runtime = data / "runtime"
     runtime.mkdir(exist_ok=True)
@@ -76,6 +83,32 @@ def track_players(
     )
     boundaries = corrected_boundaries(boundaries, annotations, start_frame, end_frame)
     cut_frames = set(boundaries["cut_frames"])
+    court_context = {
+        **boundaries,
+        "start_frame": start_frame,
+        "end_frame": end_frame,
+        "court_context_version": 1,
+    }
+    automatic, court_detection = [], None
+    if auto_calibrate:
+        valid_manual = effective_annotations(annotations, court_context)["calibrations"]
+        blocked = [(c["start_frame"], c["end_frame"]) for c in valid_manual]
+        blocked += [
+            (r.start_frame, r.end_frame)
+            for r in annotations.scene_ranges
+            if r.scene != "live"
+        ]
+        ranges = [
+            gap
+            for view in boundaries["camera_ranges"]
+            for gap in uncovered_ranges(view["start_frame"], view["end_frame"], blocked)
+        ]
+        automatic, court_detection = calibrate_ranges(
+            video, root, timestamps, ranges, lambda value: progress(0.1 + value * 0.1)
+        )
+    court_context["automatic_calibrations"] = automatic
+    effective = effective_annotations(annotations, court_context)
+    calibrations = [Calibration.model_validate(c) for c in effective["calibrations"]]
     rows, counts = [], []
     calibrated_frames = 0
     segment_start = start_frame
@@ -108,7 +141,7 @@ def track_players(
             calibration = next(
                 (
                     c
-                    for c in annotations.calibrations
+                    for c in calibrations
                     if c.start_frame <= index < c.end_frame
                     and (last_cut is None or c.start_frame >= last_cut)
                 ),
@@ -173,7 +206,7 @@ def track_players(
             )
             counts.append(len(players))
             progress(
-                0.1 + 0.9 * (index - start_frame + 1) / max(1, end_frame - start_frame)
+                0.2 + 0.8 * (index - start_frame + 1) / max(1, end_frame - start_frame)
             )
         elapsed = time.perf_counter() - began
         result = {
@@ -181,9 +214,11 @@ def track_players(
             "video_id": video["id"],
             "stage": "players",
             "video_sha256": video["sha256"],
-            "calibration_signature": context_signature(
-                annotations, start_frame, end_frame
-            )["court"],
+            "calibration_signature": court_signature(effective, start_frame, end_frame),
+            "automatic_calibrations": automatic,
+            "court_detection": court_detection,
+            "auto_calibrate": auto_calibrate,
+            "court_context_version": 1,
             "model": checkpoint["name"].removesuffix(".pt"),
             "model_variant": player_model,
             "checkpoint_sha256": checkpoint["sha256"],

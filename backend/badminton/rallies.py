@@ -15,6 +15,11 @@ from copy import deepcopy
 import cv2
 import numpy as np
 
+from .calibration_context import (
+    court_run_context,
+    court_signature,
+    effective_annotations,
+)
 from .scene_review import camera_review_signature, reviewed_run
 from .video import write_json
 
@@ -41,16 +46,14 @@ def context_signature(annotations, start, end):
             for r in doc.get("scene_ranges", [])
             if r["start_frame"] < end and start < r["end_frame"]
         ),
-        "court": sorted(
-            [c["start_frame"], c["end_frame"], [[p["x"], p["y"]] for p in c["corners"]]]
-            for c in doc.get("calibrations", [])
-            if c["start_frame"] < end and start < c["end_frame"]
-        ),
+        "court": court_signature(doc, start, end),
     }
 
 
 def reviewed_rallies(run, annotations):
     result = deepcopy(run)
+    if "court_context" in run:
+        annotations = effective_annotations(annotations, run["court_context"])
     result["requires_proposal_rerun"] = result.get(
         "context_signature"
     ) != context_signature(
@@ -65,6 +68,10 @@ def _index(run, video, stage):
     if run.get("video_sha256", video["sha256"]) != video["sha256"]:
         raise ValueError("Perception source hash does not match this video")
     if run.get("requires_tracking_rerun"):
+        if run.get("requires_court_tracking_rerun"):
+            raise ValueError(
+                "Court calibration changed these inputs; rerun player tracking"
+            )
         raise ValueError("Camera corrections changed inputs; rerun tracking")
     start, end = run["start_frame"], run["end_frame"]
     if not 0 <= start < end <= video["frame_count"]:
@@ -553,7 +560,9 @@ def validate_rally_inputs(
         "calibration_signature" in player_run
         and player_run["calibration_signature"]
         != context_signature(
-            annotations, player_run["start_frame"], player_run["end_frame"]
+            effective_annotations(annotations, player_run),
+            player_run["start_frame"],
+            player_run["end_frame"],
         )["court"]
     ):
         raise ValueError(
@@ -579,6 +588,7 @@ def propose_rallies(video, player_run, shuttle_run, annotations, source_times=No
     player_run, shuttle_run, players, shuttle = validate_rally_inputs(
         video, player_run, shuttle_run, annotations, source_times
     )
+    annotations = effective_annotations(annotations, player_run)
     start = max(player_run["start_frame"], shuttle_run["start_frame"])
     end = min(player_run["end_frame"], shuttle_run["end_frame"])
     if start >= end:
@@ -660,6 +670,7 @@ def generate_rallies(
     doc = (
         annotations.model_dump() if hasattr(annotations, "model_dump") else annotations
     )
+    doc = effective_annotations(doc, players)
     # Include full input context: an earlier camera edit can change track IDs.
     start = min(players["start_frame"], shuttle["start_frame"])
     end = max(players["end_frame"], shuttle["end_frame"])
@@ -671,6 +682,7 @@ def generate_rallies(
         context_start_frame=start,
         context_end_frame=end,
         context_signature=context_signature(doc, start, end),
+        court_context=court_run_context(players),
         input_models={
             stage: {
                 key: run[key]

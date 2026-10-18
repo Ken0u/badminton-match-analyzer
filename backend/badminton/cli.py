@@ -60,6 +60,11 @@ def main():
     track.add_argument("--stride", type=int, default=1)
     track.add_argument("--stage", choices=["players", "shuttle"], default="players")
     track.add_argument("--player-model", choices=["small", "nano"], default="small")
+    track.add_argument(
+        "--no-auto-court",
+        action="store_true",
+        help="Disable automatic court geometry for player tracking",
+    )
     segment = commands.add_parser(
         "segments", help="Scan the full video for camera/timestamp boundaries"
     )
@@ -232,6 +237,7 @@ def main():
                     progress,
                     output,
                     player_model=args.player_model,
+                    auto_calibrate=not args.no_auto_court,
                 )
             return track_shuttle(video, ROOT, DATA, start, end, progress, output)
 

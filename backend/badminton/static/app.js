@@ -3,6 +3,12 @@ import { createImportTools } from "./import-tools.js";
 import { createRecognitionTools } from "./recognition-tools.js";
 import { createSegmentTools } from "./segment-tools.js";
 import { createRallyTools } from "./rally-tools.js";
+import {
+  cameraContextChanged,
+  courtContextChanged,
+  courtSignature,
+  effectiveCalibrations,
+} from "./court-context.js";
 const $ = (id) => document.getElementById(id);
 const state = {
   videos: [],
@@ -74,6 +80,7 @@ function changed() {
   rallyTools.render();
   segmentTools.render();
   renderCandidates();
+  draw();
 }
 function handleError(e) {
   notice(e.message || String(e), true);
@@ -239,14 +246,28 @@ function draw() {
     w = ctx.canvas.width,
     h = ctx.canvas.height;
   ctx.clearRect(0, 0, w, h);
-  const calibration = state.doc.calibrations.find(
-    (c) => c.start_frame <= state.frame && state.frame < c.end_frame,
-  );
+  const derivedValid =
+    state.run &&
+    !state.run.requires_tracking_rerun &&
+    !cameraContextChanged(state.doc, state.run) &&
+    JSON.stringify(
+      courtSignature(
+        state.doc,
+        state.run,
+        state.run.start_frame,
+        state.run.end_frame,
+      ),
+    ) === JSON.stringify(state.run.calibration_signature);
+  const calibration = effectiveCalibrations(
+    state.doc,
+    derivedValid ? state.run : null,
+  ).find((c) => c.start_frame <= state.frame && state.frame < c.end_frame);
   const corners = state.corners ?? calibration?.corners;
   if (corners?.length) {
     ctx.strokeStyle = "#b5ef91";
     ctx.fillStyle = "#b5ef9112";
     ctx.lineWidth = 3;
+    ctx.setLineDash(calibration?.automatic ? [9, 6] : []);
     ctx.beginPath();
     corners.forEach((p, i) =>
       i ? ctx.lineTo(p.x * w, p.y * h) : ctx.moveTo(p.x * w, p.y * h),
@@ -254,6 +275,7 @@ function draw() {
     if (corners.length === 4) ctx.closePath();
     ctx.stroke();
     if (corners.length === 4) ctx.fill();
+    ctx.setLineDash([]);
     corners.forEach((p, i) => {
       ctx.beginPath();
       ctx.arc(p.x * w, p.y * h, 6, 0, Math.PI * 2);
@@ -264,7 +286,7 @@ function draw() {
     });
   }
   $("court-status").textContent = calibration
-    ? `Calibrated · frames ${calibration.start_frame}–${calibration.end_frame - 1}`
+    ? `${calibration.automatic ? "Auto-detected · unreviewed" : "Calibrated"} · frames ${calibration.start_frame}–${calibration.end_frame - 1}`
     : "No calibration for this frame";
   drawShuttle(ctx);
   reviewTools.drawPoint(ctx);
@@ -365,6 +387,7 @@ function renderCandidates() {
   const cameraStale =
     JSON.stringify(cameraSignature) !==
     JSON.stringify(state.contactRun?.camera_review_signature ?? []);
+  const courtStale = courtContextChanged(state.doc, state.contactRun);
   $("candidates").innerHTML = candidates.length
     ? candidates
         .map((c) => {
@@ -388,7 +411,7 @@ function renderCandidates() {
           const audioConflict = c.evidence?.audio_support?.some(
             (item) => item.hitter_agrees === false,
           );
-          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added || sceneExcluded || cameraStale ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${cameraStale ? "Camera review changed; request new contacts" : sceneExcluded ? "Excluded by scene review" : added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${c.evidence_source === "audio_shuttle_gap_and_pose" ? "Audio + vision · " : ""}${audioConflict ? "Audio hitter disagreement · " : ""}${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
+          return `<button class="candidate-row" data-candidate="${escape(c.id)}" ${added || sceneExcluded || cameraStale || courtStale ? "disabled" : ""}><time>${clock(c.time_s)}</time><span>${courtStale ? "Court changed; rerun tracking and contacts" : cameraStale ? "Camera review changed; request new contacts" : sceneExcluded ? "Excluded by scene review" : added ? "Added" : uncertain ? "Review possible contact" : "Review contact"}<small>${c.evidence_source === "audio_shuttle_gap_and_pose" ? "Audio + vision · " : ""}${audioConflict ? "Audio hitter disagreement · " : ""}${uncertain ? `Frames ${c.start_frame}–${c.end_frame} · ` : ""}${player ? `Player ${escape(player)} · ` : ""}${c.track_id === null ? "Hitter unconfirmed" : `Track ${escape(c.track_id)}${player ? "" : " · identity unconfirmed"}`} · score ${c.score.toFixed(2)}</small></span></button>`;
         })
         .join("")
     : '<p class="empty">Track the shuttle, then suggest contacts.</p>';
@@ -964,7 +987,10 @@ async function startTracking(stage) {
         stride: 1,
         stage,
         ...(stage === "players"
-          ? { player_model: $("player-model").value }
+          ? {
+              player_model: $("player-model").value,
+              auto_calibrate: $("auto-court").checked,
+            }
           : {}),
       }),
     });

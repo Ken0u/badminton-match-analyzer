@@ -1,3 +1,5 @@
+import { courtContextChanged } from "./court-context.js";
+
 export function createRecognitionTools({
   state,
   $,
@@ -34,6 +36,7 @@ export function createRecognitionTools({
     const cameraStale =
       JSON.stringify(cameraSignature) !==
       JSON.stringify(run?.camera_review_signature ?? []);
+    const courtStale = courtContextChanged(state.doc, run);
     $("stroke-count").textContent = candidates.length;
     $("stroke-predictions").innerHTML = candidates.length
       ? candidates
@@ -68,7 +71,7 @@ export function createRecognitionTools({
             const side = ["forehand", "backhand"].includes(c.side)
               ? `possible ${c.side} (${c.side_score.toFixed(2)})`
               : "stroke side unresolved";
-            return `<button class="candidate-row stroke-row" data-stroke="${escape(c.id)}" ${applied || stale || sceneExcluded || cameraStale ? "disabled" : ""}><time>F${c.frame}</time><span>${cameraStale ? "Camera review changed; request new shot labels" : sceneExcluded ? "Excluded by scene review" : applied ? "Applied" : stale ? "Contact changed; classify again" : escape(result)}<small>${escape(c.reason ?? alternatives)}${c.family_score != null ? ` · family score ${c.family_score.toFixed(2)}` : ""} · ${escape(side)} · verify mechanics</small></span></button>`;
+            return `<button class="candidate-row stroke-row" data-stroke="${escape(c.id)}" ${applied || stale || sceneExcluded || cameraStale || courtStale ? "disabled" : ""}><time>F${c.frame}</time><span>${courtStale ? "Court changed; rerun tracking and shot labels" : cameraStale ? "Camera review changed; request new shot labels" : sceneExcluded ? "Excluded by scene review" : applied ? "Applied" : stale ? "Contact changed; classify again" : escape(result)}<small>${escape(c.reason ?? alternatives)}${c.family_score != null ? ` · family score ${c.family_score.toFixed(2)}` : ""} · ${escape(side)} · verify mechanics</small></span></button>`;
           })
           .join("")
       : '<p class="empty">Family suggestions appear here. They never replace your saved labels automatically.</p>';

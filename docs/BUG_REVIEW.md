@@ -2,6 +2,14 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [automatic court increment](AUTOMATIC_COURT_REPORT.md) removes the manual-corner
+dependency for supported visible courts and fixes stale court filtering being
+reused for contact/recognition suggestions. Current manual edits invalidate
+affected inputs and new saved proposals; geometry is never auto-saved as reviewed
+truth. Actual CUDA checks retain unknown closeup geometry and reset at cuts.
+581 tests pass with four optional GPU skips; development evidence does not
+establish unseen or full-match correctness.
+
 The [finite-wrist correction](FINITE_WRIST_REPORT.md) fixes a reproduced NaN
 distance bypass that could propose a contact despite a distant player box.
 Coordinates and confidence must now be finite before supplying wrist evidence;

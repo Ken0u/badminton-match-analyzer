@@ -77,7 +77,7 @@ Both samples are edited highlights, with replay angles and close-ups. The initia
 
 ## Run the player baseline
 
-In the viewer, seek to a suitable full-court section and choose **Track players**. Saved court calibration filters detections to the playing area. A background job reports progress; completed results are loaded as overlays.
+In the viewer, seek to a suitable full-court section and choose **Track players**. Saved court calibration filters detections to the playing area. **Find court automatically when needed** is enabled by default: supported visible markings produce an unreviewed, dashed court overlay for uncovered camera views. Ambiguous or changing views stay uncalibrated. Manual corners take priority; automatic fits never save annotations. Disable the checkbox, send `auto_calibrate: false` to the tracking API, or pass `--no-auto-court` in the CLI to opt out. A background job reports progress; completed results are loaded as overlays. See [the court report](docs/AUTOMATIC_COURT_REPORT.md) for development evidence and limits.
 
 The equivalent CLI experiments are:
 

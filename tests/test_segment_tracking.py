@@ -153,7 +153,16 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
     }
     output = data / "players.json"
     tracking.track_players(
-        video, tmp_path, data, annotations, 0, 12, 2, lambda _: None, output
+        video,
+        tmp_path,
+        data,
+        annotations,
+        0,
+        12,
+        2,
+        lambda _: None,
+        output,
+        auto_calibrate=False,
     )
     result = json.loads(output.read_text())
     assert len(resets) == 1
@@ -197,13 +206,31 @@ def test_tracker_reset_allocates_disjoint_ids_and_expires_old_camera_calibration
         ),
     )
     tracking.track_players(
-        video, tmp_path, data, annotations, 4, 12, 1, lambda _: None, output
+        video,
+        tmp_path,
+        data,
+        annotations,
+        4,
+        12,
+        1,
+        lambda _: None,
+        output,
+        auto_calibrate=False,
     )
     at_start = json.loads(output.read_text())
     assert at_start["calibrated_frames"] == 0
     # A newly confirmed calibration for that camera is eligible again.
     annotations.calibrations[0].start_frame = 4
     tracking.track_players(
-        video, tmp_path, data, annotations, 4, 12, 1, lambda _: None, output
+        video,
+        tmp_path,
+        data,
+        annotations,
+        4,
+        12,
+        1,
+        lambda _: None,
+        output,
+        auto_calibrate=False,
     )
     assert json.loads(output.read_text())["calibrated_frames"] == 8
