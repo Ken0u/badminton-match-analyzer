@@ -126,6 +126,12 @@ def main():
     )
     aicup.add_argument("archive", type=Path)
     aicup.add_argument("--output", type=Path, required=True)
+    bfmd = commands.add_parser(
+        "import-bfmd",
+        help="Normalize pinned broadcast timelines; preserve inferred/conflicting labels and unverified clocks",
+    )
+    bfmd.add_argument("source", type=Path)
+    bfmd.add_argument("--output", type=Path, required=True)
     visual = commands.add_parser(
         "prepare-visual-features",
         help="Cache source RGB features for the frozen experimental singles learner",
@@ -194,6 +200,30 @@ def main():
         except (ConflictError, ValueError, OSError, ImportError) as exc:
             parser.error(str(exc))
         print(json.dumps(result, indent=2))
+    elif args.command == "import-bfmd":
+        from .bfmd_data import import_bfmd
+
+        try:
+            report = import_bfmd(args.source, args.output)
+        except (ValueError, OSError, KeyError) as exc:
+            parser.error(str(exc))
+        print(
+            json.dumps(
+                {
+                    key: report[key]
+                    for key in (
+                        "match_count",
+                        "record_count",
+                        "contact_label_eligible_records",
+                        "family_eligible_records",
+                        "training_ready_records",
+                        "media_alignment",
+                        "rights",
+                    )
+                },
+                indent=2,
+            )
+        )
     elif args.command == "import-aicup2023":
         from .aicup_data import import_aicup2023
 

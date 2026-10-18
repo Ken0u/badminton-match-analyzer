@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "scope": "Pinned local broadcast-reference normalization, not aligned training, model accuracy or promotion",
+  "source_manifest_sha256": "075d09030845a92681a52660a96643f7c12ebfa7bf722eb342a289ec8f84e16b",
+  "source_files": 35,
+  "source_bytes": 14709189,
+  "matches": 19,
+  "modes": {
+    "doubles": 7,
+    "singles": 12
+  },
+  "normalized_records": 34020,
+  "source_label_counts": {
+    "11-point interval": 39,
+    "21-point interval": 22,
+    "Rally": 1688,
+    "block": 919,
+    "bounce": 1556,
+    "clear": 607,
+    "court_cleaning": 3,
+    "drive": 881,
+    "drop": 925,
+    "flick_serve": 85,
+    "hawk_eye_challenge": 52,
+    "hit": 16751,
+    "lift": 2124,
+    "net_hit": 419,
+    "net_kill": 102,
+    "net_shot": 3079,
+    "other": 3,
+    "press": 182,
+    "push": 576,
+    "replay": 795,
+    "serve": 866,
+    "smash": 1403
+  },
+  "source_origin_counts": {
+    "manual": 34015,
+    "prediction": 5
+  },
+  "conflicting_point_type_frames": 451,
+  "manual_hits_supported_only_by_inferred_rallies": 37,
+  "contacts_outside_active_manual_rallies": 248,
+  "weak_contact_label_eligible": 16503,
+  "weak_family_label_eligible": 10850,
+  "side_label_eligible": 0,
+  "training_ready": 0,
+  "metadata_rallies": 1058,
+  "metadata_only_intervals": 4,
+  "output_sha256": {
+    "events.jsonl": "dcbebf402fb0d4f0f187ade5a9e39a345a6da1a5fc5b142606a930348e2e0f41",
+    "matches.json": "1b6f6c23aff0cda031c853c53b0566eca1bdc8c866eb0c12f9dd844be7b6fd78",
+    "metadata.json": "c0c176c531be358710c12e513f352069894256e854c653aa655b920eaf4eda1a",
+    "metadata_rallies.json": "2f00264771bdf7bc4646bf7ca5917ad8e6e45efdb8c7268e9cf7a4cd40302d21",
+    "source_indexes.json": "24638692c6d28eb77e950951045800a338a425f626af9eab29d5fae8e22c0279",
+    "source_tasks.json": "2f6631f034a8946e0fbcdaf468d690b89b452bde9652cab3401ecb10fc903a88"
+  },
+  "normalized_manifest_sha256": "d15f8f5151a1318454ebbfe8e59f54869fc79bc4aa815cf3318603ad3bca8faf",
+  "software": {
+    "passed": 745,
+    "optional_gpu_skipped": 4,
+    "focused_bfmd_tests": 38,
+    "test_receipt_sha256": "8fadf426b9b2e9e7ace0a0159eb15db63d9a69ff380364557ef66d157fabba3e",
+    "ruff": "109 files passed check/format",
+    "dependency_consistency": "passed"
+  },
+  "package": {
+    "wheel_sha256": "d776411a6a926affa7e50d679c991e83ea076b25faf04cc346c4704a91ced624",
+    "package_files": 72,
+    "all_files_equal_worktree": true,
+    "actual_package_import": ".cache\\installed-release-0.25.0\\badminton\\__init__.py",
+    "actual_cli_help_import_bfmd": true,
+    "actual_packaged_source_import": {
+      "match_count": 19,
+      "record_count": 34020,
+      "contact_label_eligible_records": 16503,
+      "family_eligible_records": 10850,
+      "training_ready_records": 0,
+      "media_alignment": "unverified",
+      "rights": "Non-commercial academic research only; publisher prohibits redistribution. Source annotations and derived research assets are not unrestricted deployment assets."
+    },
+    "normalized_output_byte_identical": true,
+    "torch_imported": false,
+    "pinned_source_files": 35
+  },
+  "implementation_sha256": {
+    "backend/badminton/bfmd_data.py": "d96b8be98b7f12af8127ade4025e07f19940482b74b620cdd31cc5dedf671fc1",
+    "backend/badminton/bfmd_manifest.json": "63efaf0d18547087fe05fc8d825f5f50bce526bd6302f91b2dd249f40fbdcf61",
+    "backend/badminton/cli.py": "ea6b9781f70aee2076f929be195cd8b249ec73269a3442e7d424e8105196737b",
+    "tests/test_bfmd_data.py": "32e049f18dd75399d1b48974b2c7911349e186c499e8600ef5b37f56cfbbe06b"
+  },
+  "independent_source_clock_verified": false,
+  "independent_human_adjudication": false,
+  "current_holdout_modified": false,
+  "app_predictions_or_annotations_written": false,
+  "raw_source_data_redistributed": false
+}

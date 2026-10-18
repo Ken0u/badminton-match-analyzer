@@ -4,6 +4,8 @@ A badminton analysis app with file uploads, YouTube imports, player/shuttle trac
 
 The six target shot families are **clear, lift, net, drop, smash, and drive**, each with a separate forehand/backhand label. Serves and rally endings are separate events.
 
+The [broadcast timeline importer](docs/BFMD_TIMELINE_REPORT.md) preserves 34,020 pinned BFMD source records across 19 singles/doubles matches for future contact, rally and replay work. It separates manual, inferred and conflicting labels; source clocks and training readiness remain unverified. It does not change app predictions.
+
 The [direct-video event learner](docs/VISUAL_EVENT_LEARNING_REPORT.md) adds RGB feature extraction and temporal contact/family/side/court-end training without supplied contact times. Its fixed 200-clip test gives contact F1 0.159 and complete tuple F1 0.028 against published weak references. These results are inadequate for automatic annotation; the research model is not installed.
 
 The [wrist-reach correction](docs/WRIST_REACH_REPORT.md) removes a reviewed floor-bounce contact when repeated observations of both wrists contradict player-box proximity. The [finite-wrist fix](docs/FINITE_WRIST_REPORT.md) also prevents invalid coordinates/confidence from bypassing proximity checks. Missing pose keeps the fallback available. These suggestions still require review; full contact accuracy is unverified.
