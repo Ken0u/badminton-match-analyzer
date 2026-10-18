@@ -11,7 +11,7 @@ import math
 
 import numpy as np
 
-METHOD = "subframe and short-gap motion/pose proposals v4"
+METHOD = "subframe and short-gap motion/pose proposals v5"
 MAX_FRAME_STEP_S = 0.1
 MAX_GAP_S = 0.24
 PROFILE_STEPS = 25
@@ -36,6 +36,7 @@ def proposal_recipe():
         "minimum_rmse_gain_diagonals": 0.0005,
         "maximum_flank_context_s": MAX_FLANK_S,
         "minimum_moving_wrist_samples": MIN_WRIST_SAMPLES,
+        "wrist_observations_require_finite_coordinates_and_confidence": True,
         "observed_contact_wrist_guard": {
             "minimum_samples_per_wrist": MIN_WRIST_SAMPLES,
             "minimum_confidence": 0.3,
@@ -47,6 +48,17 @@ def proposal_recipe():
     }
 
 
+def _valid_keypoint(point, minimum_confidence):
+    return (
+        len(point) >= 3
+        and all(
+            isinstance(value, int | float) and math.isfinite(value)
+            for value in point[:3]
+        )
+        and point[2] >= minimum_confidence
+    )
+
+
 def _hitter_hint(point, players, diagonal):
     best = None
     for player in players:
@@ -54,7 +66,7 @@ def _hitter_hint(point, players, diagonal):
         wrists = [
             keypoints[i]
             for i in (9, 10)
-            if i < len(keypoints) and len(keypoints[i]) > 2 and keypoints[i][2] >= 0.3
+            if i < len(keypoints) and _valid_keypoint(keypoints[i], 0.3)
         ]
         x1, y1, x2, y2 = player["box"]
         box_distance = math.hypot(
@@ -94,13 +106,9 @@ def _wrist_reach_contradicted(point, player, rows, origin, source_step, diagonal
             continue
         keypoints = matches[0].get("keypoints", [])
         for wrist, observations in wrists.items():
-            if wrist >= len(keypoints) or len(keypoints[wrist]) < 3:
+            if wrist >= len(keypoints) or not _valid_keypoint(keypoints[wrist], 0.3):
                 continue
-            x, y, confidence = keypoints[wrist][:3]
-            if confidence < 0.3 or not all(
-                math.isfinite(value) for value in (x, y, confidence)
-            ):
-                continue
+            x, y = keypoints[wrist][:2]
             observations.append((row["time_s"], math.hypot(x - point[0], y - point[1])))
     for observations in wrists.values():
         if len(observations) < MIN_WRIST_SAMPLES:
@@ -247,13 +255,11 @@ def _pose_evidence(point, player_rows, left, right, diagonal):
                 continue
             for wrist in (9, 10):
                 keypoints = player.get("keypoints", [])
-                if wrist >= len(keypoints) or len(keypoints[wrist]) < 3:
-                    continue
-                x, y, confidence = keypoints[wrist][:3]
-                if confidence < 0.5 or not all(
-                    math.isfinite(v) for v in (x, y, confidence)
+                if wrist >= len(keypoints) or not _valid_keypoint(
+                    keypoints[wrist], 0.5
                 ):
                     continue
+                x, y, confidence = keypoints[wrist][:3]
                 samples.setdefault((player["track_id"], wrist), []).append(
                     (row["time_s"], np.asarray([x, y]), confidence)
                 )

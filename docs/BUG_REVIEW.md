@@ -2,6 +2,14 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [finite-wrist correction](FINITE_WRIST_REPORT.md) fixes a reproduced NaN
+distance bypass that could propose a contact despite a distant player box.
+Coordinates and confidence must now be finite before supplying wrist evidence;
+missing/invalid wrists retain the existing appropriate fallback. Ten generated
+regressions cover the failure and valid other-arm behavior. Six complete native
+candidate lists and an actual cached-input API check remain unchanged, with no
+saved-label edits. This numerical fix does not establish full contact accuracy.
+
 The [observed-flight study](OBSERVED_STROKE_CONTEXT_REPORT.md) adds source-guarded
 stroke context and fixes an input-aliasing bug that could mix later court/video
 edits with earlier body features. A 60 fps regression also verifies lineage from
