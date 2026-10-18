@@ -3,6 +3,10 @@
 from uuid import uuid4
 
 
+class JobCancelled(Exception):
+    """A cooperative stop leaves completed pipeline artifacts available to resume."""
+
+
 def run_local_job(store, kind, video_id, task):
     job = {
         "id": uuid4().hex,
@@ -24,7 +28,9 @@ def run_local_job(store, kind, video_id, task):
         return result
     except BaseException as exc:
         job.update(
-            status="interrupted" if isinstance(exc, KeyboardInterrupt) else "failed",
+            status="interrupted"
+            if isinstance(exc, KeyboardInterrupt | JobCancelled)
+            else "failed",
             message=str(exc) or type(exc).__name__,
         )
         raise

@@ -1,4 +1,5 @@
 import { courtSignature } from "./court-context.js";
+import { ownedCandidates, stageMatches } from "./processing-tools.js";
 
 export function createRallyTools({
   state,
@@ -37,7 +38,7 @@ export function createRallyTools({
     render();
   }
   function render() {
-    const candidates = run?.candidates ?? [];
+    const candidates = ownedCandidates(run);
     const stale =
       run &&
       JSON.stringify(signature()) !== JSON.stringify(run.context_signature);
@@ -95,6 +96,7 @@ export function createRallyTools({
       (j) =>
         j.video_id === state.video.id &&
         j.kind === "rallies" &&
+        stageMatches(state, j) &&
         j.status === "completed" &&
         j.summary?.player_run_id === state.lastJob &&
         j.summary?.shuttle_run_id === state.shuttleJob,
@@ -112,7 +114,11 @@ export function createRallyTools({
     const result = await api(
       `/api/videos/${state.video.id}/runs/${completed.id}`,
     );
-    if (generation !== state.selectionGeneration) return;
+    if (
+      generation !== state.selectionGeneration ||
+      !stageMatches(state, completed)
+    )
+      return;
     run = result;
     jobId = completed.id;
     $("rally-status").textContent =

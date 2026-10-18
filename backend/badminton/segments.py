@@ -2,6 +2,7 @@
 
 import math
 import time
+from copy import deepcopy
 from itertools import pairwise
 
 from scenedetect import FrameTimecode
@@ -29,6 +30,33 @@ def camera_ranges(start, end, cuts):
         {"start_frame": left, "end_frame": right, "scene": "unknown"}
         for left, right in pairwise(points)
     ]
+
+
+def slice_camera_scan(video, scan, start, end):
+    """Reuse a same-source whole-video scan without inventing chunk-edge cuts."""
+    if (
+        scan.get("stage") != "segments"
+        or scan.get("video_id") != video["id"]
+        or scan.get("video_sha256") != video["sha256"]
+        or scan.get("start_frame") != 0
+        or scan.get("end_frame") != video["frame_count"]
+        or not 0 <= start < end <= video["frame_count"]
+    ):
+        raise ValueError("Camera scan must cover the complete, matching source video")
+    result = deepcopy(scan)
+    result.update(
+        start_frame=start,
+        end_frame=end,
+        cut_frames=[f for f in scan["cut_frames"] if start <= f < end],
+        known_preceding_cut_frames=[f for f in scan["cut_frames"] if f < start],
+        known_preceding_timestamp_gaps=[
+            b["frame"]
+            for b in scan["boundaries"]
+            if b["frame"] < start and b["reason"] == "timestamp_discontinuity"
+        ],
+        boundaries=[b for b in scan["boundaries"] if start <= b["frame"] < end],
+    )
+    return result
 
 
 def scan_boundaries(video, root, data, start, end, progress):

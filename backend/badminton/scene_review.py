@@ -45,8 +45,15 @@ def corrected_boundaries(raw, annotations, start, end):
         if b.get("reason") == "timestamp_discontinuity"
     }
     corrections = [plain(item) for item in doc.get("camera_corrections", [])]
+    preceding = set(raw.get("known_preceding_cut_frames", []))
+    previous_gaps = set(raw.get("known_preceding_timestamp_gaps", []))
     for correction in corrections:
         frame = correction["frame"]
+        if frame < start:
+            if correction["is_cut"]:
+                preceding.add(frame)
+            elif frame not in previous_gaps:
+                preceding.discard(frame)
         if not start <= frame < end:
             continue
         if correction["is_cut"]:
@@ -61,10 +68,7 @@ def corrected_boundaries(raw, annotations, start, end):
         applied_camera_corrections=[
             c for c in corrections if start <= c["frame"] < end
         ],
-        preceding_reviewed_cut_frame=max(
-            (c["frame"] for c in corrections if c["is_cut"] and c["frame"] < start),
-            default=None,
-        ),
+        preceding_reviewed_cut_frame=max(preceding, default=None),
     )
     return result
 
@@ -131,7 +135,9 @@ def reviewed_run(run, annotations):
 
 def reviewed_contacts(run, annotations):
     result = deepcopy(run)
-    result["requires_context_rerun"] = court_context_changed(annotations, run)
+    result["requires_context_rerun"] = court_context_changed(
+        annotations, run
+    ) or camera_context_changed(annotations, run.get("court_context"))
     for candidate in result.get("candidates", []):
         if "context_start_frame" not in candidate and candidate.get(
             "evidence_source"
@@ -161,6 +167,17 @@ def reviewed_contacts(run, annotations):
         )
     result["scene_annotation_revision"] = plain(annotations).get("revision", 0)
     return result
+
+
+def camera_context_changed(annotations, context):
+    if context is None:
+        return False
+    current = corrected_boundaries(
+        context, annotations, context["start_frame"], context["end_frame"]
+    )
+    return current["cut_frames"] != sorted(context.get("cut_frames", [])) or current[
+        "preceding_reviewed_cut_frame"
+    ] != context.get("preceding_reviewed_cut_frame")
 
 
 def camera_review_signature(annotations, start, end):

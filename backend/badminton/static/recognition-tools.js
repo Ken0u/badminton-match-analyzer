@@ -1,4 +1,5 @@
 import { courtContextChanged } from "./court-context.js";
+import { ownedCandidates, stageMatches } from "./processing-tools.js";
 
 export function createRecognitionTools({
   state,
@@ -24,7 +25,7 @@ export function createRecognitionTools({
   }
   function render() {
     if (!state.doc) return;
-    const candidates = run?.candidates ?? [];
+    const candidates = ownedCandidates(run);
     const cameraSignature = (state.doc.camera_corrections ?? [])
       .filter(
         (c) =>
@@ -162,6 +163,7 @@ export function createRecognitionTools({
       (j) =>
         j.video_id === state.video.id &&
         j.kind === "recognition" &&
+        stageMatches(state, j) &&
         j.status === "completed" &&
         j.summary?.player_run_id === state.lastJob &&
         j.summary?.shuttle_run_id === state.shuttleJob,
@@ -180,12 +182,18 @@ export function createRecognitionTools({
     const result = await api(
       `/api/videos/${state.video.id}/runs/${completed.id}`,
     );
-    if (generation !== state.selectionGeneration) return;
+    if (
+      generation !== state.selectionGeneration ||
+      !stageMatches(state, completed)
+    )
+      return;
     run = result;
     jobId = completed.id;
     state.recognitionJob = completed.id;
     $("recognition-status").textContent =
-      `${result.predicted_count}/${result.candidate_count} family suggestions · saved revision ${result.annotation_revision} · experimental model scores`;
+      result.status && result.status !== "predicted"
+        ? result.reason
+        : `${result.predicted_count}/${result.candidate_count} family suggestions · saved revision ${result.annotation_revision} · experimental model scores`;
     render();
   }
   $("recognize").onclick = async () => {

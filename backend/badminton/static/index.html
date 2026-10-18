@@ -264,6 +264,44 @@
                 <small id="shuttle-status">No shuttle run loaded</small>
               </section>
             </div>
+            <details class="players-panel" id="analysis-panel">
+              <summary>Full-match processing</summary>
+              <p class="suggestion-help">
+                Process the entire video in overlapping windows. Pause and
+                resume without repeating completed stages. Review every proposed
+                contact, rally boundary and shot label; missing proposals remain
+                unresolved. Tracker identities are scoped to each window.
+              </p>
+              <label class="suggestion-help"
+                ><input
+                  id="analysis-recognize"
+                  type="checkbox"
+                  checked
+                />Include experimental singles shot labels (doubles labels
+                unavailable)</label
+              >
+              <div class="row">
+                <button type="button" id="process-analysis">
+                  Process / resume full match</button
+                ><button type="button" id="pause-analysis" disabled>
+                  Pause
+                </button>
+              </div>
+              <small id="analysis-status"
+                >Process all source frames; completed stages are reused after a
+                pause or restart.</small
+              >
+              <label
+                >Review window<select id="analysis-windows"></select
+              ></label>
+              <div class="row">
+                <button type="button" id="review-analysis" disabled>
+                  Review window</button
+                ><button type="button" id="leave-analysis" disabled>
+                  Use window tools
+                </button>
+              </div>
+            </details>
             <details class="players-panel" id="camera-panel">
               <summary>Camera changes</summary>
               <p class="suggestion-help">

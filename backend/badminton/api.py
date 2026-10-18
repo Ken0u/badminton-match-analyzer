@@ -18,6 +18,7 @@ from . import config
 from .access import AccessMiddleware
 from .calibration_context import court_context_changed, court_run_context
 from .ingest import inspect_video, read_frame
+from .jobs import JobCancelled
 from .schemas import Annotations, StrictModel
 from .storage import ConflictError, Store
 from .video import (
@@ -43,6 +44,12 @@ class TrackingRequest(StrictModel):
     stage: Literal["players", "shuttle"] = "players"
     player_model: Literal["small", "nano"] = "small"
     auto_calibrate: bool = True
+
+
+class AnalysisRequest(StrictModel):
+    player_model: Literal["small", "nano"] = "small"
+    auto_calibrate: bool = True
+    recognize: bool = True
 
 
 class ContactsRequest(StrictModel):
@@ -130,7 +137,7 @@ def create_app(
         except FileNotFoundError as exc:
             raise HTTPException(404, str(exc)) from exc
 
-    def enqueue(kind, video_id, task):
+    def enqueue(kind, video_id, task, details=None):
         job = {
             "id": uuid4().hex,
             "kind": kind,
@@ -138,6 +145,7 @@ def create_app(
             "status": "queued",
             "progress": 0,
             "message": "Queued",
+            "details": details,
         }
         try:
             store.claim_job(job)
@@ -156,6 +164,8 @@ def create_app(
                 job.update(
                     status="completed", progress=1, message="Completed", summary=summary
                 )
+            except JobCancelled as exc:
+                job.update(status="interrupted", message=str(exc))
             except Exception as exc:
                 logger.exception("Job failed: %s", job["id"])
                 job.update(status="failed", message=str(exc))
@@ -448,6 +458,76 @@ def create_app(
 
         return enqueue(body.stage, video_id, task)
 
+    @app.post("/api/videos/{video_id}/analysis", status_code=202)
+    def analyze_match(video_id: str, body: AnalysisRequest):
+        from .pipeline import digest, plan_windows, process_match, processing_recipe
+
+        video = store.video(video_id)
+        source(video)
+        times = timestamps_for(data, video_id)
+        snapshot = store.annotations(video_id)
+        settings = body.model_dump()
+        try:
+            plan_windows(video, times)
+            key = digest(processing_recipe(video, times, snapshot, settings))
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        return enqueue(
+            "analysis",
+            video_id,
+            lambda job_id, progress: process_match(
+                video,
+                root,
+                store,
+                snapshot,
+                job_id,
+                progress,
+                settings,
+                expected_key=key,
+            ),
+            {"analysis_key": key, "settings": settings},
+        )
+
+    @app.get("/api/videos/{video_id}/analysis/{job_id}")
+    def analysis_progress(video_id: str, job_id: str):
+        from .pipeline import read_plan
+        from .rallies import context_signature
+
+        job = store.job(job_id)
+        if job.get("video_id") != video_id or job.get("kind") != "analysis":
+            raise HTTPException(404)
+        key = (job.get("details") or {}).get("analysis_key")
+        if key is None:
+            return {
+                "job": job,
+                "parts": [],
+                "state": job["status"],
+                "requires_processing_rerun": False,
+            }
+        try:
+            plan = read_plan(store, video_id, key)
+        except FileNotFoundError:
+            return {
+                "job": job,
+                "parts": [],
+                "state": job["status"],
+                "requires_processing_rerun": False,
+            }
+        video = store.video(video_id)
+        plan["requires_processing_rerun"] = plan["recipe"][
+            "context_signature"
+        ] != context_signature(store.annotations(video_id), 0, video["frame_count"])
+        return {**plan, "job": job}
+
+    @app.post("/api/videos/{video_id}/analysis/{job_id}/pause", status_code=202)
+    def pause_analysis(video_id: str, job_id: str):
+        if store.job(job_id).get("video_id") != video_id:
+            raise HTTPException(404)
+        try:
+            return store.request_cancel(job_id)
+        except ConflictError as exc:
+            raise HTTPException(409, str(exc)) from exc
+
     @app.post("/api/videos/{video_id}/segments", status_code=202)
     def segments(video_id: str):
         from .segments import scan_video
@@ -638,7 +718,11 @@ def create_app(
                     result.get("player_run_id"),
                 )
         elif result.get("stage") == "recognition":
-            result["requires_context_rerun"] = court_context_changed(doc, result)
+            from .scene_review import camera_context_changed
+
+            result["requires_context_rerun"] = court_context_changed(
+                doc, result
+            ) or camera_context_changed(doc, result.get("court_context"))
             for candidate in result["candidates"]:
                 if hint := candidate.get("hitter_hint"):
                     hint["player_id"] = resolve_contact_player(

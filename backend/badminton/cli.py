@@ -65,6 +65,14 @@ def main():
         action="store_true",
         help="Disable automatic court geometry for player tracking",
     )
+    process = commands.add_parser(
+        "process",
+        help="Process or resume all source frames with bounded inference windows",
+    )
+    process.add_argument("video_id")
+    process.add_argument("--player-model", choices=["small", "nano"], default="small")
+    process.add_argument("--no-auto-court", action="store_true")
+    process.add_argument("--no-recognition", action="store_true")
     segment = commands.add_parser(
         "segments", help="Scan the full video for camera/timestamp boundaries"
     )
@@ -244,6 +252,34 @@ def main():
         try:
             summary = run_local_job(store, args.stage, args.video_id, task)
         except ConflictError as exc:
+            parser.error(str(exc))
+        print(json.dumps(summary, indent=2))
+    elif args.command == "process":
+        from .pipeline import process_match
+
+        store = Store(DATA)
+        video = store.video(args.video_id)
+        settings = {
+            "player_model": args.player_model,
+            "auto_calibrate": not args.no_auto_court,
+            "recognize": not args.no_recognition,
+        }
+        try:
+            summary = run_local_job(
+                store,
+                "analysis",
+                args.video_id,
+                lambda job_id, progress: process_match(
+                    video,
+                    ROOT,
+                    store,
+                    store.annotations(args.video_id),
+                    job_id,
+                    progress,
+                    settings,
+                ),
+            )
+        except (ConflictError, ValueError) as exc:
             parser.error(str(exc))
         print(json.dumps(summary, indent=2))
     elif args.command == "rallies":

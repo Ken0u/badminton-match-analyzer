@@ -239,10 +239,48 @@ class Store:
     def put_job(self, job):
         job["updated_at"] = time.time()
         with self.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            previous = db.execute(
+                "SELECT document FROM jobs WHERE id=?", (job["id"],)
+            ).fetchone()
+            if previous:
+                saved = json.loads(previous[0])
+                if saved.get("cancel_requested"):
+                    job["cancel_requested"] = True
+                if job.get("details") is None and saved.get("details") is not None:
+                    job["details"] = saved["details"]
             db.execute(
                 "INSERT INTO jobs VALUES (?,?) ON CONFLICT(id) DO UPDATE SET document=excluded.document",
                 (job["id"], json.dumps(job)),
             )
+
+    def job(self, job_id):
+        with self.connect() as db:
+            row = db.execute(
+                "SELECT document FROM jobs WHERE id=?", (job_id,)
+            ).fetchone()
+        if row is None:
+            raise KeyError(job_id)
+        return json.loads(row[0])
+
+    def request_cancel(self, job_id):
+        with self.connect() as db:
+            db.execute("BEGIN IMMEDIATE")
+            row = db.execute(
+                "SELECT document FROM jobs WHERE id=?", (job_id,)
+            ).fetchone()
+            if row is None:
+                raise KeyError(job_id)
+            job = json.loads(row[0])
+            if job["kind"] != "analysis" or job["status"] not in ("queued", "running"):
+                raise ConflictError(
+                    "Only an active full-match processing job can be paused"
+                )
+            job.update(cancel_requested=True, updated_at=time.time())
+            db.execute(
+                "UPDATE jobs SET document=? WHERE id=?", (json.dumps(job), job_id)
+            )
+        return job
 
     def claim_job(self, job):
         """Atomically admit one worker across CLI processes and web instances."""
