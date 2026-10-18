@@ -190,6 +190,20 @@ remain visible; training readiness and match splits require separate verificatio
 The report specifies the two pinned source publications and expected local file
 layout. No dataset video, automatic download or new model is bundled.
 
+The [AI CUP contact-supervision audit](docs/AICUP_CONTACT_SUPERVISION_REPORT.md)
+adds an archive-verified index of published contact, family and backhand labels.
+It preserves unlabelled clips, unknown fields and source partitions. Published
+rally clips require original-match grouping and source-clock review before they
+can become training/evaluation inputs.
+
+```powershell
+.\.venv\Scripts\python.exe -m badminton.cli import-aicup2023 LOCAL_PART1.zip --output data/datasets/aicup2023/v1
+```
+
+The command expects the exact `datasets/part1.zip` member of the pinned author
+release listed in the report. It verifies all media and label bytes without
+extracting videos, loading a model, or changing app annotations.
+
 ## Storage
 
 ```text

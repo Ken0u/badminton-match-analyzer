@@ -4,6 +4,17 @@ Prepared October 17, 2026.
 
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 
+The [AI CUP contact-supervision increment](docs/AICUP_CONTACT_SUPERVISION_REPORT.md)
+adds a pinned archive importer for 7,845 published contact/family/side records
+from 800 training rallies, with all 169 unlabelled clips preserved. Source hashes,
+schema mappings and structural checks pass; all 969 clips decode with valid
+source clocks. Exact contact ordinals and original-match grouping still require
+adjudication. The published
+visual detector cannot yet be reproduced from its incomplete preprocessing;
+no replacement model is installed. Next: finish source alignment and match
+deduplication, then freeze direct-video model training/evaluation on this broader
+supervision. Full-match annotation correctness remains open.
+
 The [player tracking study](docs/PLAYER_TRACKING_RECOVERY_REPORT.md) rejects two standalone association changes after full-source checks expose new breaks and a doubles partner swap. The current candidate retains baseline observations and uses motion corroboration only for unambiguous short fragment joins, with source-context invalidation. The [fixed appearance study](docs/PLAYER_APPEARANCE_REPORT.md) also rejects appearance-only identity links. Continue source-reviewed continuity and independent full-match validation; these development checks do not establish complete identities.
 
 The [overlap actor increment](docs/ACTOR_CONTINUITY_REPORT.md) now links repeated source-frame player observations across processing windows and displays provisional actor hints. It preserves reviewed identities, excludes unsupported frame gaps and never bridges camera cuts. Actual CPU linking on all cached player windows finds 10 singles and 25 doubles links; these are unadjudicated hypotheses, not roster counts or identity accuracy. Next: source-reviewed within-run switches and cross-view identity recovery, alongside unresolved scene, contact/boundary and recognition accuracy.

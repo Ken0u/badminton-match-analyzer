@@ -120,8 +120,37 @@ def main():
     )
     finebadminton.add_argument("source", type=Path)
     finebadminton.add_argument("--output", type=Path, required=True)
+    aicup = commands.add_parser(
+        "import-aicup2023",
+        help="Index pinned rally clips and contact/family/side labels without assuming match splits",
+    )
+    aicup.add_argument("archive", type=Path)
+    aicup.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "import-finebadminton":
+    if args.command == "import-aicup2023":
+        from .aicup_data import import_aicup2023
+
+        try:
+            report = import_aicup2023(args.archive, args.output)
+        except (ValueError, OSError, KeyError) as exc:
+            parser.error(str(exc))
+        print(
+            json.dumps(
+                {
+                    key: report[key]
+                    for key in (
+                        "record_count",
+                        "clip_counts",
+                        "labelled_clip_count",
+                        "contact_label_eligible_records",
+                        "training_ready_records",
+                        "media_alignment",
+                    )
+                },
+                indent=2,
+            )
+        )
+    elif args.command == "import-finebadminton":
         from .finebadminton_data import import_finebadminton
 
         try:

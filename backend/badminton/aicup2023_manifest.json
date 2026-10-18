@@ -1,0 +1,33 @@
+{
+  "dataset": "AI CUP 2023 part1 (author release)",
+  "normalization_version": 1,
+  "source_record": "https://zenodo.org/records/14677727",
+  "source_record_version": "1.0.0",
+  "source_repository": "https://github.com/wish44165/A-New-Perspective-for-Shuttlecock-Hitting-Event-Detection",
+  "source_commit": "6c00ce3667c3f0bace1e90392b3a474a1312683f",
+  "license_declaration": "CC-BY-4.0 in the publisher's Zenodo record metadata",
+  "label_specification": "https://sites.google.com/view/coachai-challenge-2023/tasks/track1",
+  "original_label_specification": "https://www.aicup.tw/copy-of-%E8%B3%87%E6%96%99%E9%9B%86%E4%B8%8B%E8%BC%89",
+  "archive": {
+    "outer_name": "assets.zip",
+    "outer_bytes": 14462954226,
+    "outer_published_md5": "aec0d95e266bd92e1ca2f8685b0c96d3",
+    "member": "datasets/part1.zip",
+    "bytes": 1854519663,
+    "sha256": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+    "crc32": "e60e3321",
+    "readme_sha256": "7ba442d462c1ba77bcaa7eba526a0b7e3b262877113b78a0fa76930784d50176",
+    "clip_counts": {
+      "train": 800,
+      "val": 169
+    },
+    "label_counts": {
+      "train": 800,
+      "val": 0
+    }
+  },
+  "mapping_evidence": "Official nine-class schema: 1/2 serves; 3 clear; 4 drive; 5 smash; 6 net; 7 drop; 8 lift; 9 combined push/kill retained as other. Backhand 1=backhand, 2=not backhand. No half-smash target.",
+  "frame_convention": "HitFrame is a published contact ordinal; universal zero/one base remains undocumented. Do not convert with declared 30 FPS without source review.",
+  "split_policy": "Published train/val are clip partitions; original match IDs and overlap with existing corpora require an independent audit. Normalized split remains unassigned.",
+  "media_policy": "Media hashes establish file identity, not decoded clock or contact adjudication. No video extraction, model inference or app annotation writes during import."
+}
