@@ -4,6 +4,8 @@ A badminton analysis app with file uploads, YouTube imports, player/shuttle trac
 
 The six target shot families are **clear, lift, net, drop, smash, and drive**, each with a separate forehand/backhand label. Serves and rally endings are separate events.
 
+The [direct-video event learner](docs/VISUAL_EVENT_LEARNING_REPORT.md) adds RGB feature extraction, temporal contact/family/side/court-end heads, and capture-separated training/evaluation commands. Real-data evaluation is pending and no new weights are installed. It is a research path toward detecting shots without supplied contact times.
+
 The [wrist-reach correction](docs/WRIST_REACH_REPORT.md) removes a reviewed floor-bounce contact when repeated observations of both wrists contradict player-box proximity. The [finite-wrist fix](docs/FINITE_WRIST_REPORT.md) also prevents invalid coordinates/confidence from bypassing proximity checks. Missing pose keeps the fallback available. These suggestions still require review; full contact accuracy is unverified.
 
 The [observed-flight study](docs/OBSERVED_STROKE_CONTEXT_REPORT.md) adds guarded global flight and court-position hints for stroke learning. A controlled validation comparison improves family macro F1 from 0.556 to 0.590, while joint family/side results remain inadequate. No new model is installed. A declared independent-source evaluation remains pending after its media fetch encountered a sign-in requirement.

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "scope": "Research implementation and package verification; real-data event accuracy pending",
+  "source": {
+    "capture_manifest_sha256": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+    "learning_manifest_sha256": "3a7c907671673ec17e4296ded59d7a0f78d40283d7fe4b22fcb7e48f8c05211e"
+  },
+  "software": {
+    "passed": 707,
+    "optional_gpu_skipped": 4,
+    "test_receipt_sha256": "50794a7d5d34ff5f05bf5145cb2f6210251b229215128538f6d6eca60f348d00",
+    "ruff": "107 files passed check and format",
+    "dependency_consistency": "passed",
+    "implementation": {
+      "backend/badminton/visual_inputs.py": "d1abc561ec74a8dff0fbd760e3837b0b69bfff5679ef0a46fe7dd7c12b102656",
+      "backend/badminton/visual_learning.py": "80eb2e98a660f939590a7df41b5b5b47d09c92e13b115f88ba43f82a619f3a7c",
+      "backend/badminton/segments.py": "bdd77aca66a8fd4b5d7146e7be560de24e0598a05ed2825100d80b560c40eac6",
+      "tests/test_visual_inputs.py": "ca7482dd00dd34c135920809c2ba07331210c0e9cae08e5ef8a3b0185fe6cb6f",
+      "tests/test_visual_learning.py": "785d7f3e53787bed98a8595b194d6ce12a68de2da93c9e12ff28f96e6ded2bc4"
+    }
+  },
+  "package": {
+    "wheel_sha256": "b374688c80777b79894a2527ed975ebf738367e7785564a500bacec0ec8b4ba9",
+    "package_files": 70,
+    "all_files_equal_worktree": true,
+    "actual_import": {
+      "module": ".cache/installed-release-0.24.0/badminton/__init__.py",
+      "torch_imported": false
+    },
+    "cli_help_verified": true,
+    "actual_main_admission_conflict_verified": true,
+    "new_model_inference": false
+  },
+  "real_data": {
+    "features": "running",
+    "training": "not_run",
+    "held_out_head_predictions": "not_opened",
+    "installed_in_app": false
+  },
+  "live_app": {
+    "health": {
+      "status": "ok"
+    },
+    "restored_prior_verified_release": "0.22.0",
+    "main_annotations_equal_real_adoption_snapshot": true,
+    "video_count": 2,
+    "feature_job_survived_startup": true
+  },
+  "coverage_limitation": "Backhand smash source support: 6 train / 6 validation / 0 test; full requested-class accuracy unverified"
+}

@@ -2,6 +2,8 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [direct-video learner review](VISUAL_EVENT_LEARNING_REPORT.md) adds checks for source clock/cut isolation, missing context, changed cache receipts, mixed encoder runtimes, held-out normalization leakage and altered validation selections. Generated-data tests verify fast/window equivalence and refuse changed weights or thresholds. Runtime inspection caught a copied research launcher using an isolated default data root; the existing worker was adopted into the real app's job lock without re-inference. Real-data model evaluation remains pending.
+
 The [AI CUP contact-supervision audit](AICUP_CONTACT_SUPERVISION_REPORT.md)
 identifies a different 1/2 backhand convention, numbered clips lacking original
 match IDs and incomplete preprocessing in a published visual detector. The new

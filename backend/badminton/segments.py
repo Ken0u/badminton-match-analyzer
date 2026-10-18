@@ -21,6 +21,64 @@ RECIPE = {
 }
 
 
+class BoundaryDetector:
+    """Incremental scanner shared by perception and visual feature preparation."""
+
+    def __init__(self, rate, width, height):
+        if not math.isfinite(rate) or rate <= 0:
+            raise ValueError("Camera scan requires a finite positive nominal rate")
+        self.rate = rate
+        self.gap_threshold = max(0.1, 2.5 / rate)
+        self.width = min(RECIPE["width"], width)
+        self.height = max(2, round(height * self.width / width))
+        self.detector = self._new_detector()
+        self.last_visual_cut = None
+        self.previous_time = None
+        self.previous_index = None
+
+    @staticmethod
+    def _new_detector():
+        # Permit the first supported edit, then enforce normal cut spacing.
+        return AdaptiveDetector(
+            adaptive_threshold=RECIPE["adaptive_threshold"],
+            min_content_val=RECIPE["min_content_val"],
+            min_scene_len=RECIPE["initial_min_scene_len"],
+            window_width=RECIPE["window_width"],
+        )
+
+    def process(self, index, timestamp, frame):
+        if not math.isfinite(timestamp) or (
+            self.previous_index is not None
+            and (index != self.previous_index + 1 or timestamp <= self.previous_time)
+        ):
+            raise SourceChangedError(
+                "Camera scan requires consecutive source frames and increasing PTS"
+            )
+        cuts = {}
+        if (
+            self.previous_time is not None
+            and timestamp - self.previous_time > self.gap_threshold + 1e-8
+        ):
+            cuts[index] = "timestamp_discontinuity"
+            self.detector = self._new_detector()
+            self.last_visual_cut = None
+        self.previous_time, self.previous_index = timestamp, index
+        image = frame.reformat(
+            width=self.width, height=self.height, format="bgr24"
+        ).to_ndarray()
+        for cut in self.detector.process_frame(
+            FrameTimecode(index, fps=self.rate), image
+        ):
+            if (
+                self.last_visual_cut is not None
+                and cut.frame_num - self.last_visual_cut < RECIPE["min_scene_len"]
+            ):
+                continue
+            self.last_visual_cut = cut.frame_num
+            cuts.setdefault(cut.frame_num, "visual_cut")
+        return cuts
+
+
 def camera_ranges(start, end, cuts):
     """Half-open ranges; a cut is the first source frame of the new camera view."""
     if not 0 <= start < end:
@@ -71,57 +129,21 @@ def scan_boundaries(video, root, data, start, end, progress):
     if not 0 <= start < end <= len(times):
         raise ValueError("Camera scan range must lie inside the source video")
     rate = float(video["fps"])
-    if not math.isfinite(rate) or rate <= 0:
-        raise ValueError("Camera scan requires a finite positive nominal rate")
-    gap_threshold = max(0.1, 2.5 / rate)
+    detector = BoundaryDetector(rate, video["width"], video["height"])
     began = time.perf_counter()
     # The rolling window also needs preceding frame scores. Keep its first-cut
     # suppression outside the requested range whenever preceding media exists.
     scan_start = max(0, start - RECIPE["min_scene_len"] - 3)
     scan_end = min(len(times), end + RECIPE["window_width"])
 
-    def new_detector():
-        # The library initializes its last-cut clock at the first decoded
-        # frame. Its normal15-frame gate would hide a real early edit. Let the
-        # first supported cut through, then enforce the normal spacing below.
-        return AdaptiveDetector(
-            adaptive_threshold=RECIPE["adaptive_threshold"],
-            min_content_val=RECIPE["min_content_val"],
-            min_scene_len=RECIPE["initial_min_scene_len"],
-            window_width=RECIPE["window_width"],
-        )
-
-    detector = new_detector()
-    last_visual_cut = None
     cuts = {}
-    previous_time = None
-    width = min(RECIPE["width"], video["width"])
-    height = max(2, round(video["height"] * width / video["width"]))
     processed = 0
     for index, timestamp, frame in iter_frames(
         video, root, times, scan_start, scan_end
     ):
-        if (
-            previous_time is not None
-            and timestamp - previous_time > gap_threshold + 1e-8
-        ):
-            if start <= index < end:
-                cuts[index] = "timestamp_discontinuity"
-            detector = new_detector()
-            last_visual_cut = None
-        previous_time = timestamp
-        image = frame.reformat(width=width, height=height, format="bgr24").to_ndarray()
-        for cut in detector.process_frame(FrameTimecode(index, fps=rate), image):
-            if (
-                last_visual_cut is not None
-                and cut.frame_num - last_visual_cut < RECIPE["min_scene_len"]
-            ):
-                continue
-            # Include preceding accepted cuts in spacing even when they lie
-            # outside the requested output range.
-            last_visual_cut = cut.frame_num
-            if start <= cut.frame_num < end:
-                cuts.setdefault(cut.frame_num, "visual_cut")
+        for cut, reason in detector.process(index, timestamp, frame).items():
+            if start <= cut < end:
+                cuts.setdefault(cut, reason)
         processed += 1
         if processed % 25 == 0:
             progress(processed / (scan_end - scan_start))
@@ -137,7 +159,7 @@ def scan_boundaries(video, root, data, start, end, progress):
     return {
         "method": METHOD,
         "recipe": RECIPE.copy(),
-        "timestamp_gap_threshold_s": gap_threshold,
+        "timestamp_gap_threshold_s": detector.gap_threshold,
         "cut_frames": sorted(cuts),
         "boundaries": boundaries,
         "camera_ranges": camera_ranges(start, end, cuts),

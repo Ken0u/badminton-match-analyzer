@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "badminton-match-analyzer"
-version = "0.23.0"
+version = "0.24.0"
 description = "Local badminton video inspection, tracking, and annotation"
 requires-python = ">=3.10"
 dependencies = [
@@ -25,6 +25,7 @@ tracking = ["ultralytics>=8.3,<9", "lap>=0.5,<1"]
 download = ["gdown>=5,<6"]
 youtube = ["yt-dlp[default]>=2026.8.19"]
 recognition = ["positional-encodings>=6,<7", "torchinfo>=1.8,<2"]
+learning = ["torch>=2.6,<3", "torchvision>=0.21,<1"]
 
 [project.scripts]
 badminton = "badminton.cli:main"
@@ -33,7 +34,7 @@ badminton = "badminton.cli:main"
 where = ["backend"]
 
 [tool.setuptools.package-data]
-badminton = ["static/*", "assets/*", "model_manifest.json", "shuttleset_manifest.json", "s2doubles_manifest.json", "finebadminton_manifest.json", "aicup2023_manifest.json", "side_training_manifest.json", "vendor/*.json", "vendor/*LICENSE", "vendor/bst/*.json", "vendor/bst/LICENSE"]
+badminton = ["static/*", "assets/*", "model_manifest.json", "shuttleset_manifest.json", "s2doubles_manifest.json", "finebadminton_manifest.json", "aicup2023_manifest.json", "aicup_capture_groups_v1.json", "visual_learning_manifest.json", "side_training_manifest.json", "vendor/*.json", "vendor/*LICENSE", "vendor/bst/*.json", "vendor/bst/LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -4,6 +4,8 @@ Prepared October 17, 2026.
 
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 
+The [direct-video learner](docs/VISUAL_EVENT_LEARNING_REPORT.md) now implements source-clock RGB feature preparation and temporal contact/family/side/court-end training with conservative capture-separated folds. Extraction is running; real-data training and frozen test evaluation remain pending. This work does not establish full-match accuracy or cover doubles. Backhand smash has no test support in this fixed split and needs separate independently reviewed evidence.
+
 The [AI CUP contact-supervision increment](docs/AICUP_CONTACT_SUPERVISION_REPORT.md)
 adds a pinned archive importer for 7,845 published contact/family/side records
 from 800 training rallies, with all 169 unlabelled clips preserved. Source hashes,
