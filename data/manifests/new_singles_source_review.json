@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "frozen_at": 1792289680.9295104,
+  "status": "assistant_first_pass_pending_human",
+  "source_dataset": "ShuttleSet",
+  "source_commit": "45517f7d4cb936b03f3eabf939cc7959d39226fe",
+  "source_match_id": 2,
+  "source_url": "https://www.youtube.com/watch?v=-aOI9_JxoWc",
+  "channel_id": "UChh-akEbUM8_6ghGVnJd6cQ",
+  "format_id": "398",
+  "fps": 25,
+  "anchors": [
+    {
+      "request": {
+        "match_id": 2,
+        "set_id": 1,
+        "rally_id": 1,
+        "lower_cfr_hint": 11684,
+        "upper_cfr_hint_inclusive": 12249,
+        "published_strokes": 22,
+        "source_frame_hints": [
+          11709,
+          11728,
+          11750,
+          11782,
+          11793,
+          11818,
+          11841,
+          11860,
+          11882,
+          11909,
+          11942,
+          11957,
+          11983,
+          12015,
+          12046,
+          12077,
+          12104,
+          12128,
+          12153,
+          12178,
+          12203,
+          12224
+        ],
+        "selection": "First rally in each set and middle-index first-set rally, before model predictions"
+      },
+      "clip_sha256": "187fa920196a8aaa85a17b7aa2b621688df9131f7a29e559a57028f9c88c5aff",
+      "video_id": "187fa920196a8aaa",
+      "frame_count": 566,
+      "detected_cut_frames": [],
+      "source_views": [
+        {
+          "start_frame": 0,
+          "end_frame": 566,
+          "view": "wide_court"
+        }
+      ],
+      "source_review": "Assistant viewed source-only cue contact sheet and first-cue native frame with published corners and source-foot overlays; no head or native perception outputs opened",
+      "court_surface": "red",
+      "published_corner_support": "Visually aligned at first-cue sample; does not establish a general court detector",
+      "source_foot_convention": "Published player_location and opponent_location are consistent with video-pixel foot locations at the source cue, supervision only",
+      "exact_contact_times_verified": false
+    },
+    {
+      "request": {
+        "match_id": 2,
+        "set_id": 1,
+        "rally_id": 19,
+        "lower_cfr_hint": 29243,
+        "upper_cfr_hint_inclusive": 29387,
+        "published_strokes": 6,
+        "source_frame_hints": [
+          29268,
+          29279,
+          29307,
+          29317,
+          29341,
+          29362
+        ],
+        "selection": "First rally in each set and middle-index first-set rally, before model predictions"
+      },
+      "clip_sha256": "793e18f5832f745733c6419716e5d1b79885106faad88828f0610ac95ce4ae53",
+      "video_id": "793e18f5832f7457",
+      "frame_count": 145,
+      "detected_cut_frames": [
+        24
+      ],
+      "source_views": [
+        {
+          "start_frame": 0,
+          "end_frame": 24,
+          "view": "closeup_unsupported_court"
+        },
+        {
+          "start_frame": 24,
+          "end_frame": 145,
+          "view": "wide_court"
+        }
+      ],
+      "source_review": "Assistant viewed source-only cue contact sheet and first-cue native frame with published corners and source-foot overlays; no head or native perception outputs opened",
+      "court_surface": "red",
+      "published_corner_support": "Visually aligned at first-cue sample; does not establish a general court detector",
+      "source_foot_convention": "Published player_location and opponent_location are consistent with video-pixel foot locations at the source cue, supervision only",
+      "exact_contact_times_verified": false
+    },
+    {
+      "request": {
+        "match_id": 2,
+        "set_id": 2,
+        "rally_id": 1,
+        "lower_cfr_hint": 48421,
+        "upper_cfr_hint_inclusive": 48648,
+        "published_strokes": 9,
+        "source_frame_hints": [
+          48446,
+          48466,
+          48488,
+          48509,
+          48533,
+          48544,
+          48562,
+          48596,
+          48623
+        ],
+        "selection": "First rally in each set and middle-index first-set rally, before model predictions"
+      },
+      "clip_sha256": "0c0cea43bbf6dfd3c909ef9c6835928334f5ed5c03572c9dd57cb0e0c9fcac6c",
+      "video_id": "0c0cea43bbf6dfd3",
+      "frame_count": 228,
+      "detected_cut_frames": [],
+      "source_views": [
+        {
+          "start_frame": 0,
+          "end_frame": 228,
+          "view": "wide_court"
+        }
+      ],
+      "source_review": "Assistant viewed source-only cue contact sheet and first-cue native frame with published corners and source-foot overlays; no head or native perception outputs opened",
+      "court_surface": "red",
+      "published_corner_support": "Visually aligned at first-cue sample; does not establish a general court detector",
+      "source_foot_convention": "Published player_location and opponent_location are consistent with video-pixel foot locations at the source cue, supervision only",
+      "exact_contact_times_verified": false
+    }
+  ],
+  "head_holdout_scope": {
+    "rallies": 75,
+    "source_rows": 860,
+    "family_eligible_rows": 677,
+    "requested_source_frames": 21610,
+    "protocol_sha256": "99b13bb12f0cacfee316547ee656ac69a0b6f273de20e75c80eb49e19892c6ed",
+    "head_predictions_opened": false,
+    "perception_predictions_opened": false
+  },
+  "access_status": {
+    "metadata_and_three_anchors": "Public without authentication when fetched",
+    "all75_fetch": "Stopped when YouTube required sign-in; no cookies, alternate identity, or gate bypass attempted",
+    "full_evaluation": "pending, scope not reduced to fetched anchors"
+  },
+  "original_labels_and_training_ready_unchanged": true,
+  "contacts_complete": false,
+  "families_and_sides_adjudicated": false
+}
