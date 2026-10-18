@@ -114,8 +114,36 @@ def main():
     )
     doubles.add_argument("source", type=Path)
     doubles.add_argument("--output", type=Path, required=True)
+    finebadminton = commands.add_parser(
+        "import-finebadminton",
+        help="Normalize pinned action/side labels and separate published contact references",
+    )
+    finebadminton.add_argument("source", type=Path)
+    finebadminton.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "import-s2doubles":
+    if args.command == "import-finebadminton":
+        from .finebadminton_data import import_finebadminton
+
+        try:
+            report = import_finebadminton(args.source, args.output)
+        except (ValueError, OSError, KeyError) as exc:
+            parser.error(str(exc))
+        print(
+            json.dumps(
+                {
+                    key: report[key]
+                    for key in (
+                        "record_count",
+                        "rally_count",
+                        "published_contact_records",
+                        "training_ready_records",
+                        "media_alignment",
+                    )
+                },
+                indent=2,
+            )
+        )
+    elif args.command == "import-s2doubles":
         from .doubles_data import import_doubles
 
         try:

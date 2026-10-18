@@ -1,0 +1,585 @@
+{
+  "dataset": "Finebadminton-20K",
+  "normalization_version": 1,
+  "source_repository": "https://github.com/iLearn-Lab/MM25-FineBadminton",
+  "source_commit": "d3fd88b61ebadd8773774b4fa95ab27da4811cc1",
+  "dataset_repository": "https://huggingface.co/datasets/iLearn-Lab/Finebadminton-20K",
+  "dataset_revision": "72cae601e08c83ee8ec7e19f8fd7850e9158af7d",
+  "license_declaration": "Apache-2.0 in dataset card and source repository; broadcast rights are not independently verified",
+  "mapping_evidence": "Paired original Chinese/translated English labels in 40 rallies: kill = 杀球 (smash), net kill = 扑球 (other), net lift = 挑球 (lift). Push and block remain other; no half-smash target.",
+  "parallel_files": [
+    {
+      "path": "github-labels/transformed_combined_rounds_zh.json",
+      "sha256": "abf0e3ecab6e3f9ce043ecf0fed85fc6fd50d1b9d6926f080ec25bacb8cbf40d",
+      "original_path": "dataset/transformed_combined_rounds_zh.json"
+    },
+    {
+      "path": "github-labels/transformed_combined_rounds_output_en_evals_translated.json",
+      "sha256": "ae6b5d64ee7586bba23a48b87d233f03b01d67ef631e13a5faf9dcb1f1e9b8e2",
+      "original_path": "dataset/transformed_combined_rounds_output_en_evals_translated.json"
+    }
+  ],
+  "files": [
+    {
+      "match_id": "0001",
+      "path": "finebadminton-20K/0001_updated.json",
+      "sha256": "88d62e4bc8492f9247a9e619b42397a19e75c608b18edcf4691c72d9c2afd8be",
+      "media_path": "videos/0001.mp4",
+      "media_sha256": "3ff3e2e41a37ffb2533b55df15cdf62157c96e8c9aa2e44f5b95b5394e4a5be7",
+      "media_bytes": 653908628
+    },
+    {
+      "match_id": "0002",
+      "path": "finebadminton-20K/0002_updated.json",
+      "sha256": "54a4b30c450eb182d8ba7e226d03494146ab457ed6e83a5f4f9d806f3566f7be",
+      "media_path": "videos/0002.mp4",
+      "media_sha256": "edbc7d1c37a9b35f3a5a88f868a9aa997ebe034b32db7ccb5cfaa36d6ffb9018",
+      "media_bytes": 736370061
+    },
+    {
+      "match_id": "0003",
+      "path": "finebadminton-20K/0003_updated.json",
+      "sha256": "4b7d414657665f008d33a38ffeedb46a195d8efa1e0df307d37f9110ab0ec50d",
+      "media_path": "videos/0003.mp4",
+      "media_sha256": "caf1434a2fe82b563b2c82cff2128620b8c075fdba5323c488d3a16c8821d337",
+      "media_bytes": 887534124
+    },
+    {
+      "match_id": "0004",
+      "path": "finebadminton-20K/0004_updated.json",
+      "sha256": "bae00970b64d3f78e63ba3daa37573895dab73ecaa3f3b802903c748372a4304",
+      "media_path": "videos/0004.mp4",
+      "media_sha256": "d405158dda42995f78191a68b99edb38ebd749c11b4fc1f32c9eef4cf29467f2",
+      "media_bytes": 673186202
+    },
+    {
+      "match_id": "0005",
+      "path": "finebadminton-20K/0005_updated.json",
+      "sha256": "f776af5bc2d818ce092a32a1fd108a4d0f867db992d9c8af58dc5e9e6464662c",
+      "media_path": "videos/0005.mp4",
+      "media_sha256": "84a18b373a516f4ded28d5f902d318a627b7066445393606c9e5bf47fe314f92",
+      "media_bytes": 716647304
+    },
+    {
+      "match_id": "0006",
+      "path": "finebadminton-20K/0006_updated.json",
+      "sha256": "fa79658d6618e07eb14cdb3dfb6f9b00d6eb5d3fb467913b96c7750eba0f2bdd",
+      "media_path": "videos/0006.mp4",
+      "media_sha256": "d3ef4a66d905d766c94050602ff3cd9db180e6c97525ea17fd694e04d0a227c2",
+      "media_bytes": 696470562
+    },
+    {
+      "match_id": "0007",
+      "path": "finebadminton-20K/0007_updated.json",
+      "sha256": "4625c4f99923920fac0a5b3b268e403f27a790bf85f61ef4d5ac7513bc96a0b2",
+      "media_path": "videos/0007.mp4",
+      "media_sha256": "02c28156430c61025fa360a29d029f4cd854f52301cfef429f939512e50f843c",
+      "media_bytes": 721713788
+    },
+    {
+      "match_id": "0008",
+      "path": "finebadminton-20K/0008_updated.json",
+      "sha256": "bedf8a38bd05d956d41db2cf5897604ebe7fc285eec4dc2323c5582e2cbeb3dd",
+      "media_path": "videos/0008.mp4",
+      "media_sha256": "85912be45705cf859d8be8129714ce30f49c22b414bb0842c1359c4191319168",
+      "media_bytes": 828924450
+    },
+    {
+      "match_id": "0009",
+      "path": "finebadminton-20K/0009_updated.json",
+      "sha256": "c3eb46c74c11e413680719386b5bb9fb4966cd5128891d3523bcc23fcafb2409",
+      "media_path": "videos/0009.mp4",
+      "media_sha256": "36c371b4a34b58a98f863387bace8fad1da0e85eb54e18429128a2c5eeb75f8a",
+      "media_bytes": 499862644
+    },
+    {
+      "match_id": "0010",
+      "path": "finebadminton-20K/0010_updated.json",
+      "sha256": "c125532466bbe4c996cb063e9ade21bfc8a4bbef3dd551c446b0a87461b21504",
+      "media_path": "videos/0010.mp4",
+      "media_sha256": "9ada4ad427b3ef5ad1207e56b6b58196a3b9e1a04f0752b8e2a2776d53d7c7f2",
+      "media_bytes": 125226752
+    },
+    {
+      "match_id": "0011",
+      "path": "finebadminton-20K/0011_updated.json",
+      "sha256": "fb16603589f7dc0a9d2fbdc41f992fae7ba6e94a7fdad27cd36912e1f3d38176",
+      "media_path": "videos/0011.mp4",
+      "media_sha256": "c91b7cff6d0b068012e0a0f10ec6d347d681985842488460056691c08eb44dc4",
+      "media_bytes": 678276394
+    },
+    {
+      "match_id": "0012",
+      "path": "finebadminton-20K/0012_updated.json",
+      "sha256": "617ece93cfe5512e8c68c5be979c76c55c9b4ffea812fb48008b9d9b5aece967",
+      "media_path": "videos/0012.mp4",
+      "media_sha256": "13f1f96c80e3ee222b6e2225768a9fddebbe21dedf0ebf1b94825b9fb9dc2549",
+      "media_bytes": 575776067
+    },
+    {
+      "match_id": "0013",
+      "path": "finebadminton-20K/0013_updated.json",
+      "sha256": "e4c007db525e97e4614b8c31cd0579e2c0d2b207f190e827678a658a69bc18f8",
+      "media_path": "videos/0013.mp4",
+      "media_sha256": "69291ef66878a0ec1517a3db16b3c30d08b449ee7f928a91d9ca49521fed727c",
+      "media_bytes": 269783923
+    },
+    {
+      "match_id": "0014",
+      "path": "finebadminton-20K/0014_updated.json",
+      "sha256": "67602a1a445d868864a1176280d7074e557850a269b208a7cf555b1ca0e0dd58",
+      "media_path": "videos/0014.mp4",
+      "media_sha256": "34b6c016ef217f6be1cc3eef77b2bb84223806fe39c5937450623a443714af25",
+      "media_bytes": 410950122
+    },
+    {
+      "match_id": "0015",
+      "path": "finebadminton-20K/0015_updated.json",
+      "sha256": "280e2698f9a5172b234c94e88c7533bd1e6ad8a628d85e327fdc541b469c97f5",
+      "media_path": "videos/0015.mp4",
+      "media_sha256": "b5a6e0a5a592018cfd62f4f6f27363820cc3deda05b3a4af12634071c874c5c1",
+      "media_bytes": 135791043
+    },
+    {
+      "match_id": "0016",
+      "path": "finebadminton-20K/0016_updated.json",
+      "sha256": "145c784905b689ad2cbdc6644753277e74da71a45fb90b68809b1f30272d2fbb",
+      "media_path": "videos/0016.mp4",
+      "media_sha256": "bceeeb9816dbbf3e93ebc22cb244e18a32fa569f8d3fad64b1839ebbaf133dbd",
+      "media_bytes": 222394921
+    },
+    {
+      "match_id": "0017",
+      "path": "finebadminton-20K/0017_updated.json",
+      "sha256": "c2c0bb75a8ff7d091a2b6177914fbab6094e9a7a880a2d772fa3ead0cbc6a0b4",
+      "media_path": "videos/0017.mp4",
+      "media_sha256": "a0528e64a80e82f3d724235cdbd6b8e83bba29614ec7c6050da622efb040e096",
+      "media_bytes": 826606490
+    },
+    {
+      "match_id": "0018",
+      "path": "finebadminton-20K/0018_updated.json",
+      "sha256": "04ff78d3b7ab3d863403e8fbf0d6dd502691c49e53c76ae6cc3a405cfe225b60",
+      "media_path": "videos/0018.mp4",
+      "media_sha256": "5c288b314df04c82a327b2394c8df74bcd6b8baea17d8d111d20119370205d55",
+      "media_bytes": 401215990
+    },
+    {
+      "match_id": "0019",
+      "path": "finebadminton-20K/0019_updated.json",
+      "sha256": "5d75d82d0519f700e6a10d34d0c1182229f7af74f631b289d953a4a4b616f1ef",
+      "media_path": "videos/0019.mp4",
+      "media_sha256": "941f0d15a59d054032a658bcb34b8e8e01ba172e5f863933c2dd3ab1189b51aa",
+      "media_bytes": 547965379
+    },
+    {
+      "match_id": "0020",
+      "path": "finebadminton-20K/0020_updated.json",
+      "sha256": "ce7e168749645f78f254db786e14eb7aa15ca4b2d91a4722fbd29b095036fbdb",
+      "media_path": "videos/0020.mp4",
+      "media_sha256": "916f6f0d50981793240a36044e57e06c19cd722751462716795f585285f86e1e",
+      "media_bytes": 534236811
+    },
+    {
+      "match_id": "0021",
+      "path": "finebadminton-20K/0021_updated.json",
+      "sha256": "21b136f2f1eb1ca0f7d9396b080555a3ad6e871e555787c81f2af66c8db92c76",
+      "media_path": "videos/0021.mp4",
+      "media_sha256": "f1a885dca3967da09b38ae9f80039f0d636d89f93b384d8403dc0827cd7f7bb6",
+      "media_bytes": 1127076490
+    },
+    {
+      "match_id": "0022",
+      "path": "finebadminton-20K/0022_updated.json",
+      "sha256": "ad5f17f22194141a4a3cbff451b7a696131c758a653785f2c8b464db9f8f7c2a",
+      "media_path": "videos/0022.mp4",
+      "media_sha256": "05a6eaa965acaecf42f4dea53597e9bb3b287b18e13a39fc2f0c940b42306e2c",
+      "media_bytes": 429407451
+    },
+    {
+      "match_id": "0023",
+      "path": "finebadminton-20K/0023_updated.json",
+      "sha256": "3c4e86d8bc4421cfad4e785a776a64b8b696fce0ba42c106e5eb79fd46cdce94",
+      "media_path": "videos/0023.mp4",
+      "media_sha256": "3643a05073f342e0d002f090a0ad4ef17789c00cf4595f4499e8f5ab8959e8c5",
+      "media_bytes": 458798062
+    },
+    {
+      "match_id": "0024",
+      "path": "finebadminton-20K/0024_updated.json",
+      "sha256": "2d1c4451f784e82c8138450af31c37f4fc495821a4aae3442d906788799f18bd",
+      "media_path": "videos/0024.mp4",
+      "media_sha256": "2b44a98e4ac7f7a4f51e777db577541811c31d5c96c6bbaaceea068e140ab89e",
+      "media_bytes": 764328495
+    },
+    {
+      "match_id": "0025",
+      "path": "finebadminton-20K/0025_updated.json",
+      "sha256": "0322a12f7b6c48497caa3d4da5f89612dce113f47368367803c96091f27986b3",
+      "media_path": "videos/0025.mp4",
+      "media_sha256": "b1ee3f15353a75f2ea60cd9b92e54c6c7c9a90b881c8bdb3bc64c3d80c4c0cf7",
+      "media_bytes": 338858319
+    },
+    {
+      "match_id": "0026",
+      "path": "finebadminton-20K/0026_updated.json",
+      "sha256": "0f8baa2c5fa6d313c920dfb768bc5f0d847565a03ed8a6b7180eec1797594e4c",
+      "media_path": "videos/0026.mp4",
+      "media_sha256": "2d8c0c92024d51c71b7725f936ea17529288ce97fbf692309e60e954c870b05f",
+      "media_bytes": 591295737
+    },
+    {
+      "match_id": "0027",
+      "path": "finebadminton-20K/0027_updated.json",
+      "sha256": "c6fffac0276517461e51a928e3c987b0858747110b8f8e0b9fd923ca5e47d1f8",
+      "media_path": "videos/0027.mp4",
+      "media_sha256": "4a0ed0da596bdeb23ac99c8d8990a3f83771f5d6c2b2e8560cf9532e03250dbd",
+      "media_bytes": 640683878
+    },
+    {
+      "match_id": "0028",
+      "path": "finebadminton-20K/0028_updated.json",
+      "sha256": "9a0cdaf73058730849072fafa9a8cee13544e4c7b03e921c5d5e872b70100c3b",
+      "media_path": "videos/0028.mp4",
+      "media_sha256": "90b7d451249e52c70f08216b9c2189bf01060ef71f5dccf07a94bbf47d9baf45",
+      "media_bytes": 375807978
+    },
+    {
+      "match_id": "0029",
+      "path": "finebadminton-20K/0029_updated.json",
+      "sha256": "ee104967e70a4ae85af4c806fbabff83e3b52a27e7af591cb4f09c91030c0d7d",
+      "media_path": "videos/0029.mp4",
+      "media_sha256": "0831dce9500415620b144bfcdf7f602f8b8ebdf8ab60537b92f88f27608f479a",
+      "media_bytes": 526252200
+    },
+    {
+      "match_id": "0030",
+      "path": "finebadminton-20K/0030_updated.json",
+      "sha256": "e7799a50df542bdb0947b340e650400bba414c3809cf91c26f71077c80071c88",
+      "media_path": "videos/0030.mp4",
+      "media_sha256": "c14d66215e4122ca4dae5cce2d1a9cb67cdfc3636d1fd352e3fd3e60ba624661",
+      "media_bytes": 454029321
+    },
+    {
+      "match_id": "0032",
+      "path": "finebadminton-20K/0032_updated.json",
+      "sha256": "ad94bb690c326a54e449bfb3a9a95dafe1cb68f0fd3ec6f8de333a62a06ce1eb",
+      "media_path": "videos/0032.mp4",
+      "media_sha256": "1996bf38db25dc5e811297686bda487664fa50d24957e4a5c93e5f6d1b2cb55f",
+      "media_bytes": 435175465
+    },
+    {
+      "match_id": "0033",
+      "path": "finebadminton-20K/0033_updated.json",
+      "sha256": "1a0f305cdb7200219ce5b22a00d7dd9d021b2efc42235e208af94d5941aef317",
+      "media_path": "videos/0033.mp4",
+      "media_sha256": "65c73bbfe53f610240d06f397aaa15d65cba93421d0bc202fcef701ee12216f3",
+      "media_bytes": 646891265
+    },
+    {
+      "match_id": "0034",
+      "path": "finebadminton-20K/0034_updated.json",
+      "sha256": "037cf38e6689d6b9a8c7a31e60cfd836f10f7e3258bdfc806739fa04716bb3be",
+      "media_path": "videos/0034.mp4",
+      "media_sha256": "4bed7c364181057e9ee8b91faa4282b966197b62053883bf1cc99038e81f470b",
+      "media_bytes": 1160104793
+    },
+    {
+      "match_id": "0035",
+      "path": "finebadminton-20K/0035_updated.json",
+      "sha256": "5886d99556f6dc2489a7604027b614af15fdee61826389bae8e3398bcc835ed6",
+      "media_path": "videos/0035.mp4",
+      "media_sha256": "27893bc5717698efb53f2105f7094b865f97b7a1b934f3ac62e018d2473ef0b4",
+      "media_bytes": 1275165033
+    },
+    {
+      "match_id": "0036",
+      "path": "finebadminton-20K/0036_updated.json",
+      "sha256": "789f5faf196281277230ca19fdb6d747b15cbaf80fc479c321d88ed62e1061d2",
+      "media_path": "videos/0036.mp4",
+      "media_sha256": "5562eb695d217d2b2beb316cd7de690b2f47c2a881faa11b96061d894b69f63c",
+      "media_bytes": 615958171
+    },
+    {
+      "match_id": "0037",
+      "path": "finebadminton-20K/0037_updated.json",
+      "sha256": "5f54f31f06c36db0022ab5035ca426ec04bee8df7b43f108fb0df258c00a6cf3",
+      "media_path": "videos/0037.mp4",
+      "media_sha256": "bb41e841b3582e83a3bb627c8a9d3f9481368fb78c1db088e557cdc9e2ce7902",
+      "media_bytes": 797088139
+    },
+    {
+      "match_id": "0038",
+      "path": "finebadminton-20K/0038_updated.json",
+      "sha256": "7dae1b4aed6d17cebaaaa13e5a8b6b8557b0782c8380e26cfb1d228065c640dd",
+      "media_path": "videos/0038.mp4",
+      "media_sha256": "ab5603cfd1a150d7c3c3d9d937ddb051ccabc6c3476879abbc79f7c0216a2fce",
+      "media_bytes": 607369107
+    },
+    {
+      "match_id": "0039",
+      "path": "finebadminton-20K/0039_updated.json",
+      "sha256": "1efd6fc74eeb76239484af83375e164d0a30ad251c9adac213e781b3949d8fe0",
+      "media_path": "videos/0039.mp4",
+      "media_sha256": "e6ed08d54ee822232a130cdc5853995e59879e32e757cf72928e198760d532c0",
+      "media_bytes": 547727941
+    },
+    {
+      "match_id": "0040",
+      "path": "finebadminton-20K/0040_updated.json",
+      "sha256": "0e42a2efc42fa66d819c3297932af2d022ebbf9f2114e9639a51de6fd4ce3a2b",
+      "media_path": "videos/0040.mp4",
+      "media_sha256": "f84dc17dad2f0d6f2e9db4c65c41405ab01f51166b7b08a8f4c64280c1e43895",
+      "media_bytes": 515069638
+    },
+    {
+      "match_id": "0041",
+      "path": "finebadminton-20K/0041_updated.json",
+      "sha256": "55e0600371224c7060665dc4cebae6b01bf3e9c47af6fb8b4a9482dff4d17160",
+      "media_path": "videos/0041.mp4",
+      "media_sha256": "7920eb1e79e4bba1d8631ef8ef9feddb90b515adcd24128e6c33068f8b34fe36",
+      "media_bytes": 870871802
+    },
+    {
+      "match_id": "0042",
+      "path": "finebadminton-20K/0042_updated.json",
+      "sha256": "2dbeba0ab41fa70686c6700e38fc740550b1bec67f4681a4af3197b49a7cf5c5",
+      "media_path": "videos/0042.mp4",
+      "media_sha256": "295bf958f2d044db727cd3a03cf2a01896d51cd9f9db1693025029d66eb47872",
+      "media_bytes": 1142563550
+    },
+    {
+      "match_id": "0043",
+      "path": "finebadminton-20K/0043_updated.json",
+      "sha256": "8c8fddf80e095742d8ff6f6e4c5bcf65bcf3a8928d94b77ece058e3f7060997a",
+      "media_path": "videos/0043.mp4",
+      "media_sha256": "1737f2229a760efcf55a99d1ea73633b5425a0619abef4406bd0ddeddb7ca1ee",
+      "media_bytes": 654277111
+    },
+    {
+      "match_id": "0044",
+      "path": "finebadminton-20K/0044_updated.json",
+      "sha256": "51d940300a7386253f3af63d8b2f15ecc13b48be02b5c4144bc48f7bc74785b1",
+      "media_path": "videos/0044.mp4",
+      "media_sha256": "1ac5999828f4d789e246d3cfce2ef0fbd7b647cd4e40326a6629157b368899e7",
+      "media_bytes": 23719088
+    },
+    {
+      "match_id": "0045",
+      "path": "finebadminton-20K/0045_updated.json",
+      "sha256": "00954f158c104db2779c134d66d9dd57f2dd898df5edb96c5160edfe94c604e6",
+      "media_path": "videos/0045.mp4",
+      "media_sha256": "139a5dd1073fb80497c8aaf2a99b3326970ba75066794313e641de997ae426cb",
+      "media_bytes": 20122200
+    },
+    {
+      "match_id": "0046",
+      "path": "finebadminton-20K/0046_updated.json",
+      "sha256": "0d314ea7c0d963af6f1270850914fb45694cb6c39260981c73e9f893b6adfa08",
+      "media_path": "videos/0046.mp4",
+      "media_sha256": "263c7456643f96f37ad5ccc7d04c01c08d201209d49f141997405325709d0a2d",
+      "media_bytes": 20019008
+    },
+    {
+      "match_id": "0047",
+      "path": "finebadminton-20K/0047_updated.json",
+      "sha256": "fc3188950fbf22005cf2b35c4abf6675d3a82589c662ffa0d7526e4f963b3252",
+      "media_path": "videos/0047.mp4",
+      "media_sha256": "94b414d2160f0e320fa713c9f361c9a166fa8a96e1a1fb84305f3a5d86cbcced",
+      "media_bytes": 24245687
+    },
+    {
+      "match_id": "0049",
+      "path": "finebadminton-20K/0049_updated.json",
+      "sha256": "914fc3497b631797ef9b49af0300c0e0a1aa2133f15079b759ce24f76b90b0a9",
+      "media_path": "videos/0049.mp4",
+      "media_sha256": "faca22d830718e969799ea8152bd6382ceae61d6a3cefb2ecc9b2a7cbee7edf5",
+      "media_bytes": 552560822
+    },
+    {
+      "match_id": "0050",
+      "path": "finebadminton-20K/0050_updated.json",
+      "sha256": "f4f405f02934ccdfc0e2e33f4c2c05e7019ed8ba89328112346a4cdae29bf775",
+      "media_path": "videos/0050.mp4",
+      "media_sha256": "ccb93fdcc8833b35031fc677eab6e18fa53defd19b50cafc408e41db4efd7720",
+      "media_bytes": 733206066
+    },
+    {
+      "match_id": "0051",
+      "path": "finebadminton-20K/0051_updated.json",
+      "sha256": "812745a8971b323764d054d08989263e2bcc6d426b43d653b3c6ad13de18a8d6",
+      "media_path": "videos/0051.mp4",
+      "media_sha256": "034e96b49aa9299ded26481c091b9c819fc6302b797a52e51662869d9258d268",
+      "media_bytes": 959740607
+    },
+    {
+      "match_id": "0052",
+      "path": "finebadminton-20K/0052_updated.json",
+      "sha256": "60004db55000d5a0eec87d3ae78eded87bb42f59420297361a8960875b5a850c",
+      "media_path": "videos/0052.mp4",
+      "media_sha256": "63bdc971e6fc15a776808b3db23d00b29ead6f8b609c11094a43f7597be083c5",
+      "media_bytes": 647176259
+    },
+    {
+      "match_id": "0053",
+      "path": "finebadminton-20K/0053_updated.json",
+      "sha256": "7f70e8013255e23b32a03592aa4ee085c5f737a961654c97356474d8e68b6cc5",
+      "media_path": "videos/0053.mp4",
+      "media_sha256": "ab115752e0f56d1232b36395ef011b024eb16c81f196f110bfcc07ba30fffdc5",
+      "media_bytes": 690894927
+    },
+    {
+      "match_id": "0054",
+      "path": "finebadminton-20K/0054_updated.json",
+      "sha256": "5b839a7f66a2a49ad3487aa0431ba67bacafb1556ee8a88ed17d4e9f9a3b7302",
+      "media_path": "videos/0054.mp4",
+      "media_sha256": "30328e2cf0639c744c9ede5da80e550fbb32b7a79ee09e1e75020942f915e762",
+      "media_bytes": 834405661
+    },
+    {
+      "match_id": "0055",
+      "path": "finebadminton-20K/0055_updated.json",
+      "sha256": "80cbbf26636a4e6bd734ec2f71a699e5ee1826533b63cf9d4e8992b6ca9cafc2",
+      "media_path": "videos/0055.mp4",
+      "media_sha256": "f10bf49908a9706365cadca85b2ee2ab0aa877c618a1fb58331ef961e439ffc0",
+      "media_bytes": 748039118
+    },
+    {
+      "match_id": "0056",
+      "path": "finebadminton-20K/0056_updated.json",
+      "sha256": "dd9821a598a27efe0d3f8ee74fa4161ac6f589c834c0387de0428c0ebdcc4247",
+      "media_path": "videos/0056.mp4",
+      "media_sha256": "8bafa2040626836b839711c919603321e1cd5792e2e278e365671e4f3a373cc6",
+      "media_bytes": 901126438
+    },
+    {
+      "match_id": "0057",
+      "path": "finebadminton-20K/0057_updated.json",
+      "sha256": "e069f0baf7546d900365fe6e1b15a36a271a53183fe4ba09a68aa09224061ddf",
+      "media_path": "videos/0057.mp4",
+      "media_sha256": "fd0223011801d6f0f23513d1b900c41458988cea8ee7d476a91407cb6a375794",
+      "media_bytes": 958383142
+    },
+    {
+      "match_id": "0058",
+      "path": "finebadminton-20K/0058_updated.json",
+      "sha256": "e083996cfa7c28e9842bf0d21e94beab4264334204ac7dac1eeead9db843539e",
+      "media_path": "videos/0058.mp4",
+      "media_sha256": "6fcdc38dc1e0d53bc06b1e2ed853d99ba354b085d8386fe4246bd22c8515da6f",
+      "media_bytes": 904835784
+    },
+    {
+      "match_id": "0059",
+      "path": "finebadminton-20K/0059_updated.json",
+      "sha256": "db4320dc0d241e225d734695eecf86d567de58ccce01f6a63c07f873aed827e5",
+      "media_path": "videos/0059.mp4",
+      "media_sha256": "37da6616bdedab1a0874b78096cad569fd64eb18e3f66d6ad8d08a812c260235",
+      "media_bytes": 674319253
+    },
+    {
+      "match_id": "0060",
+      "path": "finebadminton-20K/0060_updated.json",
+      "sha256": "a321dabfb9a0f95dc13b4da563a6a492f66ef9a0a2157456123a3f3dc9b14393",
+      "media_path": "videos/0060.mp4",
+      "media_sha256": "c866cc2c5245f51815484dfb212b0795281a834a4342881813473e8ce13677bc",
+      "media_bytes": 801773515
+    },
+    {
+      "match_id": "0061",
+      "path": "finebadminton-20K/0061_updated.json",
+      "sha256": "72ddced6ccf6daac5f2d2f9891d9e1f1cf5a66436bd8363b3c075925a0361dc2",
+      "media_path": "videos/0061.mp4",
+      "media_sha256": "78ec5ededf5aba34fc76a1eebd96dab4f53f51c163984e8bcfebea111a68e525",
+      "media_bytes": 754839593
+    },
+    {
+      "match_id": "0062",
+      "path": "finebadminton-20K/0062_updated.json",
+      "sha256": "5a20fdf6b80a71166503b0412050d4c297b9ba2fb22c76ce5ccb28613cd85059",
+      "media_path": "videos/0062.mp4",
+      "media_sha256": "4adea9c472d77ec23a38a712e1e4703ba7abc2efc3f40c81a2420a341c81d658",
+      "media_bytes": 652039915
+    },
+    {
+      "match_id": "0063",
+      "path": "finebadminton-20K/0063_updated.json",
+      "sha256": "897ce5a180e7e5a53303c0ab99af183972e313e8e238efff52a4a616d6befe70",
+      "media_path": "videos/0063.mp4",
+      "media_sha256": "27c86695894940bf7a8a692a402524a078f506476e7b13d9938637ce13e27aee",
+      "media_bytes": 708756018
+    },
+    {
+      "match_id": "0064",
+      "path": "finebadminton-20K/0064_updated.json",
+      "sha256": "2f9d701bb46f7a7b5516e724eacebb10cf7dfdbe7211b6d7843f1d08e19e67ec",
+      "media_path": "videos/0064.mp4",
+      "media_sha256": "3352f96f16b84f4a7963bf85c2e48bf49155d3d34be42013f0f4816a4987c4e4",
+      "media_bytes": 748707690
+    },
+    {
+      "match_id": "0065",
+      "path": "finebadminton-20K/0065_updated.json",
+      "sha256": "fcb23dceda5bc39640793f4017abde3364d6707a796c95cfbaebfcad64ab8c2e",
+      "media_path": "videos/0065.mp4",
+      "media_sha256": "2df7a5bf8fd52f9add4dabc13fcf0b614efe1428bc44b45501fa071ea660d90b",
+      "media_bytes": 724381044
+    },
+    {
+      "match_id": "0066",
+      "path": "finebadminton-20K/0066_updated.json",
+      "sha256": "dad903d97aa69f46bd3d5be6e353810114d1e62070fbed590d558e57c437e72a",
+      "media_path": "videos/0066.mp4",
+      "media_sha256": "8b76af43f037c0a33128615b5b00e004fad6238887630ef1ef83acbf7113124e",
+      "media_bytes": 684622723
+    },
+    {
+      "match_id": "0067",
+      "path": "finebadminton-20K/0067_updated.json",
+      "sha256": "e03453afc4d01e6172e9cf31fe286f49264d719b636dfcda3d9976e905bfed5f",
+      "media_path": "videos/0067.mp4",
+      "media_sha256": "e1935e5e3df6add9228df405106a428a1d5cecf67b29e54f373b5c70373376a3",
+      "media_bytes": 435300640
+    },
+    {
+      "match_id": "0068",
+      "path": "finebadminton-20K/0068_updated.json",
+      "sha256": "b42e953276b0430ee32709b868964616d369e673e0eff4b45373c990420c8918",
+      "media_path": "videos/0068.mp4",
+      "media_sha256": "ef422ac8930d248beb8f7d5d75ae7e3540138e182039e1e05219af2d0cc3ceb6",
+      "media_bytes": 551613635
+    },
+    {
+      "match_id": "0069",
+      "path": "finebadminton-20K/0069_updated.json",
+      "sha256": "0d4c283a22ca686c27efbe56211e62020e4fb70ee3beb5b76b245d70d5d3ece0",
+      "media_path": "videos/0069.mp4",
+      "media_sha256": "ff31d10c185a5d58f320be656e89e8eb9da5ff53e5e4e5b3cfc68bf73bee702c",
+      "media_bytes": 477890683
+    },
+    {
+      "match_id": "0070",
+      "path": "finebadminton-20K/0070_updated.json",
+      "sha256": "b0947d26d228d2c9e27a3286379d569454314730ee73580b7b6a280d55dc29d1",
+      "media_path": "videos/0070.mp4",
+      "media_sha256": "b711ed9dabfa889cb3160e5c181fa7c4e9fa821977ad60c10517cc7a88c71a16",
+      "media_bytes": 447201004
+    },
+    {
+      "match_id": "0071",
+      "path": "finebadminton-20K/0071_updated.json",
+      "sha256": "b301a8df472f4223136bd59754eeaeef1b97160d2af80dfb2be55b430cf8e98d",
+      "media_path": "videos/0071.mp4",
+      "media_sha256": "cd5882c7daba30d4c80cd0e30da052a0deeda6bc9355013f091f94038c6c906d",
+      "media_bytes": 588285981
+    },
+    {
+      "match_id": "0072",
+      "path": "finebadminton-20K/0072_updated.json",
+      "sha256": "c23d04e4b7c724740f3609a32d16583775e98b05c336ad5e668108e97b236150",
+      "media_path": "videos/0072.mp4",
+      "media_sha256": "e7ab9bab77d0ddbc4c111580dd170669664628b6bb6c0872def62dbe162aa08d",
+      "media_bytes": 1018464472
+    }
+  ],
+  "readiness": "Source labels only; no media alignment, independently adjudicated contact truth or match-level split certification is implied."
+}
