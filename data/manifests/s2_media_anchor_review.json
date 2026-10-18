@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "source_dataset_commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
+  "selection": "First, chronological middle and last issue-free rally with at least3 strokes in each match; selected before new models.",
+  "review_method": "Assistant source-only inspection of first/middle/last selected rally frames and their pre-point score/court/jersey context, before any new model training or inference on these anchors.",
+  "status": "coarse_anchor_support_pending_human",
+  "exact_contact_truth": false,
+  "frame_origin_status": "One-based label-frame /30fps source-clock hypothesis is suitable for explicitly weak supervision only; parent decode ordinals and exact endpoints remain unverified.",
+  "sources": {
+    "1": {
+      "match_id": 1,
+      "id": "EpLD0HrwDJU",
+      "url": "https://www.youtube.com/watch?v=EpLD0HrwDJU",
+      "title": "DAIHATSU Indonesia Masters 2022 | Liang/Wang (CHN) vs. Alfian/Ardianto (INA) [5] | F",
+      "channel_id": "UChh-akEbUM8_6ghGVnJd6cQ",
+      "availability": "public",
+      "duration_s": 3355,
+      "format_id": "136",
+      "width": 1280,
+      "height": 720,
+      "fps": 30
+    },
+    "2": {
+      "match_id": 2,
+      "id": "kbHgum5unYc",
+      "url": "https://www.youtube.com/watch?v=kbHgum5unYc",
+      "title": "DAIHATSU Indonesia Masters 2022 | Gideon/Sukamuljo (INA) [1] vs. Liang/Wang (CHN) | SF",
+      "channel_id": "UChh-akEbUM8_6ghGVnJd6cQ",
+      "availability": "public",
+      "duration_s": 2745,
+      "format_id": "136",
+      "width": 1280,
+      "height": 720,
+      "fps": 30
+    },
+    "3": {
+      "match_id": 3,
+      "id": "QqJsPEd-GoA",
+      "url": "https://www.youtube.com/watch?v=QqJsPEd-GoA",
+      "title": "DAIHATSU Indonesia Masters 2022 | Gicquel/Delrue (FRA) vs. Zheng/Huang (CHN) [2] | F",
+      "channel_id": "UChh-akEbUM8_6ghGVnJd6cQ",
+      "availability": "public",
+      "duration_s": 3550,
+      "format_id": "136",
+      "width": 1280,
+      "height": 720,
+      "fps": 30
+    }
+  },
+  "anchors": [
+    {
+      "match_id": 1,
+      "set_id": 1,
+      "rally_id": 1,
+      "score_key_after": "1_01_00",
+      "split": "train",
+      "selection": "first",
+      "clip_sha256": "284d7832606300ed1c9b0a9e1bafa22069da5db11c8855b179d95cbbd2f2ebb9",
+      "frames": 324,
+      "source_url": "https://www.youtube.com/watch?v=EpLD0HrwDJU",
+      "observed_before_rally_score_AB_CD": [
+        0,
+        0
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 1,
+      "set_id": 2,
+      "rally_id": 4,
+      "score_key_after": "2_02_02",
+      "split": "train",
+      "selection": "middle",
+      "clip_sha256": "5619e6b420f19e510a0ebce4dc7a6c83aa2aba3262e38a805d3aa6b5ae065c91",
+      "frames": 236,
+      "source_url": "https://www.youtube.com/watch?v=EpLD0HrwDJU",
+      "observed_before_rally_score_AB_CD": [
+        1,
+        2
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 1,
+      "set_id": 2,
+      "rally_id": 38,
+      "score_key_after": "2_21_17",
+      "split": "train",
+      "selection": "last",
+      "clip_sha256": "abf34b65a81841ea979c91c99b521ae4c4d95a5f36feacc2bf94d5f1b356f44a",
+      "frames": 150,
+      "source_url": "https://www.youtube.com/watch?v=EpLD0HrwDJU",
+      "observed_before_rally_score_AB_CD": [
+        20,
+        17
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 2,
+      "set_id": 1,
+      "rally_id": 1,
+      "score_key_after": "1_01_00",
+      "split": "validation",
+      "selection": "first",
+      "clip_sha256": "15b911b6e555480771492f73c5ffa3d3b29bee60034ca4322be33c62a1e1bd09",
+      "frames": 398,
+      "source_url": "https://www.youtube.com/watch?v=kbHgum5unYc",
+      "observed_before_rally_score_AB_CD": [
+        0,
+        0
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 2,
+      "set_id": 1,
+      "rally_id": 37,
+      "score_key_after": "1_20_17",
+      "split": "validation",
+      "selection": "middle",
+      "clip_sha256": "20c632a2d32d1a3e94ca2279fb1064f684eebb10f898b5201fa57b8fddd72990",
+      "frames": 125,
+      "source_url": "https://www.youtube.com/watch?v=kbHgum5unYc",
+      "observed_before_rally_score_AB_CD": [
+        19,
+        17
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 2,
+      "set_id": 2,
+      "rally_id": 31,
+      "score_key_after": "2_21_10",
+      "split": "validation",
+      "selection": "last",
+      "clip_sha256": "07fb028ab866e3de8a316b9fcd10548386ff8086b78bf8f54f051dc676e8ec92",
+      "frames": 230,
+      "source_url": "https://www.youtube.com/watch?v=kbHgum5unYc",
+      "observed_before_rally_score_AB_CD": [
+        20,
+        10
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 3,
+      "set_id": 1,
+      "rally_id": 1,
+      "score_key_after": "1_00_01",
+      "split": "test",
+      "selection": "first",
+      "clip_sha256": "be8fe6eda091ec15b0f062f11c0fb8c34c8d20e4006471912c0711265ff4e376",
+      "frames": 187,
+      "source_url": "https://www.youtube.com/watch?v=QqJsPEd-GoA",
+      "observed_before_rally_score_AB_CD": [
+        0,
+        0
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 3,
+      "set_id": 2,
+      "rally_id": 4,
+      "score_key_after": "2_02_02",
+      "split": "test",
+      "selection": "middle",
+      "clip_sha256": "091f75129c4c14ef166e56b74f6f5a78d66c1e280cf5caa431efab753ac7b293",
+      "frames": 134,
+      "source_url": "https://www.youtube.com/watch?v=QqJsPEd-GoA",
+      "observed_before_rally_score_AB_CD": [
+        1,
+        2
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    },
+    {
+      "match_id": 3,
+      "set_id": 2,
+      "rally_id": 35,
+      "score_key_after": "2_21_14",
+      "split": "test",
+      "selection": "last",
+      "clip_sha256": "677af6f2ad4637ed9bd6a6c299ec1dce08ece9fffe69711debb369ad2d5da6c4",
+      "frames": 200,
+      "source_url": "https://www.youtube.com/watch?v=QqJsPEd-GoA",
+      "observed_before_rally_score_AB_CD": [
+        20,
+        14
+      ],
+      "assessment": "Continuous court play and post-point behavior match the selected source rally; shown jerseys, court ends and available score display support the source catalog. Contact precision is not certified."
+    }
+  ],
+  "original_normalized_training_ready_unchanged": true
+}
