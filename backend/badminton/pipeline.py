@@ -14,6 +14,7 @@ import os
 import time
 from pathlib import Path
 
+from .actor_linking import link_player_runs
 from .calibration_context import court_run_context
 from .config import WEIGHTS
 from .contacts import METHOD as CONTACT_METHOD
@@ -250,7 +251,7 @@ def process_match(
         },
     )
     completed, reused = 0, 0
-    total = 1 + len(windows) * len(STAGES)
+    total = 2 + len(windows) * len(STAGES)
     last_tick = -1
     last_context_check = 0
 
@@ -280,6 +281,13 @@ def process_match(
         report(0)
         index = part["window"]["index"] if part else -1
         dependencies = {}
+        if name == "identities":
+            dependencies = {
+                f"players:{part['window']['index']}": part["stages"]["players"][
+                    "sha256"
+                ]
+                for part in plan["parts"]
+            }
         if part:
             dependencies["segments"] = plan["segments"]["sha256"]
             dependencies.update(
@@ -350,6 +358,10 @@ def process_match(
                                     "boundaries",
                                     "camera_ranges",
                                     "court_detection",
+                                    "actors",
+                                    "tracks",
+                                    "links",
+                                    "rejected_links",
                                 )
                             },
                         },
@@ -416,6 +428,12 @@ def process_match(
                 if "candidates" in run
                 else 0,
             }
+            if name == "identities":
+                checkpoint.update(
+                    actor_count=run["actor_count"],
+                    linked_actor_count=run["linked_actor_count"],
+                    accepted_link_count=run["accepted_link_count"],
+                )
             summary = {
                 k: v
                 for k, v in run.items()
@@ -426,6 +444,10 @@ def process_match(
                     "boundaries",
                     "camera_ranges",
                     "court_detection",
+                    "actors",
+                    "tracks",
+                    "links",
+                    "rejected_links",
                 )
             }
             summary["checkpoint"] = checkpoint
@@ -580,6 +602,33 @@ def process_match(
                     callback(1)
 
             stage("recognition", part, recognize)
+
+        def identities(output, callback):
+            def player_inputs():
+                for part in plan["parts"]:
+                    checkpoint = part["stages"]["players"]
+                    source = (
+                        store.data
+                        / video["id"]
+                        / "runs"
+                        / f"{checkpoint['run_id']}.json"
+                    )
+                    if file_sha(source) != checkpoint["sha256"]:
+                        raise ValueError("Player input changed before actor linking")
+                    yield (
+                        checkpoint["run_id"],
+                        json.loads(source.read_text(encoding="utf-8")),
+                    )
+
+            result = link_player_runs(video, player_inputs(), callback)
+            result["source_context_signature"] = recipe["context_signature"]
+            result["input_artifact_hashes"] = {
+                p["stages"]["players"]["run_id"]: p["stages"]["players"]["sha256"]
+                for p in plan["parts"]
+            }
+            write_json(output, result)
+
+        stage("identities", None, identities)
         plan.update(
             state="completed",
             active=None,

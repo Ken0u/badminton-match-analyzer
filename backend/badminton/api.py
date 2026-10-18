@@ -679,12 +679,20 @@ def create_app(
 
     @app.get("/api/videos/{video_id}/runs/{job_id}")
     def run(video_id: str, job_id: str):
-        store.video(video_id)
+        video = store.video(video_id)
         if not any(
             j["id"] == job_id
             and j["status"] == "completed"
             and j["kind"]
-            in ("players", "shuttle", "contacts", "recognition", "segments", "rallies")
+            in (
+                "players",
+                "shuttle",
+                "contacts",
+                "recognition",
+                "segments",
+                "rallies",
+                "identities",
+            )
             for j in store.jobs(video_id)
         ):
             raise HTTPException(404)
@@ -731,6 +739,12 @@ def create_app(
                         doc.track_assignments,
                         result.get("player_run_id"),
                     )
+        elif result.get("stage") == "identities":
+            from .rallies import context_signature
+
+            result["requires_context_rerun"] = result.get(
+                "source_context_signature"
+            ) != context_signature(doc, 0, video["frame_count"])
         result["identity_annotation_revision"] = doc.revision
         return result
 

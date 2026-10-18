@@ -2,6 +2,15 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [actor-continuity work](ACTOR_CONTINUITY_REPORT.md) removes automatic-ID
+discontinuity at overlapping processing windows. Co-present tracks cannot merge,
+ambiguous correspondence stays unresolved and camera cuts remain separate.
+Review caught a gap leak in the new hints; exact eligible observation ranges now
+prevent labels appearing over weak or excluded frames. The UI also replaces its
+own stale queued notice on completion while preserving newer messages. Full
+regression passes 633 tests with four optional GPU skips; generated and cached
+native browser checks pass. Verified person identity across cuts remains open.
+
 The [FineBadminton source audit](FINEBADMINTON_REPORT.md) catches a misleading
 `kill` translation, contact-frame fields omitted from the larger release and
 one side label missing from that release. The adapter verifies both publications,

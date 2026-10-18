@@ -26,7 +26,20 @@ export function createProcessingTools({
   clearLoaded,
 }) {
   let plan = null,
-    jobId = null;
+    jobId = null,
+    actorRunId = null,
+    noticeJobId = null,
+    actors = new Map();
+  function actorForTrack(runId, trackId, frame) {
+    if (!state.analysisEnabled || stale()) return null;
+    const actor = actors.get(`${runId}:${trackId}`);
+    return actor?.linked_across_windows &&
+      actor.observation_ranges?.some(
+        ([start, end]) => start <= frame && frame < end,
+      )
+      ? actor
+      : null;
+  }
   function scope() {
     return state.analysisEnabled
       ? `${plan?.analysis_key}:${state.analysisPart?.window.index}`
@@ -60,6 +73,11 @@ export function createProcessingTools({
   function reset() {
     plan = null;
     jobId = null;
+    actorRunId = null;
+    noticeJobId = null;
+    actors.clear();
+    delete $("analysis-status").dataset.jobId;
+    delete $("analysis-status").dataset.jobStatus;
     state.analysisEnabled = false;
     state.analysisPart = null;
     $("analysis-windows").innerHTML = "";
@@ -89,6 +107,8 @@ export function createProcessingTools({
   }
   function render() {
     if (!plan) return;
+    $("analysis-status").dataset.jobId = jobId;
+    $("analysis-status").dataset.jobStatus = plan.job.status;
     if (stale()) {
       $("analysis-status").textContent =
         "Camera, scene or court context changed. Save, then process again with the current context.";
@@ -110,6 +130,9 @@ export function createProcessingTools({
               : `Processing ${active?.stage ?? "source"}${active?.part_index >= 0 ? ` · window ${active.part_index + 1}` : ""}`;
     $("analysis-status").textContent =
       `${stateText} · ${Math.round((plan.job.progress ?? 0) * 100)}%`;
+    if (plan.identities)
+      $("analysis-status").textContent +=
+        ` · ${plan.identities.linked_actor_count} overlap-linked actor groups (unreviewed)`;
     $("review-analysis").disabled = !plan.parts.length;
     $("leave-analysis").disabled = !state.analysisEnabled;
   }
@@ -134,11 +157,49 @@ export function createProcessingTools({
     const oldKey = plan?.analysis_key;
     plan = result;
     jobId = job.id;
+    if (
+      noticeJobId === job.id &&
+      !["queued", "running"].includes(plan.job.status)
+    ) {
+      const message = $("notice").textContent;
+      if (
+        message.startsWith("Full-match processing queued.") ||
+        message.startsWith("Pausing processing;")
+      ) {
+        notice(
+          plan.state === "completed"
+            ? "Full-match processing complete. Review proposals and unresolved labels."
+            : plan.state === "interrupted"
+              ? "Processing paused. Resume to reuse completed stages."
+              : `Processing stopped: ${plan.error || plan.job.message}`,
+          plan.state === "failed",
+        );
+      }
+      noticeJobId = null;
+    }
     if (isNew) {
       state.analysisEnabled = true;
       clearLoaded();
     }
     if (oldKey && oldKey !== plan.analysis_key) clearLoaded();
+    if (oldKey !== plan.analysis_key) {
+      actorRunId = null;
+      actors.clear();
+    }
+    if (plan.identities && plan.identities.run_id !== actorRunId) {
+      const identityId = plan.identities.run_id;
+      const identity = await api(
+        `/api/videos/${state.video.id}/runs/${identityId}`,
+      );
+      if (generation !== state.selectionGeneration) return;
+      actors = new Map(
+        (identity.requires_context_rerun ? [] : identity.tracks).map(
+          (actor) => [`${actor.run_id}:${actor.track_id}`, actor],
+        ),
+      );
+      actorRunId = identityId;
+      clearLoaded();
+    }
     const selected = $("analysis-windows").value;
     $("analysis-windows").replaceChildren(
       ...plan.parts.map((part) => {
@@ -158,7 +219,7 @@ export function createProcessingTools({
     try {
       if (state.dirty)
         throw Error("Save annotations before processing the match.");
-      await api(`/api/videos/${state.video.id}/analysis`, {
+      const created = await api(`/api/videos/${state.video.id}/analysis`, {
         method: "POST",
         body: JSON.stringify({
           player_model: $("player-model").value,
@@ -166,6 +227,7 @@ export function createProcessingTools({
           recognize: $("analysis-recognize").checked,
         }),
       });
+      noticeJobId = created.id;
       $("analysis-status").textContent = "Processing queued…";
       notice(
         "Full-match processing queued. Completed stages will be reused when their inputs match.",
@@ -180,6 +242,7 @@ export function createProcessingTools({
       await api(`/api/videos/${state.video.id}/analysis/${jobId}/pause`, {
         method: "POST",
       });
+      noticeJobId = jobId;
       notice(
         "Pausing processing; completed stages remain available to resume.",
       );
@@ -202,5 +265,5 @@ export function createProcessingTools({
     leave();
     pollJobs().catch((e) => notice(e.message, true));
   };
-  return { reset, refresh, render, scope, frameChanged, leave };
+  return { reset, refresh, render, scope, frameChanged, leave, actorForTrack };
 }

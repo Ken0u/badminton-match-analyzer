@@ -6,7 +6,7 @@ import pytest
 from badminton import pipeline
 from badminton.jobs import JobCancelled, run_local_job
 from badminton.scene_review import corrected_boundaries, reviewed_contacts, reviewed_run
-from badminton.schemas import CameraCorrection, Event, SceneRange
+from badminton.schemas import Calibration, CameraCorrection, Event, SceneRange
 from badminton.segments import slice_camera_scan
 from badminton.storage import ConflictError, Store
 from badminton.video import write_json
@@ -163,14 +163,14 @@ def test_complete_processing_and_resume_reuse_immutable_registered_artifacts(wor
     _, store, video, _, calls = workspace
     before = store.annotations(video["id"]).model_dump()
     result = execute(workspace)
-    assert result["parts"] == 3 and result["completed_stages"] == 16
+    assert result["parts"] == 3 and result["completed_stages"] == 17
     assert result["reused_stages"] == 0 and not result["fully_annotated"]
     snapshots = {
         p.name: p.read_bytes() for p in (store.data / "test" / "runs").glob("*.json")
     }
     calls.clear()
     resumed = execute(workspace)
-    assert resumed["reused_stages"] == 16 and calls == []
+    assert resumed["reused_stages"] == 17 and calls == []
     assert {
         p.name: p.read_bytes() for p in (store.data / "test" / "runs").glob("*.json")
     } == snapshots
@@ -330,7 +330,7 @@ def test_recover_both_registration_and_manifest_write_interruption(workspace):
         )
     calls.clear()
     recovered = execute(workspace)
-    assert recovered["reused_stages"] == 16 and calls == []
+    assert recovered["reused_stages"] == 17 and calls == []
     assert store.job(registered_id)["status"] == "completed"
     assert (
         pipeline.read_plan(store, "test", result["analysis_key"])["parts"][0]["stages"][
@@ -406,5 +406,89 @@ def test_disabling_recognition_reuses_all_completed_perception(workspace):
     execute(workspace)
     calls.clear()
     result = execute(workspace, SETTINGS | {"recognize": False})
-    assert result["reused_stages"] == 13
+    assert result["reused_stages"] == 14
+    assert calls == []
+
+
+def test_overlap_actors_are_checkpointed_without_editing_reviewed_identities(
+    workspace, monkeypatch
+):
+    _, store, video, _, _ = workspace
+    doc = store.annotations(video["id"])
+    corners = [
+        {"x": 0.1, "y": 0.1},
+        {"x": 0.9, "y": 0.1},
+        {"x": 0.9, "y": 0.9},
+        {"x": 0.1, "y": 0.9},
+    ]
+    doc.calibrations = [
+        Calibration(start_frame=a, end_frame=b, corners=corners)
+        for a, b in ((0, 350), (350, 1300))
+    ]
+    store.save_annotations(video["id"], doc)
+    before = store.annotations(video["id"]).model_dump()
+    original = pipeline.track_players
+
+    def observed(
+        v, root, data, annotations, first, last, stride, callback, output, **kwargs
+    ):
+        original(
+            v, root, data, annotations, first, last, stride, callback, output, **kwargs
+        )
+        raw = json.loads(output.read_text(encoding="utf-8"))
+        for row in raw["frames"]:
+            camera = 350 if row["frame"] >= 350 else 0
+            row.update(camera_segment_start_frame=camera, calibration_valid=True)
+            row["players"] = [
+                {
+                    "track_id": first * 10 + camera + i,
+                    "confidence": 0.9,
+                    "box": box,
+                    "keypoints": [],
+                }
+                for i, box in enumerate(([100, 80, 140, 160], [300, 180, 350, 280]), 1)
+            ]
+        raw["calibration_signature"] = pipeline.context_signature(
+            annotations, first, last
+        )["court"]
+        write_json(output, raw)
+
+    monkeypatch.setattr(pipeline, "track_players", observed)
+    summary = execute(workspace)
+    plan = pipeline.read_plan(store, video["id"], summary["analysis_key"])
+    receipt = plan["identities"]
+    assert receipt["linked_actor_count"] == 2 and receipt["accepted_link_count"] == 4
+    job = store.job(receipt["run_id"])
+    assert job["status"] == "completed" and job["kind"] == "identities"
+    assert all(key not in job["summary"] for key in ("tracks", "actors", "links"))
+    path = store.data / video["id"] / "runs" / (receipt["run_id"] + ".json")
+    result = json.loads(path.read_text(encoding="utf-8"))
+    assert not result["reviewed"] and not result["cross_camera_identity"]
+    assert result["input_artifact_hashes"] == {
+        p["stages"]["players"]["run_id"]: p["stages"]["players"]["sha256"]
+        for p in plan["parts"]
+    }
+    assert store.annotations(video["id"]).model_dump() == before
+    assert execute(workspace)["reused_stages"] == 17
+
+
+def test_pause_during_actor_linking_preserves_all_finished_perception(
+    workspace, monkeypatch
+):
+    _, store, video, _, calls = workspace
+    original = pipeline.link_player_runs
+
+    def pause(*args, **kwargs):
+        raise JobCancelled("Pause actor stage")
+
+    monkeypatch.setattr(pipeline, "link_player_runs", pause)
+    with pytest.raises(JobCancelled):
+        execute(workspace)
+    job = next(j for j in store.jobs() if j["kind"] == "analysis")
+    plan = pipeline.read_plan(store, video["id"], job["details"]["analysis_key"])
+    assert plan["completed_stages"] == 16 and "identities" not in plan
+    calls.clear()
+    monkeypatch.setattr(pipeline, "link_player_runs", original)
+    resumed = execute(workspace)
+    assert resumed["completed_stages"] == 17 and resumed["reused_stages"] == 16
     assert calls == []
