@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "badminton-match-analyzer"
-version = "0.22.0"
+version = "0.23.0"
 description = "Local badminton video inspection, tracking, and annotation"
 requires-python = ">=3.10"
 dependencies = [
@@ -33,7 +33,7 @@ badminton = "badminton.cli:main"
 where = ["backend"]
 
 [tool.setuptools.package-data]
-badminton = ["static/*", "assets/*", "model_manifest.json", "shuttleset_manifest.json", "s2doubles_manifest.json", "finebadminton_manifest.json", "side_training_manifest.json", "vendor/*.json", "vendor/*LICENSE", "vendor/bst/*.json", "vendor/bst/LICENSE"]
+badminton = ["static/*", "assets/*", "model_manifest.json", "shuttleset_manifest.json", "s2doubles_manifest.json", "finebadminton_manifest.json", "aicup2023_manifest.json", "side_training_manifest.json", "vendor/*.json", "vendor/*LICENSE", "vendor/bst/*.json", "vendor/bst/LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

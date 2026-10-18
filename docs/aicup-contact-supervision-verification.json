@@ -1,0 +1,144 @@
+{
+  "source_record": 14677727,
+  "archive_sha256": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+  "whole_outer_md5_verified": false,
+  "http_etag_provided": false,
+  "record_count": 7845,
+  "media_count": 969,
+  "clip_counts": {
+    "train": 800,
+    "val": 169
+  },
+  "label_counts": {
+    "train": 800,
+    "val": 0
+  },
+  "all_raw_rows_and_ordinals_equal_published_csv": true,
+  "all_media_and_label_member_hashes_independently_checked": true,
+  "byte_identical_video_duplicate_groups": 0,
+  "structural_issues": {},
+  "family_counts": {
+    "serve": 800,
+    "drop": 653,
+    "net": 2461,
+    "other": 526,
+    "lift": 1391,
+    "clear": 713,
+    "smash": 989,
+    "drive": 312
+  },
+  "side_counts": {
+    "forehand": 4792,
+    "backhand": 3053
+  },
+  "family_side_counts": {
+    "clear:backhand": 74,
+    "clear:forehand": 639,
+    "drive:backhand": 96,
+    "drive:forehand": 216,
+    "drop:backhand": 76,
+    "drop:forehand": 577,
+    "lift:backhand": 696,
+    "lift:forehand": 695,
+    "net:backhand": 1189,
+    "net:forehand": 1272,
+    "other:backhand": 269,
+    "other:forehand": 257,
+    "serve:backhand": 641,
+    "serve:forehand": 159,
+    "smash:backhand": 12,
+    "smash:forehand": 977
+  },
+  "source_clock_audit": {
+    "clips": 969,
+    "decoded_frames": 317759,
+    "all_header_counts_equal_decode": true,
+    "rate_counts": {
+      "30": 969
+    },
+    "shape_counts": {
+      "(1280, 720)": 969
+    },
+    "all_contacts_within_at_least_one_ordinal_convention": true,
+    "clips_requiring_zero_base_by_bounds": [
+      "00065",
+      "00092",
+      "00094",
+      "00115",
+      "00127",
+      "00147",
+      "00156",
+      "00176",
+      "00177",
+      "00185",
+      "00202",
+      "00283",
+      "00378",
+      "00426",
+      "00523",
+      "00601",
+      "00637",
+      "00667",
+      "00717"
+    ],
+    "clips_requiring_one_base_by_bounds": [],
+    "ledger_sha256": "de5ca6509087dfd79048e179fc500536660127b8c7927aad995ab8faf739585b",
+    "contact_timing_independently_adjudicated": false,
+    "torch_imported": false,
+    "model_inference": false,
+    "main_annotation_writes": false,
+    "elapsed_s": 140.89100000000326
+  },
+  "package": {
+    "wheel": ".cache\\dist\\badminton_match_analyzer-0.23.0-py3-none-any.whl",
+    "wheel_sha256": "934ae79752ee462f210c14cfabcfcb2ae9708c4e354b2ddbd70ae8b4ae8151dd",
+    "package_files": 66,
+    "all_package_files_equal_worktree": true,
+    "imported_module_from_extracted_wheel": true,
+    "actual_full_cli_import": {
+      "record_count": 7845,
+      "clip_counts": {
+        "train": 800,
+        "val": 169
+      },
+      "labelled_clip_count": 800,
+      "contact_label_eligible_records": 7845,
+      "training_ready_records": 0,
+      "media_alignment": "unverified"
+    },
+    "complete_index_outputs_byte_equal_source_cli": true,
+    "output_hashes": {
+      "records.json": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+      "clips.json": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+      "manifest.json": "6783ad8ea675c60fc6fead23c3b55dc076363c7a55df4550ac030f88cc8fd979"
+    },
+    "new_model_inference": false
+  },
+  "tests": {
+    "passed": 687,
+    "optional_gpu_skipped": 4,
+    "junit": "aicup-full-tests-v2.xml"
+  },
+  "source_review_scope": {
+    "source_only": true,
+    "model_predictions_opened": false,
+    "source_sheets_viewed": [
+      "00001-source-sheet.jpg",
+      "00004-source-sheet.jpg",
+      "00006-source-sheet.jpg"
+    ],
+    "additional_boundary_sheet_viewed": "source-boundary-inspection/source-sheet.jpg",
+    "notes": "The first three clips show two broadcast singles views and one self-recorded target court with other courts visible. Published contact neighborhoods are plausible but no universal exact ordinal base or independent family/side adjudication is established. Targeted clips00065/00092/00094 have first published contact0; no pre-video context exists and precise contact timing remains unresolved. No labels were rewritten."
+  },
+  "all_normalized_splits_unassigned": true,
+  "training_ready_records": 0,
+  "main_annotations_equal_before": true,
+  "new_model_inference": false,
+  "full_annotation_accuracy_established": false,
+  "source_files_sha256": {
+    "backend/badminton/aicup_data.py": "73265517bb8ab6193274fd99caa58429068f7ad365c81ac3d11c87c23b3a9421",
+    "backend/badminton/aicup2023_manifest.json": "bddb4c53efd6b181536ae56fdcc6b9e9934bf8ceb2d841195eeee29fee19aaa1",
+    "backend/badminton/cli.py": "7fb04c5d3faf222c766701091adaf7edb87b75844a706eacfacc330238d62778",
+    "tests/test_aicup_data.py": "16153ae719526330f81e9474a6af93cc2135e9713031ae12b84421d02ccdad99"
+  }
+}

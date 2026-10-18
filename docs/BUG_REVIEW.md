@@ -2,6 +2,18 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [AI CUP contact-supervision audit](AICUP_CONTACT_SUPERVISION_REPORT.md)
+identifies a different 1/2 backhand convention, numbered clips lacking original
+match IDs and incomplete preprocessing in a published visual detector. The new
+importer retains contact ordinals and unknown alignment/splits, verifies all
+media/label bytes and rejects archive/source conflicts before writing an index.
+Review also caught a missing-frame value hiding a reversal between the known
+contacts on either side; that full sequence is now quarantined and regression-tested.
+It imports all 7,845 published contacts and preserves 169 unlabelled clips.
+687 Python regressions pass with four optional GPU skips; existing saved events
+and model predictions remain unchanged. Broader aligned supervision is now
+available for the next model improvement; this is not improved detector accuracy.
+
 The [player tracking study](PLAYER_TRACKING_RECOVERY_REPORT.md) catches our
 detector gate disabling weak association, but also rejects the direct fix after
 new source breaks and rejects a motion-tracker replacement after a doubles ID
