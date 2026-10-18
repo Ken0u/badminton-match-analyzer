@@ -4,6 +4,8 @@ Prepared October 17, 2026.
 
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 
+The October 18 [camera-context audit](docs/EARLY_CAMERA_CUT_REPORT.md) fixes an early-edit detector miss and complete temporal evidence ranges. It also exposes and corrects mixed-camera research inputs before any model optimization. Corrected extraction spans 203 source rallies with fixed match-level splits; temporal contact and raw-YOLO doubles family/side learners remain queued for measured held-out evaluation. Integrating a supported model, completing whole-match processing, and establishing unseen full-match correctness remain open.
+
 End-state requirement: a polished, deployable application that accepts uploaded videos and YouTube match links and correctly annotates supported singles and doubles footage throughout each match. Keep expanding difficult camera/visibility cases toward that full objective; the existing review tools and small pilot are intermediate deliverables. Claims of complete correctness require verified end-to-end evidence on unseen full matches. Each implementation increment uses a feature branch, focused commits, a tested PR, and a merge into main. Run regression checks and investigate failures continuously.
 
 The input/deployment increment adds bounded video uploads, single-video YouTube imports with source provenance, authentication for a network listener, configurable persistent storage, container targets, and CI checks. Full automatic analysis, playback proxies, camera/replay segmentation, complete-rally labels, and classifier training remain open requirements.
