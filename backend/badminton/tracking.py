@@ -87,6 +87,14 @@ def associate_observations(result, tracker, image, threshold, offset, pose=True)
     )
     players = []
     for index, box, identity, confidence in observations:
+        # Results.update clips association boxes to orig_shape. Direct engine
+        # integration must preserve that publication behavior, not its unbounded
+        # Kalman coordinates. The engines retain their own unmodified state.
+        height, width = image.shape[:2]
+        box = [
+            max(0, min(width if axis % 2 == 0 else height, value))
+            for axis, value in enumerate(box)
+        ]
         points = (
             result.keypoints.data[int(indices[index])].cpu().tolist()
             if pose and result.keypoints is not None

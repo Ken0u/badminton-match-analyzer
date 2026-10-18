@@ -114,3 +114,13 @@ def test_dual_association_preserves_pose_indices_and_separates_ids_after_reset(
     for tracker, gate in zip(trackers, (0.25, 0.1)):
         later = associate_observations(result, tracker, image, gate, offset)
         assert all(p["track_id"] not in all_ids for p in later)
+
+    class OutsideTracker:
+        tracked_stracks = ()
+
+        def update(self, selected, picture):
+            return np.asarray([[-10, -5, 700, 230, 1, 0.9, 0, 0]], dtype=np.float32)
+
+    outside = associate_observations(result, OutsideTracker(), image, 0.25, 0)
+    assert outside[0]["box"] == [0, 0, 640, 200]
+    assert outside[0]["keypoints"][0][:2] == [40, 30]

@@ -4,8 +4,9 @@ Player detections fragment during brief occlusion and rapid changes of pose.
 The proposed correction retains the existing ByteTrack observations and uses a
 second motion association to corroborate short joins between disjoint fragments.
 It does not replace baseline boxes with a different tracker, interpolate missing
-players or identify a roster member. Integrated native validation is pending;
-the live app remains on the prior verified release.
+players or identify a roster member. All original player windows now pass
+integrated CUDA processing and the final package's CPU context/clipping replay.
+Seven short joins are supported; complete match identity remains unproven.
 
 ## Why the first two replacements were rejected
 
@@ -72,6 +73,22 @@ tracker links them. The production pure linker reproduces those seven maps and
 adds full source/input validation and excluded-scene co-presence guards. That
 cached-input result does not substitute for fresh integrated inference.
 
+The integrated single-detector run then processes all 18 windows and supports
+the same seven joins. All source clocks, camera context and artifact hashes are
+checked. The earlier three added breaks are absent, and baseline tracks are not
+reassociated to different old tracks. The conflicting doubles motion branch is
+quarantined instead of replacing the baseline person's ID.
+
+The integration audit catches a missed library operation: `Results.update`
+normally clips association boxes to source bounds, whereas direct engine output
+can extend beyond the image. Publication clipping is restored and covered by a
+real-engine regression. The final package replays deterministic clipping and
+current context guards on all immutable fresh native rows, checking that every
+baseline box, confidence and pose equals the original in exact numeric value,
+that no observations are lost and that all canonical decisions remain unchanged.
+This is explicit CPU finalization after inference, not a claim that the final
+guard/clipping source ran another GPU pass. Original raw artifacts are retained.
+
 ## Context and review safety
 
 Continuity uses evidence throughout the player window. Changing a scene range
@@ -99,11 +116,35 @@ PTS, bad input, short/weak/missing evidence, ambiguous boxes, brief switches,
 excluded co-presence, stride and cancellation. Actual CPU engines check the weak
 association band, independent ID namespaces, pose indices and cut resets.
 Scene/API regressions exercise stale remote evidence and reviewed-name safety.
-Final full regression and integrated native results are pending.
+Final full regression passes **658 tests**, with four optional GPU skips. Lint,
+format and dependency checks pass.
+
+The complete integrated comparison retains all 32 frozen cases: three of 11
+positive pairs join, eight remain different; all four different opponents remain
+different. Among the 17 source-unknown cases, four receive the same ID, 12 different
+IDs and one lacks usable correspondence. Unknown cases do not become identity
+truth. All seven accepted join sheets are inspected; mixed/occluded examples
+remain qualified development evidence, without changing the frozen source labels.
+
+Read-only browser checks of the final package pass both formats: changed raw
+baseline IDs retain a canonical track over the observed gap, native frames load,
+the hitter stays unknown, and annotations remain unchanged with no page errors.
+Source overlays and screenshots are inspected. These check integration rather
+than independent player accuracy.
+
+Using the final player rows with the unchanged native shuttle artifacts,
+all 18 old contact lists reproduce exactly. All 353 owned new proposals have an
+old counterpart within 120 ms, with no unmatched old or new proposals. This is
+proposal agreement, not contact or hitter accuracy; no stroke head is evaluated
+or installed by this increment.
 
 Evidence is preserved in `.cache/bytetrack-native-v1`, `v2` and `v3` ledgers and
 corresponding data/runtime directories, `.cache/dual-consensus-prototype-v1`,
 `.cache/dual-consensus-production-v2` and `.cache/person-reid-pairs-v1`.
+Final packaged derivation is `.cache/dual-native-final-v1` and its separate store;
+browser/source review is `.cache/dual-native-browser-v1.json` and
+`.cache/dual-source-joins-v2`. Contact agreement is preserved in
+`.cache/motion-contact-comparison-final-v2`.
 The first pure verification helper compared an eligible-only prototype map to
 production's additional uncalibrated self-maps; its corrected comparison checks
 all prototype entries and requires every additional entry to map only to itself.
