@@ -2,6 +2,12 @@
 
 from copy import deepcopy
 
+from .calibration_context import (
+    court_context_changed,
+    court_signature,
+    effective_annotations,
+)
+
 
 def plain(item):
     return item.model_dump() if hasattr(item, "model_dump") else item
@@ -68,8 +74,15 @@ def reviewed_run(run, annotations):
     doc = plain(annotations)
     start, end = run["start_frame"], run["end_frame"]
     result = corrected_boundaries(run, doc, start, end)
+    result["requires_court_tracking_rerun"] = (
+        run.get("stage") == "players"
+        and "calibration_signature" in run
+        and run["calibration_signature"]
+        != court_signature(effective_annotations(doc, run), start, end)
+    )
     result["requires_tracking_rerun"] = (
         run.get("requires_tracking_rerun", False)
+        or result["requires_court_tracking_rerun"]
         or result["cut_frames"] != sorted(run.get("cut_frames", []))
         or result["preceding_reviewed_cut_frame"]
         != run.get("preceding_reviewed_cut_frame")
@@ -118,6 +131,7 @@ def reviewed_run(run, annotations):
 
 def reviewed_contacts(run, annotations):
     result = deepcopy(run)
+    result["requires_context_rerun"] = court_context_changed(annotations, run)
     for candidate in result.get("candidates", []):
         if "context_start_frame" not in candidate and candidate.get(
             "evidence_source"

@@ -41,6 +41,7 @@ try {
   assert.equal(before.events.length, 0);
   await ready();
   assert.equal(await page.locator("#player-model").inputValue(), "small");
+  assert.equal(await page.locator("#auto-court").isChecked(), true);
   await page.locator("#player-model").selectOption("nano");
   let requestBody;
   await page.route("**/track", async (route) => {
@@ -56,6 +57,13 @@ try {
     document.querySelector("#notice").textContent.includes("QA intercepted"),
   );
   assert.equal(requestBody.player_model, "nano");
+  assert.equal(requestBody.auto_calibrate, true);
+  await page.locator("#auto-court").uncheck();
+  await Promise.all([
+    page.waitForResponse((r) => r.url().endsWith("/track")),
+    page.locator("#track").click(),
+  ]);
+  assert.equal(requestBody.auto_calibrate, false);
   await page.unroute("**/track");
   await page.locator("#suggest-rallies").click();
   await page.waitForFunction(
@@ -152,6 +160,41 @@ try {
     await page.locator("#rally-candidates button:disabled").count(),
     2,
   );
+  // Simulated derived geometry exercises UI review without changing server truth.
+  const playerRun = await json(root + "/runs/qa-players");
+  const currentDoc = await json(root + "/annotations");
+  await page.route(`**${root}/annotations`, async (route) => {
+    assert.equal(route.request().method(), "GET");
+    await route.fulfill({ json: { ...currentDoc, calibrations: [] } });
+  });
+  await page.route(`**${root}/runs/qa-players`, async (route) => {
+    await route.fulfill({
+      json: {
+        ...playerRun,
+        court_context_version: 1,
+        automatic_calibrations: currentDoc.calibrations,
+      },
+    });
+  });
+  await ready();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#court-status")
+      .textContent.includes("Auto-detected"),
+  );
+  assert.match(await page.locator("#court-status").textContent(), /unreviewed/);
+  // A draft camera change immediately hides the run-local fit.
+  await page.locator("#camera-panel").evaluate((e) => (e.open = true));
+  await page.locator("#camera-frame").fill("20");
+  await page.locator("#camera-decision").selectOption("cut");
+  await page.locator("#camera-apply").click();
+  assert.match(
+    await page.locator("#court-status").textContent(),
+    /No calibration/,
+  );
+  await page.unroute(`**${root}/annotations`);
+  await page.unroute(`**${root}/runs/qa-players`);
+  await ready();
   await fs.mkdir("data/processed/qa", { recursive: true });
   await page.screenshot({
     path: "data/processed/qa/rally-browser.png",

@@ -10,6 +10,7 @@ from copy import deepcopy
 
 import numpy as np
 
+from .calibration_context import effective_annotations
 from .contact_features import build_contact_features, visible
 from .rallies import _court_position, context_signature
 from .scene_review import plain, reviewed_run
@@ -103,7 +104,12 @@ class StrokeContext:
         self.shuttle = reviewed_run(shuttle_run, self.doc)
         for run in (self.players, self.shuttle):
             if run["requires_tracking_rerun"]:
+                if run.get("requires_court_tracking_rerun"):
+                    raise ValueError(
+                        "Court calibration changed inputs; rerun player tracking"
+                    )
                 raise ValueError("Camera corrections changed inputs; rerun tracking")
+        self.doc = effective_annotations(self.doc, self.players)
         expected = context_signature(
             self.doc, self.players["start_frame"], self.players["end_frame"]
         )["court"]

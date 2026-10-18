@@ -6,6 +6,7 @@ import time
 
 import numpy as np
 
+from .calibration_context import court_run_context, effective_annotations
 from .config import MODEL_MANIFEST, WEIGHTS
 from .identity import resolve_contact_player
 from .scene_review import (
@@ -14,6 +15,7 @@ from .scene_review import (
     reviewed_contacts,
     reviewed_run,
 )
+from .schemas import Calibration
 from .stroke_features import build_stroke_clip, summarize_probabilities
 from .video import write_json
 
@@ -26,6 +28,13 @@ def recognition_targets(
     end_frame=None,
 ):
     targets = []
+    if (
+        contact_run
+        and reviewed_contacts(contact_run, annotations)["requires_context_rerun"]
+    ):
+        raise ValueError(
+            "Court calibration changed contact inputs; rerun player tracking and contacts"
+        )
     reviewed_frames = set()
     if include_reviewed:
         for event in annotations.events:
@@ -122,8 +131,12 @@ def recognize_strokes(
     )
     if player_run["requires_tracking_rerun"] or shuttle_run["requires_tracking_rerun"]:
         raise ValueError(
-            "Camera corrections changed these inputs; rerun tracking before classifying"
+            "Camera corrections or court calibration changed these inputs; rerun tracking before classifying"
         )
+    calibrations = [
+        Calibration.model_validate(c)
+        for c in effective_annotations(annotations, player_run)["calibrations"]
+    ]
     try:
         import torch
 
@@ -164,7 +177,7 @@ def recognize_strokes(
                     times,
                     player_run,
                     shuttle_run,
-                    annotations.calibrations,
+                    calibrations,
                     target["frame"],
                 )
                 private = {"pose", "shuttle", "length"}
@@ -262,6 +275,11 @@ def recognize_strokes(
                 c.get("side") in ("forehand", "backhand") for c in candidates
             ),
         }
+        if "calibration_signature" in player_run:
+            result.update(
+                court_context=court_run_context(player_run),
+                calibration_signature=player_run["calibration_signature"],
+            )
         write_json(output, result)
         return {key: value for key, value in result.items() if key != "candidates"}
     finally:
