@@ -6,9 +6,12 @@ The [full-match processing work](FULL_MATCH_PROCESSING_REPORT.md) fixes cancella
 being lost to older progress snapshots and preceding detected cuts disappearing
 at new processing windows. Cached native output now requires complete source
 frame/PTS coverage, and damaged checkpoint bytes cannot be silently reused.
-Generated interruption, registration-recovery, context and ownership checks pass;
-complete-source CUDA validation is still in progress, so no full accuracy or
-completed native gate is claimed.
+Generated interruption, registration-recovery, context and ownership checks pass.
+Both complete supplied videos now pass CUDA processing and independent checks
+of all 92 registered artifacts. A cache-only resume reuses every stage without
+importing Torch or changing artifact bytes or annotations; native browser review
+passes for singles and doubles. These are coverage and integrity checks, not
+full annotation accuracy.
 
 The [automatic court increment](AUTOMATIC_COURT_REPORT.md) removes the manual-corner
 dependency for supported visible courts and fixes stale court filtering being

@@ -4,7 +4,7 @@ Prepared October 17, 2026.
 
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 
-The [resumable full-match increment](docs/FULL_MATCH_PROCESSING_REPORT.md) now connects all-source camera/perception/proposal stages, interruption recovery and windowed review. Generated 130-second API/browser checks pass; actual CUDA validation on both complete supplied videos is in progress and remains a release gate. This provides processing coverage while preserving unknown identities and unsupported labels. Full-match annotation correctness remains unproven.
+The [resumable full-match increment](docs/FULL_MATCH_PROCESSING_REPORT.md) now connects all-source camera/perception/proposal stages, interruption recovery and windowed review. Generated 130-second API/browser checks and actual CUDA processing of all 24,171 supplied source frames pass. Independent checks verify all 92 artifacts, byte-identical cache-only resume and native window review. This provides processing coverage while preserving unknown identities and unsupported labels. Full-match annotation correctness remains unproven.
 
 The [automatic court baseline](docs/AUTOMATIC_COURT_REPORT.md) now supplies unreviewed geometry directly to player tracking and downstream context, with manual priority, cut expiry and stale-result guards. Actual singles/doubles/red-court integration checks preserve saved labels; 16 development images and synthetic tests do not establish unseen court accuracy. Next: broader camera/visibility evaluation, automatic identities and resumable whole-match processing alongside the unresolved contact and stroke models.
 

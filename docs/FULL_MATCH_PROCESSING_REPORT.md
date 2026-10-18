@@ -75,21 +75,63 @@ correctness: `fully_annotated` remains false.
   Its generated fixture uses synthetic perception, not badminton ground truth.
   The rendered full-source review interface was visually inspected.
 - Actual CUDA validation of **both complete supplied videos**, with empty
-  manual annotations, is running under an immutable snapshot. No completed
-  native result or accuracy claim is made yet. This remains a release gate.
+  manual annotations, has completed under the immutable package snapshot.
+  Independent artifact checks pass before and after a cache-only resume.
 
 Native protocol/evidence: `.cache/native-runtime-pipeline-v1` contains the frozen
-60-file package and source hashes. `.cache/pipeline-native-v1` records worker,
-parent job, progress, source counts and eventual summaries; the separate store
-is `.cache/pipeline-native-data-v1`. The scope is all 12,023 singles and 12,148
-doubles frames. The new 75-rally external-source head evaluation remains gated
-and is not replaced by these development videos.
+60-file package and source hashes, byte-identical to the implementation and
+prepared 0.19.0 wheel. `.cache/pipeline-native-v1` records the worker, admitted
+parent, source counts and completed summaries; its separate store is
+`.cache/pipeline-native-data-v1`. All original and isolated annotations remain
+unchanged. The new 75-rally external-source head evaluation remains gated and
+is not replaced by these development videos.
+
+## Complete-source native checks
+
+Both 1280x720, 25 fps inputs ran sequentially on the RTX 3050 Ti laptop GPU,
+using the small player model, automatic courts, TrackNet and the existing
+proposal stages. Singles used the experimental legacy classifier; doubles
+recognition recorded an explicit unsupported result with no label candidates.
+
+| Development source | Source frames | Core windows | Registered stage artifacts | Admitted job wall time |
+| --- | --- | --- | --- | --- |
+| Singles | 12,023 | 9 | 46 | 1,348.2 seconds |
+| Doubles | 12,148 | 9 | 46 | 1,387.5 seconds |
+
+Wall time includes model loading, overlapping windows, decoding and persistence.
+The artifact auditor checks exact source-frame/PTS coverage for every stage,
+core partitioning, registered SHA256 receipts, pinned checkpoint hashes and
+actual CUDA devices. It also checks finite pose/shuttle coordinates, global
+camera-segment context, disjoint tracker IDs across detected cuts within a run,
+court scope, proposal lineage and core ownership. These checks pass for all
+92 artifacts. They do not establish that a detection or proposed event is right.
+
+The first pass produced 183 contact and 10 rally-boundary candidates for singles,
+and 170 contact and 14 rally-boundary candidates for doubles. These are
+**unadjudicated proposal counts**, including incomplete or incorrect detections,
+not detected-rally totals or accuracy measurements. Neither source is fully
+annotated, and the development videos are not an unseen test set.
+
+A separate admitted resume disables every scanner, perception and proposal entry
+point with failing sentinels. It reuses **46/46 stages for each source**, never
+imports Torch, preserves every raw artifact byte and leaves annotations
+unchanged. Reports are `.cache/pipeline-native-resume-v1/verification.json` and
+`.cache/pipeline-native-v1/verification-final-after-resume.json`; first-pass
+evidence is retained separately.
+
+Read-only native browser checks pass four source positions in each format,
+including the final core windows. They verify window-specific artifact loading,
+owned proposal counts, court status, unchanged annotations, explicit unavailable
+doubles labels and no page errors. In-play and source-tail screenshots were
+visually inspected. Evidence is `.cache/native-pipeline-browser-singles.json`
+and `.cache/native-pipeline-browser-doubles.json`. This checks the review path,
+not family, side, hitter or boundary correctness.
 
 ## Remaining requirements
 
-Verify actual whole-source completion and byte-identical resume, exercise the
-native review interface, then pass exact-head CI before merging and activating
-the release. Automatic identity continuity, reliable scene/live/replay handling,
+The native completion, immutable resume and review gates now pass. Require
+exact-head CI before merging and activating the release. Automatic identity
+continuity, reliable scene/live/replay handling,
 complete contact/serve/end recall, all requested family/side combinations and
 unseen full-match correctness remain open. Large source timestamp gaps that
 exceed the bounded inference interval also need expanded handling; frames are
