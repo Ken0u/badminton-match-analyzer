@@ -20,7 +20,7 @@ from .calibration_context import (
     court_signature,
     effective_annotations,
 )
-from .scene_review import camera_review_signature, reviewed_run
+from .scene_review import camera_context_changed, camera_review_signature, reviewed_run
 from .video import write_json
 
 METHOD = "observed shuttle transition and bounded court surround v2"
@@ -58,6 +58,9 @@ def reviewed_rallies(run, annotations):
         "context_signature"
     ) != context_signature(
         annotations, result["context_start_frame"], result["context_end_frame"]
+    )
+    result["requires_proposal_rerun"] |= camera_context_changed(
+        annotations, run.get("court_context")
     )
     return result
 

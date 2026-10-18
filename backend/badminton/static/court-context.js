@@ -43,9 +43,11 @@ export function courtContextChanged(doc, artifact) {
   const context = artifact?.court_context;
   return (
     !!context &&
-    JSON.stringify(
+    (JSON.stringify(
       courtSignature(doc, context, context.start_frame, context.end_frame),
-    ) !== JSON.stringify(artifact.calibration_signature)
+    ) !== JSON.stringify(artifact.calibration_signature) ||
+      (context.known_preceding_cut_frames != null &&
+        cameraContextChanged(doc, context)))
   );
 }
 
@@ -57,12 +59,14 @@ export function cameraContextChanged(doc, run) {
   const saved = (run.applied_camera_corrections ?? [])
     .map((c) => [c.frame, c.is_cut])
     .sort((a, b) => a[0] - b[0]);
-  const preceding = Math.max(
-    -1,
-    ...(doc.camera_corrections ?? [])
-      .filter((c) => c.is_cut && c.frame < run.start_frame)
-      .map((c) => c.frame),
-  );
+  const previous = new Set(run.known_preceding_cut_frames ?? []);
+  for (const c of doc.camera_corrections ?? []) {
+    if (c.frame >= run.start_frame) continue;
+    if (c.is_cut) previous.add(c.frame);
+    else if (!(run.known_preceding_timestamp_gaps ?? []).includes(c.frame))
+      previous.delete(c.frame);
+  }
+  const preceding = Math.max(-1, ...previous);
   return (
     JSON.stringify(current) !== JSON.stringify(saved) ||
     preceding !== (run.preceding_reviewed_cut_frame ?? -1)

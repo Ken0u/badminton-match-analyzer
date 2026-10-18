@@ -14,7 +14,7 @@ from PIL import Image
 
 from .config import MODEL_MANIFEST, WEIGHTS
 from .scene_review import corrected_boundaries, plain, reviewed_run
-from .segments import scan_boundaries
+from .segments import scan_boundaries, slice_camera_scan
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
 WIDTH, HEIGHT = 512, 288
@@ -220,7 +220,15 @@ def infer_camera_segment(
 
 
 def track_shuttle(
-    video, root, data, start_frame, end_frame, progress, output, annotations=None
+    video,
+    root,
+    data,
+    start_frame,
+    end_frame,
+    progress,
+    output,
+    annotations=None,
+    camera_scan=None,
 ):
     import torch
 
@@ -229,8 +237,17 @@ def track_shuttle(
     times = timestamps_for(data, video["id"])
     validate_range(video, times, start_frame, end_frame)
     began = time.perf_counter()
-    boundaries = scan_boundaries(
-        video, root, data, start_frame, end_frame, lambda value: progress(value * 0.1)
+    boundaries = (
+        slice_camera_scan(video, camera_scan, start_frame, end_frame)
+        if camera_scan is not None
+        else scan_boundaries(
+            video,
+            root,
+            data,
+            start_frame,
+            end_frame,
+            lambda value: progress(value * 0.1),
+        )
     )
     if annotations is None:
         from .storage import Store
@@ -320,7 +337,22 @@ def track_shuttle(
                 video["height"],
                 selection_reset_frames=selection_reset_frames,
             ):
-                row["camera_segment_start_frame"] = first
+                row["camera_segment_start_frame"] = (
+                    max(
+                        [
+                            0,
+                            *[c for c in boundaries["cut_frames"] if c <= first],
+                            *(
+                                [boundaries["preceding_reviewed_cut_frame"]]
+                                if boundaries["preceding_reviewed_cut_frame"]
+                                is not None
+                                else []
+                            ),
+                        ]
+                    )
+                    if camera_scan is not None
+                    else first
+                )
                 rows.append(row)
                 progress(
                     offset
@@ -373,7 +405,10 @@ def track_shuttle(
                     "applied_camera_corrections",
                     "camera_annotation_revision",
                     "preceding_reviewed_cut_frame",
+                    "known_preceding_cut_frames",
+                    "known_preceding_timestamp_gaps",
                 )
+                if key in boundaries
             }
         )
         result = reviewed_run(result, annotations)

@@ -4,6 +4,11 @@ import { createRecognitionTools } from "./recognition-tools.js";
 import { createSegmentTools } from "./segment-tools.js";
 import { createRallyTools } from "./rally-tools.js";
 import {
+  createProcessingTools,
+  ownedCandidates,
+  stageMatches,
+} from "./processing-tools.js";
+import {
   cameraContextChanged,
   courtContextChanged,
   courtSignature,
@@ -80,6 +85,7 @@ function changed() {
   rallyTools.render();
   segmentTools.render();
   renderCandidates();
+  processingTools.render();
   draw();
 }
 function handleError(e) {
@@ -110,6 +116,7 @@ async function selectVideo(id) {
     return;
   const generation = ++state.selectionGeneration;
   segmentTools.reset();
+  processingTools.reset();
   $("video").pause();
   $("exact-frame").hidden = true;
   $("frame-loading").hidden = true;
@@ -201,6 +208,9 @@ function updateFrame(frame) {
   $("frame-number").value = state.frame;
   $("clock").textContent = clock(state.times[state.frame] || 0);
   reviewTools.frameStatus();
+  const oldScope = processingTools.scope();
+  processingTools.frameChanged();
+  if (oldScope !== processingTools.scope()) pollJobs().catch(handleError);
   draw();
 }
 function showExact() {
@@ -368,7 +378,7 @@ function drawShuttle(ctx) {
   }
 }
 function renderCandidates() {
-  const candidates = state.contactRun?.candidates || [];
+  const candidates = ownedCandidates(state.contactRun);
   const audio = state.contactRun?.audio;
   $("audio-status").textContent = audio
     ? audio.status === "available"
@@ -619,7 +629,25 @@ async function save() {
     state.saving = false;
   }
 }
+let polling = false,
+  pollAgain = false;
 async function pollJobs() {
+  if (polling) {
+    pollAgain = true;
+    return;
+  }
+  polling = true;
+  try {
+    await refreshJobs();
+  } finally {
+    polling = false;
+    if (pollAgain) {
+      pollAgain = false;
+      pollJobs().catch(handleError);
+    }
+  }
+}
+async function refreshJobs() {
   const jobs = await api("/api/jobs");
   state.jobs = jobs;
   const active = jobs.find((j) => ["queued", "running"].includes(j.status));
@@ -628,6 +656,7 @@ async function pollJobs() {
   $("detect-contacts").disabled = !!active || !state.shuttleRun;
   importTools.updateJobs(jobs);
   await segmentTools.refresh(jobs, active);
+  await processingTools.refresh(jobs, active);
   if (active) {
     if (active.kind === "players" && active.video_id === state.video?.id)
       $("track-status").textContent =
@@ -656,6 +685,7 @@ async function pollJobs() {
     await loadLibrary();
   }
   if (!state.video) return;
+  const scope = processingTools.scope();
   const latest = jobs.find((j) => j.video_id === state.video.id);
   if (latest?.status === "failed") {
     $(
@@ -666,13 +696,18 @@ async function pollJobs() {
     (j) =>
       j.video_id === state.video.id &&
       j.kind === "players" &&
+      stageMatches(state, j) &&
       j.status === "completed",
   );
   if (done && done.id !== state.lastJob) {
     const videoId = state.video.id;
     const generation = state.selectionGeneration;
     const run = await api(`/api/videos/${videoId}/runs/${done.id}`);
-    if (state.video?.id !== videoId || generation !== state.selectionGeneration)
+    if (
+      state.video?.id !== videoId ||
+      generation !== state.selectionGeneration ||
+      scope !== processingTools.scope()
+    )
       return;
     state.lastJob = done.id;
     state.run = run;
@@ -686,13 +721,18 @@ async function pollJobs() {
     (j) =>
       j.video_id === state.video.id &&
       j.kind === "shuttle" &&
+      stageMatches(state, j) &&
       j.status === "completed",
   );
   if (shuttle && shuttle.id !== state.shuttleJob) {
     const generation = state.selectionGeneration,
       videoId = state.video.id;
     const run = await api(`/api/videos/${videoId}/runs/${shuttle.id}`);
-    if (generation !== state.selectionGeneration) return;
+    if (
+      generation !== state.selectionGeneration ||
+      scope !== processingTools.scope()
+    )
+      return;
     state.shuttleRun = run;
     state.shuttleJob = shuttle.id;
     state.shuttleMap = new Map(run.frames.map((f) => [f.frame, f]));
@@ -707,6 +747,7 @@ async function pollJobs() {
     (j) =>
       j.video_id === state.video.id &&
       j.kind === "contacts" &&
+      stageMatches(state, j) &&
       j.status === "completed" &&
       j.summary?.shuttle_run_id === state.shuttleJob,
   );
@@ -714,7 +755,11 @@ async function pollJobs() {
     const generation = state.selectionGeneration,
       videoId = state.video.id;
     const run = await api(`/api/videos/${videoId}/runs/${contacts.id}`);
-    if (generation !== state.selectionGeneration) return;
+    if (
+      generation !== state.selectionGeneration ||
+      scope !== processingTools.scope()
+    )
+      return;
     state.contactRun = run;
     state.contactJob = contacts.id;
     renderCandidates();
@@ -972,6 +1017,7 @@ async function startTracking(stage) {
       notice("Save your annotations before running tracking.", true);
       return;
     }
+    processingTools.leave();
     await api(`/api/videos/${state.video.id}/track`, {
       method: "POST",
       body: JSON.stringify({
@@ -1128,6 +1174,29 @@ const segmentTools = createSegmentTools({
   escape,
   clock,
   changed,
+});
+const processingTools = createProcessingTools({
+  state,
+  $,
+  api,
+  notice,
+  seek,
+  clock,
+  pollJobs,
+  clearLoaded() {
+    state.run = null;
+    state.lastJob = null;
+    state.runMap = new Map();
+    state.shuttleRun = null;
+    state.shuttleJob = null;
+    state.shuttleMap = new Map();
+    state.contactRun = null;
+    state.contactJob = null;
+    recognitionTools.reset();
+    rallyTools.reset();
+    renderCandidates();
+    draw();
+  },
 });
 await loadLibrary().catch(handleError);
 if (state.videos.length)

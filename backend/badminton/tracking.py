@@ -17,7 +17,7 @@ from .config import MODEL_MANIFEST, WEIGHTS
 from .court_detection import calibrate_ranges
 from .scene_review import corrected_boundaries, reviewed_run
 from .schemas import Calibration
-from .segments import scan_boundaries
+from .segments import scan_boundaries, slice_camera_scan
 from .video import iter_frames, timestamps_for, validate_range, write_json
 
 
@@ -55,6 +55,7 @@ def track_players(
     output,
     player_model="small",
     auto_calibrate=True,
+    camera_scan=None,
 ):
     runtime = data / "runtime"
     runtime.mkdir(exist_ok=True)
@@ -78,8 +79,17 @@ def track_players(
     timestamps = timestamps_for(data, video["id"])
     validate_range(video, timestamps, start_frame, end_frame)
     began = time.perf_counter()
-    boundaries = scan_boundaries(
-        video, root, data, start_frame, end_frame, lambda value: progress(value * 0.1)
+    boundaries = (
+        slice_camera_scan(video, camera_scan, start_frame, end_frame)
+        if camera_scan is not None
+        else scan_boundaries(
+            video,
+            root,
+            data,
+            start_frame,
+            end_frame,
+            lambda value: progress(value * 0.1),
+        )
     )
     boundaries = corrected_boundaries(boundaries, annotations, start_frame, end_frame)
     cut_frames = set(boundaries["cut_frames"])
@@ -117,6 +127,8 @@ def track_players(
         if start_frame in cut_frames
         else boundaries["preceding_reviewed_cut_frame"]
     )
+    if camera_scan is not None:
+        segment_start = last_cut if last_cut is not None else 0
     track_offset, largest_track = 0, 0
     pending_reset = False
     model = YOLO(str(weights))
@@ -253,7 +265,10 @@ def track_players(
                     "applied_camera_corrections",
                     "camera_annotation_revision",
                     "preceding_reviewed_cut_frame",
+                    "known_preceding_cut_frames",
+                    "known_preceding_timestamp_gaps",
                 )
+                if key in boundaries
             }
         )
         result = reviewed_run(result, annotations)

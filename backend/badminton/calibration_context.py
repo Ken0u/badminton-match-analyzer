@@ -100,7 +100,11 @@ def court_run_context(run):
                 "start_frame",
                 "end_frame",
                 "cut_frames",
+                "raw_cut_frames",
+                "applied_camera_corrections",
                 "preceding_reviewed_cut_frame",
+                "known_preceding_cut_frames",
+                "known_preceding_timestamp_gaps",
                 "automatic_calibrations",
                 "court_context_version",
             )
