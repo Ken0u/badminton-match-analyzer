@@ -1,0 +1,91 @@
+{
+  "scope": "Source integrity and supervision availability audit, not model accuracy or promotion",
+  "active_rgb_experiment_modified": false,
+  "app_annotations_modified": false,
+  "bfmd": {
+    "repo_commit": "c7c7e8e4c815085dda42746f16e07f1172503312",
+    "files": 35,
+    "source_bytes": 14709189,
+    "modes": {
+      "singles": {
+        "matches": 12,
+        "hits": 11301,
+        "rally_markers": 1054,
+        "nonmanual_results": 0,
+        "outside_rally_hit_markers": 0
+      },
+      "doubles": {
+        "matches": 7,
+        "hits": 5450,
+        "rally_markers": 634,
+        "nonmanual_results": 5,
+        "outside_rally_hit_markers": 211
+      }
+    },
+    "conflicting_point_family_frames": 451,
+    "snapshot_audit_sha256": "b8a7744e5dfcc25ec870de90d2ece3899799c63e095a0e0fee9f6dc10fccb757",
+    "source_video_clocks_verified": false
+  },
+  "dshuttlenet": {
+    "dataset_id": 10314057,
+    "version": 7,
+    "archive_sha256": "e3896a016f8cf22116d3c7d4412fe986350747549aa3bed74ca3c7dc213524b4",
+    "counts": {
+      "matches": 58,
+      "sets": 134,
+      "rally_rows": 4846,
+      "raw_shots": 58359,
+      "merged_shots": 54141,
+      "raw_only_shots": 4218,
+      "raw_rallies_with_shots": 4846,
+      "merged_rallies": 4483,
+      "merged_matches": 58
+    },
+    "structural_issues": {
+      "raw_action_outside_source_rally": 3,
+      "invalid_raw_frame_interval": 1
+    },
+    "source_type_missing_rows": 21,
+    "retained_nonzero_flaw_rows": 25,
+    "source_audit_sha256": "bf1efb7ed843f547d99e4ed034a9c481547232e52356864d77bf2f97e1c12247",
+    "source_video_clocks_verified": false
+  },
+  "recovered_original_holdout": {
+    "requests": 75,
+    "native_frames": 21610,
+    "published_rows": 860,
+    "reused_original_anchor_clips": 3,
+    "all_selected_source_and_local_pts_verified": true,
+    "all_clip_hashes_verified": true,
+    "frozen_protocol_sha256": "99b13bb12f0cacfee316547ee656ac69a0b6f273de20e75c80eb49e19892c6ed",
+    "source_video_sha256": "76c75c4bcecff975926c91fb94ad1e3e4b49df96f376db5b06c46f76c8ac11c5",
+    "ledger_sha256": "2a42203c04418f0b199736bc36297bee83013e2f8d2be0bf04e3d033c5e446ee",
+    "held_out_head_predictions_opened": false,
+    "cpu_preflight": {
+      "clips": 75,
+      "native_frames": 21610,
+      "published_rows": 860,
+      "frozen_protocol_sha256": "99b13bb12f0cacfee316547ee656ac69a0b6f273de20e75c80eb49e19892c6ed",
+      "source_byte_hashes_verified": true,
+      "main_annotations_unchanged": true,
+      "existing3_anchor_annotations_unchanged": true,
+      "camera_cut_count": 26,
+      "pose_shuttle_or_head_inference": false,
+      "full75_model_evaluation_complete": false
+    }
+  },
+  "source_only_review": {
+    "sheets_viewed": 3,
+    "sample_images": 27,
+    "independent_human_adjudication": false,
+    "cut_sheets_viewed": 2,
+    "cut_frame_pairs_viewed": 26,
+    "post_cut_overlay_request_ordinals": [
+      4,
+      31,
+      46
+    ],
+    "cut_alone_certifies_live_court": false
+  },
+  "licensing": "Data remain local research sources. BFMD restricts redistribution; DShuttleNet dataset is CC BY-NC-SA4.0, separate from its paper;2026Fine-Badminton metadata terms conflict remains unresolved."
+}

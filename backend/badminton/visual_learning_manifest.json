@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "method": "source RGB spatial features and temporal event heads v1",
+  "encoder": {
+    "architecture": "torchvision.mobilenet_v3_small.features",
+    "weights_url": "https://download.pytorch.org/models/mobilenet_v3_small-047dcff4.pth",
+    "weights_sha256": "047dcff4addef86ea5bc2eff13c9614dc11f47ab1160d0a71a25e7db994f4e1f",
+    "weights_bytes": 10306551,
+    "weights_enum": "torchvision.models.MobileNet_V3_Small_Weights.IMAGENET1K_V1",
+    "frozen": true,
+    "input_width": 512,
+    "input_height": 288,
+    "resize": "RGB aspect-preserving OpenCV area/linear resize with ImageNet-mean letterbox padding",
+    "normalization_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalization_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "pool": [
+      2,
+      2
+    ],
+    "feature_dim": 2304,
+    "stored_dtype": "float16",
+    "source_pixels": "Complete oriented frame; no annotation-derived court, hitter or trajectory input",
+    "training_augmentation": "True horizontal flip of normalized source-image tensor before encoder; family/side/hitter-end targets remain unchanged"
+  },
+  "context": {
+    "offsets_s": [
+      -0.5,
+      -0.4666666666666667,
+      -0.43333333333333335,
+      -0.4,
+      -0.36666666666666664,
+      -0.3333333333333333,
+      -0.3,
+      -0.26666666666666666,
+      -0.23333333333333334,
+      -0.2,
+      -0.16666666666666666,
+      -0.13333333333333333,
+      -0.1,
+      -0.06666666666666667,
+      -0.03333333333333333,
+      0.0,
+      0.03333333333333333,
+      0.06666666666666667,
+      0.1,
+      0.13333333333333333,
+      0.16666666666666666,
+      0.2,
+      0.23333333333333334,
+      0.26666666666666666,
+      0.3,
+      0.3333333333333333,
+      0.36666666666666664,
+      0.4,
+      0.43333333333333335,
+      0.4666666666666667,
+      0.5
+    ],
+    "max_sample_error_s": 0.025,
+    "max_source_step_s": 0.1,
+    "minimum_observations_per_flank": 3,
+    "camera_boundaries": "Same AdaptiveDetector recipe as source perception; no cross-cut observations",
+    "missing": "Zero features plus explicit availability mask; never invent a source frame"
+  },
+  "labels": {
+    "family": [
+      "clear",
+      "lift",
+      "net",
+      "drop",
+      "smash",
+      "drive",
+      "other",
+      "serve"
+    ],
+    "side": [
+      "forehand",
+      "backhand"
+    ],
+    "hitter_end": [
+      "near",
+      "far"
+    ]
+  },
+  "supervision": {
+    "contact_interval": "Published HitFrame maps to inclusive decoded ordinal bounds [max(0,H-1),min(N-1,H)] while zero/one convention is unresolved",
+    "zero_contact": "Left-censored/unadjudicated contact0 retained in denominators; no exact timing or pre-video observation manufactured",
+    "rally_end": "No terminal-time target; last stroke/winner/clip edge is not a landing label",
+    "status": "Published weak supervision, not independent semantic or contact adjudication"
+  },
+  "training": {
+    "seed": 20261018,
+    "hidden_dim": 128,
+    "temporal_dilations": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "kernel_size": 3,
+    "dropout": 0.1,
+    "epochs": 100,
+    "evaluate_every": 5,
+    "batch_size": 128,
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "negative_ratio": 2,
+    "negative_exclusion_s": 0.2,
+    "family_loss_weight": 1.0,
+    "side_loss_weight": 0.5,
+    "hitter_end_loss_weight": 0.25,
+    "class_weights": "Inverse square root of supported training reference counts; training only",
+    "normalization": "Training original and mirrored features only; std floor0.05, clipping[-10,10]",
+    "selection": "Highest validation full spotted family/side/hitter-end tuple F1 over all references; ties contactF1 then earlier epoch",
+    "contact_threshold_grid": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95
+    ],
+    "nms_s": 0.16,
+    "primary_timing_tolerance_s": 0.06666666666666667,
+    "test_policy": "No held-out head predictions before selected weights and validation threshold are frozen; no test selection or tuning"
+  },
+  "deployment": {
+    "installed_in_app": false,
+    "supported_training_mode": "singles",
+    "accuracy_claim": "Research baseline only; weak-reference agreement does not establish full-match correctness"
+  }
+}

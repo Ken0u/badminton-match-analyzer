@@ -126,8 +126,75 @@ def main():
     )
     aicup.add_argument("archive", type=Path)
     aicup.add_argument("--output", type=Path, required=True)
+    visual = commands.add_parser(
+        "prepare-visual-features",
+        help="Cache source RGB features for the frozen experimental singles learner",
+    )
+    visual.add_argument("archive", type=Path)
+    visual.add_argument("--index", type=Path, required=True)
+    visual.add_argument("--weights", type=Path, required=True)
+    visual.add_argument("--output", type=Path, required=True)
+    visual.add_argument("--device", default="cuda:0")
+    visual.add_argument("--batch-size", type=int, default=32)
+    visual_train = commands.add_parser(
+        "train-visual-events",
+        help="Train the experimental temporal event heads; no app weight installation",
+    )
+    visual_test = commands.add_parser(
+        "evaluate-visual-events",
+        help="Evaluate a frozen validation-selected visual event model",
+    )
+    for command in (visual_train, visual_test):
+        command.add_argument("--index", type=Path, required=True)
+        command.add_argument("--features", type=Path, required=True)
+        command.add_argument("--output", type=Path, required=True)
+        command.add_argument("--device", default="cuda:0")
+    visual_test.add_argument("--run", type=Path, required=True)
     args = parser.parse_args()
-    if args.command == "import-aicup2023":
+    if args.command in ("train-visual-events", "evaluate-visual-events"):
+        from .visual_learning import evaluate_visual, train_visual
+
+        def visual_task(job_id, progress):
+            if args.command == "train-visual-events":
+                return train_visual(
+                    args.index, args.features, args.output, progress, device=args.device
+                )
+            return evaluate_visual(
+                args.index,
+                args.features,
+                args.run,
+                args.output,
+                progress,
+                device=args.device,
+            )
+
+        try:
+            result = run_local_job(Store(DATA), args.command, None, visual_task)
+        except (ConflictError, ValueError, OSError, ImportError) as exc:
+            parser.error(str(exc))
+        print(json.dumps(result, indent=2))
+    elif args.command == "prepare-visual-features":
+        from .visual_inputs import prepare_features
+
+        try:
+            result = run_local_job(
+                Store(DATA),
+                "feature-preparation",
+                None,
+                lambda job_id, progress: prepare_features(
+                    args.archive,
+                    args.index,
+                    args.weights,
+                    args.output,
+                    progress,
+                    device=args.device,
+                    batch_size=args.batch_size,
+                ),
+            )
+        except (ConflictError, ValueError, OSError, ImportError) as exc:
+            parser.error(str(exc))
+        print(json.dumps(result, indent=2))
+    elif args.command == "import-aicup2023":
         from .aicup_data import import_aicup2023
 
         try:

@@ -1,6 +1,10 @@
 # Bug review and implementation progress
 
-Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
+Reviewed October 18, 2026. Fixes and remaining failures have the checks listed below.
+
+The [direct-video learner review](VISUAL_EVENT_LEARNING_REPORT.md) checks source clock/cut isolation, missing context, changed cache receipts, mixed encoder runtimes, held-out normalization leakage and altered validation selections. Generated-data tests verify fast/window equivalence and refuse changed weights or thresholds. Runtime inspection caught a copied research launcher using an isolated default data root; the existing worker was adopted into the real app's job lock without re-inference. All 800 source caches and the camera refactor now pass independent integrity/equivalence audits. The fixed 100-epoch experiment and 200-clip test are complete; independently recomputed contact F1 0.159 and full tuple F1 0.028 expose severe recognition/generalization failures. No model is promoted. The software suite remains 707 passed / four optional GPU skips; those tests do not establish annotation accuracy.
+
+The [follow-up source audit](FOLLOWUP_SUPERVISION_REPORT.md) identifies conflicting family labels, inferred results inside annotation containers, missing time fields, retained flawed rows and known cross-corpus match overlaps. These sources remain separate from the completed RGB experiment. All 75 original ShuttleSet holdout clips are recovered and clock-verified. Review of all 26 detected cuts finds close-ups and lingering wipes: a cut does not certify an immediately usable live-court view. Full native-input/model evaluation remains pending, with unsupported cases retained.
 
 The [AI CUP contact-supervision audit](AICUP_CONTACT_SUPERVISION_REPORT.md)
 identifies a different 1/2 backhand convention, numbered clips lacking original

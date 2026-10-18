@@ -4,6 +4,10 @@ Prepared October 17, 2026.
 
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 
+The [direct-video learner](docs/VISUAL_EVENT_LEARNING_REPORT.md) completes source-clock RGB feature preparation on all 800 labelled clips, the fixed 100-epoch training schedule and frozen 200-clip test. Contact F1 is 0.159; complete time/family/side/court-end tuple F1 is 0.028 against published weak references. The model is rejected for app promotion. Backhand smash has no test support; doubles, identities, serve/end accuracy and correct full-match annotations remain open. Continue development with source-aligned and independently reviewed supervision while preserving this test result.
+
+The [follow-up supervision audit](docs/FOLLOWUP_SUPERVISION_REPORT.md) verifies broader singles/doubles label sources and documents conflicts, overlaps and usage terms. It also recovers the exact original ShuttleSet holdout through normal public access: all 75 rallies / 21,610 native frames / 860 rows are prepared and clock-verified. Next complete its original native perception and frozen conditional R2/R3 comparison, retaining unsupported cases and guarding close-ups and transition wipes. No new holdout head predictions have been opened.
+
 The [AI CUP contact-supervision increment](docs/AICUP_CONTACT_SUPERVISION_REPORT.md)
 adds a pinned archive importer for 7,845 published contact/family/side records
 from 800 training rallies, with all 169 unlabelled clips preserved. Source hashes,
@@ -11,9 +15,9 @@ schema mappings and structural checks pass; all 969 clips decode with valid
 source clocks. Exact contact ordinals and original-match grouping still require
 adjudication. The published
 visual detector cannot yet be reproduced from its incomplete preprocessing;
-no replacement model is installed. Next: finish source alignment and match
-deduplication, then freeze direct-video model training/evaluation on this broader
-supervision. Full-match annotation correctness remains open.
+no replacement model is installed. The capture-separated RGB experiment above
+has now run; finish exact source alignment and original-match deduplication for
+further development. Full-match annotation correctness remains open.
 
 The [player tracking study](docs/PLAYER_TRACKING_RECOVERY_REPORT.md) rejects two standalone association changes after full-source checks expose new breaks and a doubles partner swap. The current candidate retains baseline observations and uses motion corroboration only for unambiguous short fragment joins, with source-context invalidation. The [fixed appearance study](docs/PLAYER_APPEARANCE_REPORT.md) also rejects appearance-only identity links. Continue source-reviewed continuity and independent full-match validation; these development checks do not establish complete identities.
 
@@ -25,7 +29,7 @@ The [resumable full-match increment](docs/FULL_MATCH_PROCESSING_REPORT.md) now c
 
 The [automatic court baseline](docs/AUTOMATIC_COURT_REPORT.md) now supplies unreviewed geometry directly to player tracking and downstream context, with manual priority, cut expiry and stale-result guards. Actual singles/doubles/red-court integration checks preserve saved labels; 16 development images and synthetic tests do not establish unseen court accuracy. Next: broader camera/visibility evaluation, automatic identities and resumable whole-match processing alongside the unresolved contact and stroke models.
 
-The [observed-flight representation study](docs/OBSERVED_STROKE_CONTEXT_REPORT.md) now compares guarded 371/443-value raw-video inputs on all training/validation references. The narrower context improves family macro F1 to 0.590 but still fails requested classes and joint recognition; the wider context is rejected. A new all-75-rally singles head evaluation was frozen before predictions. Three source-only anchors establish coarse input conventions and a cut at 24; the remaining media fetch stopped at a sign-in requirement, so that full evaluation stays pending. Continue data quality and portable model tooling while preserving source guards and the original full-match objective.
+The [observed-flight representation study](docs/OBSERVED_STROKE_CONTEXT_REPORT.md) compares guarded 371/443-value raw-video inputs on all training/validation references. The narrower context improves family macro F1 to 0.590 but still fails requested classes and joint recognition; the wider context is rejected. Its all-75-rally singles head evaluation was frozen before predictions. Three source-only anchors established coarse input conventions and a cut at 24; after an earlier public-access failure, all original rally media are now recovered and verified without changing the protocol. Full model evaluation remains pending. Continue data quality and portable model tooling while preserving source guards and the original full-match objective.
 
 The [wrist-reach correction](docs/WRIST_REACH_REPORT.md) removes a source-inspected floor-bounce contact while preserving missing-pose fallback and five cached comparison excerpts. The [first raw-video learning evaluation](docs/R2_LEARNING_REPORT.md) is now complete on all 203 source rallies with validation-only model selection. Held-out weak-contact F1 is 0.790, conditional family macro F1 is 0.498, and requested-family failures prevent default integration. Next: improve observed flight/hitter evidence and sparse/confused families on training/validation, establish another independent source holdout, and promote only a supported reproducible recipe. Neither model is installed in the app.
 
