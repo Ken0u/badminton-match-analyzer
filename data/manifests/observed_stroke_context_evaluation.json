@@ -1759,5 +1759,70 @@
     ".cache\\stroke-context-model-r4\\selection.json": "89c0b9129fa3a6202ab2fcc703b76fde2082f64a34ae6195826ea1ad434c9cfd",
     ".cache\\stroke-context-model-r4\\validation-comparison.json": "664c1d2c3cf5980bc8034771e3490bb5d81e47d388384b5850cbd6b646b97ea9",
     ".cache\\stroke-context-learning-r4\\recipe.json": "44427f6648067edf2009ae65cdd238b38aae14175040160f554bf2ebb772245a"
+  },
+  "post_freeze_unscored_native_input_checks": {
+    "evidence_sha256": "3b80d5ca42ac97ccac1552c99eafff3a86a3d4f99ffcfc3047a5b53c13247813",
+    "verification": {
+      "cases": [
+        {
+          "video_id": "187fa920196a8aaa",
+          "source_sha256": "187fa920196a8aaa85a17b7aa2b621688df9131f7a29e559a57028f9c88c5aff",
+          "source_frames": 566,
+          "native_runs": {
+            "players": "17bbc7ef06874d4da1a717fdc5718aee",
+            "shuttle": "ac36f4a77dd145a79952bd935d61b483"
+          },
+          "reported_visible_shuttle_frames": 551,
+          "sampled_finite_feature_packs": 160,
+          "camera_resets": [],
+          "localization_or_mechanics_accuracy": "not measured"
+        },
+        {
+          "video_id": "793e18f5832f7457",
+          "source_sha256": "793e18f5832f745733c6419716e5d1b79885106faad88828f0610ac95ce4ae53",
+          "source_frames": 145,
+          "native_runs": {
+            "players": "00ea95d8525b4aa4a9e65688cd7acb60",
+            "shuttle": "f90b49d10df646b3a856bcee0389dd49"
+          },
+          "reported_visible_shuttle_frames": 111,
+          "sampled_finite_feature_packs": 30,
+          "camera_resets": [
+            {
+              "cut": 24,
+              "before_ids": [
+                1,
+                2,
+                10
+              ],
+              "after_ids": [
+                11,
+                12
+              ],
+              "calibration_and_selection_history_reset": true
+            }
+          ],
+          "localization_or_mechanics_accuracy": "not measured"
+        },
+        {
+          "video_id": "0c0cea43bbf6dfd3",
+          "source_sha256": "0c0cea43bbf6dfd3c909ef9c6835928334f5ed5c03572c9dd57cb0e0c9fcac6c",
+          "source_frames": 228,
+          "native_runs": {
+            "players": "b65e373f86bf42d882598fe2aa003fc2",
+            "shuttle": "a98e104788d44d5c8dfd20a25a9b018b"
+          },
+          "reported_visible_shuttle_frames": 224,
+          "sampled_finite_feature_packs": 62,
+          "camera_resets": [],
+          "localization_or_mechanics_accuracy": "not measured"
+        }
+      ],
+      "total_source_frames": 939,
+      "same_source_and_context_guards_passed": true,
+      "main_annotations_unchanged": true,
+      "head_predictions_opened": false,
+      "full75_evaluation_complete": false
+    }
   }
 }

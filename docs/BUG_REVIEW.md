@@ -2,6 +2,16 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [observed-flight study](OBSERVED_STROKE_CONTEXT_REPORT.md) adds source-guarded
+stroke context and fixes an input-aliasing bug that could mix later court/video
+edits with earlier body features. A 60 fps regression also verifies lineage from
+additional flight samples. All 1,270 retained default vectors match the frozen
+experiment exactly. Validation family F1 improves modestly, but joint recognition
+and several families still fail; no new model is installed. The independent
+source has a red court and a source-verified cut at 24, so previous green-only
+research assumptions are explicitly inapplicable. Full-source scoring remains
+pending after its media fetch required sign-in.
+
 The [first raw-video learning evaluation](R2_LEARNING_REPORT.md) has completed
 all 203 corrected native cases and both frozen held-out learners. Contact weak
 F1 is 0.790, while conditional family macro F1 is 0.498; drop, net, drive and
