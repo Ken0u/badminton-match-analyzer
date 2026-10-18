@@ -2,6 +2,14 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+An October 18 source audit found a real close-up-to-court edit at frame 14 that
+the detector suppressed during startup. The corrected scanner and a real CUDA
+rerun now separate tracker IDs, calibration and shuttle context at that cut.
+Temporal descriptors also include velocity lookback and transitive component
+history in their evidence ranges. [The camera-context report](EARLY_CAMERA_CUT_REPORT.md)
+records the regression checks and source review. Model trainers stopped before
+using the affected inputs; corrected extraction is running with verified reuse.
+
 The terminal-action increment removes an incorrect in-court-only ending gate:
 a true shuttle can settle beside a sideline. The bounded surround retains every
 existing motion, visibility and quiet-player requirement. The public development

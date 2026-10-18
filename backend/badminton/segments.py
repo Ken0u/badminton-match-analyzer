@@ -9,12 +9,13 @@ from scenedetect.detectors import AdaptiveDetector
 
 from .video import SourceChangedError, iter_frames, timestamps_for, write_json
 
-METHOD = "PySceneDetect 0.7.2 AdaptiveDetector at 320px v1"
+METHOD = "PySceneDetect 0.7.2 AdaptiveDetector at 320px v2"
 RECIPE = {
     "width": 320,
     "adaptive_threshold": 3.0,
     "min_content_val": 15.0,
     "min_scene_len": 15,
+    "initial_min_scene_len": 1,
     "window_width": 2,
 }
 
@@ -50,12 +51,20 @@ def scan_boundaries(video, root, data, start, end, progress):
     # suppression outside the requested range whenever preceding media exists.
     scan_start = max(0, start - RECIPE["min_scene_len"] - 3)
     scan_end = min(len(times), end + RECIPE["window_width"])
-    detector = AdaptiveDetector(
-        adaptive_threshold=RECIPE["adaptive_threshold"],
-        min_content_val=RECIPE["min_content_val"],
-        min_scene_len=RECIPE["min_scene_len"],
-        window_width=RECIPE["window_width"],
-    )
+
+    def new_detector():
+        # The library initializes its last-cut clock at the first decoded
+        # frame. Its normal15-frame gate would hide a real early edit. Let the
+        # first supported cut through, then enforce the normal spacing below.
+        return AdaptiveDetector(
+            adaptive_threshold=RECIPE["adaptive_threshold"],
+            min_content_val=RECIPE["min_content_val"],
+            min_scene_len=RECIPE["initial_min_scene_len"],
+            window_width=RECIPE["window_width"],
+        )
+
+    detector = new_detector()
+    last_visual_cut = None
     cuts = {}
     previous_time = None
     width = min(RECIPE["width"], video["width"])
@@ -70,15 +79,19 @@ def scan_boundaries(video, root, data, start, end, progress):
         ):
             if start <= index < end:
                 cuts[index] = "timestamp_discontinuity"
-            detector = AdaptiveDetector(
-                adaptive_threshold=RECIPE["adaptive_threshold"],
-                min_content_val=RECIPE["min_content_val"],
-                min_scene_len=RECIPE["min_scene_len"],
-                window_width=RECIPE["window_width"],
-            )
+            detector = new_detector()
+            last_visual_cut = None
         previous_time = timestamp
         image = frame.reformat(width=width, height=height, format="bgr24").to_ndarray()
         for cut in detector.process_frame(FrameTimecode(index, fps=rate), image):
+            if (
+                last_visual_cut is not None
+                and cut.frame_num - last_visual_cut < RECIPE["min_scene_len"]
+            ):
+                continue
+            # Include preceding accepted cuts in spacing even when they lie
+            # outside the requested output range.
+            last_visual_cut = cut.frame_num
             if start <= cut.frame_num < end:
                 cuts.setdefault(cut.frame_num, "visual_cut")
         processed += 1

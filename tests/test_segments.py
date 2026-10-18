@@ -13,7 +13,7 @@ from badminton.video import SourceChangedError, timestamps_for
 from fastapi.testclient import TestClient
 
 
-def make_source(tmp_path, *, gap=False, fade=False, rate=25):
+def make_source(tmp_path, *, gap=False, fade=False, rate=25, cuts=(20, 40)):
     path = tmp_path / "cameras.mkv"
     pts = 0
     with av.open(str(path), "w") as container:
@@ -28,9 +28,9 @@ def make_source(tmp_path, *, gap=False, fade=False, rate=25):
                 else [index * 3] * 3
                 if fade
                 else [240, 0, 0]
-                if index < 20
+                if index < cuts[0]
                 else [0, 240, 0]
-                if index < 40
+                if index < cuts[1]
                 else [0, 0, 240]
             )
             frame = av.VideoFrame.from_ndarray(
@@ -71,6 +71,21 @@ def test_full_vfr_scan_preserves_source_frames_times_and_annotations(tmp_path):
     clip = scan_boundaries(video, tmp_path, data, 16, 21, lambda _: None)
     assert clip["cut_frames"] == [20]
     assert clip["camera_ranges"] == camera_ranges(16, 21, [20])
+
+
+@pytest.mark.parametrize("early", [5, 10, 14])
+def test_early_source_edit_is_not_hidden_by_initial_minimum_scene_length(
+    tmp_path, early
+):
+    video, data, _store = make_source(tmp_path, cuts=(early, 40))
+    times = timestamps_for(data, video["id"])
+    result = scan_boundaries(video, tmp_path, data, 0, 65, lambda _: None)
+    assert result["cut_frames"] == [early, 40]
+    assert result["boundaries"][0]["time_s"] == times[early]
+    clipped = scan_boundaries(
+        video, tmp_path, data, early - 1, early + 1, lambda _: None
+    )
+    assert clipped["cut_frames"] == [early]
 
 
 def test_timestamp_gap_splits_context_even_without_visual_change(tmp_path):
