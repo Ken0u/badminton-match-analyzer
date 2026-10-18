@@ -57,6 +57,44 @@ def test_straight_flight_gaps_and_distant_players_do_not_become_contacts():
         assert propose_contacts(*scene(**kwargs)) == []
 
 
+@pytest.mark.parametrize("bad", [float("nan"), float("inf"), None, "missing"])
+def test_invalid_wrist_cannot_bypass_distant_player_gate(bad):
+    shuttle, players, video = scene(far=True)
+    for row in players["frames"]:
+        keypoints = [[0, 0, 0] for _ in range(17)]
+        keypoints[9] = [bad, 200, 0.9]
+        row["players"][0]["keypoints"] = keypoints
+    assert propose_contacts(shuttle, players, video) == []
+
+
+def test_invalid_first_wrist_does_not_hide_a_valid_nearby_other_arm():
+    shuttle, players, video = scene(far=True)
+    for row in players["frames"]:
+        keypoints = [[0, 0, 0] for _ in range(17)]
+        keypoints[9] = [float("nan"), 200, 0.9]
+        keypoints[10] = [300, 200, 0.9]
+        row["players"][0]["keypoints"] = keypoints
+    candidate = propose_contacts(shuttle, players, video)[0]
+    assert candidate["frame"] == 12 and candidate["score"] == 0.8
+
+
+def test_infinite_confidence_cannot_supply_near_wrist_evidence():
+    shuttle, players, video = scene(far=True)
+    for row in players["frames"]:
+        keypoints = [[0, 0, 0] for _ in range(17)]
+        keypoints[9] = [300, 200, float("inf")]
+        row["players"][0]["keypoints"] = keypoints
+    assert propose_contacts(shuttle, players, video) == []
+
+
+@pytest.mark.parametrize("bad", [float("nan"), float("inf"), None, "missing"])
+def test_invalid_gap_pose_stays_missing_evidence(bad):
+    shuttle, players, video = gap_scene()
+    for row in players["frames"]:
+        row["players"][0]["keypoints"][9][2] = bad
+    assert propose_contacts(shuttle, players, video) == []
+
+
 def distant_wrists_scene():
     shuttle, players, video = scene()
     for row in players["frames"]:
