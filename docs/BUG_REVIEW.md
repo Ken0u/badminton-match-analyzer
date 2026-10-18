@@ -2,6 +2,15 @@
 
 Reviewed October 17, 2026. Fixes are implemented, with the checks listed below.
 
+The [first raw-video learning evaluation](R2_LEARNING_REPORT.md) has completed
+all 203 corrected native cases and both frozen held-out learners. Contact weak
+F1 is 0.790, while conditional family macro F1 is 0.498; drop, net, drive and
+clear remain concrete failures. Validation abstention precision also does not
+transfer uniformly. Neither learner is installed as the default. Source-control
+evaluation correctly rejected old player artifacts missing source provenance;
+fresh source-hashed small-pose controls complete without bypassing that guard
+or changing saved annotations. Future tuning needs another source holdout.
+
 The October 18 [wrist-reach regression](WRIST_REACH_REPORT.md) removes a
 source-inspected floor-bounce proposal that player-box proximity incorrectly
 supported despite repeated distant wrists. Both arms need complete temporal

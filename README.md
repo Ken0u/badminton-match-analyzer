@@ -6,7 +6,9 @@ The six target shot families are **clear, lift, net, drop, smash, and drive**, e
 
 The [wrist-reach correction](docs/WRIST_REACH_REPORT.md) removes a reviewed floor-bounce contact when repeated observations of both wrists contradict player-box proximity. Missing pose keeps the fallback available. These suggestions still require review; full contact accuracy is unverified.
 
-The [camera-context update](docs/EARLY_CAMERA_CUT_REPORT.md) fixes a missed early broadcast edit and preserves the complete evidence range for temporal contact features. Corrected source preparation now isolates unsupported close-ups from court views. Contact and doubles family/side learning remain experiments awaiting held-out results.
+The [first raw-video learning evaluation](docs/R2_LEARNING_REPORT.md) is complete across 203 source rallies. Held-out weak-contact F1 is 0.790, while conditional family macro F1 is 0.498 and several requested classes fail. Neither experimental model is installed; these scores do not establish full-match correctness.
+
+The [camera-context update](docs/EARLY_CAMERA_CUT_REPORT.md) fixes a missed early broadcast edit and preserves the complete evidence range for temporal contact features. Corrected source preparation now isolates unsupported close-ups from court views.
 
 The [doubles data audit](docs/S2_DOUBLES_REPORT.md) adds a pinned public-label importer and an actual new-camera probe. It fixes single-stroke serve-fault exclusions and documents severe contact misses; it does not yet provide a trained doubles classifier.
 
