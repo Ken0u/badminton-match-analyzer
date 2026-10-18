@@ -5,6 +5,8 @@
 .codex
 .aws
 .cache
+/PROGRESS.md
+build
 .pytest_cache
 .ruff_cache
 node_modules
@@ -13,6 +15,7 @@ node_modules
 **/*.pyc
 data/processed
 data/annotations
+data/datasets
 models/weights
 .media
 .env

@@ -41,6 +41,11 @@ excluded observations and camera changes remain unresolved. See the
 [actor-continuity report](docs/ACTOR_CONTINUITY_REPORT.md) for the source checks
 and identity limits.
 
+Player tracking work now uses motion corroboration to join supported baseline
+fragments while retaining observed boxes, poses and raw baseline IDs. The
+[tracking report](docs/PLAYER_TRACKING_RECOVERY_REPORT.md) records the rejected
+standalone trackers, conflict guards and remaining source identity failures.
+
 Use **Add a match** to upload a video or paste a YouTube video link and choose singles/doubles. Import progress and failures appear beside the form; completed videos appear in the library. Supported uploads are MP4, MOV, MKV, AVI, and WebM, limited to 2 GiB by default. Original content hashes and presentation timestamps are retained. Duplicate content preserves reviewed annotations and reuses the original source file. Some containers/codecs require exact-frame review when the browser cannot play them; playback transcoding is still pending.
 
 YouTube support requires `pip install '.[youtube]'` and Node.js 22 or later. Public completed videos are supported; videos requiring sign-in, active streams, and playlists return an actionable error. The importer records the canonical URL, title, and channel separately from the local content ID. A real BWF rally import has been verified through download, decoding, exact-frame extraction, and HTTP media playback. Availability still depends on YouTube access from the server and downloader compatibility.

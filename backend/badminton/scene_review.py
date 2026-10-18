@@ -13,6 +13,14 @@ def plain(item):
     return item.model_dump() if hasattr(item, "model_dump") else item
 
 
+def scene_review_signature(annotations, start, end):
+    return sorted(
+        [r["start_frame"], r["end_frame"], r["scene"]]
+        for item in plain(annotations).get("scene_ranges", [])
+        if (r := plain(item))["start_frame"] < end and start < r["end_frame"]
+    )
+
+
 def excluded_scene(annotations, start, end):
     """Return a blocking reviewed range overlapping the half-open context.
 
@@ -91,6 +99,18 @@ def reviewed_run(run, annotations):
         or result["preceding_reviewed_cut_frame"]
         != run.get("preceding_reviewed_cut_frame")
     )
+    continuity = result.get("track_continuity", {})
+    result["requires_continuity_rerun"] = bool(continuity.get("links")) and (
+        result["requires_tracking_rerun"]
+        or continuity.get("scene_signature") != scene_review_signature(doc, start, end)
+    )
+    if result["requires_continuity_rerun"]:
+        result["requires_tracking_rerun"] = True
+        continuity.update(status="stale_context", requires_rerun=True)
+        for row in result.get("frames", []):
+            for person in row.get("players", []):
+                person["track_id"] = person.get("baseline_track_id", person["track_id"])
+                person["player_id"] = None
     ranges = sorted(
         (plain(r) for r in doc.get("scene_ranges", [])), key=lambda r: r["start_frame"]
     )

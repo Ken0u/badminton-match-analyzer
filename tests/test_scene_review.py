@@ -61,6 +61,63 @@ def scene(start=20, end=30, kind="replay"):
     }
 
 
+def test_scene_edit_invalidates_remote_identity_evidence_without_changing_raw_data():
+    from badminton.calibration_context import court_context_changed, court_run_context
+    from badminton.identity import apply_assignments
+    from badminton.schemas import TrackAssignment
+
+    doc = empty_annotations("singles").model_dump()
+    raw = {
+        "stage": "players",
+        "start_frame": 0,
+        "end_frame": 100,
+        "cut_frames": [],
+        "preceding_reviewed_cut_frame": None,
+        "uses_motion_continuity": True,
+        "continuity_scene_signature": [],
+        "track_continuity": {
+            "links": [{"left": 1, "right": 3}],
+            "scene_signature": [],
+            "status": "completed",
+        },
+        "frames": [
+            {
+                "frame": 75,
+                "time_s": 3,
+                "players": [
+                    {
+                        "track_id": 1,
+                        "baseline_track_id": 3,
+                        "player_id": "A",
+                        "box": [10, 10, 20, 30],
+                    }
+                ],
+            }
+        ],
+    }
+    original = copy.deepcopy(raw)
+    assert not reviewed_run(raw, doc)["requires_continuity_rerun"]
+    doc["scene_ranges"] = [scene(20, 21)]
+    changed = reviewed_run(raw, doc)
+    assert changed["requires_tracking_rerun"] and changed["requires_continuity_rerun"]
+    assert changed["track_continuity"]["status"] == "stale_context"
+    assert changed["frames"][0]["players"][0]["track_id"] == 3
+    assert changed["frames"][0]["players"][0]["player_id"] is None
+    assignment = TrackAssignment(
+        run_id="r", track_id=3, player_id="B", start_frame=70, end_frame=80
+    )
+    mapped = apply_assignments(changed, [assignment], "r")
+    assert mapped["frames"][0]["players"][0]["player_id"] == "B"
+    dependent = {"court_context": court_run_context(raw)}
+    assert court_context_changed(doc, dependent)
+    assert reviewed_contacts(dependent | {"candidates": []}, doc)[
+        "requires_context_rerun"
+    ]
+    assert raw == original
+    doc["scene_ranges"] = [scene(101, 102)]
+    assert not reviewed_run(raw, doc)["requires_continuity_rerun"]
+
+
 @pytest.mark.parametrize(
     "changes",
     [
@@ -414,6 +471,73 @@ def test_api_preserves_revision_history_and_rejects_unsafe_ranges(catalog):
             response = client.put(base + "/annotations", json=saved.json() | changes)
             assert response.status_code == 422, response.text
         assert store.annotations(v["id"]).revision == 1
+
+
+def test_api_restores_baseline_before_applying_reviewed_names_after_scene_edit(catalog):
+    root, data, store, video = catalog
+    path = data / video["id"] / "runs/players.json"
+    raw = {
+        "video_id": video["id"],
+        "stage": "players",
+        "start_frame": 0,
+        "end_frame": 100,
+        "cut_frames": [],
+        "preceding_reviewed_cut_frame": None,
+        "track_continuity": {"links": [{"left": 1, "right": 3}], "scene_signature": []},
+        "frames": [
+            {
+                "frame": 75,
+                "time_s": 3.4,
+                "players": [
+                    {
+                        "track_id": 1,
+                        "baseline_track_id": 3,
+                        "player_id": None,
+                        "box": [10, 10, 20, 30],
+                    }
+                ],
+            }
+        ],
+    }
+    write_json(path, raw)
+    original = path.read_bytes()
+    base = f"/api/videos/{video['id']}"
+    with TestClient(create_app(root, data)) as client:
+        document = client.get(base + "/annotations").json()
+        document["track_assignments"] = [
+            {
+                "run_id": "players",
+                "track_id": 1,
+                "player_id": "A",
+                "start_frame": 70,
+                "end_frame": 80,
+            }
+        ]
+        saved = client.put(base + "/annotations", json=document)
+        assert saved.status_code == 200, saved.text
+        assert (
+            client.get(base + "/runs/players").json()["frames"][0]["players"][0][
+                "player_id"
+            ]
+            == "A"
+        )
+        updated = client.put(
+            base + "/annotations", json=saved.json() | {"scene_ranges": [scene(20, 21)]}
+        )
+        assert updated.status_code == 200, updated.text
+        result = client.get(base + "/runs/players").json()
+        assert result["requires_continuity_rerun"] and result["requires_tracking_rerun"]
+        assert result["frames"][0]["players"][0]["track_id"] == 3
+        assert result["frames"][0]["players"][0]["player_id"] is None
+        assert (
+            client.post(
+                base + "/contacts",
+                json={"shuttle_run_id": "shuttle", "player_run_id": "players"},
+            ).status_code
+            == 422
+        )
+        assert len(store.annotations(video["id"]).track_assignments) == 1
+    assert path.read_bytes() == original
 
 
 def test_scene_import_is_idempotent_and_preserves_unrelated_labels(catalog):
