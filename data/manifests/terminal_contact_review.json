@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "source_url": "https://www.youtube.com/watch?v=EpLD0HrwDJU",
+  "clip_path": "data/datasets/s2doubles/media/rallies-v1/match1-1_21_10.mp4",
+  "clip_sha256": "3d1c8fba275b03c1af4b1f00c408d0e20e530178e23fbcaa1e6dfa2e365cdcfe",
+  "match_id": 1,
+  "set_id": 1,
+  "rally_id": 31,
+  "split": "train",
+  "review_method": "Assistant inspected source-only full frames76/88/96/104/112 and every native crop frame96..108, including racket and shuttle landing. Baseline candidate103 was already known, so this is development error review, not blinded/heldout annotation. No learned contact prediction inspected.",
+  "status": "assistant_first_pass_pending_human",
+  "contacts_complete": false,
+  "negative_contact_intervals": [
+    {
+      "id": "rally31-post-flight-no-racket-contact",
+      "start_frame": 100,
+      "end_frame": 108,
+      "interval_bounds": "inclusive",
+      "assessment": "No visible racket strike: the shuttle passes below/behind the near player and encounters the floor while his racket stays well away.",
+      "notes": "A trajectory change near a player box is not sufficient racket-contact evidence. This is a training-overlap regression control, not whole-rally precision ground truth."
+    }
+  ],
+  "terminal_review": {
+    "start_frame": 101,
+    "end_frame": 104,
+    "status": "assistant_first_pass_pending_human",
+    "assessment": "Apparent first floor encounter followed by a bounce; exact ending and line/fault call remain unverified.",
+    "line_call_verified": false
+  },
+  "model_prediction_not_used_as_truth": true,
+  "baseline_proposal_known_before_review": true,
+  "learned_results_opened": false
+}

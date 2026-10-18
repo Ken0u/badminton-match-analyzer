@@ -616,7 +616,11 @@ async function pollJobs() {
       $("shuttle-status").textContent = "Finding contact suggestions";
     else if (active.kind === "import")
       notice(`Inspecting video · ${Math.round(active.progress * 100)}%`);
-    else if (["side-training", "feature-preparation"].includes(active.kind))
+    else if (active.kind === "feature-preparation")
+      notice(
+        `Preparing analysis features · ${Math.round(active.progress * 100)}%`,
+      );
+    else if (active.kind === "side-training")
       notice(
         `Preparing the stroke-side model · ${Math.round(active.progress * 100)}%`,
       );

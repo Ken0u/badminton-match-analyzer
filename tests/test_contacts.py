@@ -57,6 +57,106 @@ def test_straight_flight_gaps_and_distant_players_do_not_become_contacts():
         assert propose_contacts(*scene(**kwargs)) == []
 
 
+def distant_wrists_scene():
+    shuttle, players, video = scene()
+    for row in players["frames"]:
+        keypoints = [[0, 0, 0] for _ in range(17)]
+        keypoints[9] = [290, 50, 0.9]
+        keypoints[10] = [320, 45, 0.9]
+        row["players"][0]["keypoints"] = keypoints
+    return shuttle, players, video
+
+
+def test_box_proximity_does_not_override_repeated_distant_wrists():
+    inputs = distant_wrists_scene()
+    original = copy.deepcopy(inputs)
+    assert propose_contacts(*inputs) == []
+    assert inputs == original
+
+
+@pytest.mark.parametrize(
+    "failure",
+    ["one_arm", "low_confidence", "nonfinite", "no_track", "one_sided", "ambiguous"],
+)
+def test_incomplete_wrist_evidence_preserves_observed_contact_fallback(failure):
+    shuttle, players, video = distant_wrists_scene()
+    for row in players["frames"]:
+        player = row["players"][0]
+        if failure == "one_arm":
+            player["keypoints"][10][2] = 0
+        elif failure == "low_confidence":
+            player["keypoints"][9][2] = 0.29
+        elif failure == "nonfinite":
+            player["keypoints"][9][0] = float("nan")
+        elif failure == "no_track":
+            player["track_id"] = None
+        elif failure == "one_sided" and row["frame"] > 12:
+            player["keypoints"][9][2] = 0
+        elif failure == "ambiguous":
+            row["players"].append(copy.deepcopy(player))
+    candidates = propose_contacts(shuttle, players, video)
+    assert [c["frame"] for c in candidates] == [12]
+
+
+def test_nearby_wrist_keeps_contact_even_without_wrist_motion():
+    shuttle, players, video = distant_wrists_scene()
+    players["frames"][11]["players"][0]["keypoints"][9] = [300, 200, 0.9]
+    assert [c["frame"] for c in propose_contacts(shuttle, players, video)] == [12]
+
+
+def test_sparse_pose_does_not_prove_wrist_distance_through_a_gap():
+    shuttle, players, video = distant_wrists_scene()
+    for row in players["frames"]:
+        if row["frame"] not in (9, 12, 15):
+            for wrist in (9, 10):
+                row["players"][0]["keypoints"][wrist][2] = 0
+    assert [c["frame"] for c in propose_contacts(shuttle, players, video)] == [12]
+
+
+def test_wrist_guard_does_not_read_pose_outside_trajectory_context():
+    shuttle, players, video = distant_wrists_scene()
+    for row in players["frames"][9:16]:
+        row["players"][0]["keypoints"][9][2] = 0
+    candidate = propose_contacts(shuttle, players, video)[0]
+    assert candidate["frame"] == 12
+    assert candidate["context_start_frame"] == 9
+    assert candidate["context_end_frame"] == 16  # Evidence context ends exclusively.
+
+
+def test_wrist_guard_reconsiders_other_possible_hitters():
+    shuttle, players, video = distant_wrists_scene()
+    for row in players["frames"]:
+        other = copy.deepcopy(row["players"][0])
+        other["track_id"] = 8
+        other["keypoints"][9] = [300, 200, 0.9]
+        row["players"].append(other)
+    candidate = propose_contacts(shuttle, players, video)[0]
+    assert candidate["frame"] == 12 and candidate["track_id"] == 8
+
+
+@pytest.mark.parametrize("scale", [0.5, 2])
+def test_wrist_guard_uses_actual_image_dimensions(scale):
+    shuttle, players, video = distant_wrists_scene()
+    for row in shuttle["frames"]:
+        row["shuttle"]["x"] *= scale
+        row["shuttle"]["y"] *= scale
+    for row in players["frames"]:
+        player = row["players"][0]
+        player["box"] = [v * scale for v in player["box"]]
+        for keypoint in player["keypoints"]:
+            keypoint[0] *= scale
+            keypoint[1] *= scale
+    video = {k: v * scale for k, v in video.items()}
+    assert propose_contacts(shuttle, players, video) == []
+
+
+def test_close_player_body_scale_prevents_overly_short_reach_limit():
+    shuttle, players, video = distant_wrists_scene()
+    for row in players["frames"]:
+        row["players"][0]["box"] = [150, 0, 450, 350]
+    assert [c["frame"] for c in propose_contacts(shuttle, players, video)] == [12]
+
+
 def test_missing_shuttle_and_edge_coordinates_are_distinct():
     empty = locate_shuttle(np.zeros((10, 10), np.float32), 100, 100)
     assert empty["visible"] is False and empty["x"] is None and empty["y"] is None
