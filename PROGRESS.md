@@ -1,62 +1,66 @@
 # Badminton match analyzer: resume checkpoint
 
-Updated 2026-10-18T23:01:38.939124+00:00. This collaborator handoff is tracked in Git. Read the newest snapshot first; older process counts are dated evidence.
+Updated 2026-10-18T23:06:28.916995+00:00. This collaborator handoff is tracked in Git. Read the newest snapshot first; older process counts and release descriptions are dated evidence.
 
 ## Latest collaboration snapshot
 
-Updated 2026-10-18T23:01:38.939124+00:00. Branch `chore/collaborator-handoff` contains the focused
-`.gitignore` / `AGENTS.md` / `PROGRESS.md` change. It starts from merged main
-4caf543. The user explicitly requested committing and pushing these files.
-Other implementation work is preserved separately and is not part of this
-handoff commit.
+Updated 2026-10-18T23:06:28.916995+00:00. **PROGRESS.md is tracked**, and root `AGENTS.md` supplies
+repository guidance. This supersedes the original ignored-temp-file preference.
+PR29 is MERGED into remote main at **cc1a37bae9bf944b4d879763a6608fb30c225bc2**,
+with all six exact-head checks green (workflow39174812437, local receipt
+`.cache/handoff-pr29-ci-e06d630.json`). The user-requested files are accessible on
+GitHub main. Merged-main validation for this docs-only handoff still needs its
+final observation.
 
-**A fresh clone does not contain local artifacts.** All `.cache/` scripts,
-receipts, weights, source datasets and normalized labels referenced below are
-local-only. Process IDs and unified-session handles apply only to the source
-Windows workstation and this session. Revalidate them there; do not start
-replacement jobs based solely on another machine lacking these files.
-Collaborators can use the committed reports, public source manifests and CLI
-commands to reproduce work after obtaining the permitted inputs.
+Current branch **feat/broadcast-timeline-supervision**, based on that merged
+handoff. Its completed BFMD implementation, tests, report and package are being
+committed/published separately as proposed **0.25.0**. It is not yet a merged
+release; consult Git/PR state before treating it as current main.
 
-Local, UNCOMMITTED work on `feat/broadcast-timeline-supervision` has been carried
-in the worktree while this focused handoff branch is published:
-- Added `backend/badminton/bfmd_data.py`, `bfmd_manifest.json`, `import-bfmd` CLI,
-  `tests/test_bfmd_data.py` and proposed version0.25.0/package data changes.
-- All35 public reference files are hash/size verified; actual import preserves
-  **34020 source records across19 matches** (12singles/7doubles). Output is local
-  `data/datasets/bfmd/v1` and remains gitignored.
-- The importer retains451 conflicting point-type frames,943 partial choice
-  records,1058 metadata rallies/four metadata-only intervals and all raw labels.
-  It keeps contact support independent from family ambiguity. Five predicted
-  Rally intervals inside annotations must not certify live context:37 manual
-  hits occur only inside them, making248 contacts outside active manual rally
-  support, compared with211 outside any published rally.16503 weak contacts and
-  10850 family targets are label-eligible; zero records are training-ready.
-- Missing/invalid ranges, result/value type mismatches, live/replay conflicts,
-  inferred annotations and mutated outputs are guarded. Original media clocks,
-  persistent identities, side labels and cross-corpus splits remain unverified.
-- **Final745 tests passed /4 optional GPU skips**,66.66seconds, local receipt
-  `.cache/bfmd-full-tests-v2.xml`. The38 focused BFMD tests pass; Ruff109files
-  check/format and dependency consistency pass. An earlier test attempt hit the
-  system temporary-directory permission boundary; fresh workspace basetemp fixed
-  it. No global dependency upgrade was performed.
-- Wheel0.25.0 built successfully, SHA
-  `d776411a6a926affa7e50d679c991e83ea076b25faf04cc346c4704a91ced624`.
-  Packaged byte-parity/actual CLI probe and final docs/review/commit/PR are still
-  pending. This code is NOT available remotely until its separate feature commit
-  is published. Do not mistake local passing tests for a merged release.
+**A fresh clone does not contain local artifacts.** `.cache/` scripts, receipts,
+weights, source datasets and normalized labels referenced below are local-only.
+PIDs and tool session handles apply only to the source Windows workstation and
+this session. Revalidate them there; do not start replacement work just because
+another machine lacks these files. Reproduce from committed source manifests and
+CLI commands after obtaining permitted inputs.
 
-The unchanged five-worker75-rally chain is still live on the source workstation.
-Latest verified: **45/75clips13332frames**, CPU cache and audit both45;
-533 source rows/462available R2+R3/379eligible so far. Evaluator and result auditor
-are waiting behind the complete-input gates. No new holdout head predictions
-have opened. Fresh status is required before treating these numbers as final.
+BFMD completed increment:
+- `backend/badminton/bfmd_data.py`, `bfmd_manifest.json`, `import-bfmd` CLI,
+  `tests/test_bfmd_data.py`, `docs/BFMD_TIMELINE_REPORT.md` and aggregate machine
+  receipt. All35 reference-file hashes/sizes verified. Actual import retains
+  **34020 records /19 matches**, with local ignored output `data/datasets/bfmd/v1`.
+- Preserves451 conflicting point-type frames,943 partial choice records,
+  1058metadata rallies/four metadata-only intervals and raw result provenance.
+  Valid weak contact support survives family ambiguity. Five predicted Rally
+  intervals cannot certify live context for37manual hits, so248hits lie outside
+  active manual rally support (211 outside any source rally).16503weak contacts /
+  10850family targets eligible; zero side-label-eligible/training-ready rows.
+- Range/result-type/provenance/overlap checks, source mutation rejection,
+  exclusive output locks and byte-identical repeat import are covered. No app
+  Store is opened; no GPU/model/video inference runs; app annotations are unchanged.
+- **745 passed /4optionalGPUskips**,66.66s; all38BFMD focused tests pass.
+  `.cache/bfmd-full-tests-v2.xml`. Ruff109files/check/format, dependency checks,
+  report links/JSON and diff check pass. A first test attempt hit the default
+  system temp-directory permission boundary; a fresh workspace basetemp fixed it.
+- Built0.25wheelSHA **d776411a6a926affa7e50d679c991e83ea076b25faf04cc346c4704a91ced624**.
+  All72package files match final worktree and extracted
+  `.cache/installed-release-0.25.0`. Actual packaged CLI help and actual35-file
+  import succeed without loading Torch, reproducing identical normalized bytes.
+  `.cache/bfmd-package-verification-v1.json`. No runtime dependency upgrade.
 
-Next: finish publishing this focused handoff, return the preserved BFMD changes
-to their feature branch (based on the merged handoff), verify its wheel, document
-actual source behavior, then commit/test/PR that increment. Meanwhile observe the
-SAME75-rally workers; do not duplicate them. Once all75 complete, assess and
-publish their frozen scores without changing the test or model selection.
+The original five-worker75-rally chain below is unchanged and still running.
+Latest native **60/75clips /16720frames**; inspect worker/progress files
+for current cache/audit counts and eventual completion. Evaluator and independent
+result auditor are already armed behind all75input and parent-job completion
+checks. No new holdout head predictions had opened at this checkpoint. Original
+source, models, thresholds, frozen runtimes and all860/677denominators remain
+unchanged; BFMD does not enter that experiment.
+
+Next: publish/review the BFMD feature, observe exact-head CI before merging, then
+verify merged-main checks/package parity. Continue observing SAME five workers;
+when all75 frozen results/audit finish, assess full-denominator metrics and update
+reports without retuning this holdout. Both increments are intermediate work;
+full-match automatic annotation remains unverified and unfinished.
 
 ## Objective and user preferences
 
