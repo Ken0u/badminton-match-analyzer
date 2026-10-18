@@ -1,0 +1,1297 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-10-18",
+  "purpose": "Research-only weak-label evaluation; neither model installed in app",
+  "source_dataset_commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
+  "split_policy": {
+    "train_match": 1,
+    "validation_match": 2,
+    "test_match": 3,
+    "selection_before_test": true,
+    "unseen_for_future_tuning": false
+  },
+  "corpus": {
+    "native_reports": 203,
+    "feature_pairs_verified": 203,
+    "by_match": {
+      "1": {
+        "clips": 67,
+        "frames": 14614,
+        "weak_bags": 624,
+        "stroke_rows": 624,
+        "available_strokes": 608
+      },
+      "2": {
+        "clips": 67,
+        "frames": 16750,
+        "weak_bags": 672,
+        "stroke_rows": 672,
+        "available_strokes": 662
+      },
+      "3": {
+        "clips": 69,
+        "frames": 14916,
+        "weak_bags": 558,
+        "stroke_rows": 558,
+        "available_strokes": 548
+      }
+    },
+    "hashes_and_source_counts_verified": true,
+    "exact_truth": false
+  },
+  "contact": {
+    "architecture": "Shared 126->64->32->1 ReLU arm MLP; max over arms, multiple-instance positive intervals",
+    "epoch": 170,
+    "model_sha256": "4e734f118cfe4f5938d82e89f138e215594b5cba635ff66b802f660ef5b94e56",
+    "recipe": {
+      "seed": 20261017,
+      "device": "cpu",
+      "cpu_threads": 2,
+      "input_size": 126,
+      "hidden": [
+        64,
+        32
+      ],
+      "architecture": "shared arm-window ReLU MLP; max over observed arms and weak positive interval",
+      "epochs": 200,
+      "evaluate_every": 5,
+      "batch_positive_bags": 64,
+      "batch_negative_frames": 128,
+      "optimizer": "AdamW",
+      "learning_rate": 0.001,
+      "weight_decay": 0.001,
+      "negative_loss_weight": 0.7,
+      "threshold_grid": [
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.35,
+        0.4,
+        0.45,
+        0.5,
+        0.55,
+        0.6,
+        0.65,
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "selection": "Maximum match2 weak interval event F1; ties prefer precision then higher threshold then earlier epoch",
+      "train_match": 1,
+      "validation_match": 2,
+      "test_match": 3,
+      "source_semantics": "Weak clock-hint bags only; not adjudicated contacts or full-match accuracy",
+      "descriptor_code_sha256": "c5eef8f1b2686fc54f9393291aa3e30214b0d9f1eb395c4ff4d35ad2c1469220",
+      "feature_recipe_sha256": "4a53c006d03b6c5dd1e7d43b3aa7f46b3b82b0b2c7bc3c26eca470281a1b73e8",
+      "source_recipe": {
+        "name": "weak-contact-arm-windows-v2",
+        "context_guard_version": 2,
+        "offsets_s": [
+          -0.2,
+          -0.13333333333333333,
+          -0.06666666666666667,
+          0.0,
+          0.06666666666666667,
+          0.13333333333333333,
+          0.2
+        ],
+        "maximum_sample_error_s": 0.025,
+        "maximum_source_step_s": 0.1,
+        "minimum_arm_samples": 3,
+        "minimum_central_arm_samples": 1,
+        "maximum_arms": 12,
+        "arm_feature_count": 18,
+        "weak_shot_bounds_relative_to_start_minus_one": [
+          -3,
+          3
+        ],
+        "weak_serve_bounds_relative_to_start_minus_one": [
+          -2,
+          12
+        ],
+        "negative_exclusion_pad_frames": 7,
+        "nms_s": 0.18,
+        "training_match": 1,
+        "validation_match": 2,
+        "test_match": 3,
+        "not_exact_truth": true
+      }
+    },
+    "validation": {
+      "weak_tp": 545,
+      "predicted": 677,
+      "weak_references": 672,
+      "precision_against_weak_bags": 0.8050221565731167,
+      "recall_against_weak_bags": 0.8110119047619048,
+      "f1_against_weak_bags": 0.8080059303187547,
+      "threshold": 0.95,
+      "exact_truth": false
+    },
+    "test": {
+      "weak_tp": 475,
+      "predicted": 644,
+      "weak_references": 558,
+      "precision_against_weak_bags": 0.7375776397515528,
+      "recall_against_weak_bags": 0.8512544802867383,
+      "f1_against_weak_bags": 0.7903494176372712,
+      "threshold": 0.95,
+      "exact_truth": false
+    },
+    "limitation": "One heldout same-venue source match with weak timing bags, NOT exact/source-reviewed contact or full-match correctness"
+  },
+  "stroke": {
+    "architecture": "254->128->64 shared ReLU/dropout trunk; eight-family and two-side heads",
+    "epoch": 80,
+    "model_sha256": "ef71574cac55f1cf5441e1ba11cbf2f4b9eafa31298d2078e87a7018d22ae10e",
+    "recipe": {
+      "seed": 20261018,
+      "device": "cpu",
+      "cpu_threads": 2,
+      "input_dim": 254,
+      "hidden": [
+        128,
+        64
+      ],
+      "dropout": 0.1,
+      "epochs": 300,
+      "evaluate_every": 5,
+      "batch_size": 64,
+      "optimizer": "AdamW",
+      "learning_rate": 0.001,
+      "weight_decay": 0.01,
+      "family_loss_weight": 1.0,
+      "side_loss_weight": 0.5,
+      "family_class_weights": "inverse sqrt train count, normalized over supported labels",
+      "side_class_weights": "inverse sqrt train count, normalized over supported labels",
+      "normalization": "train available rows mean/std, std floor0.05, normalized clipping[-10,10]",
+      "selection": "maximum average validation strict family macroF1-supported and side balanced recall; ties prefer family/side tuple then earlier epoch",
+      "thresholds": {
+        "grid": [
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.95
+        ],
+        "minimum_accepted_per_predicted_class": 10,
+        "family_empirical_precision": 0.8,
+        "side_empirical_precision": 0.9,
+        "insufficient_evidence": "disable class by threshold1.01; never force a label"
+      },
+      "train_match": 1,
+      "validation_match": 2,
+      "test_match": 3,
+      "family_labels": [
+        "clear",
+        "lift",
+        "net",
+        "drop",
+        "smash",
+        "drive",
+        "other",
+        "serve"
+      ],
+      "side_labels": [
+        "forehand",
+        "backhand"
+      ],
+      "feature_recipe_sha256": "a4529dc177d8d55a8f1122caa2326929e6dbfb7a8f325c8350494ae54d76d8ae",
+      "conditional_on": "Published weak source contact clock and source hitter-foot association, NOT automatic hit/hitter detection",
+      "exact_truth": false,
+      "model_installed_in_app": false
+    },
+    "threshold_evidence": [
+      [
+        {
+          "label": "clear",
+          "threshold": 1.01,
+          "validation_accepted": 0,
+          "validation_precision": null,
+          "enabled": false
+        },
+        {
+          "label": "lift",
+          "threshold": 0.4,
+          "validation_accepted": 104,
+          "validation_precision": 0.8653846153846154,
+          "enabled": true
+        },
+        {
+          "label": "net",
+          "threshold": 1.01,
+          "validation_accepted": 0,
+          "validation_precision": null,
+          "enabled": false
+        },
+        {
+          "label": "drop",
+          "threshold": 0.4,
+          "validation_accepted": 19,
+          "validation_precision": 0.8421052631578947,
+          "enabled": true
+        },
+        {
+          "label": "smash",
+          "threshold": 0.8,
+          "validation_accepted": 77,
+          "validation_precision": 0.8181818181818182,
+          "enabled": true
+        },
+        {
+          "label": "drive",
+          "threshold": 1.01,
+          "validation_accepted": 0,
+          "validation_precision": null,
+          "enabled": false
+        },
+        {
+          "label": "other",
+          "threshold": 1.01,
+          "validation_accepted": 0,
+          "validation_precision": null,
+          "enabled": false
+        },
+        {
+          "label": "serve",
+          "threshold": 0.5,
+          "validation_accepted": 71,
+          "validation_precision": 0.8591549295774648,
+          "enabled": true
+        }
+      ],
+      [
+        {
+          "label": "forehand",
+          "threshold": 0.5,
+          "validation_accepted": 365,
+          "validation_precision": 0.9178082191780822,
+          "enabled": true
+        },
+        {
+          "label": "backhand",
+          "threshold": 0.5,
+          "validation_accepted": 297,
+          "validation_precision": 0.9292929292929293,
+          "enabled": true
+        }
+      ]
+    ],
+    "validation": {
+      "closed_set": {
+        "family": {
+          "per_class": {
+            "clear": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 3
+            },
+            "lift": {
+              "tp": 90,
+              "fp": 14,
+              "fn": 20,
+              "precision": 0.8653846153846154,
+              "recall": 0.8181818181818182,
+              "f1": 0.8411214953271028,
+              "support": 110
+            },
+            "net": {
+              "tp": 65,
+              "fp": 54,
+              "fn": 86,
+              "precision": 0.5462184873949579,
+              "recall": 0.4304635761589404,
+              "f1": 0.48148148148148145,
+              "support": 151
+            },
+            "drop": {
+              "tp": 16,
+              "fp": 3,
+              "fn": 26,
+              "precision": 0.8421052631578947,
+              "recall": 0.38095238095238093,
+              "f1": 0.5245901639344263,
+              "support": 42
+            },
+            "smash": {
+              "tp": 69,
+              "fp": 19,
+              "fn": 21,
+              "precision": 0.7840909090909091,
+              "recall": 0.7666666666666667,
+              "f1": 0.7752808988764045,
+              "support": 90
+            },
+            "drive": {
+              "tp": 73,
+              "fp": 93,
+              "fn": 45,
+              "precision": 0.4397590361445783,
+              "recall": 0.6186440677966102,
+              "f1": 0.5140845070422535,
+              "support": 118
+            },
+            "other": {
+              "tp": 40,
+              "fp": 55,
+              "fn": 51,
+              "precision": 0.42105263157894735,
+              "recall": 0.43956043956043955,
+              "f1": 0.43010752688172044,
+              "support": 91
+            },
+            "serve": {
+              "tp": 61,
+              "fp": 10,
+              "fn": 6,
+              "precision": 0.8591549295774648,
+              "recall": 0.9104477611940298,
+              "f1": 0.8840579710144928,
+              "support": 67
+            }
+          },
+          "supported_classes": [
+            "clear",
+            "lift",
+            "net",
+            "drop",
+            "smash",
+            "drive",
+            "other",
+            "serve"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.5563405055697352,
+          "matrix": {
+            "clear": {
+              "clear": 0,
+              "lift": 1,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 1,
+              "other": 0,
+              "serve": 1,
+              "unanswered": 0
+            },
+            "lift": {
+              "clear": 0,
+              "lift": 90,
+              "net": 3,
+              "drop": 0,
+              "smash": 0,
+              "drive": 15,
+              "other": 0,
+              "serve": 1,
+              "unanswered": 1
+            },
+            "net": {
+              "clear": 0,
+              "lift": 6,
+              "net": 65,
+              "drop": 0,
+              "smash": 1,
+              "drive": 46,
+              "other": 23,
+              "serve": 7,
+              "unanswered": 3
+            },
+            "drop": {
+              "clear": 0,
+              "lift": 0,
+              "net": 3,
+              "drop": 16,
+              "smash": 15,
+              "drive": 5,
+              "other": 3,
+              "serve": 0,
+              "unanswered": 0
+            },
+            "smash": {
+              "clear": 0,
+              "lift": 0,
+              "net": 2,
+              "drop": 2,
+              "smash": 69,
+              "drive": 3,
+              "other": 13,
+              "serve": 0,
+              "unanswered": 1
+            },
+            "drive": {
+              "clear": 0,
+              "lift": 4,
+              "net": 20,
+              "drop": 1,
+              "smash": 2,
+              "drive": 73,
+              "other": 16,
+              "serve": 1,
+              "unanswered": 1
+            },
+            "other": {
+              "clear": 0,
+              "lift": 2,
+              "net": 26,
+              "drop": 0,
+              "smash": 1,
+              "drive": 22,
+              "other": 40,
+              "serve": 0,
+              "unanswered": 0
+            },
+            "serve": {
+              "clear": 0,
+              "lift": 1,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 1,
+              "other": 0,
+              "serve": 61,
+              "unanswered": 4
+            }
+          },
+          "source_rows": 672,
+          "answered": 662,
+          "precision_given_answered": 0.6253776435045317,
+          "strict_accuracy": 0.6160714285714286,
+          "balanced_recall": 0.5456145888138607
+        },
+        "side": {
+          "per_class": {
+            "forehand": {
+              "tp": 335,
+              "fp": 30,
+              "fn": 22,
+              "precision": 0.9178082191780822,
+              "recall": 0.938375350140056,
+              "f1": 0.9279778393351801,
+              "support": 357
+            },
+            "backhand": {
+              "tp": 276,
+              "fp": 21,
+              "fn": 39,
+              "precision": 0.9292929292929293,
+              "recall": 0.8761904761904762,
+              "f1": 0.9019607843137255,
+              "support": 315
+            }
+          },
+          "supported_classes": [
+            "forehand",
+            "backhand"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.9149693118244528,
+          "matrix": {
+            "forehand": {
+              "forehand": 335,
+              "backhand": 21,
+              "unanswered": 1
+            },
+            "backhand": {
+              "forehand": 30,
+              "backhand": 276,
+              "unanswered": 9
+            }
+          },
+          "source_rows": 672,
+          "answered": 662,
+          "precision_given_answered": 0.9229607250755287,
+          "strict_accuracy": 0.9092261904761905,
+          "balanced_recall": 0.9072829131652661
+        },
+        "family_side_tuple_given_weak_source_hitter_clock": 0.5788690476190477,
+        "available_rows": 662,
+        "source_rows": 672,
+        "exact_truth": false
+      },
+      "with_abstention": {
+        "family": {
+          "per_class": {
+            "clear": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 3,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 3
+            },
+            "lift": {
+              "tp": 90,
+              "fp": 14,
+              "fn": 20,
+              "precision": 0.8653846153846154,
+              "recall": 0.8181818181818182,
+              "f1": 0.8411214953271028,
+              "support": 110
+            },
+            "net": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 151,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 151
+            },
+            "drop": {
+              "tp": 16,
+              "fp": 3,
+              "fn": 26,
+              "precision": 0.8421052631578947,
+              "recall": 0.38095238095238093,
+              "f1": 0.5245901639344263,
+              "support": 42
+            },
+            "smash": {
+              "tp": 63,
+              "fp": 14,
+              "fn": 27,
+              "precision": 0.8181818181818182,
+              "recall": 0.7,
+              "f1": 0.7544910179640718,
+              "support": 90
+            },
+            "drive": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 118,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 118
+            },
+            "other": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 91,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 91
+            },
+            "serve": {
+              "tp": 61,
+              "fp": 10,
+              "fn": 6,
+              "precision": 0.8591549295774648,
+              "recall": 0.9104477611940298,
+              "f1": 0.8840579710144928,
+              "support": 67
+            }
+          },
+          "supported_classes": [
+            "clear",
+            "lift",
+            "net",
+            "drop",
+            "smash",
+            "drive",
+            "other",
+            "serve"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.3755325810300117,
+          "matrix": {
+            "clear": {
+              "clear": 0,
+              "lift": 1,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 1,
+              "unanswered": 1
+            },
+            "lift": {
+              "clear": 0,
+              "lift": 90,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 1,
+              "unanswered": 19
+            },
+            "net": {
+              "clear": 0,
+              "lift": 6,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 7,
+              "unanswered": 138
+            },
+            "drop": {
+              "clear": 0,
+              "lift": 0,
+              "net": 0,
+              "drop": 16,
+              "smash": 11,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 15
+            },
+            "smash": {
+              "clear": 0,
+              "lift": 0,
+              "net": 0,
+              "drop": 2,
+              "smash": 63,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 25
+            },
+            "drive": {
+              "clear": 0,
+              "lift": 4,
+              "net": 0,
+              "drop": 1,
+              "smash": 2,
+              "drive": 0,
+              "other": 0,
+              "serve": 1,
+              "unanswered": 110
+            },
+            "other": {
+              "clear": 0,
+              "lift": 2,
+              "net": 0,
+              "drop": 0,
+              "smash": 1,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 88
+            },
+            "serve": {
+              "clear": 0,
+              "lift": 1,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 61,
+              "unanswered": 5
+            }
+          },
+          "source_rows": 672,
+          "answered": 271,
+          "precision_given_answered": 0.8487084870848709,
+          "strict_accuracy": 0.34226190476190477,
+          "balanced_recall": 0.35119774504102863
+        },
+        "side": {
+          "per_class": {
+            "forehand": {
+              "tp": 335,
+              "fp": 30,
+              "fn": 22,
+              "precision": 0.9178082191780822,
+              "recall": 0.938375350140056,
+              "f1": 0.9279778393351801,
+              "support": 357
+            },
+            "backhand": {
+              "tp": 276,
+              "fp": 21,
+              "fn": 39,
+              "precision": 0.9292929292929293,
+              "recall": 0.8761904761904762,
+              "f1": 0.9019607843137255,
+              "support": 315
+            }
+          },
+          "supported_classes": [
+            "forehand",
+            "backhand"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.9149693118244528,
+          "matrix": {
+            "forehand": {
+              "forehand": 335,
+              "backhand": 21,
+              "unanswered": 1
+            },
+            "backhand": {
+              "forehand": 30,
+              "backhand": 276,
+              "unanswered": 9
+            }
+          },
+          "source_rows": 672,
+          "answered": 662,
+          "precision_given_answered": 0.9229607250755287,
+          "strict_accuracy": 0.9092261904761905,
+          "balanced_recall": 0.9072829131652661
+        },
+        "family_side_tuple_given_weak_source_hitter_clock": 0.32589285714285715,
+        "available_rows": 662,
+        "source_rows": 672,
+        "exact_truth": false
+      }
+    },
+    "test": {
+      "closed_set": {
+        "family": {
+          "per_class": {
+            "clear": {
+              "tp": 3,
+              "fp": 2,
+              "fn": 9,
+              "precision": 0.6,
+              "recall": 0.25,
+              "f1": 0.35294117647058826,
+              "support": 12
+            },
+            "lift": {
+              "tp": 53,
+              "fp": 21,
+              "fn": 19,
+              "precision": 0.7162162162162162,
+              "recall": 0.7361111111111112,
+              "f1": 0.726027397260274,
+              "support": 72
+            },
+            "net": {
+              "tp": 54,
+              "fp": 37,
+              "fn": 89,
+              "precision": 0.5934065934065934,
+              "recall": 0.3776223776223776,
+              "f1": 0.46153846153846156,
+              "support": 143
+            },
+            "drop": {
+              "tp": 1,
+              "fp": 6,
+              "fn": 17,
+              "precision": 0.14285714285714285,
+              "recall": 0.05555555555555555,
+              "f1": 0.08,
+              "support": 18
+            },
+            "smash": {
+              "tp": 51,
+              "fp": 10,
+              "fn": 20,
+              "precision": 0.8360655737704918,
+              "recall": 0.7183098591549296,
+              "f1": 0.7727272727272727,
+              "support": 71
+            },
+            "drive": {
+              "tp": 71,
+              "fp": 91,
+              "fn": 56,
+              "precision": 0.4382716049382716,
+              "recall": 0.5590551181102362,
+              "f1": 0.4913494809688581,
+              "support": 127
+            },
+            "other": {
+              "tp": 15,
+              "fp": 71,
+              "fn": 31,
+              "precision": 0.1744186046511628,
+              "recall": 0.32608695652173914,
+              "f1": 0.22727272727272727,
+              "support": 46
+            },
+            "serve": {
+              "tp": 57,
+              "fp": 5,
+              "fn": 12,
+              "precision": 0.9193548387096774,
+              "recall": 0.8260869565217391,
+              "f1": 0.8702290076335878,
+              "support": 69
+            }
+          },
+          "supported_classes": [
+            "clear",
+            "lift",
+            "net",
+            "drop",
+            "smash",
+            "drive",
+            "other",
+            "serve"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.4977606904839712,
+          "matrix": {
+            "clear": {
+              "clear": 3,
+              "lift": 2,
+              "net": 1,
+              "drop": 1,
+              "smash": 0,
+              "drive": 3,
+              "other": 2,
+              "serve": 0,
+              "unanswered": 0
+            },
+            "lift": {
+              "clear": 0,
+              "lift": 53,
+              "net": 2,
+              "drop": 0,
+              "smash": 1,
+              "drive": 12,
+              "other": 2,
+              "serve": 0,
+              "unanswered": 2
+            },
+            "net": {
+              "clear": 1,
+              "lift": 4,
+              "net": 54,
+              "drop": 0,
+              "smash": 1,
+              "drive": 58,
+              "other": 22,
+              "serve": 3,
+              "unanswered": 0
+            },
+            "drop": {
+              "clear": 0,
+              "lift": 0,
+              "net": 3,
+              "drop": 1,
+              "smash": 6,
+              "drive": 2,
+              "other": 6,
+              "serve": 0,
+              "unanswered": 0
+            },
+            "smash": {
+              "clear": 0,
+              "lift": 0,
+              "net": 1,
+              "drop": 4,
+              "smash": 51,
+              "drive": 2,
+              "other": 12,
+              "serve": 0,
+              "unanswered": 1
+            },
+            "drive": {
+              "clear": 1,
+              "lift": 9,
+              "net": 16,
+              "drop": 1,
+              "smash": 1,
+              "drive": 71,
+              "other": 26,
+              "serve": 1,
+              "unanswered": 1
+            },
+            "other": {
+              "clear": 0,
+              "lift": 5,
+              "net": 12,
+              "drop": 0,
+              "smash": 1,
+              "drive": 11,
+              "other": 15,
+              "serve": 1,
+              "unanswered": 1
+            },
+            "serve": {
+              "clear": 0,
+              "lift": 1,
+              "net": 2,
+              "drop": 0,
+              "smash": 0,
+              "drive": 3,
+              "other": 1,
+              "serve": 57,
+              "unanswered": 5
+            }
+          },
+          "source_rows": 558,
+          "answered": 548,
+          "precision_given_answered": 0.5565693430656934,
+          "strict_accuracy": 0.546594982078853,
+          "balanced_recall": 0.48110349182471107
+        },
+        "side": {
+          "per_class": {
+            "forehand": {
+              "tp": 236,
+              "fp": 41,
+              "fn": 22,
+              "precision": 0.851985559566787,
+              "recall": 0.9147286821705426,
+              "f1": 0.8822429906542056,
+              "support": 258
+            },
+            "backhand": {
+              "tp": 251,
+              "fp": 20,
+              "fn": 49,
+              "precision": 0.9261992619926199,
+              "recall": 0.8366666666666667,
+              "f1": 0.8791593695271454,
+              "support": 300
+            }
+          },
+          "supported_classes": [
+            "forehand",
+            "backhand"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.8807011800906754,
+          "matrix": {
+            "forehand": {
+              "forehand": 236,
+              "backhand": 20,
+              "unanswered": 2
+            },
+            "backhand": {
+              "forehand": 41,
+              "backhand": 251,
+              "unanswered": 8
+            }
+          },
+          "source_rows": 558,
+          "answered": 548,
+          "precision_given_answered": 0.8886861313868614,
+          "strict_accuracy": 0.8727598566308243,
+          "balanced_recall": 0.8756976744186047
+        },
+        "family_side_tuple_given_weak_source_hitter_clock": 0.5,
+        "available_rows": 548,
+        "source_rows": 558,
+        "exact_truth": false
+      },
+      "with_abstention": {
+        "family": {
+          "per_class": {
+            "clear": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 12,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 12
+            },
+            "lift": {
+              "tp": 53,
+              "fp": 21,
+              "fn": 19,
+              "precision": 0.7162162162162162,
+              "recall": 0.7361111111111112,
+              "f1": 0.726027397260274,
+              "support": 72
+            },
+            "net": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 143,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 143
+            },
+            "drop": {
+              "tp": 1,
+              "fp": 5,
+              "fn": 17,
+              "precision": 0.16666666666666666,
+              "recall": 0.05555555555555555,
+              "f1": 0.08333333333333333,
+              "support": 18
+            },
+            "smash": {
+              "tp": 44,
+              "fp": 7,
+              "fn": 27,
+              "precision": 0.8627450980392157,
+              "recall": 0.6197183098591549,
+              "f1": 0.7213114754098361,
+              "support": 71
+            },
+            "drive": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 127,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 127
+            },
+            "other": {
+              "tp": 0,
+              "fp": 0,
+              "fn": 46,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 46
+            },
+            "serve": {
+              "tp": 57,
+              "fp": 4,
+              "fn": 12,
+              "precision": 0.9344262295081968,
+              "recall": 0.8260869565217391,
+              "f1": 0.8769230769230769,
+              "support": 69
+            }
+          },
+          "supported_classes": [
+            "clear",
+            "lift",
+            "net",
+            "drop",
+            "smash",
+            "drive",
+            "other",
+            "serve"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.300949410365815,
+          "matrix": {
+            "clear": {
+              "clear": 0,
+              "lift": 2,
+              "net": 0,
+              "drop": 1,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 9
+            },
+            "lift": {
+              "clear": 0,
+              "lift": 53,
+              "net": 0,
+              "drop": 0,
+              "smash": 1,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 18
+            },
+            "net": {
+              "clear": 0,
+              "lift": 4,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 3,
+              "unanswered": 136
+            },
+            "drop": {
+              "clear": 0,
+              "lift": 0,
+              "net": 0,
+              "drop": 1,
+              "smash": 5,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 12
+            },
+            "smash": {
+              "clear": 0,
+              "lift": 0,
+              "net": 0,
+              "drop": 3,
+              "smash": 44,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 24
+            },
+            "drive": {
+              "clear": 0,
+              "lift": 9,
+              "net": 0,
+              "drop": 1,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 1,
+              "unanswered": 116
+            },
+            "other": {
+              "clear": 0,
+              "lift": 5,
+              "net": 0,
+              "drop": 0,
+              "smash": 1,
+              "drive": 0,
+              "other": 0,
+              "serve": 0,
+              "unanswered": 40
+            },
+            "serve": {
+              "clear": 0,
+              "lift": 1,
+              "net": 0,
+              "drop": 0,
+              "smash": 0,
+              "drive": 0,
+              "other": 0,
+              "serve": 57,
+              "unanswered": 11
+            }
+          },
+          "source_rows": 558,
+          "answered": 192,
+          "precision_given_answered": 0.8072916666666666,
+          "strict_accuracy": 0.2777777777777778,
+          "balanced_recall": 0.2796839916309451
+        },
+        "side": {
+          "per_class": {
+            "forehand": {
+              "tp": 236,
+              "fp": 41,
+              "fn": 22,
+              "precision": 0.851985559566787,
+              "recall": 0.9147286821705426,
+              "f1": 0.8822429906542056,
+              "support": 258
+            },
+            "backhand": {
+              "tp": 251,
+              "fp": 20,
+              "fn": 49,
+              "precision": 0.9261992619926199,
+              "recall": 0.8366666666666667,
+              "f1": 0.8791593695271454,
+              "support": 300
+            }
+          },
+          "supported_classes": [
+            "forehand",
+            "backhand"
+          ],
+          "unsupported_classes": [],
+          "macro_f1_supported": 0.8807011800906754,
+          "matrix": {
+            "forehand": {
+              "forehand": 236,
+              "backhand": 20,
+              "unanswered": 2
+            },
+            "backhand": {
+              "forehand": 41,
+              "backhand": 251,
+              "unanswered": 8
+            }
+          },
+          "source_rows": 558,
+          "answered": 548,
+          "precision_given_answered": 0.8886861313868614,
+          "strict_accuracy": 0.8727598566308243,
+          "balanced_recall": 0.8756976744186047
+        },
+        "family_side_tuple_given_weak_source_hitter_clock": 0.2724014336917563,
+        "available_rows": 548,
+        "source_rows": 558,
+        "exact_truth": false
+      },
+      "limitation": "Conditional on weak source contact/hitter association, one same-venue heldout match; not full automatic detection/hitter/family/side accuracy"
+    }
+  },
+  "source_controls": [
+    {
+      "case": "heldout-mixed-first-rally",
+      "video_sha256": "be8fe6eda091ec15b0f062f11c0fb8c34c8d20e4006471912c0711265ff4e376",
+      "player_artifact_sha256": "53ca1735734681f61ba5f549aadca58ecbe3a1dfc3e9f3e96439002fa688a2da",
+      "shuttle_artifact_sha256": "ade65c4ff97ad130fc0061b927b1f2f12a7163d4d8008f3693112114af9a3c7e",
+      "learned_peak_count": 10,
+      "heuristic_v3_count": 2,
+      "contacts_complete": false,
+      "exact_accuracy_measured": false,
+      "frozen_source_intervals": 9,
+      "learned_intervals_covered": 6,
+      "heuristic_v3_intervals_covered": 0,
+      "source_interval_matching": "Navigation frame inside frozen inclusive source interval, no tolerance expansion",
+      "training_overlap": false
+    },
+    {
+      "case": "public-train-overlap",
+      "video_sha256": "b45c2a05f4455d9ad7b72b3b62a097585dbbec876039a6fcc40498c6bfcefce2",
+      "player_artifact_sha256": "c8b24e2332902c575d583117965da5868a5896ad13e91e38e03ed874f5f12c5b",
+      "shuttle_artifact_sha256": "d406e13f86d53489c8f4ddf42d3c5a6f1c1e18228481629fab6058fbe4fe4afa",
+      "learned_peak_count": 15,
+      "heuristic_v3_count": 6,
+      "contacts_complete": false,
+      "exact_accuracy_measured": false,
+      "frozen_source_intervals": 13,
+      "learned_intervals_covered": 6,
+      "heuristic_v3_intervals_covered": 6,
+      "source_interval_matching": "Navigation frame inside frozen inclusive source interval, no tolerance expansion",
+      "training_overlap": true
+    },
+    {
+      "case": "original-singles-unadjudicated",
+      "video_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+      "player_artifact_sha256": "a1fd50620fb15d1fc03c5e3fa12b8ade6778c67d129cf04d483f99cd6f75c684",
+      "shuttle_artifact_sha256": "04d9d309a60b8eecdf7b46e188f9b42f346396f19a2a3bca9cd8d80beb61182b",
+      "learned_peak_count": 15,
+      "heuristic_v3_count": 12,
+      "contacts_complete": false,
+      "exact_accuracy_measured": false
+    },
+    {
+      "case": "original-doubles-unadjudicated",
+      "video_sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+      "player_artifact_sha256": "3b713bcfc653b380158a018a53694492caa8e4fe82e97fa1bd2ec1cd2e383eab",
+      "shuttle_artifact_sha256": "363058b8502e12ba65909ea240bcbe12a13079465e70e7c8fc69a0e1c441d525",
+      "learned_peak_count": 36,
+      "heuristic_v3_count": 20,
+      "contacts_complete": false,
+      "exact_accuracy_measured": false
+    }
+  ],
+  "decision": {
+    "install_as_default": false,
+    "six_family_requirement_met": false,
+    "reason": "Weak timing differs from source-reviewed contacts; family head fails several requested classes and abstention precision does not transfer uniformly",
+    "next_evaluation_requires_new_source_holdout": true
+  },
+  "local_evidence_sha256": {
+    ".cache\\contact-learning-model-v2\\training-source.py": "9134894c8531d9859baf96392da4e79e2be3d511285be959517bc4fbe395a14f",
+    ".cache\\contact-learning-model-v2\\recipe.json": "0afcd6d93317292f2fb430c9bbb1d6f6d58a872216a62110e1f5091ca486fe6a",
+    ".cache\\contact-learning-model-v2\\selection.json": "31df4427903794d33b0d79e3bb830b24b3c4b8f955a5ba16eb76b97a9e89c13e",
+    ".cache\\contact-learning-model-v2\\heldout-weak-test.json": "6ea4fbef7070856c0d195adbf827383cbfd30ba716966d43ac021fad10b752ad",
+    ".cache\\contact-learning-model-v2\\development-comparison.json": "a5b2187d4817e7b7d9ccb7a67e098e0c91d343bde7aef2a42d0bb990f9ed5a94",
+    ".cache\\yolo-stroke-model-v2\\training-source.py": "9a65f1f754ab1574924d7c3ea7ed29024fc42b0e517c68b51898b1202efb121c",
+    ".cache\\yolo-stroke-model-v2\\recipe.json": "061030dd7097aa360450b1c13f8715ba5ac2482ea8a2302edbece5c6018d3eae",
+    ".cache\\yolo-stroke-model-v2\\selection.json": "c52755e6a366cc45e88ebdcd035a4e747c9d0b3fe9ac26e9c37798ec56c5afa9",
+    ".cache\\yolo-stroke-model-v2\\heldout-weak-test.json": "8f0b8ef10c9bcd1b59ff045246acec9a3e71b8a94a1c60d43787092245363729",
+    ".cache\\contact-learning-v2-final-verification.json": "27ce72366e8fe8199d85ed7009891868267c2e9b5b48b7e786b462cffb04b170"
+  }
+}
