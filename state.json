@@ -1638,6 +1638,15 @@
       "task_id": "111",
       "verb": "submit"
     },
+    "windows-public111-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792441188,
+      "epoch": 1,
+      "fingerprint": "dee8861f0dcd7454e52295525471c0ab6bfe6bb5de63329d5d884cdcf36a8308",
+      "status": "review",
+      "task_id": "111",
+      "verb": "submit"
+    },
     "windows-rally108-checkpoint-e3-v1": {
       "actor": "Ken0u",
       "at": 1792438406,
@@ -2372,10 +2381,10 @@
         ]
       },
       "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
-        "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
+        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
         "pr_number": 114,
         "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
       }
