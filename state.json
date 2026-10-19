@@ -148,6 +148,12 @@
       "task_id": "105",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint105-tested": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -340,6 +346,35 @@
       "status": "review",
       "task_id": "103",
       "verb": "review-result"
+    },
+    "mac-review105-01a15493-next-v1": {
+      "actor": "dootz1",
+      "at": 1792422154,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
+        "epoch": 1,
+        "expires_at": 1792432954,
+        "granted_at": 1792422154,
+        "head_sha": "460d2ccf51302e6f837b77edc1db0af6f19bab4f",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 106,
+        "review_epoch": 1,
+        "session_id": "mac-review105-01a15493",
+        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
+      },
+      "epoch": 1,
+      "fingerprint": "8af3d965d4016311f8d490b5a53d302f8dca085a317474de421ed9d215a7374f",
+      "status": "granted",
+      "task_id": "105",
+      "verb": "review-next"
+    },
+    "mac-review105-01a15493-register-v1": {
+      "actor": "dootz1",
+      "at": 1792422154,
+      "fingerprint": "b3322f4ce1cd9aa9b65dd6454c6ce24c54968ed1df2aea9abef8324d9efcd0fd",
+      "status": "ok",
+      "verb": "register"
     },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
@@ -1138,6 +1173,20 @@
       "planned_at": 1792421207,
       "planned_by": "dootz1",
       "pr_number": 106,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
+        "epoch": 1,
+        "expires_at": 1792432954,
+        "granted_at": 1792422154,
+        "head_sha": "460d2ccf51302e6f837b77edc1db0af6f19bab4f",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 106,
+        "review_epoch": 1,
+        "session_id": "mac-review105-01a15493",
+        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Reproduce unsupported original FFV1 media raising a global playback error, then successful compatible playback leaving the obsolete error visible.",
@@ -2578,6 +2627,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792420773,
       "session_id": "mac-review103-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review105-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792422154,
+      "session_id": "mac-review105-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-20261019-01a15477": {
       "actor": "dootz1",
