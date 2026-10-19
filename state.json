@@ -1579,6 +1579,15 @@
       "task_id": "119",
       "verb": "checkpoint"
     },
+    "windows-external119-checkpoint-v4": {
+      "actor": "Ken0u",
+      "at": 1792445478,
+      "epoch": 1,
+      "fingerprint": "c5166588c910f59172afcc86df8682476de213fd9f7a1401b5e43d8b15764a1a",
+      "status": "running",
+      "task_id": "119",
+      "verb": "checkpoint"
+    },
     "windows-external119-review-next-v1": {
       "actor": "Ken0u",
       "at": 1792444580,
@@ -1638,6 +1647,15 @@
       "at": 1792445210,
       "epoch": 1,
       "fingerprint": "a968eedf39faf241a827a741bdff6ae9acb53ad4ad38505577c09fedd2abe0b6",
+      "status": "review",
+      "task_id": "119",
+      "verb": "submit"
+    },
+    "windows-external119-submit-v3": {
+      "actor": "Ken0u",
+      "at": 1792445516,
+      "epoch": 1,
+      "fingerprint": "10428d7337e305f75a9e8c341c30c8cd804eb5147c59f00822eb69c6f47a8fd4",
       "status": "review",
       "task_id": "119",
       "verb": "submit"
@@ -3048,26 +3066,26 @@
     },
     "119": {
       "checkpoint": {
-        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
-        "head_sha": "671ed0cd5fab2d18d790ec384d13bb64b852461f",
+        "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
         "pr_number": 122,
-        "remaining": "New exact-head CI and fresh independent review of head671ed, followed by genuine non-author human approval of final PR122 head. Let the controller merge, then verify exact merged main. Historical111 recovery remains unsubmitted until trusted merged-main tools are available; reuse existing complete candidate39320656490. Scope authorization does not approve this PR. No raw coordination edits or research/inference restarts.",
-        "review_repair": "Genuine independent review v1 requested changes on head49a: recovery and common outbox each called deliver in the same pass, dispatching or retrying twice. New regression first reproduced both failures; recovery now leaves publication to the common outbox. Missing, failed and live candidate cases verify one attempt, later live reuse and final complete delivery without additional actions. Changes stay within the same eight allowed paths.",
+        "remaining": "New exact-head CI and fresh independent review for head6125/basec1ba9/spec94986, then genuine non-author human approval of final PR122. Let controller merge and verify exact merged main before actual111 recover-merged request. Current111 epoch2 remains fenced; complete candidate39320656490 must be reused. Scope authorization is not PR approval. No raw coordination edits, data/model deployment or research/inference restart.",
+        "review_repair": "Genuine independent v1 changes verdict found duplicated delivery inside recovery plus common outbox. Repair commit671ed removes the recovery-local delivery call and tests one dispatch/rerun, later live reuse and successful completion. Main subsequently advanced to verified c1ba9 through collaborator PR121; clean ordinary merge6125 preserves both histories and exactly eight scoped changed paths. No force push or scope expansion.",
         "validation": [
-          "197 focused queue/coordinator/policy tests passed",
-          "Full locked Python 3.12 with portable FFmpeg: 1136 passed, 11 optional skips, known Starlette warning; actual process exit 0",
-          "Ruff and format 145 files, 43-package dependency health, repository UTF8/LF/JSON/local links and diff checks passed"
+          "Full locked Python 3.12 with portable FFmpeg after merging current main: 1175 passed, 11 optional skips, known Starlette warning; actual process exit 0",
+          "197 focused queue/coordinator/policy cases included; repaired missing/failed/live candidate duplicate-delivery regression first failed before correction",
+          "Ruff and format 147 files, unchanged locked 43-package environment, repository UTF8/LF/JSON/local links and diff checks passed"
         ],
         "worktree": ".cache/worktrees/external119"
       },
-      "checkpoint_at": 1792445188,
+      "checkpoint_at": 1792445478,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
         "epoch": 1,
-        "expires_at": 1792455988,
+        "expires_at": 1792456278,
         "granted_at": 1792443018,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -3129,10 +3147,10 @@
         ]
       },
       "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "head_sha": "671ed0cd5fab2d18d790ec384d13bb64b852461f",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
         "pr_number": 122,
         "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
       }
