@@ -3458,6 +3458,7 @@
       },
       "planned_at": 1792447474,
       "planned_by": "Ken0u",
+      "reason": "Active specification edited; preserve work and obtain a new scope grant",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -3511,7 +3512,7 @@
         ]
       },
       "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
-      "status": "running"
+      "status": "recovery_required"
     },
     "124": {
       "epoch": 0,
