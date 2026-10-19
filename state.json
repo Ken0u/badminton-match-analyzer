@@ -207,6 +207,15 @@
       "task_id": "110",
       "verb": "checkpoint"
     },
+    "mac-01a15493-116-repaired": {
+      "actor": "dootz1",
+      "at": 1792442226,
+      "epoch": 1,
+      "fingerprint": "32a5e457efc3c7a214523d248a81892627048ed82abc7ff585eae4bf96d4c544",
+      "status": "running",
+      "task_id": "116",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-116-start": {
       "actor": "dootz1",
       "at": 1792441102,
@@ -221,6 +230,15 @@
       "at": 1792441551,
       "epoch": 1,
       "fingerprint": "cf03e9ba43697d20b15370d1d00887fb438bce87baa8fa2c3abc188cfc61eb36",
+      "status": "review",
+      "task_id": "116",
+      "verb": "submit"
+    },
+    "mac-01a15493-116-submit-v2": {
+      "actor": "dootz1",
+      "at": 1792442244,
+      "epoch": 1,
+      "fingerprint": "95dceb5efed065b02de4e26a2d54fa122ced1e479aa15035fed9aa3ee96be2a7",
       "status": "review",
       "task_id": "116",
       "verb": "submit"
@@ -2513,26 +2531,26 @@
     },
     "116": {
       "checkpoint": {
-        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "base_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
         "branch": "codex/issue-116-export-source-time-preserving-annotated-",
-        "head_sha": "d29092cda901e887962c529c321c7b58ed63a01f",
-        "preservation": "No shared source/annotations/predictions/research or running app modified. Five changed paths all granted. 110main verified/deliverypending, not counted fully complete.",
-        "remaining": "Publish PR after final suite, submit exact head/base/spec, fresh independent read-only review including browser/visual checks, address findings, exact-head CI/controller merge/main verification and delivery. Publishing111/114 remains separate collaborator-owned human gate.",
+        "head_sha": "ce99c4fdd2c518b61c7e8c651ea648a36829fe71",
+        "preservation": "Original d290 review/CI and changes verdict retained. Main38eaeaf externally merged bydootz1 without formal PR review; merged conflict-free into granted branch without authoring policy changes or fabricating approval. No source/annotation/research/app changes.",
+        "remaining": "Publish new head/base, submit review_epoch2 request after exact binding, obtain fresh independent verdict and hosted CI/controller merge/main/delivery. Preserve external publisher merge and its approval/delivery limitations honestly.",
         "validation": [
-          "103 combined generated overlay/plain/planner regressions passed; extra long/Unicode name test passed in32overlay cases",
-          "Ruff/format/repository/dependency/diff checks pass",
-          "Chromium156 full1.04s/8frames and rally.96s/6frames: all14 native color seeks/playback-to-end pass; inspected uncertainty/shuttle/camera-cut/known-side captures .cache/browser-fixture-wrap/",
-          "Final full suite running in .cache/full-final.xml after text-wrap adjustment; prior1043passed/11optional skips"
+          "IndependentP2 reproduced by two failing upper-panel spatial tests; repair now passes helper and actual encoded marker/court regressions",
+          "106 focused export regressions pass; combined current-main full1082passed/11optional skips (.cache/full-current-main.xml)",
+          "Ruff/format/repository/dependency/diff checks pass;5path PR diff remains granted",
+          "Fresh Chromium14native seeks/full1.04s+rally.96s endpoints pass; upper-panel marker pixels verified and capture inspected .cache/browser-fixture-repair/"
         ],
         "worktree": ".cache/rally-overlay-116"
       },
-      "checkpoint_at": 1792441482,
+      "checkpoint_at": 1792442226,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "branch": "codex/issue-116-export-source-time-preserving-annotated-",
         "epoch": 1,
-        "expires_at": 1792452282,
+        "expires_at": 1792453026,
         "granted_at": 1792441027,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -2543,42 +2561,6 @@
       "planned_by": "dootz1",
       "pr_number": 118,
       "repair_rounds": 1,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792441949,
-        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
-        "evidence": [
-          "Fresh read-only session mac-review116-01a15493; committed mac-review116-next-v1 task116 epoch1/review_epoch1 grant independently revalidated against remote PR118 exact head/base/spec before inspection and before verdict. Detached .cache/review116-d29092c remained clean.",
-          "Independently ran generated overlay/plain/planner tests using task116 locked Python3.12 environment and reviewer backend:104passed in8.69s; JUnit .cache/review116-d29092c/.cache/evidence/focused.xml. Focused Ruff/check and format checks and git diff--check passed.",
-          "Independent generate.py fixture uses10FFV1 native frames, VFR PTS,3.25s source origin,801x451 odd dimensions, delayed523.25Hz PCM audio, doubles saved uncertain/unknown/reviewed/corrected/predicted events, exact shuttle points, scene change and reviewed camera cut/calibration expiry. Exported full1.15s/10frames and rally1.05s/8frames; event accounting5total/4included/1predicted-excluded; all6original input/catalog/timeline files hash-identical after both exports. Native encoder validation checks timing/pixels/audio and completion hashes.",
-          "Independent Chromium156.0.8078.4 performed18native-frame color seeks with maximum mean pixel error0.667 and played both outputs to their expected endpoints. Browser screenshots3/6/7 visually inspected: inclusive unknown interval[2,4], saved shuttle/court, corrected drive/backhand/playerD, replay/camera cut and expired court. Receipt .cache/review116-d29092c/.cache/evidence/media/browser-receipt.json records browser_closed=true/server_closed=true; foreground harness process completed exit0.",
-          "Independent adversarial probe .cache/review116-d29092c/.cache/evidence/probe-marker.py reproduced and upper-shuttle-marker.png visually confirmed the missing upper-frame saved shuttle marker. Full evidence retained only in ignored reviewer cache; implementation untouched."
-        ],
-        "findings": [
-          "[P2] backend/badminton/rally_overlay.py:197-201: Preserve saved shuttle markers when their source coordinates overlap the top text panel. overlay_frame draws circles at lines197-200 and then zeros result[:panel_height], so valid visible points near the top disappear from both full and rally exports. Independent probe on an801x451 frame3 with saved visible point(x=.5,y=.04) retains the point in overlay_context but produces zero yellow marker pixels at its native location; upper-shuttle-marker.png visually confirms the omission. Court edges in this region are likewise overwritten. Arrange panel/geometry layering or layout so positional evidence remains visible and add a regression for a point inside the panel; encoded verification currently compares against the same flawed overlay and therefore accepts this omission."
-        ],
-        "head_sha": "d29092cda901e887962c529c321c7b58ed63a01f",
-        "limitations": [
-          "Review verdict requests correction of the reproduced panel-occlusion defect; no implementation fixes made by reviewer.",
-          "Generated media and browser checks establish exercised export behavior, not badminton annotation accuracy, complete contacts or persistent identity. No private media, inference, datasets, weights or shared jobs were used.",
-          "Ran focused104export/planner tests, not the author's1044-test full suite. Human approval, hosted CI/controller integration, exact merged-main verification and complete package/image delivery are separate gates; no merge or completion claim."
-        ],
-        "pr_number": 118,
-        "reviewed_files": [
-          "backend/badminton/rally_overlay.py",
-          "backend/badminton/rally_video.py",
-          "backend/badminton/cli.py",
-          "tests/test_rally_overlay.py",
-          "docs/REVIEWED_EXPORTS.md",
-          "backend/badminton/rally_export.py",
-          "backend/badminton/schemas.py",
-          "backend/badminton/storage.py",
-          "backend/badminton/calibration_context.py"
-        ],
-        "session_id": "mac-review116-01a15493",
-        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -2622,10 +2604,10 @@
         ]
       },
       "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
-        "head_sha": "d29092cda901e887962c529c321c7b58ed63a01f",
+        "base_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
+        "head_sha": "ce99c4fdd2c518b61c7e8c651ea648a36829fe71",
         "pr_number": 118,
         "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
       }
