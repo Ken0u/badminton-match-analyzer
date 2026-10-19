@@ -6,6 +6,7 @@ import os
 import re
 import shutil
 import stat
+import tempfile
 from contextlib import ExitStack, contextmanager
 from pathlib import Path
 
@@ -16,6 +17,7 @@ from .rally_video import render_rally_videos
 MODES = frozenset(("plain-rallies", "annotated-rallies", "annotated-full"))
 _JOB_ID = re.compile(r"[0-9a-f]{32}\Z")
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
+_COPY_CHUNK = 1024 * 1024
 
 
 def _redirected(path):
@@ -342,22 +344,42 @@ class MediaExportService:
             raise ValueError("Invalid media export completion receipt") from exc
 
     def open_download(self, job, filename):
-        """Return the verified descriptor itself, never a path to reopen later."""
+        """Return a private verified snapshot, without reopening an export path."""
         try:
-            with ExitStack() as stack:
-                _, files, handles = self._validated(job, stack, filename)
-                if not isinstance(filename, str) or filename not in handles:
-                    raise LookupError("Filename is not a completed export artifact")
-                receipt = next(f for f in files if f["filename"] == filename)
-                # Duplicate the already validated descriptor before closing the
-                # validation stack; no pathname is resolved again for streaming.
-                handle = os.fdopen(os.dup(handles[filename].fileno()), "rb")
-                handle.seek(0)
-                return {
+            # Keep snapshot ownership until validation contexts have also exited:
+            # fallback directory identity checks can fail during their cleanup.
+            with ExitStack() as ownership:
+                with ExitStack() as validation:
+                    _, files, handles = self._validated(job, validation, filename)
+                    if not isinstance(filename, str) or filename not in handles:
+                        raise LookupError("Filename is not a completed export artifact")
+                    receipt = next(f for f in files if f["filename"] == filename)
+                    handle = ownership.enter_context(tempfile.TemporaryFile())
+                    source = handles[filename]
+                    source.seek(0)
+                    size = 0
+                    # Bound memory and disk use even if the source grows while
+                    # copying. Hash the actual stored representation, not merely
+                    # an earlier read of the mutable original descriptor.
+                    while chunk := source.read(
+                        min(_COPY_CHUNK, receipt["size_bytes"] - size + 1)
+                    ):
+                        size += len(chunk)
+                        if size > receipt["size_bytes"]:
+                            raise ValueError("Export artifact grew during download")
+                        if handle.write(chunk) != len(chunk):
+                            raise OSError("Incomplete export download snapshot write")
+                    handle.flush()
+                    handle.seek(0)
+                    if _receipt(handle, filename) != receipt:
+                        raise ValueError("Export artifact changed during download")
+                result = {
                     "file": handle,
                     "filename": filename,
                     "media_type": receipt["media_type"],
                     "size_bytes": receipt["size_bytes"],
                 }
+                ownership.pop_all()
+                return result
         except (KeyError, TypeError, AttributeError, json.JSONDecodeError) as exc:
             raise ValueError("Invalid media export completion receipt") from exc

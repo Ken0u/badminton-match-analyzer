@@ -174,8 +174,23 @@ file. Another video's job, another job kind or an arbitrary filename returns
 404. Active, failed or interrupted exports cannot be downloaded. The service
 checks the completion manifest and every output hash before reporting availability
 or opening a download; missing, changed or unsafe output returns 409 with an
-instruction to start a new export. Downloads stream from an already opened,
-verified file handle. They do not load a full match into response memory.
+instruction to start a new export. Before HTTP success, each download copies the
+requested, already opened descriptor into a server-owned private temporary file
+and verifies that stored copy's complete length and SHA-256 against the completed
+native receipt. It never reopens the export pathname. Replacing a pathname or
+rewriting, truncating or growing the original inode after verification cannot
+change the returned bytes; changes observed while building the copy fail with
+409 unless the complete stored representation still matches the receipt.
+
+Copying uses chunks of at most 1 MiB and refuses bytes beyond the recorded size;
+response streaming uses 64 KiB chunks. A full match is not buffered in response
+memory. Each concurrent download needs temporary disk space up to its recorded
+size in the server's system temporary area, outside the job export directory.
+Creation, write, flush, seek or verification-read failures reject the request
+before HTTP success and close the temporary file. The response owns that file
+until completion, disconnect or cancellation, including failure before the first
+body read. No download snapshot changes the source, completion receipt or prior
+exports, or adds files to their export directory.
 
 Storage is server configured through `create_app(..., export_root=Path(...))` or
 `BADMINTON_EXPORT_DIR`. The default is an `exports` directory next to the resolved

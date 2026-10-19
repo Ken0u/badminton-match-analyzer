@@ -1,5 +1,6 @@
 """Real HTTP media exports preserve native evidence and shared admission."""
 
+import asyncio
 import errno
 import hashlib
 import io
@@ -13,6 +14,7 @@ import time
 from pathlib import Path
 from types import SimpleNamespace
 
+import anyio
 import av
 import numpy as np
 import pytest
@@ -585,3 +587,399 @@ def test_modified_job_completion_binding_is_rejected(tmp_path, field, value):
             client.get(endpoint(video, job["id"]) + "/files/manifest.json").status_code
             == 409
         )
+
+
+@pytest.mark.parametrize("filename", ["rally-000001.mp4", "manifest.json"])
+@pytest.mark.parametrize("mutation", ["overwrite", "truncate", "grow"])
+def test_download_snapshot_survives_in_place_mutation_before_http_iteration(
+    tmp_path, monkeypatch, filename, mutation
+):
+    from badminton.export_service import MediaExportService
+
+    store, video, _, saved, _ = context(tmp_path)
+    exports = tmp_path / "exports"
+    original = MediaExportService.open_download
+    retained = []
+    with TestClient(create_app(tmp_path, store.data, export_root=exports)) as client:
+        job = submit(client, store, video, saved.revision)
+        path = exports / job["id"] / filename
+        expected = path.read_bytes()
+        receipt = next(f for f in job["summary"]["files"] if f["filename"] == filename)
+        expected_names = {f["filename"] for f in job["summary"]["files"]}
+
+        def mutate_after_snapshot(self, current, name):
+            result = original(self, current, name)
+            retained.append(result["file"])
+            before = path.stat().st_ino
+            changed = (
+                bytes([expected[0] ^ 1]) + expected[1:]
+                if mutation == "overwrite"
+                else expected[:-1]
+                if mutation == "truncate"
+                else expected + b"extra"
+            )
+            with path.open("r+b") as target:
+                target.write(changed)
+                target.truncate()
+            assert path.stat().st_ino == before
+            return result
+
+        monkeypatch.setattr(MediaExportService, "open_download", mutate_after_snapshot)
+        response = client.get(endpoint(video, job["id"]) + "/files/" + filename)
+        assert response.status_code == 200 and response.content == expected
+        assert len(response.content) == int(response.headers["content-length"])
+        assert len(response.content) == receipt["size_bytes"]
+        assert hashlib.sha256(response.content).hexdigest() == receipt["sha256"]
+        assert retained and all(handle.closed for handle in retained)
+        assert {p.name for p in path.parent.iterdir()} == expected_names
+        assert client.get(endpoint(video, job["id"])).status_code == 409
+        if filename == "manifest.json":
+            assert response.json()["annotations"] == saved.model_dump(mode="json")
+        else:
+            downloaded = tmp_path / "downloaded.mp4"
+            downloaded.write_bytes(response.content)
+            times = json.loads(
+                (store.data / video["id"] / "timestamps.json").read_bytes()
+            )
+            assert_native_media(downloaded, video, times, 1, 7, times[7] - times[1])
+
+
+@pytest.mark.parametrize("filename", ["rally-000001.mp4", "manifest.json"])
+@pytest.mark.parametrize("timing", ["after-verification", "during-copy"])
+@pytest.mark.parametrize("mutation", ["overwrite", "truncate", "grow"])
+def test_mutable_source_is_reverified_when_building_download_snapshot(
+    tmp_path, monkeypatch, filename, timing, mutation
+):
+    from badminton import export_service
+
+    store, video, _, saved, _ = context(tmp_path)
+    exports = tmp_path / "exports"
+    original = export_service.MediaExportService._validated
+    temporary_file = export_service.tempfile.TemporaryFile
+    retained, source_handles, read_sizes = [], [], []
+    with TestClient(create_app(tmp_path, store.data, export_root=exports)) as client:
+        job = submit(client, store, video, saved.revision)
+        path = exports / job["id"] / filename
+        expected = path.read_bytes()
+        original_files = {p.name: p.read_bytes() for p in path.parent.iterdir()}
+
+        def mutate():
+            # Change the tail so a mid-copy mutation affects unread bytes.
+            changed = (
+                expected[:-1] + bytes([expected[-1] ^ 1])
+                if mutation == "overwrite"
+                else expected[:-1]
+                if mutation == "truncate"
+                else expected + b"extra"
+            )
+            with path.open("r+b") as target:
+                target.write(changed)
+                target.truncate()
+
+        class MutatingReader:
+            def __init__(self, handle):
+                self.handle = handle
+                self.started = False
+
+            def seek(self, offset):
+                return self.handle.seek(offset)
+
+            def read(self, size):
+                assert 0 < size <= 512
+                read_sizes.append(size)
+                chunk = self.handle.read(size)
+                if not self.started:
+                    self.started = True
+                    mutate()
+                    # Discard read-ahead to force the next read to see the
+                    # rewritten inode, deterministically on every platform.
+                    position = self.handle.tell()
+                    self.handle.seek(len(expected) + 10)
+                    self.handle.seek(position)
+                return chunk
+
+        def changed_validation(self, current, stack, requested=None):
+            result = original(self, current, stack, requested)
+            if requested is not None:
+                source_handles.extend(result[2].values())
+                if timing == "after-verification":
+                    mutate()
+                else:
+                    result[2][filename] = MutatingReader(result[2][filename])
+            return result
+
+        def track_temporary():
+            handle = temporary_file()
+            retained.append(handle)
+            return handle
+
+        monkeypatch.setattr(export_service, "_COPY_CHUNK", 512)
+        monkeypatch.setattr(export_service.tempfile, "TemporaryFile", track_temporary)
+        monkeypatch.setattr(
+            export_service.MediaExportService, "_validated", changed_validation
+        )
+        response = client.get(endpoint(video, job["id"]) + "/files/" + filename)
+        assert response.status_code == 409, response.text
+        assert retained and all(handle.closed for handle in retained)
+        assert source_handles and all(handle.closed for handle in source_handles)
+        if timing == "during-copy":
+            assert len(read_sizes) > 1
+        assert {p.name for p in path.parent.iterdir()} == set(original_files)
+        assert all(
+            (path.parent / name).read_bytes() == content
+            for name, content in original_files.items()
+            if name != filename
+        )
+        assert store.job(job["id"])["summary"] == job["summary"]
+
+
+@pytest.mark.parametrize(
+    "failure",
+    [
+        "create",
+        "write",
+        "short-write",
+        "corrupt-write",
+        "flush",
+        "seek",
+        "read",
+        "source-read",
+        "directory-exit",
+    ],
+)
+def test_snapshot_storage_failures_reject_before_http_success_and_close_handles(
+    tmp_path, monkeypatch, failure
+):
+    from contextlib import contextmanager
+
+    from badminton import export_service
+
+    store, video, source, saved, _ = context(tmp_path)
+    exports = tmp_path / "exports"
+    temporary_file = export_service.tempfile.TemporaryFile
+    open_file = export_service._open_file
+    retained, source_handles = [], []
+    with TestClient(create_app(tmp_path, store.data, export_root=exports)) as client:
+        job = submit(client, store, video, saved.revision)
+        folder = exports / job["id"]
+        original_files = {p.name: p.read_bytes() for p in folder.iterdir()}
+        original_source = source.read_bytes()
+        original_data = {p: p.read_bytes() for p in store.data.rglob("*.json")}
+
+        class FailingTemporary:
+            def __init__(self, handle):
+                self.handle = handle
+
+            def __getattr__(self, name):
+                return getattr(self.handle, name)
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                self.handle.close()
+
+            def write(self, chunk):
+                if failure == "write":
+                    raise OSError(errno.ENOSPC, "Snapshot storage is full")
+                if failure == "short-write":
+                    return self.handle.write(chunk[:-1])
+                if failure == "corrupt-write":
+                    chunk = bytes([chunk[0] ^ 1]) + chunk[1:]
+                return self.handle.write(chunk)
+
+            def flush(self):
+                if failure == "flush":
+                    raise OSError(errno.ENOSPC, "Deferred snapshot storage failure")
+                return self.handle.flush()
+
+            def seek(self, offset):
+                if failure == "seek":
+                    raise OSError(errno.EIO, "Snapshot seek failed")
+                return self.handle.seek(offset)
+
+            def read(self, size):
+                if failure == "read":
+                    raise OSError(errno.EIO, "Snapshot read failed")
+                return self.handle.read(size)
+
+        def failing_temporary():
+            if failure == "create":
+                raise OSError(errno.ENOSPC, "Cannot create download snapshot")
+            handle = temporary_file()
+            retained.append(handle)
+            return FailingTemporary(handle)
+
+        def track_source(*args):
+            handle = open_file(*args)
+            source_handles.append(handle)
+            return handle
+
+        original_validation = export_service.MediaExportService._validated
+
+        def fail_source_after_validation(self, current, stack, requested=None):
+            result = original_validation(self, current, stack, requested)
+            if requested is not None:
+                handle = result[2][requested]
+                source_handles.append(handle)
+                if failure == "source-read":
+
+                    class Unreadable:
+                        def seek(self, offset):
+                            return handle.seek(offset)
+
+                        def read(self, size):
+                            raise OSError(errno.EIO, "Source read failed during copy")
+
+                    result[2][requested] = Unreadable()
+            return result
+
+        if failure == "directory-exit":
+            original_directory = export_service._directory
+
+            @contextmanager
+            def failing_directory(path):
+                with original_directory(path) as descriptor:
+                    yield descriptor
+                raise ValueError("Directory changed during fallback exit validation")
+
+            monkeypatch.setattr(export_service, "_directory", failing_directory)
+        monkeypatch.setattr(export_service, "_open_file", track_source)
+        monkeypatch.setattr(export_service.tempfile, "TemporaryFile", failing_temporary)
+        monkeypatch.setattr(
+            export_service.MediaExportService,
+            "_validated",
+            fail_source_after_validation,
+        )
+        response = client.get(endpoint(video, job["id"]) + "/files/rally-000001.mp4")
+        assert response.status_code == 409 and "Start a new export" in response.text
+        assert all(handle.closed for handle in retained)
+        assert source_handles and all(handle.closed for handle in source_handles)
+        assert {p.name: p.read_bytes() for p in folder.iterdir()} == original_files
+        assert source.read_bytes() == original_source
+        assert all(p.read_bytes() == content for p, content in original_data.items())
+        assert store.job(job["id"])["summary"] == job["summary"]
+    # Failure of one download must not invalidate a prior completed export.
+    monkeypatch.undo()
+    with TestClient(create_app(tmp_path, store.data, export_root=exports)) as client:
+        response = client.get(endpoint(video, job["id"]) + "/files/rally-000001.mp4")
+        assert response.status_code == 200
+        assert response.content == original_files["rally-000001.mp4"]
+
+
+@pytest.mark.parametrize(
+    "spec,termination",
+    [
+        ("2.4", "success"),
+        ("2.0", "success"),
+        ("2.4", "start-error"),
+        ("2.4", "body-error"),
+        ("2.4", "pre-body-cancel"),
+        ("2.0", "disconnect-before-body"),
+        ("2.0", "disconnect-during-body"),
+    ],
+)
+def test_native_download_asgi_termination_closes_snapshot(
+    tmp_path, monkeypatch, spec, termination
+):
+    from badminton.export_service import MediaExportService
+    from starlette.requests import ClientDisconnect
+
+    store, video, _, saved, _ = context(tmp_path)
+    app = create_app(tmp_path, store.data)
+    original = MediaExportService.open_download
+    retained, reads, messages = [], [], []
+
+    class ObservedHandle:
+        def __init__(self, handle):
+            self.handle = handle
+
+        def read(self, size):
+            reads.append(size)
+            return self.handle.read(size)
+
+        def close(self):
+            self.handle.close()
+
+    def track_snapshot(self, job, filename):
+        result = original(self, job, filename)
+        retained.append(result["file"])
+        result["file"] = ObservedHandle(result["file"])
+        return result
+
+    with TestClient(app) as client:
+        job = submit(client, store, video, saved.revision)
+        monkeypatch.setattr(MediaExportService, "open_download", track_snapshot)
+        route = next(
+            route
+            for route in app.routes
+            if getattr(route, "path", None)
+            == "/api/videos/{video_id}/media-exports/{job_id}/files/{filename}"
+        )
+        # Use the real endpoint's native snapshot and Starlette's real ASGI
+        # protocol/disconnect machinery; no TestClient eager body consumption.
+        response = route.endpoint(video["id"], job["id"], "rally-000001.mp4")
+        assert retained and not reads and not retained[0].closed
+
+        async def run_response():
+            disconnect = anyio.Event()
+
+            async def send(message):
+                messages.append(message)
+                if message["type"] == "http.response.start":
+                    if termination == "start-error":
+                        raise OSError("Connection lost before first body read")
+                    if termination == "pre-body-cancel":
+                        raise asyncio.CancelledError()
+                    if termination == "disconnect-before-body":
+                        disconnect.set()
+                        await anyio.sleep_forever()
+                elif message.get("body"):
+                    if termination == "body-error":
+                        raise OSError("Connection lost during body send")
+                    if termination == "disconnect-during-body":
+                        disconnect.set()
+                        await anyio.sleep_forever()
+
+            async def receive():
+                await disconnect.wait()
+                return {"type": "http.disconnect"}
+
+            await response(
+                {"type": "http", "asgi": {"spec_version": spec}}, receive, send
+            )
+
+        if termination in ("start-error", "body-error"):
+            with pytest.raises(ClientDisconnect):
+                asyncio.run(run_response())
+        elif termination == "pre-body-cancel":
+            with pytest.raises(asyncio.CancelledError):
+                asyncio.run(run_response())
+        else:
+            asyncio.run(run_response())
+        assert all(handle.closed for handle in retained)
+        if termination in ("start-error", "pre-body-cancel", "disconnect-before-body"):
+            assert not reads
+        else:
+            assert reads and all(size == 64 * 1024 for size in reads)
+        if termination == "success":
+            content = b"".join(message.get("body", b"") for message in messages)
+            receipt = job["summary"]["files"][1]
+            assert len(content) == receipt["size_bytes"]
+            assert hashlib.sha256(content).hexdigest() == receipt["sha256"]
+
+
+def test_download_response_construction_failure_closes_snapshot(tmp_path):
+    from badminton.api import _ExportDownloadResponse
+    from badminton.export_service import MediaExportService
+
+    store, video, _, saved, _ = context(tmp_path)
+    exports = tmp_path / "exports"
+    with TestClient(create_app(tmp_path, store.data, export_root=exports)) as client:
+        job = submit(client, store, video, saved.revision)
+        service = MediaExportService(tmp_path, store.data, exports)
+        download = service.open_download(job, "rally-000001.mp4")
+        del download["filename"]
+        with pytest.raises(KeyError):
+            _ExportDownloadResponse(download)
+        assert download["file"].closed
