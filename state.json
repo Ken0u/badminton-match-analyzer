@@ -519,6 +519,13 @@
       "task_id": "69",
       "verb": "checkpoint"
     },
+    "windows-playback69-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792418461,
+      "fingerprint": "7599ddb7587f9f2744a86fcd68074c416b1879bd8b93b5576237ab03bfc2af90",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-playback69-submit-v1": {
       "actor": "Ken0u",
       "at": 1792418391,
@@ -1729,6 +1736,18 @@
       "host_id": "MSI",
       "registered_at": 1792416075,
       "session_id": "windows-pilot80-review-v1"
+    },
+    "MSI/windows-playback69-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "review"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792418461,
+      "session_id": "windows-playback69-review-v1"
     },
     "Stanleys-Laptop.local/cf2edc496cf343d2812a231f5c099c8a": {
       "actor": "dootz1",
