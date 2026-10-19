@@ -221,6 +221,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "roadmap-20261019-01a15477-review-next1": {
+      "actor": "dootz1",
+      "at": 1792419867,
+      "fingerprint": "dc5678c45c56437be2d9f357a0099e7875d030a78d4f2f4b23172ea739271caa",
+      "status": "idle",
+      "verb": "review-next"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
