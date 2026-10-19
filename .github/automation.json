@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "repository": "Ken0u/badminton-match-analyzer",
-  "mode": "observation",
+  "mode": "pilot",
   "integration_enforcement": "controller",
   "coordination_branch": "codex/coordination",
   "trusted_logins": [
@@ -29,7 +29,10 @@
     "owner": "Ken0u",
     "number": null
   },
-  "pilot_tasks": [],
+  "pilot_tasks": [
+    80,
+    81
+  ],
   "sensitive_paths": [
     ".github/",
     "scripts/devops/",
