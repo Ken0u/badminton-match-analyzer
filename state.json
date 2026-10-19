@@ -1551,6 +1551,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-external119-review-result-v1": {
+      "actor": "Ken0u",
+      "at": 1792444853,
+      "epoch": 1,
+      "fingerprint": "2ca41513816fe4247016ecfac7c280ce1aedb5954564b652969d2e24e25bb472",
+      "status": "running",
+      "task_id": "119",
+      "verb": "review-result"
+    },
     "windows-external119-submit-v1": {
       "actor": "Ken0u",
       "at": 1792444418,
@@ -3000,19 +3009,42 @@
       "planned_at": 1792442676,
       "planned_by": "Ken0u",
       "pr_number": 122,
-      "repair_rounds": 0,
-      "review_claim": {
+      "repair_rounds": 1,
+      "review": {
         "actor": "Ken0u",
+        "at": 1792444853,
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "epoch": 1,
-        "expires_at": 1792455380,
-        "granted_at": 1792444580,
+        "evidence": [
+          "Genuine durable grant windows-external119-review-next-v1: task119 epoch1/review_epoch1, MSI/windows-external119-review-v1, exact head/base/spec above. Detached isolated .cache/worktrees/external119-review-v1 at exact head; implementation files unchanged.",
+          "Independently inspected the complete eight-file diff and surrounding coordinator/state-machine/policy contracts, trusted CI revision workflow, frozen task acceptance criteria, AGENTS.md, PROJECT_PLAN.md, docs/BUG_REVIEW.md, docs/COLLABORATION.md and reviewer prompt.",
+          "Independent offline Python3.12 focused execution: 194 passed in tests/test_agent_coordinator.py tests/test_agent_queue.py tests/test_agent_policy.py, using separate pinned BADMINTON_ROOT/BADMINTON_DATA_DIR/PYTHONPATH and no GitHub/Project token environment. Initial run had 193 passed plus one setup error because the fresh .cache temporary parent did not exist; after creating that directory the complete focused run passed.",
+          "Independent Ruff check and format check passed for all seven changed Python files; git diff --check passed and tracked review worktree remained clean at 49a64dcfd3f9f609446bde09a0de0c6122c2cdc7.",
+          "Offline adversarial reproduction preserved at .cache/worktrees/external119-review-v1/.cache/reproduce_delivery.py and reproduce_delivery.json: missing candidate causes two identical dispatches/attempts=2; failed candidate causes two rerun requests/attempts=2; live candidate causes zero release actions/attempts=0. All three remain delivery_pending=true; no real API mutations were executed by this reproduction."
+        ],
+        "findings": [
+          "P2 scripts/devops/coordinator.py:721 and :746-748: Process a newly adopted task's delivery outbox only once per integrate() pass. recover_external_merges() calls deliver(), then integrate() immediately calls deliver() again for the still-pending task. If no candidate is visible yet, a single recovery issues two identical release.yml dispatches and records delivery_attempts=2; if the existing candidate failed, it issues two rerun-failed-jobs requests for the same run. GitHub may not expose a dispatched/rerun workflow immediately, so this can duplicate publication and consume two of three retry attempts. Reproduced offline with the existing external_recovery_setup() fixture, setting gh.releases=[] (missing) or setting its run to completed/failure, then calling integrate() once. Keep adoption and the common outbox separate, or otherwise ensure one delivery attempt per task per pass; cover both missing and failed candidate cases."
+        ],
         "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
-        "host_id": "MSI",
+        "limitations": [
+          "This independent session ran focused offline checks and manually reviewed the diff; it did not repeat the parent-reported full application suite or independently inspect exact-head hosted CI results.",
+          "No actual historical task111 recovery, merge, publication, inference, raw coordination-state edit, or privileged execution of PR code was performed. The regression reproduction uses mocked GitHub transport.",
+          "Sensitive task119/PR122 still requires genuine non-author human exact-head GitHub approval before controller integration. Scope authorization and prior PR114 review do not supply that approval.",
+          "Any implementation head or base change invalidates this binding and requires a fresh review grant/result."
+        ],
         "pr_number": 122,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "scripts/devops/coordinator.py",
+          "scripts/devops/queue.py",
+          "scripts/devops/policy.py",
+          "scripts/agent_queue.py",
+          "tests/test_agent_coordinator.py",
+          "tests/test_agent_queue.py",
+          "tests/test_agent_policy.py",
+          "docs/COLLABORATION.md"
+        ],
         "session_id": "windows-external119-review-v1",
-        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
+        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
+        "verdict": "changes"
       },
       "review_epoch": 1,
       "spec": {
@@ -3059,7 +3091,7 @@
         ]
       },
       "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
