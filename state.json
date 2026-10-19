@@ -1468,6 +1468,13 @@
       "task_id": "119",
       "verb": "checkpoint"
     },
+    "windows-external119-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792444498,
+      "fingerprint": "06d35652f334a6eb6003ac1e06aabcf4962de740740d2cecf7a82b2cd529fe3b",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-external119-submit-v1": {
       "actor": "Ken0u",
       "at": 1792444418,
@@ -4496,6 +4503,20 @@
       "host_id": "MSI",
       "registered_at": 1792420694,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    },
+    "MSI/windows-external119-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review",
+        "python-3.12"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792444498,
+      "session_id": "windows-external119-review-v1"
     },
     "MSI/windows-holdout63-final-review-v1": {
       "actor": "Ken0u",
