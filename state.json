@@ -2462,6 +2462,15 @@
       "task_id": "126",
       "verb": "review-result"
     },
+    "windows-policy126-review-result-v2": {
+      "actor": "Ken0u",
+      "at": 1792452563,
+      "epoch": 1,
+      "fingerprint": "f9c90d81044efc898d3ac022a1103c580d19e1b43e7a9965c8b03d54756439ac",
+      "status": "review",
+      "task_id": "126",
+      "verb": "review-result"
+    },
     "windows-policy126-submit-v1": {
       "actor": "Ken0u",
       "at": 1792449807,
@@ -4054,18 +4063,45 @@
       "pr_number": 127,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792452563,
         "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
-        "epoch": 1,
-        "expires_at": 1792463052,
-        "granted_at": 1792452252,
+        "evidence": [
+          "Credentials scrubbed, GH_CONFIG_DIR isolated, all inherited GIT_CONFIG_* removed as a group, process safe.directory only; BADMINTON_ROOT/BADMINTON_DATA_DIR/PYTHONPATH pinned to detached reviewer checkout before candidate imports.",
+          "360 passed: tests/test_agent_policy.py tests/test_agent_queue.py tests/test_agent_coordinator.py tests/test_free_integration.py tests/test_media_export_api.py tests/test_rally_export.py; Python3.12.14 reused author venv only as interpreter. One Starlette deprecation warning. Initial missing reviewer .cache parent caused fixture setup errors; created parent and reran focused checks successfully.",
+          "Eight reviewer-owned adversarial probes passed: sensitivity prefix boundaries, case-insensitive owner and requested-changes persistence, sensitivity introduced only by generated tests/ repair scope, new recovery epoch, changed current owner session, untrusted historical reviewer, final pre-commit main race and exact 12-path diff hash.",
+          "Ruff lint passed; format147 files passed; uv pip check48 packages passed. pip module absent in reused locked venv; uv dependency check used without installing or syncing anything.",
+          "scripts/verify_repository.py passed tracked UTF8/LF/strictJSON/local-links/credential-pattern checks; git diff --check passed; reviewer worktree remains clean.",
+          "Independently queried hosted CI39340951067 at dd06d050dc24cd703816e4cbb626b409bc4a641d: completed success; all12 jobs revision/repository/frontend/native(macos14)/python3.10/browser-import/python3.12/containerCPU/nativeWindows/containerReview/package/ci-gate completed success.",
+          "PR127 head/base unchanged immediately before verdict. New 12-path diff SHA256667ea62abe5de1bf225af1d26550f851cb644bddf7234947f73d87ab770b9fba matches declared rebound patch."
+        ],
+        "findings": [],
         "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
-        "host_id": "MSI",
+        "limitations": [
+          "Did not independently rerun the full local suite; author reports1244 passed/11 optional skips and full hosted Python3.10/3.12/native/package/container/browser verification was independently observed green.",
+          "No private samples/weights, GPU inference/training, deployment, manual cutover, merging, recovery actions or live coordination-state edits were performed. Reviewed code executes only offline without privileged credentials.",
+          "This approval binds only the exact listed head/base/spec/taskepoch/reviewepoch. Any change requires a new review. It does not amend the owners previous exact01a one-time transition authorization.",
+          "Pre-existing accepted-plan replay issue101 is separately scoped and excluded from this task; software checks do not establish badminton annotation accuracy."
+        ],
         "pr_number": 127,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "AGENTS.md",
+          "scripts/devops/policy.py",
+          "scripts/devops/coordinator.py",
+          "scripts/devops/queue.py",
+          "scripts/agent_queue.py",
+          "tests/test_agent_policy.py",
+          "tests/test_agent_coordinator.py",
+          "tests/test_agent_queue.py",
+          "docs/COLLABORATION.md",
+          "docs/OWNER_SETUP.md",
+          "docs/automation/worker.md",
+          "docs/automation/reviewer.md"
+        ],
         "session_id": "windows-policy126-review-v2",
-        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
