@@ -1,9 +1,10 @@
 # Reviewed rally export plans
 
 The backend for [roadmap #70](https://github.com/Ken0u/badminton-match-analyzer/issues/70)
-produces an inspectable JSON plan and plain reviewed rally clips. Burn-in overlays
-and frontend controls remain separate increments; the media-export roadmap is
-not complete.
+produces an inspectable JSON plan, plain reviewed rally clips and annotated full
+videos or rally clips. The web API can start shared export jobs and download their
+verified output. Frontend controls remain a separate phased increment; the
+media-export roadmap is not complete.
 
 ```sh
 badminton export-rally-plan VIDEO_ID --revision 3 --output /path/to/new-plan.json
@@ -130,3 +131,79 @@ These exports visualize saved reviewed evidence. They do not establish complete
 contacts, persistent identities, correct stroke labels or automatic badminton
 annotation accuracy. Frontend export controls remain a separate phased UI task;
 these commands do not switch or upgrade a running application.
+
+## Web API export jobs
+
+The existing application authentication and same-origin write checks also apply
+to these routes. An export uses an explicit **saved** revision; unsaved browser
+drafts are not exported. Starting a job does not automatically save annotations.
+
+```http
+POST /api/videos/VIDEO_ID/media-exports
+Content-Type: application/json
+
+{"revision": 3, "mode": "annotated-full"}
+```
+
+Choose `plain-rallies`, `annotated-rallies` or `annotated-full`. Revision is a
+nonnegative integer; unknown fields and filesystem paths are rejected. A missing
+video or revision returns 404. The response is 202 with the durable job `id`,
+`kind: "media-export"`, and normal queued/running job fields. The request reads
+the catalog and admits the job before any source decode, audit or encoding.
+The existing Store admission is shared with analysis, tracking, imports and CLI
+jobs: a live admitted job causes 409 rather than a competing export worker.
+
+```http
+GET /api/videos/VIDEO_ID/media-exports/JOB_ID
+GET /api/videos/VIDEO_ID/media-exports/JOB_ID/files/manifest.json
+GET /api/videos/VIDEO_ID/media-exports/JOB_ID/files/rally-000001.mp4
+```
+
+Status returns `job` and `available`. Queued, running, failed and interrupted jobs
+have `available: false`. A completed verified export also returns its complete
+`manifest` and `files` descriptors containing `filename`, `sha256`, `size_bytes`
+and `media_type`. Download names come from that list; full videos use
+`full-000001.mp4`. Downloads use safe attachment filenames and JSON or MP4 content
+types. Keep the manifest with the media: it retains the original saved snapshot,
+source clocks, hashes, native frame mappings, all rally/event denominators and
+ineligible reasons. Empty eligible-rally sets still complete with a manifest;
+annotated full-video mode still renders every native frame.
+
+Downloads require a completed export job belonging to that video and a listed
+file. Another video's job, another job kind or an arbitrary filename returns
+404. Active, failed or interrupted exports cannot be downloaded. The service
+checks the completion manifest and every output hash before reporting availability
+or opening a download; missing, changed or unsafe output returns 409 with an
+instruction to start a new export. Downloads stream from an already opened,
+verified file handle. They do not load a full match into response memory.
+
+Storage is server configured through `create_app(..., export_root=Path(...))` or
+`BADMINTON_EXPORT_DIR`. The default is an `exports` directory next to the resolved
+application data directory. It must be outside application data, and configured
+paths and their ancestors must not be symlinks or Windows reparse points,
+including directory junctions. Reparse metadata is checked on Python 3.10 and
+3.12; it does not rely on the newer `Path.is_junction()` method. Clients cannot choose a directory.
+Each job owns a new directory named with its generated job ID. Existing exports
+are never overwritten; only the requested job's verified files are downloadable.
+
+Source audits and native renderers run in the existing web worker with the
+requested historical revision. A newer saved revision does not switch that
+snapshot. Missing/stale sources, changed timeline/revision content, unavailable
+FFmpeg or encoding failures leave a durable failed job and clean incomplete
+output where the worker can perform cleanup. They do not change source media,
+predictions, saved annotations or prior exports. Use the failure message to fix
+the input and start a new job; exports do not resume inference or acquire models.
+
+On application restart, existing Store recovery marks a verified dead worker's
+active job interrupted. It does not restart encoding or expose partial output.
+A hard process exit may leave incomplete files: retain them until the original
+worker is verified stopped, then an operator may remove that job's directory.
+No automatic retention deletion is performed. Completed exports remain on disk
+until an operator removes them. Their downloads depend on retaining both the
+export files and the original job catalog. Existing full-match analysis pause
+controls remain unchanged; there is no new media-export pause endpoint.
+
+This API prepares later React controls under the approved frontend phases; it
+does not migrate the editor, change the default UI or upgrade running instances.
+Its verification concerns source-preserving exports of saved evidence, not
+automatic badminton annotation accuracy.
