@@ -1330,6 +1330,14 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-public-candidates111-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792438589,
+      "fingerprint": "7aad894aefaaa928b21d96d8173cb72bbeb4cc95c46409a5ff2a940f2ca24d11",
+      "status": "needs_human",
+      "task_id": "111",
+      "verb": "plan"
+    },
     "windows-rally108-checkpoint-e3-v1": {
       "actor": "Ken0u",
       "at": 1792438406,
@@ -1863,6 +1871,55 @@
       },
       "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829",
       "status": "ready"
+    },
+    "111": {
+      "epoch": 0,
+      "planned_at": 1792438589,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Introduce an explicit reviewed candidate visibility policy. Public publication is permitted only for the configured public repository in public mode; private mode retains its original private-repository and private-package requirements. Missing, invalid or mismatched visibility fails closed before publication.",
+          "Preserve exact merged-main success, ancestor checks, source SHA-addressed artifacts and images, dependency/source inventory, immutable digests and whole-workflow delivery receipts. Update the existing publisher to support public wheel/sdist artifacts and public review/CPU images without changing application deployment or promoting models.",
+          "Validate GHCR package visibility for the selected mode and recheck public image visibility before recording successful delivery. Never silently claim a private package is public. Document any owner-only transition needed for existing packages and do not expose credentials or private Project information.",
+          "Exclude raw/private videos, datasets, annotations, caches, credentials and external model weights from artifacts; preserve package verification. Keep GitHub Free controller enforcement, current CI/review/grant gates, zero paid overage and private Project credentials intact.",
+          "Add focused generated/adapter tests for public/private success, missing or mismatched policy, unauthorized/mismatched package visibility, stale/failed main, publication failure and immutable inventory. Document public versus private artifacts and the remaining owner action. Require fresh independent exact-head review and genuine non-author human PR approval before controller integration."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No spending, plan upgrade, branch-protection changes, controller bypass, coordination-state edits, relaxed CI/review/merge gates, secret disclosure or private Project publication.",
+          "No deployment to running applications, data/annotation migration, research/inference restarts, model promotion, unrelated dependency upgrades or automatic changes to account payment settings."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Publish verified public build artifacts and public container images for the owner-selected public repository while preserving private-mode safeguards and the private Project.",
+        "paths": [
+          ".github/automation.json",
+          ".github/workflows/release.yml",
+          "scripts/release_candidate.py",
+          "tests/test_release_candidate.py",
+          "tests/test_agent_coordinator.py",
+          "docs/OWNER_SETUP.md",
+          "docs/COLLABORATION.md"
+        ],
+        "priority": 5,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused publisher/policy/adapter tests and required full project, lint, format, repository, dependency and diff checks on the exact head.",
+          "Fresh independent exact-head/base/spec agent review, real non-author human approval for publishing policy, controller integration and exact-main checks.",
+          "Actual complete candidate workflow on the public repository, public wheel/sdist inventory and both public GHCR image digest/visibility receipts, followed by controller delivery_pending false. Preserve failed attempts and exact original main verification."
+        ]
+      },
+      "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
+      "status": "needs_human"
     },
     "62": {
       "epoch": 0,
