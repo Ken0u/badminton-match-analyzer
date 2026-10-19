@@ -4744,6 +4744,7 @@
         ]
       },
       "checkpoint_at": 1792419307,
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 4,
       "external_recovery": {
