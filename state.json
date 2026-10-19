@@ -207,6 +207,15 @@
       "task_id": "110",
       "verb": "checkpoint"
     },
+    "mac-01a15493-116-start": {
+      "actor": "dootz1",
+      "at": 1792441102,
+      "epoch": 1,
+      "fingerprint": "b1b48cb62e634b5d1e20dfb7266fc649792198ba511b3e18fc2ff67240eccd9b",
+      "status": "running",
+      "task_id": "116",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -1566,6 +1575,15 @@
       "task_id": "111",
       "verb": "checkpoint"
     },
+    "windows-public111-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792441108,
+      "epoch": 1,
+      "fingerprint": "0313698a5542730ba64246f863248822eee918bb931a4d3543f110f8bc4bbc89",
+      "status": "running",
+      "task_id": "111",
+      "verb": "checkpoint"
+    },
     "windows-public111-review-next-v1": {
       "actor": "Ken0u",
       "at": 1792440225,
@@ -1592,6 +1610,13 @@
       "actor": "Ken0u",
       "at": 1792440141,
       "fingerprint": "dae207e1733d2c0601d973923d076e7288863fc1a7d8cd5e28f326b6946b774c",
+      "status": "ok",
+      "verb": "register"
+    },
+    "windows-public111-review-register-v2": {
+      "actor": "Ken0u",
+      "at": 1792441108,
+      "fingerprint": "54406900b91a4dea22a5f16eddd2e758aef9549d87dac318c139edefb51c2fff",
       "status": "ok",
       "verb": "register"
     },
@@ -2268,26 +2293,25 @@
     },
     "111": {
       "checkpoint": {
-        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
-        "behavior": "Explicit mode/repository/package visibility fails closed. Frozen reviewed publisher and immutable build source both require exact-main verification; legacy source lock/provenance remains distinct. Pre/post-push image checks, exact wheel+sdist inventory and both commit identities are recorded. No model/deployment/policy-gate bypass or spending change.",
+        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
-        "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
-        "remaining": "Push/open focused PR, submit exact binding, fresh independent review and hosted checks, then obtain genuine non-author exact-head human approval for publishing-policy changes. Consolidate any package-settings authentication needed for owner's already-selected public images. After reviewed merge/main verification, finish actual public candidates and controller outboxes, dispatching new current-workflow runs for terminal obsolete-definition legacy sources only when necessary. Never reset coordination counters or rerun inference.",
+        "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
+        "integration": "Preserved f350 implementation history by merging controller-verified renderer mainfb0; pushed fast-forward head1fed. PRdelta remains seven approved paths. Previous baseb0 review is stale; exact-head CI39317885837 and a new independent exact binding are required.",
+        "remaining": "Submit current head/base/spec after genuine controller invalidation, obtain fresh independent review and all hosted checks, supersede stale owner approval request with final exacthead, then genuine non-author human approval and existingGHCRpackagesPublic. Only controller merges/verifiesmain. Actual public candidate workflows and old outboxes246,b0b,fb0 remain required. No duplicate dispatch/inference or coordination-state mutation.",
         "validation": [
-          "96 focused publisher/coordinator tests pass",
-          "Full locked Python3.12:1009passed/11optionalSkips",
-          "Ruff/format, uv dependency health, tracked UTF8/LF/JSON/local links/diff and YAML/JSON format checks pass",
-          "Actual wheel/sdist build:73packagefiles byte verified, fresh installed CLI/dependencies pass"
+          "Updated full locked Python3.12 suite:1048passed/11optionalSkips, known Starlette deprecation",
+          "Ruff/format142files,43package uv health, tracked UTF8/LF/JSON/local-links/diff pass",
+          "Rebuilt wheel/sdist:74packagefiles byte verified, fresh installed CLI/dependencies pass"
         ],
         "worktree": ".cache/worktrees/public111"
       },
-      "checkpoint_at": 1792440054,
+      "checkpoint_at": 1792441108,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
         "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
         "epoch": 1,
-        "expires_at": 1792450854,
+        "expires_at": 1792451908,
         "granted_at": 1792439160,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -2357,12 +2381,20 @@
       }
     },
     "116": {
+      "checkpoint": {
+        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "branch": "codex/issue-116-export-source-time-preserving-annotated-",
+        "preservation": "110 merged-main verification succeeded but delivery remains pending:39317931907 failed the unchanged private-repo guard. Publishing111/114 stays collaborator-owned. Old worktrees/evidence preserved; no running app/research/shared data changes.",
+        "remaining": "Implement full-video and rally annotation burn-in, exact source/config/annotation provenance, context and unknown/uncertainty handling, media/audio validation; generated tests/browser checks, full checks, fresh independent review and controller integration/main/delivery. Child owns only rally_overlay.py/rally_video.py in .cache/rally-overlay-116-module; parent owns CLI/tests/docs.",
+        "worktree": ".cache/rally-overlay-116"
+      },
+      "checkpoint_at": 1792441102,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "branch": "codex/issue-116-export-source-time-preserving-annotated-",
         "epoch": 1,
-        "expires_at": 1792451827,
+        "expires_at": 1792451902,
         "granted_at": 1792441027,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -3872,6 +3904,20 @@
       "host_id": "MSI",
       "registered_at": 1792440141,
       "session_id": "windows-public111-review-v1"
+    },
+    "MSI/windows-public111-review-v2": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review",
+        "python-3.12"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792441108,
+      "session_id": "windows-public111-review-v2"
     },
     "MSI/windows-rally109-review-v1": {
       "actor": "Ken0u",
