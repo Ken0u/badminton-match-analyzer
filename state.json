@@ -806,6 +806,28 @@
       "task_id": "116",
       "verb": "review-next"
     },
+    "mac-review116-next-v2": {
+      "actor": "dootz1",
+      "at": 1792442308,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
+        "epoch": 1,
+        "expires_at": 1792453108,
+        "granted_at": 1792442308,
+        "head_sha": "ce99c4fdd2c518b61c7e8c651ea648a36829fe71",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 118,
+        "review_epoch": 2,
+        "session_id": "mac-review116-01a15493",
+        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
+      },
+      "epoch": 1,
+      "fingerprint": "98e7db87c56721b94dc74c7be376947b3db91798864405cf983cf9c0f26ea5e5",
+      "status": "granted",
+      "task_id": "116",
+      "verb": "review-next"
+    },
     "mac-review116-register-v1": {
       "actor": "dootz1",
       "at": 1792441640,
@@ -2561,7 +2583,20 @@
       "planned_by": "dootz1",
       "pr_number": 118,
       "repair_rounds": 1,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
+        "epoch": 1,
+        "expires_at": 1792453108,
+        "granted_at": 1792442308,
+        "head_sha": "ce99c4fdd2c518b61c7e8c651ea648a36829fe71",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 118,
+        "review_epoch": 2,
+        "session_id": "mac-review116-01a15493",
+        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Add a backend overlay renderer and explicit CLI output mode for an entire original video and for eligible reviewed rally ranges. Reuse the audited source/immutable revision contract and #110 native video/audio validation, with an explicit overlay policy/version and source/annotation/config/output hashes in a completion manifest. Do not silently substitute a rally-only output for requested full video.",
