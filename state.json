@@ -4935,6 +4935,7 @@
         "epoch": 4,
         "evidence_state_sha": "f0059bb073d24e97afcaf1ade8f0033a01c192f8",
         "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "issue_closed_at": 1792454163,
         "merge_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
         "pr_number": 102,
         "request_id": "mac-01a15493-69-external-recovery-v1",
