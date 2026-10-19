@@ -1,8 +1,9 @@
 # Reviewed rally export plans
 
-The backend foundation for [roadmap #70](https://github.com/Ken0u/badminton-match-analyzer/issues/70)
-produces an inspectable JSON plan. It does **not** render clips, burn in overlays,
-alter the editor, or complete the media-export roadmap.
+The backend for [roadmap #70](https://github.com/Ken0u/badminton-match-analyzer/issues/70)
+produces an inspectable JSON plan and plain reviewed rally clips. Burn-in overlays
+and frontend controls remain separate increments; the media-export roadmap is
+not complete.
 
 ```sh
 badminton export-rally-plan VIDEO_ID --revision 3 --output /path/to/new-plan.json
@@ -41,7 +42,46 @@ extend calibration validity or infer missing hitter identities. Consumers must
 respect that context; an eligible boundary range does not certify live footage,
 exhaustive contacts, correct labels, or badminton annotation accuracy.
 
-Generated source-clock, orientation, uncertainty, overlap, unavailable-input,
-revision and CLI checks require no private samples or model weights. Actual clip
-encoding, audio synchronization, burn-in overlays and frontend controls remain
-separate bounded follow-ups. Running applications are not upgraded.
+## Plain rally clips
+
+```sh
+badminton export-rally-videos /path/to/plan.json --output /path/to/new-clips
+```
+
+The renderer regenerates the complete plan from its original saved revision and
+compares its canonical content before encoding and before publishing success.
+Changed source bytes, timelines, metadata, revision content or plan range fields
+invalidate the export. A newer saved revision does not invalidate an unchanged
+older revision. The existing catalog opens read-only; no inference or model
+acquisition is involved.
+
+Choose a new output directory outside application data storage. Existing output
+is never overwritten. Filenames use ordinal numbers rather than rally IDs, so
+annotation strings cannot select output paths. Clips are staged and validated
+before the completed manifest is written; failed or cancelled exports remove
+incomplete output. Source media, saved annotations and predictions remain intact.
+
+H.264 MP4 clips retain exactly the eligible native frames and their relative
+presentation times, including variable-rate gaps and the actual final sample
+duration. Rotation is applied to pixels; odd display dimensions are padded to an
+even encoded size for browser compatibility. No frames are interpolated or
+duplicated. Source audio is trimmed to the same half-open interval and its
+relative offset is retained, including delayed audio and nonzero source origins.
+The manifest distinguishes absent source audio from audio outside a rally range.
+AAC encoder priming can precede the audible start; receipts record the expected
+source sample interval separately from the encoded stream interval. Bounded
+source/decoded waveform probes check the actual sample alignment.
+
+The manifest retains every rally, including ineligible reasons, the original
+annotation snapshot and scene/camera/calibration context. Per-clip receipts record
+source-frame mapping, display/encoded dimensions, output hashes, audio timing and
+validation results. Each clip references the original context through its annotation revision/hash
+and the shared manifest annotation snapshot. The plan, source, timestamp and
+annotation hashes identify the input evidence; decoded frames/pixels/PTS, packet durations and container duration
+are checked before success. Consumers should retain the manifest with its clips.
+
+Generated source-clock, orientation, uncertainty, audio, overlap, unavailable-input,
+revision and CLI checks require no private samples or model weights. Browser
+playback evidence concerns media compatibility, not badminton annotation
+accuracy. These clips have no annotation burn-in; original predicted/unknown
+labels remain evidence in the manifest. Running applications are not upgraded.

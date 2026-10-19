@@ -100,6 +100,12 @@ def main():
     export_plan.add_argument("video_id")
     export_plan.add_argument("--revision", type=int, required=True)
     export_plan.add_argument("--output", type=Path, required=True)
+    export_videos = commands.add_parser(
+        "export-rally-videos",
+        help="Render plain clips from a verified saved rally plan",
+    )
+    export_videos.add_argument("plan", type=Path)
+    export_videos.add_argument("--output", type=Path, required=True)
     recognize = commands.add_parser(
         "recognize",
         help="Suggest singles shot families from cached pose and shuttle runs",
@@ -212,6 +218,18 @@ def main():
         except (KeyError, ValueError, OSError) as exc:
             parser.error(str(exc))
         print(json.dumps(plan, indent=2))
+    elif args.command == "export-rally-videos":
+        from .rally_export import ExportPlanStore
+        from .rally_video import render_rally_videos
+
+        try:
+            plan = json.loads(args.plan.read_text(encoding="utf-8"))
+            manifest = render_rally_videos(
+                ExportPlanStore(DATA), plan, ROOT, args.output
+            )
+        except (KeyError, TypeError, ValueError, OSError) as exc:
+            parser.error(str(exc))
+        print(json.dumps(manifest, indent=2))
     elif args.command == "import-aicup2023":
         from .aicup_data import import_aicup2023
 
