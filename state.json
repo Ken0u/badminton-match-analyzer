@@ -2163,6 +2163,7 @@
       }
     },
     "108": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39321133636",
       "checkpoint": {
         "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
         "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally-e3",
@@ -2189,8 +2190,8 @@
         "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
       },
       "delivery_attempts": 3,
-      "delivery_error": "Private publishing failed after three attempts",
-      "delivery_pending": true,
+      "delivery_pending": false,
+      "delivery_recovered_from": "Private publishing failed after three attempts",
       "epoch": 3,
       "history": [
         {
