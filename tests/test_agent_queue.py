@@ -502,6 +502,24 @@ def test_human_approval_is_hash_bound_and_explicitly_configured():
     assert h.next()["status"] == "granted"
 
 
+@pytest.mark.parametrize("defect", ["unknown_actor", "stale_spec", "no_approval"])
+def test_risk_human_claim_still_requires_valid_owner_scope_authorization(defect):
+    h = Harness()
+    h.register()
+    h.config["human_approvers"] = ["Ken0u"]
+    h.plan(risk="human")
+    task = h.state["tasks"]["1"]
+    h.send("human-approved", task_id="1", spec_hash=task["spec_hash"])
+    if defect == "unknown_actor":
+        task = h.state["tasks"]["1"]
+        task["human_approval"]["actor"] = "outsider"
+    elif defect == "stale_spec":
+        h.state["tasks"]["1"]["human_approval"]["spec_hash"] = HASH
+    else:
+        h.state["tasks"]["1"].pop("human_approval")
+    assert h.next()["status"] == "idle"
+
+
 @pytest.mark.parametrize(
     "changes",
     [{"epoch": 2}, {"epoch": True}, {"host_id": "windows"}, {"session_id": "other"}],

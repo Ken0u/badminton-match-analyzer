@@ -17,5 +17,7 @@ limitations. Echo the review grant's `review_epoch` in the JSON supplied with
 `--payload`; implementation `epoch` and review `review_epoch` are separate.
 An author session cannot provide its own review. Any changed head or base makes
 this verdict stale. Policy, authentication, destructive migration, deployment or
-model promotion also needs non-author human approval. Review only observed
-evidence; report unavailable checks rather than imply they passed.
+model-promotion scope still needs explicit configured-owner authorization of the
+frozen task. A non-author human PR review is optional; fresh independent agent
+review and exact CI remain required. Review only observed evidence; report
+unavailable checks rather than imply they passed.

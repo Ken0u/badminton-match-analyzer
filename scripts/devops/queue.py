@@ -13,6 +13,8 @@ import math
 import re
 from typing import Any
 
+from .policy import scope_authorized
+
 LEASE_SECONDS = 3 * 60 * 60
 RESERVED = {
     "running",
@@ -627,11 +629,7 @@ def apply_request(
                 else:
                     if task["status"] not in {"ready", "proposed"}:
                         continue
-                    if (
-                        spec["risk"] == "human"
-                        and task.get("human_approval", {}).get("spec_hash")
-                        != task["spec_hash"]
-                    ):
+                    if spec["risk"] == "human" and not scope_authorized(task, config):
                         continue
                     if not set(spec["capabilities"]) <= set(
                         worker["capabilities"]

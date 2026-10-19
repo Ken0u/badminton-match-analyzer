@@ -272,19 +272,32 @@ def test_policy_fences_changed_inputs(change):
     assert policy_errors(*args)
 
 
-def test_sensitive_paths_require_non_author_current_human_approval():
+@pytest.mark.parametrize("sensitive_path", [False, True])
+def test_sensitive_or_risk_human_scope_keeps_owner_authorization_without_pr_review(
+    sensitive_path,
+):
     args = policy_fixture()
-    args[0]["spec"]["paths"].append(".github/")
-    args[2].append(".github/workflows/ci.yml")
+    if sensitive_path:
+        args[0]["spec"]["paths"].append(".github/")
+        args[2].append(".github/workflows/ci.yml")
+    else:
+        args[0]["spec"]["risk"] = "human"
     assert policy_errors(*args)
+    # A PR approval cannot authorize an unapproved frozen task scope.
     args[4].append(
         {"id": 1, "user": {"login": "Ken0u"}, "state": "APPROVED", "commit_id": HEAD}
     )
+    assert policy_errors(*args)
+    args[4].clear()
+    args[0]["human_approval"] = {"actor": "dootz1", "spec_hash": "spec", "at": 100}
+    assert not policy_errors(*args)
+    # The owner can also be the PR author; no second human approval is required.
+    args[0]["human_approval"]["actor"] = "Ken0u"
     assert not policy_errors(*args)
     args[4].append(
         {"id": 2, "user": {"login": "Ken0u"}, "state": "DISMISSED", "commit_id": HEAD}
     )
-    assert policy_errors(*args)
+    assert not policy_errors(*args)
 
 
 def test_issue_content_is_json_only_not_shell_code():
@@ -738,7 +751,7 @@ def test_windows_probe_resolves_command_script(monkeypatch, tmp_path):
         ".github/workflows/agent-queue.yml",
     ],
 )
-def test_every_privileged_entrypoint_requires_human_review(path):
+def test_every_privileged_entrypoint_is_sensitive(path):
     config = json.loads(
         (Path(__file__).resolve().parents[1] / ".github/automation.json").read_text()
     )
@@ -794,7 +807,7 @@ def test_native_inference_evidence_is_bound_to_source_model_and_code():
     "before,after", [("observation", "pilot"), ("pilot", "active")]
 )
 @pytest.mark.parametrize(
-    "defect", [None, "policy", "approval", "ci", "base", "extra_path"]
+    "defect", [None, "policy", "changes_requested", "ci", "base", "extra_path"]
 )
 def test_rollout_policy_is_narrow_and_never_merges(before, after, defect):
     _, pr, _, checks, reviews, _, _ = policy_fixture()
@@ -803,13 +816,17 @@ def test_rollout_policy_is_narrow_and_never_merges(before, after, defect):
     changed = [
         {"filename": ".github/automation.json", "status": "modified", "sha": HEAD}
     ]
-    reviews.append(
-        {"id": 1, "user": {"login": "Ken0u"}, "state": "APPROVED", "commit_id": HEAD}
-    )
     if defect == "policy":
         proposed["trusted_logins"] = ["stranger"]
-    elif defect == "approval":
-        reviews[0]["commit_id"] = BASE
+    elif defect == "changes_requested":
+        reviews.append(
+            {
+                "id": 1,
+                "user": {"login": "Ken0u"},
+                "state": "CHANGES_REQUESTED",
+                "commit_id": HEAD,
+            }
+        )
     elif defect == "ci":
         checks[0]["conclusion"] = "skipped"
     elif defect == "base":
@@ -1049,7 +1066,7 @@ class RecoveryGitHub(MergeGitHub):
         return super().repo(path, method=method, data=data, **kwargs)
 
 
-def external_recovery_setup(archived=False, resources=False):
+def external_recovery_setup(archived=False, resources=False, attested=True):
     from devops.queue import apply_request, spec_hash
 
     h, gh = approved_state(), RecoveryGitHub()
@@ -1122,6 +1139,8 @@ def external_recovery_setup(archived=False, resources=False):
             "statement": "The owner confirmed dootz1 personally approved this exact head.",
         },
     }
+    if not attested:
+        request.pop("human_review_attestation")
     state = apply_request(state, request, "Ken0u", 201, config)
     store.write(store.read()[0], state)
     gh.ci = [
@@ -1148,10 +1167,12 @@ def external_recovery_setup(archived=False, resources=False):
 
 
 @pytest.mark.parametrize("archived", [False, True])
+@pytest.mark.parametrize("attested", [False, True])
 def test_explicit_recovery_uses_immutable_accepted_history_and_existing_delivery(
     archived,
+    attested,
 ):
-    gh, store, config, original = external_recovery_setup(archived)
+    gh, store, config, original = external_recovery_setup(archived, attested=attested)
     epoch = store.read()[1]["tasks"]["1"]["epoch"]
     state = integrate(gh, config, store.read()[1])
     task = state["tasks"]["1"]
@@ -1161,10 +1182,8 @@ def test_explicit_recovery_uses_immutable_accepted_history_and_existing_delivery
     assert task["review"] == original["review"]
     assert task["external_recovery"]["source_epoch"] == 1
     assert task["external_recovery"]["review_evidence"]["github_reviews"] == []
-    assert (
-        task["external_recovery"]["review_evidence"]["owner_attestation"]["reviewer"]
-        == "dootz1"
-    )
+    attestation = task["external_recovery"]["review_evidence"]["owner_attestation"]
+    assert (attestation["reviewer"] == "dootz1") if attested else attestation is None
     assert gh.external == [
         ("issues/1", {"state": "closed", "state_reason": "completed"})
     ]

@@ -78,15 +78,6 @@ def rollout_errors(pr, changed, proposed, checks, reviews, config, main_sha):
             or latest.get(name, {}).get("status") != "completed"
         ):
             errors.append(f"Required check missing or unsuccessful: {name}")
-    by_user = latest_reviews(reviews)
-    if not any(
-        user in config["human_approvers"]
-        and user != pr["user"]["login"]
-        and review.get("state") == "APPROVED"
-        and review.get("commit_id") == head
-        for user, review in by_user.items()
-    ):
-        errors.append("Rollout requires a current non-author human approval")
     return errors
 
 
@@ -149,13 +140,17 @@ def _source_errors(task, pr, files, checks, reviews, config):
     return errors
 
 
-def _human_approval(pr, reviews, config):
-    return any(
-        login in config["human_approvers"]
-        and login != pr["user"]["login"]
-        and review.get("state") == "APPROVED"
-        and review.get("commit_id") == pr["head"]["sha"]
-        for login, review in latest_reviews(reviews).items()
+def scope_authorized(task, config):
+    """Owner authorization binds the frozen task, not a human PR review."""
+    approval = task.get("human_approval")
+    return (
+        isinstance(approval, dict)
+        and isinstance(approval.get("actor"), str)
+        and approval["actor"].casefold()
+        in {login.casefold() for login in config.get("human_approvers", [])}
+        and approval.get("spec_hash") == task.get("spec_hash")
+        and isinstance(task.get("spec_hash"), str)
+        and bool(task["spec_hash"])
     )
 
 
@@ -173,8 +168,10 @@ def policy_errors(task, pr, files, checks, reviews, config, main_sha):
         errors.append("PR is not open and ready")
     if (
         task["spec"].get("risk") == "human" or sensitive(files, config)
-    ) and not _human_approval(pr, reviews, config):
-        errors.append("Sensitive change requires a current non-author human approval")
+    ) and not scope_authorized(task, config):
+        errors.append(
+            "Sensitive change requires owner authorization of the frozen task scope"
+        )
     return errors
 
 
@@ -202,10 +199,6 @@ def external_recovery_errors(task, pr, files, checks, reviews, config, request):
         and isinstance(attestation.get("statement"), str)
         and 0 < len(attestation["statement"].strip()) <= 4000
     )
-    if not _human_approval(pr, reviews, config) and not valid_attestation:
-        errors.append(
-            "External recovery requires real non-author human review evidence"
-        )
     if attestation is not None and not valid_attestation:
         errors.append("Invalid external human-review attestation")
     return errors

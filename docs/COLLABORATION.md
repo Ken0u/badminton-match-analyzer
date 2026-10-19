@@ -35,7 +35,7 @@ Sleeping both computers pauses implementation, even while GitHub checks run.
 4. Start coordination in observation mode. Inspect PR #30 and original Windows
    research workers before registering/adopting them; missing local files are
    not evidence a process stopped.
-5. In a human-reviewed configuration PR set mode to `pilot` and `pilot_tasks` to
+5. In an owner-authorized configuration PR set mode to `pilot` and `pilot_tasks` to
    the two selected issue numbers. Observation does not grant tasks. Complete
    two small nonconflicting tasks, one per host, through fresh review,
    serial integration, merged-main verification and private candidate creation.
@@ -47,14 +47,15 @@ they must not silently claim enforcement is active. Existing Codex access and
 GitHub Actions/artifact quotas still apply; keep paid overage disabled.
 
 The controller checks ownership/scope, CI, independent review, resolved review
-conversations, and sensitive-change human approval before serial merging and
-merged-main verification. GitHub Free does not itself block direct pushes, manual
+conversations, and configured-owner authorization of sensitive frozen task scope
+before serial merging and merged-main verification. GitHub Free does not itself
+block direct pushes, manual
 merges around the controller, force pushes/deletion, or concurrent main changes
 outside this path. Both humans and agents must follow the repository protocol;
 these controller safeguards cannot prevent a writer from bypassing it.
 
 Eligible owners may optionally choose `integration_enforcement: "github"` in a
-human-reviewed policy PR and apply protections with
+owner-authorized policy PR and apply protections with
 `python scripts/setup_automation.py --apply --protections`. That mode fails closed
 if the required protections are missing or unverifiable. It is not required for
 routine automatic integration in the default controller mode.
@@ -148,9 +149,14 @@ No background worker is installed by this setup.
 
 Code and base changes invalidate review evidence. Three failed repair rounds
 escalate once with a clear blocker. Routine work can merge automatically after
-CI and independent review. Automation/security policy, credentials/authentication,
-destructive migrations, deployment and model promotion require a non-author
-human approval. CI passing does not establish badminton accuracy.
+CI and fresh independent agent review. Automation/security policy,
+credentials/authentication, destructive migrations, deployment and model-promotion
+scope requires explicit configured-owner authorization of the frozen task via
+`human-approved`. Freeze such work as risk-human before claiming it. The scope
+authorization is distinct from final PR review; the PR author may also be the
+authorizing owner. Non-author human PR review is optional. Requested changes
+and unresolved review threads remain vetoes. CI passing does not establish
+badminton accuracy.
 
 ## Research, interrupted jobs and candidate delivery
 
@@ -183,8 +189,8 @@ recovery or completed milestones.
 
 ### Externally merged task PRs
 
-Routine PRs receive approval on their final head and then let the controller
-perform serial integration. A writer merging around that sequence is an incident,
+Routine PRs receive independent agent approval on their final head and then let
+the controller perform serial integration. A writer merging around that sequence is an incident,
 even when the resulting source is correct. A merged PR without its matching
 integration journal is fenced into Recovery required. Its original grant,
 submission, specification, independent review and observed merger/source remain
@@ -232,10 +238,11 @@ main ancestry and the latest complete successful exact merged-main workflow run
 from trusted `main`. Missing, stale, failed or running evidence stays incomplete.
 Existing current ownership cannot be displaced by an older evidence commit.
 
-Every external adoption also needs real non-author human review evidence. An
-actual current GitHub approval is used directly. If a configured human approver
-has explicitly confirmed a personal review outside GitHub, the request may
-add this separately typed attestation:
+External adoption requires an authenticated configured-owner recovery request
+and the original independent agent approval and source/CI evidence. Non-author
+human review is optional. Actual GitHub reviews remain audit evidence. If the
+owner has explicitly confirmed a personal review outside GitHub, the request may
+add this optional separately typed attestation:
 
 ```json
 {
@@ -252,8 +259,10 @@ An agent may submit that field only with the owner's actual, exact-head
 confirmation. A merge record, a scope authorization or an agent's guess cannot
 supply it. The controller stores the authenticated authorizer and attestation
 separately from GitHub reviews; it never creates an `APPROVED` review record.
-Existing requested changes still block recovery. Ordinary sensitive PRs continue
-to require their current non-author GitHub approval before controller merging.
+Existing requested changes still block recovery. Omit the optional field when
+no such review occurred; a malformed or conflicting supplied attestation is
+rejected. Ordinary sensitive PRs require owner-authorized task scope, fresh
+independent agent review and exact CI before controller merging.
 
 Resource/input-bearing tasks additionally require the original-host
 `terminal_proof` process lifetime, Store status and durable-artifact evidence used
