@@ -1867,6 +1867,14 @@
       "task_id": "123",
       "verb": "plan"
     },
+    "windows-human-review-removal123-plan-v2": {
+      "actor": "Ken0u",
+      "at": 1792447384,
+      "fingerprint": "b54d1de08d85ee2ac85416c0a725ac5ef3576d2c409884da3ecc071c20e43888",
+      "status": "needs_human",
+      "task_id": "123",
+      "verb": "plan"
+    },
     "windows-owner-setup-register-v1": {
       "actor": "Ken0u",
       "at": 1792394451,
@@ -3404,30 +3412,24 @@
     },
     "123": {
       "epoch": 0,
-      "human_approval": {
-        "actor": "Ken0u",
-        "at": 1792446523,
-        "spec_hash": "58bbf3ffa22debd0cad591064bfca2aa8e7fc50a3bfa9e7c7fd852acc19554a9"
-      },
-      "planned_at": 1792446443,
+      "planned_at": 1792447384,
       "planned_by": "Ken0u",
-      "repair_rounds": 0,
       "spec": {
         "acceptance": [
+          "Incorporate the complete preserved owner-authorized119 recovery implementation from reviewed head6125c7080140b2f0281515e57d640f540e7874ca, including its duplicate-delivery repair, original crash regression, immutable historical recovery, resource proof, outbox and issue-projection tests. Keep original source branches, PR122 independent verdicts and all evidence. Supersede its unmerged PR rather than infer a merge or fabricate task119 Done. The combined new revision needs its own genuine grant, full checks and fresh independent review.",
           "Remove the real non-author human review requirement from AGENTS.md and align current collaboration, owner-setup, worker and reviewer guidance. Do not retain a contradictory mandatory-human-review instruction elsewhere in these living documents.",
           "Ordinary task PRs, including policy-sensitive and risk-human tasks, can satisfy final review through a genuine fresh exact-head/base/spec independent agent approval and required successful GitHub Actions checks without a non-author human GitHub approval. Preserve task ownership/scope, current-main ancestry, same-repository branch binding, native evidence, unresolved-thread and requested-changes vetoes, serial integration and exact merged-main verification.",
           "Remove the matching mandatory non-author-human-review condition from narrow bootstrap rollout checks and explicit external-merge recovery. Preserve rollout-only scope/mode restrictions and manual bootstrap semantics, and preserve authenticated configured-owner scope/recovery authorization. Optional real human reviews and historical owner attestations remain distinct audit evidence; do not fabricate an approval or erase an existing requested-changes veto.",
           "Preserve immutable original grant/submission/independent-review history, exact source/tree/main/CI evidence, replay and epoch fencing, original-host physical-resource terminal proof, and complete delivery-outbox behavior for external recovery. Do not adopt a merge from its existence alone.",
           "Cover sensitive PRs and risk-human tasks without human GitHub reviews, missing/stale/self independent review, failed or running CI, unresolved/requested changes, unauthorized scope/recovery, rollout restrictions and external recovery without optional human attestation. Run required project checks, exact-head CI and a fresh independent review.",
-          "Keep the transition auditable. The currently trusted controller still enforces the old approval gate. Do not edit coordination state, fabricate reviews, run unreviewed PR code with privileged credentials, or silently perform a manual policy cutover. If old trusted code cannot integrate the finished change, present the exact tested and independently reviewed final PR head plus one bounded transition action to the owner before that action occurs."
+          "Keep the transition auditable. The currently trusted controller still enforces the old approval gate. Do not edit coordination state, fabricate reviews, run unreviewed PR code with privileged credentials, or silently perform a manual policy cutover. If old trusted code cannot integrate the finished change, present the exact tested and independently reviewed final PR head plus one bounded transition action to the owner before that action occurs.",
+          "After the approved combined change is actually merged and exact-main verified, perform the original owner-authorized111 recovery using its immutable accepted controller history and existing successful candidate; verify audit/source epochs, completed issue closure and delivery_pending=false without duplicate publication. Record119 as superseded by this delivered implementation, preserving truthful historical queue state instead of falsifying adoption of its unmerged PR."
         ],
         "artifacts": {},
         "capabilities": [
           "cpu"
         ],
-        "dependencies": [
-          "119"
-        ],
+        "dependencies": [],
         "exclusions": [
           "No removal of required CI, fresh independent agent review, trusted owner authentication/scope/recovery authorization, requested-changes vetoes, serial controller enforcement or merged-main verification.",
           "No raw coordination edits, fake identities/reviews, routine manual merges, GitHub Pro purchase, paid overage, branch protection changes, repository/package/Project visibility or credential changes.",
@@ -3439,7 +3441,7 @@
           "paid_services": false
         },
         "milestone": "Infrastructure",
-        "outcome": "Remove mandatory non-author human review from agent guidance and controller review gates while retaining fresh independent agent review, exact CI, explicit owner authorizations and controller-managed integration.",
+        "outcome": "Deliver the preserved external-merge recovery fix and remove mandatory non-author human review from guidance and controller gates, retaining fresh independent agent review, exact CI, explicit owner authorizations and controller-managed integration.",
         "paths": [
           "AGENTS.md",
           "scripts/devops/policy.py",
@@ -3449,7 +3451,10 @@
           "docs/COLLABORATION.md",
           "docs/OWNER_SETUP.md",
           "docs/automation/worker.md",
-          "docs/automation/reviewer.md"
+          "docs/automation/reviewer.md",
+          "scripts/devops/coordinator.py",
+          "scripts/devops/queue.py",
+          "scripts/agent_queue.py"
         ],
         "priority": 0,
         "resources": [],
@@ -3460,8 +3465,8 @@
           "Confirm ordinary sensitive work no longer needs a non-author human review while all retained ownership, CI, independent review, requested-changes, recovery and delivery gates remain enforced."
         ]
       },
-      "spec_hash": "58bbf3ffa22debd0cad591064bfca2aa8e7fc50a3bfa9e7c7fd852acc19554a9",
-      "status": "ready"
+      "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
+      "status": "needs_human"
     },
     "124": {
       "epoch": 0,
