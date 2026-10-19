@@ -220,6 +220,12 @@
       "task_id": "108",
       "verb": "checkpoint"
     },
+    "mac-01a15493-heartbeat108-resume": {
+      "actor": "dootz1",
+      "reason": "lease cannot be renewed in current status",
+      "status": "rejected",
+      "verb": "heartbeat"
+    },
     "mac-01a15493-heartbeat108-wait": {
       "actor": "dootz1",
       "at": 1792423935,
