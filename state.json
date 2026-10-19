@@ -263,6 +263,30 @@
       "task_id": "93",
       "verb": "plan"
     },
+    "spec-94-14efe58613dc9003fc7c6056d003572f2e0e66da5d51ec1492f51156c290614a": {
+      "actor": "dootz1",
+      "at": 1792417955,
+      "fingerprint": "df539fe5d05d8ae9ae92cf60853a36b3c691d7a7bdc16ab081af413a5ccc269d",
+      "status": "ready",
+      "task_id": "94",
+      "verb": "plan"
+    },
+    "spec-95-1f1de59dccca1f4123d726044fdb44ad06f5364574b8a9c9fa532d02aa9df910": {
+      "actor": "dootz1",
+      "at": 1792417955,
+      "fingerprint": "feff9c6a6461a9b9bc372ba710b0cdb932c789e8eaf128f29dc9c4776dba16e3",
+      "status": "ready",
+      "task_id": "95",
+      "verb": "plan"
+    },
+    "spec-96-e251ea398fe85458ee5b72568446bf7f735816c7ff297c9ca72e81c44edba81c": {
+      "actor": "dootz1",
+      "at": 1792417955,
+      "fingerprint": "b09ca2d30029089a4773e5ee5a912b89e1d46f33b4a8eabcf53d578523ffea2d",
+      "status": "ready",
+      "task_id": "96",
+      "verb": "plan"
+    },
     "verify-80-a996e83867509489e223e6a321b6ee4794fafc61-False": {
       "actor": "github-actions[bot]",
       "at": 1792416406,
@@ -1256,6 +1280,141 @@
       },
       "spec_hash": "82cbc0d57bb755d87d8654c3fdaef855116cee8e37482fb58beb5bb946215356",
       "status": "running"
+    },
+    "94": {
+      "epoch": 0,
+      "planned_at": 1792417955,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "After playback proxies #69 integrate, capture generated-media coverage of upload/YouTube imports, library selection, stale requests, unsaved edits, revision conflicts, job progress/interruption, and JSON/CSV exports.",
+          "Create a parity matrix for camera/scene/court edits, identities, shuttle/contact/rally/stroke review and evaluation. Preserve known unknowns and separation of predictions from reviewed labels.",
+          "Freeze repeatable baseline fixtures, host/browser, timing tolerance and performance budgets for source-frame seeking, overlays, playback and large timelines before migration; include variable-frame-rate and oriented media without real datasets or weights."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "93",
+          "69"
+        ],
+        "exclusions": [
+          "No model/inference changes, annotation/source-clock schema changes, data migration, paid services, research restarts or automatic app upgrade.",
+          "Respect active grants including playback proxies #69; request scope extensions before editing additional paths."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Freeze frontend parity and performance baselines.",
+        "paths": [
+          "tests/frontend-parity.mjs",
+          "tests/frontend-fixtures.mjs",
+          "docs/FRONTEND_BASELINE.md",
+          "package.json"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Relevant generated-media/browser regressions; typecheck/build when introduced; repository UTF-8/LF/JSON/local-link and diff checks.",
+          "Fresh exact-head/base/spec independent review, required CI and controller integration/main verification."
+        ]
+      },
+      "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38",
+      "status": "ready"
+    },
+    "95": {
+      "epoch": 0,
+      "planned_at": 1792417955,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Create a locked React + strict TypeScript + Vite source workspace at backend/frontend/, with typecheck/build scripts and a documented generated-asset policy. Keep the current default UI working.",
+          "Provide a typed FastAPI client and reproducible OpenAPI contract checks; handle errors, cancellation and stale responses explicitly.",
+          "Separate server records and jobs, unsaved annotation drafts, and ephemeral playback state. Establish accessible reusable controls and feature ownership boundaries; keep high-frequency video/canvas work outside broad React rerenders.",
+          "Build static assets without a runtime Node service; production packaging/cutover belongs to the final separately reviewed integration task."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "94"
+        ],
+        "exclusions": [
+          "No model/inference changes, annotation/source-clock schema changes, data migration, paid services, research restarts or automatic app upgrade.",
+          "Respect active grants including playback proxies #69; request scope extensions before editing additional paths."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Establish React TypeScript Vite frontend foundation.",
+        "paths": [
+          "backend/frontend/",
+          "package.json",
+          "package-lock.json",
+          "tests/frontend-foundation.mjs"
+        ],
+        "priority": 40,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Relevant generated-media/browser regressions; typecheck/build when introduced; repository UTF-8/LF/JSON/local-link and diff checks.",
+          "Fresh exact-head/base/spec independent review, required CI and controller integration/main verification."
+        ]
+      },
+      "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
+      "status": "ready"
+    },
+    "96": {
+      "epoch": 0,
+      "planned_at": 1792417955,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Migrate library, uploads/progress, public YouTube import, empty/error states and processing progress/pause/resume using the typed API client.",
+          "Prove video switching during pending requests/jobs does not overwrite another video or discard unsaved drafts. Preserve authentication/errors, input validation and playback-proxy contracts.",
+          "Provide keyboard/focus/label coverage and generated-media failure/recovery tests while keeping the legacy editor available until parity is established."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "95"
+        ],
+        "exclusions": [
+          "No model/inference changes, annotation/source-clock schema changes, data migration, paid services, research restarts or automatic app upgrade.",
+          "Respect active grants including playback proxies #69; request scope extensions before editing additional paths."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Migrate library imports and job monitoring to React.",
+        "paths": [
+          "backend/frontend/",
+          "tests/frontend-library.mjs"
+        ],
+        "priority": 50,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Relevant generated-media/browser regressions; typecheck/build when introduced; repository UTF-8/LF/JSON/local-link and diff checks.",
+          "Fresh exact-head/base/spec independent review, required CI and controller integration/main verification."
+        ]
+      },
+      "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d",
+      "status": "ready"
     }
   },
   "version": 1,
