@@ -2351,6 +2351,15 @@
       "task_id": "126",
       "verb": "checkpoint"
     },
+    "windows-policy126-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792451865,
+      "epoch": 1,
+      "fingerprint": "9d13311000d48c3a0d70d0370c7c376644dc481d58eb30c2db8bb36612e1fa27",
+      "status": "running",
+      "task_id": "126",
+      "verb": "checkpoint"
+    },
     "windows-policy126-next-v1": {
       "actor": "Ken0u",
       "at": 1792449189,
@@ -3973,21 +3982,24 @@
     },
     "126": {
       "checkpoint": {
+        "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
         "branch": "codex/issue-126-deliver-the-preserved-external-merge-rec",
-        "progress": "Genuine epoch1 grant confirmed after explicitly authorized identical-scope transfer from false-fenced123. Preserved original99da/PR125 and119source/reviews/CI. New isolated126 checkout and locked review env incorporate complete preserved source. Fixed independent preflight sensitive-main-repair authorization regression: risk-human/sensitive repair scopes including broad ancestors enter Needs human, obtain their own exact-hash owner authorization, retain repair_for and paused priority, and complete normal independent-review/CI/merge/main verification; ordinary repairs remain automatic.",
-        "remaining": "Full project suite/text/JSON/link checks; exact source commit/newPR/CI; new genuine formal independent review. No manual policy cutover authorized. After actual verified merged main perform original111 historical recovery reusing successful delivery. Existing101 remains separate.",
+        "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+        "pr_number": 127,
+        "progress": "Owner explicitly authorized one-time transition at previous01a head, but collaborator PR128/task124 merged verified export snapshot fix onto main37eb before action. Revalidated state: no manual merge occurred; controller correctly invalidated old review and returned126Running/epoch1. Normal local merge preserves updated app source and full existing policy implementation; PRdelta against37eb remains exactly12 authorized paths.",
+        "remaining": "Complete fresh full checks, push normal merge, new exact head/base submit/CI and genuine independent review. Existing owner authorization explicitly names01a; currentdd06 requires concrete amended head authorization after final checks/review. Do not merge stale01a or silently substitute a new head. Original126/111 audited recovery still required after actual verified integration; no duplicate111publication/inference.",
         "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
-        "validation": [
-          "New full repair lifecycle tests cover risk-human, sensitive file and broad-ancestor scope in active/pilot modes, unauthorized/stale owner scope, independent review, serial merge, verified repair resumption and completed candidate reuse. Focused231 tests pass; lint/format147files,48package health and diff checks pass."
+        "verification": [
+          "New merged-main37eb exact CI39338362665 SUCCESS. Lint/format147files,48package health,diff checks pass on updateddd06. New fullsuite is running; source not yet pushed at checkpoint creation."
         ]
       },
-      "checkpoint_at": 1792449566,
+      "checkpoint_at": 1792451865,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "branch": "codex/issue-126-deliver-the-preserved-external-merge-rec",
         "epoch": 1,
-        "expires_at": 1792460366,
+        "expires_at": 1792462665,
         "granted_at": 1792449340,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
