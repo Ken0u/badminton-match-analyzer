@@ -264,6 +264,13 @@
       "task_id": "80",
       "verb": "next"
     },
+    "windows-pilot80-review-v1-register": {
+      "actor": "Ken0u",
+      "at": 1792416075,
+      "fingerprint": "634a9bee44383b8e14f33eb664c40653f8c6f5e35ef20a9f1cd466184919b1e3",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-pilot80-submit-v1": {
       "actor": "Ken0u",
       "at": 1792416012,
@@ -1006,6 +1013,18 @@
       "host_id": "MSI",
       "registered_at": 1792394451,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    },
+    "MSI/windows-pilot80-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "review"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792416075,
+      "session_id": "windows-pilot80-review-v1"
     },
     "Stanleys-Laptop.local/cf2edc496cf343d2812a231f5c099c8a": {
       "actor": "dootz1",
