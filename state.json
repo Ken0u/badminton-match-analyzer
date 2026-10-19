@@ -211,6 +211,15 @@
       "task_id": "103",
       "verb": "submit"
     },
+    "mac-01a15493-submit105-v1": {
+      "actor": "dootz1",
+      "at": 1792422076,
+      "epoch": 1,
+      "fingerprint": "bf532e9dcd2e5ef7559fd270254ba75112c6014fe6ae2f71d769b239d2f8e3a4",
+      "status": "review",
+      "task_id": "105",
+      "verb": "submit"
+    },
     "mac-pilot-81-claim-v1": {
       "actor": "dootz1",
       "at": 1792410819,
@@ -1128,6 +1137,7 @@
       "epoch": 1,
       "planned_at": 1792421207,
       "planned_by": "dootz1",
+      "pr_number": 106,
       "spec": {
         "acceptance": [
           "Reproduce unsupported original FFV1 media raising a global playback error, then successful compatible playback leaving the obsolete error visible.",
@@ -1165,7 +1175,13 @@
         ]
       },
       "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
+        "head_sha": "460d2ccf51302e6f837b77edc1db0af6f19bab4f",
+        "pr_number": 106,
+        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
+      }
     },
     "62": {
       "epoch": 0,
