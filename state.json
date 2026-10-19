@@ -264,6 +264,28 @@
       "task_id": "80",
       "verb": "next"
     },
+    "windows-pilot80-review-v1-claim": {
+      "actor": "Ken0u",
+      "at": 1792416134,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "9aa0f437fd5cacd948161ae09149ac2855f01c31",
+        "epoch": 1,
+        "expires_at": 1792426934,
+        "granted_at": 1792416134,
+        "head_sha": "49c266486371784fc4bcbfad37bae0b6b40db0f7",
+        "host_id": "MSI",
+        "pr_number": 90,
+        "review_epoch": 1,
+        "session_id": "windows-pilot80-review-v1",
+        "spec_hash": "7ffd88dc6c3f100b78da755bd605ca51863e5147bf6e5c12924e62ef3f81efab"
+      },
+      "epoch": 1,
+      "fingerprint": "e40fb6d1d06f96a3db2896c9c87951a2ca753c1875775af547d12d25da3e8e1e",
+      "status": "granted",
+      "task_id": "80",
+      "verb": "review-next"
+    },
     "windows-pilot80-review-v1-register": {
       "actor": "Ken0u",
       "at": 1792416075,
@@ -801,6 +823,20 @@
       "planned_at": 1792395547,
       "planned_by": "Ken0u",
       "pr_number": 90,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "9aa0f437fd5cacd948161ae09149ac2855f01c31",
+        "epoch": 1,
+        "expires_at": 1792426934,
+        "granted_at": 1792416134,
+        "head_sha": "49c266486371784fc4bcbfad37bae0b6b40db0f7",
+        "host_id": "MSI",
+        "pr_number": 90,
+        "review_epoch": 1,
+        "session_id": "windows-pilot80-review-v1",
+        "spec_hash": "7ffd88dc6c3f100b78da755bd605ca51863e5147bf6e5c12924e62ef3f81efab"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Run on the actual Windows host as its own authenticated collaborator in a fresh linked worktree after a committed grant.",
