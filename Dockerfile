@@ -1,16 +1,19 @@
 # syntax=docker/dockerfile:1
 # Use --target review for video review/imports without the ML dependencies.
 # Use --target cpu (the default) or --target gpu for tracking and family suggestions.
-FROM node:24-bookworm-slim AS javascript
+FROM node:24-bookworm-slim@sha256:a5f4366e834695d5f363b920c104953a535d3a9864d1bdf74566a0ebe01daee5 AS javascript
 
-FROM python:3.12-slim-bookworm AS review
+FROM python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258 AS review
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
     BADMINTON_ROOT=/state \
     BADMINTON_DATA_DIR=/state/data/processed \
     BADMINTON_WEIGHTS_DIR=/state/models/weights \
-    HOME=/home/badminton
+    HOME=/home/badminton \
+    UV_PROJECT_ENVIRONMENT=/opt/venv \
+    UV_NO_CACHE=1 \
+    PATH=/opt/venv/bin:$PATH
 
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
@@ -25,12 +28,13 @@ RUN apt-get update \
 COPY --from=javascript /usr/local/bin/node /usr/local/bin/node
 COPY --from=javascript /usr/local/LICENSE /usr/local/share/licenses/node/LICENSE
 WORKDIR /app
-COPY pyproject.toml README.md ./
+COPY pyproject.toml uv.lock README.md ./
 COPY backend ./backend
 COPY scripts/download_models.py ./scripts/download_models.py
 COPY docs ./docs
-RUN python -m pip install --no-cache-dir ".[youtube,download]" \
-    && python -m pip check \
+RUN /usr/local/bin/python -m pip install --no-cache-dir uv==0.9.4 \
+    && uv sync --locked --no-dev --no-editable --extra youtube --extra download \
+    && uv pip check --python /opt/venv/bin/python \
     && node --version \
     && ffmpeg -version
 
@@ -44,22 +48,18 @@ CMD ["serve", "--host", "0.0.0.0", "--port", "8000"]
 
 FROM review AS cpu
 USER root
-RUN python -m pip install --no-cache-dir \
-        torch==2.8.0 torchvision==0.23.0 \
-        --index-url https://download.pytorch.org/whl/cpu \
-    && python -m pip install --no-cache-dir ".[tracking,recognition]" \
-    && python -m pip check \
+RUN uv sync --locked --no-dev --no-editable --extra youtube --extra download \
+        --extra tracking --extra recognition --extra cpu \
+    && uv pip check --python /opt/venv/bin/python \
     && python -c "import torch; from badminton.vendor.bst.bst import BST_0; assert torch.version.cuda is None; assert BST_0(in_dim=72, seq_len=30, n_class=35)(torch.zeros(1,30,2,72), torch.zeros(1,30,2), torch.tensor([30])).shape == (1,35)"
 RUN python -c "from badminton.stroke_side import load_side_predictor; assert load_side_predictor('cpu') is not None"
 USER 10001:10001
 
 FROM review AS gpu
 USER root
-RUN python -m pip install --no-cache-dir \
-        torch==2.8.0 torchvision==0.23.0 \
-        --index-url https://download.pytorch.org/whl/cu126 \
-    && python -m pip install --no-cache-dir ".[tracking,recognition]" \
-    && python -m pip check \
+RUN uv sync --locked --no-dev --no-editable --extra youtube --extra download \
+        --extra tracking --extra recognition --extra cuda \
+    && uv pip check --python /opt/venv/bin/python \
     && python -c "import torch; assert torch.version.cuda == '12.6'"
 USER 10001:10001
 

@@ -1,69 +1,242 @@
 name: Checks
+run-name: Verify ${{ inputs.verify_sha || github.sha }}
 
 on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
+    inputs:
+      verify_sha:
+        description: "Exact merged-main SHA to verify (40 hexadecimal characters)"
+        required: true
+        type: string
 
 permissions:
   contents: read
 
+concurrency:
+  group: checks-${{ github.event.pull_request.number || github.sha }}-${{ github.event_name }}-${{ inputs.verify_sha || 'default' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  python:
+  revision:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      tested_sha: ${{ steps.revision.outputs.tested_sha }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Validate revision and record source identities
+        id: revision
+        env:
+          VERIFY_SHA: ${{ inputs.verify_sha }}
+        shell: bash
+        run: |
+          python - <<'PYTHON'
+          import json, os, pathlib, re, subprocess
+          def git(*args):
+              return subprocess.check_output(["git", *args], text=True).strip()
+          event = json.loads(pathlib.Path(os.environ["GITHUB_EVENT_PATH"]).read_text())
+          tested = git("rev-parse", "HEAD")
+          if os.environ["GITHUB_EVENT_NAME"] == "workflow_dispatch":
+              requested = os.environ["VERIFY_SHA"]
+              if not re.fullmatch(r"[0-9a-fA-F]{40}", requested):
+                  raise SystemExit("verify_sha must be a full hexadecimal commit SHA")
+              tested = git("rev-parse", requested + "^{commit}")
+              subprocess.run(["git", "merge-base", "--is-ancestor", tested, "origin/main"], check=True)
+              subprocess.run(["git", "checkout", "--detach", tested], check=True)
+          pull = event.get("pull_request", {})
+          receipt = {
+              "event": os.environ["GITHUB_EVENT_NAME"],
+              "run_id": os.environ["GITHUB_RUN_ID"],
+              "head_sha": pull.get("head", {}).get("sha", tested),
+              "base_sha": pull.get("base", {}).get("sha", event.get("before")),
+              "tested_sha": tested,
+              "tested_tree": git("rev-parse", "HEAD^{tree}"),
+              "main_sha_at_dispatch": git("rev-parse", "origin/main"),
+          }
+          pathlib.Path(".cache").mkdir(exist_ok=True)
+          pathlib.Path(".cache/ci-revision.json").write_text(json.dumps(receipt, indent=2) + "\n")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as output:
+              output.write("tested_sha=" + tested + "\n")
+          print(json.dumps(receipt, indent=2))
+          PYTHON
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ci-revision
+          path: .cache/ci-revision.json
+          retention-days: 14
+
+  python:
+    needs: revision
+    runs-on: ubuntu-latest
+    env:
+      UV_PYTHON: ${{ matrix.python }}
+    timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
         python: ["3.10", "3.12"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.revision.outputs.tested_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ matrix.python }}
-          cache: pip
-          cache-dependency-path: pyproject.toml
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: "0.9.4"
+          enable-cache: true
       - name: Install codec and OpenCV system libraries
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg libgl1 libglib2.0-0
-      - name: Install review, import, and test dependencies
-        run: python -m pip install ".[dev,youtube]"
+      - name: Install locked review and test dependencies
+        run: uv sync --locked --python "${{ matrix.python }}" --extra dev --extra youtube
       - name: Verify dependencies and source
         run: |
-          python -m pip check
-          python -m ruff check backend tests scripts
-          python -m ruff format --check backend tests scripts
-      - name: Test with generated media, without sample files or model weights
+          uv pip check
+          uv run --no-sync python -m ruff check backend tests scripts
+          uv run --no-sync python -m ruff format --check backend tests scripts
+      - name: Test generated media without private samples or weights
         env:
           BADMINTON_GPU_TESTS: "0"
         run: |
-          mkdir -p .cache
-          python -m pytest -q --basetemp .cache/pytest
+          python -c "from pathlib import Path; Path('.cache').mkdir(exist_ok=True)"
+          uv run --no-sync python -m pytest -q --basetemp .cache/pytest --junitxml .cache/test-results.xml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: python-${{ matrix.python }}-failure
+          path: .cache/test-results.xml
+          if-no-files-found: ignore
+          retention-days: 14
+
+  native:
+    needs: revision
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, windows-2022]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.revision.outputs.tested_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: "0.9.4"
+          enable-cache: true
+      - name: Install macOS codec tools
+        if: runner.os == 'macOS'
+        run: brew list ffmpeg || brew install ffmpeg
+      - name: Install Windows codec tools
+        if: runner.os == 'Windows'
+        run: choco install ffmpeg --no-progress -y
+      - name: Install locked native review environment
+        run: uv sync --locked --python 3.12 --extra dev --extra youtube
+      - name: Verify native generated-media workflows
+        env:
+          BADMINTON_GPU_TESTS: "0"
+        run: |
+          python -c "from pathlib import Path; Path('.cache').mkdir(exist_ok=True)"
+          uv pip check
+          uv run --no-sync python -m pytest -q --basetemp .cache/pytest-native --junitxml .cache/test-results.xml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: native-${{ matrix.os }}-failure
+          path: .cache/test-results.xml
+          if-no-files-found: ignore
+          retention-days: 14
+
+  repository:
+    needs: revision
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.revision.outputs.tested_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/verify_repository.py
+
+  package:
+    needs: revision
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.revision.outputs.tested_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: "0.9.4"
+          enable-cache: true
+      - run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libgl1 libglib2.0-0
+      - run: uv sync --locked --extra dev --extra youtube
+      - name: Build and verify clean installed wheel and source distribution
+        run: uv run --no-sync python scripts/verify_package.py --build --dist-dir .cache/dist
 
   frontend:
+    needs: revision
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
-          node-version: "24"
+          ref: ${{ needs.revision.outputs.tested_sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
           cache: npm
       - run: npm ci
       - name: Check browser source formatting
         run: npx prettier --check "backend/badminton/static/*" "tests/*.mjs" "scripts/*.mjs"
 
   browser-import:
+    needs: revision
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     env:
       BADMINTON_ROOT: ${{ github.workspace }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.revision.outputs.tested_sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.12"
-      - uses: actions/setup-node@v4
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
         with:
-          node-version: "24"
+          version: "0.9.4"
+          enable-cache: true
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
           cache: npm
-      - run: python -m pip install ".[youtube]"
+      - run: uv sync --locked --extra youtube
+      - name: Use locked Python environment for browser fixture servers
+        shell: bash
+        run: echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Verify upload and YouTube import interface with an isolated server
@@ -108,7 +281,7 @@ jobs:
           node tests/pipeline-browser.mjs
       - name: Import browser artifacts
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: import-browser
           path: |
@@ -122,13 +295,18 @@ jobs:
             data/processed/qa/pipeline-browser.png
 
   container:
+    needs: revision
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     strategy:
       fail-fast: false
       matrix:
         target: [review, cpu]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.revision.outputs.tested_sha }}
+          persist-credentials: false
       - name: Build the ${{ matrix.target }} image without media or weights
         run: docker build --target "${{ matrix.target }}" --tag badminton-review:ci .
       - name: Start with single-user authentication
@@ -150,10 +328,30 @@ jobs:
           curl --fail --silent --user reviewer:ci-only-generated-environment --output /tmp/badminton-index.html http://127.0.0.1:8000/
           grep -q '<html' /tmp/badminton-index.html
           test "$(curl --fail --silent --user reviewer:ci-only-generated-environment http://127.0.0.1:8000/api/videos)" = '[]'
-          docker exec badminton-review python -m pip check
+          docker exec badminton-review uv pip check --python /opt/venv/bin/python
       - name: Container logs
         if: always()
         run: docker logs badminton-review
       - name: Stop container
         if: always()
         run: docker rm --force badminton-review
+
+  gate:
+    name: ci/gate
+    if: always()
+    needs: [revision, python, native, repository, package, frontend, browser-import, container]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every verification job to succeed
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python - <<'PYTHON'
+          import json, os
+          results = json.loads(os.environ["RESULTS"])
+          failures = {name: job["result"] for name, job in results.items() if job["result"] != "success"}
+          if failures:
+              raise SystemExit("Required verification did not succeed: " + json.dumps(failures))
+          print("Every required verification succeeded")
+          PYTHON

@@ -1,0 +1,55 @@
+name: Agent task
+# Agents validate and normalize this form before moving the issue to Ready.
+description: Define an outcome, reservations and verifiable acceptance criteria.
+title: ""
+body:
+  - type: markdown
+    attributes:
+      value: "An agent planner converts this request into a frozen structured task. Proposed issues are not executable. Never paste credentials, private annotations, raw datasets or weights."
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Outcome
+      description: What changes for a user or researcher?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria and verification
+      description: Observable completion and required evidence; distinguish software correctness from annotation accuracy.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope, exclusions and dependencies
+      description: Include intended paths/conflict areas, prerequisite issues, and work excluded.
+    validations:
+      required: true
+  - type: dropdown
+    id: milestone
+    attributes:
+      label: Approved milestone
+      options:
+        - Data and evaluation
+        - Perception
+        - Event recognition
+        - Review and product
+        - Infrastructure
+    validations:
+      required: true
+  - type: textarea
+    id: capabilities
+    attributes:
+      label: Capabilities, artifacts and resource limits
+      description: OS/CPU/CUDA, input/model hashes, existing process ownership, compute duration; unknown is acceptable.
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk
+      options:
+        - routine
+        - human
+    validations:
+      required: true

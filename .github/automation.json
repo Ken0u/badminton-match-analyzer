@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "repository": "Ken0u/badminton-match-analyzer",
+  "mode": "observation",
+  "integration_enforcement": "controller",
+  "coordination_branch": "codex/coordination",
+  "trusted_logins": [
+    "Ken0u",
+    "dootz1"
+  ],
+  "human_approvers": [
+    "Ken0u",
+    "dootz1"
+  ],
+  "coordinator_login": "github-actions[bot]",
+  "milestones": [
+    "Infrastructure",
+    "Data and evaluation",
+    "Perception",
+    "Event recognition",
+    "Review and product"
+  ],
+  "required_checks": [
+    "ci/gate"
+  ],
+  "max_repair_rounds": 3,
+  "lease_seconds": 10800,
+  "project": {
+    "owner": "Ken0u",
+    "number": null
+  },
+  "pilot_tasks": [],
+  "sensitive_paths": [
+    ".github/",
+    "scripts/devops/",
+    "scripts/agent_queue.py",
+    "scripts/bootstrap.py",
+    "AGENTS.md",
+    "Dockerfile",
+    "backend/badminton/access.py",
+    "backend/badminton/storage.py",
+    "backend/badminton/model_manifest.json",
+    "backend/badminton/assets/",
+    "docs/DEPLOYMENT.md",
+    "scripts/project_status.py",
+    "scripts/release_candidate.py",
+    "scripts/setup_automation.py",
+    "scripts/backfill_project.py"
+  ],
+  "no_paid_overage": true,
+  "native_evidence_paths": [
+    "backend/badminton/tracking.py",
+    "backend/badminton/shuttle.py",
+    "backend/badminton/recognition.py",
+    "backend/badminton/contacts.py",
+    "backend/badminton/rallies.py",
+    "backend/badminton/track_consensus.py",
+    "backend/badminton/actor_linking.py",
+    "backend/badminton/court_detection.py"
+  ]
+}

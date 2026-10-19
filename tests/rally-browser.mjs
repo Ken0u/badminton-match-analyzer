@@ -1,4 +1,4 @@
-﻿import { chromium } from "playwright";
+import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 
