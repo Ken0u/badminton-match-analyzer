@@ -173,6 +173,24 @@
       "task_id": "110",
       "verb": "checkpoint"
     },
+    "mac-01a15493-110-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792440315,
+      "epoch": 1,
+      "fingerprint": "e1a2a904cdb4388a7e5a0ea9d1c56c6db94dcb8b9abbd70408c516163a7c035d",
+      "status": "review",
+      "task_id": "110",
+      "verb": "submit"
+    },
+    "mac-01a15493-110-tested": {
+      "actor": "dootz1",
+      "at": 1792440248,
+      "epoch": 1,
+      "fingerprint": "4d62d402e247ea7ae2b79d402fbb0230d77ffb94c18d787466a3d793377b4053",
+      "status": "running",
+      "task_id": "110",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -2008,17 +2026,24 @@
       "checkpoint": {
         "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
         "branch": "codex/issue-110-render-source-time-preserving-reviewed-r",
-        "preservation": "Old103/105/108 worktrees remain clean and preserved. Publishing111 is collaborator-owned; frontend dependencies retained.",
-        "remaining": "Implement verified plain rally clip renderer, generated native video/audio regressions, CLI/docs, required checks, fresh independent exact-head review and controller integration/delivery. Bounded child owns only rally_video.py in separate .cache/rally-video-110-module worktree; parent owns tests/CLI/docs. No shared research or app processes started.",
+        "head_sha": "ed701df322e3708e9d6eb2a61135ef7d307299d1",
+        "preservation": "All generated media live in ignored task cache; no source annotations/predictions/app data/research jobs changed. No frontend phase bypass or running-app upgrade.",
+        "remaining": "Publish PR, submit exact head/base/spec, obtain fresh independent read-only review including independent browser check; address findings, exact-head hosted CI, controller integration/exact-main and delivery receipts. Publishing111 remains collaborator-owned.",
+        "validation": [
+          "72 focused real generated video/audio/native-clock/plan/CLI regressions passed (.cache/focused.xml)",
+          "Full locked Python3.12 suite1012passed/11optional skips (.cache/full.xml)",
+          "Ruff/format/repository/dependency/diff checks pass",
+          "Chromium156: four exact VFR seek pixels and playback to .72s endpoint pass; receipt .cache/browser-fixture/browser-receipt.json"
+        ],
         "worktree": ".cache/rally-video-110"
       },
-      "checkpoint_at": 1792439855,
+      "checkpoint_at": 1792440248,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
         "branch": "codex/issue-110-render-source-time-preserving-reviewed-r",
         "epoch": 1,
-        "expires_at": 1792450655,
+        "expires_at": 1792451048,
         "granted_at": 1792439782,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -2027,6 +2052,7 @@
       "epoch": 1,
       "planned_at": 1792424330,
       "planned_by": "dootz1",
+      "pr_number": 115,
       "spec": {
         "acceptance": [
           "Add a CLI and backend renderer consuming the source-audited plan from #108. Revalidate source bytes, native timeline, annotation revision/content and plan provenance before encoding; reject edited or stale plans rather than trusting arbitrary range fields.",
@@ -2069,7 +2095,13 @@
         ]
       },
       "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "head_sha": "ed701df322e3708e9d6eb2a61135ef7d307299d1",
+        "pr_number": 115,
+        "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829"
+      }
     },
     "111": {
       "checkpoint": {
