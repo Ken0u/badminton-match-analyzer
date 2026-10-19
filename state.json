@@ -97,6 +97,22 @@
       "task_id": "73",
       "verb": "plan"
     },
+    "spec-80-6c9f8a11c3dcd138ac6d847dc385932b1b768eb625a10997f8ec4e74f0debfd6": {
+      "actor": "Ken0u",
+      "at": 1792395547,
+      "fingerprint": "44a169c9f97f5598edd6f01b839fae07cef6d5d25473aa061825ab0fd1629920",
+      "status": "proposed",
+      "task_id": "80",
+      "verb": "plan"
+    },
+    "spec-81-d5ecc5989fdc5d9068a9dbd84669b5b2be12f15e2727bf459dc02197795f9b1f": {
+      "actor": "Ken0u",
+      "at": 1792395547,
+      "fingerprint": "18795532340cc89829197012a0b28952ab1fdb38785790d31eb2a690d07da221",
+      "status": "proposed",
+      "task_id": "81",
+      "verb": "plan"
+    },
     "windows-owner-setup-register-v1": {
       "actor": "Ken0u",
       "at": 1792394451,
@@ -595,6 +611,90 @@
       },
       "spec_hash": "5e0f112c57c45709ffc673b02a6b15b8dcf46016b1e63ccf982c765c93a60e75",
       "status": "needs_human"
+    },
+    "80": {
+      "epoch": 0,
+      "planned_at": 1792395547,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Run on the actual Windows host as its own authenticated collaborator in a fresh linked worktree after a committed grant.",
+          "Add docs/pilot/WINDOWS.md with actual OS/architecture, Python/Node/uv versions, locked profile commands, exact source revision, focused/full check results and limitations.",
+          "Use a fresh independent review session; let the controller integrate, verify merged main and publish a successful private candidate.",
+          "Retain all existing environments, annotations, datasets, research processes and model weights; no application upgrade."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No automatic annotation accuracy claim, data download, inference, model promotion, deployment, policy/workflow change or paid service.",
+          "Never put credentials, local absolute private-data paths or raw research artifacts in GitHub."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Document a reproducible Windows locked-review workstation smoke check without changing the application or research environments.",
+        "paths": [
+          "docs/pilot/WINDOWS.md"
+        ],
+        "priority": 1,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Run locked review-profile tests, Ruff lint/format, pip check, repository UTF-8/LF/JSON/link checks and git diff --check on exact head.",
+          "Record independent review, serial integration, successful merged-main ci/gate and private candidate run/artifact links on this issue."
+        ]
+      },
+      "spec_hash": "7ffd88dc6c3f100b78da755bd605ca51863e5147bf6e5c12924e62ef3f81efab",
+      "status": "proposed"
+    },
+    "81": {
+      "epoch": 0,
+      "planned_at": 1792395547,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Run on the actual Mac host as its own authenticated collaborator in a fresh linked worktree after a committed grant.",
+          "Add docs/pilot/MACOS.md with actual OS/architecture, Python/Node/uv versions, locked profile commands, exact source revision, focused/full check results and limitations.",
+          "Use a fresh independent review session; let the controller integrate, verify merged main and publish a successful private candidate.",
+          "Retain all existing environments, annotations, datasets, research processes and model weights; no application upgrade."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "darwin"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No automatic annotation accuracy claim, data download, inference, model promotion, deployment, policy/workflow change or paid service.",
+          "Never put credentials, local absolute private-data paths or raw research artifacts in GitHub."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Document a reproducible Mac locked-review workstation smoke check without changing the application or research environments.",
+        "paths": [
+          "docs/pilot/MACOS.md"
+        ],
+        "priority": 2,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Run locked review-profile tests, Ruff lint/format, pip check, repository UTF-8/LF/JSON/link checks and git diff --check on exact head.",
+          "Record independent review, serial integration, successful merged-main ci/gate and private candidate run/artifact links on this issue."
+        ]
+      },
+      "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57",
+      "status": "proposed"
     }
   },
   "version": 1,
