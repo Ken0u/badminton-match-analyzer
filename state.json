@@ -159,6 +159,15 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "mac-01a15493-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792420773,
+      "epoch": 1,
+      "fingerprint": "71343abc1df37281077357c3f97e4d81eecf1eab69ec3d42606a6d690821fb54",
+      "status": "review",
+      "task_id": "103",
+      "verb": "submit"
+    },
     "mac-pilot-81-claim-v1": {
       "actor": "dootz1",
       "at": 1792410819,
@@ -241,6 +250,13 @@
       "status": "review",
       "task_id": "81",
       "verb": "submit"
+    },
+    "mac-review103-01a15493-register-v1": {
+      "actor": "dootz1",
+      "at": 1792420773,
+      "fingerprint": "53868819acdbb1a91addcfa0b51e3c941c310806a59584b7547701a166eabfac",
+      "status": "ok",
+      "verb": "register"
     },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
@@ -881,6 +897,7 @@
       "epoch": 1,
       "planned_at": 1792420409,
       "planned_by": "Ken0u",
+      "pr_number": 104,
       "spec": {
         "acceptance": [
           "Use positive final source-frame duration for import end time, retaining a documented timing fallback when unavailable; preserve native PTS, frame identities, source bytes and reviewed labels.",
@@ -919,7 +936,13 @@
         ]
       },
       "spec_hash": "eacd1c09aab3ecaf49ca659a777c16500e0a95bd699d35d0c8a6756c7e0d2fc7",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "head_sha": "844bab544ff9f209cf4efc1efb8a01ecaef3533d",
+        "pr_number": 104,
+        "spec_hash": "eacd1c09aab3ecaf49ca659a777c16500e0a95bd699d35d0c8a6756c7e0d2fc7"
+      }
     },
     "62": {
       "epoch": 0,
@@ -2293,6 +2316,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792411125,
       "session_id": "mac-pilot-review-85"
+    },
+    "Stanleys-Laptop.local/mac-review103-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792420773,
+      "session_id": "mac-review103-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-20261019-01a15477": {
       "actor": "dootz1",
