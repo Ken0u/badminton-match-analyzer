@@ -1867,6 +1867,14 @@
       "task_id": "123",
       "verb": "human-approved"
     },
+    "windows-human-review-removal123-owner-scope-v2": {
+      "actor": "Ken0u",
+      "at": 1792447986,
+      "fingerprint": "91f4263cd1e249c4401d45eb2b6f66519334532a68c16fd8f837175edea5e815",
+      "status": "ready",
+      "task_id": "123",
+      "verb": "human-approved"
+    },
     "windows-human-review-removal123-plan-v1": {
       "actor": "Ken0u",
       "at": 1792446443,
@@ -3201,7 +3209,7 @@
       "planned_at": 1792442676,
       "planned_by": "Ken0u",
       "pr_number": 122,
-      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "reason": "Issue closed; preserve reservations and checkpoint before recovery",
       "repair_rounds": 1,
       "review": {
         "actor": "Ken0u",
@@ -3286,7 +3294,7 @@
         ]
       },
       "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-      "status": "review",
+      "status": "recovery_required",
       "submission": {
         "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
@@ -3420,8 +3428,14 @@
     },
     "123": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792447986,
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+      },
       "planned_at": 1792447474,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Incorporate the complete preserved owner-authorized119 recovery implementation from reviewed head6125c7080140b2f0281515e57d640f540e7874ca, including its duplicate-delivery repair, original crash regression, immutable historical recovery, resource proof, outbox and issue-projection tests. Keep original source branches, PR122 independent verdicts and all evidence. Supersede its unmerged PR rather than infer a merge or fabricate task119 Done. The combined new revision needs its own genuine grant, full checks and fresh independent review.",
@@ -3474,7 +3488,7 @@
         ]
       },
       "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
-      "status": "needs_human"
+      "status": "ready"
     },
     "124": {
       "epoch": 0,
