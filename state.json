@@ -1835,6 +1835,14 @@
       "task_id": "63",
       "verb": "submit"
     },
+    "windows-human-review-removal123-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792446443,
+      "fingerprint": "b9ee62a90adf14d02301a94080ee115d4c4d679d06bb6f9beb596bea198760a6",
+      "status": "needs_human",
+      "task_id": "123",
+      "verb": "plan"
+    },
     "windows-owner-setup-register-v1": {
       "actor": "Ken0u",
       "at": 1792394451,
@@ -3372,7 +3380,7 @@
     },
     "123": {
       "epoch": 0,
-      "planned_at": 1792446363,
+      "planned_at": 1792446443,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
