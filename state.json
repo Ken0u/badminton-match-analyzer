@@ -534,6 +534,12 @@
       "status": "review",
       "task_id": "69",
       "verb": "submit"
+    },
+    "windows-playback69-submit-v2": {
+      "actor": "Ken0u",
+      "reason": "submit requires running work",
+      "status": "rejected",
+      "verb": "submit"
     }
   },
   "tasks": {
