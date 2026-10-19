@@ -108,6 +108,14 @@
       "task_id": "93",
       "verb": "integrate"
     },
+    "invalidate-69-a0004b67dac5ffb56b7c629a0a95141d5df7633f-77906a0aa27e151d482fc1d46f609daef7ff8855": {
+      "actor": "github-actions[bot]",
+      "at": 1792418630,
+      "fingerprint": "4ed6eebb3bf39e6d1879a7d0e39def9b463f54b8cd2699e627c9804f4b36daeb",
+      "status": "running",
+      "task_id": "69",
+      "verb": "invalidate-review"
+    },
     "mac-pilot-81-claim-v1": {
       "actor": "dootz1",
       "at": 1792410819,
@@ -879,6 +887,7 @@
       "planned_at": 1792393957,
       "planned_by": "dootz1",
       "pr_number": 100,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Preserve source PTS, orientation and native frame identities across proxy playback and seeks.",
@@ -913,7 +922,7 @@
         ]
       },
       "spec_hash": "73df461cadd6a4d9aa3e51c5659fcb636d0c4d9329a52fe758d5541d658605a9",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
         "head_sha": "9dcc0798d9fa15335a805e0a83a203284619189f",
