@@ -844,6 +844,15 @@
       "task_id": "116",
       "verb": "review-result"
     },
+    "mac-review116-result-v2": {
+      "actor": "dootz1",
+      "at": 1792442474,
+      "epoch": 1,
+      "fingerprint": "89f9cbdd9fe057d91512978df191dc5c1775569697d20faa767fef0f51cc87ec",
+      "status": "review",
+      "task_id": "116",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -2583,18 +2592,40 @@
       "planned_by": "dootz1",
       "pr_number": 118,
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792442474,
         "base_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
-        "epoch": 1,
-        "expires_at": 1792453108,
-        "granted_at": 1792442308,
+        "evidence": [
+          "Independent read-only reviewer mac-review116-01a15493 obtained committed mac-review116-next-v2 grant task116 epoch1/review_epoch2. Remotely revalidated exact PR headce99c4fdd2c518b61c7e8c651ea648a36829fe71/base38eaeaff966dddc1c7a9466fc6948a84c36162bb/spec90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad immediately before verdict; captured queue-binding.json/pr-binding.json in ignored reviewer evidence.",
+          "Inspected complete five-path exact-base diff and surrounding native source/schema/revision/context contracts, then compared repaired scoped changes with prior independently reviewed head. Prior marker-occlusion finding is fixed by policy version2: background, court, text, exact shuttle marker. Native encoding/CLI/planner contracts unchanged by repair; externally advanced publication-policy changes belong to base and receive no approval through this review.",
+          "Independently ran all generated overlay/plain/planner tests on exact repaired reviewer backend with task116 locked Python3.12:106passed in9.46s including new raw+encoded upper-panel shuttle/court cases. Focused Ruff, format and git diff--check passed; detached .cache/review116-ce99c4f remains clean. Evidence focused.xml.",
+          "Reran independent ten-frame FFV1/VFR doubles fixture with3.25s source origin,801x451 pixels, delayed523.25Hz audio, uncertainty[2,4], unknown family/side/hitter, corrected drive/backhand, excluded prediction, reviewed scene/camera cut and court expiry. Full1.15s/10frames and rally1.05s/8frames exported;5total/4included/1excluded event denominator retained. All6input/catalog/timeline files hash-identical after both exports; output native packet/pixel/audio validation passed.",
+          "Independent marker probe at original failing frame3 coordinates(.5,.04) now yields68exact yellow raw overlay pixels versus0before repair. Independent Chromium156.0.8078.4 read actual encoded output:52yellow marker pixels on native frame3 in both full and rally scopes and0at upper probe on every other native frame. All18source-color seeks pass with maximum mean error0.667; both outputs play to expected endpoints.",
+          "Visually inspected repaired browser-frame-3.png and browser-frame-7.png: upper-panel marker and court edges visible, unknown inclusive interval retained, scene/cut text and court expiry correct. browser-receipt.json confirms browser_closed=true/server_closed=true; harness completed exit0. All generated media, scripts, images and receipts retained under .cache/review116-ce99c4f/.cache/evidence; prior review evidence preserved unchanged."
+        ],
+        "findings": [],
         "head_sha": "ce99c4fdd2c518b61c7e8c651ea648a36829fe71",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "No remaining blocking findings in the scoped exact-head change. This is independent agent code/media review, not human policy approval or a merge/main-verification/delivery claim.",
+          "Ran focused106export/planner tests independently, not the author reported1082-test full suite. Generated/browser evidence does not establish badminton annotation accuracy, complete contacts or persistent identity; no private media, models, inference or shared jobs were used.",
+          "Base38eaeaff contains externally merged publication-policy work fromPR114. This review does not fabricate or attest a non-author human approval for that work, its repository/image visibility transitions or package/image delivery. Controller/hostedCI/exactmerged-main and complete candidate receipts remain separate gates."
+        ],
         "pr_number": 118,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/badminton/rally_overlay.py",
+          "backend/badminton/rally_video.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_overlay.py",
+          "docs/REVIEWED_EXPORTS.md",
+          "backend/badminton/rally_export.py",
+          "backend/badminton/schemas.py",
+          "backend/badminton/storage.py",
+          "backend/badminton/calibration_context.py"
+        ],
         "session_id": "mac-review116-01a15493",
-        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
+        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
