@@ -576,6 +576,13 @@
       "task_id": "123",
       "verb": "next"
     },
+    "mac-01a15493-next-frontend94-after124-v1": {
+      "actor": "dootz1",
+      "at": 1792451014,
+      "fingerprint": "1c076a02bc16c5f3bbe991fb3adc165a940d8dff691b817f1dd91d38103eb558",
+      "status": "idle",
+      "verb": "next"
+    },
     "mac-01a15493-next105": {
       "actor": "dootz1",
       "at": 1792421711,
