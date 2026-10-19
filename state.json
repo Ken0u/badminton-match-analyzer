@@ -535,6 +535,13 @@
       "task_id": "69",
       "verb": "checkpoint"
     },
+    "windows-playback69-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792418670,
+      "fingerprint": "1cd5dd8a7d5252513382374af6e7cd84d96c7667833fe497d06e35625ac1d475",
+      "status": "idle",
+      "verb": "review-next"
+    },
     "windows-playback69-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792418461,
