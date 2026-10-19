@@ -2424,6 +2424,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-policy126-review-register-v2": {
+      "actor": "Ken0u",
+      "at": 1792452168,
+      "fingerprint": "0c34ed6909a28a9cde0d26971b92bcd32d02e3e1e4bd59dda91085ca77d17862",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-policy126-review-result-v1": {
       "actor": "Ken0u",
       "at": 1792450302,
@@ -5568,6 +5575,18 @@
       "host_id": "MSI",
       "registered_at": 1792449891,
       "session_id": "windows-policy126-review-v1"
+    },
+    "MSI/windows-policy126-review-v2": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792452168,
+      "session_id": "windows-policy126-review-v2"
     },
     "MSI/windows-public111-review-v1": {
       "actor": "Ken0u",
