@@ -1,6 +1,26 @@
 {
   "paused": false,
   "receipts": {
+    "mac-pilot-81-claim-v1": {
+      "actor": "dootz1",
+      "at": 1792410819,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
+        "branch": "codex/issue-81-document-a-reproducible-mac-locked-revie",
+        "epoch": 1,
+        "expires_at": 1792421619,
+        "granted_at": 1792410819,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "cf2edc496cf343d2812a231f5c099c8a",
+        "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
+      },
+      "epoch": 1,
+      "fingerprint": "ec79eaa118f8bbee2e7e85e722b52437657c1ec7c24b3c56101b68ed32bc681e",
+      "status": "granted",
+      "task_id": "81",
+      "verb": "next"
+    },
     "mac-pilot-registration-v1": {
       "actor": "dootz1",
       "at": 1792410527,
@@ -662,7 +682,18 @@
       "status": "proposed"
     },
     "81": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
+        "branch": "codex/issue-81-document-a-reproducible-mac-locked-revie",
+        "epoch": 1,
+        "expires_at": 1792421619,
+        "granted_at": 1792410819,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "cf2edc496cf343d2812a231f5c099c8a",
+        "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
+      },
+      "epoch": 1,
       "planned_at": 1792395547,
       "planned_by": "Ken0u",
       "spec": {
@@ -701,7 +732,7 @@
         ]
       },
       "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57",
-      "status": "proposed"
+      "status": "running"
     }
   },
   "version": 1,
