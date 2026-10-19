@@ -176,6 +176,15 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint108-start": {
+      "actor": "dootz1",
+      "at": 1792423443,
+      "epoch": 1,
+      "fingerprint": "c8e2d33dd3763d27ac7d7b59ac1d09bb13097dcd3e74090b4bf6fd87d91d9901",
+      "status": "running",
+      "task_id": "108",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -1414,12 +1423,23 @@
       }
     },
     "108": {
+      "checkpoint": {
+        "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
+        "evidence": [
+          "Committed Mac grant epoch1 spec28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
+          "No frontend/research/data/model changes; only granted4paths"
+        ],
+        "head_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "remaining": "Implement read-only source audit, immutable revision plan and non-overwriting JSON CLI; generated tests/docs, fresh review and controller/main/private receipts",
+        "worktree": ".cache/rally-export-plan-108"
+      },
+      "checkpoint_at": 1792423443,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
         "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
         "epoch": 1,
-        "expires_at": 1792434027,
+        "expires_at": 1792434243,
         "granted_at": 1792423227,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
