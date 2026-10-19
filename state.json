@@ -790,6 +790,7 @@
         "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
       },
       "delivery_attempts": 3,
+      "delivery_error": "Private publishing failed after three attempts",
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
