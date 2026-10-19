@@ -1104,6 +1104,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review124-01a15493-result-v1": {
+      "actor": "dootz1",
+      "at": 1792450444,
+      "epoch": 1,
+      "fingerprint": "e2241fb958f9abd5c592ce412e1d44adcb3e6add6aaf52f28b8b1125a3b665db",
+      "status": "review",
+      "task_id": "124",
+      "verb": "review-result"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -3822,18 +3831,38 @@
       "planned_at": 1792447108,
       "planned_by": "Ken0u",
       "pr_number": 128,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792450444,
         "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
-        "epoch": 1,
-        "expires_at": 1792460925,
-        "granted_at": 1792450125,
+        "evidence": [
+          "Fresh independent session mac-review124-01a15493; committed review-next request mac-review124-01a15493-next-v1 granted task epoch1/review_epoch1; exact PR head/base/spec revalidated before verdict.",
+          "Read all four-file diff and surrounding safe-path, descriptor, receipt, job-binding and response lifecycle code. Copy checks stored snapshot hash and size before response initialization; source handles stay protected through validation exit; temporary ownership closes on all inspected failure paths.",
+          ".cache/review124-a452f30/.cache/evidence/independent-probes.json: actual generated native baseline media and manifest reproduce HTTP200 same-length receipt mismatch; granted head returns receipt-identical bytes; ASGI2.0/2.4 mid-body source mutation and streaming-read errors preserve receipt or close snapshot.",
+          ".cache/review124-a452f30/.cache/evidence/focused-tests.log and focused-tests.xml: 145 passed,2 Windows-only skipped; native media/export/overlay, mutation timing, truncation/growth, storage faults, replacement, safe names, job binding and response cancellation/disconnect checks.",
+          ".cache/review124-a452f30/.cache/evidence/full-tests.log and full-tests.xml: independently executed full suite1154 passed,13 skipped,1 upstream Starlette/httpx deprecation warning using credential-free environment and isolated BADMINTON_ROOT/DATA.",
+          ".cache/review124-a452f30/.cache/evidence/{ruff-check.log,ruff-format.log,dependency-check.log,repository-check.json,diff-check.log}: lint passes;146 files formatted;uv0.9.4 dependency check47 packages compatible;UTF8/LF/JSON/local-link check and diff check pass;tracked checkout clean.",
+          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39337021873 independently observed12 verification jobs including ci/gate successful; independently downloaded ci-revision artifact and API tested merge5badd5c01840850f9d6a6d63dae8182ef1c51d3e confirms tree36016f2da5ca2f7479a8b776f13204ea2fcadd0e equals granted head tree.",
+          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39337021873/job/118349010187 independently fetched Windows log confirms1156 passed,11 skipped,1 upstream warning; native junction tests exercised by Windows full suite."
+        ],
+        "findings": [],
         "head_sha": "a452f30a95623bc70bdf59e37f730f002636c6e0",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Reviewer executed locally on macOS/Python3.12 using existing locked environment; native Windows behavior was independently observed in hosted logs, not executed on this workstation.",
+          "No full-match or simultaneous-download performance benchmark. Python buffers are bounded at1MiB copy/64KiB stream, but each download needs temporary storage up to its recorded size, all artifacts are rehashed and requested bytes incur copy and snapshot verification IO before HTTP success; aggregate capacity depends on concurrency and system temporary-storage backing.",
+          "Hosted automation/policy currently reports failure while independent review is pending; code approval does not assert controller integration, exact merged-main verification or private candidate delivery. Those remain parent/controller work.",
+          "No private assets, model inference, package upgrades or running-process changes. Software/native receipt checks do not establish automatic badminton annotation accuracy."
+        ],
         "pr_number": 128,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/api.py",
+          "backend/badminton/export_service.py",
+          "tests/test_media_export_api.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
         "session_id": "mac-review124-01a15493",
-        "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045"
+        "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
