@@ -164,6 +164,15 @@
       "task_id": "69",
       "verb": "invalidate-review"
     },
+    "mac-01a15493-110-start": {
+      "actor": "dootz1",
+      "at": 1792439855,
+      "epoch": 1,
+      "fingerprint": "c5797c1675b56173df52e32fdf7bfad8d3392891fe4b011b8b22a33c01a38bce",
+      "status": "running",
+      "task_id": "110",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -1949,12 +1958,20 @@
       }
     },
     "110": {
+      "checkpoint": {
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "branch": "codex/issue-110-render-source-time-preserving-reviewed-r",
+        "preservation": "Old103/105/108 worktrees remain clean and preserved. Publishing111 is collaborator-owned; frontend dependencies retained.",
+        "remaining": "Implement verified plain rally clip renderer, generated native video/audio regressions, CLI/docs, required checks, fresh independent exact-head review and controller integration/delivery. Bounded child owns only rally_video.py in separate .cache/rally-video-110-module worktree; parent owns tests/CLI/docs. No shared research or app processes started.",
+        "worktree": ".cache/rally-video-110"
+      },
+      "checkpoint_at": 1792439855,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
         "branch": "codex/issue-110-render-source-time-preserving-reviewed-r",
         "epoch": 1,
-        "expires_at": 1792450582,
+        "expires_at": 1792450655,
         "granted_at": 1792439782,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
