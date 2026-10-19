@@ -433,6 +433,8 @@ def deliver(gh, store, state, task_id, source):
     tip, current = store.read()
     task = current["tasks"][task_id]
     if latest.get("conclusion") == "success":
+        if task.get("delivery_error"):
+            task["delivery_recovered_from"] = task.pop("delivery_error")
         task.update(delivery_pending=False, candidate_run=latest["html_url"])
         store.write(tip, current)
         return current
@@ -485,11 +487,7 @@ def integrate(gh, config, state):
     # Delivery is an independent outbox. Failed/exhausted publication cannot
     # occupy the serial merge lane or starve later eligible implementation.
     for task_id, task in list(state.get("tasks", {}).items()):
-        if (
-            task.get("status") == "done"
-            and task.get("delivery_pending")
-            and not task.get("delivery_error")
-        ):
+        if task.get("status") == "done" and task.get("delivery_pending"):
             state = deliver(gh, store, state, task_id, task["merge_sha"])
     tasks = state.get("tasks", {})
     for task_id, task in tasks.items():

@@ -922,3 +922,43 @@ def test_exhausted_publication_does_not_starve_a_later_merge():
     assert result["tasks"]["0"]["delivery_pending"]
     assert result["tasks"]["1"]["status"] == "integrating"
     assert gh.pr["merged"] is True
+
+
+@pytest.mark.parametrize("outcome", ["success", "failure", "in_progress"])
+def test_exhausted_delivery_observes_external_recovery_without_extra_retries(outcome):
+    gh, store, config = merge_setup()
+    tip, state = store.read()
+    task = state["tasks"]["1"]
+    reason = "Private publishing failed after three attempts"
+    task.update(
+        status="done",
+        merge_sha=gh.merge_sha,
+        delivery_pending=True,
+        delivery_attempts=3,
+        delivery_error=reason,
+    )
+    store.write(tip, state)
+    gh.releases = [
+        {
+            "id": 99,
+            "display_title": f"Private candidate {gh.merge_sha}",
+            "conclusion": None if outcome == "in_progress" else outcome,
+            "status": "in_progress" if outcome == "in_progress" else "completed",
+            "html_url": "https://github.com/run/99",
+        }
+    ]
+    result = integrate(gh, config, store.read()[1])
+    recovered = result["tasks"]["1"]
+    assert recovered["delivery_attempts"] == 3
+    assert recovered["delivery_pending"] is (outcome != "success")
+    if outcome == "success":
+        assert recovered["candidate_run"] == "https://github.com/run/99"
+        assert recovered["delivery_recovered_from"] == reason
+        assert "delivery_error" not in recovered
+    else:
+        assert recovered["delivery_error"] == reason
+    assert not any(path.startswith("actions/") for path, _data in gh.external)
+    # Observing the repaired run is idempotent and never clears failure evidence
+    # based on a queued/failed workflow or starts a fourth automatic attempt.
+    again = integrate(gh, config, store.read()[1])
+    assert again["tasks"]["1"] == recovered
