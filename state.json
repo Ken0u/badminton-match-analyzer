@@ -650,6 +650,42 @@
       "task_id": "108",
       "verb": "review-result"
     },
+    "mac-review110-01a15493-grant-v1": {
+      "actor": "dootz1",
+      "at": 1792440405,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "epoch": 1,
+        "expires_at": 1792451205,
+        "granted_at": 1792440405,
+        "head_sha": "ed701df322e3708e9d6eb2a61135ef7d307299d1",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 115,
+        "review_epoch": 1,
+        "session_id": "mac-review110-01a15493",
+        "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829"
+      },
+      "epoch": 1,
+      "fingerprint": "888f0157c0db804a2c6a80fb82038b5135d982e661e89a7c7ff9b1eae3bb85fa",
+      "status": "granted",
+      "task_id": "110",
+      "verb": "review-next"
+    },
+    "mac-review110-01a15493-register-v1": {
+      "actor": "dootz1",
+      "at": 1792440405,
+      "fingerprint": "4ab74a4f3f16552519dd85912c1b70ed26e98361ea42307db6b5df83d588dbe3",
+      "status": "ok",
+      "verb": "register"
+    },
+    "mac-review111-01a15493-register": {
+      "actor": "dootz1",
+      "at": 1792440405,
+      "fingerprint": "71a47084e83cf84afcb643f2218e53da9e72917541f2d60c6ccc2f338a31dc1f",
+      "status": "ok",
+      "verb": "register"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -2053,6 +2089,20 @@
       "planned_at": 1792424330,
       "planned_by": "dootz1",
       "pr_number": 115,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "epoch": 1,
+        "expires_at": 1792451205,
+        "granted_at": 1792440405,
+        "head_sha": "ed701df322e3708e9d6eb2a61135ef7d307299d1",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 115,
+        "review_epoch": 1,
+        "session_id": "mac-review110-01a15493",
+        "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Add a CLI and backend renderer consuming the source-audited plan from #108. Revalidate source bytes, native timeline, annotation revision/content and plan provenance before encoding; reject edited or stale plans rather than trusting arbitrary range fields.",
@@ -3748,6 +3798,30 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792423977,
       "session_id": "mac-review108-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review110-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792440405,
+      "session_id": "mac-review110-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review111-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792440405,
+      "session_id": "mac-review111-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-20261019-01a15477": {
       "actor": "dootz1",
