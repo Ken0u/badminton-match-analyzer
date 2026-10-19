@@ -10,9 +10,10 @@ from typing import Literal
 from uuid import uuid4
 
 from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import Field
+from starlette.background import BackgroundTask
 
 from . import config
 from .access import AccessMiddleware
@@ -84,6 +85,11 @@ class RecognitionRequest(StrictModel):
     min_family_score: float = Field(default=0.5, ge=0, le=1, allow_inf_nan=False)
 
 
+class MediaExportRequest(StrictModel):
+    revision: int = Field(ge=0, strict=True)
+    mode: Literal["plain-rallies", "annotated-rallies", "annotated-full"]
+
+
 def create_app(
     root: Path = config.ROOT,
     data: Path = config.DATA,
@@ -91,6 +97,7 @@ def create_app(
     max_media_bytes: int = config.MAX_MEDIA_BYTES,
     username: str | None = None,
     password: str | None = None,
+    export_root: Path | None = None,
 ):
     if type(max_media_bytes) is not int or max_media_bytes <= 0:
         raise ValueError("Media byte limit must be a positive integer")
@@ -103,6 +110,15 @@ def create_app(
     if bool(username) != bool(password):
         raise ValueError("Set both BADMINTON_USERNAME and BADMINTON_PASSWORD")
     root, data = Path(root).resolve(), Path(data).resolve()
+    from .export_service import MediaExportService
+
+    media_exports = MediaExportService(
+        root,
+        data,
+        export_root
+        if export_root is not None
+        else Path(os.environ.get("BADMINTON_EXPORT_DIR", data.parent / "exports")),
+    )
     store = Store(data)
     executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="analysis")
     store.recover_jobs()
@@ -445,6 +461,71 @@ def create_app(
     def jobs(video_id: str | None = None):
         store.recover_jobs()
         return store.jobs(video_id)
+
+    @app.post("/api/videos/{video_id}/media-exports", status_code=202)
+    def start_media_export(video_id: str, body: MediaExportRequest):
+        # Only catalog reads run in the request: decode/audit starts after shared
+        # admission, in the existing single worker, with the explicit revision.
+        store.annotations(video_id, revision=body.revision)
+        return enqueue(
+            "media-export",
+            video_id,
+            lambda job_id, progress: media_exports.render(
+                job_id, video_id, body.revision, body.mode, progress
+            ),
+            body.model_dump(),
+        )
+
+    def media_export_job(video_id, job_id):
+        store.recover_jobs()
+        job = store.job(job_id)
+        if job.get("video_id") != video_id or job.get("kind") != "media-export":
+            raise HTTPException(404, "Media export job not found")
+        return job
+
+    @app.get("/api/videos/{video_id}/media-exports/{job_id}")
+    def media_export_status(video_id: str, job_id: str):
+        job = media_export_job(video_id, job_id)
+        if job["status"] != "completed":
+            return {"job": job, "available": False}
+        try:
+            return {"job": job, "available": True, **media_exports.describe(job)}
+        except (ValueError, OSError, KeyError) as exc:
+            raise HTTPException(
+                409, "Export artifacts are unavailable or changed. Start a new export."
+            ) from exc
+
+    @app.get("/api/videos/{video_id}/media-exports/{job_id}/files/{filename}")
+    def media_export_download(video_id: str, job_id: str, filename: str):
+        job = media_export_job(video_id, job_id)
+        if job["status"] != "completed":
+            raise HTTPException(409, "Only completed media exports can be downloaded")
+        try:
+            download = media_exports.open_download(job, filename)
+        except LookupError as exc:
+            raise HTTPException(404, "Export file not found") from exc
+        except (ValueError, OSError) as exc:
+            raise HTTPException(
+                409, "Export artifacts are unavailable or changed. Start a new export."
+            ) from exc
+        handle = download["file"]
+
+        def chunks():
+            try:
+                while chunk := handle.read(64 * 1024):
+                    yield chunk
+            finally:
+                handle.close()
+
+        return StreamingResponse(
+            chunks(),
+            media_type=download["media_type"],
+            headers={
+                "Content-Disposition": f'attachment; filename="{download["filename"]}"',
+                "Content-Length": str(download["size_bytes"]),
+            },
+            background=BackgroundTask(handle.close),
+        )
 
     @app.post("/api/videos/{video_id}/track", status_code=202)
     def track(video_id: str, body: TrackingRequest):
