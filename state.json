@@ -212,6 +212,14 @@
       "task_id": "81",
       "verb": "verify-main"
     },
+    "verify-81-f2071ee11ff3835287cfba994a76a30206daa466-True": {
+      "actor": "github-actions[bot]",
+      "at": 1792411623,
+      "fingerprint": "547aab9d76c86e387ba3628e5f47d8eb7d1fb19b7d88b0dbfb09b2e13c9c50b0",
+      "status": "done",
+      "task_id": "81",
+      "verb": "verify-main"
+    },
     "windows-owner-setup-register-v1": {
       "actor": "Ken0u",
       "at": 1792394451,
@@ -773,6 +781,7 @@
         "session_id": "cf2edc496cf343d2812a231f5c099c8a",
         "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
       },
+      "delivery_pending": true,
       "epoch": 1,
       "integration": {
         "at": 1792411270,
@@ -851,7 +860,7 @@
         ]
       },
       "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57",
-      "status": "verifying_main",
+      "status": "done",
       "submission": {
         "base_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
         "head_sha": "c2d598e94a8609989bd6ed3250f8a4d253971458",
