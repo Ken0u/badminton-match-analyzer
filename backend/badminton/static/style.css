@@ -275,6 +275,13 @@ small {
   align-items: center;
   margin-bottom: 13px;
 }
+.playback-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+}
 .library-item {
   display: block;
   width: 100%;
