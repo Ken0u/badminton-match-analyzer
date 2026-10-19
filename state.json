@@ -125,6 +125,12 @@
       "task_id": "103",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint-tested": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -250,6 +256,28 @@
       "status": "review",
       "task_id": "81",
       "verb": "submit"
+    },
+    "mac-review103-01a15493-next-v1": {
+      "actor": "dootz1",
+      "at": 1792420905,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "epoch": 1,
+        "expires_at": 1792431705,
+        "granted_at": 1792420905,
+        "head_sha": "844bab544ff9f209cf4efc1efb8a01ecaef3533d",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 104,
+        "review_epoch": 1,
+        "session_id": "mac-review103-01a15493",
+        "spec_hash": "eacd1c09aab3ecaf49ca659a777c16500e0a95bd699d35d0c8a6756c7e0d2fc7"
+      },
+      "epoch": 1,
+      "fingerprint": "b12d3ebfdffddd2db245f2c2f6950baffec78707a941d7a09a19fdb95e968267",
+      "status": "granted",
+      "task_id": "103",
+      "verb": "review-next"
     },
     "mac-review103-01a15493-register-v1": {
       "actor": "dootz1",
@@ -898,6 +926,20 @@
       "planned_at": 1792420409,
       "planned_by": "Ken0u",
       "pr_number": 104,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "epoch": 1,
+        "expires_at": 1792431705,
+        "granted_at": 1792420905,
+        "head_sha": "844bab544ff9f209cf4efc1efb8a01ecaef3533d",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 104,
+        "review_epoch": 1,
+        "session_id": "mac-review103-01a15493",
+        "spec_hash": "eacd1c09aab3ecaf49ca659a777c16500e0a95bd699d35d0c8a6756c7e0d2fc7"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Use positive final source-frame duration for import end time, retaining a documented timing fallback when unavailable; preserve native PTS, frame identities, source bytes and reviewed labels.",
