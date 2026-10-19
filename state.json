@@ -1721,6 +1721,15 @@
       "task_id": "111",
       "verb": "checkpoint"
     },
+    "windows-public111-closed-recovery-v1": {
+      "actor": "Ken0u",
+      "at": 1792442943,
+      "epoch": 2,
+      "fingerprint": "d91038108df102f42a630213b89474517f9f0969fbb357a65f1086460be714a9",
+      "status": "ready",
+      "task_id": "111",
+      "verb": "recover"
+    },
     "windows-public111-review-next-v1": {
       "actor": "Ken0u",
       "at": 1792440225,
@@ -2473,31 +2482,53 @@
     },
     "111": {
       "checkpoint": {
-        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
-        "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
-        "integration": "Preserved f350 implementation history by merging controller-verified renderer mainfb0; pushed fast-forward head1fed. PRdelta remains seven approved paths. Previous baseb0 review is stale; exact-head CI39317885837 and a new independent exact binding are required.",
-        "remaining": "Submit current head/base/spec after genuine controller invalidation, obtain fresh independent review and all hosted checks, supersede stale owner approval request with final exacthead, then genuine non-author human approval and existingGHCRpackagesPublic. Only controller merges/verifiesmain. Actual public candidate workflows and old outboxes246,b0b,fb0 remain required. No duplicate dispatch/inference or coordination-state mutation.",
-        "validation": [
-          "Updated full locked Python3.12 suite:1048passed/11optionalSkips, known Starlette deprecation",
-          "Ruff/format142files,43package uv health, tracked UTF8/LF/JSON/local-links/diff pass",
-          "Rebuilt wheel/sdist:74packagefiles byte verified, fresh installed CLI/dependencies pass"
+        "evidence": [
+          "Fresh independent task111epoch1/review_epoch2 approve at1792441640 for head1fed/basefb0/spec4936, and owner-confirmed genuine non-author exact-head personal review before dootz1 external merge",
+          "Exact merged-main CI39320074931 whole success/all12jobs; complete public candidate39320656490 and both anonymous digest receipts verified",
+          "Legacy sources246,b0b,fb0 complete public runs39321124329/39321133636/39321142573; actual controller delivery_pending=false for63/108/110; all original source-lock/package/image digests audited"
         ],
-        "worktree": ".cache/worktrees/public111"
+        "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
+        "merge_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
+        "original_base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "original_spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
+        "pr_number": 114,
+        "preservation": "Original remote branch/head and isolated implementation/review worktrees remain intact. Original task111 is code-only with empty resources/artifact reservations; no GPU, training or inference task was started for this implementation.",
+        "remaining": "Issue111 was closed with remaining external-merge adoption/bookkeeping explicitly transferred to owner-authorized119. Preserve111 as a fenced historical closed task, not a fabricated Done. Code-only recovery archives its original grant and releases host ownership through the dispatcher. No reimplementation or duplicate candidate is needed. Task119 requires its own exact grant and later fresh independent/non-author human review."
       },
       "checkpoint_at": 1792441108,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
-        "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
-        "epoch": 1,
-        "expires_at": 1792451908,
-        "granted_at": 1792439160,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
-      },
-      "epoch": 1,
+      "epoch": 2,
+      "history": [
+        {
+          "at": 1792442943,
+          "checkpoint": {
+            "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
+            "evidence": [
+              "Fresh independent task111epoch1/review_epoch2 approve at1792441640 for head1fed/basefb0/spec4936, and owner-confirmed genuine non-author exact-head personal review before dootz1 external merge",
+              "Exact merged-main CI39320074931 whole success/all12jobs; complete public candidate39320656490 and both anonymous digest receipts verified",
+              "Legacy sources246,b0b,fb0 complete public runs39321124329/39321133636/39321142573; actual controller delivery_pending=false for63/108/110; all original source-lock/package/image digests audited"
+            ],
+            "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
+            "merge_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
+            "original_base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+            "original_spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
+            "pr_number": 114,
+            "preservation": "Original remote branch/head and isolated implementation/review worktrees remain intact. Original task111 is code-only with empty resources/artifact reservations; no GPU, training or inference task was started for this implementation.",
+            "remaining": "Issue111 was closed with remaining external-merge adoption/bookkeeping explicitly transferred to owner-authorized119. Preserve111 as a fenced historical closed task, not a fabricated Done. Code-only recovery archives its original grant and releases host ownership through the dispatcher. No reimplementation or duplicate candidate is needed. Task119 requires its own exact grant and later fresh independent/non-author human review."
+          },
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+            "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
+            "epoch": 1,
+            "expires_at": 1792451908,
+            "granted_at": 1792439160,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+          }
+        }
+      ],
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792438679,
@@ -2508,40 +2539,6 @@
       "pr_number": 114,
       "reason": "Issue closed; preserve reservations and checkpoint before recovery",
       "repair_rounds": 0,
-      "review": {
-        "actor": "Ken0u",
-        "at": 1792441640,
-        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
-        "evidence": [
-          "Fresh independent read-only session MSI/windows-public111-review-v2 obtained matching durable grant windows-public111-review-next-v2 for task111 epoch1/review_epoch2 before inspection. Detached isolated checkout .cache/worktrees/public111-review-v2 is exactly head1fed758054c3c0becb37da9936eea07193521340; remote PR114 head/base still match the grant. Reviewed all seven scoped paths, frozen issue111 specification and relevant surrounding CI, GitHub transport, controller delivery, package verifier, Docker build/exclusion and merged rally-renderer integration code. No implementation files modified.",
-          "Independent Python3.12 focused run: tests/test_release_candidate.py tests/test_agent_coordinator.py tests/test_rally_export.py tests/test_rally_video.py, 168 passed in25.72s. Additional tests/test_devops_environment.py:9 passed. Reviewer-owned storage, root/data/PYTHONPATH pinned to detached checkout; credential environment variables removed and GH_CONFIG_DIR isolated for tests. Evidence .cache/worktrees/public111-review-v2/.cache/review-tests.xml.",
-          "Independent reviewer-authored 19 generated local-Git/CLI/API probes passed. Covered separate source/publisher identity and original source uv.lock, failed latest publisher verification, publisher ancestry, stale publisher binding, staged source and unstaged publisher changes, explicit source-root, missing public package, private precreation versus postpush existence, wrong package identity/type, visibility revoked after preflight, immutable digest/source refs, extra archives and missing/matching private policy. Poisoned legacy source helper was never executed. API was in-memory only. Evidence .cache/worktrees/public111-review-v2/.cache/review-probes-v2.json.",
-          "Independent read-only audit of rebuilt .cache/worktrees/public111/.cache/dist-public111-v2 archives confirms all74 tracked backend package files byte-identical in wheel and sdist, including merged rally_video.py/rally_export.py; dependency metadata/uv.lock match granted source. All source archive files are tracked or generated package metadata, with no private state/media/dataset/external-weight directory entries. Wheel SHA256 f8a2ca4a815949c3c0997232e4525f23e404b3f464519b620e1b3b1fad0ed641; sdist SHA2567e8047b2147a85386f88bf63666422989b8a20c08e5be81eca8330a73cbb4ae8; source uv.lock SHA256fe4deca37e729cfe4bdf26c125e2d184659ecd1982ea9d8bf12e177e382de54d. Evidence .cache/worktrees/public111-review-v2/.cache/review-archives-v2.json.",
-          "Scoped Ruff lint and format checks pass for release_candidate.py and both scoped Python test files; uv pip check confirms43 installed packages compatible (reused uv environment has no pip module). git diff --check passes and reviewer checkout remains clean. Base renderer/export/package verifier/Docker/exclusion paths are byte-identical between granted base and head.",
-          "Independent remote API confirms Checks run39317885837 completed success on exact head1fed758054c3c0becb37da9936eea07193521340, with all12 Checks jobs successful. PR reviews were empty at final recheck. Legacy Private candidates workflow/run-name correlation and controller whole-workflow delivery outbox remain intact; Project/authentication/paid-overage/deployment/model controls are not changed by the scoped diff. https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39317885837",
-          "Owner visibility documentation matches GitHub's current package-settings guidance: package visibility is independent of repository visibility, and a public package cannot be made private again. https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility"
-        ],
-        "findings": [],
-        "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
-        "limitations": [
-          "This is an independent agent code verdict, not genuine non-author human approval. The sensitive publishing-policy change still requires that exact-head human approval before controller integration; no human PR reviews existed at the final recheck.",
-          "No live GHCR push, package-visibility mutation, public candidate workflow completion, public image digest receipt or delivery_pending=false was performed or established by this review. Owner public-package setup and actual complete delivery remain separate required actions. This review does not claim deployed behavior or improved annotation accuracy.",
-          "Reviewer independently ran177 focused tests and19 additional probes plus archive-byte checks, lint/format/dependency/diff checks. The full1048-test suite, clean-installed package verification, native macOS run and container builds were not rerun locally by this reviewer; exact-head remote CI success was independently observed. Existing implementation evidence remains distinct from reviewer-executed evidence."
-        ],
-        "pr_number": 114,
-        "reviewed_files": [
-          ".github/automation.json",
-          ".github/workflows/release.yml",
-          "scripts/release_candidate.py",
-          "tests/test_release_candidate.py",
-          "tests/test_agent_coordinator.py",
-          "docs/OWNER_SETUP.md",
-          "docs/COLLABORATION.md"
-        ],
-        "session_id": "windows-public111-review-v2",
-        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-        "verdict": "approve"
-      },
       "review_epoch": 2,
       "spec": {
         "acceptance": [
@@ -2586,7 +2583,7 @@
         ]
       },
       "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-      "status": "recovery_required",
+      "status": "ready",
       "submission": {
         "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
