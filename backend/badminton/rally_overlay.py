@@ -140,20 +140,42 @@ def overlay_frame(pixels, snapshot, frame_index):
     for text in context["text"]:
         text = text.encode("ascii", "backslashreplace").decode("ascii")
         line = ""
-        for character in text:
-            proposed = line + character
+        for word in text.split():
+            proposed = (line + " " + word).strip()
             if (
-                line
-                and cv2.getTextSize(
-                    proposed, cv2.FONT_HERSHEY_SIMPLEX, scale, thickness
-                )[0][0]
+                cv2.getTextSize(proposed, cv2.FONT_HERSHEY_SIMPLEX, scale, thickness)[
+                    0
+                ][0]
+                <= width - 8
+            ):
+                line = proposed
+                continue
+            if line:
+                lines.append(line)
+                line = ""
+            # Keep ordinary words together, but retain long unbroken names/IDs
+            # by splitting only tokens that cannot fit on an empty line.
+            while (
+                word
+                and cv2.getTextSize(word, cv2.FONT_HERSHEY_SIMPLEX, scale, thickness)[
+                    0
+                ][0]
                 > width - 8
             ):
-                lines.append(line)
-                line = character
-            else:
-                line = proposed
-        lines.append(line)
+                length = 1
+                while (
+                    length < len(word)
+                    and cv2.getTextSize(
+                        word[: length + 1], cv2.FONT_HERSHEY_SIMPLEX, scale, thickness
+                    )[0][0]
+                    <= width - 8
+                ):
+                    length += 1
+                lines.append(word[:length])
+                word = word[length:]
+            line = word
+        if line:
+            lines.append(line)
     panel_height = min(height // 2, max(line_height + 4, len(lines) * line_height + 4))
     # At very small resolutions text is proportionally reduced to retain the
     # complete evidence, keeping at least half the source outside the panel.

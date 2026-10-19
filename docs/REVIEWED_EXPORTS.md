@@ -85,3 +85,46 @@ revision and CLI checks require no private samples or model weights. Browser
 playback evidence concerns media compatibility, not badminton annotation
 accuracy. These clips have no annotation burn-in; original predicted/unknown
 labels remain evidence in the manifest. Running applications are not upgraded.
+
+## Annotated full videos and rally clips
+
+```sh
+badminton export-annotated-videos /path/to/plan.json --scope full --output /path/to/new-full-video
+badminton export-annotated-videos /path/to/plan.json --scope rallies --output /path/to/new-rally-clips
+```
+
+Choose the scope explicitly. `full` retains every original native video frame,
+including footage outside eligible rally boundaries; it requires a verified
+final sample endpoint. `rallies` uses only the eligible reviewed ranges and still
+retains all ineligible rallies and their reasons in the manifest. Both modes
+regenerate and compare the complete audited plan before rendering and before
+completion. Outputs use new directories outside application data and preserve
+previous exports, sources, annotations and original predictions.
+
+Burn-in comes from the selected immutable annotation snapshot. Reviewed or
+corrected exact serve, shot and rally-end events appear at their native source
+frames. Contact and terminal uncertainty intervals remain visibly uncertain
+across the inclusive interval; an ordinal inside that interval is not presented
+as an exact contact. Shot family, forehand/backhand and hitter information retain
+unknowns. Predicted events remain in provenance and are excluded from reviewed
+truth burn-in; the event report records included/excluded evidence and reasons.
+
+Saved visible shuttle points appear only at their exact native source frames.
+Missing, invisible or unobserved positions do not become interpolated tracks.
+Reviewed scene labels and camera corrections remain visible context. Court
+geometry applies only within its saved range and expires at camera cuts; no
+player positions, track boxes or identities are invented when positional evidence
+is unavailable. A replay label is preserved rather than silently removing frames.
+
+The manifest binds a versioned overlay policy/configuration to its source,
+annotation revision and rendered output hashes. It retains the original complete
+snapshot and all rally/event denominators. Frame receipts preserve native frame
+identity and relative timestamps; validation checks source pixels outside the
+documented overlay regions as well as the expected rendered pixels, packet and
+container endpoints and relative audio timing. H.264/AAC remain lossy codecs;
+encoder padding is disclosed separately from audible source sample timing.
+
+These exports visualize saved reviewed evidence. They do not establish complete
+contacts, persistent identities, correct stroke labels or automatic badminton
+annotation accuracy. Frontend export controls remain a separate phased UI task;
+these commands do not switch or upgrade a running application.

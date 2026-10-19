@@ -106,6 +106,13 @@ def main():
     )
     export_videos.add_argument("plan", type=Path)
     export_videos.add_argument("--output", type=Path, required=True)
+    annotated = commands.add_parser(
+        "export-annotated-videos",
+        help="Render reviewed annotation overlays on a full video or rally clips",
+    )
+    annotated.add_argument("plan", type=Path)
+    annotated.add_argument("--output", type=Path, required=True)
+    annotated.add_argument("--scope", choices=("full", "rallies"), required=True)
     recognize = commands.add_parser(
         "recognize",
         help="Suggest singles shot families from cached pose and shuttle runs",
@@ -226,6 +233,18 @@ def main():
             plan = json.loads(args.plan.read_text(encoding="utf-8"))
             manifest = render_rally_videos(
                 ExportPlanStore(DATA), plan, ROOT, args.output
+            )
+        except (KeyError, TypeError, ValueError, OSError) as exc:
+            parser.error(str(exc))
+        print(json.dumps(manifest, indent=2))
+    elif args.command == "export-annotated-videos":
+        from .rally_export import ExportPlanStore
+        from .rally_overlay import render_annotated_videos
+
+        try:
+            plan = json.loads(args.plan.read_text(encoding="utf-8"))
+            manifest = render_annotated_videos(
+                ExportPlanStore(DATA), plan, ROOT, args.output, scope=args.scope
             )
         except (KeyError, TypeError, ValueError, OSError) as exc:
             parser.error(str(exc))
