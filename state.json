@@ -260,6 +260,15 @@
       "task_id": "116",
       "verb": "checkpoint"
     },
+    "mac-01a15493-120-start": {
+      "actor": "dootz1",
+      "at": 1792443625,
+      "epoch": 1,
+      "fingerprint": "9727b7331bf045cfe067444ad3fb469d3d487d5b74e19d7588d52a49e42103db",
+      "status": "running",
+      "task_id": "120",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -2879,12 +2888,20 @@
       "status": "running"
     },
     "120": {
+      "checkpoint": {
+        "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
+        "head_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "preservation": "MSI repair119 remains separate; no source/data/models/research/app upgrade; no frontend/dependency bypass.",
+        "remaining": "Implement four granted paths; locked review bootstrap in progress; API/tests/docs parent-owned, bounded service-only subagent isolated .cache/media-export-api-120-service. Parent retains grant/publishing. Full focused/regression checks, fresh independent review and controller/main/delivery remain.",
+        "worktree": ".cache/media-export-api-120"
+      },
+      "checkpoint_at": 1792443625,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
         "epoch": 1,
-        "expires_at": 1792454307,
+        "expires_at": 1792454425,
         "granted_at": 1792443507,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
