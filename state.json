@@ -28,6 +28,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-pilot-review-85-register": {
+      "actor": "dootz1",
+      "at": 1792411125,
+      "fingerprint": "939e74c1b5e5f22bb168c43f74d88c3899328e81bd9ec047351765796309b248",
+      "status": "ok",
+      "verb": "register"
+    },
     "mac-pilot81-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792411065,
@@ -36,6 +43,15 @@
       "status": "running",
       "task_id": "81",
       "verb": "checkpoint"
+    },
+    "mac-pilot81-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792411125,
+      "epoch": 1,
+      "fingerprint": "e72b6cf065fb815e66724767fd73c4448356ffb652a1f66ba2f0ccc9f54d3e22",
+      "status": "review",
+      "task_id": "81",
+      "verb": "submit"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
@@ -713,6 +729,7 @@
       "epoch": 1,
       "planned_at": 1792395547,
       "planned_by": "Ken0u",
+      "pr_number": 85,
       "spec": {
         "acceptance": [
           "Run on the actual Mac host as its own authenticated collaborator in a fresh linked worktree after a committed grant.",
@@ -749,7 +766,13 @@
         ]
       },
       "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
+        "head_sha": "c2d598e94a8609989bd6ed3250f8a4d253971458",
+        "pr_number": 85,
+        "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
+      }
     }
   },
   "version": 1,
@@ -779,6 +802,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792410527,
       "session_id": "cf2edc496cf343d2812a231f5c099c8a"
+    },
+    "Stanleys-Laptop.local/mac-pilot-review-85": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792411125,
+      "session_id": "mac-pilot-review-85"
     }
   }
 }
