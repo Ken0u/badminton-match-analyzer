@@ -549,6 +549,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-playback69-scope-ci-v1": {
+      "actor": "Ken0u",
+      "at": 1792418796,
+      "epoch": 1,
+      "fingerprint": "c341377525563af24eede4dcfa969e8a39e350842d9f06c26c02a7b182fd4d49",
+      "status": "running",
+      "task_id": "69",
+      "verb": "extend-scope"
+    },
     "windows-playback69-submit-v1": {
       "actor": "Ken0u",
       "at": 1792418391,
@@ -888,7 +897,7 @@
         "granted_at": 1792417543,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "73df461cadd6a4d9aa3e51c5659fcb636d0c4d9329a52fe758d5541d658605a9"
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
       },
       "epoch": 1,
       "planned_at": 1792393957,
@@ -918,7 +927,8 @@
         "outcome": "Add source-time-preserving browser playback proxies.",
         "paths": [
           "backend/badminton/",
-          "tests/"
+          "tests/",
+          ".github/workflows/ci.yml"
         ],
         "priority": 100,
         "resources": [],
@@ -928,7 +938,7 @@
           "Record source/input/protocol hashes and material limitations for research."
         ]
       },
-      "spec_hash": "73df461cadd6a4d9aa3e51c5659fcb636d0c4d9329a52fe758d5541d658605a9",
+      "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
       "status": "running",
       "submission": {
         "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
