@@ -18,11 +18,17 @@ reports for methods, denominators and limitations, not just software test counts
 
 ## Autonomous DevOps increment
 
-Implementation is on `codex/autonomous-devops`. The queue uses durable GitHub
+Implementation is [PR #76](https://github.com/Ken0u/badminton-match-analyzer/pull/76)
+on `codex/autonomous-devops`. The queue uses durable GitHub
 requests, atomic path/resource grants, independent agent review and serial
 integration; local Mac/Windows workers execute work. Automation starts in
 **observation** mode. CI, reproducible profiles and private candidates are part
 of this increment. The implementation report is [docs/AUTONOMOUS_DEVOPS_REPORT.md](docs/AUTONOMOUS_DEVOPS_REPORT.md); final checks are recorded on the bootstrap PR before activation.
+
+Local Python 3.10 and clean locked Python 3.12 each pass 877 tests with 11 skips.
+Package/installed-byte checks, lint, lock and dependency checks pass. Independent
+review found no remaining blocking code findings. Hosted native/container checks
+and the owner setup/pilot remain required; this workflow is not active yet.
 
 All 29 merged PRs and a report index are backfilled as 30 closed evidence records. Twelve roadmap tasks, PR #30 recovery, and [queue control #74](https://github.com/Ken0u/badminton-match-analyzer/issues/74) remain open. Historical PRs are completed implementation/research issues,
 with links to their original evidence. Completed research does not mean its model

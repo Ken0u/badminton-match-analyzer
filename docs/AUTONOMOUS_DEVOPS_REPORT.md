@@ -41,7 +41,7 @@ The bootstrap implementation itself is tracked separately.
 
 ## Verification and rollout limits
 
-Final local Python 3.10 and clean locked Python 3.12 runs each passed 861 tests
+Final local Python 3.10 and clean locked Python 3.12 runs each passed 877 tests
 with 11 skips. Boundary tests cover repair (including pilot mode), publishing,
 recovery and privileged entry points. Hosted exact-head results are recorded
 on the PR; local tests do not establish Windows or container execution.
