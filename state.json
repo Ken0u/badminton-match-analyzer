@@ -2284,6 +2284,15 @@
       "task_id": "126",
       "verb": "human-approved"
     },
+    "windows-policy126-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792449807,
+      "epoch": 1,
+      "fingerprint": "fd35b21fab907d20d8b6ede7ddd0c6676f70fd02ae0418a8e4c36a626b41bdf9",
+      "status": "review",
+      "task_id": "126",
+      "verb": "submit"
+    },
     "windows-post63-next-v1": {
       "actor": "Ken0u",
       "at": 1792437874,
@@ -3799,6 +3808,7 @@
       },
       "planned_at": 1792449022,
       "planned_by": "Ken0u",
+      "pr_number": 127,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -3852,7 +3862,13 @@
         ]
       },
       "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "head_sha": "01a386cd2297804fe46a77fd1d16a4ac9088658e",
+        "pr_number": 127,
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+      }
     },
     "62": {
       "epoch": 0,
