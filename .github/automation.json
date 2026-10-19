@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "repository": "Ken0u/badminton-match-analyzer",
-  "mode": "pilot",
+  "mode": "active",
   "integration_enforcement": "controller",
   "coordination_branch": "codex/coordination",
   "trusted_logins": [
