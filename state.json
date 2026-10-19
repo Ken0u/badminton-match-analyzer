@@ -2316,6 +2316,7 @@
       }
     },
     "110": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39321142573",
       "checkpoint": {
         "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
         "branch": "codex/issue-110-render-source-time-preserving-reviewed-r",
@@ -2343,8 +2344,8 @@
         "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829"
       },
       "delivery_attempts": 3,
-      "delivery_error": "Private publishing failed after three attempts",
-      "delivery_pending": true,
+      "delivery_pending": false,
+      "delivery_recovered_from": "Private publishing failed after three attempts",
       "epoch": 1,
       "integration": {
         "at": 1792440724,
