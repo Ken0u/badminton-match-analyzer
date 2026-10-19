@@ -293,6 +293,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-pilot80-review-v1-result": {
+      "actor": "Ken0u",
+      "at": 1792416325,
+      "epoch": 1,
+      "fingerprint": "d4d7c39b67241badd3fa57ec857f00ee58d01999b797d8eedec38796127a041f",
+      "status": "review",
+      "task_id": "80",
+      "verb": "review-result"
+    },
     "windows-pilot80-submit-v1": {
       "actor": "Ken0u",
       "at": 1792416012,
@@ -823,18 +832,33 @@
       "planned_at": 1792395547,
       "planned_by": "Ken0u",
       "pr_number": 90,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792416325,
         "base_sha": "9aa0f437fd5cacd948161ae09149ac2855f01c31",
-        "epoch": 1,
-        "expires_at": 1792426934,
-        "granted_at": 1792416134,
+        "evidence": [
+          "Fresh read-only reviewer session MSI/windows-pilot80-review-v1 obtained committed review_epoch 1 for implementation epoch 1. PR 90 head/base and independently recomputed issue specification hash exactly match this verdict.",
+          "Exact Git diff adds only docs/pilot/WINDOWS.md (84 lines); merge-base equals the frozen baseline. The reviewed document's SHA256 is dbbdbeffbb6b9bce3127a30e79e64ef3156e969840d4639a03b7d72827e96cdb. UTF-8/LF, document link/credential checks and exact-range git diff --check pass.",
+          "Preserved .cache/pilot-tests.xml independently parsed: hostname MSI, 917 cases, 11 skipped, zero failures/errors, therefore 906 passed. XML SHA256 d91ac982392ba3282d5dc9a472c81ea1cb67c90ea6d5356826073329cb79491e. The explicit skip reasons support the report's ML/GPU limitations.",
+          "Environment receipt SHA256 3d37a896d4f824d72160d87f5877170519355c44c9e5e81c9e322c50332b32e0 matches the actual Windows AMD64 / Python 3.12.14 environment and report. Independently hashed uv.lock fe4deca37e729cfe4bdf26c125e2d184659ecd1982ea9d8bf12e177e382de54d and package-lock.json 5b4cc79bf781af72ff766d953f105fa29fc3b948e2a1d8539fd721310e70c1f0 match the report.",
+          "Independent focused verification in disposable reviewer storage: 120 passed in 3.51 seconds; Ruff lint passed; Ruff format confirmed 131 files; uv pip check confirmed all 48 installed packages compatible. Focused XML SHA256 7c527d94f0fc2bb3ef71968ad4061cba6687ad499c93bfd0454e69e87a6e60b0.",
+          "Hosted exact-head ci/gate and its Python 3.10/3.12, native Mac/Windows, repository, package, frontend, browser and container jobs succeeded: https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39259130270 . The separately inspected automation/policy check states only: Fresh independent agent review required."
+        ],
+        "findings": [],
         "head_sha": "49c266486371784fc4bcbfad37bae0b6b40db0f7",
-        "host_id": "MSI",
+        "limitations": [
+          "The full local suite and original bootstrap were not rerun by this reviewer; the full suite was checked through the preserved XML and hosted exact-head checks. The reviewer independently reran the 120 focused queue, Free-integration, CI-policy and environment tests.",
+          "No inference, model download, application upgrade, or independent badminton annotation accuracy evaluation was performed. The report explicitly preserves these limits and the optional ML/GPU skips.",
+          "The known doctor FFmpeg/FFprobe --version false-negative remains disclosed and assigned to follow-up 84. This documentation change does not repair that diagnostic.",
+          "Merged-main ci/gate, successful private-candidate artifacts and the second host's pilot remain downstream requirements; this approval does not assert those steps are complete."
+        ],
         "pr_number": 90,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "docs/pilot/WINDOWS.md"
+        ],
         "session_id": "windows-pilot80-review-v1",
-        "spec_hash": "7ffd88dc6c3f100b78da755bd605ca51863e5147bf6e5c12924e62ef3f81efab"
+        "spec_hash": "7ffd88dc6c3f100b78da755bd605ca51863e5147bf6e5c12924e62ef3f81efab",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
