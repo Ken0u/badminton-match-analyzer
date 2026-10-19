@@ -199,6 +199,13 @@
       "task_id": "81",
       "verb": "submit"
     },
+    "roadmap-20261019-01a15477-next1": {
+      "actor": "dootz1",
+      "at": 1792419525,
+      "fingerprint": "e5662ce417da1b4139da77939eba2ce00565d518d522efe9938f39372c6b2258",
+      "status": "idle",
+      "verb": "next"
+    },
     "roadmap-20261019-01a15477-register": {
       "actor": "dootz1",
       "at": 1792418921,
@@ -227,6 +234,14 @@
       "at": 1792393957,
       "fingerprint": "a888539f40fdcd6268f673a52d74e93b0a8fa375e268efd524bc6646333a0d63",
       "status": "proposed",
+      "task_id": "63",
+      "verb": "plan"
+    },
+    "spec-63-e68b38502321bdc5e05661445387effa48b7b19d01dde18bd0bfa31f7ae977e5": {
+      "actor": "dootz1",
+      "at": 1792419525,
+      "fingerprint": "ad0f60145a2e30e13c5492fc422f19d6839dbc4c6c818715a9128e6868cc3e07",
+      "status": "ready",
       "task_id": "63",
       "verb": "plan"
     },
@@ -639,6 +654,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-playback69-review-result-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1792419525,
+      "epoch": 3,
+      "fingerprint": "3698e68120f2e785234c956eeb9dc71c48078c3c91e29c987ad3047a06c21e30",
+      "status": "review",
+      "task_id": "69",
+      "verb": "review-result"
+    },
     "windows-playback69-scope-ci-v1": {
       "actor": "Ken0u",
       "at": 1792418796,
@@ -750,14 +774,24 @@
     },
     "63": {
       "epoch": 0,
-      "planned_at": 1792393957,
+      "planned_at": 1792419525,
       "planned_by": "dootz1",
       "spec": {
         "acceptance": [
-          "Verify original worker PIDs, creation times, commands, Store status and durable artifacts.",
-          "Publish frozen scores only after complete-input gates; retain unsupported cases."
+          "Revalidate original-host PID, creation time, command, working directory, shared/research Store status and all durable native/feature/audit hash chains before recovery. Preserve source/frozen code/models, original annotations, worker records and prior outputs; never restart the one-shot launchers blindly.",
+          "Implement a reproducible resumable CLI and meaningful generated-fixture tests. Reuse all 67 completed native/feature/audit receipt sets and ordinal 67's existing completed player artifact; complete only the eight missing rally stages. Keep original records/receipts immutable and record new recovery lineage separately.",
+          "Pin application root/data before imports. Admit native work through run_local_job on the real shared main Store before nested research stages; refuse live/ambiguous owners. Preserve source PTS, native frames, orientation, cuts, source-view exclusions and calibration expiry.",
+          "Freeze and independently inspect recovery/evaluation code against the unchanged original recipe on generated fixtures before opening held-out head predictions. Complete and audit ALL 75 rallies / 21610 native frames / 860 source rows and release successful native parent admission before frozen CPU head evaluation.",
+          "Keep both 677-row eligible denominators, all unknown labels and unavailable inputs; retain original validation normalization, selected models and thresholds. Independently recompute saved metrics and label results as conditional on published weak clock/hitter/court evidence, never full event/identity accuracy.",
+          "Publish reproducible code and aggregate report with source/protocol/runtime/model/receipt hashes and limitations. Do not redistribute raw videos/labels/weights. Record failures honestly, do not tune on this holdout, and require another holdout for test-informed changes."
         ],
-        "artifacts": {},
+        "artifacts": {
+          "frozen_holdout_protocol": "99b13bb12f0cacfee316547ee656ac69a0b6f273de20e75c80eb49e19892c6ed",
+          "frozen_view_support": "1b2e035e536e6ef74b1704b37275fab0e30d74c58fb3d2e45c4cd656f1df8b78",
+          "normalized_labels": "2fb3fdca1bd544179367b5bcc0cd3679c7001fb1f697e5cf29e69b327801a881",
+          "r2_selected_model": "ef71574cac55f1cf5441e1ba11cbf2f4b9eafa31298d2078e87a7018d22ae10e",
+          "r3_selected_model": "cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc"
+        },
         "capabilities": [
           "windows",
           "cuda",
@@ -765,8 +799,8 @@
         ],
         "dependencies": [],
         "exclusions": [
-          "No claim of full automatic annotation accuracy.",
-          "No production/model promotion or destructive storage changes."
+          "No model installation/promotion, application truth overwrite, production deployment, destructive data migration, replacement data downloads, held-out retuning or paid services.",
+          "No competing GPU work or isolated Store bypass; no false completion of old stale jobs or claim of fully correct automatic badminton annotations."
         ],
         "limits": {
           "max_review_rounds": 3,
@@ -774,9 +808,14 @@
           "paid_services": false
         },
         "milestone": "Data and evaluation",
-        "outcome": "Inventory and recover the frozen 75-rally evaluation.",
+        "outcome": "Safely resume and complete the original frozen 75-rally native/input audit and conditional R2/R3 evaluation, preserving existing work and reporting strict full-source results.",
         "paths": [
-          "docs/"
+          "scripts/recover_frozen_holdout.py",
+          "tests/test_holdout_recovery.py",
+          "docs/HOLDOUT_RECOVERY_REPORT.md",
+          "docs/OBSERVED_STROKE_CONTEXT_REPORT.md",
+          "docs/BUG_REVIEW.md",
+          "PROJECT_PLAN.md"
         ],
         "priority": 100,
         "resources": [
@@ -784,12 +823,12 @@
         ],
         "risk": "routine",
         "verification": [
-          "Focused tests for changed behavior; required project checks on the exact head.",
-          "Record source/input/protocol hashes and material limitations for research."
+          "Generated interruption/reuse/changed-input/owner-admission regressions; focused and required project checks on exact head; genuine independent code/recipe preflight and final review.",
+          "Original-host process/Store/artifact evidence, complete 75-case receipt chain, strict 860/677 denominators, unchanged input/runtime/model/threshold hashes and independently recomputed frozen outputs."
         ]
       },
-      "spec_hash": "efb1950e2a0eb7a63a9c719a3c8c437f2c8b2da967159b509418daf7547a9577",
-      "status": "proposed"
+      "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc",
+      "status": "ready"
     },
     "64": {
       "epoch": 0,
@@ -1064,18 +1103,50 @@
       "planned_by": "dootz1",
       "pr_number": 102,
       "reason": "Active specification edited; preserve work and obtain a new scope grant",
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792419525,
         "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
-        "epoch": 3,
-        "expires_at": 1792430199,
-        "granted_at": 1792419399,
+        "evidence": [
+          "Fresh independent read-only session windows-playback69-review-v1 on MSI; actual review grant windows-playback69-review-next-v2 binds task epoch 3 / review_epoch 1 and this exact head/base/spec.",
+          "Independently inspected complete exact-base diff and surrounding source validation, native frame PTS, rotation, audio offset, atomic cache receipt, shared Store admission, Range media response and UI stale-selection handling; no actionable findings remain.",
+          "Independent task-venv pytest on this exact head: tests/test_playback.py tests/test_orientation.py tests/test_media_import.py tests/test_import_api.py tests/test_agent_coordinator.py::test_every_privileged_entrypoint_requires_human_review; 95 passed in 5.24s. Fresh artifacts: .cache/review-playback69/focused-e3-v2.xml and pytest-focused-e3-v2.",
+          "Verified backend/tests/workflow byte parity against preserved candidate c2cb58a7ced083a3c76fcdcbea8f486f31e9c27a. New base 77906a0 adds only PROJECT_PLAN.md and docs/FRONTEND_REWRITE.md planning changes; no runtime change.",
+          "Independent earlier real FFmpeg checks exercised ten distinct nonzero source origins with exact VFR timestamps on byte-identical application code. Earlier independently inspected generated desktop/mobile screenshots; no original server or research process was modified.",
+          "Reviewed local full-suite XML .cache/test-results.xml: 925 total, 11 skipped, zero errors/failures (914 pass). Exact-head hosted Checks run 39267159096 observed all 12 jobs successful including Python 3.10/3.12, Windows/macOS native, package, frontend, browser-import, containers and ci/gate.",
+          "Confirmed original pytest-only fixture import defect is repaired by pure media_fixtures helper. Confirmed hosted missing-FFmpeg defect is repaired by two-line browser CI prerequisite; contents:read, checkout credential behavior and verification gates are unchanged. git diff --check passes and tracked worktree is clean."
+        ],
+        "findings": [],
         "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
-        "host_id": "MSI",
+        "limitations": [
+          "The workflow change requires a real non-author human review of this exact PR head before controller integration. This independent agent verdict does not supply, impersonate or bypass that approval; automation/policy remains a separate gate.",
+          "Generated-media and software checks establish playback behavior, source timing and export preservation, not automatic badminton annotation accuracy or unseen full-match correctness.",
+          "I did not rerun the full local suite or launch another full browser server in this review; I independently ran focused checks, inspected full-suite XML, observed exact-head hosted CI and inspected preserved browser evidence. Existing research, native inference, models, environments, source media and reviewed data were preserved.",
+          "Playback preparation requires an available FFmpeg CLI, CPU time and storage. Optional ML/GPU checks in the local full suite remain skipped and are not claimed as exercised by this review."
+        ],
         "pr_number": 102,
-        "review_epoch": 1,
+        "reviewed_files": [
+          ".github/workflows/ci.yml",
+          "backend/badminton/api.py",
+          "backend/badminton/playback.py",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/index.html",
+          "backend/badminton/static/playback-tools.js",
+          "backend/badminton/static/style.css",
+          "tests/import-browser.mjs",
+          "tests/media_fixtures.py",
+          "tests/playback-fixture.py",
+          "tests/test_orientation.py",
+          "tests/test_playback.py",
+          "backend/badminton/video.py",
+          "backend/badminton/orientation.py",
+          "backend/badminton/ingest.py",
+          "backend/badminton/av_runtime.py",
+          "backend/badminton/storage.py"
+        ],
         "session_id": "windows-playback69-review-v1",
-        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
