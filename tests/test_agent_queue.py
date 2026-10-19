@@ -143,6 +143,118 @@ def terminal_proof(host="mac"):
     }
 
 
+def external_authorization(h):
+    task = h.state["tasks"]["1"]
+    return {
+        "task_id": "1",
+        "host_id": "mac",
+        "session_id": "mac1",
+        "epoch": task["epoch"],
+        "spec_hash": task["spec_hash"],
+        "pr_number": task["pr_number"],
+        "head_sha": HEAD,
+        "base_sha": BASE,
+        "merge_sha": MERGE,
+        "evidence_state_sha": "e" * 40,
+        "human_review_attestation": {
+            "kind": "owner_attestation",
+            "reviewer": "dootz1",
+            "head_sha": HEAD,
+            "statement": "The owner confirmed personal exact-head non-author review.",
+        },
+    }
+
+
+def fenced_queue():
+    h = Harness().running()
+    h.submit()
+    h.state["tasks"]["1"]["status"] = "recovery_required"
+    h.config["human_approvers"] = ["Ken0u", "dootz1"]
+    return h
+
+
+def test_human_recovery_authorization_is_pending_not_verified_completion():
+    h = fenced_queue()
+    original = copy.deepcopy(h.state["tasks"]["1"])
+    receipt = h.send("recover-merged", **external_authorization(h))
+    task = h.state["tasks"]["1"]
+    assert receipt["status"] == "recovery_pending"
+    assert task["status"] == "recovery_required"
+    assert task["claim"] == original["claim"]
+    assert "merge_sha" not in task and not task.get("delivery_pending")
+    assert task["external_recovery_request"]["actor"] == "Ken0u"
+    with pytest.raises(QueueError, match="coordinator"):
+        h.send("adopt-external-merge", task_id="1")
+
+
+@pytest.mark.parametrize("case", ["epoch", "spec", "pr", "sha", "role", "mode", "live"])
+def test_external_recovery_authorization_preserves_fencing_and_human_permissions(case):
+    h = fenced_queue()
+    fields = external_authorization(h)
+    if case == "epoch":
+        fields["epoch"] += 1
+    elif case == "spec":
+        fields["spec_hash"] = "f" * 64
+    elif case == "pr":
+        fields["pr_number"] += 1
+    elif case == "sha":
+        fields["evidence_state_sha"] = "main"
+    elif case == "role":
+        h.config["human_approvers"] = ["dootz1"]
+    elif case == "mode":
+        h.config["mode"] = "observation"
+    else:
+        h.state["tasks"]["1"]["status"] = "review"
+    before = copy.deepcopy(h.state)
+    with pytest.raises(QueueError):
+        h.send("recover-merged", **fields)
+    assert h.state == before
+
+
+def test_external_recovery_authorization_id_cannot_be_replayed_with_changed_source():
+    h = fenced_queue()
+    fields = external_authorization(h)
+    receipt = h.send("recover-merged", **fields)
+    request_id = next(
+        key for key, value in h.state["receipts"].items() if value == receipt
+    )
+    with pytest.raises(QueueError, match="replay"):
+        apply_request(
+            h.state,
+            {
+                "verb": "recover-merged",
+                "request_id": request_id,
+                **fields,
+                "merge_sha": "f" * 40,
+            },
+            "Ken0u",
+            h.now,
+            h.config,
+        )
+
+
+def test_client_cannot_supply_verified_recovery_or_impersonate_the_authorizer():
+    h = fenced_queue()
+    fields = external_authorization(h)
+    h.state = apply_request(
+        h.state,
+        {
+            "verb": "recover-merged",
+            "request_id": "forged-verified-recovery",
+            **fields,
+            "verified": {"verification_complete": True},
+            "actor": "github-actions[bot]",
+        },
+        "Ken0u",
+        h.now,
+        h.config,
+    )
+    task = h.state["tasks"]["1"]
+    assert task["status"] == "recovery_required"
+    assert "verified" not in task["external_recovery_request"]
+    assert task["external_recovery_request"]["actor"] == "Ken0u"
+
+
 def test_hash_is_canonical_and_does_not_mutate():
     value = spec()
     reordered = dict(reversed(list(value.items())))
