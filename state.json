@@ -636,6 +636,15 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-holdout63-checkpoint-inventory-v1": {
+      "actor": "Ken0u",
+      "at": 1792421520,
+      "epoch": 1,
+      "fingerprint": "2b810c5e51fe18eee20af98b52fd97064aec5894aba907ff6b650a66641e728c",
+      "status": "running",
+      "task_id": "63",
+      "verb": "checkpoint"
+    },
     "windows-holdout63-next-v1": {
       "actor": "Ken0u",
       "at": 1792420694,
@@ -1137,12 +1146,23 @@
       "status": "needs_human"
     },
     "63": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/holdout63-inventory-manifest.json",
+          ".cache/holdout63-inventory-result.json"
+        ],
+        "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
+        "head_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "remaining": "Complete resumable execution and meaningful admission/interruption/recipe tests; fresh independent preflight before frozen head predictions; run actual missing eight native stages/all75 audits, frozen CPU comparison and independent metric audit; final exact-head CI/review/controller integration. PROGRESS.md deprecated and untouched. Mac owns103/PR104; Windows duration prototype preserved separately.",
+        "status": "Implementation in isolated worktree, not committed/published yet. Read-only real inventory confirms all 75 sources, 21610 frames, 860 rows and both 677 eligible denominators; 67 completed native/feature/input-audit chains preserved. 12 focused inventory tests pass. Native/features recovery code in progress; no inference, Store mutation, head prediction opening or task completion."
+      },
+      "checkpoint_at": 1792421520,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
         "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
         "epoch": 1,
-        "expires_at": 1792431494,
+        "expires_at": 1792432320,
         "granted_at": 1792420694,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
