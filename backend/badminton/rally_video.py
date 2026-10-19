@@ -414,7 +414,7 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
                 "-map",
                 "0:v:0",
                 "-vf",
-                f"trim=start_frame={interval['start_frame']}:end_frame={interval['end_frame_exclusive']},setpts=PTS-({start:.12f})/TB,setsar=1,pad=ceil(iw/2)*2:ceil(ih/2)*2",
+                f"trim=start_frame={interval['start_frame']}:end_frame={interval['end_frame_exclusive']},setpts=PTS-STARTPTS,setsar=1,pad=ceil(iw/2)*2:ceil(ih/2)*2",
                 "-c:v",
                 "libx264",
                 "-preset",
@@ -506,7 +506,6 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
             }
             completed += 1
             progress(completed / total * 0.95)
-        _fresh_plan(store, plan, root)
         if folder.stat().st_ino != identity.st_ino or folder.is_symlink():
             raise ValueError("Export output directory changed during rendering")
         manifest = {
@@ -533,6 +532,9 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
                 path.rename(folder / path.name)
         staging.rmdir()
         progress(1)
+        # Callbacks can cancel or change inputs too. Audit after the final one,
+        # immediately before the completion receipt becomes visible.
+        _fresh_plan(store, plan, root)
         with (folder / "manifest.json").open(
             "x", encoding="utf-8", newline="\n"
         ) as receipt:
