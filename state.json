@@ -1435,6 +1435,22 @@
       "task_id": "111",
       "verb": "checkpoint"
     },
+    "windows-public111-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792440141,
+      "fingerprint": "dae207e1733d2c0601d973923d076e7288863fc1a7d8cd5e28f326b6946b774c",
+      "status": "ok",
+      "verb": "register"
+    },
+    "windows-public111-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792440141,
+      "epoch": 1,
+      "fingerprint": "3a4ae19c78e07a3c9e6572f867ec23a4bcfe3b0676faf1d4c6605872b7c5ecf9",
+      "status": "review",
+      "task_id": "111",
+      "verb": "submit"
+    },
     "windows-rally108-checkpoint-e3-v1": {
       "actor": "Ken0u",
       "at": 1792438406,
@@ -2068,6 +2084,7 @@
       },
       "planned_at": 1792438589,
       "planned_by": "Ken0u",
+      "pr_number": 114,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -2112,7 +2129,13 @@
         ]
       },
       "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
+        "pr_number": 114,
+        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+      }
     },
     "62": {
       "epoch": 0,
@@ -3557,6 +3580,20 @@
       "host_id": "MSI",
       "registered_at": 1792418461,
       "session_id": "windows-playback69-review-v1"
+    },
+    "MSI/windows-public111-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review",
+        "python-3.12"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792440141,
+      "session_id": "windows-public111-review-v1"
     },
     "MSI/windows-rally109-review-v1": {
       "actor": "Ken0u",
