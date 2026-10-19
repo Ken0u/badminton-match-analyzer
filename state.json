@@ -1330,6 +1330,15 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-rally108-checkpoint-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1792438406,
+      "epoch": 3,
+      "fingerprint": "28a5879cb9ca29cf530d89ceb4875b68ecc2ed6c52c55ba3d14033eda897cee9",
+      "status": "running",
+      "task_id": "108",
+      "verb": "checkpoint"
+    },
     "windows-rally108-next-v1": {
       "actor": "Ken0u",
       "at": 1792438147,
@@ -1663,19 +1672,24 @@
     "108": {
       "checkpoint": {
         "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
-        "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
+        "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally-e3",
         "head_sha": "a137ed5712f59e82acf55d126f4c04dbde6f96ab",
-        "pr_number": 109,
-        "preservation": "Fetched and verified the exact original remote branch/head and main before recovery; original branch, PR and all worktrees remain unchanged. Code-only task has no resource or input-artifact reservations. No source media, datasets, annotations, weights or research jobs are involved.",
-        "remaining": "Recover the expired code-only task through the controller, request its actual new grant, preserve the existing implementation, validate on current main, obtain fresh independent exact-head review and hosted checks, then use controller integration. Publishing compatibility with the now-public repository is separate sensitive work; do not weaken its current private guard."
+        "preservation": "Original task108 branch and PR109 preserved; adopted exact existing implementation in granted epoch3 worktree. No source, model, annotation, inference, environment or policy changes.",
+        "remaining": "Publish granted branch/PR, submit exact head/base/spec for fresh independent review, hosted checks and controller integration/main verification. Public publishing compatibility is tracked separately in controller incident111 under explicit user direction for public builds/images; current publisher guard remains intact.",
+        "validation": [
+          "33 focused generated native-clock/revision/export tests passed",
+          "Full locked Python3.12 suite:973 passed,11 optional skips",
+          "Ruff, format, uv dependency, repository UTF8/LF/JSON/link and diff checks passed"
+        ],
+        "worktree": ".cache/worktrees/rally108-e3"
       },
-      "checkpoint_at": 1792423781,
+      "checkpoint_at": 1792438406,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
         "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally-e3",
         "epoch": 3,
-        "expires_at": 1792448947,
+        "expires_at": 1792449206,
         "granted_at": 1792438147,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
