@@ -47,6 +47,7 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
         sample_times = [nominal_duration * i / 18 for i in range(18)]
         timestamps, samples = [], []
         rotation = None
+        last_frame_duration = 0
         for index, frame in enumerate(container.decode(stream)):
             decoded_rotation = frame_rotation(frame)
             if rotation is None:
@@ -63,6 +64,7 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
                     "Video presentation timestamps are not strictly increasing"
                 )
             timestamps.append(round(timestamp, 8))
+            last_frame_duration = float((frame.duration or 0) * stream.time_base)
             if (
                 len(samples) < len(sample_times)
                 and timestamp >= sample_times[len(samples)]
@@ -80,6 +82,9 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
             if len(timestamps) > 1
             else 1 / float(stream.average_rate or 25)
         )
+        # Prefer the decoded final sample duration: its preceding VFR gap can
+        # be unrelated. When absent, retain the last gap (or nominal single-frame
+        # interval) as an estimate; no additional source frame is invented.
         document = {
             "id": video_id,
             "name": path.name,
@@ -92,7 +97,11 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
             "rotation": rotation,
             "fps": float(stream.average_rate or 1 / step),
             "frame_count": len(timestamps),
-            "duration_s": round(timestamps[-1] + step, 8),
+            "duration_s": round(
+                timestamps[-1]
+                + (last_frame_duration if last_frame_duration > 0 else step),
+                8,
+            ),
             "codec": stream.codec_context.name,
             "source_start_s": origin,
             "time_base": str(stream.time_base),

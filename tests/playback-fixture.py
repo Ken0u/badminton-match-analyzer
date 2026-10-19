@@ -3,7 +3,7 @@
 import sys
 from pathlib import Path
 
-from media_fixtures import write_rotated_video
+from media_fixtures import write_lossless_vfr_video, write_rotated_video
 
 if __name__ == "__main__":
     path = Path(sys.argv[1]).resolve()
@@ -12,3 +12,4 @@ if __name__ == "__main__":
         raise ValueError("Browser fixtures must stay inside this worktree's cache")
     path.parent.mkdir(parents=True, exist_ok=True)
     write_rotated_video(path, 90)
+    write_lossless_vfr_video(path.with_name("long-gap-vfr.mkv"))

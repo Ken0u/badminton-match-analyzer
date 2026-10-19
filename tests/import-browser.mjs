@@ -415,6 +415,49 @@ try {
     await page.locator("#video").getAttribute("src"),
     `/api/videos/${youtube.id}/media`,
   );
+  // An unusual final gap must not be mistaken for the final sample duration.
+  await page
+    .locator("#upload-file")
+    .setInputFiles(
+      fileURLToPath(
+        new URL(
+          "../.cache/import-ui-test-data/long-gap-vfr.mkv",
+          import.meta.url,
+        ),
+      ),
+    );
+  await page.locator("#upload-form button[type=submit]").click();
+  await ready(4, "long-gap-vfr.mkv");
+  await page.getByRole("button", { name: /long-gap-vfr.mkv/ }).click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#playback-status")
+      .textContent.includes("compatible copy"),
+  );
+  const longGap = (await api("/api/videos")).find(
+    (v) => v.name === "long-gap-vfr.mkv",
+  );
+  assert.equal(longGap.duration_s, 0.72);
+  await page.locator("#prepare-playback").click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#playback-status")
+      .textContent.includes("source frame timing preserved"),
+  );
+  assert.equal(await page.locator("#video").evaluate((v) => v.duration), 0.72);
+  await page.locator("#frame-number").fill("3");
+  await page.locator("#frame-number").dispatchEvent("change");
+  await page.waitForFunction(
+    () =>
+      Math.abs(document.querySelector("#video").currentTime - 0.68) < 0.0001,
+  );
+  await page.locator("#play").click();
+  await page.waitForFunction(() => document.querySelector("#video").ended);
+  assert.equal(
+    await page.locator("#video").evaluate((v) => v.currentTime),
+    0.72,
+  );
+  assert.equal(await page.locator("#frame-number").inputValue(), "3");
   await page.screenshot({
     path: fileURLToPath(new URL("import-desktop.png", output)),
     fullPage: true,
