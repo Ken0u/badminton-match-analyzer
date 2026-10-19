@@ -46,6 +46,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "frontend-plan-review-99-claim": {
+      "actor": "dootz1",
+      "at": 1792418226,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
+        "epoch": 1,
+        "expires_at": 1792429026,
+        "granted_at": 1792418226,
+        "head_sha": "8d34e99b8026c278d2c1c0220edd9d23eee52ac9",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 99,
+        "review_epoch": 1,
+        "session_id": "frontend-plan-review-99",
+        "spec_hash": "82cbc0d57bb755d87d8654c3fdaef855116cee8e37482fb58beb5bb946215356"
+      },
+      "epoch": 1,
+      "fingerprint": "a306aaac423ac8209dadf9c6146a5f3db06145dea065d9e44e1b2188d8a58614",
+      "status": "granted",
+      "task_id": "93",
+      "verb": "review-next"
+    },
     "frontend-plan-review-99-register": {
       "actor": "dootz1",
       "at": 1792418159,
@@ -1297,6 +1319,20 @@
       "planned_at": 1792417850,
       "planned_by": "dootz1",
       "pr_number": 99,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
+        "epoch": 1,
+        "expires_at": 1792429026,
+        "granted_at": 1792418226,
+        "head_sha": "8d34e99b8026c278d2c1c0220edd9d23eee52ac9",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 99,
+        "review_epoch": 1,
+        "session_id": "frontend-plan-review-99",
+        "spec_hash": "82cbc0d57bb755d87d8654c3fdaef855116cee8e37482fb58beb5bb946215356"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Update PROJECT_PLAN.md and add docs/FRONTEND_REWRITE.md with the approved stack, migration phases, dependencies, architecture, parity/performance/accessibility criteria and rollback boundaries.",
