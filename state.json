@@ -1,6 +1,14 @@
 {
   "paused": false,
   "receipts": {
+    "external-merge-126-f2866cae9c1b11ec14594ea8c4ff611fa751375d": {
+      "actor": "github-actions[bot]",
+      "at": 1792454004,
+      "fingerprint": "6b6eed6193c4854ee40ed6f63d88abba9dd04a27723dba00ac8adf028e13a7a5",
+      "status": "recovery_required",
+      "task_id": "126",
+      "verb": "fence-external-merge"
+    },
     "frontend-plan-93-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792418055,
@@ -4053,6 +4061,133 @@
         "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
       },
       "epoch": 1,
+      "external_merge": {
+        "at": 1792454004,
+        "observed": {
+          "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
+          "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+          "main_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+          "merge_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+          "merged_by": "dootz1",
+          "pr_number": 127,
+          "pr_url": "https://github.com/Ken0u/badminton-match-analyzer/pull/127"
+        },
+        "original": {
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+            "branch": "codex/issue-126-deliver-the-preserved-external-merge-rec",
+            "epoch": 1,
+            "expires_at": 1792462665,
+            "granted_at": 1792449340,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+          },
+          "epoch": 1,
+          "pr_number": 127,
+          "review": {
+            "actor": "Ken0u",
+            "at": 1792452563,
+            "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
+            "evidence": [
+              "Credentials scrubbed, GH_CONFIG_DIR isolated, all inherited GIT_CONFIG_* removed as a group, process safe.directory only; BADMINTON_ROOT/BADMINTON_DATA_DIR/PYTHONPATH pinned to detached reviewer checkout before candidate imports.",
+              "360 passed: tests/test_agent_policy.py tests/test_agent_queue.py tests/test_agent_coordinator.py tests/test_free_integration.py tests/test_media_export_api.py tests/test_rally_export.py; Python3.12.14 reused author venv only as interpreter. One Starlette deprecation warning. Initial missing reviewer .cache parent caused fixture setup errors; created parent and reran focused checks successfully.",
+              "Eight reviewer-owned adversarial probes passed: sensitivity prefix boundaries, case-insensitive owner and requested-changes persistence, sensitivity introduced only by generated tests/ repair scope, new recovery epoch, changed current owner session, untrusted historical reviewer, final pre-commit main race and exact 12-path diff hash.",
+              "Ruff lint passed; format147 files passed; uv pip check48 packages passed. pip module absent in reused locked venv; uv dependency check used without installing or syncing anything.",
+              "scripts/verify_repository.py passed tracked UTF8/LF/strictJSON/local-links/credential-pattern checks; git diff --check passed; reviewer worktree remains clean.",
+              "Independently queried hosted CI39340951067 at dd06d050dc24cd703816e4cbb626b409bc4a641d: completed success; all12 jobs revision/repository/frontend/native(macos14)/python3.10/browser-import/python3.12/containerCPU/nativeWindows/containerReview/package/ci-gate completed success.",
+              "PR127 head/base unchanged immediately before verdict. New 12-path diff SHA256667ea62abe5de1bf225af1d26550f851cb644bddf7234947f73d87ab770b9fba matches declared rebound patch."
+            ],
+            "findings": [],
+            "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+            "limitations": [
+              "Did not independently rerun the full local suite; author reports1244 passed/11 optional skips and full hosted Python3.10/3.12/native/package/container/browser verification was independently observed green.",
+              "No private samples/weights, GPU inference/training, deployment, manual cutover, merging, recovery actions or live coordination-state edits were performed. Reviewed code executes only offline without privileged credentials.",
+              "This approval binds only the exact listed head/base/spec/taskepoch/reviewepoch. Any change requires a new review. It does not amend the owners previous exact01a one-time transition authorization.",
+              "Pre-existing accepted-plan replay issue101 is separately scoped and excluded from this task; software checks do not establish badminton annotation accuracy."
+            ],
+            "pr_number": 127,
+            "reviewed_files": [
+              "AGENTS.md",
+              "scripts/devops/policy.py",
+              "scripts/devops/coordinator.py",
+              "scripts/devops/queue.py",
+              "scripts/agent_queue.py",
+              "tests/test_agent_policy.py",
+              "tests/test_agent_coordinator.py",
+              "tests/test_agent_queue.py",
+              "docs/COLLABORATION.md",
+              "docs/OWNER_SETUP.md",
+              "docs/automation/worker.md",
+              "docs/automation/reviewer.md"
+            ],
+            "session_id": "windows-policy126-review-v2",
+            "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
+            "verdict": "approve"
+          },
+          "review_epoch": 2,
+          "spec": {
+            "acceptance": [
+              "Incorporate the complete preserved owner-authorized119 recovery implementation from reviewed head6125c7080140b2f0281515e57d640f540e7874ca, including its duplicate-delivery repair, original crash regression, immutable historical recovery, resource proof, outbox and issue-projection tests. Keep original source branches, PR122 independent verdicts and all evidence. Supersede its unmerged PR rather than infer a merge or fabricate task119 Done. The combined new revision needs its own genuine grant, full checks and fresh independent review.",
+              "Remove the real non-author human review requirement from AGENTS.md and align current collaboration, owner-setup, worker and reviewer guidance. Do not retain a contradictory mandatory-human-review instruction elsewhere in these living documents.",
+              "Ordinary task PRs, including policy-sensitive and risk-human tasks, can satisfy final review through a genuine fresh exact-head/base/spec independent agent approval and required successful GitHub Actions checks without a non-author human GitHub approval. Preserve task ownership/scope, current-main ancestry, same-repository branch binding, native evidence, unresolved-thread and requested-changes vetoes, serial integration and exact merged-main verification.",
+              "Remove the matching mandatory non-author-human-review condition from narrow bootstrap rollout checks and explicit external-merge recovery. Preserve rollout-only scope/mode restrictions and manual bootstrap semantics, and preserve authenticated configured-owner scope/recovery authorization. Optional real human reviews and historical owner attestations remain distinct audit evidence; do not fabricate an approval or erase an existing requested-changes veto.",
+              "Preserve immutable original grant/submission/independent-review history, exact source/tree/main/CI evidence, replay and epoch fencing, original-host physical-resource terminal proof, and complete delivery-outbox behavior for external recovery. Do not adopt a merge from its existence alone.",
+              "Cover sensitive PRs and risk-human tasks without human GitHub reviews, missing/stale/self independent review, failed or running CI, unresolved/requested changes, unauthorized scope/recovery, rollout restrictions and external recovery without optional human attestation. Run required project checks, exact-head CI and a fresh independent review.",
+              "Keep the transition auditable. The currently trusted controller still enforces the old approval gate. Do not edit coordination state, fabricate reviews, run unreviewed PR code with privileged credentials, or silently perform a manual policy cutover. If old trusted code cannot integrate the finished change, present the exact tested and independently reviewed final PR head plus one bounded transition action to the owner before that action occurs.",
+              "After the approved combined change is actually merged and exact-main verified, perform the original owner-authorized111 recovery using its immutable accepted controller history and existing successful candidate; verify audit/source epochs, completed issue closure and delivery_pending=false without duplicate publication. Record119 as superseded by this delivered implementation, preserving truthful historical queue state instead of falsifying adoption of its unmerged PR."
+            ],
+            "artifacts": {},
+            "capabilities": [
+              "cpu"
+            ],
+            "dependencies": [],
+            "exclusions": [
+              "No removal of required CI, fresh independent agent review, trusted owner authentication/scope/recovery authorization, requested-changes vetoes, serial controller enforcement or merged-main verification.",
+              "No raw coordination edits, fake identities/reviews, routine manual merges, GitHub Pro purchase, paid overage, branch protection changes, repository/package/Project visibility or credential changes.",
+              "No PROGRESS.md edits, unrelated deprecated-handoff cleanup, application/model/data/deployment changes, research or inference restarts. Preserve root changes, all environments, datasets and durable artifacts."
+            ],
+            "limits": {
+              "max_review_rounds": 3,
+              "max_runtime_hours": 3,
+              "paid_services": false
+            },
+            "milestone": "Infrastructure",
+            "outcome": "Deliver the preserved external-merge recovery fix and remove mandatory non-author human review from guidance and controller gates, retaining fresh independent agent review, exact CI, explicit owner authorizations and controller-managed integration.",
+            "paths": [
+              "AGENTS.md",
+              "scripts/devops/policy.py",
+              "tests/test_agent_policy.py",
+              "tests/test_agent_queue.py",
+              "tests/test_agent_coordinator.py",
+              "docs/COLLABORATION.md",
+              "docs/OWNER_SETUP.md",
+              "docs/automation/worker.md",
+              "docs/automation/reviewer.md",
+              "scripts/devops/coordinator.py",
+              "scripts/devops/queue.py",
+              "scripts/agent_queue.py"
+            ],
+            "priority": 0,
+            "resources": [],
+            "risk": "human",
+            "verification": [
+              "Focused queue/coordinator/policy regressions plus full pytest, Ruff lint/format, locked dependency health, repository text/JSON/local-link and git diff checks.",
+              "Fresh genuine exact-head/base/spec independent review; successful exact-head CI and verified merged main, using an explicit audited transition if the old trusted policy still blocks adoption.",
+              "Confirm ordinary sensitive work no longer needs a non-author human review while all retained ownership, CI, independent review, requested-changes, recovery and delivery gates remain enforced."
+            ]
+          },
+          "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
+          "status": "review",
+          "submission": {
+            "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
+            "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+            "pr_number": 127,
+            "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+          }
+        }
+      },
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792449100,
@@ -4061,7 +4196,7 @@
       "planned_at": 1792449022,
       "planned_by": "Ken0u",
       "pr_number": 127,
-      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "reason": "PR merged outside the recorded integration; explicit recovery required",
       "repair_rounds": 0,
       "review": {
         "actor": "Ken0u",
@@ -4156,7 +4291,7 @@
         ]
       },
       "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
-      "status": "review",
+      "status": "recovery_required",
       "submission": {
         "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
         "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
