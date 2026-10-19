@@ -1,6 +1,14 @@
 {
   "paused": false,
   "receipts": {
+    "adopt-003628c8dcaecb68b1f14319cad228db61bf5c092e5028caeb9297739a68b42e": {
+      "actor": "github-actions[bot]",
+      "at": 1792454159,
+      "fingerprint": "3493feff97556a9713f21dc531c694830dab39337c52895b8512312a0d39187e",
+      "status": "done",
+      "task_id": "69",
+      "verb": "adopt-external-merge"
+    },
     "external-merge-126-f2866cae9c1b11ec14594ea8c4ff611fa751375d": {
       "actor": "github-actions[bot]",
       "at": 1792454004,
@@ -4736,11 +4744,194 @@
         ]
       },
       "checkpoint_at": 1792419307,
+      "delivery_pending": true,
       "epoch": 4,
+      "external_recovery": {
+        "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "evidence_state_sha": "f0059bb073d24e97afcaf1ade8f0033a01c192f8",
+        "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "main_sha_at_verification": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+        "merge_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "merged_by": "dootz1",
+        "original_task": {
+          "checkpoint": {
+            "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+            "branch": "codex/issue-69-add-source-time-preserving-browser-playb-e3",
+            "evidence": [
+              ".cache/test-results.xml",
+              "Original worktree data/processed/qa/import-desktop.png and import-mobile.png",
+              "PR 100 remains preserved/superseded; scope-recovery receipts in controller state"
+            ],
+            "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+            "limits": "No automatic badminton accuracy claim, no research/environment/data/model/application upgrade; PROGRESS.md deprecated",
+            "pr_number": 102,
+            "remaining": "Current PR102 exact-head CI, genuine independent review, non-author human approval for two-line browser FFmpeg CI setup, controller merge/main/private candidate verification",
+            "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
+            "validation": [
+              "Fresh epoch-3 full suite: 914 passed / 11 optional skips in 49.61 seconds",
+              "Ruff, formatting, repository, uv dependency consistency, Prettier and diff checks pass",
+              "Identical implementation on original branch passed all 12 hosted CI jobs in run 39266307138"
+            ]
+          },
+          "checkpoint_at": 1792419307,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+            "branch": "codex/issue-69-add-source-time-preserving-browser-playb-e3",
+            "epoch": 3,
+            "expires_at": 1792430107,
+            "granted_at": 1792419050,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+          },
+          "epoch": 3,
+          "history": [
+            {
+              "at": 1792418989,
+              "checkpoint": {
+                "branch": "codex/issue-69-add-source-time-preserving-browser-playb",
+                "head_sha": "c2cb58a7ced083a3c76fcdcbea8f486f31e9c27a",
+                "pr_number": 100,
+                "reason": "Approved scope extension changed frozen spec but issue body still held predecessor; controller conservatively fenced work. Owning issue now matches committed scope. Preserve current remote branch/head and obtain a fresh ownership epoch.",
+                "remaining": "New exact-head CI, fresh independent review, non-author human workflow approval and controller integration/main/candidate gates",
+                "research": "Code-only task, no reserved physical resources or input artifacts; no inference/research processes changed",
+                "validation": [
+                  "914 tests passed/11 skips before fixture-only and CI fixes",
+                  "39 focused passed after generator extraction",
+                  "22 focused policy/playback/orientation tests passed after CI step",
+                  "Repository and diff checks pass"
+                ]
+              },
+              "claim": {
+                "actor": "Ken0u",
+                "baseline_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
+                "branch": "codex/issue-69-add-source-time-preserving-browser-playb",
+                "epoch": 1,
+                "expires_at": 1792429133,
+                "granted_at": 1792417543,
+                "host_id": "MSI",
+                "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+                "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+              }
+            }
+          ],
+          "planned_at": 1792393957,
+          "planned_by": "dootz1",
+          "pr_number": 102,
+          "reason": "Active specification edited; preserve work and obtain a new scope grant",
+          "review": {
+            "actor": "Ken0u",
+            "at": 1792419525,
+            "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+            "evidence": [
+              "Fresh independent read-only session windows-playback69-review-v1 on MSI; actual review grant windows-playback69-review-next-v2 binds task epoch 3 / review_epoch 1 and this exact head/base/spec.",
+              "Independently inspected complete exact-base diff and surrounding source validation, native frame PTS, rotation, audio offset, atomic cache receipt, shared Store admission, Range media response and UI stale-selection handling; no actionable findings remain.",
+              "Independent task-venv pytest on this exact head: tests/test_playback.py tests/test_orientation.py tests/test_media_import.py tests/test_import_api.py tests/test_agent_coordinator.py::test_every_privileged_entrypoint_requires_human_review; 95 passed in 5.24s. Fresh artifacts: .cache/review-playback69/focused-e3-v2.xml and pytest-focused-e3-v2.",
+              "Verified backend/tests/workflow byte parity against preserved candidate c2cb58a7ced083a3c76fcdcbea8f486f31e9c27a. New base 77906a0 adds only PROJECT_PLAN.md and docs/FRONTEND_REWRITE.md planning changes; no runtime change.",
+              "Independent earlier real FFmpeg checks exercised ten distinct nonzero source origins with exact VFR timestamps on byte-identical application code. Earlier independently inspected generated desktop/mobile screenshots; no original server or research process was modified.",
+              "Reviewed local full-suite XML .cache/test-results.xml: 925 total, 11 skipped, zero errors/failures (914 pass). Exact-head hosted Checks run 39267159096 observed all 12 jobs successful including Python 3.10/3.12, Windows/macOS native, package, frontend, browser-import, containers and ci/gate.",
+              "Confirmed original pytest-only fixture import defect is repaired by pure media_fixtures helper. Confirmed hosted missing-FFmpeg defect is repaired by two-line browser CI prerequisite; contents:read, checkout credential behavior and verification gates are unchanged. git diff --check passes and tracked worktree is clean."
+            ],
+            "findings": [],
+            "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+            "limitations": [
+              "The workflow change requires a real non-author human review of this exact PR head before controller integration. This independent agent verdict does not supply, impersonate or bypass that approval; automation/policy remains a separate gate.",
+              "Generated-media and software checks establish playback behavior, source timing and export preservation, not automatic badminton annotation accuracy or unseen full-match correctness.",
+              "I did not rerun the full local suite or launch another full browser server in this review; I independently ran focused checks, inspected full-suite XML, observed exact-head hosted CI and inspected preserved browser evidence. Existing research, native inference, models, environments, source media and reviewed data were preserved.",
+              "Playback preparation requires an available FFmpeg CLI, CPU time and storage. Optional ML/GPU checks in the local full suite remain skipped and are not claimed as exercised by this review."
+            ],
+            "pr_number": 102,
+            "reviewed_files": [
+              ".github/workflows/ci.yml",
+              "backend/badminton/api.py",
+              "backend/badminton/playback.py",
+              "backend/badminton/static/app.js",
+              "backend/badminton/static/index.html",
+              "backend/badminton/static/playback-tools.js",
+              "backend/badminton/static/style.css",
+              "tests/import-browser.mjs",
+              "tests/media_fixtures.py",
+              "tests/playback-fixture.py",
+              "tests/test_orientation.py",
+              "tests/test_playback.py",
+              "backend/badminton/video.py",
+              "backend/badminton/orientation.py",
+              "backend/badminton/ingest.py",
+              "backend/badminton/av_runtime.py",
+              "backend/badminton/storage.py"
+            ],
+            "session_id": "windows-playback69-review-v1",
+            "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
+            "verdict": "approve"
+          },
+          "review_epoch": 1,
+          "spec": {
+            "acceptance": [
+              "Preserve source PTS, orientation and native frame identities across proxy playback and seeks.",
+              "Verify generated variable-frame-rate/oriented media and original annotation exports."
+            ],
+            "artifacts": {},
+            "capabilities": [
+              "cpu"
+            ],
+            "dependencies": [],
+            "exclusions": [
+              "No claim of full automatic annotation accuracy.",
+              "No production/model promotion or destructive storage changes."
+            ],
+            "limits": {
+              "max_review_rounds": 3,
+              "max_runtime_hours": 3,
+              "paid_services": false
+            },
+            "milestone": "Review and product",
+            "outcome": "Add source-time-preserving browser playback proxies.",
+            "paths": [
+              "backend/badminton/",
+              "tests/",
+              ".github/workflows/ci.yml"
+            ],
+            "priority": 100,
+            "resources": [],
+            "risk": "routine",
+            "verification": [
+              "Focused tests for changed behavior; required project checks on the exact head.",
+              "Record source/input/protocol hashes and material limitations for research."
+            ]
+          },
+          "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
+          "status": "review",
+          "submission": {
+            "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+            "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+            "pr_number": 102,
+            "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+          }
+        },
+        "pr_number": 102,
+        "review_evidence": {
+          "authorized_by": "dootz1",
+          "github_reviews": [],
+          "owner_attestation": null
+        },
+        "source_epoch": 3,
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
+        "tree_sha": "63d68cc9813bf10d7f76e2a69c9a2f40086fb812",
+        "verification_complete": true,
+        "verification_run": {
+          "display_title": "Verify 8a691435bf8003962a73162918c3f8d853c805e8",
+          "event": "push",
+          "head_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+          "html_url": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39269323717",
+          "id": 39269323717
+        }
+      },
       "external_recovery_request": {
         "actor": "dootz1",
         "at": 1792454126,
         "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "completed_at": 1792454159,
         "epoch": 4,
         "evidence_state_sha": "f0059bb073d24e97afcaf1ade8f0033a01c192f8",
         "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
@@ -4807,12 +4998,76 @@
             "session_id": "3283a9953d4445739251c6b8dfdb55bd",
             "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
           }
+        },
+        {
+          "at": 1792454159,
+          "authorization": {
+            "actor": "dootz1",
+            "at": 1792454126,
+            "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+            "epoch": 4,
+            "evidence_state_sha": "f0059bb073d24e97afcaf1ade8f0033a01c192f8",
+            "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+            "merge_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+            "pr_number": 102,
+            "request_id": "mac-01a15493-69-external-recovery-v1",
+            "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+          },
+          "claim": null,
+          "epoch": 4,
+          "verb": "adopt-external-merge"
         }
       ],
+      "merge_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
       "planned_at": 1792393957,
       "planned_by": "dootz1",
       "pr_number": 102,
-      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
+      "reason": "External merge recovered from verified original evidence",
+      "review": {
+        "actor": "Ken0u",
+        "at": 1792419525,
+        "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "evidence": [
+          "Fresh independent read-only session windows-playback69-review-v1 on MSI; actual review grant windows-playback69-review-next-v2 binds task epoch 3 / review_epoch 1 and this exact head/base/spec.",
+          "Independently inspected complete exact-base diff and surrounding source validation, native frame PTS, rotation, audio offset, atomic cache receipt, shared Store admission, Range media response and UI stale-selection handling; no actionable findings remain.",
+          "Independent task-venv pytest on this exact head: tests/test_playback.py tests/test_orientation.py tests/test_media_import.py tests/test_import_api.py tests/test_agent_coordinator.py::test_every_privileged_entrypoint_requires_human_review; 95 passed in 5.24s. Fresh artifacts: .cache/review-playback69/focused-e3-v2.xml and pytest-focused-e3-v2.",
+          "Verified backend/tests/workflow byte parity against preserved candidate c2cb58a7ced083a3c76fcdcbea8f486f31e9c27a. New base 77906a0 adds only PROJECT_PLAN.md and docs/FRONTEND_REWRITE.md planning changes; no runtime change.",
+          "Independent earlier real FFmpeg checks exercised ten distinct nonzero source origins with exact VFR timestamps on byte-identical application code. Earlier independently inspected generated desktop/mobile screenshots; no original server or research process was modified.",
+          "Reviewed local full-suite XML .cache/test-results.xml: 925 total, 11 skipped, zero errors/failures (914 pass). Exact-head hosted Checks run 39267159096 observed all 12 jobs successful including Python 3.10/3.12, Windows/macOS native, package, frontend, browser-import, containers and ci/gate.",
+          "Confirmed original pytest-only fixture import defect is repaired by pure media_fixtures helper. Confirmed hosted missing-FFmpeg defect is repaired by two-line browser CI prerequisite; contents:read, checkout credential behavior and verification gates are unchanged. git diff --check passes and tracked worktree is clean."
+        ],
+        "findings": [],
+        "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "limitations": [
+          "The workflow change requires a real non-author human review of this exact PR head before controller integration. This independent agent verdict does not supply, impersonate or bypass that approval; automation/policy remains a separate gate.",
+          "Generated-media and software checks establish playback behavior, source timing and export preservation, not automatic badminton annotation accuracy or unseen full-match correctness.",
+          "I did not rerun the full local suite or launch another full browser server in this review; I independently ran focused checks, inspected full-suite XML, observed exact-head hosted CI and inspected preserved browser evidence. Existing research, native inference, models, environments, source media and reviewed data were preserved.",
+          "Playback preparation requires an available FFmpeg CLI, CPU time and storage. Optional ML/GPU checks in the local full suite remain skipped and are not claimed as exercised by this review."
+        ],
+        "pr_number": 102,
+        "reviewed_files": [
+          ".github/workflows/ci.yml",
+          "backend/badminton/api.py",
+          "backend/badminton/playback.py",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/index.html",
+          "backend/badminton/static/playback-tools.js",
+          "backend/badminton/static/style.css",
+          "tests/import-browser.mjs",
+          "tests/media_fixtures.py",
+          "tests/playback-fixture.py",
+          "tests/test_orientation.py",
+          "tests/test_playback.py",
+          "backend/badminton/video.py",
+          "backend/badminton/orientation.py",
+          "backend/badminton/ingest.py",
+          "backend/badminton/av_runtime.py",
+          "backend/badminton/storage.py"
+        ],
+        "session_id": "windows-playback69-review-v1",
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
+        "verdict": "approve"
+      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -4849,7 +5104,7 @@
         ]
       },
       "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
-      "status": "blocked",
+      "status": "done",
       "submission": {
         "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
         "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
