@@ -915,6 +915,13 @@
       "task_id": "116",
       "verb": "review-result"
     },
+    "mac-review119-01a15493-register": {
+      "actor": "dootz1",
+      "at": 1792444580,
+      "fingerprint": "db0f99bcba41b935ed10aaaba66e0a51f1523542913c932b5c65ee531b146a46",
+      "status": "ok",
+      "verb": "register"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -1467,6 +1474,28 @@
       "status": "running",
       "task_id": "119",
       "verb": "checkpoint"
+    },
+    "windows-external119-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792444580,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "epoch": 1,
+        "expires_at": 1792455380,
+        "granted_at": 1792444580,
+        "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
+        "host_id": "MSI",
+        "pr_number": 122,
+        "review_epoch": 1,
+        "session_id": "windows-external119-review-v1",
+        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
+      },
+      "epoch": 1,
+      "fingerprint": "fbb10a1c0caa076b5a69b923460ce0d2f456363ac070ca38e8c101043d6ab6dc",
+      "status": "granted",
+      "task_id": "119",
+      "verb": "review-next"
     },
     "windows-external119-review-register-v1": {
       "actor": "Ken0u",
@@ -2925,6 +2954,20 @@
       "planned_by": "Ken0u",
       "pr_number": 122,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "epoch": 1,
+        "expires_at": 1792455380,
+        "granted_at": 1792444580,
+        "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
+        "host_id": "MSI",
+        "pr_number": 122,
+        "review_epoch": 1,
+        "session_id": "windows-external119-review-v1",
+        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Reproduce task111 Review with externally merged PR114 and verified main38e; detect the external merge before the normal verify-main transition, preserving the original claim, epoch, frozen spec, submission, independent review, actual merger, merged commit/tree and CI observations. Repeated passes create one preserved incident and continue safely with unrelated eligible work.",
@@ -4705,6 +4748,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792441640,
       "session_id": "mac-review116-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review119-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792444580,
+      "session_id": "mac-review119-01a15493"
     },
     "Stanleys-Laptop.local/mac-review120-01a15493": {
       "actor": "dootz1",
