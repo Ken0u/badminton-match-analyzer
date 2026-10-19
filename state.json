@@ -1301,6 +1301,13 @@
       "status": "rejected",
       "verb": "submit"
     },
+    "windows-rally109-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792425957,
+      "fingerprint": "f5fc9a8da99fe089b132e87c6f4bd83ef5403210eb4b0da1b416669ebbf26fd6",
+      "status": "idle",
+      "verb": "review-next"
+    },
     "windows-rally109-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792425873,
