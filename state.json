@@ -57,6 +57,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-pilot-review-85-verdict-v1": {
+      "actor": "dootz1",
+      "at": 1792411244,
+      "epoch": 1,
+      "fingerprint": "8afdc95083a7828d1277312bbe399329ceb55f1194e412de5d1bd1bc92415001",
+      "status": "review",
+      "task_id": "81",
+      "verb": "review-result"
+    },
     "mac-pilot81-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792411065,
@@ -752,18 +761,36 @@
       "planned_at": 1792395547,
       "planned_by": "Ken0u",
       "pr_number": 85,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792411244,
         "base_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
-        "epoch": 1,
-        "expires_at": 1792421978,
-        "granted_at": 1792411178,
+        "evidence": [
+          "Frozen task #81 specification and submission read from committed dispatcher state; only docs/pilot/MACOS.md changes, within granted paths.",
+          "PR #85 live binding is open non-draft at reviewed head/base; report records implementation epoch 1 and the exact frozen spec hash.",
+          "Inspected .cache/pilot-tests.log and pilot-tests.xml: 913 total, 11 skipped, zero failures/errors; Mac hostname Stanleys-Laptop.local.",
+          "Inspected doctor.json, pilot-versions.json and bootstrap-environment.json; versions, review extras and both lock SHA256 values match report.",
+          "Independent exact-head checks: verify_repository.py, Ruff check, Ruff format --check, git diff --check all pass; 148 queue/coordinator/environment tests pass.",
+          "Bootstrap surrounding code pins disposable linked-worktree storage before dependency/app operations and refuses existing environment migration; no app or inference code diff."
+        ],
+        "findings": [],
         "head_sha": "c2d598e94a8609989bd6ed3250f8a4d253971458",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Doctor false result for installed FFmpeg/FFprobe --version probes is accurately disclosed; separate scoped follow-up remains necessary.",
+          "Independent reviewer inspected local full-suite evidence (902 passed, 11 skipped) and reran 148 focused tests; did not repeat the full suite.",
+          "Windows behavior, hosted merged-main checks, private candidate delivery and complete two-host activation remain pending their own workflow receipts; this verdict certifies documentation and observed Mac smoke evidence only.",
+          "Software checks do not establish inference or badminton annotation accuracy."
+        ],
         "pr_number": 85,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "docs/pilot/MACOS.md",
+          "scripts/bootstrap.py",
+          "scripts/devops/environment.py",
+          "scripts/agent_queue.py"
+        ],
         "session_id": "mac-pilot-review-85",
-        "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
+        "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
