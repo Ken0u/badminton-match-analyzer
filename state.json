@@ -3156,6 +3156,7 @@
       }
     },
     "120": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39327821100",
       "checkpoint": {
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
@@ -3184,7 +3185,7 @@
         "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792444985,
