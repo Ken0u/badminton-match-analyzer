@@ -338,6 +338,14 @@
       "task_id": "103",
       "verb": "plan"
     },
+    "spec-105-da1e1dd5e5652d53cc7b89495bc46b5c12bb165d8a6d621bb78663b1b74ed0f9": {
+      "actor": "dootz1",
+      "at": 1792421207,
+      "fingerprint": "073b1aacbbc95183b102c76cc1bde41c15681902fce1836905c9f0d2efe7d4df",
+      "status": "ready",
+      "task_id": "105",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -985,6 +993,49 @@
         "pr_number": 104,
         "spec_hash": "eacd1c09aab3ecaf49ca659a777c16500e0a95bd699d35d0c8a6756c7e0d2fc7"
       }
+    },
+    "105": {
+      "epoch": 0,
+      "planned_at": 1792421207,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Reproduce unsupported original FFV1 media raising a global playback error, then successful compatible playback leaving the obsolete error visible.",
+          "On confirmed successful prepared playback clear only the playback error owned by the current selected video; preserve newer unrelated notices, preparation errors and delayed-response/video-switch guards.",
+          "Add a real generated-media Chromium regression that observes the original failure, prepares the proxy, confirms successful native-frame seek/playback and obsolete error removal, and verifies newer notices are retained."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "103"
+        ],
+        "exclusions": [
+          "No frontend rewrite/default cutover, model/inference changes, annotation/source-clock schema changes, workflow/deployment changes, data migration, research restarts, running-application upgrades or paid services."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Clear stale original-media playback errors after successful prepared playback without erasing newer notices.",
+        "paths": [
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/playback-tools.js",
+          "tests/import-browser.mjs"
+        ],
+        "priority": 10,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Real generated-media Chromium import/playback and stale-selection checks; relevant focused tests, required project checks and formatting.",
+          "Fresh exact-head/base/spec independent review, required CI, controller merge/main verification and complete private candidate receipts."
+        ]
+      },
+      "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
