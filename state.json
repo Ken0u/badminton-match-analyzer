@@ -1868,6 +1868,12 @@
       "task_id": "63",
       "verb": "submit"
     },
+    "windows-human-review-removal123-checkpoint-v1": {
+      "actor": "Ken0u",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "windows-human-review-removal123-next-v1": {
       "actor": "Ken0u",
       "at": 1792448265,
