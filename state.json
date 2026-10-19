@@ -2417,6 +2417,28 @@
       "task_id": "126",
       "verb": "review-next"
     },
+    "windows-policy126-review-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792452252,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
+        "epoch": 1,
+        "expires_at": 1792463052,
+        "granted_at": 1792452252,
+        "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+        "host_id": "MSI",
+        "pr_number": 127,
+        "review_epoch": 2,
+        "session_id": "windows-policy126-review-v2",
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+      },
+      "epoch": 1,
+      "fingerprint": "a44783964d9fad316259739400bbae689f8b2ba5ab2a9a3f8e68f212576590ea",
+      "status": "granted",
+      "task_id": "126",
+      "verb": "review-next"
+    },
     "windows-policy126-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792449891,
@@ -4032,7 +4054,20 @@
       "pr_number": 127,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
+        "epoch": 1,
+        "expires_at": 1792463052,
+        "granted_at": 1792452252,
+        "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+        "host_id": "MSI",
+        "pr_number": 127,
+        "review_epoch": 2,
+        "session_id": "windows-policy126-review-v2",
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Incorporate the complete preserved owner-authorized119 recovery implementation from reviewed head6125c7080140b2f0281515e57d640f540e7874ca, including its duplicate-delivery repair, original crash regression, immutable historical recovery, resource proof, outbox and issue-projection tests. Keep original source branches, PR122 independent verdicts and all evidence. Supersede its unmerged PR rather than infer a merge or fabricate task119 Done. The combined new revision needs its own genuine grant, full checks and fresh independent review.",
