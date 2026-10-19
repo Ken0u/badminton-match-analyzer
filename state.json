@@ -206,6 +206,14 @@
       "status": "idle",
       "verb": "next"
     },
+    "roadmap-20261019-01a15477-plan84": {
+      "actor": "dootz1",
+      "at": 1792419790,
+      "fingerprint": "c7a6e6f6f6183346fb59fd62e628b07f2990ec3829e5fbec8ee80e118fde38cf",
+      "status": "needs_human",
+      "task_id": "84",
+      "verb": "plan"
+    },
     "roadmap-20261019-01a15477-register": {
       "actor": "dootz1",
       "at": 1792418921,
@@ -1573,6 +1581,47 @@
         "pr_number": 85,
         "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
       }
+    },
+    "84": {
+      "epoch": 0,
+      "planned_at": 1792419790,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Doctor invokes ffmpeg -version and ffprobe -version while retaining supported version probes for other executables.",
+          "Regression tests assert actual command arguments for both codecs, success/failure reporting, and status-only auth diagnostics without exposing captured credentials.",
+          "Existing disposable bootstrap guards, tool availability semantics and application/model/data behavior remain unchanged."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No automation-mode, authentication, grant, integration, environment-migration, running-application, data, model or research-job changes.",
+          "No paid services or automatic tool/runtime upgrades."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Repair FFmpeg and FFprobe version arguments in workstation diagnostics.",
+        "paths": [
+          "scripts/devops/environment.py",
+          "tests/test_devops_environment.py"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused environment diagnostics/bootstrap regressions; Ruff lint/format, dependency/repository/diff checks and required exact-head CI.",
+          "Fresh independent exact-head/base/spec review and real non-author human approval; controller integration, merged-main verification and successful private-candidate receipts."
+        ]
+      },
+      "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7",
+      "status": "needs_human"
     },
     "86": {
       "epoch": 0,
