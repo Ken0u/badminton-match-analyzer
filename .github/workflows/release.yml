@@ -16,6 +16,9 @@ jobs:
   eligibility:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
     outputs:
       source: ${{ steps.validate.outputs.source }}
     steps:

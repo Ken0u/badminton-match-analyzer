@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import subprocess
 import sys
 import textwrap
@@ -10,6 +11,34 @@ from pathlib import Path
 import pytest
 
 WORKFLOW = Path(__file__).resolve().parents[1] / ".github/workflows/ci.yml"
+
+
+def test_private_candidate_ci_read_is_limited_to_eligibility():
+    release = (WORKFLOW.parent / "release.yml").read_text(encoding="utf-8")
+
+    def permissions(block, indent):
+        match = re.search(
+            rf"(?m)^{indent}permissions:\n((?:{indent}  [^\n]+\n)+)", block + "\n"
+        )
+        return (
+            dict(line.strip().split(": ", 1) for line in match[1].splitlines())
+            if match
+            else None
+        )
+
+    jobs = dict(re.findall(r"(?ms)^  ([\w-]+):\n(.*?)(?=^  [\w-]+:\n|\Z)", release))
+    # Eligibility reads CI history; installing packages receives no Actions
+    # access, and only the image publisher retains its existing package write.
+    assert permissions(release.split("\njobs:", 1)[0], "") == {"contents": "read"}
+    assert permissions(jobs["eligibility"], "    ") == {
+        "contents": "read",
+        "actions": "read",
+    }
+    assert permissions(jobs["package"], "    ") is None
+    assert permissions(jobs["images"], "    ") == {
+        "contents": "read",
+        "packages": "write",
+    }
 
 
 def revision_script():
