@@ -482,6 +482,14 @@
       "task_id": "105",
       "verb": "plan"
     },
+    "spec-108-35abfa0e48da9ab01b8f1b59c31b412be1bd91b49636275e0f8e4626573f4d78": {
+      "actor": "dootz1",
+      "at": 1792422680,
+      "fingerprint": "144208cb8b16cb549d07d1c61701e5c974f76d19ff9774658eccc961bc39bb88",
+      "status": "ready",
+      "task_id": "108",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -1287,6 +1295,51 @@
         "pr_number": 106,
         "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
       }
+    },
+    "108": {
+      "epoch": 0,
+      "planned_at": 1792422680,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Add a backend planning module and CLI command that reads an immutable annotation revision and validated source timestamps/metadata, writes only a requested JSON plan, and never edits source media, annotations or predictions.",
+          "For each distinct rally retain its reviewed serve/start and terminal-event evidence. Plan only rallies with unambiguous reviewed or corrected boundaries and exact timing; reject predicted, partial, missing, ambiguous or uncertainty-interval boundaries with explicit reasons rather than treating intervals as exact contacts.",
+          "Preserve native source-frame indices, PTS/origin/orientation and source SHA256, annotation revision/content hash, timestamp hash, inclusive boundary frames and exclusive end time (next native PTS or validated video endpoint). Keep all rally denominators and unknown player/family/side labels; scene/camera/calibration context remains separately recorded, never rewritten.",
+          "Generated-data tests cover singles/doubles, VFR/nonzero origin/orientation, final-frame end, uncertain/missing/predicted boundaries, changed source/timeline, revision snapshots, unavailable artifacts and unchanged annotations/predictions. Document that this is an inspectable export plan; actual video rendering and UI follow separately."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "103"
+        ],
+        "exclusions": [
+          "No frontend/editor changes or rewrite dependency bypass; no media rendering, inference/model promotion, schema/storage migrations, deployment/workflow changes, research/data acquisition, running-app upgrade or paid services."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Expose a reproducible source-frame rally export plan from reviewed annotations, retaining ineligible rallies and reasons.",
+        "paths": [
+          "backend/badminton/rally_export.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_export.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
+        "priority": 80,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated source-clock and annotation fixtures plus CLI regression; required full project/lint/format/dependency/repository/diff checks.",
+          "Fresh exact-head/base/spec independent review, required hosted CI, controller integration, exact-main verification and complete private delivery receipts."
+        ]
+      },
+      "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
