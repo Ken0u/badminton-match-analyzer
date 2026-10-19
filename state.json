@@ -882,6 +882,7 @@
       "epoch": 0,
       "planned_at": 1792411723,
       "planned_by": "dootz1",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "Add actions: read only to the eligibility job in .github/workflows/release.yml; keep other job token permissions unchanged.",
@@ -917,7 +918,7 @@
         ]
       },
       "spec_hash": "cb6aba907d6452ebfd2ca45a53fda8600eee88aad3186e1e2af47613d6e8294b",
-      "status": "needs_human"
+      "status": "blocked"
     }
   },
   "version": 1,
