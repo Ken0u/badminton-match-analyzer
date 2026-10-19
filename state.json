@@ -937,6 +937,14 @@
       "task_id": "116",
       "verb": "plan"
     },
+    "spec-119-7958da9e7a798dc442bb022636d0c89dd2e4db5cf5f866d4ae354501c00405e7": {
+      "actor": "Ken0u",
+      "at": 1792442676,
+      "fingerprint": "999dd90f370ef509deb2c91f421b0a81c7b5cb1cb7e887e1b873cb3ae77236a4",
+      "status": "needs_human",
+      "task_id": "119",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -1281,6 +1289,14 @@
       "fingerprint": "4f86441cba0df57bd572e4f4ff8bc34d18718832e93e1d314e7d390250fa9e76",
       "status": "idle",
       "verb": "next"
+    },
+    "windows-external-merge119-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792442676,
+      "fingerprint": "7b2dec37216904ac6888f49c9b0f185c16a37d95b1a723ab2b9cd924714cd387",
+      "status": "needs_human",
+      "task_id": "119",
+      "verb": "plan"
     },
     "windows-holdout63-checkpoint-inventory-v1": {
       "actor": "Ken0u",
@@ -2679,6 +2695,56 @@
         "pr_number": 118,
         "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
       }
+    },
+    "119": {
+      "epoch": 0,
+      "planned_at": 1792442676,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Reproduce task111 Review with externally merged PR114 and verified main38e; detect the external merge before the normal verify-main transition, preserving the original claim, epoch, frozen spec, submission, independent review, actual merger, merged commit/tree and CI observations. Repeated passes create one preserved incident and continue safely with unrelated eligible work.",
+          "Retain existing queue restrictions: a merge record alone never establishes non-author human approval, source parity or main verification. Unknown, stale, mismatched, failed or in-progress evidence stays incomplete. Do not silently mark externally merged work Done or delete reservations/history.",
+          "Define an authenticated explicit recovery request and documented operator sequence for already-merged work. Bind the actual original head/base/spec, merged source/tree, successful exact-main verification and real independent/non-author human review evidence; distinguish owner-confirmed external review from a GitHub approval record. Preserve unknowns and reject unauthorized, replay-mutated or incomplete recovery.",
+          "Preserve ordinary controller serial merge/CI/review/sensitive-change gates, code-only and resource-bearing recovery rules, host/path/resource fencing and delivery outbox idempotency. Keep application source, merge SHA and publisher SHA distinct; no extra candidate dispatch when a live or successful one exists.",
+          "Cover external Review merges, queued/running/failed/stale main checks, mismatched source trees/head/base/spec and unauthorized/replayed recovery, plus repeated reconciliation and successful unrelated integration after fencing. Final implementation requires fresh independent exact-head review and genuine non-author human review before controller integration."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No raw coordination-branch edits, fake human/agent reviews, automatic adoption from a merge alone, routine manual PR merges, relaxed checks or security/enforcement changes outside the bounded explicit recovery behavior.",
+          "No repository/package visibility, spending, plan, protections, credentials, Project metadata, dataset, model, running-app deployment or research/inference changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Fence externally merged task PRs without crashing the controller and provide an explicit audited recovery path that preserves all original review, source and delivery evidence.",
+        "paths": [
+          "scripts/devops/coordinator.py",
+          "scripts/devops/queue.py",
+          "scripts/agent_queue.py",
+          "scripts/devops/policy.py",
+          "tests/test_agent_coordinator.py",
+          "tests/test_agent_queue.py",
+          "tests/test_agent_policy.py",
+          "docs/COLLABORATION.md"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused queue/coordinator/policy adapter regressions including the observed Review-to-verify-main crash and two reconciliation passes; required full project/lint/format/dependency/repository/diff checks.",
+          "Fresh independent exact-head/base/spec review and real non-author human review, controller integration, successful exact merged-main CI and complete package/image candidate delivery.",
+          "Revalidate actual externally merged111 without overwriting its original provenance, then verify legitimate Windows/Mac ownership remains fenced and unrelated eligible tasks progress without duplicate work."
+        ]
+      },
+      "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
+      "status": "needs_human"
     },
     "62": {
       "epoch": 0,
