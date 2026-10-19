@@ -8,7 +8,12 @@ import re
 from datetime import datetime, timezone
 
 from .github import GitHubError
-from .policy import external_recovery_errors, policy_errors, rollout_errors
+from .policy import (
+    external_recovery_errors,
+    policy_errors,
+    rollout_errors,
+    sensitive_scope,
+)
 
 REQUEST_MARKER = "<!-- agent-request:v1 -->"
 HEARTBEAT_MARKER = "<!-- agent-heartbeat:v1 -->"
@@ -885,7 +890,12 @@ def integrate(gh, config, state):
                         dependencies=[],
                         priority=0,
                         milestone="Infrastructure",
-                        risk="routine",
+                        risk=(
+                            "human"
+                            if task["spec"]["risk"] == "human"
+                            or sensitive_scope(task["spec"]["paths"], config)
+                            else "routine"
+                        ),
                     )
                     repair_state = apply_request(
                         repair_state,

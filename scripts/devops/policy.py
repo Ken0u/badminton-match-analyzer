@@ -15,6 +15,15 @@ def sensitive(files, config):
     return any(in_scope(f, config["sensitive_paths"]) for f in files)
 
 
+def sensitive_scope(paths, config):
+    """Repair grants can contain sensitive files beneath an ancestor prefix."""
+    return any(
+        in_scope(path, [prefix]) or in_scope(prefix, [path])
+        for path in paths
+        for prefix in config.get("sensitive_paths", [])
+    )
+
+
 def latest_reviews(reviews):
     result = {}
     for review in sorted(reviews, key=lambda r: r.get("id", 0)):

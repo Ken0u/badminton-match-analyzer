@@ -13,7 +13,7 @@ import math
 import re
 from typing import Any
 
-from .policy import scope_authorized
+from .policy import scope_authorized, sensitive_scope
 
 LEASE_SECONDS = 3 * 60 * 60
 RESERVED = {
@@ -463,16 +463,21 @@ def apply_request(
             raise QueueError("repair task already exists")
         if spec["resources"] or spec["artifacts"] or spec["dependencies"]:
             raise QueueError("CI repairs cannot acquire research/data resources")
+        repair_status = (
+            "needs_human"
+            if spec["risk"] == "human" or sensitive_scope(spec["paths"], config)
+            else "ready"
+        )
         result["tasks"][task_id] = {
             "spec": spec,
             "spec_hash": digest,
-            "status": "ready",
+            "status": repair_status,
             "epoch": 0,
             "repair_for": original,
             "planned_by": actor,
             "planned_at": now,
         }
-        receipt.update(task_id=task_id, status="ready")
+        receipt.update(task_id=task_id, status=repair_status)
     elif verb in {"pause", "resume"}:
         result["paused"] = verb == "pause"
     elif verb == "plan":

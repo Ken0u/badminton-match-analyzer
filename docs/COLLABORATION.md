@@ -321,6 +321,13 @@ resources stay protected. A verified repair records the original failed SHA and
 repair SHA separately and resumes the queue. A repair that breaks main again
 escalates once for human attention.
 
+Sensitive or risk-human repairs enter Needs human with their own frozen scope.
+An authenticated configured owner authorizes that exact repair hash using
+`human-approved` before claiming; the parent's authorization is not reused.
+The repair retains its paused-queue priority and `repair_for` linkage through
+authorization, independent review and verified integration. Nonsensitive routine
+repairs remain automatic. No non-author human PR approval is required.
+
 Candidate publishing stays pending until the complete candidate workflow succeeds,
 including package/image artifacts. Failed publishing is retried up to three
 attempts, then produces one incident issue. A dispatch acknowledgement is not

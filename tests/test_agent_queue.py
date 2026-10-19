@@ -520,6 +520,31 @@ def test_risk_human_claim_still_requires_valid_owner_scope_authorization(defect)
     assert h.next()["status"] == "idle"
 
 
+@pytest.mark.parametrize("kind", ["risk_human", "sensitive_scope", "routine"])
+def test_coordinator_repair_enters_supported_owner_scope_flow_when_needed(kind):
+    h = Harness().running()
+    h.state["tasks"]["1"]["status"] = "verifying_main"
+    h.state["paused"] = True
+    h.config["coordinator_login"] = "github-actions[bot]"
+    h.config["human_approvers"] = ["Ken0u"]
+    h.config["sensitive_paths"] = ["backend/access.py"]
+    repair_spec = spec(
+        risk="human" if kind == "risk_human" else "routine",
+        paths=["backend/"] if kind == "sensitive_scope" else ["tests/clock.py"],
+    )
+    result = h.send(
+        "repair", "github-actions[bot]", task_id="2", repair_for="1", spec=repair_spec
+    )
+    assert result["status"] == ("ready" if kind == "routine" else "needs_human")
+    assert h.state["tasks"]["2"]["repair_for"] == "1"
+    if kind != "routine":
+        h.send(
+            "human-approved", task_id="2", spec_hash=h.state["tasks"]["2"]["spec_hash"]
+        )
+        assert h.state["tasks"]["2"]["status"] == "ready"
+        assert h.state["tasks"]["2"]["repair_for"] == "1"
+
+
 @pytest.mark.parametrize(
     "changes",
     [{"epoch": 2}, {"epoch": True}, {"host_id": "windows"}, {"session_id": "other"}],

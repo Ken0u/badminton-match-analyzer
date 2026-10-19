@@ -558,6 +558,129 @@ def test_failed_verification_grants_only_a_bounded_repair(conclusion, mode):
     assert state["receipts"]["repair-next"]["task_id"] == "900"
 
 
+@pytest.mark.parametrize("mode", ["active", "pilot"])
+@pytest.mark.parametrize("kind", ["risk_human", "sensitive_file", "ancestor_scope"])
+def test_sensitive_main_repair_has_its_own_owner_authorization_and_completes(
+    mode, kind
+):
+    from devops.queue import QueueError, apply_request, spec_hash
+
+    gh, store, config = merge_setup()
+    config["human_approvers"] = ["Ken0u"]
+    tip, state = store.read()
+    original = state["tasks"]["1"]
+    if kind == "risk_human":
+        original["spec"]["risk"] = "human"
+    else:
+        config["sensitive_paths"] = ["backend/clock.py"]
+        if kind == "ancestor_scope":
+            original["spec"]["paths"] = ["backend/"]
+    digest = spec_hash(original["spec"])
+    original["spec_hash"] = digest
+    for field in ("claim", "submission", "review"):
+        original[field]["spec_hash"] = digest
+    original["human_approval"] = {"actor": "Ken0u", "spec_hash": digest, "at": 90}
+    store.write(tip, state)
+    integrate(gh, config, store.read()[1])
+    failed_sha = gh.merge_sha
+    gh.ci = [
+        {"id": 1, "event": "push", "head_sha": failed_sha, "conclusion": "failure"}
+    ]
+    state = integrate(gh, config, store.read()[1])
+    repair = state["tasks"]["900"]
+    assert state["paused"] and repair["repair_for"] == "1"
+    assert repair["status"] == "needs_human" and repair["spec"]["risk"] == "human"
+    assert "human_approval" not in repair and repair["spec_hash"] != digest
+    config.update(mode=mode, pilot_tasks=[1])
+    counter = 0
+
+    def send(verb, actor="Ken0u", **fields):
+        nonlocal state, counter
+        counter += 1
+        request = {"verb": verb, "request_id": f"repair-life-{counter}", **fields}
+        state = apply_request(state, request, actor, 110 + counter, config)
+        return state["receipts"][request["request_id"]]
+
+    worker = {"host_id": "win", "session_id": "repair-impl"}
+    send("register", **worker, capabilities=["cpu"], artifacts={})
+    assert (
+        send("next", task_id="900", **worker, baseline_sha=failed_sha)["status"]
+        == "idle"
+    )
+    with pytest.raises(QueueError, match="approver"):
+        send(
+            "human-approved",
+            actor="dootz1",
+            task_id="900",
+            spec_hash=repair["spec_hash"],
+        )
+    with pytest.raises(QueueError, match="hash"):
+        send("human-approved", task_id="900", spec_hash=digest)
+    send("human-approved", task_id="900", spec_hash=repair["spec_hash"])
+    assert state["tasks"]["900"]["repair_for"] == "1"
+    grant = send("next", task_id="900", **worker, baseline_sha=failed_sha)
+    assert grant["status"] == "granted"
+    gh.pr.update(number=900, merged=False, state="open")
+    gh.pr.pop("merge_commit_sha", None)
+    gh.pr["head"].update(sha="d" * 40, ref=grant["claim"]["branch"])
+    gh.pr["base"]["sha"] = failed_sha
+    binding = {
+        "head_sha": "d" * 40,
+        "base_sha": failed_sha,
+        "spec_hash": repair["spec_hash"],
+    }
+    send("submit", task_id="900", epoch=1, **worker, pr_number=900, **binding)
+    assert send("review-next", task_id="900", **worker)["status"] == "idle"
+    reviewer = {"host_id": "win", "session_id": "repair-review"}
+    send("register", **reviewer, capabilities=["cpu"], artifacts={})
+    review = send("review-next", task_id="900", **reviewer)
+    assert review["status"] == "granted"
+    send(
+        "review-result",
+        task_id="900",
+        epoch=1,
+        review_epoch=review["claim"]["review_epoch"],
+        **reviewer,
+        **binding,
+        verdict="approve",
+        findings=[],
+        reviewed_files=["backend/clock.py"],
+        limitations=[],
+        evidence=["Independent repair regression checks passed"],
+    )
+    # No human PR review is supplied by the fake transport; scope approval is separate.
+    store.write(store.read()[0], state)
+    gh.merge_sha = "e" * 40
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["900"]["status"] == "integrating" and gh.pr["merged"]
+    assert state["paused"]
+    gh.ci = [
+        {
+            "id": 2,
+            "event": "push",
+            "head_branch": "main",
+            "head_sha": gh.merge_sha,
+            "status": "completed",
+            "conclusion": "success",
+        }
+    ]
+    gh.releases = [
+        {
+            "id": 3,
+            "display_title": f"Private candidate {gh.merge_sha}",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "run/3",
+        }
+    ]
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["900"]["status"] == "done" and not state["paused"]
+    assert state["tasks"]["900"]["delivery_pending"] is False
+    assert state["tasks"]["1"]["status"] == "done"
+    assert state["tasks"]["1"]["merge_sha"] == failed_sha
+    assert state["tasks"]["1"]["verified_by_repair"] == gh.merge_sha
+
+
 def test_malformed_request_id_does_not_starve_queue():
     gh = FakeGitHub()
     gh.issues = [issue("control")]
