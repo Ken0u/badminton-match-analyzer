@@ -4727,6 +4727,7 @@
       "status": "proposed"
     },
     "69": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39344599707",
       "checkpoint": {
         "branch": "codex/issue-69-add-source-time-preserving-browser-playb-e3",
         "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
@@ -4745,7 +4746,7 @@
       },
       "checkpoint_at": 1792419307,
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 4,
       "external_recovery": {
         "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
