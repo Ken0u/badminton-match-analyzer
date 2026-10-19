@@ -2,6 +2,7 @@ import { chromium } from "playwright";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { fileURLToPath } from "node:url";
+import { execFileSync } from "node:child_process";
 
 const base = process.env.BASE_URL || "http://127.0.0.1:8002";
 assert.equal(
@@ -317,6 +318,103 @@ try {
   );
   assert.ok(statusLog.some((text) => /Uploading|Checking/.test(text)));
   assert.ok(statusLog.some((text) => /Preparing/.test(text)));
+
+  // A real rotated, variable-rate source must keep native seeks and reviewed
+  // exports while the compatible media is prepared and across a reload.
+  const rotatedPath = fileURLToPath(
+    new URL("../.cache/import-ui-test-data/rotated-vfr.mp4", import.meta.url),
+  );
+  execFileSync(process.env.PYTHON || "python", [
+    fileURLToPath(new URL("playback-fixture.py", import.meta.url)),
+    rotatedPath,
+  ]);
+  await page.locator("#upload-file").setInputFiles(rotatedPath);
+  await page.locator("#upload-form button[type=submit]").click();
+  await ready(3, "rotated-vfr.mp4");
+  await page.getByRole("button", { name: /rotated-vfr.mp4/ }).click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#playback-status")
+      .textContent.includes("compatible copy"),
+  );
+  const rotated = (await api("/api/videos")).find(
+      (v) => v.name === "rotated-vfr.mp4",
+    ),
+    rotatedRoot = `/api/videos/${rotated.id}`;
+  assert.deepEqual(
+    await api(rotatedRoot + "/timestamps"),
+    [0, 0.04, 0.12, 0.16],
+  );
+  const reviewedBefore = await api(rotatedRoot + "/annotations");
+  await page.locator("#frame-number").fill("2");
+  await page.locator("#frame-number").dispatchEvent("change");
+  await page.locator("#prepare-playback").click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#playback-status")
+      .textContent.includes("source frame timing preserved"),
+  );
+  assert.equal(await page.locator("#frame-number").inputValue(), "2");
+  assert.match(
+    await page.locator("#video").getAttribute("src"),
+    /playback\/media$/,
+  );
+  await page.waitForFunction(() => {
+    const v = document.querySelector("#video");
+    return v.readyState >= 2 && Math.abs(v.currentTime - 0.12) < 0.0001;
+  });
+  assert.deepEqual(
+    await page.locator("#video").evaluate((v) => [v.videoWidth, v.videoHeight]),
+    [64, 128],
+  );
+  assert.deepEqual(
+    (await api(rotatedRoot + "/export?format=json")).annotations,
+    reviewedBefore,
+  );
+  await page.reload();
+  await page.getByRole("button", { name: /rotated-vfr.mp4/ }).click();
+  await page.waitForFunction(() =>
+    document
+      .querySelector("#playback-status")
+      .textContent.includes("source frame timing preserved"),
+  );
+  await page.locator("#frame-number").fill("1");
+  await page.locator("#frame-number").dispatchEvent("change");
+  await page.locator("#play").click();
+  await page.waitForFunction(
+    () => document.querySelector("#video").currentTime >= 0.16,
+  );
+  await page.waitForFunction(() => document.querySelector("#video").paused);
+  assert.equal(await page.locator("#frame-number").inputValue(), "3");
+  assert.deepEqual(await api(rotatedRoot + "/annotations"), reviewedBefore);
+
+  // A late cache response from the old video must not replace the new source.
+  let releasePlayback;
+  let observedPlayback;
+  const playbackObserved = new Promise((resolve) => {
+    observedPlayback = resolve;
+  });
+  const playbackGate = new Promise((resolve) => {
+    releasePlayback = resolve;
+  });
+  await page.route(`**${rotatedRoot}/playback`, async (route) => {
+    observedPlayback();
+    await playbackGate;
+    await route.continue();
+  });
+  await page.getByRole("button", { name: /QA YouTube fixture/ }).click();
+  await page.getByRole("button", { name: /rotated-vfr.mp4/ }).click();
+  await playbackObserved;
+  await page.getByRole("button", { name: /QA YouTube fixture/ }).click();
+  releasePlayback();
+  await page.unrouteAll({ behavior: "wait" });
+  await page.waitForFunction(
+    () => document.querySelector("#title").textContent === "QA YouTube fixture",
+  );
+  assert.equal(
+    await page.locator("#video").getAttribute("src"),
+    `/api/videos/${youtube.id}/media`,
+  );
   await page.screenshot({
     path: fileURLToPath(new URL("import-desktop.png", output)),
     fullPage: true,
@@ -335,7 +433,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "Import browser checks passed: upload/progress/media, terminal intervals/history/kind switch, camera/scene corrections, duplicate persistence, invalid file/URL errors, queued YouTube fixture import, content identity, mobile layout.",
+    "Import browser checks passed: upload/progress/media, rotated VFR playback preparation/seeks/reload/stale-selection guard, reviewed exports, terminal intervals/history/kind switch, camera/scene corrections, duplicate persistence, invalid file/URL errors, queued YouTube fixture import, content identity, mobile layout.",
   );
 } finally {
   await browser.close();

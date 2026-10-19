@@ -309,6 +309,41 @@ def create_app(
     def media(video_id: str):
         return FileResponse(source(store.video(video_id)))
 
+    @app.get("/api/videos/{video_id}/playback")
+    def playback_status(video_id: str):
+        from .playback import cached_playback
+
+        v = store.video(video_id)
+        source(v)
+        cached = cached_playback(v, root, data)
+        return {
+            "status": "ready" if cached else "missing",
+            "url": f"/api/videos/{video_id}/playback/media" if cached else None,
+        }
+
+    @app.post("/api/videos/{video_id}/playback", status_code=202)
+    def playback_prepare(video_id: str):
+        from .playback import prepare_playback
+
+        v = store.video(video_id)
+        source(v)
+        return enqueue(
+            "playback",
+            video_id,
+            lambda job_id, progress: prepare_playback(v, root, data, progress),
+        )
+
+    @app.get("/api/videos/{video_id}/playback/media")
+    def playback_media(video_id: str):
+        from .playback import cached_playback
+
+        v = store.video(video_id)
+        source(v)
+        cached = cached_playback(v, root, data)
+        if cached is None:
+            raise HTTPException(404, "Prepare browser playback for this video first")
+        return FileResponse(cached[0], media_type="video/mp4")
+
     @app.get("/api/videos/{video_id}/image/{name}")
     def image(video_id: str, name: str):
         store.video(video_id)

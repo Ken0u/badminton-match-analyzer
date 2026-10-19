@@ -191,6 +191,16 @@
               aria-label="Video position in source frames"
             />
             <div id="event-markers" aria-label="Event markers"></div>
+            <div class="playback-options">
+              <button id="prepare-playback" class="quiet" disabled>
+                Prepare playback
+              </button>
+              <small
+                id="playback-status"
+                role="status"
+                aria-live="polite"
+              ></small>
+            </div>
             <div class="mark-bar">
               <span>MARK CURRENT FRAME</span
               ><button data-mark="serve">Serve <kbd>1</kbd></button

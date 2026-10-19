@@ -3,6 +3,7 @@ import { createImportTools } from "./import-tools.js";
 import { createRecognitionTools } from "./recognition-tools.js";
 import { createSegmentTools } from "./segment-tools.js";
 import { createRallyTools } from "./rally-tools.js";
+import { createPlaybackTools } from "./playback-tools.js";
 import {
   createProcessingTools,
   ownedCandidates,
@@ -115,6 +116,7 @@ async function selectVideo(id) {
   if (state.dirty && !confirm("Discard unsaved edits and open another video?"))
     return;
   const generation = ++state.selectionGeneration;
+  playbackTools.reset();
   segmentTools.reset();
   processingTools.reset();
   $("video").pause();
@@ -186,6 +188,7 @@ async function selectVideo(id) {
   await loadLibrary();
   if (generation !== state.selectionGeneration) return;
   seek(initialFrame);
+  playbackTools.load();
   resetEditor();
   notice(
     "Mark events at the current frame. Save edits before exporting or running tracking.",
@@ -665,6 +668,7 @@ async function refreshJobs() {
   $("track-shuttle").disabled = !!active;
   $("detect-contacts").disabled = !!active || !state.shuttleRun;
   importTools.updateJobs(jobs);
+  await playbackTools.updateJobs(jobs);
   await segmentTools.refresh(jobs, active);
   await processingTools.refresh(jobs, active);
   if (active) {
@@ -697,7 +701,7 @@ async function refreshJobs() {
   if (!state.video) return;
   const scope = processingTools.scope();
   const latest = jobs.find((j) => j.video_id === state.video.id);
-  if (latest?.status === "failed") {
+  if (latest?.status === "failed" && latest.kind !== "playback") {
     $(
       latest.kind === "players" ? "track-status" : "shuttle-status",
     ).textContent = latest.message;
@@ -912,17 +916,20 @@ $("video").onplay = () => {
   $("exact-frame").hidden = true;
 };
 $("video").onpause = () => {
+  if ($("video").dataset.switching) return;
   $("play").textContent = "▶ Play";
   updateFrame(frameAt($("video").currentTime));
   showExact();
 };
 $("video").ontimeupdate = () => {
+  if ($("video").dataset.switching) return;
   if (!$("video").paused) updateFrame(frameAt($("video").currentTime));
 };
 $("video").onerror = () => {
+  playbackTools.mediaError();
   if (state.video)
     notice(
-      "Video playback could not load. Check the source file or try exact-frame review.",
+      "Video playback could not load. Choose Prepare playback or use exact-frame review.",
       true,
     );
 };
@@ -1136,6 +1143,7 @@ window.addEventListener("keydown", (e) => {
   if (["1", "2", "3"].includes(e.key))
     mark({ 1: "serve", 2: "shot", 3: "rally_end" }[e.key]);
 });
+const playbackTools = createPlaybackTools({ $, state, api, seek });
 const reviewTools = createReviewTools({
   state,
   $,
