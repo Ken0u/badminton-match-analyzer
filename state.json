@@ -287,6 +287,22 @@
       "task_id": "96",
       "verb": "plan"
     },
+    "spec-97-7e908991232f8121877d462716d58fa3a0a2b72f3a8470d5c2b0c963f427ac7f": {
+      "actor": "dootz1",
+      "at": 1792418018,
+      "fingerprint": "0e632edcb163a4faa86b4e001a8af80f52dea0d9b5a84535c62a1bf389f6f11e",
+      "status": "ready",
+      "task_id": "97",
+      "verb": "plan"
+    },
+    "spec-98-3450f2d5553fc18a73580afccb83f706fdb0c268bcdfa40dfa2ba9a7a7f73497": {
+      "actor": "dootz1",
+      "at": 1792418018,
+      "fingerprint": "0747d972116209af7e4319bb88e82b625651076f03f1c9516221ca550c52c84d",
+      "status": "needs_human",
+      "task_id": "98",
+      "verb": "plan"
+    },
     "verify-80-a996e83867509489e223e6a321b6ee4794fafc61-False": {
       "actor": "github-actions[bot]",
       "at": 1792416406,
@@ -1415,6 +1431,103 @@
       },
       "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d",
       "status": "ready"
+    },
+    "97": {
+      "epoch": 0,
+      "planned_at": 1792418018,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Migrate playback, timeline, overlays, camera/scene/court editing, player mappings, shuttle/contact/rally/stroke review and evaluation; cover every supported baseline action.",
+          "Preserve native source PTS/frame identity, orientation, proxy mapping, cut/exclusion/calibration expiry, unknown labels, saved revisions and original predictions. Preserve explicit prediction acceptance and JSON/CSV semantics.",
+          "Verify seek/correct/save/reload, revision conflicts, unsaved edits and request ordering. Meet the frozen phase-1 performance budgets and keyboard/focus requirements with generated-media evidence; isolate frequent frame rendering from React component rerenders."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "96"
+        ],
+        "exclusions": [
+          "No model/inference changes, annotation/source-clock schema changes, data migration, paid services, research restarts or automatic app upgrade.",
+          "Respect active grants including playback proxies #69; request scope extensions before editing additional paths."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Migrate the frame-accurate review editor to React.",
+        "paths": [
+          "backend/frontend/",
+          "tests/frontend-editor.mjs"
+        ],
+        "priority": 60,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Relevant generated-media/browser regressions; typecheck/build when introduced; repository UTF-8/LF/JSON/local-link and diff checks.",
+          "Fresh exact-head/base/spec independent review, required CI and controller integration/main verification."
+        ]
+      },
+      "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
+      "status": "ready"
+    },
+    "98": {
+      "epoch": 0,
+      "planned_at": 1792418018,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Build and serve the frontend from FastAPI; include correct assets in wheel/sdist and review/CPU images, excluding frontend source/build tooling where unnecessary. Keep one application container and no runtime frontend server.",
+          "Add typecheck/build/browser CI gates, installed-package asset checks outside checkout, and authenticated container startup/static-routing checks. Preserve native Mac/Windows development.",
+          "Pass the complete parity matrix and frozen performance/accessibility checks before default cutover or legacy removal; document reversible code-release rollback without changing annotation data.",
+          "Obtain real non-author human approval for workflow/Docker/packaging changes plus independent agent review, exact-head CI, merged-main verification and private candidate receipts. Do not upgrade running applications."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "97"
+        ],
+        "exclusions": [
+          "No model/inference changes, annotation/source-clock schema changes, data migration, paid services, research restarts or automatic app upgrade.",
+          "Respect active grants including playback proxies #69; request scope extensions before editing additional paths."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Integrate React package/container assets and retire legacy UI.",
+        "paths": [
+          "backend/frontend/",
+          "backend/badminton/static/",
+          "backend/badminton/api.py",
+          "pyproject.toml",
+          "package.json",
+          "package-lock.json",
+          "Dockerfile",
+          ".dockerignore",
+          ".github/workflows/ci.yml",
+          "scripts/verify_package.py",
+          "tests/frontend-delivery.mjs",
+          "docs/DEPLOYMENT.md"
+        ],
+        "priority": 70,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Relevant generated-media/browser regressions; typecheck/build when introduced; repository UTF-8/LF/JSON/local-link and diff checks.",
+          "Fresh exact-head/base/spec independent review, required CI and controller integration/main verification."
+        ]
+      },
+      "spec_hash": "051f9726f4d266c476bf1c36a30a0c9a21b729d47c8388a7fd57357add44d576",
+      "status": "needs_human"
     }
   },
   "version": 1,
