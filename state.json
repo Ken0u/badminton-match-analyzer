@@ -770,6 +770,7 @@
       "status": "proposed"
     },
     "81": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39256504972",
       "checkpoint": {
         "base_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
         "branch": "codex/issue-81-document-a-reproducible-mac-locked-revie",
@@ -790,8 +791,8 @@
         "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
       },
       "delivery_attempts": 3,
-      "delivery_error": "Private publishing failed after three attempts",
-      "delivery_pending": true,
+      "delivery_pending": false,
+      "delivery_recovered_from": "Private publishing failed after three attempts",
       "epoch": 1,
       "integration": {
         "at": 1792411270,
