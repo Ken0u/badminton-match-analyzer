@@ -963,6 +963,13 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "mac-review119-01a15493-next-v2": {
+      "actor": "dootz1",
+      "at": 1792445688,
+      "fingerprint": "79b0425dd32b726e6b82f3adfc41d5a67809445027d60e180877e1d1d54049c6",
+      "status": "idle",
+      "verb": "review-next"
+    },
     "mac-review119-01a15493-register": {
       "actor": "dootz1",
       "at": 1792444580,
