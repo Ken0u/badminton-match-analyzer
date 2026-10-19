@@ -662,6 +662,13 @@
       "task_id": "69",
       "verb": "review-next"
     },
+    "windows-playback69-review-next-v3": {
+      "actor": "Ken0u",
+      "at": 1792419939,
+      "fingerprint": "cd8ba91b39c80a6d204205b4941e6f9e7629be73f4e2237591406447176b1a59",
+      "status": "idle",
+      "verb": "review-next"
+    },
     "windows-playback69-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792418461,
