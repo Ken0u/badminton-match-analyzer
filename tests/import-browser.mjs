@@ -437,6 +437,23 @@ try {
   const longGap = (await api("/api/videos")).find(
     (v) => v.name === "long-gap-vfr.mkv",
   );
+  await page.waitForFunction(() =>
+    document.querySelector("#notice").textContent.includes("could not load"),
+  );
+  assert.equal(
+    await page
+      .locator("#notice")
+      .evaluate((n) => n.classList.contains("error")),
+    true,
+  );
+  // Trying Play on the unsupported original must retain playback ownership
+  // even when play() rejects after the media error event.
+  await page.locator("#play").click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector("#video").error?.code === 4 &&
+      document.querySelector("#notice").textContent.includes("could not load"),
+  );
   assert.equal(longGap.duration_s, 0.72);
   await page.locator("#prepare-playback").click();
   await page.waitForFunction(() =>
@@ -458,6 +475,39 @@ try {
     0.72,
   );
   assert.equal(await page.locator("#frame-number").inputValue(), "3");
+  assert.equal(await page.locator("#notice").textContent(), "");
+  assert.equal(
+    await page
+      .locator("#notice")
+      .evaluate((n) => n.classList.contains("error")),
+    false,
+  );
+
+  // Loading a prepared copy must preserve a newer, unrelated review notice.
+  await page.getByRole("button", { name: /QA YouTube fixture/ }).click();
+  const longRoot = `/api/videos/${longGap.id}`;
+  let releaseCachedPlayback;
+  const cachedPlaybackGate = new Promise((resolve) => {
+    releaseCachedPlayback = resolve;
+  });
+  await page.route(`**${longRoot}/playback`, async (route) => {
+    await cachedPlaybackGate;
+    await route.continue();
+  });
+  await page.getByRole("button", { name: /long-gap-vfr.mkv/ }).click();
+  await page.waitForFunction(() =>
+    document.querySelector("#notice").textContent.includes("could not load"),
+  );
+  await page.locator('[data-mark="shot"]').click();
+  const newerNotice = await page.locator("#notice").textContent();
+  assert.match(newerNotice, /Choose the shot family/);
+  releaseCachedPlayback();
+  await page.waitForFunction(() => {
+    const v = document.querySelector("#video");
+    return v.readyState >= 2 && v.currentSrc.endsWith("/playback/media");
+  });
+  assert.equal(await page.locator("#notice").textContent(), newerNotice);
+  await page.unroute(`**${longRoot}/playback`);
   await page.screenshot({
     path: fileURLToPath(new URL("import-desktop.png", output)),
     fullPage: true,
@@ -476,7 +526,7 @@ try {
   );
   assert.deepEqual(errors, []);
   console.log(
-    "Import browser checks passed: upload/progress/media, rotated VFR playback preparation/seeks/reload/stale-selection guard, reviewed exports, terminal intervals/history/kind switch, camera/scene corrections, duplicate persistence, invalid file/URL errors, queued YouTube fixture import, content identity, mobile layout.",
+    "Import browser checks passed: upload/progress/media, rotated VFR playback preparation/seeks/reload/stale-selection guard, owned playback error recovery/newer-notice preservation, reviewed exports, terminal intervals/history/kind switch, camera/scene corrections, duplicate persistence, invalid file/URL errors, queued YouTube fixture import, content identity, mobile layout.",
   );
 } finally {
   await browser.close();
