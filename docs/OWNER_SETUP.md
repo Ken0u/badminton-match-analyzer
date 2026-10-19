@@ -3,8 +3,9 @@
 Implementation and issue history are available before activation. This is a
 one-time setup by `Ken0u`; `dootz1` currently has write rather than admin access.
 GitHub Pro is not required. The default `integration_enforcement: "controller"`
-works with a private repository on GitHub Free. No subscription, credentials or
-branch protections were changed by this PR.
+works with public or private repositories on GitHub Free. No subscription or
+branch-protection setup is required. Candidate visibility is configured separately
+from the private Project, as described below.
 
 1. Review and merge the bootstrap DevOps PR after its exact-head CI succeeds.
    This change alters trusted workflows/policy and requires non-author human
@@ -30,7 +31,7 @@ branch protections were changed by this PR.
 6. Select two small nonconflicting issues, one per host. In a human-reviewed
    configuration PR set `mode` to `pilot` and `pilot_tasks` to their issue numbers.
    Verify committed grants, independent reviews, sequential merges, merged-main
-   checks, board updates and private candidate artifacts.
+   checks, board updates and candidate artifacts matching the declared visibility.
 7. After both pilots pass, use a human-reviewed configuration PR to change mode
    to `active`. GitHub Actions and artifact/storage quotas still apply; keep
    paid overage disabled unless explicitly authorized separately. Each collaborator
@@ -47,9 +48,53 @@ This permits activation while observation mode correctly grants no tasks.
 Historical records live in [Issues](https://github.com/Ken0u/badminton-match-analyzer/issues).
 [Queue control #74](https://github.com/Ken0u/badminton-match-analyzer/issues/74)
 accepts durable requests after the trusted controller is merged. Project creation
-was not possible with the implementation account's current token: it lacks the
-Project scope. This authorization is still needed for the board; it does not
-require buying GitHub Pro.
+requires a Project-capable credential; ordinary repository authentication alone
+may not provide that scope. The board stays private even when source and build
+artifacts are public. Project authorization does not require buying GitHub Pro.
+
+## Candidate visibility and public builds
+
+The reviewed `.github/automation.json` declares `candidate_visibility` as `public`
+for this public repository. Private installations use `private`. Missing, invalid
+or mismatched repository visibility stops publishing; the workflow never silently
+falls back to another mode. The legacy workflow name **Private candidates** is
+retained for controller receipt compatibility; receipts record actual visibility.
+
+Public mode makes the wheel/sdist workflow artifacts and the `review`/`cpu`
+container images public. It does not publish the private Project, credentials,
+datasets, uploaded videos, private annotations, caches or external model weights,
+and it does not deploy or upgrade a running application.
+Visibility does not choose a project license or change dependency terms; the
+[existing license inventory](DEPLOYMENT.md#dependency-licenses-and-source) remains
+applicable to distribution.
+
+GHCR package visibility is independent of source-repository visibility. An owner
+must set both `badminton-match-analyzer-review` and
+`badminton-match-analyzer-cpu` to Public in their package settings before public
+pushes can succeed. A missing public package requires an owner-controlled initial
+package setup; the publisher refuses to assume it is public. Changing a package
+to public cannot be reversed, so this follows the owner's explicit publication
+decision. See [GitHub's package visibility instructions](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility).
+Private mode permits initial package creation using GHCR's private default and
+requires confirmed private visibility in the final image receipt. Both modes
+check visibility before pushing and again before recording success.
+
+The publisher is frozen at a reviewed main commit during eligibility. Both the
+application source and publisher require successful exact merged-main checks;
+an older verified source cannot authorize an unverified publisher. Package
+and image jobs check out that publisher separately from the exact verified
+application source. Receipts bind both commits; the dependency lock hash belongs
+to the application source. This supports older queued sources without running
+their obsolete publishing helper or including the publisher checkout in builds.
+
+After a reviewed publisher repair, rerunning an old failed workflow still uses
+its old workflow definition. For a terminal failed candidate with no successful
+delivery, dispatch the current trusted `release.yml` on `main` once with its
+original verified `source_sha`. First check for an existing successful or live
+candidate for that source. Do not reset attempt counters, edit coordination
+state, bypass CI, or repeat inference. The normal delivery outbox recognizes the
+new complete successful candidate and clears its pending/error state. Partial
+package or image success is insufficient.
 
 ## Integration safeguards without Pro
 

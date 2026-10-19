@@ -151,7 +151,7 @@ CI and independent review. Automation/security policy, credentials/authenticatio
 destructive migrations, deployment and model promotion require a non-author
 human approval. CI passing does not establish badminton accuracy.
 
-## Research, interrupted jobs and private delivery
+## Research, interrupted jobs and candidate delivery
 
 Pin `BADMINTON_ROOT` and `BADMINTON_DATA_DIR` before importing configuration in
 copied launchers. Use disposable test storage, and preserve actual annotations
@@ -164,9 +164,18 @@ working directory, command, Store/job state and durable artifacts. A timeout,
 closed chat, offline host or absent observation handle does not prove exit.
 Unreachable physical resources remain reserved until verified recovery.
 
-Successful main verification creates private SHA-addressed package/container
-candidates; running apps are not auto-upgraded. Raw datasets/videos, private
+Successful main verification creates SHA-addressed package/container candidates
+using the reviewed `candidate_visibility` (`public` or `private`). Repository and
+image visibility must match that explicit policy; the private Project remains
+private in either mode. Running apps are not auto-upgraded. Raw datasets/videos, private
 annotations, credentials, caches and external model weights remain excluded.
+The publisher commit is frozen separately from the verified application source,
+so older queued commits can use current reviewed publication controls without
+changing the built source or its dependency-lock provenance. Image visibility
+is checked before push and before a final digest receipt. Public mode requires
+existing public GHCR packages, with any owner-only visibility transition handled
+through [the owner checklist](OWNER_SETUP.md#candidate-visibility-and-public-builds).
+
 Failed main verification pauses claims/merges and opens a repair task. Normal
 notifications concern human action, integration/release failure, stalled
 recovery or completed milestones.
@@ -213,7 +222,7 @@ resources stay protected. A verified repair records the original failed SHA and
 repair SHA separately and resumes the queue. A repair that breaks main again
 escalates once for human attention.
 
-Private publishing stays pending until the complete candidate workflow succeeds,
+Candidate publishing stays pending until the complete candidate workflow succeeds,
 including package/image artifacts. Failed publishing is retried up to three
 attempts, then produces one incident issue. A dispatch acknowledgement is not
 proof of a completed release. Running app/data upgrades remain explicit.
