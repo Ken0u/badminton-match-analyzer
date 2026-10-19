@@ -204,6 +204,14 @@
       "task_id": "81",
       "verb": "plan"
     },
+    "spec-86-1107efdce8fb4cfd26a880d935215b511ad7d0f892750fbdcf2969edb217bfe1": {
+      "actor": "dootz1",
+      "at": 1792411723,
+      "fingerprint": "65a741fd5b77dccde9234a00a7d07a35ff4ee7f5ffbca6300d5ce9c54178ba9a",
+      "status": "needs_human",
+      "task_id": "86",
+      "verb": "plan"
+    },
     "verify-81-f2071ee11ff3835287cfba994a76a30206daa466-False": {
       "actor": "github-actions[bot]",
       "at": 1792411332,
@@ -868,6 +876,47 @@
         "pr_number": 85,
         "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
       }
+    },
+    "86": {
+      "epoch": 0,
+      "planned_at": 1792411723,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Add actions: read only to the eligibility job in .github/workflows/release.yml; keep other job token permissions unchanged.",
+          "Add a regression asserting eligibility can read Actions while package and image jobs retain their existing permissions.",
+          "Obtain non-author human approval on the exact workflow PR; rerun failed candidate f2071ee11ff3835287cfba994a76a30206daa466 and require successful package/private image receipts before pilot activation."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No model/application promotion, public publishing, additional write scopes, subscription purchase, data/annotation changes or research restarts.",
+          "Do not mark the two-host pilot complete until both Mac and Windows evidence and private candidates succeed."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Allow private candidate eligibility to read successful merged-main CI with least-privilege Actions access.",
+        "paths": [
+          ".github/workflows/release.yml",
+          "tests/test_ci_policy.py"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused workflow permissions regression, required lint/format/repository checks, exact-head CI, independent agent review, current non-author human approval.",
+          "Inspect successful private-candidate workflow and allowlisted artifacts/image receipts after integration."
+        ]
+      },
+      "spec_hash": "cb6aba907d6452ebfd2ca45a53fda8600eee88aad3186e1e2af47613d6e8294b",
+      "status": "needs_human"
     }
   },
   "version": 1,
