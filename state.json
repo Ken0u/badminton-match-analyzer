@@ -184,6 +184,24 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint108-approved": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
+    "mac-01a15493-checkpoint108-base": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
+    "mac-01a15493-checkpoint108-blocked": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint108-start": {
       "actor": "dootz1",
       "at": 1792423443,
@@ -277,6 +295,13 @@
       "fingerprint": "1efeca85b51c5daf7eafe13a0faf57086c75141c3defba112edc236b1c317a4f",
       "status": "ok",
       "verb": "register"
+    },
+    "mac-01a15493-review-audit-v2": {
+      "actor": "dootz1",
+      "at": 1792424906,
+      "fingerprint": "cf29921b341f75ecf839a08384d0c74dec16c11b1db1e7228360d8bb4c4f63e2",
+      "status": "idle",
+      "verb": "review-next"
     },
     "mac-01a15493-review-next": {
       "actor": "dootz1",
