@@ -1124,7 +1124,7 @@
       "planned_at": 1792393957,
       "planned_by": "dootz1",
       "pr_number": 102,
-      "reason": "Active specification edited; preserve work and obtain a new scope grant",
+      "reason": "Issue closed; preserve reservations and checkpoint before recovery",
       "review": {
         "actor": "Ken0u",
         "at": 1792419525,
@@ -1206,7 +1206,7 @@
         ]
       },
       "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
-      "status": "review",
+      "status": "recovery_required",
       "submission": {
         "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
         "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
