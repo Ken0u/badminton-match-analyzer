@@ -216,7 +216,7 @@ Before wider release, evaluate on several unseen full videos of each format and 
 
 Use Python with PyTorch, OpenCV, and FFmpeg/PyAV for processing. The implemented environment uses the existing Python 3.10 installation, an isolated virtual environment, and CUDA-enabled PyTorch; its verified dependencies are recorded in `requirements.lock`. Consult the [official installation guidance](https://pytorch.org/get-started/locally/) when adapting the environment to another machine.
 
-The current implementation uses a local FastAPI service, a background worker, and an HTML/CSS/JavaScript video editor served by the API. Revisit a React frontend if editor complexity warrants it. SQLite stores jobs, metadata, events, and corrections; large videos, weights, and frame-level arrays stay in files. Delay distributed services until actual workload requires them.
+The current implementation uses a local FastAPI service, a background worker, and an HTML/CSS/JavaScript video editor served by the API. A phased frontend rewrite using React, TypeScript and Vite is now approved under Review and product; see the [frontend rewrite plan](docs/FRONTEND_REWRITE.md) and [roadmap task #93](https://github.com/Ken0u/badminton-match-analyzer/issues/93). Capture parity and performance baselines after the active playback-proxy task #69 integrates, then introduce a typed foundation, migrate library/import/job controls and the review editor, and complete separately approved package/container integration. FastAPI continues serving the built static assets in the same application/container. The working UI stays available until parity is demonstrated. SQLite stores jobs, metadata, events, and corrections; large videos, weights, and frame-level arrays stay in files. Delay distributed services until actual workload requires them.
 
 Proposed modules:
 
@@ -228,7 +228,7 @@ backend/
   recognition/  # shot family and stroke side
   storage/      # schemas, jobs, predictions, corrections
   api/          # upload, status, review, export
-frontend/       # video player, overlays, event timeline, corrections
+  frontend/     # React/TypeScript/Vite source; built assets served by badminton/static
 training/       # imports, label mappings, splits, training, evaluation
 tests/          # schema, timing, identity and export checks; small fixtures
 data/           # manifests and local datasets; large assets outside Git
@@ -251,6 +251,7 @@ Indicative effort for one developer with ML experience and access to a knowledge
 | 3. Singles shot recognition | 2–3 weeks | Train the two-output temporal baseline, compare BST where practical, show all requested labels and uncertainties, and measure per-class errors. |
 | 4. Doubles extension | 2–4 weeks | Four persistent players, team-aware hitter attribution, doubles training examples, crossing/occlusion tests, and format-specific metrics. |
 | 5. Full-video reliability | 1–2 weeks | Replay/cut handling, resumable jobs, consistent exports, unseen-match evaluation, runtime measurements, and documented supported conditions. |
+| Parallel: frontend rewrite (Review and product) | Bounded phases; estimate after baseline | React/TypeScript editor with preserved source timing, reviewed annotations and exports; baseline parity/performance checks, accessible interactions, and verified Python/container assets. See [phase tasks #94–#98](docs/FRONTEND_REWRITE.md). |
 
 Stages 1–2 should produce the first useful rally/contact prototype. Do not spend the early schedule optimizing shot classification while shuttle tracks or contact labels remain unreliable. After each stage, prioritize fixes by their effect on complete-event accuracy and review time.
 
