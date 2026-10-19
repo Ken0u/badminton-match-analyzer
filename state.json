@@ -2163,7 +2163,7 @@
         "session_id": "roadmap-20261019-01a15493",
         "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829"
       },
-      "delivery_attempts": 1,
+      "delivery_attempts": 2,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
