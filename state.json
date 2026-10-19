@@ -559,6 +559,26 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-holdout63-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792420694,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
+        "epoch": 1,
+        "expires_at": 1792431494,
+        "granted_at": 1792420694,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc"
+      },
+      "epoch": 1,
+      "fingerprint": "12d23e1b33601ff97e98f85b498ba3bc845466fec83e6206c6c8ef422bcb9122",
+      "status": "granted",
+      "task_id": "63",
+      "verb": "next"
+    },
     "windows-owner-setup-register-v1": {
       "actor": "Ken0u",
       "at": 1792394451,
@@ -782,6 +802,13 @@
       "reason": "submit requires running work",
       "status": "rejected",
       "verb": "submit"
+    },
+    "windows-research-register-20261019-v1": {
+      "actor": "Ken0u",
+      "at": 1792420694,
+      "fingerprint": "16a4de40bcb150782adf8f7e4a876552555db6842f6076af70b889212caaf800",
+      "status": "ok",
+      "verb": "register"
     }
   },
   "tasks": {
@@ -935,7 +962,18 @@
       "status": "needs_human"
     },
     "63": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
+        "epoch": 1,
+        "expires_at": 1792431494,
+        "granted_at": 1792420694,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc"
+      },
+      "epoch": 1,
       "planned_at": 1792419525,
       "planned_by": "dootz1",
       "spec": {
@@ -990,7 +1028,7 @@
         ]
       },
       "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc",
-      "status": "ready"
+      "status": "running"
     },
     "64": {
       "epoch": 0,
@@ -2175,16 +2213,25 @@
   "workers": {
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
-      "artifacts": {},
+      "artifacts": {
+        "frozen_holdout_protocol": "99b13bb12f0cacfee316547ee656ac69a0b6f273de20e75c80eb49e19892c6ed",
+        "frozen_view_support": "1b2e035e536e6ef74b1704b37275fab0e30d74c58fb3d2e45c4cd656f1df8b78",
+        "normalized_labels": "2fb3fdca1bd544179367b5bcc0cd3679c7001fb1f697e5cf29e69b327801a881",
+        "r2_selected_model": "ef71574cac55f1cf5441e1ba11cbf2f4b9eafa31298d2078e87a7018d22ae10e",
+        "r3_selected_model": "cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc"
+      },
       "capabilities": [
         "cpu",
         "windows",
         "amd64",
         "review",
-        "python-3.12"
+        "python-3.10",
+        "python-3.12",
+        "cuda",
+        "shuttleset-holdout"
       ],
       "host_id": "MSI",
-      "registered_at": 1792394451,
+      "registered_at": 1792420694,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/windows-pilot80-review-v1": {
