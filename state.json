@@ -358,6 +358,14 @@
       "task_id": "110",
       "verb": "next"
     },
+    "mac-01a15493-plan116-v1": {
+      "actor": "dootz1",
+      "at": 1792440580,
+      "fingerprint": "60ab50b4a141fcd1266a10f6b712809c9d67ffa9662c78aa31794e3758c3406a",
+      "status": "ready",
+      "task_id": "116",
+      "verb": "plan"
+    },
     "mac-01a15493-register": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -760,6 +768,14 @@
       "fingerprint": "1f79d9a4a971bbefaaee96a6ef431c93d20fe8f3f1a2475fc5832d1bad3a1312",
       "status": "ready",
       "task_id": "110",
+      "verb": "plan"
+    },
+    "spec-116-8a163624037280441e493ad3acbddefde99824dbade274ca0f3c8bc94cfa5d44": {
+      "actor": "dootz1",
+      "at": 1792440580,
+      "fingerprint": "2b11983a400422384a9884ad2ffd5fdb713ab92ff1ca98a7c7f82aae9b2dfffb",
+      "status": "ready",
+      "task_id": "116",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -1518,6 +1534,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-public111-review-result-v1": {
+      "actor": "Ken0u",
+      "at": 1792440580,
+      "epoch": 1,
+      "fingerprint": "67e2cd0b28e4bce5f239e0bb2b874b248df5c38edf7d074315e0121efb42260b",
+      "status": "review",
+      "task_id": "111",
+      "verb": "review-result"
+    },
     "windows-public111-submit-v1": {
       "actor": "Ken0u",
       "at": 1792440141,
@@ -2190,18 +2215,41 @@
       "planned_by": "Ken0u",
       "pr_number": 114,
       "repair_rounds": 0,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792440580,
         "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
-        "epoch": 1,
-        "expires_at": 1792451025,
-        "granted_at": 1792440225,
+        "evidence": [
+          "Durable register windows-public111-review-register-v1 acknowledged ok; review-next windows-public111-review-next-v1 committed a matching task111 epoch1/review_epoch1 grant for host MSI/session windows-public111-review-v1, PR114, exact head/base/spec. Detached .cache/worktrees/public111-review-v1 remained clean at f35095d6b16762df1e6e45a2c066305c07d4b93e.",
+          "Independently inspected all seven changed files and surrounding CI revision verification, controller delivery/recovery, exact-head human approval policy, GitHub transport, package verifier, Dockerfile, .dockerignore, MANIFEST.in and build metadata. Missing/invalid/mismatched repository and package visibility fail closed; publisher/source identities and source lock remain distinct; Project credentials are absent from release jobs; package/image success depends on the complete workflow.",
+          "Independent focused test run: python -m pytest -q tests/test_release_candidate.py tests/test_agent_coordinator.py --basetemp .cache/pytest-review-v2: 96 passed in 13.87s. Initial harness attempt only lacked the .cache parent; after creating it the fresh rerun passed.",
+          "Independent credential-free disposable CLI probe (.cache/review_cli_probe.py): 11 expected outcomes passed using actual helper subprocesses and real disposable Git history. Exercised legacy source with obsolete helper, distinct publisher and source-lock hash, latest cancelled CI for either identity, repository visibility mismatch, absent public package, publisher binding mismatch, changed source after build, and post-push private package refusal without a success receipt.",
+          "Independently verified the submitted wheel/sdist against exact review source: 73 package files match; wheel SHA256 0200b8d90697de583a1fbbcd9ecb778538b4e1050bb32066a6f71e512fbc6c2c; sdist SHA256 98522696dd7c1b706b2f17a92abbfd107af9a916eb75407773191ee257b61cbf. Inspected archive paths for private state, datasets and annotations; injected synthetic .aws/credentials into a disposable sdist and verified rejection.",
+          "Changed Python files passed Ruff lint and format checks. git diff --check from exact base passed. All seven changed paths passed tracked UTF-8/LF, strict JSON and local-document-link checks. No implementation files were edited.",
+          "Revalidated remote PR114 open/non-draft at the exact head/base and observed completed successful ci/gate plus Python3.10/3.12, native Windows/macOS, package, repository, frontend, browser-import and review/CPU container checks. Hosted run https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39315790285 . Current automation/policy remains failure pending required review gates, and current human PR reviews were empty.",
+          "Checked the owner documentation against GitHub primary package documentation: visibility is separate from repository permissions, newly published personal packages default private, a public package cannot return to private, and workflow package access may need explicit repository permission. Source: https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility ."
+        ],
+        "findings": [],
         "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
-        "host_id": "MSI",
+        "limitations": [
+          "This is a fresh independent agent review, not the mandatory exact-head non-author human PR approval. Current PR reviews were empty; the human approval remains required and must not be inferred from task scope approval or this verdict.",
+          "Actual GHCR metadata, package settings, workflow package access, anonymous image retrieval and public delivery were not independently established. No image publishing, visibility mutation, application deployment, inference, model promotion, spending or private Project access occurred in this review. Public packages must already exist with owner-configured public visibility; the workflow fails closed otherwise.",
+          "Actual complete current-workflow candidate runs and controller delivery_pending=false remain post-merge requirements, including recovery for legacy sources through the current trusted workflow. Local adapter/CLI evidence does not prove those external outcomes.",
+          "Independent local verification used the existing Python 3.12 review environment with isolated application/data/weights roots and credential-free tests. Full multi-platform/browser/container validation was verified through successful exact-head hosted CI rather than repeated locally. No badminton annotation accuracy claim follows from these software checks."
+        ],
         "pr_number": 114,
-        "review_epoch": 1,
+        "reviewed_files": [
+          ".github/automation.json",
+          ".github/workflows/release.yml",
+          "scripts/release_candidate.py",
+          "tests/test_release_candidate.py",
+          "tests/test_agent_coordinator.py",
+          "docs/OWNER_SETUP.md",
+          "docs/COLLABORATION.md"
+        ],
         "session_id": "windows-public111-review-v1",
-        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
@@ -2254,6 +2302,54 @@
         "pr_number": 114,
         "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
       }
+    },
+    "116": {
+      "epoch": 0,
+      "planned_at": 1792440580,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Add a backend overlay renderer and explicit CLI output mode for an entire original video and for eligible reviewed rally ranges. Reuse the audited source/immutable revision contract and #110 native video/audio validation, with an explicit overlay policy/version and source/annotation/config/output hashes in a completion manifest. Do not silently substitute a rally-only output for requested full video.",
+          "Derive overlays only from the selected saved annotation snapshot. Display reviewed/corrected serve, shot family/forehand/backhand, hitter/player and rally-end evidence at their native source frames; disclose unknown identity/labels and show contact/terminal uncertainty intervals as intervals, not exact contacts. Keep original predicted events in provenance and exclude them from reviewed-truth burn-in; report included/excluded event counts and reasons.",
+          "Render saved visible shuttle points only on their exact source frames, no fabricated positions/interpolation. Preserve reviewed scene/camera context visibly; expire court calibration across its recorded range and camera boundaries and suppress invalid geometry. Preserve unavailable track positions/identity rather than inventing player boxes or claiming automatic correctness.",
+          "Preserve every selected native frame, relative PTS, orientation, pixel dimensions/padding, source origin, exact final sample and relative audio timing including codec padding disclosure. Limit overlay pixels to documented regions; verify unmasked source pixels, frame identity, sample/packet/container timing and audio alignment using generated media. Preserve the full immutable annotation snapshot and all rally/event denominators.",
+          "Use a new requested output directory outside application storage, safe ordinal filenames, staged media and final completion receipts, refusal of overwrite/traversal and cleanup on failure/cancellation. Source media, original predictions, annotations and previous exports stay unchanged. Provide generated singles/doubles/VFR/nonzero-origin/rotation/odd-size/audio cases, uncertain/unknown/predicted events, scene/cut/calibration expiry, stale inputs, failures and actual independent Chromium playback/visual inspection; document limitations and plain-versus-annotated modes."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "110"
+        ],
+        "exclusions": [
+          "No frontend migration or editor controls; preserve approved phase dependencies. No inference, model promotion, dataset acquisition, research restart, schema/storage migration, deployment/workflow change, paid services or running-application upgrade.",
+          "No inferred player positions, synthetic contacts or hidden evaluation denominator changes. Software/visual export verification does not establish badminton annotation accuracy."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Export source-time-preserving annotated full videos and reviewed rally clips from immutable saved annotations.",
+        "paths": [
+          "backend/badminton/rally_overlay.py",
+          "backend/badminton/rally_video.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_overlay.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused generated annotation-overlay/media/audio/CLI regression tests plus real FFmpeg, decoded frame/pixel/timing checks and independent Chromium visual/seek/playback evidence. Required full project/lint/format/dependency/repository/diff checks.",
+          "Fresh exact-head/base/spec independent review, required hosted CI, controller integration, exact merged-main verification and complete candidate package/image receipts under the approved publishing policy."
+        ]
+      },
+      "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
