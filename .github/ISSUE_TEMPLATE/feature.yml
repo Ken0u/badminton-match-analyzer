@@ -1,0 +1,25 @@
+name: Feature proposal
+description: Suggest a new outcome for the autonomous planner
+title: ""
+body:
+  - type: markdown
+    attributes:
+      value: "Trusted collaborator proposals are triaged against approved milestones. Major scope changes need a human decision; an issue does not authorize credentials, spending, destructive work, or model promotion."
+  - type: textarea
+    id: problem
+    attributes:
+      label: Desired outcome
+      description: Explain the problem and who benefits.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Examples and success criteria
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints, priority and related work
+      description: Include relevant issue/PR/report links and any deadline.

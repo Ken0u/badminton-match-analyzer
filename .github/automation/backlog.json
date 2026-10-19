@@ -1,0 +1,505 @@
+{
+  "version": 1,
+  "milestones": [
+    {
+      "key": "Data and evaluation",
+      "description": "Source alignment, independent labels, split integrity and reproducible evaluation."
+    },
+    {
+      "key": "Perception",
+      "description": "Court, shuttle and persistent player evidence, preserving source uncertainty."
+    },
+    {
+      "key": "Event recognition",
+      "description": "Contacts, boundaries, singles/doubles family and side recognition; promotion requires evidence."
+    },
+    {
+      "key": "Review and product",
+      "description": "Assisted review, playback, exports and unseen-match product acceptance."
+    },
+    {
+      "key": "Infrastructure",
+      "description": "Portable environments, coordination, verification and private delivery."
+    }
+  ],
+  "tasks": [
+    {
+      "key": "aligned-supervision",
+      "title": "Adjudicate source-aligned complete rallies",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Adjudicate source-aligned complete rallies.",
+        "acceptance": [
+          "Freeze original-source groups and contact/scene/identity conventions before predictions.",
+          "Record independent disagreement adjudication and preserve unknown/unavailable labels."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "docs/ANNOTATION_GUIDE.md",
+          "scripts/"
+        ],
+        "capabilities": [
+          "review-inputs"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 100,
+        "milestone": "Data and evaluation",
+        "risk": "human",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "holdout-recovery",
+      "title": "Inventory and recover the frozen 75-rally evaluation",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Inventory and recover the frozen 75-rally evaluation.",
+        "acceptance": [
+          "Verify original worker PIDs, creation times, commands, Store status and durable artifacts.",
+          "Publish frozen scores only after complete-input gates; retain unsupported cases."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "docs/"
+        ],
+        "capabilities": [
+          "windows",
+          "cuda",
+          "shuttleset-holdout"
+        ],
+        "artifacts": {},
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "dependencies": [],
+        "priority": 100,
+        "milestone": "Data and evaluation",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "portable-training",
+      "title": "Make supported training/evaluation recipes portable",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Make supported training/evaluation recipes portable.",
+        "acceptance": [
+          "Reproduce a development-only recipe with pinned input/model/protocol hashes.",
+          "Keep conditional classification distinct from complete event detection and do not promote weights."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "scripts/",
+          "backend/badminton/"
+        ],
+        "capabilities": [
+          "cpu"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 500,
+        "milestone": "Event recognition",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "shuttle-failures",
+      "title": "Evaluate and reduce shuttle localization failures",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Evaluate and reduce shuttle localization failures.",
+        "acceptance": [
+          "Freeze reviewed visibility cases including occlusion, fast flight and background distractors.",
+          "Compare misses and false observations without filling unavailable trajectories."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "backend/badminton/shuttle.py",
+          "tests/"
+        ],
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "artifacts": {},
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "dependencies": [],
+        "priority": 100,
+        "milestone": "Perception",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "identity-evaluation",
+      "title": "Evaluate persistent player identity across fragments and cuts",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Evaluate persistent player identity across fragments and cuts.",
+        "acceptance": [
+          "Measure source-reviewed identity switches and unknown cases for singles and doubles.",
+          "Preserve reviewed mappings and reject uncertain teammate links."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "capabilities": [
+          "review-inputs"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 500,
+        "milestone": "Perception",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "boundary-evaluation",
+      "title": "Evaluate complete-rally contacts, serves and endings",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Evaluate complete-rally contacts, serves and endings.",
+        "acceptance": [
+          "Freeze independently reviewed contacts and ending uncertainty intervals.",
+          "Report contact/hitter and boundary coverage with unavailable inputs retained."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "capabilities": [
+          "review-inputs"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 100,
+        "milestone": "Event recognition",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "doubles-recognition",
+      "title": "Define and implement the doubles recognition increment",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Define and implement the doubles recognition increment.",
+        "acceptance": [
+          "Separate teammate attribution, family and side from court-end classification.",
+          "Train/select only on development sources and preserve a separate held-out protocol."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "artifacts": {},
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "dependencies": [],
+        "priority": 500,
+        "milestone": "Event recognition",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "playback-proxy",
+      "title": "Add source-time-preserving browser playback proxies",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Add source-time-preserving browser playback proxies.",
+        "acceptance": [
+          "Preserve source PTS, orientation and native frame identities across proxy playback and seeks.",
+          "Verify generated variable-frame-rate/oriented media and original annotation exports."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "capabilities": [
+          "cpu"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 100,
+        "milestone": "Review and product",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "reviewed-exports",
+      "title": "Export reviewed rally clips and annotated video",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Export reviewed rally clips and annotated video.",
+        "acceptance": [
+          "Derive overlays and clip boundaries from reviewed annotations and source time.",
+          "Verify generated media exports without altering original predictions."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "capabilities": [
+          "cpu"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 500,
+        "milestone": "Review and product",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "unseen-match-acceptance",
+      "title": "Validate unseen singles and doubles product workflows",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Validate unseen singles and doubles product workflows.",
+        "acceptance": [
+          "Freeze independent unseen matches before predictions and report complete time/player/family/side results.",
+          "Measure human correction time; processing coverage cannot certify correctness."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "docs/",
+          "tests/"
+        ],
+        "capabilities": [
+          "review-inputs"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 500,
+        "milestone": "Review and product",
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "two-host-pilot",
+      "title": "Run the Mac/Windows autonomous workflow pilot",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Run the Mac/Windows autonomous workflow pilot.",
+        "acceptance": [
+          "Run two nonconflicting tasks on different hosts through review and serial integration.",
+          "Verify main and private candidates; record recovery/ownership evidence before active mode."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "docs/COLLABORATION.md"
+        ],
+        "capabilities": [
+          "cpu"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 100,
+        "milestone": "Infrastructure",
+        "risk": "human",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    },
+    {
+      "key": "dependency-maintenance",
+      "title": "Maintain pinned dependencies and container candidates",
+      "kind": "task",
+      "status": "Proposed",
+      "spec": {
+        "outcome": "Maintain pinned dependencies and container candidates.",
+        "acceptance": [
+          "Review grouped dependency updates with native/package/container evidence.",
+          "Keep credentials and external datasets/weights outside release artifacts."
+        ],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "paths": [
+          "pyproject.toml",
+          "uv.lock",
+          "Dockerfile",
+          ".github/"
+        ],
+        "capabilities": [
+          "cpu"
+        ],
+        "artifacts": {},
+        "resources": [],
+        "dependencies": [],
+        "priority": 900,
+        "milestone": "Infrastructure",
+        "risk": "human",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        }
+      }
+    }
+  ]
+}
