@@ -2,6 +2,7 @@
   "schema_version": 1,
   "repository": "Ken0u/badminton-match-analyzer",
   "mode": "observation",
+  "integration_enforcement": "controller",
   "coordination_branch": "codex/coordination",
   "trusted_logins": [
     "Ken0u",

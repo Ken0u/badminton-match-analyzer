@@ -2,7 +2,7 @@
 
 Prepared October 17, 2026.
 
-Development now follows the [autonomous collaboration protocol](docs/COLLABORATION.md): GitHub Issues hold bounded tasks, a serialized dispatcher grants ownership, local Mac/Windows agents implement and independently review, and protected integration verifies merged main. The [DevOps report](docs/AUTONOMOUS_DEVOPS_REPORT.md) distinguishes implemented controls from owner/pilot activation still required. Historical PR/report work is backfilled without marking rejected models or the full product complete.
+Development now follows the [autonomous collaboration protocol](docs/COLLABORATION.md): GitHub Issues hold bounded tasks, a serialized dispatcher grants ownership, local Mac/Windows agents implement and independently review, and controller-enforced integration verifies merged main. GitHub Free private repositories are supported without Pro; all writers must honor the protocol because GitHub does not block bypasses. The [DevOps report](docs/AUTONOMOUS_DEVOPS_REPORT.md) distinguishes implemented controls from owner/pilot activation still required. Historical PR/report work is backfilled without marking rejected models or the full product complete.
 
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 

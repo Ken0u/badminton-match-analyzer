@@ -27,7 +27,9 @@ PROTECTION = {
 }
 
 
-def setup(gh, *, apply=False, protections=False):
+def setup(gh, *, apply=False, protections=False, enforcement="controller"):
+    if enforcement not in ("controller", "github"):
+        raise ValueError("Unknown integration enforcement")
     repo = gh.repo()
     if not repo["private"]:
         raise ValueError("This workflow is configured for a private repository")
@@ -38,8 +40,16 @@ def setup(gh, *, apply=False, protections=False):
         "repository": repo["full_name"],
         "mode": "observation",
         "control_issue": issues[0]["number"] if issues else None,
-        "protection": PROTECTION,
-        "owner_action_required": not repo["permissions"].get("admin"),
+        "integration_enforcement": enforcement,
+        "subscription_required": False
+        if enforcement == "controller"
+        else "eligible GitHub plan",
+        "protection": PROTECTION if protections or enforcement == "github" else None,
+        "owner_action_required": bool(protections or enforcement == "github")
+        and not repo["permissions"].get("admin"),
+        "enforcement_limit": "Controller checks cannot prevent direct writes or manual merges outside the protocol"
+        if enforcement == "controller"
+        else "GitHub branch protections required",
     }
     if not apply:
         return result
@@ -67,7 +77,9 @@ def setup(gh, *, apply=False, protections=False):
         result["control_issue"] = issue["number"]
     if protections:
         if not repo["permissions"].get("admin"):
-            raise ValueError("Ken0u owner/admin must apply protections after Pro setup")
+            raise ValueError(
+                "Optional branch protections require owner/admin access and an eligible GitHub plan"
+            )
         gh.repo("branches/main/protection", method="PUT", data=PROTECTION)
         result["protection_applied"] = True
     return result
@@ -77,7 +89,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--apply", action="store_true")
     parser.add_argument(
-        "--protections", action="store_true", help="Owner only; requires --apply"
+        "--protections",
+        action="store_true",
+        help="Optional server protections; owner/eligible plan only; requires --apply",
     )
     args = parser.parse_args()
     config = json.loads((ROOT / ".github/automation.json").read_text(encoding="utf-8"))
@@ -89,6 +103,7 @@ def main():
                 GitHub(config["repository"]),
                 apply=args.apply,
                 protections=args.protections,
+                enforcement=config.get("integration_enforcement", "controller"),
             ),
             indent=2,
         )

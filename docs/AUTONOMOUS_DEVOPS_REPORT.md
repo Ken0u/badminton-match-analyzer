@@ -5,7 +5,8 @@ infrastructure. It does not improve or certify badminton annotation accuracy.
 
 ## Implemented behavior
 
-Local subscription-authenticated Codex sessions execute work on Mac/Windows.
+Local Codex sessions execute work on Mac/Windows using each collaborator's
+existing access and usage limits. No GitHub Pro subscription is required.
 GitHub Issues hold frozen task specs; the dispatcher alone writes an orphan
 coordination branch. Atomic grants reserve paths/resources, fence stale epochs,
 and keep same-host implementation and independent review sessions separate.
@@ -15,7 +16,11 @@ The control issue projects task owners, blockers, lease status and recent verifi
 merges without comment notifications; the private Project separately projects status.
 
 Routine integration requires exact-head/base review, current CI, granted paths
-and protected main. Sensitive entry points need non-author human approval.
+and resolved review conversations. The default `integration_enforcement` value
+`controller` enforces these conditions in the serial controller and works on a
+private GitHub Free repository. Sensitive entry points need non-author human
+approval. Optional `github` mode additionally requires verified branch protections
+and fails closed when they are absent or unverifiable.
 Inference changes require source/model/code-bound native evidence with explicit
 limitations. Journalled merge attempts survive uncertain API responses. A main
 failure creates a bounded repair lane while normal work pauses; verified repairs
@@ -43,7 +48,7 @@ The bootstrap implementation itself is tracked separately.
 
 ## Verification and rollout limits
 
-Final local Python 3.10 and clean locked Python 3.12 runs each passed 880 tests
+Final local Python 3.10 and clean locked Python 3.12 runs each passed 902 tests
 with 11 skips. Boundary tests cover repair (including pilot mode), publishing,
 recovery and privileged entry points. Hosted exact-head results are recorded
 on the PR; local tests do not establish Windows or container execution.
@@ -56,9 +61,17 @@ eligibility, Windows command resolution and privileged script classification.
 Adapter tests exercise crash-before-merge and lost responses as well as failure
 and cancellation outcomes. Source-clock/model accuracy evidence remains separate.
 
-Activation is deliberately gated: the implementation account has write but not
-admin access, current credentials lack Project scope, and GitHub reports that
-private rulesets require an eligible paid plan. No Project, subscription or
-protection change is claimed. Follow [owner setup](OWNER_SETUP.md), then the
-human-reviewed two-host pilot, before enabling active integration. Until then,
+The original rollout treated private branch protections as mandatory and GitHub
+reported that they require an eligible paid plan. The free-controller revision
+supersedes that prerequisite: no subscription upgrade or branch-protection setup
+is required in the default mode. GitHub cannot prevent writers from bypassing
+the controller with direct pushes, manual merges, force pushes/deletion or
+concurrent main changes; the protocol prohibits those actions.
+
+Activation still requires non-author human review, Project authorization and the
+two-host pilot. The implementation account has write rather than admin access
+and its current credentials lack Project scope. No Project, subscription or
+protection change is claimed. GitHub Actions and artifact/storage quotas and
+local Codex usage limits apply; paid overage remains disabled. Follow
+[owner setup](OWNER_SETUP.md), then the human-reviewed two-host pilot, before enabling active integration. Until then,
 no automatic production deployment or application/model upgrade occurs.

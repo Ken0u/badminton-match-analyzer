@@ -15,10 +15,28 @@ def sensitive(files, config):
     return any(in_scope(f, config["sensitive_paths"]) for f in files)
 
 
+def latest_reviews(reviews):
+    result = {}
+    for review in sorted(reviews, key=lambda r: r.get("id", 0)):
+        if review.get("state") in ("APPROVED", "CHANGES_REQUESTED", "DISMISSED"):
+            result[review["user"]["login"]] = review
+    return result
+
+
+def review_errors(reviews, config):
+    if any(
+        review.get("state") == "CHANGES_REQUESTED"
+        for login, review in latest_reviews(reviews).items()
+        if login in config["trusted_logins"]
+    ):
+        return ["A collaborator's requested changes must be approved or dismissed"]
+    return []
+
+
 def rollout_errors(pr, changed, proposed, checks, reviews, config, main_sha):
     """One-time, manually merged mode changes cannot depend on queue grants."""
     head = pr["head"]["sha"]
-    errors = []
+    errors = review_errors(reviews, config)
     if (
         len(changed) != 1
         or changed[0].get("filename") != ".github/automation.json"
@@ -60,10 +78,7 @@ def rollout_errors(pr, changed, proposed, checks, reviews, config, main_sha):
             or latest.get(name, {}).get("status") != "completed"
         ):
             errors.append(f"Required check missing or unsuccessful: {name}")
-    by_user = {}
-    for review in sorted(reviews, key=lambda r: r.get("id", 0)):
-        if review.get("state") in ("APPROVED", "CHANGES_REQUESTED", "DISMISSED"):
-            by_user[review["user"]["login"]] = review
+    by_user = latest_reviews(reviews)
     if not any(
         user in config["human_approvers"]
         and user != pr["user"]["login"]
@@ -77,7 +92,7 @@ def rollout_errors(pr, changed, proposed, checks, reviews, config, main_sha):
 
 def policy_errors(task, pr, files, checks, reviews, config, main_sha):
     """Missing or stale evidence fails closed, including newly discovered paths."""
-    errors = []
+    errors = review_errors(reviews, config)
     head, base = pr["head"]["sha"], pr["base"]["sha"]
     spec = task["spec"]
     if not files:
@@ -136,10 +151,7 @@ def policy_errors(task, pr, files, checks, reviews, config, main_sha):
     ):
         errors.append("Fresh independent agent review required")
     if spec.get("risk") == "human" or sensitive(files, config):
-        by_user = {}
-        for review in sorted(reviews, key=lambda r: r.get("id", 0)):
-            if review.get("state") in ("APPROVED", "CHANGES_REQUESTED", "DISMISSED"):
-                by_user[review["user"]["login"]] = review
+        by_user = latest_reviews(reviews)
         if not any(
             login in config["human_approvers"]
             and login != pr["user"]["login"]

@@ -25,7 +25,14 @@ integration; local Mac/Windows workers execute work. Automation starts in
 **observation** mode. CI, reproducible profiles and private candidates are part
 of this increment. The implementation report is [docs/AUTONOMOUS_DEVOPS_REPORT.md](docs/AUTONOMOUS_DEVOPS_REPORT.md); final checks are recorded on the bootstrap PR before activation.
 
-Local Python 3.10 and clean locked Python 3.12 each pass 880 tests with 11 skips.
+GitHub Free private repositories use `integration_enforcement: "controller"`;
+no Pro subscription or branch-protection setup is required. Controller CI,
+independent review, current-main ancestry, scope and conversation checks remain.
+All writers must follow the protocol: GitHub cannot block direct pushes/manual
+bypasses or external changes racing the controller. Optional `github` enforcement
+still refuses integration without its configured server protections.
+
+Local Python 3.10 and clean locked Python 3.12 each pass 902 tests with 11 skips.
 Package/installed-byte checks, lint, lock and dependency checks pass. Independent
 review found no remaining blocking code findings. Hosted native/container checks
 and the owner setup/pilot remain required; this workflow is not active yet.
@@ -37,8 +44,8 @@ do not create competing work. Recheck GitHub before continuing it.
 
 ## Outstanding setup and work
 
-- Owner `Ken0u` must configure eligible private branch protections and the Project
-  automation credential before active integration. `dootz1` has write, not admin.
+- Owner `Ken0u` must configure the Project automation credential before active
+  integration. `dootz1` has write, not admin. GitHub Pro/protections are optional.
 - Project sync is idempotent; issue backfill works independently of Project auth.
 - Run the documented two-task pilot before changing observation to active.
 - Continue source-aligned supervision, perception, complete contact/rally/identity

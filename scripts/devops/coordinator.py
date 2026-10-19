@@ -298,6 +298,38 @@ def check_run(gh, head, errors):
     )
 
 
+def conversation_errors(gh, config, number):
+    """Inspect every review thread, including outdated unresolved discussions."""
+    owner, repo = config["repository"].split("/", 1)
+    cursor = None
+    while True:
+        data = gh.graphql(
+            """query($owner:String!, $repo:String!, $number:Int!, $cursor:String) {
+              repository(owner:$owner, name:$repo) {
+                pullRequest(number:$number) {
+                  reviewThreads(first:100, after:$cursor) {
+                    nodes { isResolved }
+                    pageInfo { hasNextPage endCursor }
+                  }
+                }
+              }
+            }""",
+            owner=owner,
+            repo=repo,
+            number=int(number),
+            cursor=cursor,
+        )
+        threads = data["repository"]["pullRequest"]["reviewThreads"]
+        if any(thread["isResolved"] is not True for thread in threads["nodes"]):
+            return ["Resolve all PR review conversations before integration"]
+        page = threads["pageInfo"]
+        if page["hasNextPage"] is False:
+            return []
+        if not page["endCursor"] or page["endCursor"] == cursor:
+            raise ValueError("Review-thread pagination did not advance")
+        cursor = page["endCursor"]
+
+
 def evaluate_pr(gh, config, task, main):
     pr = gh.repo(f"pulls/{task['pr_number']}")
     changed = gh.pages(f"pulls/{task['pr_number']}/files?per_page=100")
@@ -314,6 +346,15 @@ def evaluate_pr(gh, config, task, main):
     ]
     reviews = gh.pages(f"pulls/{task['pr_number']}/reviews?per_page=100")
     errors = policy_errors(task, pr, files, checks, reviews, config, main)
+    comparison = gh.repo(f"compare/{main}...{pr['head']['sha']}")
+    if (
+        comparison.get("status") not in ("ahead", "identical")
+        or comparison.get("merge_base_commit", {}).get("sha") != main
+    ):
+        errors.append(
+            "Update the PR branch to include current main, then rerun CI and review"
+        )
+    errors += conversation_errors(gh, config, task["pr_number"])
     return pr, errors
 
 
@@ -342,7 +383,8 @@ def rollout_policy(gh, config):
         check_run(
             gh,
             pr["head"]["sha"],
-            rollout_errors(pr, changed, proposed, checks, reviews, config, main),
+            rollout_errors(pr, changed, proposed, checks, reviews, config, main)
+            + conversation_errors(gh, config, number),
         )
 
 
@@ -432,8 +474,12 @@ def integrate(gh, config, state):
     store = StateStore(gh, config["coordination_branch"])
     if config["mode"] == "observation":
         return state
-    # Fail closed if private-repository protection is unavailable or weakened.
-    if not protections_present(gh):
+    enforcement = config.get("integration_enforcement", "controller")
+    if enforcement not in ("controller", "github"):
+        raise ValueError("Unknown integration enforcement; integration disabled")
+    # GitHub Free uses controller policy. Optional server enforcement must never
+    # silently downgrade when protections disappear or their API is unavailable.
+    if enforcement == "github" and not protections_present(gh):
         raise ValueError("Required branch protections are absent; integration disabled")
     main = gh.repo("git/ref/heads/main")["object"]["sha"]
     # Delivery is an independent outbox. Failed/exhausted publication cannot
@@ -625,6 +671,18 @@ def integrate(gh, config, state):
             config,
         )
         store.write(tip, current)
+        # Revalidate after journalling too: no protected-branch requirement exists
+        # in controller mode. External writers still must honor the protocol.
+        target = current["tasks"][str(task["task_id"])]
+        target["task_id"] = task["task_id"]
+        pr, errors = evaluate_pr(gh, config, target, main)
+        if errors or gh.repo("git/ref/heads/main")["object"]["sha"] != main:
+            check_run(
+                gh,
+                pr["head"]["sha"],
+                errors or ["Main advanced; refresh integration evidence"],
+            )
+            return current
         gh.repo(
             f"pulls/{task['pr_number']}/merge",
             method="PUT",

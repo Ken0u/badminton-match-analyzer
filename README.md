@@ -261,5 +261,9 @@ Start with [the Mac/Windows collaboration workflow](docs/COLLABORATION.md) and
 [one-time owner activation](docs/OWNER_SETUP.md). GitHub Issues track historical
 deliverables and the approved backlog; local Codex sessions claim work, implement
 in isolated worktrees, obtain independent review and submit for verified serial
-integration. The queue starts in observation mode. Private candidates never
-automatically replace your running application or install research weights.
+integration. The default controller mode works with a private repository on
+GitHub Free; GitHub Pro is optional. Both collaborators must use the controller
+because GitHub Free does not prevent direct pushes or manual bypass. Existing
+Codex access and GitHub Actions/storage quotas apply. The queue starts in
+observation mode. Private candidates never automatically replace your running
+application or install research weights.

@@ -354,6 +354,18 @@ class MergeGitHub(FakeGitHub):
         self.lose_merge_response = False
         self.external = []
 
+    def graphql(self, _query, **_variables):
+        return {
+            "repository": {
+                "pullRequest": {
+                    "reviewThreads": {
+                        "nodes": [],
+                        "pageInfo": {"hasNextPage": False, "endCursor": None},
+                    }
+                }
+            }
+        }
+
     def pages(self, path):
         if "/files?" in path:
             return [{"filename": "backend/clock.py"}]
@@ -373,6 +385,8 @@ class MergeGitHub(FakeGitHub):
             }
         if path == "git/ref/heads/main":
             return {"object": {"sha": self.main}}
+        if path.startswith("compare/"):
+            return {"status": "ahead", "merge_base_commit": {"sha": self.main}}
         if path.startswith("pulls/"):
             if method == "GET":
                 return copy.deepcopy(self.pr)
@@ -759,6 +773,18 @@ def test_rollout_policy_is_narrow_and_never_merges(before, after, defect):
     class RolloutGitHub:
         def __init__(self):
             self.verdict = None
+
+        def graphql(self, _query, **_variables):
+            return {
+                "repository": {
+                    "pullRequest": {
+                        "reviewThreads": {
+                            "nodes": [],
+                            "pageInfo": {"hasNextPage": False, "endCursor": None},
+                        }
+                    }
+                }
+            }
 
         def pages(self, path):
             if path.startswith("pulls?"):

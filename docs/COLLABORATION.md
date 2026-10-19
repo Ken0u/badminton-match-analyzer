@@ -9,17 +9,21 @@ Sleeping both computers pauses implementation, even while GitHub checks run.
 
 ## One-time setup and activation
 
-1. After this bootstrap PR is merged, the repository owner enables the private-repository plan needed for branch
-   protection, runs `python scripts/setup_automation.py --apply --protections`, confirms collaborator write access, and configures protected
-   `main` with `ci/gate` and `automation/policy`, required current-base checks,
-   resolved conversations, and no routine bypass/force-push/deletion.
+1. After this bootstrap PR is merged, the repository owner runs
+   `python scripts/setup_automation.py --apply` and confirms collaborator write
+   access. Keep `integration_enforcement` set to `controller`: the default works
+   on a private GitHub Free repository and requires no GitHub Pro subscription.
+   Follow [the owner checklist](OWNER_SETUP.md) for the remaining setup.
 2. Create a **private user Project** and its Status options: Proposed, Ready,
    Running, Review, Integrating, Verifying main, Done, Blocked, Recovery required,
    Needs human. Configure its number and a Project read/write credential in the
    trusted automation: repository variable `AGENT_PROJECT_NUMBER` and secret
    `AGENT_PROJECT_TOKEN` (Project read/write and private repository read access).
    Repository `GITHUB_TOKEN` cannot manage user
-   Projects. The issue history is usable before Project setup succeeds.
+   Projects. Run `python scripts/backfill_project.py --apply --create-project
+   --revision cc1a37b` to create/reuse the board and existing issue history.
+   Preserve that historical baseline on retries. The issue history is usable
+   before Project setup succeeds.
 3. Each collaborator authenticates their own `gh` and Codex account locally.
    Use the committed environment/bootstrap instructions; keep existing research
    environments and data intact. Never place Codex credentials in GitHub.
@@ -37,9 +41,23 @@ Sleeping both computers pauses implementation, even while GitHub checks run.
    serial integration, merged-main verification and private candidate creation.
    Only then switch the configured rollout mode to active.
 
-Authentication, subscription choices and private Project access may require the
-owner. Agents should prepare the precise configuration and report these missing
-prerequisites together; they must not silently claim enforcement is active.
+Authentication and private Project access may require the owner. Agents should
+prepare the precise configuration and report these missing prerequisites together;
+they must not silently claim enforcement is active. Existing Codex access and
+GitHub Actions/artifact quotas still apply; keep paid overage disabled.
+
+The controller checks ownership/scope, CI, independent review, resolved review
+conversations, and sensitive-change human approval before serial merging and
+merged-main verification. GitHub Free does not itself block direct pushes, manual
+merges around the controller, force pushes/deletion, or concurrent main changes
+outside this path. Both humans and agents must follow the repository protocol;
+these controller safeguards cannot prevent a writer from bypassing it.
+
+Eligible owners may optionally choose `integration_enforcement: "github"` in a
+human-reviewed policy PR and apply protections with
+`python scripts/setup_automation.py --apply --protections`. That mode fails closed
+if the required protections are missing or unverifiable. It is not required for
+routine automatic integration in the default controller mode.
 
 ## Everyday use
 
@@ -158,11 +176,15 @@ recovery or completed milestones.
 Preview before applying remote backfill:
 
 ```sh
-python scripts/backfill_project.py --dry-run
-python scripts/backfill_project.py --apply --create-project
+python scripts/backfill_project.py --dry-run --revision cc1a37b
+python scripts/backfill_project.py --apply --create-project --revision cc1a37b
 # Or reuse an already configured Project:
-python scripts/backfill_project.py --apply --project-number 1
+python scripts/backfill_project.py --apply --project-number 1 --revision cc1a37b
 ```
+
+Keep `--revision cc1a37b` for this initial history: later bootstrap merges are
+not part of its qualified historical baseline. Ongoing task completion is handled
+by the queue.
 
 The tool reads **all pages** of merged/open PRs and open/closed issues. It creates
 one closed bounded-deliverable issue per merged PR, a committed-report evidence
