@@ -105,7 +105,16 @@ jobs:
       - name: Test generated media without private samples or weights
         env:
           BADMINTON_GPU_TESTS: "0"
-        run: uv run --no-sync python -m pytest -q --basetemp .cache/pytest
+        run: |
+          python -c "from pathlib import Path; Path('.cache').mkdir(exist_ok=True)"
+          uv run --no-sync python -m pytest -q --basetemp .cache/pytest --junitxml .cache/test-results.xml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: python-${{ matrix.python }}-failure
+          path: .cache/test-results.xml
+          if-no-files-found: ignore
+          retention-days: 14
 
   native:
     needs: revision
@@ -139,8 +148,16 @@ jobs:
         env:
           BADMINTON_GPU_TESTS: "0"
         run: |
+          python -c "from pathlib import Path; Path('.cache').mkdir(exist_ok=True)"
           uv pip check
-          uv run --no-sync python -m pytest -q --basetemp .cache/pytest-native
+          uv run --no-sync python -m pytest -q --basetemp .cache/pytest-native --junitxml .cache/test-results.xml
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: failure()
+        with:
+          name: native-${{ matrix.os }}-failure
+          path: .cache/test-results.xml
+          if-no-files-found: ignore
+          retention-days: 14
 
   repository:
     needs: revision
