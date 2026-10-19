@@ -145,6 +145,9 @@ def main(argv=None):
         state = reconcile(gh, config)
         if args.command == "integrate":
             state = integrate(gh, config, state)
+            from devops.dashboard import publish
+
+            publish(gh, state, config["mode"], int(time.time()))
         print(
             json.dumps(
                 {

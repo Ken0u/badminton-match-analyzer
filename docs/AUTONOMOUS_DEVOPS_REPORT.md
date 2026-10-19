@@ -11,6 +11,8 @@ coordination branch. Atomic grants reserve paths/resources, fence stale epochs,
 and keep same-host implementation and independent review sessions separate.
 Observation mode grants no execution. Trusted comments are JSON data, never shell
 commands; reconciliation tolerates retries, malformed requests and lost wakeups.
+The control issue projects task owners, blockers, lease status and recent verified
+merges without comment notifications; the private Project separately projects status.
 
 Routine integration requires exact-head/base review, current CI, granted paths
 and protected main. Sensitive entry points need non-author human approval.
@@ -41,7 +43,7 @@ The bootstrap implementation itself is tracked separately.
 
 ## Verification and rollout limits
 
-Final local Python 3.10 and clean locked Python 3.12 runs each passed 877 tests
+Final local Python 3.10 and clean locked Python 3.12 runs each passed 880 tests
 with 11 skips. Boundary tests cover repair (including pilot mode), publishing,
 recovery and privileged entry points. Hosted exact-head results are recorded
 on the PR; local tests do not establish Windows or container execution.
