@@ -1301,6 +1301,13 @@
       "status": "rejected",
       "verb": "submit"
     },
+    "windows-rally109-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792425873,
+      "fingerprint": "acd9647167a6328aed32f8ecc8ad80da5e525e66afc71f9dbbb73e84fa506eb5",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-research-register-20261019-v1": {
       "actor": "Ken0u",
       "at": 1792420694,
@@ -3185,6 +3192,20 @@
       "host_id": "MSI",
       "registered_at": 1792418461,
       "session_id": "windows-playback69-review-v1"
+    },
+    "MSI/windows-rally109-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review",
+        "python-3.12"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792425873,
+      "session_id": "windows-rally109-review-v1"
     },
     "Stanleys-Laptop.local/cf2edc496cf343d2812a231f5c099c8a": {
       "actor": "dootz1",
