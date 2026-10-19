@@ -206,6 +206,14 @@
       "status": "ok",
       "verb": "register"
     },
+    "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
+      "actor": "Ken0u",
+      "at": 1792419127,
+      "fingerprint": "41f9a73dc6eaa7bc168b23beb8688345b19a627c8a37830e486740ff46b279e6",
+      "status": "needs_human",
+      "task_id": "101",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -617,6 +625,49 @@
     }
   },
   "tasks": {
+    "101": {
+      "epoch": 0,
+      "planned_at": 1792419127,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Reproduce extension acceptance followed by an unchanged predecessor issue specification on another reconciliation; implement and document a supported interruption-safe synchronization sequence.",
+          "Preserve unrelated human issue text and concurrent edits; never silently authorize arbitrary body changes or overwrite another collaborator's specification.",
+          "Keep stale ownership/review fencing, path/resource conflicts, request idempotency and unauthorized-plan-change recovery intact.",
+          "Cover repeated and interrupted reconciliations with adapter/queue regressions; obtain fresh independent and non-author human review before integration."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No rollout/enforcement/permission changes, direct worker coordination writes, model/data/deployment changes, research restarts or paid services."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Preserve legitimate committed scope extensions through canonical issue-plan reconciliation without weakening scope or ownership checks.",
+        "paths": [
+          "scripts/devops/coordinator.py",
+          "scripts/devops/queue.py",
+          "tests/test_agent_coordinator.py",
+          "tests/test_agent_queue.py",
+          "docs/COLLABORATION.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused queue/coordinator/policy tests, required project checks and exact-head CI; meaningful regression includes two reconcile passes around an approved extension."
+        ]
+      },
+      "spec_hash": "d149214dd5636f3976b34af96de00b864317e42d98ca80b89cdb795cfef23ba4",
+      "status": "needs_human"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
