@@ -356,6 +356,15 @@
       "task_id": "124",
       "verb": "next"
     },
+    "mac-01a15493-124-reproduced-v1": {
+      "actor": "dootz1",
+      "at": 1792449530,
+      "epoch": 1,
+      "fingerprint": "387bea561ff1226e3e885497e2d12e89bf6458eed5699fbb5d81c11f1ead1acd",
+      "status": "running",
+      "task_id": "124",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-124-start-v1": {
       "actor": "dootz1",
       "at": 1792449410,
@@ -2231,6 +2240,15 @@
       "task_id": "123",
       "verb": "recover"
     },
+    "windows-policy126-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792449566,
+      "epoch": 1,
+      "fingerprint": "8cdadcad15a3d54c76854cbc9dacad2dfcfc7c7670ff007e6bee52a576817f37",
+      "status": "running",
+      "task_id": "126",
+      "verb": "checkpoint"
+    },
     "windows-policy126-next-v1": {
       "actor": "Ken0u",
       "at": 1792449189,
@@ -3689,15 +3707,15 @@
         "head_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "remaining": "Implement only granted four paths; focused/full checks, fresh independent review, controller integration, exact-main and delivery receipts.",
         "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045",
-        "stage": "Committed epoch1 grant accepted; isolated .cache/export-download-124 created on exact baseline. Reproduce generated native media/manifest in-place write before repair, then stable bounded verified response and cleanup tests. MSI policy paths excluded."
+        "stage": "Actual before-fix native HTTP reproduction completed at unchanged c1ba9dc: MP44107bytes and manifest8249bytes both return200 matching Content-Length after same-inode rewrite, but SHA256differs from native receipt. Handles close. Evidence .cache/export-download-124/.cache/evidence/before-race.json and reproduce_download_race.py. Bounded private snapshot and response lifecycle repair in progress; no source/media truth or MSI paths changed."
       },
-      "checkpoint_at": 1792449410,
+      "checkpoint_at": 1792449530,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "branch": "codex/issue-124-keep-completed-media-export-http-downloa",
         "epoch": 1,
-        "expires_at": 1792460210,
+        "expires_at": 1792460330,
         "granted_at": 1792449340,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -3752,12 +3770,22 @@
       "status": "running"
     },
     "126": {
+      "checkpoint": {
+        "branch": "codex/issue-126-deliver-the-preserved-external-merge-rec",
+        "progress": "Genuine epoch1 grant confirmed after explicitly authorized identical-scope transfer from false-fenced123. Preserved original99da/PR125 and119source/reviews/CI. New isolated126 checkout and locked review env incorporate complete preserved source. Fixed independent preflight sensitive-main-repair authorization regression: risk-human/sensitive repair scopes including broad ancestors enter Needs human, obtain their own exact-hash owner authorization, retain repair_for and paused priority, and complete normal independent-review/CI/merge/main verification; ordinary repairs remain automatic.",
+        "remaining": "Full project suite/text/JSON/link checks; exact source commit/newPR/CI; new genuine formal independent review. No manual policy cutover authorized. After actual verified merged main perform original111 historical recovery reusing successful delivery. Existing101 remains separate.",
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5",
+        "validation": [
+          "New full repair lifecycle tests cover risk-human, sensitive file and broad-ancestor scope in active/pilot modes, unauthorized/stale owner scope, independent review, serial merge, verified repair resumption and completed candidate reuse. Focused231 tests pass; lint/format147files,48package health and diff checks pass."
+        ]
+      },
+      "checkpoint_at": 1792449566,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "branch": "codex/issue-126-deliver-the-preserved-external-merge-rec",
         "epoch": 1,
-        "expires_at": 1792460140,
+        "expires_at": 1792460366,
         "granted_at": 1792449340,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
