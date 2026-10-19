@@ -270,6 +270,12 @@
       "task_id": "69",
       "verb": "plan"
     },
+    "spec-69-cd3a181e8f6bff0a5932fed57669e85ba87550d44c229798856ebeb8640378b7": {
+      "actor": "dootz1",
+      "reason": "active/completed tasks require scope change or a new issue",
+      "status": "rejected",
+      "verb": "plan"
+    },
     "spec-70-d839eab295e476eb6e1e12e5fae84ada03c0c3adc7e83b860a49252c281a9df9": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -541,6 +547,15 @@
       "status": "running",
       "task_id": "69",
       "verb": "checkpoint"
+    },
+    "windows-playback69-recover-scope-v1": {
+      "actor": "Ken0u",
+      "at": 1792418989,
+      "epoch": 2,
+      "fingerprint": "ef3e089fedbcd5923c5457bada65a5c0df943f323e6f7915db4be8f9f36216ba",
+      "status": "ready",
+      "task_id": "69",
+      "verb": "recover"
     },
     "windows-playback69-review-next-v1": {
       "actor": "Ken0u",
@@ -874,39 +889,50 @@
     "69": {
       "checkpoint": {
         "branch": "codex/issue-69-add-source-time-preserving-browser-playb",
-        "completed": "Source-aligned browser playback implementation and regressions published; no source/reviewed-annotation writes",
-        "evidence": [
-          ".cache/test-results.xml",
-          "data/processed/qa/import-desktop.png",
-          "data/processed/qa/import-mobile.png"
-        ],
-        "head_sha": "9dcc0798d9fa15335a805e0a83a203284619189f",
-        "limitations": [
-          "Generated media verification establishes playback behavior, not badminton annotation accuracy",
-          "Existing research remains preserved; PROGRESS.md is deprecated"
-        ],
+        "head_sha": "c2cb58a7ced083a3c76fcdcbea8f486f31e9c27a",
         "pr_number": 100,
-        "remaining": "Exact current-base CI and fresh independent review, controller integration and main/private candidate verification",
+        "reason": "Approved scope extension changed frozen spec but issue body still held predecessor; controller conservatively fenced work. Owning issue now matches committed scope. Preserve current remote branch/head and obtain a fresh ownership epoch.",
+        "remaining": "New exact-head CI, fresh independent review, non-author human workflow approval and controller integration/main/candidate gates",
+        "research": "Code-only task, no reserved physical resources or input artifacts; no inference/research processes changed",
         "validation": [
-          "914 passed, 11 skipped",
-          "39 focused playback/orientation/import tests passed",
-          "Real Chromium import/playback workflow passed",
-          "Ruff, Prettier, repository checks, uv pip check and diff checks passed"
+          "914 tests passed/11 skips before fixture-only and CI fixes",
+          "39 focused passed after generator extraction",
+          "22 focused policy/playback/orientation tests passed after CI step",
+          "Repository and diff checks pass"
         ]
       },
       "checkpoint_at": 1792418333,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
-        "branch": "codex/issue-69-add-source-time-preserving-browser-playb",
-        "epoch": 1,
-        "expires_at": 1792429133,
-        "granted_at": 1792417543,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
-      },
-      "epoch": 1,
+      "epoch": 2,
+      "history": [
+        {
+          "at": 1792418989,
+          "checkpoint": {
+            "branch": "codex/issue-69-add-source-time-preserving-browser-playb",
+            "head_sha": "c2cb58a7ced083a3c76fcdcbea8f486f31e9c27a",
+            "pr_number": 100,
+            "reason": "Approved scope extension changed frozen spec but issue body still held predecessor; controller conservatively fenced work. Owning issue now matches committed scope. Preserve current remote branch/head and obtain a fresh ownership epoch.",
+            "remaining": "New exact-head CI, fresh independent review, non-author human workflow approval and controller integration/main/candidate gates",
+            "research": "Code-only task, no reserved physical resources or input artifacts; no inference/research processes changed",
+            "validation": [
+              "914 tests passed/11 skips before fixture-only and CI fixes",
+              "39 focused passed after generator extraction",
+              "22 focused policy/playback/orientation tests passed after CI step",
+              "Repository and diff checks pass"
+            ]
+          },
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
+            "branch": "codex/issue-69-add-source-time-preserving-browser-playb",
+            "epoch": 1,
+            "expires_at": 1792429133,
+            "granted_at": 1792417543,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+          }
+        }
+      ],
       "planned_at": 1792393957,
       "planned_by": "dootz1",
       "pr_number": 100,
@@ -946,7 +972,7 @@
         ]
       },
       "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
-      "status": "recovery_required",
+      "status": "ready",
       "submission": {
         "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
         "head_sha": "9dcc0798d9fa15335a805e0a83a203284619189f",
