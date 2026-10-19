@@ -12,6 +12,7 @@ from fractions import Fraction
 from pathlib import Path
 
 import av
+import cv2
 import numpy as np
 
 from .av_runtime import open_media
@@ -263,9 +264,12 @@ def _verify_audio(path, context, probes):
     }
 
 
-def _verify(path, source, video, interval, times, duration, audio, probes):
+def _verify(
+    path, source, video, interval, times, duration, audio, probes, overlay=None
+):
     count = 0
-    maximum_error = maximum_pixel_error = 0.0
+    maximum_error = maximum_pixel_error = maximum_unmasked_error = 0.0
+    unmasked_pixels = 0
     with open_media(str(path)) as encoded, open_media(str(source)) as original:
         stream = encoded.streams.video[0]
         if (
@@ -308,6 +312,12 @@ def _verify(path, source, video, interval, times, duration, audio, probes):
             expected = orient_frame(
                 expected, expected_rotation=video.get("rotation", 0)
             ).to_ndarray(format="rgb24")
+            original_pixels = expected
+            mask = np.zeros(expected.shape[:2], dtype=bool)
+            if overlay is not None:
+                expected, mask, _ = overlay.draw(
+                    expected, interval["start_frame"] + count
+                )
             actual = frame.to_ndarray(format="rgb24")[
                 : video["height"], : video["width"]
             ]
@@ -328,6 +338,39 @@ def _verify(path, source, video, interval, times, duration, audio, probes):
                 raise ValueError(
                     "Export pixels differ from the display-oriented source frame"
                 )
+            if overlay is not None:
+                # Account for chroma subsampling and H.264 blocks next to a
+                # documented overlay region while checking source-only pixels.
+                guard = cv2.dilate(
+                    mask.astype(np.uint8), np.ones((33, 33), np.uint8)
+                ).astype(bool)
+                if (~guard).any():
+                    source_reference = (
+                        av.VideoFrame.from_ndarray(
+                            np.pad(
+                                original_pixels,
+                                (
+                                    (0, video["height"] % 2),
+                                    (0, video["width"] % 2),
+                                    (0, 0),
+                                ),
+                            ),
+                            format="rgb24",
+                        )
+                        .reformat(format="yuv420p")
+                        .to_ndarray(format="rgb24")[: video["height"], : video["width"]]
+                    )
+                    unmasked_error = float(
+                        np.abs(source_reference.astype(float) - actual.astype(float))[
+                            ~guard
+                        ].mean()
+                    )
+                    if unmasked_error > 8:
+                        raise ValueError(
+                            "Unmasked export pixels changed from original source"
+                        )
+                    maximum_unmasked_error = max(maximum_unmasked_error, unmasked_error)
+                    unmasked_pixels += int((~guard).sum())
             maximum_pixel_error = max(maximum_pixel_error, pixel_error)
             maximum_error = max(maximum_error, error)
             count += 1
@@ -350,15 +393,65 @@ def _verify(path, source, video, interval, times, duration, audio, probes):
         "max_timestamp_error_s": maximum_error,
         "max_pixel_mean_absolute_error": maximum_pixel_error,
         "audio": _verify_audio(path, audio, probes),
+        **(
+            {
+                "max_unmasked_pixel_mean_absolute_error": maximum_unmasked_error,
+                "unmasked_verified_pixels": unmasked_pixels,
+            }
+            if overlay is not None
+            else {}
+        ),
     }
 
 
-def render_rally_videos(store, plan, root, output, progress=lambda value: None):
-    """Create a new export, publishing manifest.json only after every check passes.
+def _encode_overlay(source, destination, video, interval, overlay, progress):
+    """Encode actual oriented source frames with deterministic saved overlays."""
+    time_base = Fraction(video["time_base"])
+    with (
+        open_media(str(source)) as original,
+        open_media(str(destination), "w") as output,
+    ):
+        stream = output.add_stream("libx264", rate=25)
+        stream.width = video["width"] + video["width"] % 2
+        stream.height = video["height"] + video["height"] % 2
+        stream.pix_fmt = "yuv420p"
+        stream.time_base = stream.codec_context.time_base = time_base
+        stream.options = {"crf": "12", "preset": "veryfast", "bf": "0"}
+        origin = None
+        count = interval["end_frame_exclusive"] - interval["start_frame"]
+        for index, frame in enumerate(original.decode(video=0)):
+            if index >= interval["end_frame_exclusive"]:
+                break
+            if index < interval["start_frame"]:
+                continue
+            if origin is None:
+                origin = frame.pts * frame.time_base
+            oriented = orient_frame(frame, expected_rotation=video.get("rotation", 0))
+            pixels, _, _ = overlay.draw(oriented.to_ndarray(format="rgb24"), index)
+            pixels = np.pad(
+                pixels, ((0, video["height"] % 2), (0, video["width"] % 2), (0, 0))
+            )
+            rendered = av.VideoFrame.from_ndarray(pixels, format="rgb24")
+            rendered.pts = round((frame.pts * frame.time_base - origin) / time_base)
+            rendered.time_base = time_base
+            for packet in stream.encode(rendered):
+                packet.duration = 1
+                output.mux(packet)
+            progress((index - interval["start_frame"] + 1) / count)
+        for packet in stream.encode():
+            packet.duration = 1
+            output.mux(packet)
 
-    This reads saved annotations and actual media only. No inference, annotation
-    changes, shared application jobs or existing exports are involved.
-    """
+
+def render_rally_videos(store, plan, root, output, progress=lambda value: None):
+    """Render plain eligible rally clips without changing source evidence."""
+    return _render_videos(store, plan, root, output, progress)
+
+
+def _render_videos(
+    store, plan, root, output, progress, *, overlay=None, scope="rallies"
+):
+    """Shared native-media validation and atomic completion for export modes."""
     plan = copy.deepcopy(plan)
     fresh = _fresh_plan(store, plan, root)
     executable = shutil.which("ffmpeg")
@@ -367,6 +460,8 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
     video = fresh["source"]
     source = resolve_source(video, root)
     timeline = json.loads((store.data / video["id"] / "timestamps.json").read_bytes())
+    if scope == "full" and video["audited_endpoint_s"] is None:
+        raise ValueError("Full-video export requires a verified final sample duration")
     progress(0)
     folder = _output_directory(output, store.data)
     identity = folder.stat()
@@ -374,9 +469,27 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
         staging = folder / ".staging"
         staging.mkdir()
         rallies = copy.deepcopy(plan["rallies"])
-        total = max(1, plan["counts"]["eligible"])
+        entries = rallies
+        if scope == "full":
+            entries = [
+                {
+                    "eligible": True,
+                    "source_range": {
+                        "start_frame": 0,
+                        "end_frame_exclusive": len(timeline),
+                        "start_s": timeline[0],
+                        "end_s_exclusive": video["audited_endpoint_s"],
+                        "source_start_s": timeline[0] + video["source_start_s"],
+                        "source_end_s_exclusive": video["audited_endpoint_s"]
+                        + video["source_start_s"],
+                    },
+                }
+            ]
+            for rally in rallies:
+                rally["clip"] = None
+        total = max(1, sum(e["eligible"] for e in entries))
         completed = 0
-        for ordinal, rally in enumerate(rallies, 1):
+        for ordinal, rally in enumerate(entries, 1):
             rally["clip"] = None
             if not rally["eligible"]:
                 continue
@@ -396,7 +509,7 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
             movie_timescale = math.lcm(time_base.denominator, rate)
             if movie_timescale > 2147483647:
                 raise ValueError("Source clocks exceed supported MP4 time scale")
-            filename = f"rally-{ordinal:06d}.mp4"
+            filename = f"{'full' if scope == 'full' else 'rally'}-{ordinal:06d}.mp4"
             temporary, encoded = (
                 staging / f"encoded-{ordinal:06d}.mp4",
                 staging / filename,
@@ -439,10 +552,42 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
                 "-movie_timescale",
                 str(movie_timescale),
             ]
+            if overlay is not None:
+                overlay_media = staging / f"overlay-{ordinal:06d}.mp4"
+                _encode_overlay(
+                    source,
+                    overlay_media,
+                    video,
+                    interval,
+                    overlay,
+                    lambda fraction: progress(
+                        (completed + fraction * 0.5) / total * 0.9
+                    ),
+                )
+                command = [
+                    executable,
+                    "-nostdin",
+                    "-hide_banner",
+                    "-loglevel",
+                    "error",
+                    "-copyts",
+                    "-i",
+                    str(overlay_media),
+                    "-i",
+                    str(source),
+                    "-map",
+                    "0:v:0",
+                    "-c:v",
+                    "copy",
+                    "-video_track_timescale",
+                    str(time_base.denominator),
+                    "-movie_timescale",
+                    str(movie_timescale),
+                ]
             if audio["available"]:
                 command += [
                     "-map",
-                    "0:a:0",
+                    "1:a:0" if overlay is not None else "0:a:0",
                     "-af",
                     f"atrim=start={start:.12f}:end={end:.12f},asetpts=PTS-({start:.12f})/TB",
                     "-c:a",
@@ -481,9 +626,19 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
             )
             _remux(temporary, encoded, times, duration, movie_timescale)
             validation = _verify(
-                encoded, source, video, interval, times, duration, audio, probes
+                encoded,
+                source,
+                video,
+                interval,
+                times,
+                duration,
+                audio,
+                probes,
+                overlay,
             )
             temporary.unlink()
+            if overlay is not None:
+                overlay_media.unlink()
             rally["clip"] = {
                 "file": filename,
                 "sha256": _digest(encoded),
@@ -510,7 +665,9 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
             raise ValueError("Export output directory changed during rendering")
         manifest = {
             "schema_version": 1,
-            "purpose": "reviewed_rally_videos",
+            "purpose": "annotated_videos"
+            if overlay is not None
+            else "reviewed_rally_videos",
             "plan_sha256": hashlib.sha256(_canonical(plan)).hexdigest(),
             "source": plan["source"],
             "annotation_revision": plan["annotation_revision"],
@@ -524,7 +681,27 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
                 "Browser-compatible H.264 uses lossy encoding and 4:2:0 chroma; AAC may include disclosed codec padding.",
             ],
         }
-        for rally in rallies:
+        if overlay is not None:
+            manifest.update(
+                scope=scope,
+                exports=[e["clip"] for e in entries if e["clip"] is not None],
+                overlay_config=overlay.config,
+                overlay_config_sha256=overlay.config_sha256,
+                event_counts=overlay.event_receipt(
+                    [
+                        (
+                            e["source_range"]["start_frame"],
+                            e["source_range"]["end_frame_exclusive"],
+                        )
+                        for e in entries
+                        if e["eligible"]
+                    ]
+                ),
+            )
+            manifest["limitations"][0] = (
+                "Saved reviewed annotations burned into source-timed video; no inferred boxes, shuttle positions or exact contacts."
+            )
+        for rally in entries:
             if rally["clip"] is not None:
                 path = staging / rally["clip"]["file"]
                 if _digest(path) != rally["clip"]["sha256"]:
@@ -535,6 +712,18 @@ def render_rally_videos(store, plan, root, output, progress=lambda value: None):
         # Callbacks can cancel or change inputs too. Audit after the final one,
         # immediately before the completion receipt becomes visible.
         _fresh_plan(store, plan, root)
+        if (
+            folder.is_symlink()
+            or folder.stat().st_ino != identity.st_ino
+            or any(p.is_symlink() for p in folder.parents)
+        ):
+            raise ValueError("Export output directory changed before completion")
+        for entry in entries:
+            if (
+                entry["clip"] is not None
+                and _digest(folder / entry["clip"]["file"]) != entry["clip"]["sha256"]
+            ):
+                raise ValueError("Encoded export bytes changed before completion")
         with (folder / "manifest.json").open(
             "x", encoding="utf-8", newline="\n"
         ) as receipt:
