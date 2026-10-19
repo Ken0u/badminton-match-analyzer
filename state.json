@@ -132,6 +132,14 @@
       "task_id": "93",
       "verb": "integrate"
     },
+    "invalidate-108-a137ed5712f59e82acf55d126f4c04dbde6f96ab-246d14ff84424951adaf5ce10f5a27c2bda96f8a": {
+      "actor": "github-actions[bot]",
+      "at": 1792437910,
+      "fingerprint": "e84784e10158bc673c4e27e35b2bd33e045552ab29a345283f7a523daf694575",
+      "status": "recovery_required",
+      "task_id": "108",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -1652,38 +1660,7 @@
       "planned_at": 1792422680,
       "planned_by": "dootz1",
       "pr_number": 109,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792424330,
-        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
-        "evidence": [
-          "Committed review-next receipt mac-review108-01a15493-next-v1 grants task epoch 1/review_epoch 1 to fresh read-only session mac-review108-01a15493; exact PR head/base/spec revalidated before submission.",
-          "Read all four changed files plus surrounding schema, storage, ingestion, source resolution and orientation contracts; changed paths exactly match granted scope; clean worktree and git diff --check.",
-          "Independent .venv/bin/python -m pytest -q tests/test_rally_export.py: 33 passed; .cache/reviewer-108/focused.xml. An initial scratch-parent setup error was corrected before rerun.",
-          "Independent full .venv/bin/python -m pytest -q: 950 passed, 11 optional skips, one Starlette deprecation warning; .cache/reviewer-108/full.xml.",
-          "Independent generated probes reject boolean/infinite/negative timestamp inputs and a stale saved event timestamp, preserve next-native-PTS eligibility without final sample duration, and reject an output path symlinked into Store data; .cache/reviewer-108/probes/results.json.",
-          "Independent Ruff check and format checks pass: 137 files already formatted. Existing root uv pip check --python task/.venv/bin/python checks 47 installed packages, all compatible.",
-          "Observed generated VFR/nonzero-origin and rotation fixtures, final-frame endpoint exclusion when unavailable, old-revision stability, scene/camera/calibration preservation, unknown and predicted interior event retention, concurrent input rechecks, immutable SQLite reader, and exclusive-create JSON output behavior."
-        ],
-        "findings": [],
-        "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
-        "limitations": [
-          "This review verifies source-frame export planning, not rendering, audio synchronization, overlays, full-match annotation accuracy, or persistent player identity.",
-          "No private sources, model inference, running applications, GPU jobs, research artifacts, deployment, or model promotion were exercised.",
-          "Local validation used Python 3.12.13; optional model/GPU cases remain skipped. Hosted exact-head CI was queued/in progress when the verdict was prepared; automation/policy currently reports failure and the controller remains responsible for integration eligibility.",
-          "The task environment lacks pip. Dependency compatibility was independently checked with the existing uv executable against the task Python; no packages were installed."
-        ],
-        "pr_number": 109,
-        "reviewed_files": [
-          "backend/badminton/rally_export.py",
-          "backend/badminton/cli.py",
-          "tests/test_rally_export.py",
-          "docs/REVIEWED_EXPORTS.md"
-        ],
-        "session_id": "mac-review108-01a15493",
-        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
-        "verdict": "approve"
-      },
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -1724,7 +1701,7 @@
         ]
       },
       "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
-      "status": "review",
+      "status": "recovery_required",
       "submission": {
         "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
         "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
