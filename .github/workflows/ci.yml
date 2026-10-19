@@ -1,4 +1,5 @@
 name: Checks
+run-name: Verify ${{ inputs.verify_sha || github.sha }}
 
 on:
   push:

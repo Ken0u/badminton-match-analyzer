@@ -53,6 +53,10 @@ ROOT_FILES = {
     "package.json",
     "package-lock.json",
     "requirements.lock",
+    "uv.lock",
+    "MANIFEST.in",
+    ".python-version",
+    ".node-version",
 }
 IGNORED_SUFFIXES = {".mp4", ".mov", ".mkv", ".avi", ".webm", ".pyc", ".pyo"}
 WINDOWS_DEVICES = {
@@ -304,6 +308,11 @@ def _conflict(state: dict, task_id: str, spec: dict) -> bool:
             continue
         if set(spec["resources"]) & set(other["spec"]["resources"]):
             return True
+        if (
+            other_id == state["tasks"].get(task_id, {}).get("repair_for")
+            and other["status"] == "verifying_main"
+        ):
+            continue
         if any(
             paths_overlap(a, b) for a in spec["paths"] for b in other["spec"]["paths"]
         ):
@@ -435,6 +444,33 @@ def apply_request(
             "artifacts": artifacts,
             "registered_at": now,
         }
+    elif verb == "repair":
+        if not coordinator:
+            raise QueueError("repair tasks require verified coordinator evidence")
+        task_id, original = (
+            _task_id(request.get("task_id")),
+            _task_id(request.get("repair_for")),
+        )
+        parent = result["tasks"].get(original, {})
+        if parent.get("status") != "verifying_main" or not result["paused"]:
+            raise QueueError("repair requires paused failed-main integration")
+        spec = copy.deepcopy(request.get("spec"))
+        digest = spec_hash(spec)
+        _milestone(spec, config)
+        if task_id in result["tasks"]:
+            raise QueueError("repair task already exists")
+        if spec["resources"] or spec["artifacts"] or spec["dependencies"]:
+            raise QueueError("CI repairs cannot acquire research/data resources")
+        result["tasks"][task_id] = {
+            "spec": spec,
+            "spec_hash": digest,
+            "status": "ready",
+            "epoch": 0,
+            "repair_for": original,
+            "planned_by": actor,
+            "planned_at": now,
+        }
+        receipt.update(task_id=task_id, status="ready")
     elif verb in {"pause", "resume"}:
         result["paused"] = verb == "pause"
     elif verb == "plan":
@@ -488,7 +524,10 @@ def apply_request(
         receipt.update(task_id=task_id, status=task["status"])
     elif verb in {"next", "review-next"}:
         worker = _worker(result, request, actor)
-        if mode == "observation" or result["paused"]:
+        repair_ids = {
+            key for key, item in result["tasks"].items() if item.get("repair_for")
+        }
+        if mode == "observation" or (result["paused"] and not repair_ids):
             receipt["status"] = "observed" if mode == "observation" else "paused"
         else:
             review = verb == "review-next"
@@ -496,6 +535,7 @@ def apply_request(
                 any(
                     t["status"] in RESERVED
                     and t.get("claim", {}).get("host_id") == worker["host_id"]
+                    and not (result["paused"] and t["status"] == "verifying_main")
                     for t in result["tasks"].values()
                 )
                 if not review
@@ -512,9 +552,11 @@ def apply_request(
             )
             chosen = None
             for task_id, task in candidates:
-                if mode == "pilot" and task_id not in {
-                    str(x) for x in config.get("pilot_tasks", [])
-                }:
+                if (
+                    mode == "pilot"
+                    and not task.get("repair_for")
+                    and task_id not in {str(x) for x in config.get("pilot_tasks", [])}
+                ):
                     continue
                 if (
                     request.get("task_id") is not None
@@ -522,6 +564,8 @@ def apply_request(
                 ):
                     continue
                 spec = task["spec"]
+                if result["paused"] and not task.get("repair_for"):
+                    continue
                 if review:
                     if (
                         task["status"] != "review"
@@ -629,7 +673,8 @@ def apply_request(
                 raise QueueError("exact-head checks required")
             if any(
                 t["status"] in {"integrating", "verifying_main"}
-                for t in result["tasks"].values()
+                for key, t in result["tasks"].items()
+                if key != task.get("repair_for")
             ):
                 raise QueueError("another integration is unfinished")
             task["status"] = "integrating"
@@ -648,6 +693,13 @@ def apply_request(
             task["status"] = (
                 "done" if request.get("checks_passed") is True else "verifying_main"
             )
+            if task["status"] == "done" and task.get("repair_for"):
+                original = result["tasks"][task["repair_for"]]
+                original.update(status="done", verified_by_repair=merge_sha)
+                result["paused"] = any(
+                    t["status"] == "verifying_main" and t.get("integration_error")
+                    for t in result["tasks"].values()
+                )
         receipt.update(task_id=task_id, status=task["status"])
     else:
         task_id = _task_id(request.get("task_id"))
@@ -655,6 +707,40 @@ def apply_request(
         if not task:
             raise QueueError("unknown task")
         _worker(result, request, actor)
+        if (
+            verb == "recover"
+            and task["status"] == "recovery_required"
+            and not task["spec"]["resources"]
+            and not task["spec"]["artifacts"]
+            and not request.get("terminal_proof")
+        ):
+            checkpoint = request.get("checkpoint")
+            if (
+                not isinstance(checkpoint, dict)
+                or not checkpoint.get("branch")
+                or not checkpoint.get("head_sha")
+                or checkpoint.get("branch") != task["claim"]["branch"]
+                or request.get("epoch") != task["epoch"]
+            ):
+                raise QueueError(
+                    "code recovery requires a preserved branch and head checkpoint"
+                )
+            _sha(checkpoint["head_sha"], "preserved head")
+            task.setdefault("history", []).append(
+                {
+                    "claim": task.pop("claim"),
+                    "checkpoint": copy.deepcopy(checkpoint),
+                    "at": now,
+                }
+            )
+            task.pop("review_claim", None)
+            task.pop("review", None)
+            task["epoch"] += 1
+            task["status"] = "ready"
+            task["checkpoint"] = copy.deepcopy(checkpoint)
+            receipt.update(task_id=task_id, status="ready", epoch=task["epoch"])
+            result["receipts"][request_id] = receipt
+            return result
         review = verb == "review-result" or (
             verb == "heartbeat" and request.get("lane") == "review"
         )
@@ -718,6 +804,11 @@ def apply_request(
                 "spec_hash": task["spec_hash"],
                 "pr_number": request["pr_number"],
             }
+            if request.get("native_evidence") is not None:
+                _json(request["native_evidence"])
+                task["submission"]["native_evidence"] = copy.deepcopy(
+                    request["native_evidence"]
+                )
             task["pr_number"] = request["pr_number"]
             task.pop("review", None)
             task.pop("review_claim", None)

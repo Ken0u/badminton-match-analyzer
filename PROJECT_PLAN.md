@@ -2,6 +2,8 @@
 
 Prepared October 17, 2026.
 
+Development now follows the [autonomous collaboration protocol](docs/COLLABORATION.md): GitHub Issues hold bounded tasks, a serialized dispatcher grants ownership, local Mac/Windows agents implement and independently review, and protected integration verifies merged main. The [DevOps report](docs/AUTONOMOUS_DEVOPS_REPORT.md) distinguishes implemented controls from owner/pilot activation still required. Historical PR/report work is backfilled without marking rejected models or the full product complete.
+
 Scope update: half smash has been removed. The six target families are clear, lift, net, drop, smash, and drive, each with forehand/backhand labeling.
 
 The [direct-video learner](docs/VISUAL_EVENT_LEARNING_REPORT.md) completes source-clock RGB feature preparation on all 800 labelled clips, the fixed 100-epoch training schedule and frozen 200-clip test. Contact F1 is 0.159; complete time/family/side/court-end tuple F1 is 0.028 against published weak references. The model is rejected for app promotion. Backhand smash has no test support; doubles, identities, serve/end accuracy and correct full-match annotations remain open. Continue development with source-aligned and independently reviewed supervision while preserving this test result.

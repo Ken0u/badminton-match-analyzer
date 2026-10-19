@@ -6,7 +6,11 @@ state rather than adopting dated machine-specific handoffs.
 
 1. Run the queue doctor and register the authenticated collaborator, unique
    host/session, OS/architecture, Python profile and available input hashes.
-2. Prioritize reviews and integration repairs. Otherwise request `next`; wait for
+2. Prioritize reviews and integration repairs. Refresh trusted unplanned feature
+   requests at checkpoints using the planner prompt; clarify/split sufficiently
+   specified work within approved milestones before requesting more work.
+   Adopt dependency-bot changes through a granted task and its codex branch/PR;
+   never merge an untracked bot branch around policy. Otherwise request `next`; wait for
    the confirmed ownership epoch, frozen specification and full reservations.
 3. Work in an isolated branch/worktree `codex/issue-<number>-<slug>`. Pin test
    root/data before application imports. Use the real Store admission for heavy

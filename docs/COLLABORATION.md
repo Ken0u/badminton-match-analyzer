@@ -9,22 +9,31 @@ Sleeping both computers pauses implementation, even while GitHub checks run.
 
 ## One-time setup and activation
 
-1. The repository owner enables the private-repository plan needed for branch
+1. After this bootstrap PR is merged, the repository owner enables the private-repository plan needed for branch
    protection, runs `python scripts/setup_automation.py --apply --protections`, confirms collaborator write access, and configures protected
    `main` with `ci/gate` and `automation/policy`, required current-base checks,
    resolved conversations, and no routine bypass/force-push/deletion.
 2. Create a **private user Project** and its Status options: Proposed, Ready,
    Running, Review, Integrating, Verifying main, Done, Blocked, Recovery required,
    Needs human. Configure its number and a Project read/write credential in the
-   trusted automation environment. Repository `GITHUB_TOKEN` cannot manage user
+   trusted automation: repository variable `AGENT_PROJECT_NUMBER` and secret
+   `AGENT_PROJECT_TOKEN` (Project read/write and private repository read access).
+   Repository `GITHUB_TOKEN` cannot manage user
    Projects. The issue history is usable before Project setup succeeds.
 3. Each collaborator authenticates their own `gh` and Codex account locally.
    Use the committed environment/bootstrap instructions; keep existing research
    environments and data intact. Never place Codex credentials in GitHub.
+   Install the pinned uv tool (`python -m pip install uv==0.9.4`) in your tooling
+   environment and use its activated PATH. Run `python scripts/bootstrap.py
+   --profile review --install` only inside a new linked task worktree. Use
+   `--profile cuda` on a compatible Windows/Linux host, or `cpu` for CPU models.
+   The Codex CLI is optional for existing desktop sessions.
 4. Start coordination in observation mode. Inspect PR #30 and original Windows
    research workers before registering/adopting them; missing local files are
    not evidence a process stopped.
-5. Complete two small nonconflicting tasks, one per host, through fresh review,
+5. In a human-reviewed configuration PR set mode to `pilot` and `pilot_tasks` to
+   the two selected issue numbers. Observation does not grant tasks. Complete
+   two small nonconflicting tasks, one per host, through fresh review,
    serial integration, merged-main verification and private candidate creation.
    Only then switch the configured rollout mode to active.
 
@@ -65,7 +74,7 @@ milestone is achieved.
 
 The cross-platform interface is `python scripts/agent_queue.py`. Global options
 include `--payload FILE` for JSON request fields, `--task NUMBER`, `--epoch EPOCH`, `--host HOST`, and `--session SESSION`. Run `--help` and each
-subcommand's help for required request fields. Commands are:
+command's help; extra request fields are supplied as JSON. Commands are:
 
 | Command | Purpose |
 | --- | --- |
@@ -73,6 +82,7 @@ subcommand's help for required request fields. Commands are:
 | `register` | Declare authenticated worker, host/session and capability/input hashes |
 | `next` | Request the highest-priority eligible nonconflicting task |
 | `checkpoint` | Preserve branch, evidence and progress; renew ownership |
+| `heartbeat` | Renew using an edited status comment without a workflow per heartbeat |
 | `extend-scope` | Obtain extra path/resource reservations before changing scope |
 | `submit` | Submit the granted task and exact PR revision for review |
 | `review-next` | Reserve an independent review |
@@ -90,11 +100,32 @@ invalidates old submissions.
 
 A three-hour lease renews at checkpoints and before long operations. A stale
 lease enters recovery rather than immediately assigning duplicate work.
+For expired code-only work, another registered collaborator can recover with the
+current epoch and a checkpoint naming the original granted remote branch and its
+verified head SHA. The old epoch is fenced. Resource/input-bearing work retains
+the original-host process/Store/artifact proof requirement; an offline host is
+never assumed stopped.
 Before yielding, record the branch/PR, exact revision, tests, remaining work and
 artifact references. Review needs a fresh session, frozen spec, PR head and base;
 a self-declared second verdict in the implementation session is insufficient.
 Review responses echo the grant's `review_epoch` separately from task `epoch`,
 with `verdict` set to `approve` or `changes` in the `--payload` JSON.
+
+Inference changes also submit `native_evidence` containing `code_sha` equal to
+the PR head, `source_sha256`, `model_sha256`, `receipt_sha256`, and a nonempty
+`limitations` array. Receipts establish provenance and exercised behavior, not
+independent annotation accuracy.
+
+For submission, payload fields include integer `pr_number`, `spec_hash`, and
+`head_sha`/`base_sha`. A review response additionally supplies `review_epoch`,
+`findings`, `reviewed_files`, `limitations`, and `evidence` arrays. Reviewed files
+and evidence cannot be empty. A review session registers with the same host and
+a new `--session` value; it must actually be a fresh read-only agent session.
+
+Use `checkpoint --task N --epoch E --payload FILE` with a `checkpoint` object.
+Before long work renew ownership; heartbeat comments are collected by the hourly
+watchdog, so use a normal checkpoint when an immediate acknowledgement matters.
+No background worker is installed by this setup.
 
 Code and base changes invalidate review evidence. Three failed repair rounds
 escalate once with a clear blocker. Routine work can merge automatically after
@@ -150,3 +181,17 @@ issue cards (and repairs unset Status after an interruption); coordination
 automation uses `sync_board(..., preserve_existing=False)` to project authoritative
 queue status. Ongoing queue status projection is owned by coordination automation,
 not retrospective backfill. Neither tool grants ownership.
+
+## Failed integration and publishing
+
+A failed, cancelled, skipped or approval-blocked main verification pauses normal
+work and creates one bounded repair issue. Only that coordinator-authorized
+repair can acquire overlapping code paths while paused; physical research
+resources stay protected. A verified repair records the original failed SHA and
+repair SHA separately and resumes the queue. A repair that breaks main again
+escalates once for human attention.
+
+Private publishing stays pending until the complete candidate workflow succeeds,
+including package/image artifacts. Failed publishing is retried up to three
+attempts, then produces one incident issue. A dispatch acknowledgement is not
+proof of a completed release. Running app/data upgrades remain explicit.

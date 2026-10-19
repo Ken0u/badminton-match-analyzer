@@ -24,6 +24,10 @@ PROFILES = {
 def probe(command: list[str], cwd: Path) -> dict:
     """Return status only for auth probes; never persist credential-bearing output."""
     try:
+        executable = shutil.which(command[0])
+        if executable is None:
+            return {"available": False, "ok": False}
+        command = [executable, *command[1:]]
         result = subprocess.run(
             command, cwd=cwd, capture_output=True, text=True, timeout=20, check=False
         )
@@ -62,8 +66,9 @@ def doctor(profile: str, root: Path | None = None) -> dict:
         "free_bytes": shutil.disk_usage(root).free,
         "ok": supported
         and (root / "uv.lock").is_file()
-        and all(value["ok"] for value in tools.values())
-        and all(value["ok"] for value in auth.values()),
+        and all(value["ok"] for key, value in tools.items() if key != "codex")
+        and auth["github"]["ok"],
+        "codex_cli_optional": True,
         "limits": [
             "No model/data downloads or inference performed",
             "No app, worker or process restart performed",
@@ -134,5 +139,8 @@ def bootstrap(profile: str, root: Path, python: str = "3.12") -> None:
     for extra in PROFILES[profile]:
         command.extend(("--extra", extra))
     subprocess.run(command, cwd=root, env=env, check=True)
-    subprocess.run(["npm", "ci"], cwd=root, env=env, check=True)
+    npm = shutil.which("npm")
+    if npm is None:
+        raise ValueError("Install the pinned Node/npm runtime before bootstrap")
+    subprocess.run([npm, "ci"], cwd=root, env=env, check=True)
     marker.write_text(json.dumps(identity, indent=2) + "\n", encoding="utf-8")

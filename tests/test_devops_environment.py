@@ -58,7 +58,12 @@ def test_cuda_refused_on_mac_before_running_tools(tmp_path):
 def test_doctor_does_not_expose_auth_output(tmp_path):
     (tmp_path / ".python-version").write_text("3.12\n")
     (tmp_path / "uv.lock").write_text("version = 1\n")
-    with patch.object(environment.subprocess, "run") as run:
+    with (
+        patch.object(
+            environment.shutil, "which", side_effect=lambda name: f"/tools/{name}"
+        ),
+        patch.object(environment.subprocess, "run") as run,
+    ):
         run.return_value.returncode = 0
         run.return_value.stdout = "private-token"
         run.return_value.stderr = "secret"

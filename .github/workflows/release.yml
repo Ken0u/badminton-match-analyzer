@@ -1,0 +1,105 @@
+name: Private candidates
+run-name: Private candidate ${{ inputs.source_sha }}
+on:
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Verified merged-main commit
+        required: true
+        type: string
+concurrency:
+  group: private-candidate-${{ inputs.source_sha }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  eligibility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    outputs:
+      source: ${{ steps.validate.outputs.source }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - id: validate
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: python scripts/release_candidate.py validate
+  package:
+    needs: eligibility
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.eligibility.outputs.source }}
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: '0.9.4'
+      - run: uv sync --locked --python 3.12 --extra dev --extra youtube
+      - run: uv run --no-sync python scripts/verify_package.py --build --dist-dir dist
+      - name: Candidate inventory
+        env:
+          SOURCE_SHA: ${{ needs.eligibility.outputs.source }}
+        run: uv run --no-sync python scripts/release_candidate.py inventory
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: python-${{ needs.eligibility.outputs.source }}
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/candidate.json
+          if-no-files-found: error
+          retention-days: 30
+  images:
+    needs: [eligibility, package]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        target: [review, cpu]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ needs.eligibility.outputs.source }}
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+      - name: Require private package visibility before push
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ needs.eligibility.outputs.source }}
+        run: python scripts/release_candidate.py package-privacy --target "${{ matrix.target }}"
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - id: image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: .
+          target: ${{ matrix.target }}
+          platforms: linux/amd64
+          push: true
+          tags: ghcr.io/ken0u/badminton-match-analyzer-${{ matrix.target }}:sha-${{ needs.eligibility.outputs.source }}
+          provenance: false
+          sbom: false
+      - name: Persist immutable image receipt
+        env:
+          SOURCE_SHA: ${{ needs.eligibility.outputs.source }}
+          IMAGE_DIGEST: ${{ steps.image.outputs.digest }}
+          IMAGE_TARGET: ${{ matrix.target }}
+        run: python scripts/release_candidate.py image-receipt
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: image-${{ matrix.target }}-${{ needs.eligibility.outputs.source }}
+          path: dist/image-*.json
+          retention-days: 30
