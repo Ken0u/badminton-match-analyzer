@@ -970,6 +970,7 @@
       "status": "needs_human"
     },
     "103": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39272975409",
       "checkpoint": {
         "branch": "codex/issue-103-preserve-actual-vfr-source-endpoints-and",
         "evidence": [
@@ -993,7 +994,7 @@
         "spec_hash": "eacd1c09aab3ecaf49ca659a777c16500e0a95bd699d35d0c8a6756c7e0d2fc7"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792421324,
