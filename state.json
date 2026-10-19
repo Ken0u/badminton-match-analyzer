@@ -1281,6 +1281,7 @@
       }
     },
     "105": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39276815136",
       "checkpoint": {
         "branch": "codex/issue-105-clear-stale-original-media-playback-erro",
         "evidence": [
@@ -1304,7 +1305,7 @@
         "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792422814,
