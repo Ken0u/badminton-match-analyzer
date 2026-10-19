@@ -1,0 +1,5 @@
+include uv.lock .python-version .node-version package.json package-lock.json
+include AGENTS.md PROJECT_PLAN.md PROGRESS.md
+recursive-include scripts *.py *.mjs
+recursive-include docs *.md *.json *.png
+recursive-include tests *.mjs
