@@ -14,8 +14,9 @@ from .av_runtime import open_media
 from .orientation import frame_rotation
 from .video import resolve_source, timestamps_for, write_json
 
-VERSION = 1
+VERSION = 2
 TIMING_TOLERANCE_S = 0.00002
+DURATION_TOLERANCE_S = 0.0011  # MP4 movie duration is rounded to milliseconds.
 
 
 @lru_cache(maxsize=16)
@@ -75,6 +76,19 @@ def _validate(path, video, times):
             raise ValueError("Playback video must use H.264")
         if bool(container.streams.audio) != video["audio"]:
             raise ValueError("Playback did not preserve source audio availability")
+        expected_duration = video["duration_s"]
+        if (
+            stream.duration is None
+            or stream.start_time is None
+            or container.duration is None
+            or abs(
+                float((stream.start_time + stream.duration) * stream.time_base)
+                - expected_duration
+            )
+            > DURATION_TOLERANCE_S
+            or abs(container.duration / 1e6 - expected_duration) > DURATION_TOLERANCE_S
+        ):
+            raise ValueError("Playback duration does not match the source timeline")
         width = video["width"] + video["width"] % 2
         height = video["height"] + video["height"] % 2
         for frame in container.decode(stream):
@@ -96,6 +110,49 @@ def _validate(path, video, times):
     return maximum_error
 
 
+def _set_packet_durations(source, destination, video, times):
+    """Retain encoded samples and their PTS while fixing MP4 sample durations.
+
+    Nominal encoder frame rates do not describe variable-rate presentation gaps.
+    No B frames are encoded, so each packet's decode and presentation order agree.
+    """
+    count = 0
+    with (
+        open_media(str(source)) as original,
+        open_media(str(destination), "w", options={"movflags": "+faststart"}) as output,
+    ):
+        streams = {
+            stream.index: output.add_stream_from_template(stream, opaque=True)
+            for stream in original.streams
+        }
+        for stream in original.streams:
+            streams[stream.index].time_base = stream.time_base
+        for packet in original.demux():
+            if packet.pts is None or packet.dts is None:
+                continue
+            if packet.stream.type == "video":
+                if (
+                    count >= len(times)
+                    or packet.dts != packet.pts
+                    or abs(float(packet.pts * packet.time_base) - times[count])
+                    > TIMING_TOLERANCE_S
+                ):
+                    raise ValueError(
+                        "Encoded playback timestamps or source frame order changed"
+                    )
+                end = (
+                    times[count + 1] if count + 1 < len(times) else video["duration_s"]
+                )
+                packet.duration = round(end / packet.time_base) - packet.pts
+                if packet.duration <= 0:
+                    raise ValueError("Playback frame duration must be positive")
+                count += 1
+            packet.stream = streams[packet.stream.index]
+            output.mux(packet)
+    if count != len(times):
+        raise ValueError("Encoded playback is missing source frames")
+
+
 def prepare_playback(video, root, data, progress=lambda value: None):
     existing = cached_playback(video, root, data)
     if existing:
@@ -109,6 +166,7 @@ def prepare_playback(video, root, data, progress=lambda value: None):
     folder = data / video["id"] / "playback"
     folder.mkdir(parents=True, exist_ok=True)
     temporary = folder / f"{uuid4().hex}.mp4"
+    remuxed = folder / f"{uuid4().hex}.mp4"
     time_base = Fraction(video["time_base"])
     origin = format(video["source_start_s"], ".12f")
     # Explicit timestamp passthrough and encoder time base avoid CFR frame
@@ -137,6 +195,8 @@ def prepare_playback(video, root, data, progress=lambda value: None):
         "veryfast",
         "-crf",
         "20",
+        "-bf",
+        "0",
         "-pix_fmt",
         "yuv420p",
         "-fps_mode",
@@ -193,7 +253,8 @@ def prepare_playback(video, root, data, progress=lambda value: None):
                         process.wait()
                 process.stdout.close()
         progress(0.92)
-        error = _validate(temporary, video, times)
+        _set_packet_durations(temporary, remuxed, video, times)
+        error = _validate(remuxed, video, times)
         # Source/timing changes during encoding invalidate this result too.
         resolve_source(video, root)
         if context != _context(video, data):
@@ -204,13 +265,15 @@ def prepare_playback(video, root, data, progress=lambda value: None):
             "context": context,
             "frame_mapping": "identity",
             "max_timestamp_error_s": error,
-            "proxy_sha256": digest(temporary),
+            "proxy_sha256": digest(remuxed),
+            "duration_s": video["duration_s"],
             "audio_codec": "aac" if video["audio"] else None,
             "video_codec": "h264",
         }
-        temporary.replace(folder / "browser.mp4")
+        remuxed.replace(folder / "browser.mp4")
         write_json(folder / "receipt.json", receipt)
         progress(1)
         return receipt
     finally:
         temporary.unlink(missing_ok=True)
+        remuxed.unlink(missing_ok=True)

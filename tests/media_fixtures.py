@@ -9,7 +9,27 @@ import av
 import numpy as np
 
 
-def write_rotated_video(path, rotation):
+def write_lossless_vfr_video(path, timestamps=(0, 40, 80, 680)):
+    """Matroska with explicit 40-ms final sample and independently varied gaps."""
+    with av.open(str(path), "w") as container:
+        stream = container.add_stream("ffv1", rate=25)
+        stream.width, stream.height = 64, 32
+        stream.pix_fmt = "bgr0"
+        stream.time_base = Fraction(1, 1000)
+        stream.codec_context.time_base = Fraction(1, 1000)
+        for index, timestamp in enumerate(timestamps):
+            frame = av.VideoFrame.from_ndarray(
+                np.full((32, 64, 3), 30 + index * 50, np.uint8), format="rgb24"
+            )
+            frame.pts, frame.time_base = timestamp, Fraction(1, 1000)
+            for packet in stream.encode(frame):
+                container.mux(packet)
+        for packet in stream.encode():
+            container.mux(packet)
+    return path
+
+
+def write_rotated_video(path, rotation, timestamps=(0, 40, 120, 160)):
     """Encode asymmetric VFR pixels and patch a genuine MP4 display matrix.
 
     PyAV cannot currently set a stream display matrix through its public API.
@@ -23,7 +43,7 @@ def write_rotated_video(path, rotation):
         stream.pix_fmt = "yuv420p"
         stream.time_base = Fraction(1, 1000)
         stream.codec_context.time_base = Fraction(1, 1000)
-        for index, pts in enumerate((0, 40, 120, 160)):
+        for index, pts in enumerate(timestamps):
             pixels = np.empty((64, 128, 3), dtype=np.uint8)
             pixels[:32, :64] = [230, 20 + index * 5, 20]
             pixels[:32, 64:] = [20, 220, 20 + index * 5]

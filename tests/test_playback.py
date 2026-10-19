@@ -1,6 +1,7 @@
 """Actual transcoding must retain every source frame and its presentation time."""
 
 import io
+import json
 import shutil
 import time
 from fractions import Fraction
@@ -11,11 +12,11 @@ import numpy as np
 import pytest
 from badminton.api import create_app
 from badminton.ingest import inspect_video
-from badminton.playback import cached_playback, prepare_playback
+from badminton.playback import _validate, cached_playback, prepare_playback
 from badminton.storage import Store
 from badminton.video import SourceChangedError, iter_frames, timestamps_for
 from fastapi.testclient import TestClient
-from media_fixtures import write_rotated_video
+from media_fixtures import write_lossless_vfr_video, write_rotated_video
 
 pytestmark = pytest.mark.skipif(not shutil.which("ffmpeg"), reason="FFmpeg is required")
 
@@ -91,6 +92,43 @@ def test_failed_transcode_never_publishes_partial_proxy(tmp_path):
             prepare_playback(video, tmp_path, store.data)
     folder = store.data / video["id"] / "playback"
     assert list(folder.iterdir()) == []
+
+
+@pytest.mark.parametrize(
+    "pts", [(0, 40, 80, 680), (0, 20, 40, 50), (0, 500, 1000, 1500)]
+)
+def test_real_vfr_source_tail_and_proxy_packet_durations_agree(tmp_path, pts):
+    source = write_lossless_vfr_video(tmp_path / "vfr.mkv", pts)
+    store = Store(tmp_path / "processed")
+    video = inspect_video(source, "singles", store, tmp_path)
+    with av.open(str(source)) as container:
+        frames = list(container.decode(video=0))
+        actual_end = float(
+            (frames[-1].pts + frames[-1].duration) * frames[-1].time_base
+        )
+        assert actual_end == pytest.approx(container.duration / 1e6)
+    assert video["duration_s"] == pytest.approx(actual_end)
+    times = timestamps_for(store.data, video["id"])
+    assert times == pytest.approx(np.asarray(pts) / 1000)
+    prepare_playback(video, tmp_path, store.data)
+    path, receipt = cached_playback(video, tmp_path, store.data)
+    with av.open(str(path)) as container:
+        stream = container.streams.video[0]
+        assert float(stream.duration * stream.time_base) == pytest.approx(actual_end)
+        assert container.duration / 1e6 == pytest.approx(actual_end, abs=0.001)
+        packets = [
+            packet for packet in container.demux(video=0) if packet.pts is not None
+        ]
+        assert [float(p.pts * p.time_base) for p in packets] == pytest.approx(times)
+        assert [float(p.duration * p.time_base) for p in packets] == pytest.approx(
+            [b - a for a, b in zip(times, [*times[1:], actual_end], strict=True)]
+        )
+    with pytest.raises(ValueError, match="duration"):
+        _validate(path, video | {"duration_s": actual_end + 1}, times)
+    assert receipt["duration_s"] == pytest.approx(actual_end)
+    receipt["context"]["version"] = 1
+    (path.parent / "receipt.json").write_text(json.dumps(receipt), encoding="utf-8")
+    assert cached_playback(video, tmp_path, store.data) is None
 
 
 def test_nonbrowser_codec_nonzero_clock_odd_size_and_delayed_audio(tmp_path):
