@@ -96,6 +96,13 @@
       "status": "needs_human",
       "task_id": "73",
       "verb": "plan"
+    },
+    "windows-owner-setup-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792394451,
+      "fingerprint": "44b85b4a9efc888ea43058374c9bc482edfad44466f89488e3ad0184b02921d6",
+      "status": "ok",
+      "verb": "register"
     }
   },
   "tasks": {
@@ -591,5 +598,20 @@
     }
   },
   "version": 1,
-  "workers": {}
+  "workers": {
+    "MSI/3283a9953d4445739251c6b8dfdb55bd": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review",
+        "python-3.12"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792394451,
+      "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    }
+  }
 }
