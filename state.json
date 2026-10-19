@@ -416,6 +416,15 @@
       "task_id": "124",
       "verb": "checkpoint"
     },
+    "mac-01a15493-69-external-recovery-v1": {
+      "actor": "dootz1",
+      "at": 1792454126,
+      "epoch": 4,
+      "fingerprint": "3712af2b49e872926d0b8d507d20fe7ddff34d31acf8fd59a7730f0519b08617",
+      "status": "recovery_pending",
+      "task_id": "69",
+      "verb": "recover-merged"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -4728,6 +4737,18 @@
       },
       "checkpoint_at": 1792419307,
       "epoch": 4,
+      "external_recovery_request": {
+        "actor": "dootz1",
+        "at": 1792454126,
+        "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "epoch": 4,
+        "evidence_state_sha": "f0059bb073d24e97afcaf1ade8f0033a01c192f8",
+        "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "merge_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
+        "pr_number": 102,
+        "request_id": "mac-01a15493-69-external-recovery-v1",
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+      },
       "history": [
         {
           "at": 1792418989,
