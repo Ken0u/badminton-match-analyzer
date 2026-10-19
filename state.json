@@ -1,6 +1,13 @@
 {
   "paused": false,
   "receipts": {
+    "frontend-plan-register-v1": {
+      "actor": "dootz1",
+      "at": 1792417850,
+      "fingerprint": "e9a8c943d4ed75062c35d2e895afc7a2e5f788698e0b9f5227136d325ad91259",
+      "status": "ok",
+      "verb": "register"
+    },
     "integrate-80-49c266486371784fc4bcbfad37bae0b6b40db0f7-9aa0f437fd5cacd948161ae09149ac2855f01c31": {
       "actor": "github-actions[bot]",
       "at": 1792416353,
@@ -226,6 +233,14 @@
       "fingerprint": "4484ab8867bfd1422e544d25317386f636b9a29ba4c621a97b60824812ef684f",
       "status": "needs_human",
       "task_id": "91",
+      "verb": "plan"
+    },
+    "spec-93-ed7b793bd3666d6ce1cc81a1cf1cd47d12a6780c0fd06c4f8e3d71bfb7a68178": {
+      "actor": "dootz1",
+      "at": 1792417850,
+      "fingerprint": "07a82e0a028a3029a3d94629efcf4965986d2b00fdf6c5ab18bda70bb8441746",
+      "status": "ready",
+      "task_id": "93",
       "verb": "plan"
     },
     "verify-80-a996e83867509489e223e6a321b6ee4794fafc61-False": {
@@ -1169,6 +1184,47 @@
       },
       "spec_hash": "cda5613c2799138fd227dd4a8d7bffaa2e274dd31ca153ab742d7226674f6ebc",
       "status": "needs_human"
+    },
+    "93": {
+      "epoch": 0,
+      "planned_at": 1792417850,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Update PROJECT_PLAN.md and add docs/FRONTEND_REWRITE.md with the approved stack, migration phases, dependencies, architecture, parity/performance/accessibility criteria and rollback boundaries.",
+          "Create deduplicated bounded issues under Review and product with queue-valid specs; preserve active playback-proxy task #69 and require its integration before baseline capture.",
+          "Keep FastAPI and one-container delivery; do not change application code, dependency/build configuration, automation policy, models, annotations or existing environments."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "Planning/documentation only; this task does not implement the rewrite or authorize sensitive build/workflow changes without their own non-author human approval.",
+          "No dataset/model downloads, inference, research restarts, paid services or claims of annotation accuracy."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Record the approved phased React, TypeScript and Vite frontend rewrite in the project roadmap and link its executable backlog.",
+        "paths": [
+          "PROJECT_PLAN.md",
+          "docs/FRONTEND_REWRITE.md"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Validate all phase specifications with scripts/devops/queue.py; verify links, UTF-8/LF and git diff --check.",
+          "Fresh independent exact-head/base/spec review, hosted ci/gate and controller integration/main verification."
+        ]
+      },
+      "spec_hash": "82cbc0d57bb755d87d8654c3fdaef855116cee8e37482fb58beb5bb946215356",
+      "status": "ready"
     }
   },
   "version": 1,
@@ -1208,7 +1264,7 @@
         "arm64"
       ],
       "host_id": "Stanleys-Laptop.local",
-      "registered_at": 1792410527,
+      "registered_at": 1792417850,
       "session_id": "cf2edc496cf343d2812a231f5c099c8a"
     },
     "Stanleys-Laptop.local/mac-pilot-review-85": {
