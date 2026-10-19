@@ -28,6 +28,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-pilot-review-85-claim": {
+      "actor": "dootz1",
+      "at": 1792411178,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
+        "epoch": 1,
+        "expires_at": 1792421978,
+        "granted_at": 1792411178,
+        "head_sha": "c2d598e94a8609989bd6ed3250f8a4d253971458",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 85,
+        "review_epoch": 1,
+        "session_id": "mac-pilot-review-85",
+        "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
+      },
+      "epoch": 1,
+      "fingerprint": "5de349b2e3192923efe39602f6a78efa61d9e153503cd0185fe4a56b193a5088",
+      "status": "granted",
+      "task_id": "81",
+      "verb": "review-next"
+    },
     "mac-pilot-review-85-register": {
       "actor": "dootz1",
       "at": 1792411125,
@@ -730,6 +752,20 @@
       "planned_at": 1792395547,
       "planned_by": "Ken0u",
       "pr_number": 85,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "1ea6166017cbc425d42693ef9de9dd19e623a104",
+        "epoch": 1,
+        "expires_at": 1792421978,
+        "granted_at": 1792411178,
+        "head_sha": "c2d598e94a8609989bd6ed3250f8a4d253971458",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 85,
+        "review_epoch": 1,
+        "session_id": "mac-pilot-review-85",
+        "spec_hash": "28f4f0de09bfb342d1798fbdecd2de872ab3731cbd1b7d7408b19eba07f31b57"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Run on the actual Mac host as its own authenticated collaborator in a fresh linked worktree after a committed grant.",
