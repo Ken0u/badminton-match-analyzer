@@ -687,6 +687,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review110-01a15493-verdict-v1": {
+      "actor": "dootz1",
+      "at": 1792440675,
+      "epoch": 1,
+      "fingerprint": "3e96cd6aca369a59089a0e24f9e26dffbc5db4101c2cbe5d7ef597ed5643fe89",
+      "status": "review",
+      "task_id": "110",
+      "verb": "review-result"
+    },
     "mac-review111-01a15493-register": {
       "actor": "dootz1",
       "at": 1792440405,
@@ -2114,18 +2123,37 @@
       "planned_at": 1792424330,
       "planned_by": "dootz1",
       "pr_number": 115,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792440675,
         "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
-        "epoch": 1,
-        "expires_at": 1792451205,
-        "granted_at": 1792440405,
+        "evidence": [
+          "Fresh granted read-only session mac-review110-01a15493, review_epoch1, isolated detached .cache/review110-ed701df at ed701df; all four changed files inspected against frozen base/spec, plus planning/orientation/av-runtime/ingest/CLI context; no implementation edits.",
+          "Independent focused execution:72passed in3.69s, tests/test_rally_video.py and tests/test_rally_export.py; JUnit .cache/review110-ed701df/.cache/review-focused.xml. Independent Ruff check/format and git diff --check passed; worktree tracked status clean.",
+          "Independent fixture script .cache/review110-ed701df/.cache/independent_probe.py created native7s-origin FFV1 source131x77, seven selected VFR frames, relativePTS[0,.06,.16,.47,.73,.77,1], exact1.04s endpoint, black padding132x78, .08s-delayed chirp audio; decoded pixel/PTS/packet/sample/container verification and input hashes pass. Cancellation after encoding began removed incomplete directory, preserved source/catalog/timestamp/annotation byte hashes.",
+          "Independent real Chromium156.0.8078.4 range-server seek/playback probe checked all seven source colors plus corner orientation markers and playback ended at1.04s; .cache/review110-ed701df/.cache/independent-media/browser-receipt.json. SourceSHA53c4ef0e179b76f49d7c6a920676b1aaf8df9f4586aef88a36e24832daa46e76; clipSHAc7ca68f646b424afa6c5c3db87de3f9c31e27ea6452eef941c00ad64c76599a5.",
+          "Before verdict, revalidated live task110 ownershipepoch1/reviewepoch1 and PR115 exact head ed701df/baseb0b252d. GitHub Actions39316239472 ci/gate and all constituent jobs success; automation/policy waiting for independent review."
+        ],
+        "findings": [],
         "head_sha": "ed701df322e3708e9d6eb2a61135ef7d307299d1",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Generated-media CPU review on macOS with FFmpeg7.1.1/PyAV and Chromium156; no private match media, GPU inference or annotation-accuracy evaluation performed.",
+          "Independent browser probe used synthetic doubles VFR odd-size footage with delayed mono audio; rotation/singles/audio-free cases were covered by the independently rerun focused regressions. Cross-browser compatibility and general audio channel-layout coverage are not certified.",
+          "Full project suite1012passed/11skips is author-reported, not rerun by this reviewer; exact-head hosted ci/gate and constituent Python/native/package/frontend/browser/container jobs were independently observed successful. Controller integration, exact merged-main verification and candidate receipts remain pending."
+        ],
         "pr_number": 115,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/rally_video.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_video.py",
+          "docs/REVIEWED_EXPORTS.md",
+          "backend/badminton/rally_export.py",
+          "backend/badminton/orientation.py",
+          "backend/badminton/av_runtime.py"
+        ],
         "session_id": "mac-review110-01a15493",
-        "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829"
+        "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
