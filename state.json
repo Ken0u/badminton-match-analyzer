@@ -1435,6 +1435,28 @@
       "task_id": "111",
       "verb": "checkpoint"
     },
+    "windows-public111-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792440225,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "epoch": 1,
+        "expires_at": 1792451025,
+        "granted_at": 1792440225,
+        "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
+        "host_id": "MSI",
+        "pr_number": 114,
+        "review_epoch": 1,
+        "session_id": "windows-public111-review-v1",
+        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+      },
+      "epoch": 1,
+      "fingerprint": "297c2c139f48fd988765b61db638bebfe9195331e63ce5d8b8707c090647222e",
+      "status": "granted",
+      "task_id": "111",
+      "verb": "review-next"
+    },
     "windows-public111-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792440141,
@@ -2086,6 +2108,20 @@
       "planned_by": "Ken0u",
       "pr_number": 114,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "epoch": 1,
+        "expires_at": 1792451025,
+        "granted_at": 1792440225,
+        "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
+        "host_id": "MSI",
+        "pr_number": 114,
+        "review_epoch": 1,
+        "session_id": "windows-public111-review-v1",
+        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Introduce an explicit reviewed candidate visibility policy. Public publication is permitted only for the configured public repository in public mode; private mode retains its original private-repository and private-package requirements. Missing, invalid or mismatched visibility fails closed before publication.",
