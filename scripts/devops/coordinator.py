@@ -718,8 +718,8 @@ def recover_external_merges(gh, config, store, state, main):
                 store.write(tip, current)
             state = current
             continue
-        state = deliver(gh, store, current, task_id, verified["merge_sha"])
-        state = close_recovered_issue(gh, store, state, task_id)
+        # The common integration outbox owns publication, once per pass.
+        state = close_recovered_issue(gh, store, current, task_id)
     return state
 
 

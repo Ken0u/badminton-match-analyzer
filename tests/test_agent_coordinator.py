@@ -1415,3 +1415,52 @@ def test_newer_main_verification_cannot_reuse_an_older_green_run(latest):
     assert state["tasks"]["1"]["status"] == "recovery_required"
     assert "merged-main verification" in state["tasks"]["1"]["external_recovery_error"]
     assert not gh.external
+
+
+@pytest.mark.parametrize("candidate", ["missing", "failure", "in_progress"])
+def test_external_adoption_delivers_once_then_reuses_visible_candidate(candidate):
+    gh, store, config, _original = external_recovery_setup()
+    visible = {
+        **gh.releases[0],
+        "status": "in_progress",
+        "conclusion": None,
+    }
+    if candidate == "missing":
+        gh.releases = []
+        expected = [
+            (
+                "actions/workflows/release.yml/dispatches",
+                {"ref": "main", "inputs": {"source_sha": gh.merge_sha}},
+            )
+        ]
+    elif candidate == "failure":
+        gh.releases[0]["conclusion"] = "failure"
+        expected = [("actions/runs/11/rerun-failed-jobs", {})]
+    else:
+        gh.releases = [visible]
+        expected = []
+
+    def release_actions():
+        return [
+            (path, data) for path, data in gh.external if path.startswith("actions/")
+        ]
+
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["status"] == "done" and task["delivery_pending"] is True
+    assert release_actions() == expected
+    assert task.get("delivery_attempts", 0) == len(expected)
+
+    # GitHub exposes the dispatched or rerun candidate on a later pass.
+    gh.releases = [visible]
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["delivery_pending"] is True
+    assert release_actions() == expected
+    assert state["tasks"]["1"].get("delivery_attempts", 0) == len(expected)
+
+    gh.releases[0].update(status="completed", conclusion="success")
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["delivery_pending"] is False
+    assert state["tasks"]["1"]["candidate_run"] == visible["html_url"]
+    assert release_actions() == expected
+    assert state["tasks"]["1"].get("delivery_attempts", 0) == len(expected)
