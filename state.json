@@ -1403,6 +1403,7 @@
       "status": "needs_human"
     },
     "93": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39265419115",
       "checkpoint": {
         "branch": "codex/issue-93-record-the-approved-phased-react-typescr",
         "evidence": [
@@ -1426,7 +1427,7 @@
         "spec_hash": "82cbc0d57bb755d87d8654c3fdaef855116cee8e37482fb58beb5bb946215356"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792418335,
