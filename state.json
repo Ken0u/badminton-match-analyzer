@@ -1,6 +1,15 @@
 {
   "paused": false,
   "receipts": {
+    "frontend-plan-93-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792418055,
+      "epoch": 1,
+      "fingerprint": "41a1e6e1e9fd4d898a560953d8014b6ab321e2cee33232b0d5097e1f23d95f43",
+      "status": "running",
+      "task_id": "93",
+      "verb": "checkpoint"
+    },
     "frontend-plan-93-claim-v1": {
       "actor": "dootz1",
       "at": 1792417906,
@@ -20,6 +29,15 @@
       "status": "granted",
       "task_id": "93",
       "verb": "next"
+    },
+    "frontend-plan-93-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792418087,
+      "epoch": 1,
+      "fingerprint": "e4fea20644cd0b153cddb691854d504dbe1537587caf3a53fef5e934e597e56e",
+      "status": "review",
+      "task_id": "93",
+      "verb": "submit"
     },
     "frontend-plan-register-v1": {
       "actor": "dootz1",
@@ -1246,12 +1264,23 @@
       "status": "needs_human"
     },
     "93": {
+      "checkpoint": {
+        "branch": "codex/issue-93-record-the-approved-phased-react-typescr",
+        "evidence": [
+          "Five phase specs validated; docs UTF-8/LF/JSON/local-link and diff checks pass.",
+          "Created phase issues #94\u2013#98; phase #94 waits for #69 and #93; packaging/workflow phase #98 requires non-author human review."
+        ],
+        "head_sha": "8d34e99b8026c278d2c1c0220edd9d23eee52ac9",
+        "pr_number": 99,
+        "remaining": "Independent exact-revision agent review, hosted CI, controller merge/main verification and private candidate receipts."
+      },
+      "checkpoint_at": 1792418055,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
         "branch": "codex/issue-93-record-the-approved-phased-react-typescr",
         "epoch": 1,
-        "expires_at": 1792428706,
+        "expires_at": 1792428855,
         "granted_at": 1792417906,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "cf2edc496cf343d2812a231f5c099c8a",
@@ -1260,6 +1289,7 @@
       "epoch": 1,
       "planned_at": 1792417850,
       "planned_by": "dootz1",
+      "pr_number": 99,
       "spec": {
         "acceptance": [
           "Update PROJECT_PLAN.md and add docs/FRONTEND_REWRITE.md with the approved stack, migration phases, dependencies, architecture, parity/performance/accessibility criteria and rollback boundaries.",
@@ -1295,7 +1325,13 @@
         ]
       },
       "spec_hash": "82cbc0d57bb755d87d8654c3fdaef855116cee8e37482fb58beb5bb946215356",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
+        "head_sha": "8d34e99b8026c278d2c1c0220edd9d23eee52ac9",
+        "pr_number": 99,
+        "spec_hash": "82cbc0d57bb755d87d8654c3fdaef855116cee8e37482fb58beb5bb946215356"
+      }
     },
     "94": {
       "epoch": 0,
