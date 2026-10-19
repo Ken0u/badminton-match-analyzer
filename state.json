@@ -944,6 +944,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "review120-result-01a15493": {
+      "actor": "dootz1",
+      "at": 1792444418,
+      "epoch": 1,
+      "fingerprint": "e5992b56072f52b51e530b8bd2c8bae24978600396753fe32c547c4740b5e511",
+      "status": "running",
+      "task_id": "120",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -1449,6 +1458,24 @@
       "status": "running",
       "task_id": "119",
       "verb": "checkpoint"
+    },
+    "windows-external119-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792444399,
+      "epoch": 1,
+      "fingerprint": "f836b9bd03e92376e5b4891fa12a855d4293336110cac7cb2aaa6eefb67568fc",
+      "status": "running",
+      "task_id": "119",
+      "verb": "checkpoint"
+    },
+    "windows-external119-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792444418,
+      "epoch": 1,
+      "fingerprint": "b3ffad002671aa75d05efae11d5fd63957a26b08586b388fbaa2dcd2597b57e4",
+      "status": "review",
+      "task_id": "119",
+      "verb": "submit"
     },
     "windows-holdout63-checkpoint-inventory-v1": {
       "actor": "Ken0u",
@@ -2856,24 +2883,26 @@
     },
     "119": {
       "checkpoint": {
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "behavior": "Fences external merges instead of crashing/implicitly adopting. Explicit authenticated recovery requires original accepted immutable controller-history evidence plus source/merge/scope/CI/review checks and separately typed genuine owner attestation; preserves current epoch/source epoch and physical-resource terminal proof. Incidents, issue completion and complete-delivery outbox retry idempotently. Normal controller gates remain intact.",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
-        "evidence": "Reproduced actual Review/external-merge -> verify-main QueueError before implementation. First fail-closed fence preserves original claim/spec/submission/independent review and observed source/merger/main, prevents automatic adoption, and creates one incident without starving later candidates.144focused existing/new queue/coordinator tests pass. Remaining explicit authenticated audited recovery and its negative cases/docs/full checks are not implemented yet. No PR/commit/push/review/completion claim.",
-        "head_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "remaining": "Build explicit recovery from immutable trusted coordination history, exact original head/base/spec/merged tree/current-main ancestry/source+main CI, real independent/non-author human evidence (owner attestation distinct from GitHub approval), resource terminal proof, idempotent outbox. Add negative/unknown and unrelated-task progress tests. Full project/exact-head CI/fresh independent/non-author human review before normal controller merge.",
-        "working_changes": [
-          "scripts/devops/coordinator.py",
-          "scripts/devops/queue.py",
-          "tests/test_agent_coordinator.py"
+        "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
+        "pr_number": 122,
+        "remaining": "Exact-head hosted CI, fresh independent read-only review and genuine non-author human approval of final PR122 head before controller merge/main verification. Then actual recover-merged request for historical111 using prepared immutableproof2e2d3b146b9c66fe1ea0ecfc63430f7f526fbc0f must run with trusted verified merged-main tools; verify Done/delivery=false without duplicate candidates. No rawcoordstateedit, user-scopeapproval is not PRapproval.",
+        "validation": [
+          "194focused policy/queue/adapter tests pass",
+          "Full locked Python3.12:1133passed/11optionalSkips, known Starlette warning",
+          "Ruff/format145files,43package dependency health, tracked UTF8/LF/JSON/local-links/CLIhelp/diff pass"
         ],
         "worktree": ".cache/worktrees/external119"
       },
-      "checkpoint_at": 1792443314,
+      "checkpoint_at": 1792444399,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
         "epoch": 1,
-        "expires_at": 1792454114,
+        "expires_at": 1792455199,
         "granted_at": 1792443018,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -2887,6 +2916,7 @@
       },
       "planned_at": 1792442676,
       "planned_by": "Ken0u",
+      "pr_number": 122,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -2932,7 +2962,13 @@
         ]
       },
       "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
+        "pr_number": 122,
+        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
+      }
     },
     "120": {
       "checkpoint": {
@@ -2968,18 +3004,41 @@
       "planned_at": 1792443507,
       "planned_by": "dootz1",
       "pr_number": 121,
-      "review_claim": {
+      "repair_rounds": 1,
+      "review": {
         "actor": "dootz1",
+        "at": 1792444418,
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "epoch": 1,
-        "expires_at": 1792454950,
-        "granted_at": 1792444150,
+        "evidence": [
+          "Fresh independent read-only session mac-review120-01a15493 obtained committed review_epoch 1 binding task120 PR121 implementationepoch1 head06afa2a base822e1c0 specce7dec72; isolated detached worktree .cache/review120-06afa2a; no implementation file edits.",
+          "Independently executed tests/test_media_export_api.py tests/test_rally_export.py tests/test_rally_video.py tests/test_rally_overlay.py: 141 passed in 14.94s, one upstream Starlette deprecation warning. Report .cache/review120-06afa2a/.cache/evidence/focused.xml.",
+          "Separate reviewer-authored .cache/evidence/independent_probe.py generated a 12-frame nonzero-origin VFR FFV1 source. A second Store active claim rejected POST with409 before patched planner invocation. All three HTTP modes completed against empty saved revision0 with zero denominators preserved; full downloaded MP4 decoded all12 original relative PTS and matched SHA256; source and annotations preserved. Results .cache/review120-06afa2a/.cache/evidence/independent-probe.json.",
+          "Inspected diff and surrounding Store admission/recovery, read-only export planner/source audits and native renderer cleanup/provenance. Focused tests independently exercised historical revisions/concurrent edits, audio/rotation/odd frames, source failure/interruption, authentication, cross-video/kind binding, traversal/symlink/hash corruption, completion receipts and retained downloads.",
+          "Ruff check and format --check pass for all three changed Python files. git diff --check passes; isolated worktree tracked status clean.",
+          "Independently inspected hosted run https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39325016431 bound head06afa2a: native windows-2022 and ci/gate fail; Windows log shows test_download_stream_uses_the_verified_handle_without_reopening_path asserts409==200. Other listed build/test/package/container/browser jobs succeed.",
+          "Independently read official Python3.12 pathlib docs distinguishing is_symlink/is_junction (https://docs.python.org/3.12/library/pathlib.html#pathlib.Path.is_junction), Python3.10 stat reparse attributes/tags (https://docs.python.org/3.10/library/stat.html), and installed pathlib implementation. Simulated directory lstat carrying FILE_ATTRIBUTE_REPARSE_POINT and IO_REPARSE_TAG_MOUNT_POINT is accepted by _safe_path; result .cache/evidence/reparse-static-probe.txt. No native Windows junction execution claimed."
+        ],
+        "findings": [
+          "[P2] tests/test_media_export_api.py:470: Make the retained-handle regression portable to Windows. It unconditionally renames the MP4 while open_download retains an open CRT file handle; Windows rejects that rename, so the injected wrapper raises OSError and the route returns 409 instead of the asserted 200. Hosted exact-head run 39325016431 native windows-2022 fails this new test (1116 passed, 11 skipped) and ci/gate fails. Accept only the expected Windows sharing/permission denial while preserving verified-byte/retained-handle assertions, or use a portable injection; retain replacement-path coverage on platforms permitting it. Rerun Windows and the exact-head required gate. This is a regression-test defect; ordinary production download failure was not demonstrated.",
+          "[P2] backend/badminton/export_service.py:23: Reject Windows junction/reparse components as well as symlinks. _safe_path checks only Path.is_symlink; a Windows directory junction has separate junction/reparse metadata and can appear as a directory. The Windows fallback then opens descendants by pathname and checks only stable identities, so replacing a completed export folder/root with a junction to a moved copy outside the configured export root can pass the checks and serve it. Native hashes still restrict accepted bytes, but the promised unsafe-path refusal is not enforced. Inspect lstat reparse attributes/tags for every component (compatible with3.10), and add an actual Windows junction regression. This is a static code/doc-supported finding with a portable metadata simulation; native Windows reproduction was not performed."
+        ],
         "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Local independent execution used macOS Python 3.12 with the existing locked environment; no local Windows execution. Hosted Windows failure was independently read through gh run view/log-failed.",
+          "Ran 141 focused tests rather than the complete local suite. Initial runner attempt failed in fixture setup because its temporary parent directory was absent; created the parent and all 141 passed on retry.",
+          "No private media, model weights, inference, deployment or app upgrade exercised. Generated-media/source and software checks do not establish badminton annotation accuracy.",
+          "The Windows junction finding is static, supported by inspected code/official Python docs and a simulated reparse lstat; native Windows junction creation and HTTP reproduction remain unexecuted. No additional blocking finding identified. Binding is exact head/base/spec/reviewepoch."
+        ],
         "pr_number": 121,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/api.py",
+          "backend/badminton/export_service.py",
+          "tests/test_media_export_api.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
         "session_id": "mac-review120-01a15493",
-        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1",
+        "verdict": "changes"
       },
       "review_epoch": 1,
       "spec": {
@@ -3023,7 +3082,7 @@
         ]
       },
       "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
