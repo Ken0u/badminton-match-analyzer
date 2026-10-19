@@ -1344,6 +1344,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-recover-rally108-v1": {
+      "actor": "Ken0u",
+      "at": 1792438069,
+      "epoch": 2,
+      "fingerprint": "bbfef3de71b28902159196afac9b140dd0b6bd93ca00e52d829ed27bc5266ebd",
+      "status": "ready",
+      "task_id": "108",
+      "verb": "recover"
+    },
     "windows-research-register-20261019-v1": {
       "actor": "Ken0u",
       "at": 1792420694,
@@ -1633,30 +1642,39 @@
     },
     "108": {
       "checkpoint": {
-        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
         "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
-        "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
+        "head_sha": "a137ed5712f59e82acf55d126f4c04dbde6f96ab",
         "pr_number": 109,
-        "remaining": "Fresh independent review, exact-head CI, controller merge/main/private receipts. No source or prediction changes. Actual rendering remains #70 follow-up.",
-        "validation": [
-          "33focused source/revision/CLI generated tests pass .cache/focused.xml",
-          "950full tests pass/11optional skips .cache/full.xml",
-          "Ruff/format/repository/uv dependency/diff checks pass"
-        ]
+        "preservation": "Fetched and verified the exact original remote branch/head and main before recovery; original branch, PR and all worktrees remain unchanged. Code-only task has no resource or input-artifact reservations. No source media, datasets, annotations, weights or research jobs are involved.",
+        "remaining": "Recover the expired code-only task through the controller, request its actual new grant, preserve the existing implementation, validate on current main, obtain fresh independent exact-head review and hosted checks, then use controller integration. Publishing compatibility with the now-public repository is separate sensitive work; do not weaken its current private guard."
       },
       "checkpoint_at": 1792423781,
-      "claim": {
-        "actor": "dootz1",
-        "baseline_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
-        "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
-        "epoch": 1,
-        "expires_at": 1792434735,
-        "granted_at": 1792423227,
-        "host_id": "Stanleys-Laptop.local",
-        "session_id": "roadmap-20261019-01a15493",
-        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
-      },
-      "epoch": 1,
+      "epoch": 2,
+      "history": [
+        {
+          "at": 1792438069,
+          "checkpoint": {
+            "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
+            "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
+            "head_sha": "a137ed5712f59e82acf55d126f4c04dbde6f96ab",
+            "pr_number": 109,
+            "preservation": "Fetched and verified the exact original remote branch/head and main before recovery; original branch, PR and all worktrees remain unchanged. Code-only task has no resource or input-artifact reservations. No source media, datasets, annotations, weights or research jobs are involved.",
+            "remaining": "Recover the expired code-only task through the controller, request its actual new grant, preserve the existing implementation, validate on current main, obtain fresh independent exact-head review and hosted checks, then use controller integration. Publishing compatibility with the now-public repository is separate sensitive work; do not weaken its current private guard."
+          },
+          "claim": {
+            "actor": "dootz1",
+            "baseline_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+            "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
+            "epoch": 1,
+            "expires_at": 1792434735,
+            "granted_at": 1792423227,
+            "host_id": "Stanleys-Laptop.local",
+            "session_id": "roadmap-20261019-01a15493",
+            "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+          }
+        }
+      ],
       "planned_at": 1792422680,
       "planned_by": "dootz1",
       "pr_number": 109,
@@ -1701,7 +1719,7 @@
         ]
       },
       "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
-      "status": "recovery_required",
+      "status": "ready",
       "submission": {
         "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
         "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
