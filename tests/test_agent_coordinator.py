@@ -78,7 +78,7 @@ class FakeGitHub:
                 return {"object": {"sha": self.tip}}
             return copy.deepcopy(self.objects[path.split("/")[-1]])
         if path in ("git/blobs", "git/trees", "git/commits"):
-            key = str(len(self.objects) + 1)
+            key = f"{len(self.objects) + 1:040x}"
             if path == "git/blobs":
                 self.objects[key] = {
                     "content": base64.b64encode(data["content"].encode()).decode()
@@ -272,19 +272,32 @@ def test_policy_fences_changed_inputs(change):
     assert policy_errors(*args)
 
 
-def test_sensitive_paths_require_non_author_current_human_approval():
+@pytest.mark.parametrize("sensitive_path", [False, True])
+def test_sensitive_or_risk_human_scope_keeps_owner_authorization_without_pr_review(
+    sensitive_path,
+):
     args = policy_fixture()
-    args[0]["spec"]["paths"].append(".github/")
-    args[2].append(".github/workflows/ci.yml")
+    if sensitive_path:
+        args[0]["spec"]["paths"].append(".github/")
+        args[2].append(".github/workflows/ci.yml")
+    else:
+        args[0]["spec"]["risk"] = "human"
     assert policy_errors(*args)
+    # A PR approval cannot authorize an unapproved frozen task scope.
     args[4].append(
         {"id": 1, "user": {"login": "Ken0u"}, "state": "APPROVED", "commit_id": HEAD}
     )
+    assert policy_errors(*args)
+    args[4].clear()
+    args[0]["human_approval"] = {"actor": "dootz1", "spec_hash": "spec", "at": 100}
+    assert not policy_errors(*args)
+    # The owner can also be the PR author; no second human approval is required.
+    args[0]["human_approval"]["actor"] = "Ken0u"
     assert not policy_errors(*args)
     args[4].append(
         {"id": 2, "user": {"login": "Ken0u"}, "state": "DISMISSED", "commit_id": HEAD}
     )
-    assert policy_errors(*args)
+    assert not policy_errors(*args)
 
 
 def test_issue_content_is_json_only_not_shell_code():
@@ -445,6 +458,34 @@ def merge_setup():
     return gh, store, config
 
 
+def test_external_review_merge_is_fenced_without_adoption_or_duplicate_incidents():
+    gh, store, config = merge_setup()
+    original = copy.deepcopy(store.read()[1]["tasks"]["1"])
+    gh.pr.update(
+        merged=True,
+        state="closed",
+        merge_commit_sha=gh.merge_sha,
+        merged_by={"login": "dootz1"},
+        html_url="https://github.com/Ken0u/badminton-match-analyzer/pull/42",
+    )
+    gh.main = gh.merge_sha
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["status"] == "recovery_required"
+    assert task["claim"] == original["claim"]
+    assert task["submission"] == original["submission"]
+    assert task["review"] == original["review"]
+    assert task["external_merge"]["original"]["review"] == original["review"]
+    assert task["external_merge"]["observed"]["merge_sha"] == gh.merge_sha
+    assert task["external_merge"]["observed"]["merged_by"] == "dootz1"
+    assert "merge_sha" not in task and not task.get("delivery_pending")
+    assert not gh.external
+    assert len(gh.issues) == 1
+    again = integrate(gh, config, store.read()[1])
+    assert again == state
+    assert len(gh.issues) == 1
+
+
 @pytest.mark.parametrize("lost", [False, True])
 def test_journalled_merge_retry_and_response_loss(lost):
     gh, store, config = merge_setup()
@@ -515,6 +556,129 @@ def test_failed_verification_grants_only_a_bounded_repair(conclusion, mode):
         config,
     )
     assert state["receipts"]["repair-next"]["task_id"] == "900"
+
+
+@pytest.mark.parametrize("mode", ["active", "pilot"])
+@pytest.mark.parametrize("kind", ["risk_human", "sensitive_file", "ancestor_scope"])
+def test_sensitive_main_repair_has_its_own_owner_authorization_and_completes(
+    mode, kind
+):
+    from devops.queue import QueueError, apply_request, spec_hash
+
+    gh, store, config = merge_setup()
+    config["human_approvers"] = ["Ken0u"]
+    tip, state = store.read()
+    original = state["tasks"]["1"]
+    if kind == "risk_human":
+        original["spec"]["risk"] = "human"
+    else:
+        config["sensitive_paths"] = ["backend/clock.py"]
+        if kind == "ancestor_scope":
+            original["spec"]["paths"] = ["backend/"]
+    digest = spec_hash(original["spec"])
+    original["spec_hash"] = digest
+    for field in ("claim", "submission", "review"):
+        original[field]["spec_hash"] = digest
+    original["human_approval"] = {"actor": "Ken0u", "spec_hash": digest, "at": 90}
+    store.write(tip, state)
+    integrate(gh, config, store.read()[1])
+    failed_sha = gh.merge_sha
+    gh.ci = [
+        {"id": 1, "event": "push", "head_sha": failed_sha, "conclusion": "failure"}
+    ]
+    state = integrate(gh, config, store.read()[1])
+    repair = state["tasks"]["900"]
+    assert state["paused"] and repair["repair_for"] == "1"
+    assert repair["status"] == "needs_human" and repair["spec"]["risk"] == "human"
+    assert "human_approval" not in repair and repair["spec_hash"] != digest
+    config.update(mode=mode, pilot_tasks=[1])
+    counter = 0
+
+    def send(verb, actor="Ken0u", **fields):
+        nonlocal state, counter
+        counter += 1
+        request = {"verb": verb, "request_id": f"repair-life-{counter}", **fields}
+        state = apply_request(state, request, actor, 110 + counter, config)
+        return state["receipts"][request["request_id"]]
+
+    worker = {"host_id": "win", "session_id": "repair-impl"}
+    send("register", **worker, capabilities=["cpu"], artifacts={})
+    assert (
+        send("next", task_id="900", **worker, baseline_sha=failed_sha)["status"]
+        == "idle"
+    )
+    with pytest.raises(QueueError, match="approver"):
+        send(
+            "human-approved",
+            actor="dootz1",
+            task_id="900",
+            spec_hash=repair["spec_hash"],
+        )
+    with pytest.raises(QueueError, match="hash"):
+        send("human-approved", task_id="900", spec_hash=digest)
+    send("human-approved", task_id="900", spec_hash=repair["spec_hash"])
+    assert state["tasks"]["900"]["repair_for"] == "1"
+    grant = send("next", task_id="900", **worker, baseline_sha=failed_sha)
+    assert grant["status"] == "granted"
+    gh.pr.update(number=900, merged=False, state="open")
+    gh.pr.pop("merge_commit_sha", None)
+    gh.pr["head"].update(sha="d" * 40, ref=grant["claim"]["branch"])
+    gh.pr["base"]["sha"] = failed_sha
+    binding = {
+        "head_sha": "d" * 40,
+        "base_sha": failed_sha,
+        "spec_hash": repair["spec_hash"],
+    }
+    send("submit", task_id="900", epoch=1, **worker, pr_number=900, **binding)
+    assert send("review-next", task_id="900", **worker)["status"] == "idle"
+    reviewer = {"host_id": "win", "session_id": "repair-review"}
+    send("register", **reviewer, capabilities=["cpu"], artifacts={})
+    review = send("review-next", task_id="900", **reviewer)
+    assert review["status"] == "granted"
+    send(
+        "review-result",
+        task_id="900",
+        epoch=1,
+        review_epoch=review["claim"]["review_epoch"],
+        **reviewer,
+        **binding,
+        verdict="approve",
+        findings=[],
+        reviewed_files=["backend/clock.py"],
+        limitations=[],
+        evidence=["Independent repair regression checks passed"],
+    )
+    # No human PR review is supplied by the fake transport; scope approval is separate.
+    store.write(store.read()[0], state)
+    gh.merge_sha = "e" * 40
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["900"]["status"] == "integrating" and gh.pr["merged"]
+    assert state["paused"]
+    gh.ci = [
+        {
+            "id": 2,
+            "event": "push",
+            "head_branch": "main",
+            "head_sha": gh.merge_sha,
+            "status": "completed",
+            "conclusion": "success",
+        }
+    ]
+    gh.releases = [
+        {
+            "id": 3,
+            "display_title": f"Private candidate {gh.merge_sha}",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "run/3",
+        }
+    ]
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["900"]["status"] == "done" and not state["paused"]
+    assert state["tasks"]["900"]["delivery_pending"] is False
+    assert state["tasks"]["1"]["status"] == "done"
+    assert state["tasks"]["1"]["merge_sha"] == failed_sha
+    assert state["tasks"]["1"]["verified_by_repair"] == gh.merge_sha
 
 
 def test_malformed_request_id_does_not_starve_queue():
@@ -710,7 +874,7 @@ def test_windows_probe_resolves_command_script(monkeypatch, tmp_path):
         ".github/workflows/agent-queue.yml",
     ],
 )
-def test_every_privileged_entrypoint_requires_human_review(path):
+def test_every_privileged_entrypoint_is_sensitive(path):
     config = json.loads(
         (Path(__file__).resolve().parents[1] / ".github/automation.json").read_text()
     )
@@ -766,7 +930,7 @@ def test_native_inference_evidence_is_bound_to_source_model_and_code():
     "before,after", [("observation", "pilot"), ("pilot", "active")]
 )
 @pytest.mark.parametrize(
-    "defect", [None, "policy", "approval", "ci", "base", "extra_path"]
+    "defect", [None, "policy", "changes_requested", "ci", "base", "extra_path"]
 )
 def test_rollout_policy_is_narrow_and_never_merges(before, after, defect):
     _, pr, _, checks, reviews, _, _ = policy_fixture()
@@ -775,13 +939,17 @@ def test_rollout_policy_is_narrow_and_never_merges(before, after, defect):
     changed = [
         {"filename": ".github/automation.json", "status": "modified", "sha": HEAD}
     ]
-    reviews.append(
-        {"id": 1, "user": {"login": "Ken0u"}, "state": "APPROVED", "commit_id": HEAD}
-    )
     if defect == "policy":
         proposed["trusted_logins"] = ["stranger"]
-    elif defect == "approval":
-        reviews[0]["commit_id"] = BASE
+    elif defect == "changes_requested":
+        reviews.append(
+            {
+                "id": 1,
+                "user": {"login": "Ken0u"},
+                "state": "CHANGES_REQUESTED",
+                "commit_id": HEAD,
+            }
+        )
     elif defect == "ci":
         checks[0]["conclusion"] = "skipped"
     elif defect == "base":
@@ -981,3 +1149,460 @@ def test_exhausted_delivery_observes_external_recovery_without_extra_retries(out
     # based on a queued/failed workflow or starts a fourth automatic attempt.
     again = integrate(gh, config, store.read()[1])
     assert again["tasks"]["1"] == recovered
+
+
+class RecoveryGitHub(MergeGitHub):
+    def __init__(self):
+        super().__init__()
+        self.source_tree = self.merged_tree = "d" * 40
+        self.history_ancestor = self.main_ancestor = True
+        self.preserved_head = HEAD
+        self.source_reviews = []
+        self.source_checks = None
+
+    def pages(self, path):
+        if "/reviews?" in path:
+            return copy.deepcopy(self.source_reviews)
+        return super().pages(path)
+
+    def repo(self, path, *, method="GET", data=None, **kwargs):
+        if method == "GET":
+            if path == f"git/commits/{HEAD}":
+                return {"tree": {"sha": self.source_tree}}
+            if path == f"git/commits/{self.merge_sha}":
+                return {"tree": {"sha": self.merged_tree}}
+            if path == f"git/ref/heads/{self.pr['head']['ref']}":
+                return {"object": {"sha": self.preserved_head}}
+            if path.startswith("compare/"):
+                start, end = path.removeprefix("compare/").split("...")
+                allowed = (
+                    self.history_ancestor if end == self.tip else self.main_ancestor
+                )
+                return {
+                    "status": ("identical" if start == end else "ahead")
+                    if allowed
+                    else "diverged",
+                    "merge_base_commit": {"sha": start if allowed else "f" * 40},
+                }
+            if "/check-runs?" in path and self.source_checks is not None:
+                return [{"check_runs": copy.deepcopy(self.source_checks)}]
+        return super().repo(path, method=method, data=data, **kwargs)
+
+
+def external_recovery_setup(archived=False, resources=False, attested=True):
+    from devops.queue import apply_request, spec_hash
+
+    h, gh = approved_state(), RecoveryGitHub()
+    if resources:
+        source = h.state["tasks"]["1"]
+        source["spec"]["resources"] = ["gpu:windows"]
+        source["spec_hash"] = spec_hash(source["spec"])
+        for field in ("claim", "submission", "review"):
+            source[field]["spec_hash"] = source["spec_hash"]
+    config = {
+        **CONFIG,
+        "coordinator_login": "github-actions[bot]",
+        "milestones": ["M1", "Infrastructure"],
+    }
+    store = StateStore(gh, config["coordination_branch"])
+    evidence = store.write(None, h.state)
+    original = copy.deepcopy(h.state["tasks"]["1"])
+    gh.pr["head"]["ref"] = original["claim"]["branch"]
+    gh.pr.update(
+        merged=True,
+        state="closed",
+        merge_commit_sha=gh.merge_sha,
+        merged_by={"login": "dootz1"},
+        html_url="https://github.com/pull/42",
+    )
+    gh.main = gh.merge_sha
+    state = integrate(gh, config, store.read()[1])
+    if archived:
+        state = apply_request(
+            state,
+            {
+                "request_id": "archive-original",
+                "verb": "recover",
+                "task_id": "1",
+                "epoch": 1,
+                "host_id": "mac",
+                "session_id": "mac1",
+                "checkpoint": {"branch": original["claim"]["branch"], "head_sha": HEAD},
+            },
+            "Ken0u",
+            200,
+            config,
+        )
+        closed = issue("Preserve externally merged task", number=1)
+        closed["state"] = "closed"
+        gh.issues.append(closed)
+        store.write(store.read()[0], state)
+        state = reconcile(gh, config, now=200)
+        assert state["tasks"]["1"]["status"] == "blocked"
+        assert (
+            "claim" not in state["tasks"]["1"] and "review" not in state["tasks"]["1"]
+        )
+    request = {
+        "request_id": "owner-external-recovery",
+        "verb": "recover-merged",
+        "task_id": "1",
+        "epoch": state["tasks"]["1"]["epoch"],
+        "host_id": "mac",
+        "session_id": "mac1",
+        "pr_number": 42,
+        "head_sha": HEAD,
+        "base_sha": BASE,
+        "spec_hash": original["spec_hash"],
+        "merge_sha": gh.merge_sha,
+        "evidence_state_sha": evidence,
+        "human_review_attestation": {
+            "kind": "owner_attestation",
+            "reviewer": "dootz1",
+            "head_sha": HEAD,
+            "statement": "The owner confirmed dootz1 personally approved this exact head.",
+        },
+    }
+    if not attested:
+        request.pop("human_review_attestation")
+    state = apply_request(state, request, "Ken0u", 201, config)
+    store.write(store.read()[0], state)
+    gh.ci = [
+        {
+            "id": 10,
+            "event": "push",
+            "head_branch": "main",
+            "head_sha": gh.merge_sha,
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/run/10",
+        }
+    ]
+    gh.releases = [
+        {
+            "id": 11,
+            "display_title": f"Private candidate {gh.merge_sha}",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/run/11",
+        }
+    ]
+    return gh, store, config, original
+
+
+@pytest.mark.parametrize("archived", [False, True])
+@pytest.mark.parametrize("attested", [False, True])
+def test_explicit_recovery_uses_immutable_accepted_history_and_existing_delivery(
+    archived,
+    attested,
+):
+    gh, store, config, original = external_recovery_setup(archived, attested=attested)
+    epoch = store.read()[1]["tasks"]["1"]["epoch"]
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["status"] == "done" and task["epoch"] == epoch
+    assert task["merge_sha"] == gh.merge_sha and task["delivery_pending"] is False
+    assert task["candidate_run"] == "https://github.com/run/11"
+    assert task["review"] == original["review"]
+    assert task["external_recovery"]["source_epoch"] == 1
+    assert task["external_recovery"]["review_evidence"]["github_reviews"] == []
+    attestation = task["external_recovery"]["review_evidence"]["owner_attestation"]
+    assert (attestation["reviewer"] == "dootz1") if attested else attestation is None
+    assert gh.external == [
+        ("issues/1", {"state": "closed", "state_reason": "completed"})
+    ]
+    again = integrate(gh, config, store.read()[1])
+    assert again == state and len(gh.issues) == 1 + archived
+    assert gh.external == [
+        ("issues/1", {"state": "closed", "state_reason": "completed"})
+    ]
+
+
+@pytest.mark.parametrize(
+    "case",
+    [
+        "unrelated_history",
+        "changed_tree",
+        "changed_head",
+        "changed_base",
+        "changed_merge",
+        "changed_branch",
+        "failed_source_check",
+        "missing_main",
+        "running_main",
+        "failed_main",
+        "untrusted_workflow_branch",
+        "not_in_main",
+        "human_changes_requested",
+    ],
+)
+def test_external_recovery_keeps_unknown_or_changed_remote_evidence_incomplete(case):
+    gh, store, config, original = external_recovery_setup()
+    if case == "unrelated_history":
+        gh.history_ancestor = False
+    elif case == "changed_tree":
+        gh.merged_tree = "e" * 40
+    elif case == "changed_head":
+        gh.pr["head"]["sha"] = "e" * 40
+    elif case == "changed_base":
+        gh.pr["base"]["sha"] = "e" * 40
+    elif case == "changed_merge":
+        gh.pr["merge_commit_sha"] = "e" * 40
+    elif case == "changed_branch":
+        gh.preserved_head = "e" * 40
+    elif case == "failed_source_check":
+        gh.source_checks = []
+    elif case == "missing_main":
+        gh.ci = []
+    elif case == "running_main":
+        gh.ci[0].update(status="in_progress", conclusion=None)
+    elif case == "failed_main":
+        gh.ci[0]["conclusion"] = "failure"
+    elif case == "untrusted_workflow_branch":
+        gh.ci[0]["head_branch"] = "unreviewed-feature"
+    elif case == "not_in_main":
+        gh.main_ancestor = False
+    else:
+        gh.source_reviews = [
+            {
+                "id": 1,
+                "user": {"login": "dootz1"},
+                "state": "CHANGES_REQUESTED",
+                "commit_id": HEAD,
+            }
+        ]
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["status"] == "recovery_required"
+    assert task["review"] == original["review"]
+    assert task["external_recovery_error"]
+    assert "external_recovery" not in task and not task.get("delivery_pending")
+    assert not gh.external
+    assert integrate(gh, config, store.read()[1]) == state
+
+
+def test_resource_bearing_external_recovery_requires_original_host_terminal_proof():
+    from devops.queue import apply_request
+    from test_agent_queue import terminal_proof
+
+    gh, store, config, original = external_recovery_setup(resources=True)
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "recovery_required"
+    assert "terminal proof" in state["tasks"]["1"]["external_recovery_error"]
+    assert state["tasks"]["1"]["claim"] == original["claim"]
+    for host in ("other-host", "mac"):
+        request = {
+            **state["tasks"]["1"]["external_recovery_request"],
+            "request_id": f"proof-{host}",
+            "verb": "recover-merged",
+            "task_id": "1",
+            "host_id": "mac",
+            "session_id": "mac1",
+            "terminal_proof": terminal_proof(host),
+        }
+        state = apply_request(state, request, "Ken0u", 202, config)
+        store.write(store.read()[0], state)
+        state = integrate(gh, config, store.read()[1])
+        if host == "other-host":
+            assert state["tasks"]["1"]["status"] == "recovery_required"
+    assert state["tasks"]["1"]["status"] == "done"
+    assert state["tasks"]["1"]["delivery_pending"] is False
+
+
+@pytest.mark.parametrize("response_lost", [False, True])
+def test_fence_retries_an_interrupted_incident_without_authorizing_a_merge(
+    response_lost,
+):
+    gh, store, config = merge_setup()
+    gh.pr.update(merged=True, state="closed", merge_commit_sha=gh.merge_sha)
+    gh.main = gh.merge_sha
+    transport = gh.repo
+    interrupted = False
+
+    def fail_issue_once(path, *, method="GET", data=None, **kwargs):
+        nonlocal interrupted
+        if path == "issues" and method == "POST" and not interrupted:
+            interrupted = True
+            if response_lost:
+                transport(path, method=method, data=data, **kwargs)
+            raise GitHubError("temporary issue transport failure")
+        return transport(path, method=method, data=data, **kwargs)
+
+    gh.repo = fail_issue_once
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "recovery_required"
+    assert len(gh.issues) == int(response_lost)
+    assert "incident_issue" not in state["tasks"]["1"]["external_merge"]
+    state = integrate(gh, config, store.read()[1])
+    assert len(gh.issues) == 1
+    assert state["tasks"]["1"]["external_merge"]["incident_issue"] == 900
+    assert integrate(gh, config, store.read()[1]) == state
+    assert not gh.external
+
+
+def test_external_merge_fence_does_not_starve_an_unrelated_valid_integration():
+    from devops.queue import spec_hash
+
+    gh, store, config = merge_setup()
+    state = store.read()[1]
+    other = copy.deepcopy(state["tasks"]["1"])
+    other["spec"]["paths"] = ["backend/unrelated.py"]
+    other["spec_hash"] = spec_hash(other["spec"])
+    other["pr_number"] = 43
+    other["claim"].update(
+        branch="codex/issue-2-unrelated",
+        host_id="win",
+        session_id="impl2",
+        baseline_sha=gh.merge_sha,
+    )
+    other["review"].update(
+        session_id="review2", reviewed_files=["backend/unrelated.py"]
+    )
+    for key in ("claim", "submission", "review"):
+        other[key]["spec_hash"] = other["spec_hash"]
+    for key in ("submission", "review"):
+        other[key].update(head_sha="e" * 40, base_sha=gh.merge_sha, pr_number=43)
+    state["tasks"]["2"] = other
+    store.write(store.read()[0], state)
+    gh.pr.update(merged=True, state="closed", merge_commit_sha=gh.merge_sha)
+    gh.main = gh.merge_sha
+    pr2 = {
+        "number": 43,
+        "state": "open",
+        "draft": False,
+        "merged": False,
+        "head": {
+            "sha": "e" * 40,
+            "ref": "codex/issue-2-unrelated",
+            "repo": {"full_name": CONFIG["repository"]},
+        },
+        "base": {"sha": gh.merge_sha, "ref": "main"},
+        "user": {"login": "Ken0u"},
+    }
+    transport, pages = gh.repo, gh.pages
+
+    def multi_pr(path, *, method="GET", data=None, **kwargs):
+        if path == "pulls/43" and method == "GET":
+            return copy.deepcopy(pr2)
+        if path == "pulls/43/merge" and method == "PUT":
+            assert data["sha"] == pr2["head"]["sha"]
+            pr2.update(merged=True, state="closed", merge_commit_sha="f" * 40)
+            gh.main = "f" * 40
+            return {"merged": True, "sha": gh.main}
+        if path == f"commits/{'e' * 40}/check-runs?per_page=100":
+            return [
+                {
+                    "check_runs": [
+                        {
+                            "id": 1,
+                            "name": "ci/gate",
+                            "head_sha": "e" * 40,
+                            "status": "completed",
+                            "conclusion": "success",
+                            "app": {"slug": "github-actions"},
+                        }
+                    ]
+                }
+            ]
+        return transport(path, method=method, data=data, **kwargs)
+
+    def multi_pages(path):
+        return (
+            [{"filename": "backend/unrelated.py"}]
+            if path.startswith("pulls/43/files?")
+            else pages(path)
+        )
+
+    gh.repo, gh.pages = multi_pr, multi_pages
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "recovery_required"
+    assert state["tasks"]["2"]["status"] == "integrating"
+    assert pr2["merged"] is True and gh.main == "f" * 40
+
+
+@pytest.mark.parametrize("response_lost", [False, True])
+def test_recovered_issue_projection_retries_without_repeating_adoption_or_delivery(
+    response_lost,
+):
+    gh, store, config, _original = external_recovery_setup(archived=True)
+    transport = gh.repo
+    interrupted = False
+
+    def fail_projection_once(path, *, method="GET", data=None, **kwargs):
+        nonlocal interrupted
+        if path == "issues/1" and method == "PATCH" and not interrupted:
+            interrupted = True
+            if response_lost:
+                transport(path, method=method, data=data, **kwargs)
+            raise GitHubError("issue completion response unavailable")
+        return transport(path, method=method, data=data, **kwargs)
+
+    gh.repo = fail_projection_once
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["status"] == "done" and task["delivery_pending"] is False
+    proof = copy.deepcopy(task["external_recovery"])
+    assert "issue_closed_at" not in task["external_recovery_request"]
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["external_recovery"] == proof
+    assert state["tasks"]["1"]["external_recovery_request"]["issue_closed_at"]
+    assert not any(path.startswith("actions/") for path, _data in gh.external)
+    assert integrate(gh, config, store.read()[1]) == state
+
+
+@pytest.mark.parametrize("latest", [("in_progress", None), ("completed", "failure")])
+def test_newer_main_verification_cannot_reuse_an_older_green_run(latest):
+    gh, store, config, _original = external_recovery_setup()
+    gh.ci.append({**gh.ci[0], "id": 11, "status": latest[0], "conclusion": latest[1]})
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "recovery_required"
+    assert "merged-main verification" in state["tasks"]["1"]["external_recovery_error"]
+    assert not gh.external
+
+
+@pytest.mark.parametrize("candidate", ["missing", "failure", "in_progress"])
+def test_external_adoption_delivers_once_then_reuses_visible_candidate(candidate):
+    gh, store, config, _original = external_recovery_setup()
+    visible = {
+        **gh.releases[0],
+        "status": "in_progress",
+        "conclusion": None,
+    }
+    if candidate == "missing":
+        gh.releases = []
+        expected = [
+            (
+                "actions/workflows/release.yml/dispatches",
+                {"ref": "main", "inputs": {"source_sha": gh.merge_sha}},
+            )
+        ]
+    elif candidate == "failure":
+        gh.releases[0]["conclusion"] = "failure"
+        expected = [("actions/runs/11/rerun-failed-jobs", {})]
+    else:
+        gh.releases = [visible]
+        expected = []
+
+    def release_actions():
+        return [
+            (path, data) for path, data in gh.external if path.startswith("actions/")
+        ]
+
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["status"] == "done" and task["delivery_pending"] is True
+    assert release_actions() == expected
+    assert task.get("delivery_attempts", 0) == len(expected)
+
+    # GitHub exposes the dispatched or rerun candidate on a later pass.
+    gh.releases = [visible]
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["delivery_pending"] is True
+    assert release_actions() == expected
+    assert state["tasks"]["1"].get("delivery_attempts", 0) == len(expected)
+
+    gh.releases[0].update(status="completed", conclusion="success")
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["delivery_pending"] is False
+    assert state["tasks"]["1"]["candidate_run"] == visible["html_url"]
+    assert release_actions() == expected
+    assert state["tasks"]["1"].get("delivery_attempts", 0) == len(expected)

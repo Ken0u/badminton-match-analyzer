@@ -103,6 +103,7 @@ def main(argv=None):
         "review-result",
         "release",
         "recover",
+        "recover-merged",
         "status",
         "plan",
         "reconcile",

@@ -8,7 +8,12 @@ import re
 from datetime import datetime, timezone
 
 from .github import GitHubError
-from .policy import policy_errors, rollout_errors
+from .policy import (
+    external_recovery_errors,
+    policy_errors,
+    rollout_errors,
+    sensitive_scope,
+)
 
 REQUEST_MARKER = "<!-- agent-request:v1 -->"
 HEARTBEAT_MARKER = "<!-- agent-heartbeat:v1 -->"
@@ -42,11 +47,29 @@ class StateStore:
             if "404" not in str(exc):
                 raise
             return None, initial_state()
-        commit = self.gh.repo(f"git/commits/{tip}")
+        return tip, self._read_commit(tip)
+
+    def _read_commit(self, revision):
+        commit = self.gh.repo(f"git/commits/{revision}")
         tree = self.gh.repo(f"git/trees/{commit['tree']['sha']}")
         entry = next(e for e in tree["tree"] if e["path"] == "state.json")
         blob = self.gh.repo(f"git/blobs/{entry['sha']}")
-        return tip, json.loads(base64.b64decode(blob["content"]))
+        return json.loads(base64.b64decode(blob["content"]))
+
+    def read_at(self, revision):
+        """Read only immutable evidence already in the controller's history."""
+        if not isinstance(revision, str) or not re.fullmatch(r"[0-9a-f]{40}", revision):
+            raise ValueError("Recovery evidence requires an immutable coordination SHA")
+        tip = self.gh.repo(f"git/ref/heads/{self.branch}")["object"]["sha"]
+        comparison = self.gh.repo(f"compare/{revision}...{tip}")
+        if (
+            comparison.get("status") not in {"ahead", "identical"}
+            or comparison.get("merge_base_commit", {}).get("sha") != revision
+        ):
+            raise ValueError(
+                "Recovery evidence is outside trusted coordination history"
+            )
+        return self._read_commit(revision)
 
     def write(self, tip, state):
         # Parent/tree/state receipt commit is the transaction. No force push.
@@ -469,6 +492,242 @@ def deliver(gh, store, state, task_id, source):
     return current
 
 
+def verified_external_recovery(gh, config, store, task_id, task, main):
+    """Verify original accepted evidence; never trust a caller's verdict fields."""
+    from .queue import spec_hash
+
+    request = task["external_recovery_request"]
+    original = store.read_at(request["evidence_state_sha"])["tasks"][task_id]
+    binding = original.get("submission", {})
+    if (
+        original.get("spec_hash") != task.get("spec_hash")
+        or spec_hash(original["spec"]) != task["spec_hash"]
+        or any(
+            binding.get(key) != request.get(key)
+            for key in ("head_sha", "base_sha", "spec_hash", "pr_number")
+        )
+        or original.get("pr_number") != request["pr_number"]
+        or original.get("claim", {}).get("spec_hash") != task["spec_hash"]
+        or original.get("claim", {}).get("epoch") != original.get("epoch")
+        or original.get("review", {}).get("actor") not in config["trusted_logins"]
+    ):
+        raise ValueError("Original accepted task evidence does not match recovery")
+    if task.get("claim") and any(
+        task["claim"].get(key) != original["claim"].get(key)
+        for key in ("actor", "host_id", "session_id", "epoch", "branch", "spec_hash")
+    ):
+        raise ValueError("Another ownership epoch retains this task's reservations")
+    pr = gh.repo(f"pulls/{request['pr_number']}")
+    if pr.get("merge_commit_sha") != request["merge_sha"]:
+        raise ValueError("Actual merged source does not match recovery")
+    files = gh.pages(f"pulls/{request['pr_number']}/files?per_page=100")
+    paths = [item["filename"] for item in files] + [
+        item["previous_filename"] for item in files if item.get("previous_filename")
+    ]
+    checks = [
+        check
+        for page in gh.repo(
+            f"commits/{request['head_sha']}/check-runs?per_page=100", paginate=True
+        )
+        for check in page["check_runs"]
+    ]
+    reviews = gh.pages(f"pulls/{request['pr_number']}/reviews?per_page=100")
+    errors = external_recovery_errors(
+        {**original, "task_id": task_id}, pr, paths, checks, reviews, config, request
+    )
+    errors += conversation_errors(gh, config, request["pr_number"])
+    if errors:
+        raise ValueError("; ".join(errors))
+    remote = gh.repo(f"git/ref/heads/{original['claim']['branch']}")["object"]["sha"]
+    if remote != request["head_sha"]:
+        raise ValueError(
+            "Original granted branch is not preserved at the reviewed head"
+        )
+    head = gh.repo(f"git/commits/{request['head_sha']}")
+    merged = gh.repo(f"git/commits/{request['merge_sha']}")
+    tree = head.get("tree", {}).get("sha")
+    if (
+        not isinstance(tree, str)
+        or not re.fullmatch(r"[0-9a-f]{40}", tree)
+        or tree != merged.get("tree", {}).get("sha")
+    ):
+        raise ValueError("Merged tree differs from the independently reviewed source")
+    for start, end in (
+        (request["base_sha"], request["head_sha"]),
+        (request["merge_sha"], main),
+    ):
+        comparison = gh.repo(f"compare/{start}...{end}")
+        if (
+            comparison.get("status") not in {"ahead", "identical"}
+            or comparison.get("merge_base_commit", {}).get("sha") != start
+        ):
+            raise ValueError("Recovery source is not in the verified main lineage")
+    runs = gh.repo("actions/workflows/ci.yml/runs?per_page=100")["workflow_runs"]
+    matching = [
+        run
+        for run in runs
+        if run.get("head_branch") == "main"
+        and (
+            (run.get("event") == "push" and run.get("head_sha") == request["merge_sha"])
+            or (
+                run.get("event") == "workflow_dispatch"
+                and run.get("display_title") == f"Verify {request['merge_sha']}"
+            )
+        )
+    ]
+    latest = max(matching, key=lambda run: run["id"]) if matching else {}
+    if latest.get("status") != "completed" or latest.get("conclusion") != "success":
+        raise ValueError(
+            "Successful complete exact merged-main verification is required"
+        )
+    if gh.repo("git/ref/heads/main")["object"]["sha"] != main:
+        raise ValueError("Main advanced during external recovery verification")
+    return {
+        **{
+            key: request[key]
+            for key in (
+                "evidence_state_sha",
+                "head_sha",
+                "base_sha",
+                "merge_sha",
+                "spec_hash",
+                "pr_number",
+            )
+        },
+        "verification_complete": True,
+        "original_task": copy.deepcopy(original),
+        "source_epoch": original["epoch"],
+        "tree_sha": tree,
+        "main_sha_at_verification": main,
+        "verification_run": {
+            key: latest.get(key)
+            for key in ("id", "event", "head_sha", "display_title", "html_url")
+        },
+        "merged_by": (pr.get("merged_by") or {}).get("login"),
+        "review_evidence": {
+            "github_reviews": [
+                {
+                    "id": review.get("id"),
+                    "reviewer": review.get("user", {}).get("login"),
+                    "state": review.get("state"),
+                    "commit_id": review.get("commit_id"),
+                }
+                for review in reviews
+            ],
+            "owner_attestation": copy.deepcopy(request.get("human_review_attestation")),
+            "authorized_by": request["actor"],
+        },
+    }
+
+
+def external_merge_incident(gh, store, state, task_id):
+    """Retry a lost issue response without losing the already durable fence."""
+    observation = state["tasks"][task_id].get("external_merge", {})
+    if not observation or observation.get("incident_issue"):
+        return state
+    merged = observation.get("observed", {}).get("merge_sha")
+    if not isinstance(merged, str) or not re.fullmatch(r"[0-9a-f]{40}", merged):
+        return state
+    try:
+        number = failure_issue(
+            gh,
+            merged,
+            observation["observed"].get("pr_url")
+            or "Preserved external-merge observations in coordination history",
+            "external-merge",
+        )
+        tip, current = store.read()
+        current["tasks"][task_id]["external_merge"]["incident_issue"] = number
+        store.write(tip, current)
+        return current
+    except GitHubError:
+        # Keep the fence and retry on the next normal pass; no merge is authorized.
+        return state
+
+
+def close_recovered_issue(gh, store, state, task_id):
+    """Retry issue projection separately from accepted evidence and delivery."""
+    if (
+        state["tasks"][task_id]["external_recovery_request"].get("issue_closed_at")
+        is not None
+    ):
+        return state
+    try:
+        gh.repo(
+            f"issues/{task_id}",
+            method="PATCH",
+            data={"state": "closed", "state_reason": "completed"},
+        )
+    except GitHubError:
+        return state
+    tip, current = store.read()
+    current["tasks"][task_id]["external_recovery_request"]["issue_closed_at"] = int(
+        datetime.now(timezone.utc).timestamp()
+    )
+    store.write(tip, current)
+    return current
+
+
+def recover_external_merges(gh, config, store, state, main):
+    """One fenced incident cannot starve unrelated serial integration."""
+    from .queue import QueueError, apply_request
+
+    for task_id, task in list(state.get("tasks", {}).items()):
+        authorization = task.get("external_recovery_request", {})
+        if not authorization:
+            continue
+        if authorization.get("completed_at") is not None:
+            if task["status"] == "done":
+                state = close_recovered_issue(gh, store, state, task_id)
+            continue
+        if task["status"] not in {"blocked", "recovery_required", "needs_human"}:
+            continue
+        try:
+            verified = verified_external_recovery(
+                gh, config, store, task_id, task, main
+            )
+            tip, current = store.read()
+            current = apply_request(
+                current,
+                {
+                    "request_id": "adopt-"
+                    + hashlib.sha256(authorization["request_id"].encode()).hexdigest(),
+                    "verb": "adopt-external-merge",
+                    "task_id": task_id,
+                    "authorization_id": authorization["request_id"],
+                    "verified": verified,
+                },
+                config["coordinator_login"],
+                int(datetime.now(timezone.utc).timestamp()),
+                config,
+            )
+            if gh.repo("git/ref/heads/main")["object"]["sha"] != main:
+                raise ValueError("Main advanced before external recovery was recorded")
+            store.write(tip, current)
+        except (GitHubError, KeyError, TypeError, ValueError, QueueError) as error:
+            reason = (
+                "GitHub recovery evidence is unavailable"
+                if isinstance(error, (GitHubError, KeyError, TypeError))
+                else str(error)
+            )
+            tip, current = store.read()
+            target = current["tasks"][task_id]
+            if (
+                target.get("external_recovery_request", {}).get("completed_at")
+                is not None
+            ):
+                state = current
+                continue
+            if target.get("external_recovery_error") != reason:
+                target["external_recovery_error"] = reason
+                store.write(tip, current)
+            state = current
+            continue
+        # The common integration outbox owns publication, once per pass.
+        state = close_recovered_issue(gh, store, current, task_id)
+    return state
+
+
 def integrate(gh, config, state):
     """Serial external side effects, journalled before merging and replay-safe."""
     from .queue import apply_request
@@ -484,14 +743,18 @@ def integrate(gh, config, state):
     if enforcement == "github" and not protections_present(gh):
         raise ValueError("Required branch protections are absent; integration disabled")
     main = gh.repo("git/ref/heads/main")["object"]["sha"]
+    for task_id in state.get("tasks", {}):
+        state = external_merge_incident(gh, store, state, task_id)
+    state = recover_external_merges(gh, config, store, state, main)
     # Delivery is an independent outbox. Failed/exhausted publication cannot
     # occupy the serial merge lane or starve later eligible implementation.
     for task_id, task in list(state.get("tasks", {}).items()):
         if task.get("status") == "done" and task.get("delivery_pending"):
             state = deliver(gh, store, state, task_id, task["merge_sha"])
-    tasks = state.get("tasks", {})
-    for task_id, task in tasks.items():
-        task["task_id"] = task_id
+    tasks = {
+        task_id: {**task, "task_id": task_id}
+        for task_id, task in state.get("tasks", {}).items()
+    }
     active = [
         t
         for t in tasks.values()
@@ -519,6 +782,42 @@ def integrate(gh, config, state):
         pr = gh.repo(f"pulls/{task['pr_number']}")
         if pr.get("merged"):
             merged = pr["merge_commit_sha"]
+            submission = task.get("submission", {})
+            journal = task.get("integration", {})
+            journalled = (
+                task["status"] in ("integrating", "verifying_main")
+                and journal.get("head_sha") == pr["head"]["sha"]
+                and journal.get("head_sha") == submission.get("head_sha")
+                and journal.get("base_sha") == submission.get("base_sha")
+                and journal.get("base_sha") == pr.get("base", {}).get("sha")
+                and submission.get("spec_hash") == task.get("spec_hash")
+                and (not task.get("merge_sha") or task["merge_sha"] == merged)
+            )
+            if not journalled:
+                tip, current = store.read()
+                current = apply_request(
+                    current,
+                    {
+                        "request_id": f"external-merge-{task['task_id']}-{merged}",
+                        "verb": "fence-external-merge",
+                        "task_id": task["task_id"],
+                        "observed": {
+                            "pr_number": task["pr_number"],
+                            "pr_url": pr.get("html_url"),
+                            "head_sha": pr.get("head", {}).get("sha"),
+                            "base_sha": pr.get("base", {}).get("sha"),
+                            "merge_sha": merged,
+                            "merged_by": (pr.get("merged_by") or {}).get("login"),
+                            "main_sha": main,
+                        },
+                    },
+                    config["coordinator_login"],
+                    int(datetime.now(timezone.utc).timestamp()),
+                    config,
+                )
+                store.write(tip, current)
+                state = external_merge_incident(gh, store, current, task["task_id"])
+                continue
             runs = gh.repo("actions/workflows/ci.yml/runs?per_page=100")[
                 "workflow_runs"
             ]
@@ -591,7 +890,12 @@ def integrate(gh, config, state):
                         dependencies=[],
                         priority=0,
                         milestone="Infrastructure",
-                        risk="routine",
+                        risk=(
+                            "human"
+                            if task["spec"]["risk"] == "human"
+                            or sensitive_scope(task["spec"]["paths"], config)
+                            else "routine"
+                        ),
                     )
                     repair_state = apply_request(
                         repair_state,

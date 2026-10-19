@@ -35,7 +35,7 @@ Sleeping both computers pauses implementation, even while GitHub checks run.
 4. Start coordination in observation mode. Inspect PR #30 and original Windows
    research workers before registering/adopting them; missing local files are
    not evidence a process stopped.
-5. In a human-reviewed configuration PR set mode to `pilot` and `pilot_tasks` to
+5. In an owner-authorized configuration PR set mode to `pilot` and `pilot_tasks` to
    the two selected issue numbers. Observation does not grant tasks. Complete
    two small nonconflicting tasks, one per host, through fresh review,
    serial integration, merged-main verification and private candidate creation.
@@ -47,14 +47,15 @@ they must not silently claim enforcement is active. Existing Codex access and
 GitHub Actions/artifact quotas still apply; keep paid overage disabled.
 
 The controller checks ownership/scope, CI, independent review, resolved review
-conversations, and sensitive-change human approval before serial merging and
-merged-main verification. GitHub Free does not itself block direct pushes, manual
+conversations, and configured-owner authorization of sensitive frozen task scope
+before serial merging and merged-main verification. GitHub Free does not itself
+block direct pushes, manual
 merges around the controller, force pushes/deletion, or concurrent main changes
 outside this path. Both humans and agents must follow the repository protocol;
 these controller safeguards cannot prevent a writer from bypassing it.
 
 Eligible owners may optionally choose `integration_enforcement: "github"` in a
-human-reviewed policy PR and apply protections with
+owner-authorized policy PR and apply protections with
 `python scripts/setup_automation.py --apply --protections`. That mode fails closed
 if the required protections are missing or unverifiable. It is not required for
 routine automatic integration in the default controller mode.
@@ -107,6 +108,7 @@ command's help; extra request fields are supplied as JSON. Commands are:
 | `review-result` | Submit exact-head/base/spec verdict, findings and limitations |
 | `release` | Checkpoint and release eligible code work |
 | `recover` | Adopt interrupted work only with required preservation/process evidence |
+| `recover-merged` | Authorize audited recovery of an externally merged, fenced task |
 | `status` | Read queue, reservations and blockers |
 
 Requests use a unique request ID and fenced JSON marked `agent-request:v1` on an
@@ -147,9 +149,14 @@ No background worker is installed by this setup.
 
 Code and base changes invalidate review evidence. Three failed repair rounds
 escalate once with a clear blocker. Routine work can merge automatically after
-CI and independent review. Automation/security policy, credentials/authentication,
-destructive migrations, deployment and model promotion require a non-author
-human approval. CI passing does not establish badminton accuracy.
+CI and fresh independent agent review. Automation/security policy,
+credentials/authentication, destructive migrations, deployment and model-promotion
+scope requires explicit configured-owner authorization of the frozen task via
+`human-approved`. Freeze such work as risk-human before claiming it. The scope
+authorization is distinct from final PR review; the PR author may also be the
+authorizing owner. Non-author human PR review is optional. Requested changes
+and unresolved review threads remain vetoes. CI passing does not establish
+badminton accuracy.
 
 ## Research, interrupted jobs and candidate delivery
 
@@ -179,6 +186,98 @@ through [the owner checklist](OWNER_SETUP.md#candidate-visibility-and-public-bui
 Failed main verification pauses claims/merges and opens a repair task. Normal
 notifications concern human action, integration/release failure, stalled
 recovery or completed milestones.
+
+### Externally merged task PRs
+
+Routine PRs receive independent agent approval on their final head and then let
+the controller perform serial integration. A writer merging around that sequence is an incident,
+even when the resulting source is correct. A merged PR without its matching
+integration journal is fenced into Recovery required. Its original grant,
+submission, specification, independent review and observed merger/source remain
+preserved. The controller records one incident and continues unrelated eligible
+work; it does not infer approval from the merge or mark the task Done.
+
+An explicitly authorized human approver can request `recover-merged` after
+inspecting the actual source and recovery evidence. Use trusted merged-main
+tools, register the real host/session, and supply a JSON payload with:
+
+```json
+{
+  "pr_number": 114,
+  "spec_hash": "ORIGINAL_FROZEN_SPEC_SHA256",
+  "head_sha": "ORIGINAL_REVIEWED_HEAD_SHA",
+  "base_sha": "ORIGINAL_REVIEWED_BASE_SHA",
+  "merge_sha": "ACTUAL_MERGED_SOURCE_SHA",
+  "evidence_state_sha": "IMMUTABLE_COORDINATION_COMMIT_WITH_ACCEPTED_REVIEW"
+}
+```
+
+All commit fields must be actual lowercase 40-character SHAs. The evidence
+commit must be an ancestor of the current `codex/coordination` branch and contain
+the original accepted task grant, submission and independent approval. Locate it
+through read-only coordination history, such as `git fetch origin
+codex/coordination` and `git log FETCH_HEAD -- state.json`. Do not reconstruct a
+verdict in the request body. This also supports a closed historical task whose
+code-only recovery already archived its claim; keep that issue closed while
+requesting adoption. Reopening and replanning it can replace the evidence needed
+for recovery.
+
+Use the task's **current fenced epoch**, while the source epoch remains separately
+recorded in the historical evidence:
+
+```sh
+python scripts/agent_queue.py recover-merged --task 111 --epoch 2 --payload .cache/recover-merged.json --request-id UNIQUE_RECOVERY_ID
+python scripts/agent_queue.py status --task 111
+```
+
+The first response is `recovery_pending`, not a grant or completion receipt. Only
+the trusted controller can accept the recovery after rechecking the original
+head/base/spec and branch, changed-file scope including renames, exact source
+checks, independent review, unresolved conversations, actual merged-tree parity,
+main ancestry and the latest complete successful exact merged-main workflow run
+from trusted `main`. Missing, stale, failed or running evidence stays incomplete.
+Existing current ownership cannot be displaced by an older evidence commit.
+
+External adoption requires an authenticated configured-owner recovery request
+and the original independent agent approval and source/CI evidence. Non-author
+human review is optional. Actual GitHub reviews remain audit evidence. If the
+owner has explicitly confirmed a personal review outside GitHub, the request may
+add this optional separately typed attestation:
+
+```json
+{
+  "human_review_attestation": {
+    "kind": "owner_attestation",
+    "reviewer": "ACTUAL_CONFIGURED_NON_AUTHOR_REVIEWER",
+    "head_sha": "ORIGINAL_REVIEWED_HEAD_SHA",
+    "statement": "The owner's explicit confirmation of who personally reviewed and approved this exact head."
+  }
+}
+```
+
+An agent may submit that field only with the owner's actual, exact-head
+confirmation. A merge record, a scope authorization or an agent's guess cannot
+supply it. The controller stores the authenticated authorizer and attestation
+separately from GitHub reviews; it never creates an `APPROVED` review record.
+Existing requested changes still block recovery. Omit the optional field when
+no such review occurred; a malformed or conflicting supplied attestation is
+rejected. Ordinary sensitive PRs require owner-authorized task scope, fresh
+independent agent review and exact CI before controller merging.
+
+Resource/input-bearing tasks additionally require the original-host
+`terminal_proof` process lifetime, Store status and durable-artifact evidence used
+by normal recovery. A merge, timeout or offline host does not establish process
+exit. Code-only history recovery does not erase physical reservations. Unknown
+or conflicting evidence leaves the task fenced with `external_recovery_error`.
+Correcting a request requires a new request ID; never mutate a previously accepted
+request or edit coordination state to bypass an error.
+
+After successful adoption, the current ownership epoch stays fenced, the original
+accepted review/source epoch and exact verification are retained in the audit,
+and normal delivery outbox processing checks the complete candidate workflow.
+An existing successful or live candidate is reused; adoption does not rerun
+inference, deploy an app or promote a model. Completion and delivery are still
+separate receipts.
 
 ## Retrospective history and Project synchronization
 
@@ -221,6 +320,13 @@ repair can acquire overlapping code paths while paused; physical research
 resources stay protected. A verified repair records the original failed SHA and
 repair SHA separately and resumes the queue. A repair that breaks main again
 escalates once for human attention.
+
+Sensitive or risk-human repairs enter Needs human with their own frozen scope.
+An authenticated configured owner authorizes that exact repair hash using
+`human-approved` before claiming; the parent's authorization is not reused.
+The repair retains its paused-queue priority and `repair_for` linkage through
+authorization, independent review and verified integration. Nonsensitive routine
+repairs remain automatic. No non-author human PR approval is required.
 
 Candidate publishing stays pending until the complete candidate workflow succeeds,
 including package/image artifacts. Failed publishing is retried up to three

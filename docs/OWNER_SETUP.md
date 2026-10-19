@@ -8,8 +8,8 @@ branch-protection setup is required. Candidate visibility is configured separate
 from the private Project, as described below.
 
 1. Review and merge the bootstrap DevOps PR after its exact-head CI succeeds.
-   This change alters trusted workflows/policy and requires non-author human
-   review. Keep `.github/automation.json` in observation mode.
+   The owner authorizes this initial trusted workflow/policy setup. Keep
+   `.github/automation.json` in observation mode.
 2. Run `python scripts/setup_automation.py --apply` while authenticated as the
    owner. Keep `integration_enforcement` set to `controller`; no paid plan or
    branch-protection setup is needed. The script previews configuration without
@@ -28,11 +28,11 @@ from the private Project, as described below.
    Codex goal using [the collaboration guide](COLLABORATION.md). Bootstrap new
    task worktrees with the pinned tool/environment profiles. Existing application
    environments and Windows research jobs are not migrated or restarted.
-6. Select two small nonconflicting issues, one per host. In a human-reviewed
+6. Select two small nonconflicting issues, one per host. In an owner-authorized
    configuration PR set `mode` to `pilot` and `pilot_tasks` to their issue numbers.
    Verify committed grants, independent reviews, sequential merges, merged-main
    checks, board updates and candidate artifacts matching the declared visibility.
-7. After both pilots pass, use a human-reviewed configuration PR to change mode
+7. After both pilots pass, use an owner-authorized configuration PR to change mode
    to `active`. GitHub Actions and artifact/storage quotas still apply; keep
    paid overage disabled unless explicitly authorized separately. Each collaborator
    uses their existing Codex access and its usage limits. Local workers stop when
@@ -40,8 +40,9 @@ from the private Project, as described below.
 
 The two rollout PRs are a narrow bootstrap exception to queue ownership: they
 may change only `mode` and `pilot_tasks` in `.github/automation.json`. Trusted
-main code publishes `automation/policy` after current CI and a current-head
-non-author human approval. A human merges these two PRs. No other policy,
+main code publishes `automation/policy` after current CI and resolved review
+conversations. A human performs the explicitly authorized merge of these two
+PRs; a second human's PR approval is optional. No other policy,
 workflow or credential change qualifies, and the rollout path never auto-merges.
 This permits activation while observation mode correctly grants no tasks.
 
@@ -99,8 +100,9 @@ package or image success is insufficient.
 ## Integration safeguards without Pro
 
 The controller checks task ownership and scope, CI, independent exact-head/base
-review, resolved review conversations, and sensitive-change human approval before
-serial integration. It verifies the merged main commit and pauses work on failure.
+review, resolved review conversations, and configured-owner authorization of
+sensitive frozen task scope before serial integration. It verifies the merged
+main commit and pauses work on failure.
 Both collaborators and their agents must use this path. GitHub Free does not
 prevent a writer from pushing directly to `main`, manually bypassing these checks,
 force pushing/deleting the branch, or changing main concurrently outside the
@@ -108,11 +110,14 @@ controller. These actions are prohibited by the repository protocol; controller
 checks cannot provide the server-side backstop of protected branches.
 
 Owners who already have eligible branch protection may opt into
-`integration_enforcement: "github"` in a human-reviewed policy PR and run
+`integration_enforcement: "github"` in an owner-authorized policy PR and run
 `python scripts/setup_automation.py --apply --protections`. That mode refuses
 integration if its required protections are absent or cannot be verified. It is
 optional; do not upgrade a subscription solely to complete this checklist.
 
 Once active, routine task administration, review, merging and candidate builds
-are automatic. Human decisions remain for scope changes, sensitive approvals,
-annotation adjudication, spending and exceptional recovery.
+are automatic. Human decisions remain for scope changes, sensitive task scope,
+annotation adjudication, spending and exceptional recovery. Final task PR review
+uses fresh independent agent approval and exact CI without requiring a non-author
+human PR approval. Existing requested changes and unresolved threads still veto
+integration.

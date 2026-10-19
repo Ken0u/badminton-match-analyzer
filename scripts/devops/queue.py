@@ -13,6 +13,8 @@ import math
 import re
 from typing import Any
 
+from .policy import scope_authorized, sensitive_scope
+
 LEASE_SECONDS = 3 * 60 * 60
 RESERVED = {
     "running",
@@ -461,16 +463,21 @@ def apply_request(
             raise QueueError("repair task already exists")
         if spec["resources"] or spec["artifacts"] or spec["dependencies"]:
             raise QueueError("CI repairs cannot acquire research/data resources")
+        repair_status = (
+            "needs_human"
+            if spec["risk"] == "human" or sensitive_scope(spec["paths"], config)
+            else "ready"
+        )
         result["tasks"][task_id] = {
             "spec": spec,
             "spec_hash": digest,
-            "status": "ready",
+            "status": repair_status,
             "epoch": 0,
             "repair_for": original,
             "planned_by": actor,
             "planned_at": now,
         }
-        receipt.update(task_id=task_id, status="ready")
+        receipt.update(task_id=task_id, status=repair_status)
     elif verb in {"pause", "resume"}:
         result["paused"] = verb == "pause"
     elif verb == "plan":
@@ -500,6 +507,56 @@ def apply_request(
         }
         _cycles(result["tasks"])
         receipt.update(task_id=task_id, status=status)
+    elif verb == "recover-merged":
+        _worker(result, request, actor)
+        if actor.casefold() not in {
+            value.casefold() for value in config.get("human_approvers", [])
+        }:
+            raise QueueError("external recovery requires an explicit human approver")
+        task_id = _task_id(request.get("task_id"))
+        task = result["tasks"].get(task_id)
+        if (
+            not task
+            or task["status"] not in {"blocked", "recovery_required", "needs_human"}
+            or type(request.get("epoch")) is not int
+            or request["epoch"] != task["epoch"]
+            or request.get("spec_hash") != task["spec_hash"]
+        ):
+            raise QueueError(
+                "external recovery requires the current fenced task binding"
+            )
+        if mode == "observation" or (
+            mode == "pilot"
+            and task_id not in {str(value) for value in config.get("pilot_tasks", [])}
+        ):
+            raise QueueError("external recovery is outside the current rollout mode")
+        authorization = {
+            "request_id": request_id,
+            "actor": actor,
+            "at": now,
+            "epoch": task["epoch"],
+            "spec_hash": task["spec_hash"],
+        }
+        for key in ("evidence_state_sha", "head_sha", "base_sha", "merge_sha"):
+            authorization[key] = _sha(request.get(key), key)
+        if (
+            type(request.get("pr_number")) is not int
+            or request["pr_number"] <= 0
+            or request["pr_number"] != task.get("pr_number")
+        ):
+            raise QueueError("external recovery PR does not match the original task")
+        authorization["pr_number"] = request["pr_number"]
+        for key in ("human_review_attestation", "terminal_proof"):
+            if key in request:
+                _json(request[key])
+                authorization[key] = copy.deepcopy(request[key])
+        if task.get("external_recovery_request"):
+            task.setdefault("external_recovery_history", []).append(
+                copy.deepcopy(task["external_recovery_request"])
+            )
+        task["external_recovery_request"] = authorization
+        task.pop("external_recovery_error", None)
+        receipt.update(task_id=task_id, status="recovery_pending", epoch=task["epoch"])
     elif verb == "human-approved":
         if actor.casefold() not in {
             x.casefold() for x in config.get("human_approvers", [])
@@ -577,11 +634,7 @@ def apply_request(
                 else:
                     if task["status"] not in {"ready", "proposed"}:
                         continue
-                    if (
-                        spec["risk"] == "human"
-                        and task.get("human_approval", {}).get("spec_hash")
-                        != task["spec_hash"]
-                    ):
+                    if spec["risk"] == "human" and not scope_authorized(task, config):
                         continue
                     if not set(spec["capabilities"]) <= set(
                         worker["capabilities"]
@@ -642,14 +695,116 @@ def apply_request(
                     epoch=task["epoch"],
                     claim=copy.deepcopy(claim),
                 )
-    elif verb in {"integrate", "verify-main", "invalidate-review"}:
+    elif verb in {
+        "integrate",
+        "verify-main",
+        "invalidate-review",
+        "fence-external-merge",
+        "adopt-external-merge",
+    }:
         if not coordinator:
             raise QueueError("adapter-verified coordinator transition required")
         task_id = _task_id(request.get("task_id"))
         task = result["tasks"].get(task_id)
         if not task:
             raise QueueError("unknown task")
-        if verb == "invalidate-review":
+        if verb == "adopt-external-merge":
+            authorization = task.get("external_recovery_request", {})
+            verified = request.get("verified")
+            if (
+                task["status"] not in {"blocked", "recovery_required", "needs_human"}
+                or authorization.get("request_id") != request.get("authorization_id")
+                or authorization.get("epoch") != task["epoch"]
+                or authorization.get("spec_hash") != task["spec_hash"]
+                or result.get("paused")
+                or mode == "observation"
+                or (
+                    mode == "pilot"
+                    and task_id
+                    not in {str(value) for value in config.get("pilot_tasks", [])}
+                )
+                or not isinstance(verified, dict)
+                or verified.get("verification_complete") is not True
+                or any(
+                    verified.get(key) != authorization.get(key)
+                    for key in (
+                        "evidence_state_sha",
+                        "head_sha",
+                        "base_sha",
+                        "merge_sha",
+                        "spec_hash",
+                        "pr_number",
+                    )
+                )
+            ):
+                raise QueueError(
+                    "verified external recovery no longer matches authorization"
+                )
+            original = verified.get("original_task")
+            if (
+                not isinstance(original, dict)
+                or not isinstance(original.get("claim"), dict)
+                or original.get("spec_hash") != task["spec_hash"]
+                or spec_hash(original.get("spec")) != task["spec_hash"]
+            ):
+                raise QueueError("original accepted recovery evidence is required")
+            if task["spec"]["resources"] or task["spec"]["artifacts"]:
+                _terminal_proof(authorization, original["claim"])
+            _json(verified)
+            task.setdefault("history", []).append(
+                {
+                    "verb": verb,
+                    "at": now,
+                    "epoch": task["epoch"],
+                    "claim": copy.deepcopy(task.get("claim")),
+                    "authorization": copy.deepcopy(authorization),
+                }
+            )
+            task["external_recovery"] = copy.deepcopy(verified)
+            task["external_recovery_request"]["completed_at"] = now
+            task["submission"] = copy.deepcopy(original["submission"])
+            task["review"] = copy.deepcopy(original["review"])
+            task.update(
+                status="done",
+                merge_sha=authorization["merge_sha"],
+                delivery_pending=True,
+                reason="External merge recovered from verified original evidence",
+            )
+            task.pop("external_recovery_error", None)
+        elif verb == "fence-external-merge":
+            if task["status"] == "done":
+                raise QueueError("completed work cannot be externally fenced")
+            observed = request.get("observed")
+            if not isinstance(observed, dict):
+                raise QueueError("external merge observations are required")
+            _json(observed)
+            if "external_merge" not in task:
+                task["external_merge"] = {
+                    "at": now,
+                    "observed": copy.deepcopy(observed),
+                    "original": {
+                        key: copy.deepcopy(task[key])
+                        for key in (
+                            "status",
+                            "epoch",
+                            "spec",
+                            "spec_hash",
+                            "claim",
+                            "submission",
+                            "review",
+                            "review_epoch",
+                            "pr_number",
+                            "integration",
+                            "merge_sha",
+                        )
+                        if key in task
+                    },
+                }
+            task["status"] = "recovery_required"
+            task["reason"] = (
+                "PR merged outside the recorded integration; explicit recovery required"
+            )
+        elif verb == "invalidate-review":
             if task["status"] not in {"review", "integrating"}:
                 raise QueueError("task is not under review/integration")
             task.pop("review_claim", None)

@@ -15,6 +15,15 @@ def sensitive(files, config):
     return any(in_scope(f, config["sensitive_paths"]) for f in files)
 
 
+def sensitive_scope(paths, config):
+    """Repair grants can contain sensitive files beneath an ancestor prefix."""
+    return any(
+        in_scope(path, [prefix]) or in_scope(prefix, [path])
+        for path in paths
+        for prefix in config.get("sensitive_paths", [])
+    )
+
+
 def latest_reviews(reviews):
     result = {}
     for review in sorted(reviews, key=lambda r: r.get("id", 0)):
@@ -78,20 +87,11 @@ def rollout_errors(pr, changed, proposed, checks, reviews, config, main_sha):
             or latest.get(name, {}).get("status") != "completed"
         ):
             errors.append(f"Required check missing or unsuccessful: {name}")
-    by_user = latest_reviews(reviews)
-    if not any(
-        user in config["human_approvers"]
-        and user != pr["user"]["login"]
-        and review.get("state") == "APPROVED"
-        and review.get("commit_id") == head
-        for user, review in by_user.items()
-    ):
-        errors.append("Rollout requires a current non-author human approval")
     return errors
 
 
-def policy_errors(task, pr, files, checks, reviews, config, main_sha):
-    """Missing or stale evidence fails closed, including newly discovered paths."""
+def _source_errors(task, pr, files, checks, reviews, config):
+    """Evidence that remains necessary for both normal and external integration."""
     errors = review_errors(reviews, config)
     head, base = pr["head"]["sha"], pr["base"]["sha"]
     spec = task["spec"]
@@ -99,14 +99,10 @@ def policy_errors(task, pr, files, checks, reviews, config, main_sha):
         errors.append("No changed-file evidence")
     if any(not in_scope(f, spec["paths"]) for f in files):
         errors.append("Changed paths exceed the granted scope")
-    if base != main_sha or task.get("submission", {}).get("base_sha") != base:
-        errors.append("Update branch and review against current main")
+    if task.get("submission", {}).get("base_sha") != base:
+        errors.append("Submission does not match PR base")
     if task.get("submission", {}).get("head_sha") != head:
         errors.append("Submission does not match PR head")
-    if task.get("status") not in ("review", "merge_ready", "integrating", "merging"):
-        errors.append("Task has no valid integration reservation")
-    if pr.get("draft") or pr.get("state") != "open":
-        errors.append("PR is not open and ready")
     if (
         pr["base"]["ref"] != "main"
         or pr["head"].get("repo", {}).get("full_name") != config["repository"]
@@ -150,16 +146,68 @@ def policy_errors(task, pr, files, checks, reviews, config, main_sha):
         or verdict.get("session_id") == task.get("claim", {}).get("session_id")
     ):
         errors.append("Fresh independent agent review required")
-    if spec.get("risk") == "human" or sensitive(files, config):
-        by_user = latest_reviews(reviews)
-        if not any(
-            login in config["human_approvers"]
-            and login != pr["user"]["login"]
-            and review.get("state") == "APPROVED"
-            and review.get("commit_id") == head
-            for login, review in by_user.items()
-        ):
-            errors.append(
-                "Sensitive change requires a current non-author human approval"
-            )
+    return errors
+
+
+def scope_authorized(task, config):
+    """Owner authorization binds the frozen task, not a human PR review."""
+    approval = task.get("human_approval")
+    return (
+        isinstance(approval, dict)
+        and isinstance(approval.get("actor"), str)
+        and approval["actor"].casefold()
+        in {login.casefold() for login in config.get("human_approvers", [])}
+        and approval.get("spec_hash") == task.get("spec_hash")
+        and isinstance(task.get("spec_hash"), str)
+        and bool(task["spec_hash"])
+    )
+
+
+def policy_errors(task, pr, files, checks, reviews, config, main_sha):
+    """Missing or stale evidence fails closed, including newly discovered paths."""
+    errors = _source_errors(task, pr, files, checks, reviews, config)
+    if (
+        pr["base"]["sha"] != main_sha
+        or task.get("submission", {}).get("base_sha") != pr["base"]["sha"]
+    ):
+        errors.append("Update branch and review against current main")
+    if task.get("status") not in ("review", "merge_ready", "integrating", "merging"):
+        errors.append("Task has no valid integration reservation")
+    if pr.get("draft") or pr.get("state") != "open":
+        errors.append("PR is not open and ready")
+    if (
+        task["spec"].get("risk") == "human" or sensitive(files, config)
+    ) and not scope_authorized(task, config):
+        errors.append(
+            "Sensitive change requires owner authorization of the frozen task scope"
+        )
+    return errors
+
+
+def external_recovery_errors(task, pr, files, checks, reviews, config, request):
+    """A recovery authorization cannot replace original source/review evidence.
+
+    The trusted adapter authenticates the request actor and checks immutable
+    coordination history, source/merge trees, ancestry and exact-main CI.
+    An owner attestation is recorded separately from GitHub approval reviews.
+    """
+    errors = _source_errors(task, pr, files, checks, reviews, config)
+    if pr.get("merged") is not True or pr.get("state") != "closed" or pr.get("draft"):
+        errors.append("External recovery requires an actually merged PR")
+    if pr["head"]["ref"] != task.get("claim", {}).get("branch"):
+        errors.append("Recovery branch does not match the original grant")
+    if request.get("actor") not in config["human_approvers"]:
+        errors.append("External recovery requires an authenticated human approver")
+    attestation = request.get("human_review_attestation")
+    valid_attestation = (
+        isinstance(attestation, dict)
+        and attestation.get("kind") == "owner_attestation"
+        and attestation.get("reviewer") in config["human_approvers"]
+        and attestation.get("reviewer") != pr["user"]["login"]
+        and attestation.get("head_sha") == pr["head"]["sha"]
+        and isinstance(attestation.get("statement"), str)
+        and 0 < len(attestation["statement"].strip()) <= 4000
+    )
+    if attestation is not None and not valid_attestation:
+        errors.append("Invalid external human-review attestation")
     return errors
