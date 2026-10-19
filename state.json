@@ -1610,6 +1610,28 @@
       "task_id": "119",
       "verb": "review-next"
     },
+    "windows-external119-review-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792445602,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "epoch": 1,
+        "expires_at": 1792456402,
+        "granted_at": 1792445602,
+        "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
+        "host_id": "MSI",
+        "pr_number": 122,
+        "review_epoch": 2,
+        "session_id": "windows-external119-review-v2",
+        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
+      },
+      "epoch": 1,
+      "fingerprint": "55d11525596f7aef9602da66c44311bb70796ce0d6f3bc98c18008d1d04486dd",
+      "status": "granted",
+      "task_id": "119",
+      "verb": "review-next"
+    },
     "windows-external119-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792444498,
@@ -3102,7 +3124,20 @@
       "pr_number": 122,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "epoch": 1,
+        "expires_at": 1792456402,
+        "granted_at": 1792445602,
+        "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
+        "host_id": "MSI",
+        "pr_number": 122,
+        "review_epoch": 2,
+        "session_id": "windows-external119-review-v2",
+        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Reproduce task111 Review with externally merged PR114 and verified main38e; detect the external merge before the normal verify-main transition, preserving the original claim, epoch, frozen spec, submission, independent review, actual merger, merged commit/tree and CI observations. Repeated passes create one preserved incident and continue safely with unrelated eligible work.",
