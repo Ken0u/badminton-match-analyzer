@@ -446,6 +446,14 @@ try {
       .evaluate((n) => n.classList.contains("error")),
     true,
   );
+  // Trying Play on the unsupported original must retain playback ownership
+  // even when play() rejects after the media error event.
+  await page.locator("#play").click();
+  await page.waitForFunction(
+    () =>
+      document.querySelector("#video").error?.code === 4 &&
+      document.querySelector("#notice").textContent.includes("could not load"),
+  );
   assert.equal(longGap.duration_s, 0.72);
   await page.locator("#prepare-playback").click();
   await page.waitForFunction(() =>

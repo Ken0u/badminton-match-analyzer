@@ -96,6 +96,18 @@ function changed() {
 function handleError(e) {
   notice(e.message || String(e), true);
 }
+function playbackError() {
+  if (!state.video) return;
+  notice(
+    "Video playback could not load. Choose Prepare playback or use exact-frame review.",
+    true,
+  );
+  playbackFailure = {
+    version: noticeVersion,
+    generation: state.selectionGeneration,
+    videoId: state.video.id,
+  };
+}
 async function loadLibrary() {
   state.videos = await api("/api/videos");
   $("library-count").textContent = state.videos.length;
@@ -908,7 +920,22 @@ $("play").onclick = () => {
   const v = $("video");
   if (v.paused) {
     $("exact-frame").hidden = true;
-    v.play().catch(handleError);
+    const generation = state.selectionGeneration,
+      videoId = state.video?.id,
+      source = v.src,
+      version = noticeVersion;
+    v.play().catch((error) => {
+      if (
+        error.name === "AbortError" ||
+        generation !== state.selectionGeneration ||
+        videoId !== state.video?.id ||
+        source !== v.src ||
+        (version !== noticeVersion &&
+          playbackFailure?.version !== noticeVersion)
+      )
+        return;
+      playbackError();
+    });
   } else {
     v.pause();
     showExact();
@@ -931,17 +958,7 @@ $("video").ontimeupdate = () => {
 };
 $("video").onerror = () => {
   playbackTools.mediaError();
-  if (state.video) {
-    notice(
-      "Video playback could not load. Choose Prepare playback or use exact-frame review.",
-      true,
-    );
-    playbackFailure = {
-      version: noticeVersion,
-      generation: state.selectionGeneration,
-      videoId: state.video.id,
-    };
-  }
+  playbackError();
 };
 $("video").onseeked = () => {
   if ($("video").paused) showExact();
