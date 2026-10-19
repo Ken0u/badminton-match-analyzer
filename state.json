@@ -1075,6 +1075,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review124-01a15493-next-v1": {
+      "actor": "dootz1",
+      "at": 1792450125,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "epoch": 1,
+        "expires_at": 1792460925,
+        "granted_at": 1792450125,
+        "head_sha": "a452f30a95623bc70bdf59e37f730f002636c6e0",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 128,
+        "review_epoch": 1,
+        "session_id": "mac-review124-01a15493",
+        "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045"
+      },
+      "epoch": 1,
+      "fingerprint": "a5656d73a2ef5c246f6f7c286b043b721066c1dbdf965c2aad6fa783398d16dc",
+      "status": "granted",
+      "task_id": "124",
+      "verb": "review-next"
+    },
     "mac-review124-01a15493-register-v1": {
       "actor": "dootz1",
       "at": 1792450050,
@@ -3791,6 +3813,20 @@
       "planned_at": 1792447108,
       "planned_by": "Ken0u",
       "pr_number": 128,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "epoch": 1,
+        "expires_at": 1792460925,
+        "granted_at": 1792450125,
+        "head_sha": "a452f30a95623bc70bdf59e37f730f002636c6e0",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 128,
+        "review_epoch": 1,
+        "session_id": "mac-review124-01a15493",
+        "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Reproduce the observed race with an actual tiny generated native export: retain the service download handle, rewrite the same source inode after its verification and before response iteration, and demonstrate that current HTTP200 bytes differ from the completed native receipt despite matching Content-Length. Cover media and manifest responses without inference or private assets.",
