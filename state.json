@@ -156,6 +156,14 @@
       "task_id": "108",
       "verb": "invalidate-review"
     },
+    "invalidate-111-1fed758054c3c0becb37da9936eea07193521340-fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1": {
+      "actor": "github-actions[bot]",
+      "at": 1792441065,
+      "fingerprint": "9e92fa2f81ce15916808d3194d4cfa94ff11b01f9da67037e6259d82674ff1f0",
+      "status": "running",
+      "task_id": "111",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -2294,43 +2302,8 @@
       "planned_at": 1792438589,
       "planned_by": "Ken0u",
       "pr_number": 114,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
-      "review": {
-        "actor": "Ken0u",
-        "at": 1792440580,
-        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
-        "evidence": [
-          "Durable register windows-public111-review-register-v1 acknowledged ok; review-next windows-public111-review-next-v1 committed a matching task111 epoch1/review_epoch1 grant for host MSI/session windows-public111-review-v1, PR114, exact head/base/spec. Detached .cache/worktrees/public111-review-v1 remained clean at f35095d6b16762df1e6e45a2c066305c07d4b93e.",
-          "Independently inspected all seven changed files and surrounding CI revision verification, controller delivery/recovery, exact-head human approval policy, GitHub transport, package verifier, Dockerfile, .dockerignore, MANIFEST.in and build metadata. Missing/invalid/mismatched repository and package visibility fail closed; publisher/source identities and source lock remain distinct; Project credentials are absent from release jobs; package/image success depends on the complete workflow.",
-          "Independent focused test run: python -m pytest -q tests/test_release_candidate.py tests/test_agent_coordinator.py --basetemp .cache/pytest-review-v2: 96 passed in 13.87s. Initial harness attempt only lacked the .cache parent; after creating it the fresh rerun passed.",
-          "Independent credential-free disposable CLI probe (.cache/review_cli_probe.py): 11 expected outcomes passed using actual helper subprocesses and real disposable Git history. Exercised legacy source with obsolete helper, distinct publisher and source-lock hash, latest cancelled CI for either identity, repository visibility mismatch, absent public package, publisher binding mismatch, changed source after build, and post-push private package refusal without a success receipt.",
-          "Independently verified the submitted wheel/sdist against exact review source: 73 package files match; wheel SHA256 0200b8d90697de583a1fbbcd9ecb778538b4e1050bb32066a6f71e512fbc6c2c; sdist SHA256 98522696dd7c1b706b2f17a92abbfd107af9a916eb75407773191ee257b61cbf. Inspected archive paths for private state, datasets and annotations; injected synthetic .aws/credentials into a disposable sdist and verified rejection.",
-          "Changed Python files passed Ruff lint and format checks. git diff --check from exact base passed. All seven changed paths passed tracked UTF-8/LF, strict JSON and local-document-link checks. No implementation files were edited.",
-          "Revalidated remote PR114 open/non-draft at the exact head/base and observed completed successful ci/gate plus Python3.10/3.12, native Windows/macOS, package, repository, frontend, browser-import and review/CPU container checks. Hosted run https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39315790285 . Current automation/policy remains failure pending required review gates, and current human PR reviews were empty.",
-          "Checked the owner documentation against GitHub primary package documentation: visibility is separate from repository permissions, newly published personal packages default private, a public package cannot return to private, and workflow package access may need explicit repository permission. Source: https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility ."
-        ],
-        "findings": [],
-        "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
-        "limitations": [
-          "This is a fresh independent agent review, not the mandatory exact-head non-author human PR approval. Current PR reviews were empty; the human approval remains required and must not be inferred from task scope approval or this verdict.",
-          "Actual GHCR metadata, package settings, workflow package access, anonymous image retrieval and public delivery were not independently established. No image publishing, visibility mutation, application deployment, inference, model promotion, spending or private Project access occurred in this review. Public packages must already exist with owner-configured public visibility; the workflow fails closed otherwise.",
-          "Actual complete current-workflow candidate runs and controller delivery_pending=false remain post-merge requirements, including recovery for legacy sources through the current trusted workflow. Local adapter/CLI evidence does not prove those external outcomes.",
-          "Independent local verification used the existing Python 3.12 review environment with isolated application/data/weights roots and credential-free tests. Full multi-platform/browser/container validation was verified through successful exact-head hosted CI rather than repeated locally. No badminton annotation accuracy claim follows from these software checks."
-        ],
-        "pr_number": 114,
-        "reviewed_files": [
-          ".github/automation.json",
-          ".github/workflows/release.yml",
-          "scripts/release_candidate.py",
-          "tests/test_release_candidate.py",
-          "tests/test_agent_coordinator.py",
-          "docs/OWNER_SETUP.md",
-          "docs/COLLABORATION.md"
-        ],
-        "session_id": "windows-public111-review-v1",
-        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-        "verdict": "approve"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -2375,7 +2348,7 @@
         ]
       },
       "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
         "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
