@@ -260,6 +260,15 @@
       "task_id": "116",
       "verb": "checkpoint"
     },
+    "mac-01a15493-120-repaired": {
+      "actor": "dootz1",
+      "at": 1792444651,
+      "epoch": 1,
+      "fingerprint": "d778a37f4e1bae80a3c810e735f47554517d6a37722149e7c3935f7497ba48d1",
+      "status": "running",
+      "task_id": "120",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-120-start": {
       "actor": "dootz1",
       "at": 1792443625,
@@ -274,6 +283,15 @@
       "at": 1792444150,
       "epoch": 1,
       "fingerprint": "519f667aea0e0e3763044c66d8de88ae4328fac705acab97cad16ced7c8f7fec",
+      "status": "review",
+      "task_id": "120",
+      "verb": "submit"
+    },
+    "mac-01a15493-120-submit-v2": {
+      "actor": "dootz1",
+      "at": 1792444665,
+      "epoch": 1,
+      "fingerprint": "c1669ac7bc3f5c1fe6ceb951937fac29b4a55e2973152989539798a0b58da269",
       "status": "review",
       "task_id": "120",
       "verb": "submit"
@@ -914,6 +932,13 @@
       "status": "review",
       "task_id": "116",
       "verb": "review-result"
+    },
+    "mac-review119-01a15493-next": {
+      "actor": "dootz1",
+      "at": 1792444665,
+      "fingerprint": "b60082177d321bb56387459fd0b75b5e576a40e18b083f11d1f65be673bbdcdb",
+      "status": "idle",
+      "verb": "review-next"
     },
     "mac-review119-01a15493-register": {
       "actor": "dootz1",
@@ -3024,27 +3049,25 @@
       "checkpoint": {
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
-        "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
-        "limitations": [
-          "Native Windows not run; directory fallback simulated on Mac. No new frontend controls or app upgrades. Software/media checks do not prove automatic badminton annotation accuracy."
-        ],
+        "head_sha": "9e9706bbaacbfa346c46050739c01de3189f5153",
         "pr_number": 121,
-        "remaining": "Fresh read-only exact-head/base/spec review, hosted CI, repair findings if any, controller merge, exact-main verification and complete candidate receipts. Preserve MSI-owned119 and frontend dependencies.",
+        "preservation": "Original06afa2a CI39325016431 Windows failure and genuine independent review_epoch1 changes verdict preserved. Production API/native renderer unchanged except bounded export path guard. MSI119 remains separate; no frontend or app/data/model/research changes.",
+        "remaining": "Hosted Windows/other exact-head checks and independent review_epoch2 after priority119 review lane completes; controller merge/main verification and complete candidate delivery remain.",
         "validation": [
-          "169 focused API/export/import/analysis regressions passed (.cache/focused-final.xml)",
-          "1117 full tests passed,11optional skipped (.cache/full.xml)",
-          "Ruff/format146files,repository,diff and locked47package dependency checks pass",
-          "Real HTTP/native full/rally exports cover audio/VFR/rotation, pinned revisions, shared admission, corruption/symlinks, auth and retained handles; no private input/model/inference"
+          "143focused passed/2Windows-only skipped; full1119passed/13skips (.cache/focused-repair.xml,.cache/full-repair.xml)",
+          "Prior reparse regression failed before fix (.cache/reparse-before.xml); repair rejects lstat reparse components, including cleanup ancestry. Native Windows mklink/J root/job-directory regressions added for hosted validation",
+          "Retained-handle regression now accepts only Windows EACCES/sharing denial, preserves POSIX pathname-replacement and checks original bytes/closed handles; denial simulated on Mac too",
+          "Ruff/format146files, repository,47package dependency and diff checks pass"
         ],
         "worktree": ".cache/media-export-api-120"
       },
-      "checkpoint_at": 1792444074,
+      "checkpoint_at": 1792444651,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
         "epoch": 1,
-        "expires_at": 1792454874,
+        "expires_at": 1792455451,
         "granted_at": 1792443507,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -3055,41 +3078,6 @@
       "planned_by": "dootz1",
       "pr_number": 121,
       "repair_rounds": 1,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792444418,
-        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "evidence": [
-          "Fresh independent read-only session mac-review120-01a15493 obtained committed review_epoch 1 binding task120 PR121 implementationepoch1 head06afa2a base822e1c0 specce7dec72; isolated detached worktree .cache/review120-06afa2a; no implementation file edits.",
-          "Independently executed tests/test_media_export_api.py tests/test_rally_export.py tests/test_rally_video.py tests/test_rally_overlay.py: 141 passed in 14.94s, one upstream Starlette deprecation warning. Report .cache/review120-06afa2a/.cache/evidence/focused.xml.",
-          "Separate reviewer-authored .cache/evidence/independent_probe.py generated a 12-frame nonzero-origin VFR FFV1 source. A second Store active claim rejected POST with409 before patched planner invocation. All three HTTP modes completed against empty saved revision0 with zero denominators preserved; full downloaded MP4 decoded all12 original relative PTS and matched SHA256; source and annotations preserved. Results .cache/review120-06afa2a/.cache/evidence/independent-probe.json.",
-          "Inspected diff and surrounding Store admission/recovery, read-only export planner/source audits and native renderer cleanup/provenance. Focused tests independently exercised historical revisions/concurrent edits, audio/rotation/odd frames, source failure/interruption, authentication, cross-video/kind binding, traversal/symlink/hash corruption, completion receipts and retained downloads.",
-          "Ruff check and format --check pass for all three changed Python files. git diff --check passes; isolated worktree tracked status clean.",
-          "Independently inspected hosted run https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39325016431 bound head06afa2a: native windows-2022 and ci/gate fail; Windows log shows test_download_stream_uses_the_verified_handle_without_reopening_path asserts409==200. Other listed build/test/package/container/browser jobs succeed.",
-          "Independently read official Python3.12 pathlib docs distinguishing is_symlink/is_junction (https://docs.python.org/3.12/library/pathlib.html#pathlib.Path.is_junction), Python3.10 stat reparse attributes/tags (https://docs.python.org/3.10/library/stat.html), and installed pathlib implementation. Simulated directory lstat carrying FILE_ATTRIBUTE_REPARSE_POINT and IO_REPARSE_TAG_MOUNT_POINT is accepted by _safe_path; result .cache/evidence/reparse-static-probe.txt. No native Windows junction execution claimed."
-        ],
-        "findings": [
-          "[P2] tests/test_media_export_api.py:470: Make the retained-handle regression portable to Windows. It unconditionally renames the MP4 while open_download retains an open CRT file handle; Windows rejects that rename, so the injected wrapper raises OSError and the route returns 409 instead of the asserted 200. Hosted exact-head run 39325016431 native windows-2022 fails this new test (1116 passed, 11 skipped) and ci/gate fails. Accept only the expected Windows sharing/permission denial while preserving verified-byte/retained-handle assertions, or use a portable injection; retain replacement-path coverage on platforms permitting it. Rerun Windows and the exact-head required gate. This is a regression-test defect; ordinary production download failure was not demonstrated.",
-          "[P2] backend/badminton/export_service.py:23: Reject Windows junction/reparse components as well as symlinks. _safe_path checks only Path.is_symlink; a Windows directory junction has separate junction/reparse metadata and can appear as a directory. The Windows fallback then opens descendants by pathname and checks only stable identities, so replacing a completed export folder/root with a junction to a moved copy outside the configured export root can pass the checks and serve it. Native hashes still restrict accepted bytes, but the promised unsafe-path refusal is not enforced. Inspect lstat reparse attributes/tags for every component (compatible with3.10), and add an actual Windows junction regression. This is a static code/doc-supported finding with a portable metadata simulation; native Windows reproduction was not performed."
-        ],
-        "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
-        "limitations": [
-          "Local independent execution used macOS Python 3.12 with the existing locked environment; no local Windows execution. Hosted Windows failure was independently read through gh run view/log-failed.",
-          "Ran 141 focused tests rather than the complete local suite. Initial runner attempt failed in fixture setup because its temporary parent directory was absent; created the parent and all 141 passed on retry.",
-          "No private media, model weights, inference, deployment or app upgrade exercised. Generated-media/source and software checks do not establish badminton annotation accuracy.",
-          "The Windows junction finding is static, supported by inspected code/official Python docs and a simulated reparse lstat; native Windows junction creation and HTTP reproduction remain unexecuted. No additional blocking finding identified. Binding is exact head/base/spec/reviewepoch."
-        ],
-        "pr_number": 121,
-        "reviewed_files": [
-          "backend/badminton/api.py",
-          "backend/badminton/export_service.py",
-          "tests/test_media_export_api.py",
-          "docs/REVIEWED_EXPORTS.md"
-        ],
-        "session_id": "mac-review120-01a15493",
-        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -3132,10 +3120,10 @@
         ]
       },
       "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
+        "head_sha": "9e9706bbaacbfa346c46050739c01de3189f5153",
         "pr_number": 121,
         "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
       }
