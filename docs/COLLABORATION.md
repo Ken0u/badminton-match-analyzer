@@ -145,5 +145,7 @@ produce an owner setup instruction while retaining the created issue history.
 apply=False, backlog_path=..., root=..., revision="HEAD", include_history=True)`.
 The injectable `gh` transport implements `api`, `pages`, and `graphql`. Reads
 occur in dry run; only `apply=True` writes. `sync_board` projects newly added
-issue cards (and repairs unset Status after an interruption); ongoing queue status projection is owned by coordination automation,
+issue cards (and repairs unset Status after an interruption); coordination
+automation uses `sync_board(..., preserve_existing=False)` to project authoritative
+queue status. Ongoing queue status projection is owned by coordination automation,
 not retrospective backfill. Neither tool grants ownership.

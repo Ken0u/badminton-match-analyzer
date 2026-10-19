@@ -237,6 +237,17 @@ def test_board_pagination_and_existing_card_preserved():
     assert gh.cursors == [None, "next"]
     assert result["add"] == [{"issue": 2, "status": "Ready"}]
     assert len(gh.mutations) == 2
+    gh.mutations.clear()
+    project.sync_board(
+        gh,
+        "owner",
+        1,
+        [({"number": 1, "node_id": "I_1"}, "Done")],
+        apply=True,
+        preserve_existing=False,
+    )
+    assert len(gh.mutations) == 1
+    assert gh.mutations[0]["item"] == "existing"
 
 
 def test_transport_paginates_all_pages(monkeypatch):

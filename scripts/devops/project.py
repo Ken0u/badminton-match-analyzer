@@ -387,8 +387,13 @@ def sync_board(
     issues: list[tuple[dict[str, Any], str]],
     *,
     apply: bool = False,
+    preserve_existing: bool = True,
 ) -> dict[str, Any]:
-    """Project projection with paginated reads and no changes in dry-run mode."""
+    """Project projection; queue sync can set preserve_existing=False.
+
+    Retrospective backfill preserves human/queue status. The authoritative queue
+    projector explicitly opts into updating existing cards after reconciliation.
+    """
     data = gh.graphql(
         "query($owner:String!,$number:Int!){user(login:$owner){projectV2(number:$number)"
         "{id fields(first:100){nodes{... on ProjectV2SingleSelectField{id name options{id name}}}}}}}",
@@ -439,7 +444,7 @@ def sync_board(
     for issue, value in issues:
         issue_id = issue["node_id"]
         item_id = content.get(issue_id)
-        if item_id and issue_id in valued:
+        if preserve_existing and item_id and issue_id in valued:
             # Preserve manually/queue-managed status, repairing only unset values.
             continue
         changes.append({"issue": issue["number"], "status": value})
