@@ -1161,6 +1161,14 @@
       "task_id": "123",
       "verb": "plan"
     },
+    "spec-124-ceb13f29706a0f7440bb5aacbd37dc209143bc680c4ebe18a00864facc2f1a04": {
+      "actor": "Ken0u",
+      "at": 1792447108,
+      "fingerprint": "8f21d3ed4b1d1bfc698f08e8e15ffd45383ebebe68ac201f59a50f803f496fe1",
+      "status": "ready",
+      "task_id": "124",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -1537,6 +1545,14 @@
       "fingerprint": "4f86441cba0df57bd572e4f4ff8bc34d18718832e93e1d314e7d390250fa9e76",
       "status": "idle",
       "verb": "next"
+    },
+    "windows-export-stream124-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792447108,
+      "fingerprint": "26e8f54cd6b4eb97335fc6fa626ef2428a5bb75d8a496079b60dc96aa5b56f4a",
+      "status": "ready",
+      "task_id": "124",
+      "verb": "plan"
     },
     "windows-external-merge119-next-v1": {
       "actor": "Ken0u",
@@ -3445,6 +3461,55 @@
         ]
       },
       "spec_hash": "58bbf3ffa22debd0cad591064bfca2aa8e7fc50a3bfa9e7c7fd852acc19554a9",
+      "status": "ready"
+    },
+    "124": {
+      "epoch": 0,
+      "planned_at": 1792447108,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Reproduce the observed race with an actual tiny generated native export: retain the service download handle, rewrite the same source inode after its verification and before response iteration, and demonstrate that current HTTP200 bytes differ from the completed native receipt despite matching Content-Length. Cover media and manifest responses without inference or private assets.",
+          "Serve a stable verified representation whose complete bytes, size and hash match the recorded native completion receipt, or reject unavailable/changed content before starting a successful response. A retained descriptor alone must not permit in-place rewrites to change the response after verification. Preserve pathname-replacement protection, job/video/revision/mode binding, safe names and existing missing/corrupt/unsafe-artifact responses.",
+          "Keep response memory bounded for full-match videos. Any per-download snapshot or temporary storage must be server-owned, cleaned on success/failure/disconnect, isolated from source and completed export truth, and must not leave unexpected files in a job export directory. Storage failures must not expose an unverified successful download or alter prior exports.",
+          "Preserve shared Store admission for rendering, existing authentication/same-origin policy, immutable reviewed revisions, source media, original predictions, native frame/PTS/orientation/audio receipts, complete denominators and ordinary status/job behavior. No new inference, re-encoding, source mutation, UI migration or change to the frozen rendering protocol is required.",
+          "Add deterministic HTTP regressions for same-length overwrite, truncation/growth and requested-manifest mutation around the verification-to-stream boundary; preserve existing file/directory replacement and descriptor cleanup tests. Verify actual downloaded native bytes and manifests against their completion receipts, run focused and required project checks, then fresh independent review, exact-head CI, serial controller integration and exact merged-main verification."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "120"
+        ],
+        "exclusions": [
+          "No authentication-policy, coordination/controller, CI/workflow, visibility, credential, model, dataset, training, inference, deployment or running-instance changes.",
+          "No unbounded full-video RAM buffering, weakening receipt verification, silently rewriting completion hashes, overwriting reviewed annotations or original exports, bypassing shared render admission, or restarting research jobs.",
+          "Do not change MSI-owned119/123 policy paths, deprecated PROGRESS.md, frontend phases or native encoders/planner contracts."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Keep completed media-export HTTP download bytes bound to their native completion receipts even when an export file is rewritten in place after verification.",
+        "paths": [
+          "backend/badminton/api.py",
+          "backend/badminton/export_service.py",
+          "tests/test_media_export_api.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
+        "priority": 25,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual tiny generated-media HTTP race regression before/after repair; all media-export HTTP and native receipt checks, without private data, weights or inference.",
+          "Full pytest, Ruff lint/format, locked dependency health, repository UTF8/LF/JSON/local-link and diff checks; fresh independent exact-head/base/spec review and required hosted CI.",
+          "Controller merge, successful exact merged-main verification and complete candidate delivery, retaining the separate limits on automatic badminton annotation accuracy."
+        ]
+      },
+      "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045",
       "status": "ready"
     },
     "62": {
