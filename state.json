@@ -374,6 +374,24 @@
       "task_id": "124",
       "verb": "checkpoint"
     },
+    "mac-01a15493-124-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792449891,
+      "epoch": 1,
+      "fingerprint": "8a169b2078ad590ae09cd1ae5f31e4929e2a503bbd4fb3a3e850bc1211421cf4",
+      "status": "review",
+      "task_id": "124",
+      "verb": "submit"
+    },
+    "mac-01a15493-124-tested-v1": {
+      "actor": "dootz1",
+      "at": 1792449870,
+      "epoch": 1,
+      "fingerprint": "1a9ca89f38551e764e0a2e959c354d519b8fa15ebfef8c1f73103321f8c6ef07",
+      "status": "running",
+      "task_id": "124",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -2284,6 +2302,35 @@
       "task_id": "126",
       "verb": "human-approved"
     },
+    "windows-policy126-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792449891,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "epoch": 1,
+        "expires_at": 1792460691,
+        "granted_at": 1792449891,
+        "head_sha": "01a386cd2297804fe46a77fd1d16a4ac9088658e",
+        "host_id": "MSI",
+        "pr_number": 127,
+        "review_epoch": 1,
+        "session_id": "windows-policy126-review-v1",
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+      },
+      "epoch": 1,
+      "fingerprint": "926c134b565d95846e8c5270c6efc7a61c273a305ef187dafc3921c657d51b8d",
+      "status": "granted",
+      "task_id": "126",
+      "verb": "review-next"
+    },
+    "windows-policy126-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792449891,
+      "fingerprint": "fb8ada554dd157d623d857921658c04f48da8ad7a0b8b3852f0154f94fb4bf4a",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-policy126-submit-v1": {
       "actor": "Ken0u",
       "at": 1792449807,
@@ -3712,19 +3759,22 @@
     },
     "124": {
       "checkpoint": {
+        "artifacts": ".cache/export-download-124/.cache/{full-tests.xml,full-tests.log,evidence/implementation-handoff.md,evidence/before-race.json,evidence/after-race.json}",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "branch": "codex/issue-124-keep-completed-media-export-http-downloa",
-        "head_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
-        "remaining": "Implement only granted four paths; focused/full checks, fresh independent review, controller integration, exact-main and delivery receipts.",
+        "head_sha": "a452f30a95623bc70bdf59e37f730f002636c6e0",
+        "pr_number": 128,
+        "remaining": "Genuine fresh independent exact-head/base/spec review, hosted CI, controller merge, exact-main verification and complete candidate receipts.",
         "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045",
-        "stage": "Actual before-fix native HTTP reproduction completed at unchanged c1ba9dc: MP44107bytes and manifest8249bytes both return200 matching Content-Length after same-inode rewrite, but SHA256differs from native receipt. Handles close. Evidence .cache/export-download-124/.cache/evidence/before-race.json and reproduce_download_race.py. Bounded private snapshot and response lifecycle repair in progress; no source/media truth or MSI paths changed."
+        "stage": "Implemented actual native media/manifest race repair with private bounded verified temporary snapshots and full ASGI lifetime cleanup. Before/after evidence preserved; full1154passed/13skips, focused178incl finalAPI72pass/2platformskips, Ruff/format146files, locked47package health, repository text/JSON/links and diff checks pass."
       },
-      "checkpoint_at": 1792449530,
+      "checkpoint_at": 1792449870,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "branch": "codex/issue-124-keep-completed-media-export-http-downloa",
         "epoch": 1,
-        "expires_at": 1792460330,
+        "expires_at": 1792460670,
         "granted_at": 1792449340,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -3733,6 +3783,7 @@
       "epoch": 1,
       "planned_at": 1792447108,
       "planned_by": "Ken0u",
+      "pr_number": 128,
       "spec": {
         "acceptance": [
           "Reproduce the observed race with an actual tiny generated native export: retain the service download handle, rewrite the same source inode after its verification and before response iteration, and demonstrate that current HTTP200 bytes differ from the completed native receipt despite matching Content-Length. Cover media and manifest responses without inference or private assets.",
@@ -3776,7 +3827,13 @@
         ]
       },
       "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "head_sha": "a452f30a95623bc70bdf59e37f730f002636c6e0",
+        "pr_number": 128,
+        "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045"
+      }
     },
     "126": {
       "checkpoint": {
@@ -3810,6 +3867,20 @@
       "planned_by": "Ken0u",
       "pr_number": 127,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "epoch": 1,
+        "expires_at": 1792460691,
+        "granted_at": 1792449891,
+        "head_sha": "01a386cd2297804fe46a77fd1d16a4ac9088658e",
+        "host_id": "MSI",
+        "pr_number": 127,
+        "review_epoch": 1,
+        "session_id": "windows-policy126-review-v1",
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Incorporate the complete preserved owner-authorized119 recovery implementation from reviewed head6125c7080140b2f0281515e57d640f540e7874ca, including its duplicate-delivery repair, original crash regression, immutable historical recovery, resource proof, outbox and issue-projection tests. Keep original source branches, PR122 independent verdicts and all evidence. Supersede its unmerged PR rather than infer a merge or fabricate task119 Done. The combined new revision needs its own genuine grant, full checks and fresh independent review.",
@@ -5340,6 +5411,18 @@
       "host_id": "MSI",
       "registered_at": 1792418461,
       "session_id": "windows-playback69-review-v1"
+    },
+    "MSI/windows-policy126-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792449891,
+      "session_id": "windows-policy126-review-v1"
     },
     "MSI/windows-public111-review-v1": {
       "actor": "Ken0u",
