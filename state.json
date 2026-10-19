@@ -2637,6 +2637,7 @@
       }
     },
     "116": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39322955749",
       "checkpoint": {
         "base_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
         "branch": "codex/issue-116-export-source-time-preserving-annotated-",
@@ -2664,7 +2665,7 @@
         "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792442885,
