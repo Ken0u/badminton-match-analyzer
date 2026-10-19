@@ -46,6 +46,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "frontend-plan-review-99-register": {
+      "actor": "dootz1",
+      "at": 1792418159,
+      "fingerprint": "2a3b644b3c4ecbeb2a55b67241378911ed37cc2d9b7ec622e050d58560f20247",
+      "status": "ok",
+      "verb": "register"
+    },
     "integrate-80-49c266486371784fc4bcbfad37bae0b6b40db0f7-9aa0f437fd5cacd948161ae09149ac2855f01c31": {
       "actor": "github-actions[bot]",
       "at": 1792416353,
@@ -1605,6 +1612,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792417850,
       "session_id": "cf2edc496cf343d2812a231f5c099c8a"
+    },
+    "Stanleys-Laptop.local/frontend-plan-review-99": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792418159,
+      "session_id": "frontend-plan-review-99"
     },
     "Stanleys-Laptop.local/mac-pilot-review-85": {
       "actor": "dootz1",
