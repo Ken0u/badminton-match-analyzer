@@ -13,7 +13,6 @@ from fastapi import FastAPI, File, Form, HTTPException, Query, UploadFile
 from fastapi.responses import FileResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import Field
-from starlette.background import BackgroundTask
 
 from . import config
 from .access import AccessMiddleware
@@ -31,6 +30,39 @@ from .video import (
 )
 
 logger = logging.getLogger(__name__)
+
+
+class _ExportDownloadResponse(StreamingResponse):
+    """Own the snapshot throughout ASGI, including cancellation before iteration."""
+
+    def __init__(self, download):
+        self.handle = download["file"]
+        try:
+            super().__init__(
+                self.chunks(),
+                media_type=download["media_type"],
+                headers={
+                    "Content-Disposition": (
+                        f'attachment; filename="{download["filename"]}"'
+                    ),
+                    "Content-Length": str(download["size_bytes"]),
+                },
+            )
+        except BaseException:
+            self.handle.close()
+            raise
+
+    def chunks(self):
+        while chunk := self.handle.read(64 * 1024):
+            yield chunk
+
+    async def __call__(self, scope, receive, send):
+        try:
+            await super().__call__(scope, receive, send)
+        finally:
+            # A generator finally/background task alone can be skipped when
+            # response-start fails or cancellation precedes its first read.
+            self.handle.close()
 
 
 class ImportRequest(StrictModel):
@@ -508,24 +540,7 @@ def create_app(
             raise HTTPException(
                 409, "Export artifacts are unavailable or changed. Start a new export."
             ) from exc
-        handle = download["file"]
-
-        def chunks():
-            try:
-                while chunk := handle.read(64 * 1024):
-                    yield chunk
-            finally:
-                handle.close()
-
-        return StreamingResponse(
-            chunks(),
-            media_type=download["media_type"],
-            headers={
-                "Content-Disposition": f'attachment; filename="{download["filename"]}"',
-                "Content-Length": str(download["size_bytes"]),
-            },
-            background=BackgroundTask(handle.close),
-        )
+        return _ExportDownloadResponse(download)
 
     @app.post("/api/videos/{video_id}/track", status_code=202)
     def track(video_id: str, body: TrackingRequest):
