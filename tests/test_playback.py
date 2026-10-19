@@ -15,7 +15,7 @@ from badminton.playback import cached_playback, prepare_playback
 from badminton.storage import Store
 from badminton.video import SourceChangedError, iter_frames, timestamps_for
 from fastapi.testclient import TestClient
-from test_orientation import write_rotated_video
+from media_fixtures import write_rotated_video
 
 pytestmark = pytest.mark.skipif(not shutil.which("ffmpeg"), reason="FFmpeg is required")
 

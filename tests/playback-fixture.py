@@ -3,7 +3,7 @@
 import sys
 from pathlib import Path
 
-from test_orientation import write_rotated_video
+from media_fixtures import write_rotated_video
 
 if __name__ == "__main__":
     path = Path(sys.argv[1]).resolve()
