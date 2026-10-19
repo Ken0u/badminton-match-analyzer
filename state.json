@@ -556,6 +556,24 @@
       "task_id": "69",
       "verb": "checkpoint"
     },
+    "windows-playback69-e3-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792419307,
+      "epoch": 3,
+      "fingerprint": "18e4c6f50e22e3e6508c9674f9da2dc3931f06c807c2498722fc12a7f21b0c65",
+      "status": "running",
+      "task_id": "69",
+      "verb": "checkpoint"
+    },
+    "windows-playback69-e3-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792419322,
+      "epoch": 3,
+      "fingerprint": "4045b3e94343dafe0f57e736b53d829e2d2be2f1dc2958b586a5c1c9116bb057",
+      "status": "review",
+      "task_id": "69",
+      "verb": "submit"
+    },
     "windows-playback69-next-recovered-v1": {
       "actor": "Ken0u",
       "at": 1792419050,
@@ -959,26 +977,31 @@
     },
     "69": {
       "checkpoint": {
-        "branch": "codex/issue-69-add-source-time-preserving-browser-playb",
-        "head_sha": "c2cb58a7ced083a3c76fcdcbea8f486f31e9c27a",
-        "pr_number": 100,
-        "reason": "Approved scope extension changed frozen spec but issue body still held predecessor; controller conservatively fenced work. Owning issue now matches committed scope. Preserve current remote branch/head and obtain a fresh ownership epoch.",
-        "remaining": "New exact-head CI, fresh independent review, non-author human workflow approval and controller integration/main/candidate gates",
-        "research": "Code-only task, no reserved physical resources or input artifacts; no inference/research processes changed",
+        "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "branch": "codex/issue-69-add-source-time-preserving-browser-playb-e3",
+        "evidence": [
+          ".cache/test-results.xml",
+          "Original worktree data/processed/qa/import-desktop.png and import-mobile.png",
+          "PR 100 remains preserved/superseded; scope-recovery receipts in controller state"
+        ],
+        "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "limits": "No automatic badminton accuracy claim, no research/environment/data/model/application upgrade; PROGRESS.md deprecated",
+        "pr_number": 102,
+        "remaining": "Current PR102 exact-head CI, genuine independent review, non-author human approval for two-line browser FFmpeg CI setup, controller merge/main/private candidate verification",
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
         "validation": [
-          "914 tests passed/11 skips before fixture-only and CI fixes",
-          "39 focused passed after generator extraction",
-          "22 focused policy/playback/orientation tests passed after CI step",
-          "Repository and diff checks pass"
+          "Fresh epoch-3 full suite: 914 passed / 11 optional skips in 49.61 seconds",
+          "Ruff, formatting, repository, uv dependency consistency, Prettier and diff checks pass",
+          "Identical implementation on original branch passed all 12 hosted CI jobs in run 39266307138"
         ]
       },
-      "checkpoint_at": 1792418333,
+      "checkpoint_at": 1792419307,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
         "branch": "codex/issue-69-add-source-time-preserving-browser-playb-e3",
         "epoch": 3,
-        "expires_at": 1792429850,
+        "expires_at": 1792430107,
         "granted_at": 1792419050,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -1017,7 +1040,7 @@
       ],
       "planned_at": 1792393957,
       "planned_by": "dootz1",
-      "pr_number": 100,
+      "pr_number": 102,
       "reason": "Active specification edited; preserve work and obtain a new scope grant",
       "spec": {
         "acceptance": [
@@ -1054,12 +1077,12 @@
         ]
       },
       "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
-        "head_sha": "9dcc0798d9fa15335a805e0a83a203284619189f",
-        "pr_number": 100,
-        "spec_hash": "73df461cadd6a4d9aa3e51c5659fcb636d0c4d9329a52fe758d5541d658605a9"
+        "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "pr_number": 102,
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
       }
     },
     "70": {
