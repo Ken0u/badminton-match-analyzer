@@ -1823,6 +1823,7 @@
         "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
       },
       "delivery_attempts": 3,
+      "delivery_error": "Private publishing failed after three attempts",
       "delivery_pending": true,
       "epoch": 3,
       "history": [
