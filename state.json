@@ -4063,6 +4063,7 @@
       "epoch": 1,
       "external_merge": {
         "at": 1792454004,
+        "incident_issue": 129,
         "observed": {
           "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
           "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
