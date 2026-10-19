@@ -139,6 +139,12 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint105-repair": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint105-start": {
       "actor": "dootz1",
       "at": 1792421889,
@@ -222,6 +228,15 @@
       "at": 1792422076,
       "epoch": 1,
       "fingerprint": "bf532e9dcd2e5ef7559fd270254ba75112c6014fe6ae2f71d769b239d2f8e3a4",
+      "status": "review",
+      "task_id": "105",
+      "verb": "submit"
+    },
+    "mac-01a15493-submit105-v2": {
+      "actor": "dootz1",
+      "at": 1792422546,
+      "epoch": 1,
+      "fingerprint": "e52b4de33fc76a2f50e1eaf11a2d9c2527ea5d455a0390404e49fd8c9f894ce8",
       "status": "review",
       "task_id": "105",
       "verb": "submit"
@@ -365,6 +380,28 @@
       },
       "epoch": 1,
       "fingerprint": "8af3d965d4016311f8d490b5a53d302f8dca085a317474de421ed9d215a7374f",
+      "status": "granted",
+      "task_id": "105",
+      "verb": "review-next"
+    },
+    "mac-review105-01a15493-next-v2": {
+      "actor": "dootz1",
+      "at": 1792422546,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
+        "epoch": 1,
+        "expires_at": 1792433346,
+        "granted_at": 1792422546,
+        "head_sha": "560606c53299c90bc0d08e958a0b08788dbc5984",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 106,
+        "review_epoch": 2,
+        "session_id": "mac-review105-01a15493",
+        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
+      },
+      "epoch": 1,
+      "fingerprint": "ef516015c9c0ebbd262a061923e3639ce5f1870475e2ae0a8f4999f39f6226cf",
       "status": "granted",
       "task_id": "105",
       "verb": "review-next"
@@ -731,6 +768,15 @@
       "at": 1792421520,
       "epoch": 1,
       "fingerprint": "2b810c5e51fe18eee20af98b52fd97064aec5894aba907ff6b650a66641e728c",
+      "status": "running",
+      "task_id": "63",
+      "verb": "checkpoint"
+    },
+    "windows-holdout63-native-start-v1": {
+      "actor": "Ken0u",
+      "at": 1792422478,
+      "epoch": 1,
+      "fingerprint": "bda812e32b87d2d6650d013e9db131ff5d272b046cfc400980ec236107c4cd7e",
       "status": "running",
       "task_id": "63",
       "verb": "checkpoint"
@@ -1183,37 +1229,20 @@
       "planned_by": "dootz1",
       "pr_number": 106,
       "repair_rounds": 1,
-      "review": {
+      "review_claim": {
         "actor": "dootz1",
-        "at": 1792422391,
         "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
-        "evidence": [
-          "Fresh session mac-review105-01a15493 on Stanleys-Laptop.local obtained committed review grant mac-review105-01a15493-next-v1, task epoch 1 and review_epoch 1, before reviewing. Local HEAD and GitHub PR106 head/base match the exact supplied hashes; all three changed files are within frozen issue105 paths.",
-          "Read AGENTS.md, PROJECT_PLAN.md, PROGRESS.md, docs/BUG_REVIEW.md, docs/COLLABORATION.md, docs/automation/reviewer.md and .github/automation.json; read issue105 and the committed frozen task specification.",
-          "Inspected exact base-to-head diff and surrounding notice, selection, media, playback preparation, job polling and browser regression code. git diff --check passed.",
-          "Independently ran .cache/reviewer-105/probe.mjs against existing isolated fixture server PID50810 at port8002 without persisted edits: real original FFV1 raises media error code4; direct prepared recovery clears its error; frame3 seeks to 0.68s and ends at 0.72s; a newer shot-review notice is retained; delayed old playback response does not replace the newly selected YouTube fixture or its notice. No pageerror events.",
-          "Independently reran the remaining Play-rejection failure in .cache/reviewer-105/finding.mjs and visually inspected the saved screenshot. JSON evidence reports the stale red 'The element has no supported sources.' notice together with successful prepared media readyState4, no media error, ended=true at 0.72s and frame3.",
-          "Queried hosted run39274131194 metadata: required ci/gate and all 12 software checks are successful on the exact head; automation/policy remains failure pending this independent review. Inspected local .cache/full.xml: 928 total tests, 11 skipped, no failures/errors (917 passed)."
-        ],
-        "findings": [
-          "[P2] backend/badminton/static/app.js:1163-1168: Track rejected Play promises as owned playback failures too. After the unsupported original FFV1 source fires onerror, clicking Play runs v.play().catch(handleError) at line 911. handleError increments noticeVersion and replaces the owned message with 'The element has no supported sources.' The successful prepared-media canplay callback then fails the version equality check and leaves that stale red playback error visible. Independently reproduced with the real long-gap-vfr.mkv and real prepared media: readyState=4, mediaError=null, native frame=3, seek=0.68s, playback ended at 0.72s, while the error remains. This violates the requested stale original-media error recovery. Bind Play rejection reporting to the captured video/source/selection generation and the playback notice owner, while continuing to preserve unrelated newer notices; add a browser regression for Play on the failed original before proxy recovery. Evidence: .cache/reviewer-105/stale-play-rejection.json and stale-play-rejection.png."
-        ],
-        "head_sha": "460d2ccf51302e6f837b77edc1db0af6f19bab4f",
-        "limitations": [
-          "Did not rerun the full backend suite or hosted matrix; inspected their exact-head receipts and local XML. Browser probes used the existing generated-media isolated server and mocked only cache-response delay; no server restart, data edits, annotation saves or inference jobs.",
-          "Review is restricted to the frozen playback notice scope and Chromium; it does not establish annotation accuracy or behavior in every browser. The complete import-browser script was not rerun because its fresh-empty catalog prerequisite is no longer true; direct real-media probes exercised the changed behavior."
-        ],
+        "epoch": 1,
+        "expires_at": 1792433346,
+        "granted_at": 1792422546,
+        "head_sha": "560606c53299c90bc0d08e958a0b08788dbc5984",
+        "host_id": "Stanleys-Laptop.local",
         "pr_number": 106,
-        "reviewed_files": [
-          "backend/badminton/static/app.js",
-          "backend/badminton/static/playback-tools.js",
-          "tests/import-browser.mjs"
-        ],
+        "review_epoch": 2,
         "session_id": "mac-review105-01a15493",
-        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df",
-        "verdict": "changes"
+        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
       },
-      "review_epoch": 1,
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Reproduce unsupported original FFV1 media raising a global playback error, then successful compatible playback leaving the obsolete error visible.",
@@ -1251,10 +1280,10 @@
         ]
       },
       "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
-        "head_sha": "460d2ccf51302e6f837b77edc1db0af6f19bab4f",
+        "head_sha": "560606c53299c90bc0d08e958a0b08788dbc5984",
         "pr_number": 106,
         "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
       }
@@ -1302,21 +1331,23 @@
     "63": {
       "checkpoint": {
         "artifacts": [
-          ".cache/holdout63-inventory-manifest.json",
-          ".cache/holdout63-inventory-result.json"
+          ".cache/holdout63-reviewed-execution-manifest.json",
+          ".cache/holdout63-independent-preflight.json",
+          ".cache/holdout63-recovery-v1/attempts/"
         ],
         "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
-        "head_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
-        "remaining": "Complete resumable execution and meaningful admission/interruption/recipe tests; fresh independent preflight before frozen head predictions; run actual missing eight native stages/all75 audits, frozen CPU comparison and independent metric audit; final exact-head CI/review/controller integration. PROGRESS.md deprecated and untouched. Mac owns103/PR104; Windows duration prototype preserved separately.",
-        "status": "Implementation in isolated worktree, not committed/published yet. Read-only real inventory confirms all 75 sources, 21610 frames, 860 rows and both 677 eligible denominators; 67 completed native/feature/input-audit chains preserved. 12 focused inventory tests pass. Native/features recovery code in progress; no inference, Store mutation, head prediction opening or task completion."
+        "head_sha": "b9f9f6e64d8d5ec28318b2d91980968ec4bf071c",
+        "pr_number": 107,
+        "remaining": "Observe exact new worker PID/creation/cwd/command and actual Store/artifacts. Never restart on timeout. Finish only missing eight native inputs, all75 feature/input audits, successful parent release, frozen CPU comparison and independent result audit; publish aggregate report and final CI/fresh review/controller integration. PROGRESS deprecated and untouched.",
+        "status": "950 tests pass with4optional skips on Python3.10 after verified main2485d32 merge. 23focused recovery tests, lint/format/text/link/dependency checks pass. Independent preflight approved exact code7bdfb1149c9684b178bf67997dc4138d329af5201733e22bd400abe35a4fae9f and final359-input manifest61c57c285790773136975e8b6f16afcd3d473ea571a53ff3a5a0c69d10a7fef5. Read-only strict recipe check passes all135 completed native artifacts. No head predictions opened. Beginning native recovery under actual main Store admission, preserving67completed chains+ordinal67player."
       },
-      "checkpoint_at": 1792421520,
+      "checkpoint_at": 1792422478,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
         "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
         "epoch": 1,
-        "expires_at": 1792432320,
+        "expires_at": 1792433278,
         "granted_at": 1792420694,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
