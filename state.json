@@ -2721,6 +2721,7 @@
       "status": "needs_human"
     },
     "63": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39321124329",
       "checkpoint": {
         "artifacts": [
           ".cache/holdout63-recovery-v1/attempts/90154803ef344639b6aafd68009547f7/native-completed.json",
@@ -2747,8 +2748,8 @@
         "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc"
       },
       "delivery_attempts": 3,
-      "delivery_error": "Private publishing failed after three attempts",
-      "delivery_pending": true,
+      "delivery_pending": false,
+      "delivery_recovered_from": "Private publishing failed after three attempts",
       "epoch": 1,
       "integration": {
         "at": 1792424371,
