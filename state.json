@@ -1426,6 +1426,15 @@
       "task_id": "111",
       "verb": "plan"
     },
+    "windows-public111-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792440054,
+      "epoch": 1,
+      "fingerprint": "75e77e9b2220e85022fc3ddeddb63821a4f5c70159a503253fe3035795b98e58",
+      "status": "running",
+      "task_id": "111",
+      "verb": "checkpoint"
+    },
     "windows-rally108-checkpoint-e3-v1": {
       "actor": "Ken0u",
       "at": 1792438406,
@@ -2025,12 +2034,27 @@
       "status": "running"
     },
     "111": {
+      "checkpoint": {
+        "base_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
+        "behavior": "Explicit mode/repository/package visibility fails closed. Frozen reviewed publisher and immutable build source both require exact-main verification; legacy source lock/provenance remains distinct. Pre/post-push image checks, exact wheel+sdist inventory and both commit identities are recorded. No model/deployment/policy-gate bypass or spending change.",
+        "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
+        "head_sha": "f35095d6b16762df1e6e45a2c066305c07d4b93e",
+        "remaining": "Push/open focused PR, submit exact binding, fresh independent review and hosted checks, then obtain genuine non-author exact-head human approval for publishing-policy changes. Consolidate any package-settings authentication needed for owner's already-selected public images. After reviewed merge/main verification, finish actual public candidates and controller outboxes, dispatching new current-workflow runs for terminal obsolete-definition legacy sources only when necessary. Never reset coordination counters or rerun inference.",
+        "validation": [
+          "96 focused publisher/coordinator tests pass",
+          "Full locked Python3.12:1009passed/11optionalSkips",
+          "Ruff/format, uv dependency health, tracked UTF8/LF/JSON/local links/diff and YAML/JSON format checks pass",
+          "Actual wheel/sdist build:73packagefiles byte verified, fresh installed CLI/dependencies pass"
+        ],
+        "worktree": ".cache/worktrees/public111"
+      },
+      "checkpoint_at": 1792440054,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "b0b252d9059b486b37db4c0ca72e967d364b0240",
         "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
         "epoch": 1,
-        "expires_at": 1792449960,
+        "expires_at": 1792450854,
         "granted_at": 1792439160,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
