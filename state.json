@@ -2498,7 +2498,7 @@
       "planned_at": 1792438589,
       "planned_by": "Ken0u",
       "pr_number": 114,
-      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "reason": "Issue closed; preserve reservations and checkpoint before recovery",
       "repair_rounds": 0,
       "review": {
         "actor": "Ken0u",
@@ -2578,7 +2578,7 @@
         ]
       },
       "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-      "status": "review",
+      "status": "recovery_required",
       "submission": {
         "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
