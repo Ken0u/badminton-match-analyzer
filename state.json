@@ -1,6 +1,13 @@
 {
   "paused": false,
   "receipts": {
+    "mac-pilot-registration-v1": {
+      "actor": "dootz1",
+      "at": 1792410527,
+      "fingerprint": "a7dad51096622e0c3a8d6f87635ee485e1a1d25ef857cc20440299b7df51481b",
+      "status": "ok",
+      "verb": "register"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -712,6 +719,18 @@
       "host_id": "MSI",
       "registered_at": 1792394451,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    },
+    "Stanleys-Laptop.local/cf2edc496cf343d2812a231f5c099c8a": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792410527,
+      "session_id": "cf2edc496cf343d2812a231f5c099c8a"
     }
   }
 }
