@@ -199,6 +199,13 @@
       "task_id": "81",
       "verb": "submit"
     },
+    "roadmap-20261019-01a15477-register": {
+      "actor": "dootz1",
+      "at": 1792418921,
+      "fingerprint": "ac4696c3424971e6a0eca8b13d8644eac44e7123887fd147d0f737c6d03b9c15",
+      "status": "ok",
+      "verb": "register"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -1827,6 +1834,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792411125,
       "session_id": "mac-pilot-review-85"
+    },
+    "Stanleys-Laptop.local/roadmap-20261019-01a15477": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792418921,
+      "session_id": "roadmap-20261019-01a15477"
     }
   }
 }
