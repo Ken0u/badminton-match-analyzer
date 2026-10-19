@@ -53,7 +53,11 @@ const escape = (s) =>
 const pretty = (s) => String(s ?? "Unknown").replaceAll("_", " ");
 const clock = (t) =>
   `${Math.floor(t / 60)}:${(t % 60).toFixed(2).padStart(5, "0")}`;
+// Async playback recovery may clear its own error, never a newer user notice.
+let noticeVersion = 0,
+  playbackFailure = null;
 function notice(message, error = false) {
+  noticeVersion += 1;
   $("notice").textContent = message;
   $("notice").classList.toggle("error", error);
 }
@@ -927,11 +931,17 @@ $("video").ontimeupdate = () => {
 };
 $("video").onerror = () => {
   playbackTools.mediaError();
-  if (state.video)
+  if (state.video) {
     notice(
       "Video playback could not load. Choose Prepare playback or use exact-frame review.",
       true,
     );
+    playbackFailure = {
+      version: noticeVersion,
+      generation: state.selectionGeneration,
+      videoId: state.video.id,
+    };
+  }
 };
 $("video").onseeked = () => {
   if ($("video").paused) showExact();
@@ -1143,7 +1153,21 @@ window.addEventListener("keydown", (e) => {
   if (["1", "2", "3"].includes(e.key))
     mark({ 1: "serve", 2: "shot", 3: "rally_end" }[e.key]);
 });
-const playbackTools = createPlaybackTools({ $, state, api, seek });
+const playbackTools = createPlaybackTools({
+  $,
+  state,
+  api,
+  seek,
+  onReady: () => {
+    if (
+      playbackFailure?.version === noticeVersion &&
+      playbackFailure.generation === state.selectionGeneration &&
+      playbackFailure.videoId === state.video?.id
+    )
+      notice("");
+    playbackFailure = null;
+  },
+});
 const reviewTools = createReviewTools({
   state,
   $,

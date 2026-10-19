@@ -1,9 +1,10 @@
-export function createPlaybackTools({ $, state, api, seek }) {
+export function createPlaybackTools({ $, state, api, seek, onReady }) {
   let generation = 0,
     preparedUrl = null,
     finishedJob = null,
     busy = false,
-    metadataListener = null;
+    metadataListener = null,
+    readyListener = null;
   const button = $("prepare-playback"),
     status = $("playback-status"),
     video = $("video");
@@ -16,6 +17,8 @@ export function createPlaybackTools({ $, state, api, seek }) {
     if (metadataListener)
       video.removeEventListener("loadedmetadata", metadataListener);
     metadataListener = null;
+    if (readyListener) video.removeEventListener("canplay", readyListener);
+    readyListener = null;
     delete video.dataset.switching;
     button.disabled = true;
     button.textContent = "Prepare playback";
@@ -27,10 +30,12 @@ export function createPlaybackTools({ $, state, api, seek }) {
       status.textContent = "Prepared playback · source frame timing preserved";
       button.textContent = "Playback ready";
       button.disabled = true;
+      if (video.readyState >= 2 && !video.error) onReady();
       return;
     }
     if (metadataListener)
       video.removeEventListener("loadedmetadata", metadataListener);
+    if (readyListener) video.removeEventListener("canplay", readyListener);
     const current = generation,
       url = preparedUrl;
     video.dataset.switching = "true";
@@ -47,6 +52,19 @@ export function createPlaybackTools({ $, state, api, seek }) {
       button.textContent = "Playback ready";
     };
     video.addEventListener("loadedmetadata", metadataListener);
+    readyListener = () => {
+      if (
+        current !== generation ||
+        !video.currentSrc.endsWith(url) ||
+        video.readyState < 2 ||
+        video.error
+      )
+        return;
+      video.removeEventListener("canplay", readyListener);
+      readyListener = null;
+      onReady();
+    };
+    video.addEventListener("canplay", readyListener);
     video.src = url;
   }
   async function refresh(current) {
@@ -120,6 +138,8 @@ export function createPlaybackTools({ $, state, api, seek }) {
     if (metadataListener)
       video.removeEventListener("loadedmetadata", metadataListener);
     metadataListener = null;
+    if (readyListener) video.removeEventListener("canplay", readyListener);
+    readyListener = null;
     delete video.dataset.switching;
     button.disabled = busy;
   }
