@@ -969,6 +969,28 @@
       "task_id": "120",
       "verb": "review-next"
     },
+    "review120-next-v2-01a15493": {
+      "actor": "dootz1",
+      "at": 1792444766,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "epoch": 1,
+        "expires_at": 1792455566,
+        "granted_at": 1792444766,
+        "head_sha": "9e9706bbaacbfa346c46050739c01de3189f5153",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 121,
+        "review_epoch": 2,
+        "session_id": "mac-review120-01a15493",
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+      },
+      "epoch": 1,
+      "fingerprint": "937be62452dc683ab04604a0d68a36e6fa97946412274a7ded624a37132f9b86",
+      "status": "granted",
+      "task_id": "120",
+      "verb": "review-next"
+    },
     "review120-register-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -3078,7 +3100,20 @@
       "planned_by": "dootz1",
       "pr_number": 121,
       "repair_rounds": 1,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "epoch": 1,
+        "expires_at": 1792455566,
+        "granted_at": 1792444766,
+        "head_sha": "9e9706bbaacbfa346c46050739c01de3189f5153",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 121,
+        "review_epoch": 2,
+        "session_id": "mac-review120-01a15493",
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Add a typed POST export request bound to an existing video and explicit saved annotation revision, selecting plain rally clips, annotated rally clips or an annotated full original video. Admit through the existing real Store/shared web job queue before any expensive source audit/encoding; return 202 promptly with a durable job identifier. Preserve concurrent-job conflicts, queued/running/completed/failed/interrupted reporting and existing analysis pause behavior.",
