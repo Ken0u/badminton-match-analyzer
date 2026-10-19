@@ -220,6 +220,14 @@
       "task_id": "86",
       "verb": "plan"
     },
+    "spec-91-1245b191be7e71cc113dcbb0e8b345d80faaf1b68ddf5f197b09ecc44ff380d1": {
+      "actor": "Ken0u",
+      "at": 1792416601,
+      "fingerprint": "4484ab8867bfd1422e544d25317386f636b9a29ba4c621a97b60824812ef684f",
+      "status": "needs_human",
+      "task_id": "91",
+      "verb": "plan"
+    },
     "verify-80-a996e83867509489e223e6a321b6ee4794fafc61-False": {
       "actor": "github-actions[bot]",
       "at": 1792416406,
@@ -1088,6 +1096,47 @@
       },
       "spec_hash": "cb6aba907d6452ebfd2ca45a53fda8600eee88aad3186e1e2af47613d6e8294b",
       "status": "blocked"
+    },
+    "91": {
+      "epoch": 0,
+      "planned_at": 1792416601,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "AGENTS.md, docs/COLLABORATION.md and docs/automation/worker.md consistently direct agents to current issues, Project and queue state for progress.",
+          "No live instruction requires reading or rewriting PROGRESS.md; historical files and existing local edits remain intact.",
+          "Keep claim epochs, path/resource reservations, independent review, sensitive human approval and main/candidate gates unchanged.",
+          "Use a committed grant and non-author human review for the sensitive guidance change; verify docs/links/LF and relevant policy checks."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No change to automation mode, privileges, workflow enforcement, app/data/models, research jobs or historical evidence."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Remove deprecated PROGRESS.md from live agent reading/update instructions and use task issue checkpoints and authoritative coordination state.",
+        "paths": [
+          "AGENTS.md",
+          "docs/COLLABORATION.md",
+          "docs/automation/worker.md"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Repository UTF-8/LF/JSON/link checks, git diff --check and focused collaboration/policy checks pass on exact head; fresh independent and non-author human review."
+        ]
+      },
+      "spec_hash": "cda5613c2799138fd227dd4a8d7bffaa2e274dd31ca153ab742d7226674f6ebc",
+      "status": "needs_human"
     }
   },
   "version": 1,
