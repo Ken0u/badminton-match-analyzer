@@ -548,6 +548,26 @@
       "task_id": "69",
       "verb": "checkpoint"
     },
+    "windows-playback69-next-recovered-v1": {
+      "actor": "Ken0u",
+      "at": 1792419050,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "branch": "codex/issue-69-add-source-time-preserving-browser-playb-e3",
+        "epoch": 3,
+        "expires_at": 1792429850,
+        "granted_at": 1792419050,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+      },
+      "epoch": 3,
+      "fingerprint": "f5815604aca070d8f6c21ccfa054f72b3793b559f0ef584a9feebaa5addbf6f7",
+      "status": "granted",
+      "task_id": "69",
+      "verb": "next"
+    },
     "windows-playback69-recover-scope-v1": {
       "actor": "Ken0u",
       "at": 1792418989,
@@ -902,7 +922,18 @@
         ]
       },
       "checkpoint_at": 1792418333,
-      "epoch": 2,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "branch": "codex/issue-69-add-source-time-preserving-browser-playb-e3",
+        "epoch": 3,
+        "expires_at": 1792429850,
+        "granted_at": 1792419050,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+      },
+      "epoch": 3,
       "history": [
         {
           "at": 1792418989,
@@ -972,7 +1003,7 @@
         ]
       },
       "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd",
-      "status": "ready",
+      "status": "running",
       "submission": {
         "base_sha": "6aa6b8d8731a379f0e6ccf7b6bb4b84f81b41b05",
         "head_sha": "9dcc0798d9fa15335a805e0a83a203284619189f",
