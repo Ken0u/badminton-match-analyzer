@@ -1547,6 +1547,15 @@
       "task_id": "119",
       "verb": "checkpoint"
     },
+    "windows-external119-checkpoint-v3": {
+      "actor": "Ken0u",
+      "at": 1792445188,
+      "epoch": 1,
+      "fingerprint": "d1bae67e214edb3a95ddd282df4221bee0ef464ead523e25687617c40c2d6624",
+      "status": "running",
+      "task_id": "119",
+      "verb": "checkpoint"
+    },
     "windows-external119-review-next-v1": {
       "actor": "Ken0u",
       "at": 1792444580,
@@ -1590,6 +1599,15 @@
       "at": 1792444418,
       "epoch": 1,
       "fingerprint": "b3ffad002671aa75d05efae11d5fd63957a26b08586b388fbaa2dcd2597b57e4",
+      "status": "review",
+      "task_id": "119",
+      "verb": "submit"
+    },
+    "windows-external119-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792445210,
+      "epoch": 1,
+      "fingerprint": "a968eedf39faf241a827a741bdff6ae9acb53ad4ad38505577c09fedd2abe0b6",
       "status": "review",
       "task_id": "119",
       "verb": "submit"
@@ -3001,25 +3019,25 @@
     "119": {
       "checkpoint": {
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "behavior": "Fences external merges instead of crashing/implicitly adopting. Explicit authenticated recovery requires original accepted immutable controller-history evidence plus source/merge/scope/CI/review checks and separately typed genuine owner attestation; preserves current epoch/source epoch and physical-resource terminal proof. Incidents, issue completion and complete-delivery outbox retry idempotently. Normal controller gates remain intact.",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
-        "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
+        "head_sha": "671ed0cd5fab2d18d790ec384d13bb64b852461f",
         "pr_number": 122,
-        "remaining": "Exact-head hosted CI, fresh independent read-only review and genuine non-author human approval of final PR122 head before controller merge/main verification. Then actual recover-merged request for historical111 using prepared immutableproof2e2d3b146b9c66fe1ea0ecfc63430f7f526fbc0f must run with trusted verified merged-main tools; verify Done/delivery=false without duplicate candidates. No rawcoordstateedit, user-scopeapproval is not PRapproval.",
+        "remaining": "New exact-head CI and fresh independent review of head671ed, followed by genuine non-author human approval of final PR122 head. Let the controller merge, then verify exact merged main. Historical111 recovery remains unsubmitted until trusted merged-main tools are available; reuse existing complete candidate39320656490. Scope authorization does not approve this PR. No raw coordination edits or research/inference restarts.",
+        "review_repair": "Genuine independent review v1 requested changes on head49a: recovery and common outbox each called deliver in the same pass, dispatching or retrying twice. New regression first reproduced both failures; recovery now leaves publication to the common outbox. Missing, failed and live candidate cases verify one attempt, later live reuse and final complete delivery without additional actions. Changes stay within the same eight allowed paths.",
         "validation": [
-          "194focused policy/queue/adapter tests pass",
-          "Full locked Python3.12:1133passed/11optionalSkips, known Starlette warning",
-          "Ruff/format145files,43package dependency health, tracked UTF8/LF/JSON/local-links/CLIhelp/diff pass"
+          "197 focused queue/coordinator/policy tests passed",
+          "Full locked Python 3.12 with portable FFmpeg: 1136 passed, 11 optional skips, known Starlette warning; actual process exit 0",
+          "Ruff and format 145 files, 43-package dependency health, repository UTF8/LF/JSON/local links and diff checks passed"
         ],
         "worktree": ".cache/worktrees/external119"
       },
-      "checkpoint_at": 1792444399,
+      "checkpoint_at": 1792445188,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
         "epoch": 1,
-        "expires_at": 1792455199,
+        "expires_at": 1792455988,
         "granted_at": 1792443018,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -3035,42 +3053,6 @@
       "planned_by": "Ken0u",
       "pr_number": 122,
       "repair_rounds": 1,
-      "review": {
-        "actor": "Ken0u",
-        "at": 1792444853,
-        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "evidence": [
-          "Genuine durable grant windows-external119-review-next-v1: task119 epoch1/review_epoch1, MSI/windows-external119-review-v1, exact head/base/spec above. Detached isolated .cache/worktrees/external119-review-v1 at exact head; implementation files unchanged.",
-          "Independently inspected the complete eight-file diff and surrounding coordinator/state-machine/policy contracts, trusted CI revision workflow, frozen task acceptance criteria, AGENTS.md, PROJECT_PLAN.md, docs/BUG_REVIEW.md, docs/COLLABORATION.md and reviewer prompt.",
-          "Independent offline Python3.12 focused execution: 194 passed in tests/test_agent_coordinator.py tests/test_agent_queue.py tests/test_agent_policy.py, using separate pinned BADMINTON_ROOT/BADMINTON_DATA_DIR/PYTHONPATH and no GitHub/Project token environment. Initial run had 193 passed plus one setup error because the fresh .cache temporary parent did not exist; after creating that directory the complete focused run passed.",
-          "Independent Ruff check and format check passed for all seven changed Python files; git diff --check passed and tracked review worktree remained clean at 49a64dcfd3f9f609446bde09a0de0c6122c2cdc7.",
-          "Offline adversarial reproduction preserved at .cache/worktrees/external119-review-v1/.cache/reproduce_delivery.py and reproduce_delivery.json: missing candidate causes two identical dispatches/attempts=2; failed candidate causes two rerun requests/attempts=2; live candidate causes zero release actions/attempts=0. All three remain delivery_pending=true; no real API mutations were executed by this reproduction."
-        ],
-        "findings": [
-          "P2 scripts/devops/coordinator.py:721 and :746-748: Process a newly adopted task's delivery outbox only once per integrate() pass. recover_external_merges() calls deliver(), then integrate() immediately calls deliver() again for the still-pending task. If no candidate is visible yet, a single recovery issues two identical release.yml dispatches and records delivery_attempts=2; if the existing candidate failed, it issues two rerun-failed-jobs requests for the same run. GitHub may not expose a dispatched/rerun workflow immediately, so this can duplicate publication and consume two of three retry attempts. Reproduced offline with the existing external_recovery_setup() fixture, setting gh.releases=[] (missing) or setting its run to completed/failure, then calling integrate() once. Keep adoption and the common outbox separate, or otherwise ensure one delivery attempt per task per pass; cover both missing and failed candidate cases."
-        ],
-        "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
-        "limitations": [
-          "This independent session ran focused offline checks and manually reviewed the diff; it did not repeat the parent-reported full application suite or independently inspect exact-head hosted CI results.",
-          "No actual historical task111 recovery, merge, publication, inference, raw coordination-state edit, or privileged execution of PR code was performed. The regression reproduction uses mocked GitHub transport.",
-          "Sensitive task119/PR122 still requires genuine non-author human exact-head GitHub approval before controller integration. Scope authorization and prior PR114 review do not supply that approval.",
-          "Any implementation head or base change invalidates this binding and requires a fresh review grant/result."
-        ],
-        "pr_number": 122,
-        "reviewed_files": [
-          "scripts/devops/coordinator.py",
-          "scripts/devops/queue.py",
-          "scripts/devops/policy.py",
-          "scripts/agent_queue.py",
-          "tests/test_agent_coordinator.py",
-          "tests/test_agent_queue.py",
-          "tests/test_agent_policy.py",
-          "docs/COLLABORATION.md"
-        ],
-        "session_id": "windows-external119-review-v1",
-        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -3116,10 +3098,10 @@
         ]
       },
       "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "head_sha": "49a64dcfd3f9f609446bde09a0de0c6122c2cdc7",
+        "head_sha": "671ed0cd5fab2d18d790ec384d13bb64b852461f",
         "pr_number": 122,
         "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
       }
