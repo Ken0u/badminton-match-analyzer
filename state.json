@@ -1585,6 +1585,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-external119-review-register-v2": {
+      "actor": "Ken0u",
+      "at": 1792445292,
+      "fingerprint": "2e0f514d64956c046e8f5f4224b11f85ff4cd8e4ba61ff51d577819840a5d480",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-external119-review-result-v1": {
       "actor": "Ken0u",
       "at": 1792444853,
@@ -4647,6 +4654,18 @@
       "host_id": "MSI",
       "registered_at": 1792444498,
       "session_id": "windows-external119-review-v1"
+    },
+    "MSI/windows-external119-review-v2": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792445292,
+      "session_id": "windows-external119-review-v2"
     },
     "MSI/windows-holdout63-final-review-v1": {
       "actor": "Ken0u",
