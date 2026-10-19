@@ -367,6 +367,26 @@
       "task_id": "103",
       "verb": "next"
     },
+    "mac-01a15493-next-120-v1": {
+      "actor": "dootz1",
+      "at": 1792443507,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
+        "epoch": 1,
+        "expires_at": 1792454307,
+        "granted_at": 1792443507,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-20261019-01a15493",
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+      },
+      "epoch": 1,
+      "fingerprint": "ad5a155960fc475c42043d99b50767db080fffd59e18be5819ec2dab567be20d",
+      "status": "granted",
+      "task_id": "120",
+      "verb": "next"
+    },
     "mac-01a15493-next-after116-v1": {
       "actor": "dootz1",
       "at": 1792443435,
@@ -958,6 +978,14 @@
       "fingerprint": "999dd90f370ef509deb2c91f421b0a81c7b5cb1cb7e887e1b873cb3ae77236a4",
       "status": "needs_human",
       "task_id": "119",
+      "verb": "plan"
+    },
+    "spec-120-f0c69c7f3ac5c672a8417ff9b3a5bd4b8a35bbd7b262342df2932e9e042b6a31": {
+      "actor": "dootz1",
+      "at": 1792443507,
+      "fingerprint": "c1e06ab98427e0c9b7b1130444aa4fb479d495c67c9d9285a4c2e3db68d54eed",
+      "status": "ready",
+      "task_id": "120",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -2848,6 +2876,64 @@
         ]
       },
       "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
+      "status": "running"
+    },
+    "120": {
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
+        "epoch": 1,
+        "expires_at": 1792454307,
+        "granted_at": 1792443507,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-20261019-01a15493",
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+      },
+      "epoch": 1,
+      "planned_at": 1792443507,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Add a typed POST export request bound to an existing video and explicit saved annotation revision, selecting plain rally clips, annotated rally clips or an annotated full original video. Admit through the existing real Store/shared web job queue before any expensive source audit/encoding; return 202 promptly with a durable job identifier. Preserve concurrent-job conflicts, queued/running/completed/failed/interrupted reporting and existing analysis pause behavior.",
+          "Reuse the integrated read-only export planner and native renderer without weakening their immutable snapshot/source/hash/frame/PTS/orientation/audio/final-sample validation. Capture the requested revision rather than silently switching to newest annotations. No eligible rallies is an explicit successful empty result with all ineligible reasons; full scope still renders all native frames. Planning/render failures must produce durable failed jobs and clean incomplete output without altering sources, original predictions, revisions or previous exports.",
+          "Use a server-configured export root outside application data and uniquely generated job directories; HTTP requests cannot select paths or filenames. Expose job-scoped status and completed manifest/media downloads only after final manifest and output hashes validate. Bind routes to both video ID and export job kind; reject other-video jobs, active/failed/interrupted jobs, missing/corrupt outputs, traversal, symlink escapes and arbitrary files. Reuse the existing application authentication middleware without changing its policy.",
+          "Downloads retain the complete provenance manifest, original annotation snapshot, unknown/predicted evidence and full rally/event denominators. Use safe ordinal attachment filenames and correct content types. Document the request/response contract, server storage configuration, stale/missing input and interrupted job recovery, output retention and that export jobs do not provide resumable inference or new pause controls.",
+          "Exercise actual generated-media HTTP export/download for all three modes, historical revisions and newer concurrent edits, nonzero-origin VFR/odd dimensions/rotation and audio using existing fixtures where possible. Cover shared admission before decode, prompt job submission, failures/restart interruption, hash corruption, cross-video access, unsafe paths and unauthenticated requests. Verify downloaded bytes/manifests against native renderer receipts without private videos, weights or inference."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "116"
+        ],
+        "exclusions": [
+          "No frontend changes, UI cutover or skipping rewrite dependencies; future React export controls remain a separate phase-owned increment. No annotation/schema/storage migration, authentication policy change, workflow/deployment/model change, running application upgrade, paid services, data acquisition or research restart.",
+          "No new inference, automatic accuracy claim, invented positions/labels or silently reduced denominators. No arbitrary HTTP filesystem inputs, overwriting previous exports, generic cancellation-policy expansion or changes to shared Store admission."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Expose immutable reviewed media exports as shared background jobs with verified downloads through the existing web API.",
+        "paths": [
+          "backend/badminton/api.py",
+          "backend/badminton/export_service.py",
+          "tests/test_media_export_api.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused generated-media export API/job/download regressions and real decoded output/manifest checks; required full project, lint, formatting, dependency, repository and diff checks.",
+          "Fresh independent exact-head/base/spec review, required hosted CI, controller integration, exact merged-main verification and complete package/image delivery receipts."
+        ]
+      },
+      "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1",
       "status": "running"
     },
     "62": {
