@@ -1359,6 +1359,37 @@
       "task_id": "108",
       "verb": "next"
     },
+    "windows-rally108-review-next-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1792438496,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
+        "epoch": 3,
+        "expires_at": 1792449296,
+        "granted_at": 1792438496,
+        "head_sha": "a137ed5712f59e82acf55d126f4c04dbde6f96ab",
+        "host_id": "MSI",
+        "pr_number": 112,
+        "review_epoch": 2,
+        "session_id": "windows-rally109-review-v1",
+        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+      },
+      "epoch": 3,
+      "fingerprint": "3fa6afc44d50f6970cb8b4e84896318dc1c426d3152128d2d55910aaf081025e",
+      "status": "granted",
+      "task_id": "108",
+      "verb": "review-next"
+    },
+    "windows-rally108-submit-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1792438496,
+      "epoch": 3,
+      "fingerprint": "85339f9cb124cacafb282d0c59a12f6c2863da56be2513309a987a6aa6d2ae69",
+      "status": "review",
+      "task_id": "108",
+      "verb": "submit"
+    },
     "windows-rally109-review-next-v1": {
       "actor": "Ken0u",
       "at": 1792425957,
@@ -1722,9 +1753,22 @@
       ],
       "planned_at": 1792422680,
       "planned_by": "dootz1",
-      "pr_number": 109,
+      "pr_number": 112,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
+        "epoch": 3,
+        "expires_at": 1792449296,
+        "granted_at": 1792438496,
+        "head_sha": "a137ed5712f59e82acf55d126f4c04dbde6f96ab",
+        "host_id": "MSI",
+        "pr_number": 112,
+        "review_epoch": 2,
+        "session_id": "windows-rally109-review-v1",
+        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Add a backend planning module and CLI command that reads an immutable annotation revision and validated source timestamps/metadata, writes only a requested JSON plan, and never edits source media, annotations or predictions.",
@@ -1764,11 +1808,11 @@
         ]
       },
       "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
-        "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
-        "pr_number": 109,
+        "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
+        "head_sha": "a137ed5712f59e82acf55d126f4c04dbde6f96ab",
+        "pr_number": 112,
         "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
       }
     },
