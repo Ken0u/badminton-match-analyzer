@@ -1,0 +1,595 @@
+{
+  "paused": false,
+  "receipts": {
+    "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "0bc2589410c93cf6baa48f37aa0ab762546a9bf01fbc697c015fc5e69288218d",
+      "status": "needs_human",
+      "task_id": "62",
+      "verb": "plan"
+    },
+    "spec-63-83167b972c9dabfa3f86ed29f81c51abe076c348356cab6a558a7ce4c20a2b7a": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "a888539f40fdcd6268f673a52d74e93b0a8fa375e268efd524bc6646333a0d63",
+      "status": "proposed",
+      "task_id": "63",
+      "verb": "plan"
+    },
+    "spec-64-8f923755e818f2849fe8b3971c6e285e2fb0c92e169e047100dfb039d991cf6d": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "2ee5e86b8efbcf56a7e106bfab138b0fa53283a51f8cd6eb750851e41dbf0340",
+      "status": "proposed",
+      "task_id": "64",
+      "verb": "plan"
+    },
+    "spec-65-d8e803eee4cb7e586a10e1191ac54e293e884251f927c1a23c18748d41892a4f": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "18845152a551446ca6aa4fd1fca7f64cce403073539ea079aa8635cd074e10b6",
+      "status": "proposed",
+      "task_id": "65",
+      "verb": "plan"
+    },
+    "spec-66-3dba2f5d46c001d9677d70a359ef461396669aa1b91a347b8125b0ba822e3242": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "2cd1d585b73606a94f460f3746d35f11526495464915614232aad7deb4b212e0",
+      "status": "proposed",
+      "task_id": "66",
+      "verb": "plan"
+    },
+    "spec-67-ee28a5eddbc46c21b4e78690c1b17570e3eaaf3fde3b5f8dc0501589f3e872a1": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "492a835b683657ba8bc94b2dfa31fb37d95bedf8a4f7044e2c7ffbf5c41f4839",
+      "status": "proposed",
+      "task_id": "67",
+      "verb": "plan"
+    },
+    "spec-68-875a3ada88b98e0de99065cadeebf2a875c3299d758891f0c6b31914a2dffa77": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "58bb6a7e99d0b2d7fe8ac7c0e95cfa9391a7354637023cacf4d41c650635bf1e",
+      "status": "proposed",
+      "task_id": "68",
+      "verb": "plan"
+    },
+    "spec-69-0a5eee99318ae1e06aa3111abbf5bf54b33fa7a630c43608d6da16df5f010a59": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "8b55f9fd2a54a6627ae69c249a0cb4b185f1dd514d1f386b37dd608bec813f3a",
+      "status": "proposed",
+      "task_id": "69",
+      "verb": "plan"
+    },
+    "spec-70-d839eab295e476eb6e1e12e5fae84ada03c0c3adc7e83b860a49252c281a9df9": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "fb758b4588f9e744f71f5f31877b81de6ee7587d8e976d500a17f0d0d1fa9a4d",
+      "status": "proposed",
+      "task_id": "70",
+      "verb": "plan"
+    },
+    "spec-71-964bec0487bbce5c8a5605e30f72be3866788ce019649b46412ab7db148b10b5": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "6e1bb2948be1a04d892156ea5de1d40f4497e91c1762697711189421555265d6",
+      "status": "proposed",
+      "task_id": "71",
+      "verb": "plan"
+    },
+    "spec-72-2a8bfb065ad3a35e12fdf024f622aa5416ddaac6f14eca1d411c03a42a7fadab": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "235c817e49df60771540e80e4eee2dfd98c9e79707e75758635ffdceb9e62316",
+      "status": "needs_human",
+      "task_id": "72",
+      "verb": "plan"
+    },
+    "spec-73-c842b966987f09622568ee30b638ed43c61ecce7e8249edb4d7ee279545fc9db": {
+      "actor": "dootz1",
+      "at": 1792393957,
+      "fingerprint": "5d96291642adef50596dc6bbf9b3e016913bcc3111c06e9cde7821447611c1b9",
+      "status": "needs_human",
+      "task_id": "73",
+      "verb": "plan"
+    }
+  },
+  "tasks": {
+    "62": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Freeze original-source groups and contact/scene/identity conventions before predictions.",
+          "Record independent disagreement adjudication and preserve unknown/unavailable labels."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "review-inputs"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Adjudicate source-aligned complete rallies.",
+        "paths": [
+          "docs/ANNOTATION_GUIDE.md",
+          "scripts/"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "be8db2fc4a6ece0a0840ae4909f776db3e565dd4750c1787118017bedca3ffe1",
+      "status": "needs_human"
+    },
+    "63": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Verify original worker PIDs, creation times, commands, Store status and durable artifacts.",
+          "Publish frozen scores only after complete-input gates; retain unsupported cases."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "windows",
+          "cuda",
+          "shuttleset-holdout"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Inventory and recover the frozen 75-rally evaluation.",
+        "paths": [
+          "docs/"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "efb1950e2a0eb7a63a9c719a3c8c437f2c8b2da967159b509418daf7547a9577",
+      "status": "proposed"
+    },
+    "64": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Reproduce a development-only recipe with pinned input/model/protocol hashes.",
+          "Keep conditional classification distinct from complete event detection and do not promote weights."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Make supported training/evaluation recipes portable.",
+        "paths": [
+          "scripts/",
+          "backend/badminton/"
+        ],
+        "priority": 500,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "a278ee30cd36cd1d35c7ab5ae6027a949d3dd98bc3602b1db07f53addc371938",
+      "status": "proposed"
+    },
+    "65": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Freeze reviewed visibility cases including occlusion, fast flight and background distractors.",
+          "Compare misses and false observations without filling unavailable trajectories."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Evaluate and reduce shuttle localization failures.",
+        "paths": [
+          "backend/badminton/shuttle.py",
+          "tests/"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "1393e9a7fd812c68b9c8b1baca78d1e010cab207294256f640ab76a6f67f5c9a",
+      "status": "proposed"
+    },
+    "66": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Measure source-reviewed identity switches and unknown cases for singles and doubles.",
+          "Preserve reviewed mappings and reject uncertain teammate links."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "review-inputs"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Evaluate persistent player identity across fragments and cuts.",
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "priority": 500,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "7077102fbd2296d68bd2b8ec84c3b523379a27df84b994e1639982b2cc32906d",
+      "status": "proposed"
+    },
+    "67": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Freeze independently reviewed contacts and ending uncertainty intervals.",
+          "Report contact/hitter and boundary coverage with unavailable inputs retained."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "review-inputs"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Evaluate complete-rally contacts, serves and endings.",
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "a3b2ad4f3fc719b28fac79e61dadc807f02761cd18e405126cc33e7fc96fdecc",
+      "status": "proposed"
+    },
+    "68": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Separate teammate attribution, family and side from court-end classification.",
+          "Train/select only on development sources and preserve a separate held-out protocol."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Define and implement the doubles recognition increment.",
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "priority": 500,
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "354ab2888d9b7465402ec3ccd6ccec244d11a36eca997917a9e854efcafc3658",
+      "status": "proposed"
+    },
+    "69": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Preserve source PTS, orientation and native frame identities across proxy playback and seeks.",
+          "Verify generated variable-frame-rate/oriented media and original annotation exports."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Add source-time-preserving browser playback proxies.",
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "73df461cadd6a4d9aa3e51c5659fcb636d0c4d9329a52fe758d5541d658605a9",
+      "status": "proposed"
+    },
+    "70": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Derive overlays and clip boundaries from reviewed annotations and source time.",
+          "Verify generated media exports without altering original predictions."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Export reviewed rally clips and annotated video.",
+        "paths": [
+          "backend/badminton/",
+          "tests/"
+        ],
+        "priority": 500,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "c7ce1f9b88b68400116605cfc4e6ac7ad089dfed177a4b2ea4ceb979a6327d4e",
+      "status": "proposed"
+    },
+    "71": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Freeze independent unseen matches before predictions and report complete time/player/family/side results.",
+          "Measure human correction time; processing coverage cannot certify correctness."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "review-inputs"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Validate unseen singles and doubles product workflows.",
+        "paths": [
+          "docs/",
+          "tests/"
+        ],
+        "priority": 500,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "6d5977064ba77bf5e322eb1547d53402ac3a9efe61534b791340a45df2c29a68",
+      "status": "proposed"
+    },
+    "72": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Run two nonconflicting tasks on different hosts through review and serial integration.",
+          "Verify main and private candidates; record recovery/ownership evidence before active mode."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Run the Mac/Windows autonomous workflow pilot.",
+        "paths": [
+          "docs/COLLABORATION.md"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "c9670c0cfb08d233b0360370681f7ba790428865764b0fd469e65499c03016b5",
+      "status": "needs_human"
+    },
+    "73": {
+      "epoch": 0,
+      "planned_at": 1792393957,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Review grouped dependency updates with native/package/container evidence.",
+          "Keep credentials and external datasets/weights outside release artifacts."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No claim of full automatic annotation accuracy.",
+          "No production/model promotion or destructive storage changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Maintain pinned dependencies and container candidates.",
+        "paths": [
+          "pyproject.toml",
+          "uv.lock",
+          "Dockerfile",
+          ".github/"
+        ],
+        "priority": 900,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused tests for changed behavior; required project checks on the exact head.",
+          "Record source/input/protocol hashes and material limitations for research."
+        ]
+      },
+      "spec_hash": "5e0f112c57c45709ffc673b02a6b15b8dcf46016b1e63ccf982c765c93a60e75",
+      "status": "needs_human"
+    }
+  },
+  "version": 1,
+  "workers": {}
+}
