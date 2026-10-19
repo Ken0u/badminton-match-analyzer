@@ -18,10 +18,24 @@ _JOB_ID = re.compile(r"[0-9a-f]{32}\Z")
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 
 
+def _redirected(path):
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        return False
+    # Junctions are reparse points, not symbolic links. Use lstat metadata so
+    # Python 3.10 and 3.12 enforce the same boundary without is_junction().
+    return stat.S_ISLNK(info.st_mode) or bool(
+        getattr(info, "st_file_attributes", 0) & stat.FILE_ATTRIBUTE_REPARSE_POINT
+    )
+
+
 def _safe_path(value):
     path = Path(value).absolute()
-    if ".." in path.parts or any(p.is_symlink() for p in (path, *path.parents)):
-        raise ValueError("Export paths cannot traverse directories or symlinks")
+    if ".." in path.parts or any(_redirected(p) for p in (path, *path.parents)):
+        raise ValueError(
+            "Export paths cannot traverse directories, symlinks or reparse points"
+        )
     return path
 
 
@@ -242,10 +256,10 @@ class MediaExportService:
             return summary
         except BaseException:
             if (
-                not folder.is_symlink()
+                not _redirected(folder)
                 and folder.exists()
                 and _identity(folder.stat()) == _identity(identity)
-                and not any(p.is_symlink() for p in folder.parents)
+                and not any(_redirected(p) for p in folder.parents)
             ):
                 shutil.rmtree(folder)
             raise

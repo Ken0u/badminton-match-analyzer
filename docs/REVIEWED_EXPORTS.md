@@ -180,7 +180,9 @@ verified file handle. They do not load a full match into response memory.
 Storage is server configured through `create_app(..., export_root=Path(...))` or
 `BADMINTON_EXPORT_DIR`. The default is an `exports` directory next to the resolved
 application data directory. It must be outside application data, and configured
-paths and their ancestors must not be symlinks. Clients cannot choose a directory.
+paths and their ancestors must not be symlinks or Windows reparse points,
+including directory junctions. Reparse metadata is checked on Python 3.10 and
+3.12; it does not rely on the newer `Path.is_junction()` method. Clients cannot choose a directory.
 Each job owns a new directory named with its generated job ID. Existing exports
 are never overwritten; only the requested job's verified files are downloadable.
 

@@ -1,11 +1,17 @@
 """Real HTTP media exports preserve native evidence and shared admission."""
 
+import errno
 import hashlib
 import io
 import json
+import os
 import shutil
+import stat
+import subprocess
 import threading
 import time
+from pathlib import Path
+from types import SimpleNamespace
 
 import av
 import numpy as np
@@ -452,8 +458,9 @@ def test_directory_descriptor_fallback_preserves_verified_binary_downloads(
             assert len(list(container.decode(video=0))) == 6
 
 
+@pytest.mark.parametrize("deny_rename", [False, True])
 def test_download_stream_uses_the_verified_handle_without_reopening_path(
-    tmp_path, monkeypatch
+    tmp_path, monkeypatch, deny_rename
 ):
     from badminton.export_service import MediaExportService
 
@@ -464,17 +471,97 @@ def test_download_stream_uses_the_verified_handle_without_reopening_path(
         job = submit(client, store, video, saved.revision)
         path = exports / job["id"] / "rally-000001.mp4"
         expected = path.read_bytes()
+        retained, blocked = [], []
 
         def replace_after_open(self, current, filename):
             result = original(self, current, filename)
-            path.rename(path.with_suffix(".old"))
-            path.write_bytes(b"changed pathname after verification")
+            retained.append(result["file"])
+            try:
+                if deny_rename:
+                    raise PermissionError(errno.EACCES, "Simulated Windows sharing")
+                path.rename(path.with_suffix(".old"))
+            except PermissionError as exc:
+                # Windows CRT handles can deny rename while the verified file
+                # is open. The unchanged handle must still stream correctly.
+                assert os.name == "nt" or deny_rename
+                assert exc.errno == errno.EACCES or getattr(exc, "winerror", None) in (
+                    5,
+                    32,
+                )
+                blocked.append(True)
+            else:
+                path.write_bytes(b"changed pathname after verification")
             return result
 
         monkeypatch.setattr(MediaExportService, "open_download", replace_after_open)
         response = client.get(endpoint(video, job["id"]) + "/files/rally-000001.mp4")
         assert response.status_code == 200 and response.content == expected
-        assert client.get(endpoint(video, job["id"])).status_code == 409
+        assert retained and all(handle.closed for handle in retained)
+        assert client.get(endpoint(video, job["id"])).status_code == (
+            200 if blocked else 409
+        )
+
+
+def test_reparse_attribute_is_refused_without_requiring_python312_junction_api(
+    tmp_path, monkeypatch
+):
+    store, _, _, _, _ = context(tmp_path)
+    target = tmp_path / "exports"
+    target.mkdir()
+    original = Path.lstat
+
+    def reparse(path, *args, **kwargs):
+        info = original(path, *args, **kwargs)
+        if path == target:
+            return SimpleNamespace(st_mode=info.st_mode, st_file_attributes=1024)
+        return info
+
+    monkeypatch.setattr(Path, "lstat", reparse)
+    with pytest.raises(ValueError, match=r"symlink|reparse"):
+        create_app(tmp_path, store.data, export_root=target)
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Native Windows junction regression")
+@pytest.mark.parametrize("component", ["configured-root", "job-directory"])
+def test_native_windows_junctions_cannot_redirect_export_storage(tmp_path, component):
+    store, video, _, saved, _ = context(tmp_path)
+    exports, outside = tmp_path / "exports", tmp_path / "outside"
+
+    def junction(link, destination):
+        subprocess.run(
+            ["cmd", "/c", "mklink", "/J", str(link), str(destination)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        assert link.lstat().st_file_attributes & stat.FILE_ATTRIBUTE_REPARSE_POINT
+
+    if component == "configured-root":
+        outside.mkdir()
+        junction(exports, outside)
+        with pytest.raises(ValueError, match=r"symlink|reparse"):
+            create_app(tmp_path, store.data, export_root=exports)
+    else:
+        with TestClient(
+            create_app(tmp_path, store.data, export_root=exports)
+        ) as client:
+            job = submit(client, store, video, saved.revision)
+            folder = exports / job["id"]
+            folder.rename(outside)
+            junction(folder, outside)
+            assert client.get(endpoint(video, job["id"])).status_code == 409
+            assert (
+                client.get(
+                    endpoint(video, job["id"]) + "/files/manifest.json"
+                ).status_code
+                == 409
+            )
+            assert (
+                client.get(
+                    endpoint(video, job["id"]) + "/files/rally-000001.mp4"
+                ).status_code
+                == 409
+            )
 
 
 @pytest.mark.parametrize(
