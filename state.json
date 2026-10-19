@@ -185,6 +185,24 @@
       "task_id": "108",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint108-tested": {
+      "actor": "dootz1",
+      "at": 1792423781,
+      "epoch": 1,
+      "fingerprint": "84cf2d40846ee7fe4e9498d94ac594a74c19d2052c85a7c2ad9c477331da30c0",
+      "status": "running",
+      "task_id": "108",
+      "verb": "checkpoint"
+    },
+    "mac-01a15493-heartbeat108-wait": {
+      "actor": "dootz1",
+      "at": 1792423935,
+      "epoch": 1,
+      "fingerprint": "87f8b7e07312a3e58a85cfbb1a1591c73b352029ed3831e4e00bc04a201ea827",
+      "status": "running",
+      "task_id": "108",
+      "verb": "heartbeat"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -284,6 +302,15 @@
       "fingerprint": "e52b4de33fc76a2f50e1eaf11a2d9c2527ea5d455a0390404e49fd8c9f894ce8",
       "status": "review",
       "task_id": "105",
+      "verb": "submit"
+    },
+    "mac-01a15493-submit108-v1": {
+      "actor": "dootz1",
+      "at": 1792423977,
+      "epoch": 1,
+      "fingerprint": "467e8531d121d533ac583431cfeb88a7870fafe985ba57edc23f8f86726cf521",
+      "status": "review",
+      "task_id": "108",
       "verb": "submit"
     },
     "mac-pilot-81-claim-v1": {
@@ -475,6 +502,35 @@
       "status": "review",
       "task_id": "105",
       "verb": "review-result"
+    },
+    "mac-review108-01a15493-next-v1": {
+      "actor": "dootz1",
+      "at": 1792423977,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "epoch": 1,
+        "expires_at": 1792434777,
+        "granted_at": 1792423977,
+        "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 109,
+        "review_epoch": 1,
+        "session_id": "mac-review108-01a15493",
+        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+      },
+      "epoch": 1,
+      "fingerprint": "91bde47ced825f45ef7c6fb99638798d0798e93f31ccb2baddce75993671bdbc",
+      "status": "granted",
+      "task_id": "108",
+      "verb": "review-next"
+    },
+    "mac-review108-01a15493-register-v1": {
+      "actor": "dootz1",
+      "at": 1792423977,
+      "fingerprint": "91e9893d2fb742241dca0c66f5d1eb6822aa6da406a265e06ee6af738e1d7007",
+      "status": "ok",
+      "verb": "register"
     },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
@@ -897,6 +953,15 @@
       "fingerprint": "f2e10a779860e6386106fe179c17cb576e319ae166acf97956eccf7ab9027d8e",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-holdout63-final-review-result-v1": {
+      "actor": "Ken0u",
+      "at": 1792423977,
+      "epoch": 1,
+      "fingerprint": "0d219dc3a68fa0c6cba78cc164fb29ce40441e33a3383c2f5813cf9148c1b5c3",
+      "status": "review",
+      "task_id": "63",
+      "verb": "review-result"
     },
     "windows-holdout63-native-complete-v1": {
       "actor": "Ken0u",
@@ -1467,22 +1532,24 @@
     },
     "108": {
       "checkpoint": {
+        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
         "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
-        "evidence": [
-          "Committed Mac grant epoch1 spec28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
-          "No frontend/research/data/model changes; only granted4paths"
-        ],
-        "head_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
-        "remaining": "Implement read-only source audit, immutable revision plan and non-overwriting JSON CLI; generated tests/docs, fresh review and controller/main/private receipts",
-        "worktree": ".cache/rally-export-plan-108"
+        "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
+        "pr_number": 109,
+        "remaining": "Fresh independent review, exact-head CI, controller merge/main/private receipts. No source or prediction changes. Actual rendering remains #70 follow-up.",
+        "validation": [
+          "33focused source/revision/CLI generated tests pass .cache/focused.xml",
+          "950full tests pass/11optional skips .cache/full.xml",
+          "Ruff/format/repository/uv dependency/diff checks pass"
+        ]
       },
-      "checkpoint_at": 1792423443,
+      "checkpoint_at": 1792423781,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
         "branch": "codex/issue-108-expose-a-reproducible-source-frame-rally",
         "epoch": 1,
-        "expires_at": 1792434243,
+        "expires_at": 1792434735,
         "granted_at": 1792423227,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -1491,6 +1558,21 @@
       "epoch": 1,
       "planned_at": 1792422680,
       "planned_by": "dootz1",
+      "pr_number": 109,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "epoch": 1,
+        "expires_at": 1792434777,
+        "granted_at": 1792423977,
+        "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 109,
+        "review_epoch": 1,
+        "session_id": "mac-review108-01a15493",
+        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Add a backend planning module and CLI command that reads an immutable annotation revision and validated source timestamps/metadata, writes only a requested JSON plan, and never edits source media, annotations or predictions.",
@@ -1530,7 +1612,13 @@
         ]
       },
       "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
+        "pr_number": 109,
+        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+      }
     },
     "62": {
       "epoch": 0,
@@ -1603,14 +1691,30 @@
       "planned_by": "dootz1",
       "pr_number": 107,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792423977,
         "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
-        "epoch": 1,
-        "expires_at": 1792434340,
-        "granted_at": 1792423540,
+        "evidence": [
+          "This is a genuine fresh read-only agent session /root/holdout63_final_review, registered as host MSI/session windows-holdout63-final-review-v1. Actual committed review-next request windows-holdout63-final-review-next-v2 granted task 63 epoch 1/review_epoch 1 at 1792423540, binding exact head a2dcdc84d38eb283767dece737f38c0952972649, base 6e23ffc567a9c2c632a727acc5dbf093d00168cb and frozen specification ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc. Earlier pending/idle requests were not treated as grants.",
+          "Read repository AGENTS, COLLABORATION, reviewer instructions, automation config, current task 63 frozen queue specification, exact six-file diff and relevant frozen original native/feature/evaluation/runtime/job-admission code. The detached review worktree is .cache/worktrees/holdout63-final-review-v1 at the granted head and remains tracked-clean. No sensitive policy/auth/deployment/model-promotion path is changed.",
+          "Observed 23 focused generated tests passing on locked Python 3.12.14 in 3.16 seconds using isolated .cache temporary/test data. Initial test setup lacked the new worktree .cache parent; creating it resolved setup errors without any implementation change. Coverage includes immutable receipts/output locks, stale/live/ambiguous identities, interrupted player-stage reuse, actual generated main Store denial before research construction/inference, successful parent gates, source/runtime changes, strict unknown/unavailable denominators, frozen thresholds and corruption of all saved metric fields.",
+          "Independently ran full backend/tests/scripts Ruff checks, Ruff format check (137 files), scripts/verify_repository.py (strict UTF-8/LF/JSON/local links/credentials), uv pip check (48 compatible packages), and git diff --check for the granted base/head. All passed. GitHub API confirmed the same exact head/base and six granted paths immediately before verdict.",
+          "Verified recovery source SHA-256 7bdfb1149c9684b178bf67997dc4138d329af5201733e22bd400abe35a4fae9f, reviewed manifest SHA-256 61c57c285790773136975e8b6f16afcd3d473ea571a53ff3a5a0c69d10a7fef5, all 359 input seals and all 109 runtime file pins. The native 54-file map matches original frozen view support; the feature 55-file map matches the original R3 snapshot. Original selected weights, selections, helper code, protocol, labels, source-clock receipts and court geometry retain frozen bytes.",
+          "Verified genuine independent preflight SHA-256 556c94bf0dba39ab19b75eb58a08ef77083dde195037207d2c5dd8bbf63a315a binds exact code/protocol/manifest; GitHub issue 63 comment 6270525192 was created and last updated 2026-10-19T15:09:59Z before evaluation worker creation 1792422896.6826873. Compared recovery R2/R3 architecture, input dimensions, identical navigation/common254 construction, source_frame-minus-one mapping, normalization/clipping, support masks and validation-only thresholds against frozen original scripts; no recipe drift found.",
+          "Reviewed ROOT/DATA/WEIGHTS binding before frozen app imports, torchvision initialization before decoding, forced native CUDA, real main run_local_job claim before research Store construction, per-case frozen/source revalidation, immutable original/recovery lineage, exact native recipe guards, source PTS/frame/cut/scene/calibration guards, all75 completion gates, successful parent release gates and partial-output rejection before frozen heads. No application truth/model installation path is introduced.",
+          "Created and ran my own independent read-only evidence/count checker at .cache/worktrees/holdout63-final-review-v1/.cache/verify_actual_evidence.py (SHA-256 9926fa2c60d31d7e06744766f902449115b4e2a846e38e7fe826c4849f380c04), importing no application/scorer/auditor and loading no model. It verifies all75 native/feature/audit transitive chains, exact registered video metadata and source clocks, all21610 native frame/PTS values, calibration expiry, cut-separated track IDs, all860 original row IDs and targets, original67 receipt locations and pinned ordinal67 player reuse. Exactly15 new native-stage lineage records exist.",
+          "The independent checker verifies actual SQLite completed parents 18711a15dd5a4772bc0e2eb4cbe0a127 (native), 92f3e41c33da4db8863493b5a7203c87 (features), and 5d7f40c23de34fcfa5b593e47864a4ac (evaluation), each with durable admission-released receipt and original worker lifetime exited. Raw main annotation hashes and original68 initialized research annotation strings match before snapshots. Old native parent 9620824f51f8406f8da41529fd2cd504 remains interrupted. All five original producer identities are exited, and a current process scan finds no restarted producer script.",
+          "My own saved-probability argmax/threshold and count/confusion/per-class/summary/joint recomputation matches every saved metric field for both models in both frozen modes. All860 rows remain; each task retains677 eligible and183 unknown truth rows, with724 available source descriptors/568 available eligible/109 unavailable eligible per model. R2 joint counts are242/677 closed and130/677 thresholded; R3 is285/677 closed and97/677 thresholded. Requested six-family macro F1 recomputes to0.380166/0.465450 closed and0.195530/0.101758 thresholded. The aggregate report rounds these correctly and preserves rare-class failures and non-promotion limitations."
+        ],
+        "findings": [],
         "head_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
-        "host_id": "MSI",
+        "limitations": [
+          "Exact-head CI run 39277793976 was still in progress at verdict preparation: Python 3.10, Python 3.12, macOS native, frontend and revision had succeeded; the required ci/gate was queued. The controller must require its successful exact-revision completion before integration. This reviewer has not manually merged or bypassed policy.",
+          "The fresh reviewer ran only generated fixture tests and read-only JSON/SQLite/NumPy evidence checks. No actual main/research Store was constructed, model weights deserialized, inference/training repeated, annotations edited or implementation files changed. Full local 950-test execution and native execution are author evidence; final exact-head full-suite coverage remains enforced by CI.",
+          "These are conditional classifier measurements on one original singles match using weak published clock/hitter/court evidence. They do not establish exact contacts, localization, persistent identity, doubles performance, serve/rally boundaries or complete automatic annotation accuracy. Perception pretraining overlap remains unestablished.",
+          "Raw media, labels, models, frozen helper/runtime snapshots and detailed receipts are intentionally local ignored evidence, not clone contents. No model is promoted or installed. This consumed holdout must not tune future changes; test-informed work requires another complete-source holdout."
+        ],
         "native_evidence": {
           "code_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
           "limitations": [
@@ -1624,9 +1728,17 @@
           "source_sha256": "76c75c4bcecff975926c91fb94ad1e3e4b49df96f376db5b06c46f76c8ac11c5"
         },
         "pr_number": 107,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "scripts/recover_frozen_holdout.py",
+          "tests/test_holdout_recovery.py",
+          "docs/HOLDOUT_RECOVERY_REPORT.md",
+          "docs/OBSERVED_STROKE_CONTEXT_REPORT.md",
+          "docs/BUG_REVIEW.md",
+          "PROJECT_PLAN.md"
+        ],
         "session_id": "windows-holdout63-final-review-v1",
-        "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc"
+        "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
@@ -3002,6 +3114,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792422154,
       "session_id": "mac-review105-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review108-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792423977,
+      "session_id": "mac-review108-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-20261019-01a15477": {
       "actor": "dootz1",
