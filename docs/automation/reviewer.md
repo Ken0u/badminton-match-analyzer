@@ -12,7 +12,9 @@ checks cannot certify badminton accuracy. Do not execute untrusted PR scripts
 with privileged credentials. Do not modify implementation files.
 
 Submit `review-result` with head/base/spec hashes, reviewer host/session,
-pass/changes-requested verdict, actionable findings and unresolved limitations.
+`verdict: "approve"` or `verdict: "changes"`, actionable findings and unresolved
+limitations. Echo the review grant's `review_epoch` in the JSON supplied with
+`--payload`; implementation `epoch` and review `review_epoch` are separate.
 An author session cannot provide its own review. Any changed head or base makes
 this verdict stale. Policy, authentication, destructive migration, deployment or
 model promotion also needs non-author human approval. Review only observed

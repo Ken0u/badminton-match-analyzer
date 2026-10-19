@@ -10,7 +10,7 @@ Sleeping both computers pauses implementation, even while GitHub checks run.
 ## One-time setup and activation
 
 1. The repository owner enables the private-repository plan needed for branch
-   protection, confirms collaborator write access, and configures protected
+   protection, runs `python scripts/setup_automation.py --apply --protections`, confirms collaborator write access, and configures protected
    `main` with `ci/gate` and `automation/policy`, required current-base checks,
    resolved conversations, and no routine bypass/force-push/deletion.
 2. Create a **private user Project** and its Status options: Proposed, Ready,
@@ -64,8 +64,7 @@ milestone is achieved.
 ## Queue helper and ownership
 
 The cross-platform interface is `python scripts/agent_queue.py`. Global options
-include `--repo Ken0u/badminton-match-analyzer`, `--payload FILE` for JSON request
-fields, `--task NUMBER`, `--epoch EPOCH`, `--host HOST`, and `--session SESSION`. Run `--help` and each
+include `--payload FILE` for JSON request fields, `--task NUMBER`, `--epoch EPOCH`, `--host HOST`, and `--session SESSION`. Run `--help` and each
 subcommand's help for required request fields. Commands are:
 
 | Command | Purpose |
@@ -94,6 +93,8 @@ lease enters recovery rather than immediately assigning duplicate work.
 Before yielding, record the branch/PR, exact revision, tests, remaining work and
 artifact references. Review needs a fresh session, frozen spec, PR head and base;
 a self-declared second verdict in the implementation session is insufficient.
+Review responses echo the grant's `review_epoch` separately from task `epoch`,
+with `verdict` set to `approve` or `changes` in the `--payload` JSON.
 
 Code and base changes invalidate review evidence. Three failed repair rounds
 escalate once with a clear blocker. Routine work can merge automatically after
