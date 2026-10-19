@@ -766,6 +766,35 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review116-next-v1": {
+      "actor": "dootz1",
+      "at": 1792441640,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "epoch": 1,
+        "expires_at": 1792452440,
+        "granted_at": 1792441640,
+        "head_sha": "d29092cda901e887962c529c321c7b58ed63a01f",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 118,
+        "review_epoch": 1,
+        "session_id": "mac-review116-01a15493",
+        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
+      },
+      "epoch": 1,
+      "fingerprint": "d240a29e339a3a56786345acf425f2b31022af1f985e51e74cfb32fadb657693",
+      "status": "granted",
+      "task_id": "116",
+      "verb": "review-next"
+    },
+    "mac-review116-register-v1": {
+      "actor": "dootz1",
+      "at": 1792441640,
+      "fingerprint": "5b1e2f5beef59b256f52dc1bc28654659d42cf15bc9d0625637d0c888107eda1",
+      "status": "ok",
+      "verb": "register"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -1669,6 +1698,15 @@
       "task_id": "111",
       "verb": "review-result"
     },
+    "windows-public111-review-result-v2": {
+      "actor": "Ken0u",
+      "at": 1792441640,
+      "epoch": 1,
+      "fingerprint": "10668e65144c1931531cdd350c6a1cce1cad857c0697e6def86a78c7693461ad",
+      "status": "review",
+      "task_id": "111",
+      "verb": "review-result"
+    },
     "windows-public111-submit-v1": {
       "actor": "Ken0u",
       "at": 1792440141,
@@ -2378,18 +2416,39 @@
       "pr_number": 114,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792441640,
         "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
-        "epoch": 1,
-        "expires_at": 1792452067,
-        "granted_at": 1792441267,
+        "evidence": [
+          "Fresh independent read-only session MSI/windows-public111-review-v2 obtained matching durable grant windows-public111-review-next-v2 for task111 epoch1/review_epoch2 before inspection. Detached isolated checkout .cache/worktrees/public111-review-v2 is exactly head1fed758054c3c0becb37da9936eea07193521340; remote PR114 head/base still match the grant. Reviewed all seven scoped paths, frozen issue111 specification and relevant surrounding CI, GitHub transport, controller delivery, package verifier, Docker build/exclusion and merged rally-renderer integration code. No implementation files modified.",
+          "Independent Python3.12 focused run: tests/test_release_candidate.py tests/test_agent_coordinator.py tests/test_rally_export.py tests/test_rally_video.py, 168 passed in25.72s. Additional tests/test_devops_environment.py:9 passed. Reviewer-owned storage, root/data/PYTHONPATH pinned to detached checkout; credential environment variables removed and GH_CONFIG_DIR isolated for tests. Evidence .cache/worktrees/public111-review-v2/.cache/review-tests.xml.",
+          "Independent reviewer-authored 19 generated local-Git/CLI/API probes passed. Covered separate source/publisher identity and original source uv.lock, failed latest publisher verification, publisher ancestry, stale publisher binding, staged source and unstaged publisher changes, explicit source-root, missing public package, private precreation versus postpush existence, wrong package identity/type, visibility revoked after preflight, immutable digest/source refs, extra archives and missing/matching private policy. Poisoned legacy source helper was never executed. API was in-memory only. Evidence .cache/worktrees/public111-review-v2/.cache/review-probes-v2.json.",
+          "Independent read-only audit of rebuilt .cache/worktrees/public111/.cache/dist-public111-v2 archives confirms all74 tracked backend package files byte-identical in wheel and sdist, including merged rally_video.py/rally_export.py; dependency metadata/uv.lock match granted source. All source archive files are tracked or generated package metadata, with no private state/media/dataset/external-weight directory entries. Wheel SHA256 f8a2ca4a815949c3c0997232e4525f23e404b3f464519b620e1b3b1fad0ed641; sdist SHA2567e8047b2147a85386f88bf63666422989b8a20c08e5be81eca8330a73cbb4ae8; source uv.lock SHA256fe4deca37e729cfe4bdf26c125e2d184659ecd1982ea9d8bf12e177e382de54d. Evidence .cache/worktrees/public111-review-v2/.cache/review-archives-v2.json.",
+          "Scoped Ruff lint and format checks pass for release_candidate.py and both scoped Python test files; uv pip check confirms43 installed packages compatible (reused uv environment has no pip module). git diff --check passes and reviewer checkout remains clean. Base renderer/export/package verifier/Docker/exclusion paths are byte-identical between granted base and head.",
+          "Independent remote API confirms Checks run39317885837 completed success on exact head1fed758054c3c0becb37da9936eea07193521340, with all12 Checks jobs successful. PR reviews were empty at final recheck. Legacy Private candidates workflow/run-name correlation and controller whole-workflow delivery outbox remain intact; Project/authentication/paid-overage/deployment/model controls are not changed by the scoped diff. https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39317885837",
+          "Owner visibility documentation matches GitHub's current package-settings guidance: package visibility is independent of repository visibility, and a public package cannot be made private again. https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility"
+        ],
+        "findings": [],
         "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
-        "host_id": "MSI",
+        "limitations": [
+          "This is an independent agent code verdict, not genuine non-author human approval. The sensitive publishing-policy change still requires that exact-head human approval before controller integration; no human PR reviews existed at the final recheck.",
+          "No live GHCR push, package-visibility mutation, public candidate workflow completion, public image digest receipt or delivery_pending=false was performed or established by this review. Owner public-package setup and actual complete delivery remain separate required actions. This review does not claim deployed behavior or improved annotation accuracy.",
+          "Reviewer independently ran177 focused tests and19 additional probes plus archive-byte checks, lint/format/dependency/diff checks. The full1048-test suite, clean-installed package verification, native macOS run and container builds were not rerun locally by this reviewer; exact-head remote CI success was independently observed. Existing implementation evidence remains distinct from reviewer-executed evidence."
+        ],
         "pr_number": 114,
-        "review_epoch": 2,
+        "reviewed_files": [
+          ".github/automation.json",
+          ".github/workflows/release.yml",
+          "scripts/release_candidate.py",
+          "tests/test_release_candidate.py",
+          "tests/test_agent_coordinator.py",
+          "docs/OWNER_SETUP.md",
+          "docs/COLLABORATION.md"
+        ],
         "session_id": "windows-public111-review-v2",
-        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
@@ -2474,6 +2533,20 @@
       "planned_at": 1792440580,
       "planned_by": "dootz1",
       "pr_number": 118,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "epoch": 1,
+        "expires_at": 1792452440,
+        "granted_at": 1792441640,
+        "head_sha": "d29092cda901e887962c529c321c7b58ed63a01f",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 118,
+        "review_epoch": 1,
+        "session_id": "mac-review116-01a15493",
+        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Add a backend overlay renderer and explicit CLI output mode for an entire original video and for eligible reviewed rally ranges. Reuse the audited source/immutable revision contract and #110 native video/audio validation, with an explicit overlay policy/version and source/annotation/config/output hashes in a completion manifest. Do not silently substitute a rally-only output for requested full video.",
@@ -4105,6 +4178,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792440405,
       "session_id": "mac-review111-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review116-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792441640,
+      "session_id": "mac-review116-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-20261019-01a15477": {
       "actor": "dootz1",
