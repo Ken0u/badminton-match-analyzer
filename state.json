@@ -269,6 +269,15 @@
       "task_id": "120",
       "verb": "checkpoint"
     },
+    "mac-01a15493-120-tested": {
+      "actor": "dootz1",
+      "at": 1792444074,
+      "epoch": 1,
+      "fingerprint": "ad2376c1d3903468268b3b0a962095e12103d79dbfd7e1fe3822f5ab6afb2b8c",
+      "status": "running",
+      "task_id": "120",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -2889,19 +2898,29 @@
     },
     "120": {
       "checkpoint": {
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
-        "head_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "preservation": "MSI repair119 remains separate; no source/data/models/research/app upgrade; no frontend/dependency bypass.",
-        "remaining": "Implement four granted paths; locked review bootstrap in progress; API/tests/docs parent-owned, bounded service-only subagent isolated .cache/media-export-api-120-service. Parent retains grant/publishing. Full focused/regression checks, fresh independent review and controller/main/delivery remain.",
+        "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
+        "limitations": [
+          "Native Windows not run; directory fallback simulated on Mac. No new frontend controls or app upgrades. Software/media checks do not prove automatic badminton annotation accuracy."
+        ],
+        "pr_number": 121,
+        "remaining": "Fresh read-only exact-head/base/spec review, hosted CI, repair findings if any, controller merge, exact-main verification and complete candidate receipts. Preserve MSI-owned119 and frontend dependencies.",
+        "validation": [
+          "169 focused API/export/import/analysis regressions passed (.cache/focused-final.xml)",
+          "1117 full tests passed,11optional skipped (.cache/full.xml)",
+          "Ruff/format146files,repository,diff and locked47package dependency checks pass",
+          "Real HTTP/native full/rally exports cover audio/VFR/rotation, pinned revisions, shared admission, corruption/symlinks, auth and retained handles; no private input/model/inference"
+        ],
         "worktree": ".cache/media-export-api-120"
       },
-      "checkpoint_at": 1792443625,
+      "checkpoint_at": 1792444074,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-120-expose-immutable-reviewed-media-exports-",
         "epoch": 1,
-        "expires_at": 1792454425,
+        "expires_at": 1792454874,
         "granted_at": 1792443507,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
