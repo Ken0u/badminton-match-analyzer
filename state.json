@@ -422,6 +422,15 @@
       "task_id": "105",
       "verb": "review-result"
     },
+    "mac-review105-01a15493-result-v2": {
+      "actor": "dootz1",
+      "at": 1792422773,
+      "epoch": 1,
+      "fingerprint": "437c69a67c07ee5f04c908db9dc04976affa2b3b8524c4a74d126ff541a48673",
+      "status": "review",
+      "task_id": "105",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -1237,18 +1246,33 @@
       "planned_by": "dootz1",
       "pr_number": 106,
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792422773,
         "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
-        "epoch": 1,
-        "expires_at": 1792433346,
-        "granted_at": 1792422546,
+        "evidence": [
+          "Independent read-only reviewer session mac-review105-01a15493 on Stanleys-Laptop.local obtained committed grant mac-review105-01a15493-next-v2, review_epoch 2, before assessing the repair. Revalidated exact local HEAD560606c53299c90bc0d08e958a0b08788dbc5984 and GitHub PR106 head/base/spec binding immediately before verdict; working tree remains clean.",
+          "Re-reviewed the complete three-file frozen base-to-head diff and surrounding notice ownership, Play promise, selection generation, source-switch, preparation/job and ready-listener code. The previously reported P2 is repaired through a shared owned playbackError helper; late Play rejections are fenced by source, video, generation and notice version, with AbortError ignored. Browser regression now clicks real Play on the unsupported FFV1 source before preparation. Node syntax checks for all three files and git diff --check passed.",
+          "Independently ran .cache/reviewer-105/review-v2.mjs against identity-verified disposable server PID52469 at port8002. Real FFV1 original produces media error code4 and real Play rejection, followed by successful prepared media: empty notice, removed error class, mediaError=null, readyState4, source-frame3 seek0.68s, playback ended0.72s. This directly verifies the prior finding is fixed.",
+          "Controlled Chromium late-promise probes passed: newer unrelated shot-review notice survives a delayed same-source rejection and prepared recovery; old-source rejection after proxy switch is ignored; rejection after selecting another video preserves the new source/notice; AbortError leaves notice unchanged. A failed proxy media request retains its playback error. No pageerror events. Durable evidence: .cache/reviewer-105/review-v2-evidence.json.",
+          "Independently ran .cache/reviewer-105/preparation-error-v2.mjs with GET/POST request mocks: preparation failure status remains visible and the Prepare playback button becomes retryable while the media failure notice remains. No backend preparation request or persisted annotation edit. Evidence: .cache/reviewer-105/preparation-error-v2.json.",
+          "Queried hosted exact-head run39275336920: all 12 software checks, including browser-import and required ci/gate, succeeded. automation/policy remains pending independent verdict. Inspected local .cache/full-repair.xml: 928 total, 11 skipped, no failures/errors (917 passed)."
+        ],
+        "findings": [],
         "head_sha": "560606c53299c90bc0d08e958a0b08788dbc5984",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Did not rerun the full backend suite or hosted matrix; inspected their exact-head receipts and local XML. Did not rerun the full import-browser script because it requires a fresh-empty catalog; independent real-media probes exercised the changed behavior and hosted browser-import passed.",
+          "Delay/source/cancellation paths used controlled browser promises or request mocks alongside real original/proxy media. Review covers the frozen playback notice scope in Chromium, not all browser engines or badminton annotation accuracy. No implementation changes, server restarts, annotation saves, GPU jobs or research/model changes were made."
+        ],
         "pr_number": 106,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/playback-tools.js",
+          "tests/import-browser.mjs"
+        ],
         "session_id": "mac-review105-01a15493",
-        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
+        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
