@@ -1737,6 +1737,15 @@
       "task_id": "119",
       "verb": "submit"
     },
+    "windows-external119-superseded-recovery-v1": {
+      "actor": "Ken0u",
+      "at": 1792448187,
+      "epoch": 2,
+      "fingerprint": "40cc126eb2b1b13bcf2635272a7ed9df31c0577250b11895c77bc7befe0b4b2a",
+      "status": "ready",
+      "task_id": "119",
+      "verb": "recover"
+    },
     "windows-holdout63-checkpoint-inventory-v1": {
       "actor": "Ken0u",
       "at": 1792421520,
@@ -3175,32 +3184,53 @@
     },
     "119": {
       "checkpoint": {
-        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
-        "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
-        "pr_number": 122,
-        "remaining": "New exact-head CI and fresh independent review for head6125/basec1ba9/spec94986, then genuine non-author human approval of final PR122. Let controller merge and verify exact merged main before actual111 recover-merged request. Current111 epoch2 remains fenced; complete candidate39320656490 must be reused. Scope authorization is not PR approval. No raw coordination edits, data/model deployment or research/inference restart.",
-        "review_repair": "Genuine independent v1 changes verdict found duplicated delivery inside recovery plus common outbox. Repair commit671ed removes the recovery-local delivery call and tests one dispatch/rerun, later live reuse and successful completion. Main subsequently advanced to verified c1ba9 through collaborator PR121; clean ordinary merge6125 preserves both histories and exactly eight scoped changed paths. No force push or scope expansion.",
-        "validation": [
-          "Full locked Python 3.12 with portable FFmpeg after merging current main: 1175 passed, 11 optional skips, known Starlette warning; actual process exit 0",
-          "197 focused queue/coordinator/policy cases included; repaired missing/failed/live candidate duplicate-delivery regression first failed before correction",
-          "Ruff and format 147 files, unchanged locked 43-package environment, repository UTF8/LF/JSON/local links and diff checks passed"
+        "evidence": [
+          "Full locked native-media suite1175 passed/11optional skips; actual exit0; exact-head CI39328070766 all12 verification jobs successful",
+          "Genuine fresh independent review epoch2 for head6125/basec1ba9/spec94986 accepted as windows-external119-review-result-v2 at1792445911 with no findings",
+          "Owner explicitly replied Authorize supersession and combined #123; transfer records are PR122 comment6278510612 and issue119 comment6278510876"
         ],
-        "worktree": ".cache/worktrees/external119"
+        "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
+        "original_base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+        "original_spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
+        "pr_number": 122,
+        "preservation": "Original remote branch6125 and all implementation/review worktrees, source, CI and independent review evidence retained. PR122 closed without merging and issue119 marked superseded after the owner's explicit authorization. No physical resource/artifact reservation or heavy inference/training belongs to this code-only task.",
+        "remaining": "Archive original code-only ownership through the dispatcher and preserve119 as superseded, not fake Done. Obtain a genuine new123 grant for combined12path/speca272, incorporate complete119 source, remove mandatory human review as requested, then full checks/newCI/fresh independent review. No manual merge authorized by this supersession.",
+        "superseded_by_task": 123
       },
       "checkpoint_at": 1792445478,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
-        "epoch": 1,
-        "expires_at": 1792456278,
-        "granted_at": 1792443018,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
-      },
-      "epoch": 1,
+      "epoch": 2,
+      "history": [
+        {
+          "at": 1792448187,
+          "checkpoint": {
+            "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
+            "evidence": [
+              "Full locked native-media suite1175 passed/11optional skips; actual exit0; exact-head CI39328070766 all12 verification jobs successful",
+              "Genuine fresh independent review epoch2 for head6125/basec1ba9/spec94986 accepted as windows-external119-review-result-v2 at1792445911 with no findings",
+              "Owner explicitly replied Authorize supersession and combined #123; transfer records are PR122 comment6278510612 and issue119 comment6278510876"
+            ],
+            "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
+            "original_base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
+            "original_spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
+            "pr_number": 122,
+            "preservation": "Original remote branch6125 and all implementation/review worktrees, source, CI and independent review evidence retained. PR122 closed without merging and issue119 marked superseded after the owner's explicit authorization. No physical resource/artifact reservation or heavy inference/training belongs to this code-only task.",
+            "remaining": "Archive original code-only ownership through the dispatcher and preserve119 as superseded, not fake Done. Obtain a genuine new123 grant for combined12path/speca272, incorporate complete119 source, remove mandatory human review as requested, then full checks/newCI/fresh independent review. No manual merge authorized by this supersession.",
+            "superseded_by_task": 123
+          },
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+            "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
+            "epoch": 1,
+            "expires_at": 1792456278,
+            "granted_at": 1792443018,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3"
+          }
+        }
+      ],
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792442808,
@@ -3211,44 +3241,6 @@
       "pr_number": 122,
       "reason": "Issue closed; preserve reservations and checkpoint before recovery",
       "repair_rounds": 1,
-      "review": {
-        "actor": "Ken0u",
-        "at": 1792445911,
-        "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
-        "evidence": [
-          "Actual durable independent review grant windows-external119-review-next-v2 bound task epoch1/review_epoch2 to hostMSI/session windows-external119-review-v2, PR122, exact head6125c7080140b2f0281515e57d640f540e7874ca/basec1ba9dc93738ccb01859337e4a3f5359b886291f/spec94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3. Detached isolated worktree remained clean.",
-          "Read the whole eight-file base-to-head diff and relevant surrounding coordinator, queue, policy, client, workflow, reviewer, collaboration, project-plan and bug-review context. Independently fetched issue119 frozen public specification and recomputed its canonical SHA256 equal to the grant.",
-          "Independently ran tests/test_agent_coordinator.py, tests/test_agent_queue.py and tests/test_agent_policy.py against the granted checkout with credential environment variables removed and disposable pinned roots:197 passed, actual process exit0.",
-          "Ten additional offline probes passed: paused adoption refusal, excluded pilot refusal, included pilot success, retained newer ownership refusal, unresolved-thread veto, rename previous-path scope veto, newer-running source-check veto, trusted-history merge-base mismatch refusal, untrusted original review actor refusal, and original changes verdict refusal.",
-          "Inspected preservation of immutable trusted coordination ancestry, original granted branch/head/base/spec and independent review, distinct human GitHub approval versus configured-owner attestation, requested-changes veto, GitHub Actions source checks, merged-tree equality, main ancestry, latest complete successful exact merged-main verification from main, current epoch/modes/replay restrictions, original-host terminal proof, incident and issue-projection retries, unrelated valid integration, and unchanged ordinary serial/policy gates.",
-          "The repaired recovery path contains no recovery-local deliver call. Existing tests independently passed for missing, failed and live candidate workflows, exactly one dispatch/rerun in the adoption pass, later live reuse and successful completion; the common integration outbox owns publication once per pass.",
-          "Independent Ruff check passed, Ruff format reported147 files already formatted, uv pip check validated the existing locked43-package Python3.12.14 environment, and git diff --check passed. No implementation source, shared environment or research artifacts were modified.",
-          "Independently read GitHub CI39328070766:completed/success for exact head6125c7080140b2f0281515e57d640f540e7874ca; all12 verification jobs including ci/gate succeeded and check-runs came from github-actions. Independently read exact-main CI39327291667:completed/success from main atc1ba9dc93738ccb01859337e4a3f5359b886291f. Main and PR122 head/base remained unchanged at final verification.",
-          "Actual PR122 reviews were empty and reviewThreads were empty with hasNextPagefalse. The separate automation/policy check listed exactly Fresh independent agent review required and Sensitive change requires a current non-author human approval before this verdict submission."
-        ],
-        "findings": [],
-        "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
-        "limitations": [
-          "This read-only review did not execute an actual task111 recovery, merge, release publication, deployment, inference, or research job. GitHub effects and failure recovery were exercised only through in-memory mocked transports.",
-          "The full combined test suite and native/browser/container checks were not rerun locally by this reviewer. Exact-head GitHub CI was independently observed completed successfully; the reviewer independently ran the 197 focused cases and 10 additional adversarial probes.",
-          "PR122 has no genuine non-author human GitHub approval as observed. Its ordinary sensitive-change gate still requires that final-head approval before controller integration. This agent verdict, task scope authorization, and any earlier PR114 attestation do not supply it.",
-          "Software checks and recovery provenance do not establish complete automatic badminton annotation accuracy."
-        ],
-        "pr_number": 122,
-        "reviewed_files": [
-          "scripts/devops/coordinator.py",
-          "scripts/devops/queue.py",
-          "scripts/devops/policy.py",
-          "scripts/agent_queue.py",
-          "tests/test_agent_coordinator.py",
-          "tests/test_agent_queue.py",
-          "tests/test_agent_policy.py",
-          "docs/COLLABORATION.md"
-        ],
-        "session_id": "windows-external119-review-v2",
-        "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-        "verdict": "approve"
-      },
       "review_epoch": 2,
       "spec": {
         "acceptance": [
@@ -3294,7 +3286,7 @@
         ]
       },
       "spec_hash": "94986fd3c971eceee14a655be044ba8ed5406d7befdab53529aed5eb725781e3",
-      "status": "recovery_required",
+      "status": "ready",
       "submission": {
         "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
         "head_sha": "6125c7080140b2f0281515e57d640f540e7874ca",
