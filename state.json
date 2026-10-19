@@ -216,6 +216,24 @@
       "task_id": "116",
       "verb": "checkpoint"
     },
+    "mac-01a15493-116-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792441551,
+      "epoch": 1,
+      "fingerprint": "cf03e9ba43697d20b15370d1d00887fb438bce87baa8fa2c3abc188cfc61eb36",
+      "status": "review",
+      "task_id": "116",
+      "verb": "submit"
+    },
+    "mac-01a15493-116-tested": {
+      "actor": "dootz1",
+      "at": 1792441482,
+      "epoch": 1,
+      "fingerprint": "82d05983af3b2242ba6010875cffd4093a1b8aa8fff1bc96e57268a93358853d",
+      "status": "running",
+      "task_id": "116",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -2429,17 +2447,24 @@
       "checkpoint": {
         "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "branch": "codex/issue-116-export-source-time-preserving-annotated-",
-        "preservation": "110 merged-main verification succeeded but delivery remains pending:39317931907 failed the unchanged private-repo guard. Publishing111/114 stays collaborator-owned. Old worktrees/evidence preserved; no running app/research/shared data changes.",
-        "remaining": "Implement full-video and rally annotation burn-in, exact source/config/annotation provenance, context and unknown/uncertainty handling, media/audio validation; generated tests/browser checks, full checks, fresh independent review and controller integration/main/delivery. Child owns only rally_overlay.py/rally_video.py in .cache/rally-overlay-116-module; parent owns CLI/tests/docs.",
+        "head_sha": "d29092cda901e887962c529c321c7b58ed63a01f",
+        "preservation": "No shared source/annotations/predictions/research or running app modified. Five changed paths all granted. 110main verified/deliverypending, not counted fully complete.",
+        "remaining": "Publish PR after final suite, submit exact head/base/spec, fresh independent read-only review including browser/visual checks, address findings, exact-head CI/controller merge/main verification and delivery. Publishing111/114 remains separate collaborator-owned human gate.",
+        "validation": [
+          "103 combined generated overlay/plain/planner regressions passed; extra long/Unicode name test passed in32overlay cases",
+          "Ruff/format/repository/dependency/diff checks pass",
+          "Chromium156 full1.04s/8frames and rally.96s/6frames: all14 native color seeks/playback-to-end pass; inspected uncertainty/shuttle/camera-cut/known-side captures .cache/browser-fixture-wrap/",
+          "Final full suite running in .cache/full-final.xml after text-wrap adjustment; prior1043passed/11optional skips"
+        ],
         "worktree": ".cache/rally-overlay-116"
       },
-      "checkpoint_at": 1792441102,
+      "checkpoint_at": 1792441482,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
         "branch": "codex/issue-116-export-source-time-preserving-annotated-",
         "epoch": 1,
-        "expires_at": 1792451902,
+        "expires_at": 1792452282,
         "granted_at": 1792441027,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -2448,6 +2473,7 @@
       "epoch": 1,
       "planned_at": 1792440580,
       "planned_by": "dootz1",
+      "pr_number": 118,
       "spec": {
         "acceptance": [
           "Add a backend overlay renderer and explicit CLI output mode for an entire original video and for eligible reviewed rally ranges. Reuse the audited source/immutable revision contract and #110 native video/audio validation, with an explicit overlay policy/version and source/annotation/config/output hashes in a completion manifest. Do not silently substitute a rally-only output for requested full video.",
@@ -2490,7 +2516,13 @@
         ]
       },
       "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "head_sha": "d29092cda901e887962c529c321c7b58ed63a01f",
+        "pr_number": 118,
+        "spec_hash": "90e88aff3e3d71491147232119b398d41d1bd9c36e03317bf7744790ba4e1bad"
+      }
     },
     "62": {
       "epoch": 0,
