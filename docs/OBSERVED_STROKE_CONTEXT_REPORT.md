@@ -3,6 +3,16 @@
 October 18, 2026. Version 0.17.0 adds an experimental feature builder for stroke
 learning. It does not install a new contact, family or side model in the app.
 
+October 19 update: the [original all-75-rally frozen comparison](HOLDOUT_RECOVERY_REPORT.md)
+is complete after safe interruption recovery and independent recipe review.
+All 21,610 native frames / 860 source rows / 677 eligible rows per task remain
+preserved. Predeclared R3 achieves eight-group family macro F1 0.475, requested
+six-family macro F1 0.465 and strict conditional family/side accuracy 0.421
+without confidence abstention. Its unchanged validation thresholds reduce joint
+accuracy to 0.143. These are weak-source conditional classifier results, not
+complete event or persistent-identity accuracy; no model is promoted. The
+preparation history below records the earlier access block, subsequently resolved.
+
 ## Feature contract
 
 `badminton.stroke_context.StrokeContext` takes a video, completed native player
@@ -103,14 +113,17 @@ upstream perception pretraining overlap is not established.
 The subsequent full-scope fetch encountered YouTube's sign-in requirement and
 stopped before downloading additional clips. No authentication or gate bypass
 was attempted. The three downloaded anchors are preserved for unscored native
-input checks; they do not replace the declared 75-rally head evaluation. That
-evaluation remains pending access to the remaining media.
+input checks; they did not replace the declared 75-rally head evaluation. At that
+stage evaluation was pending access to the remaining media. Public access later
+recovered all original clips, and the unchanged frozen comparison is now complete
+in the [recovery report](HOLDOUT_RECOVERY_REPORT.md). Test-informed changes require
+another complete-source holdout.
 
 Those input checks completed on 939 actual CUDA source frames. Both stages
 detect the reviewed cut at 24; tracker IDs 1/2/10 before it are disjoint from
 11/12 afterward. Court validity and shuttle-selection history reset there.
 There are 252 sampled finite 371-value feature packs, with main annotations
-unchanged. No family/side head predictions were opened. Reported visibility
+unchanged. At that input-check stage no family/side head predictions were opened. Reported visibility
 counts and valid feature arrays do not establish localization or shot accuracy.
 
 ## Validation and next work
