@@ -841,6 +841,20 @@
       "task_id": "63",
       "verb": "checkpoint"
     },
+    "windows-holdout63-final-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792423390,
+      "fingerprint": "687020ec0bf26b0c1fd3d3d3bfa4359dc13d3d0d618abee7ad26894fbbda94ba",
+      "status": "idle",
+      "verb": "review-next"
+    },
+    "windows-holdout63-final-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792423390,
+      "fingerprint": "f2e10a779860e6386106fe179c17cb576e319ae166acf97956eccf7ab9027d8e",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-holdout63-native-complete-v1": {
       "actor": "Ken0u",
       "at": 1792422862,
@@ -2801,6 +2815,20 @@
       "host_id": "MSI",
       "registered_at": 1792420694,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    },
+    "MSI/windows-holdout63-final-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review",
+        "python-3.12"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792423390,
+      "session_id": "windows-holdout63-final-review-v1"
     },
     "MSI/windows-pilot80-review-v1": {
       "actor": "Ken0u",
