@@ -1350,6 +1350,15 @@
       "task_id": "119",
       "verb": "plan"
     },
+    "windows-external119-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792443314,
+      "epoch": 1,
+      "fingerprint": "e9c05efc33b0a3f9fd311f6e3d9524f3013da501fbc39cda3a54648468a9c5ee",
+      "status": "running",
+      "task_id": "119",
+      "verb": "checkpoint"
+    },
     "windows-holdout63-checkpoint-inventory-v1": {
       "actor": "Ken0u",
       "at": 1792421520,
@@ -2754,12 +2763,25 @@
       }
     },
     "119": {
+      "checkpoint": {
+        "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
+        "evidence": "Reproduced actual Review/external-merge -> verify-main QueueError before implementation. First fail-closed fence preserves original claim/spec/submission/independent review and observed source/merger/main, prevents automatic adoption, and creates one incident without starving later candidates.144focused existing/new queue/coordinator tests pass. Remaining explicit authenticated audited recovery and its negative cases/docs/full checks are not implemented yet. No PR/commit/push/review/completion claim.",
+        "head_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "remaining": "Build explicit recovery from immutable trusted coordination history, exact original head/base/spec/merged tree/current-main ancestry/source+main CI, real independent/non-author human evidence (owner attestation distinct from GitHub approval), resource terminal proof, idempotent outbox. Add negative/unknown and unrelated-task progress tests. Full project/exact-head CI/fresh independent/non-author human review before normal controller merge.",
+        "working_changes": [
+          "scripts/devops/coordinator.py",
+          "scripts/devops/queue.py",
+          "tests/test_agent_coordinator.py"
+        ],
+        "worktree": ".cache/worktrees/external119"
+      },
+      "checkpoint_at": 1792443314,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
         "branch": "codex/issue-119-fence-externally-merged-task-prs-without",
         "epoch": 1,
-        "expires_at": 1792453818,
+        "expires_at": 1792454114,
         "granted_at": 1792443018,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
