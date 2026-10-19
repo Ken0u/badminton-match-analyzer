@@ -124,6 +124,14 @@
       "task_id": "93",
       "verb": "integrate"
     },
+    "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
+      "actor": "github-actions[bot]",
+      "at": 1792423338,
+      "fingerprint": "a88ce414c10e4d308d4d4227d39b2ab817fa95c3421f11c17043ca16da587995",
+      "status": "running",
+      "task_id": "63",
+      "verb": "invalidate-review"
+    },
     "invalidate-69-a0004b67dac5ffb56b7c629a0a95141d5df7633f-77906a0aa27e151d482fc1d46f609daef7ff8855": {
       "actor": "github-actions[bot]",
       "at": 1792418630,
@@ -1517,6 +1525,7 @@
       "planned_at": 1792419525,
       "planned_by": "dootz1",
       "pr_number": 107,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Revalidate original-host PID, creation time, command, working directory, shared/research Store status and all durable native/feature/audit hash chains before recovery. Preserve source/frozen code/models, original annotations, worker records and prior outputs; never restart the one-shot launchers blindly.",
@@ -1569,7 +1578,7 @@
         ]
       },
       "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
         "head_sha": "67a74987a4ef39281b7c9d1be5ac6baeabd409cd",
