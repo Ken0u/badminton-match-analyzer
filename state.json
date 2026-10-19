@@ -1007,6 +1007,15 @@
       "task_id": "120",
       "verb": "review-result"
     },
+    "review120-result-v2-01a15493": {
+      "actor": "dootz1",
+      "at": 1792444945,
+      "epoch": 1,
+      "fingerprint": "36d45e2854bb48100211c23fae28c61b6e250aeac3044d2b560e4a937bd8d266",
+      "status": "review",
+      "task_id": "120",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -3132,18 +3141,37 @@
       "planned_by": "dootz1",
       "pr_number": 121,
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792444945,
         "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
-        "epoch": 1,
-        "expires_at": 1792455566,
-        "granted_at": 1792444766,
+        "evidence": [
+          "Same genuinely independent read-only reviewer session mac-review120-01a15493 obtained committed review_epoch2 for repaired PR121; isolated detached worktree .cache/review120-9e9706b, no tracked edits. PR exact head/base revalidated before submission.",
+          "Inspected complete four-file increment in prior review and bounded06afa2a..9e9706b repair. Both P2 findings are addressed: _redirected uses lstat reparse attributes on each path component and service cleanup ancestry; retained-handle regression preserves POSIX replacement and verified bytes/closure while accepting only expected Windows sharing denial. New native Windows root/job-directory junction regressions assert HTTP/config refusal.",
+          "Independent focused execution tests/test_media_export_api.py tests/test_rally_export.py tests/test_rally_video.py tests/test_rally_overlay.py:143passed,2Windows-only skipped, one upstream Starlette deprecation warning,14.61s. Report .cache/review120-9e9706b/.cache/evidence/focused.xml. Covers actual HTTP media/audio/rotation/historical revisions, job admission/failure/recovery, immutable provenance, unsafe paths/hash binding and handle closure.",
+          "Reran reviewer-authored12frame nonzero-origin VFR native/HTTP probe on exact repaired code: second Store live claim conflicts before planner call; all three modes preserve empty historical revision0 and zero denominators; annotated full downloaded MP4 has all12original relativePTS and matchingSHA256; source/annotations unchanged. .cache/evidence/independent-probe.json.",
+          "Independent metadata probes reject both an existing directory ancestor and an existing regular file carrying simulated Windows FILE_ATTRIBUTE_REPARSE_POINT; .cache/evidence/reparse-probe.json. Initial scratch probe referenced a nonexistent file and was corrected before final evidence; no native Windows reproduction claimed by this local probe.",
+          "Independently observed hosted exact-head run https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39326319203 completed success, all12jobs including native Windows/macOS, Python3.10/3.12, package, browser, bothcontainers and ci/gate. Windows job118313055113 full unfiltered pytest log:1121passed,11skipped,1warning in83.80s. Extract preserved .cache/evidence/windows-ci-summary.txt.",
+          "Ruff check and format --check pass all three changed Python files; git diff --check passes; isolated tracked worktree clean. Broader previous review assessment of Store admission/recovery, source-frame/PTS preservation, read-only revision planning, native renderer cleanup and authenticated receipt-bound routes remains applicable because their implementation is unchanged by this repair."
+        ],
+        "findings": [],
         "head_sha": "9e9706bbaacbfa346c46050739c01de3189f5153",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Local execution was macOS/Python3.12 using existing locked environment, with143focused tests and two native Windows tests skipped; complete native Windows suite was observed through hosted logs rather than executed locally.",
+          "Hosted Windows summary reports1121passed/11skipped. The two native junction cases are guarded only by os.name != nt and the full-suite command has no selection filter; their execution follows from inspected code, Windows runner identity and passing unfiltered suite. No per-test verbose receipt is available in successful CI.",
+          "No private videos, weights, inference, deployment, model promotion or running app upgrade exercised. Native output/software checks do not establish automatic badminton annotation accuracy.",
+          "Approval binds only to exact head9e9706b/base822e1c0/specce7dec72/implementationepoch1/reviewepoch2. Controller integration, merged-main verification and private candidate delivery remain outside this read-only review."
+        ],
         "pr_number": 121,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/badminton/api.py",
+          "backend/badminton/export_service.py",
+          "tests/test_media_export_api.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
         "session_id": "mac-review120-01a15493",
-        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
