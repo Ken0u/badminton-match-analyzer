@@ -797,6 +797,15 @@
       "task_id": "63",
       "verb": "checkpoint"
     },
+    "windows-holdout63-native-complete-v1": {
+      "actor": "Ken0u",
+      "at": 1792422862,
+      "epoch": 1,
+      "fingerprint": "b98ee4ae4507510f17fb3413b54f14818f1d266f40c7f9d0ff9f6ca2764d0f90",
+      "status": "running",
+      "task_id": "63",
+      "verb": "checkpoint"
+    },
     "windows-holdout63-native-start-v1": {
       "actor": "Ken0u",
       "at": 1792422478,
@@ -1421,23 +1430,24 @@
     "63": {
       "checkpoint": {
         "artifacts": [
+          ".cache/holdout63-recovery-v1/attempts/90154803ef344639b6aafd68009547f7/native-completed.json",
+          ".cache/holdout63-recovery-v1/attempts/90154803ef344639b6aafd68009547f7/admission-released.json",
           ".cache/holdout63-reviewed-execution-manifest.json",
-          ".cache/holdout63-independent-preflight.json",
-          ".cache/holdout63-recovery-v1/attempts/"
+          ".cache/holdout63-independent-preflight.json"
         ],
         "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
         "head_sha": "b9f9f6e64d8d5ec28318b2d91980968ec4bf071c",
         "pr_number": 107,
-        "remaining": "Observe exact new worker PID/creation/cwd/command and actual Store/artifacts. Never restart on timeout. Finish only missing eight native inputs, all75 feature/input audits, successful parent release, frozen CPU comparison and independent result audit; publish aggregate report and final CI/fresh review/controller integration. PROGRESS deprecated and untouched.",
-        "status": "950 tests pass with4optional skips on Python3.10 after verified main2485d32 merge. 23focused recovery tests, lint/format/text/link/dependency checks pass. Independent preflight approved exact code7bdfb1149c9684b178bf67997dc4138d329af5201733e22bd400abe35a4fae9f and final359-input manifest61c57c285790773136975e8b6f16afcd3d473ea571a53ff3a5a0c69d10a7fef5. Read-only strict recipe check passes all135 completed native artifacts. No head predictions opened. Beginning native recovery under actual main Store admission, preserving67completed chains+ordinal67player."
+        "remaining": "Finish all75features/input audits; actual successful native/feature parent release plus359sealedinputs and exactcode/protocol/manifestpreflight gate frozenCPUheads. Then independentlyauditall860savedrows/677denominators/unknown/unavailablecases, publish aggregate reports, final fresh exactheadreview/controllerintegration/main/privatecandidateverification. Keep original old parent interrupted, never falselycomplete it. PROGRESS deprecated untouched.",
+        "status": "Native recovery completed all75clips under real main parent18711a15dd5a4772bc0e2eb4cbe0a127. Actual Store parent completed, admission-released receipt exists and PID11516 exited after durable success. Reused67original native chains+ordinal67player and completed exactly15newstages;8newnative receipts, no original receipt/model/source/worker/annotation overwrite. All12exacthead CI checks pass. Independent preflight previously frozen/published before heads; no held-out head predictions opened yet. Feature/cache/full75input audit now running with a new shared parent."
       },
-      "checkpoint_at": 1792422478,
+      "checkpoint_at": 1792422862,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8a691435bf8003962a73162918c3f8d853c805e8",
         "branch": "codex/issue-63-safely-resume-and-complete-the-original-",
         "epoch": 1,
-        "expires_at": 1792433278,
+        "expires_at": 1792433662,
         "granted_at": 1792420694,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
