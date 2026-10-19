@@ -376,6 +376,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review105-01a15493-result-v1": {
+      "actor": "dootz1",
+      "at": 1792422391,
+      "epoch": 1,
+      "fingerprint": "83865281a51e88136364d80ba8733fd99a04f42f5fbed38cff1119cf37550659",
+      "status": "running",
+      "task_id": "105",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -1173,18 +1182,36 @@
       "planned_at": 1792421207,
       "planned_by": "dootz1",
       "pr_number": 106,
-      "review_claim": {
+      "repair_rounds": 1,
+      "review": {
         "actor": "dootz1",
+        "at": 1792422391,
         "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
-        "epoch": 1,
-        "expires_at": 1792432954,
-        "granted_at": 1792422154,
+        "evidence": [
+          "Fresh session mac-review105-01a15493 on Stanleys-Laptop.local obtained committed review grant mac-review105-01a15493-next-v1, task epoch 1 and review_epoch 1, before reviewing. Local HEAD and GitHub PR106 head/base match the exact supplied hashes; all three changed files are within frozen issue105 paths.",
+          "Read AGENTS.md, PROJECT_PLAN.md, PROGRESS.md, docs/BUG_REVIEW.md, docs/COLLABORATION.md, docs/automation/reviewer.md and .github/automation.json; read issue105 and the committed frozen task specification.",
+          "Inspected exact base-to-head diff and surrounding notice, selection, media, playback preparation, job polling and browser regression code. git diff --check passed.",
+          "Independently ran .cache/reviewer-105/probe.mjs against existing isolated fixture server PID50810 at port8002 without persisted edits: real original FFV1 raises media error code4; direct prepared recovery clears its error; frame3 seeks to 0.68s and ends at 0.72s; a newer shot-review notice is retained; delayed old playback response does not replace the newly selected YouTube fixture or its notice. No pageerror events.",
+          "Independently reran the remaining Play-rejection failure in .cache/reviewer-105/finding.mjs and visually inspected the saved screenshot. JSON evidence reports the stale red 'The element has no supported sources.' notice together with successful prepared media readyState4, no media error, ended=true at 0.72s and frame3.",
+          "Queried hosted run39274131194 metadata: required ci/gate and all 12 software checks are successful on the exact head; automation/policy remains failure pending this independent review. Inspected local .cache/full.xml: 928 total tests, 11 skipped, no failures/errors (917 passed)."
+        ],
+        "findings": [
+          "[P2] backend/badminton/static/app.js:1163-1168: Track rejected Play promises as owned playback failures too. After the unsupported original FFV1 source fires onerror, clicking Play runs v.play().catch(handleError) at line 911. handleError increments noticeVersion and replaces the owned message with 'The element has no supported sources.' The successful prepared-media canplay callback then fails the version equality check and leaves that stale red playback error visible. Independently reproduced with the real long-gap-vfr.mkv and real prepared media: readyState=4, mediaError=null, native frame=3, seek=0.68s, playback ended at 0.72s, while the error remains. This violates the requested stale original-media error recovery. Bind Play rejection reporting to the captured video/source/selection generation and the playback notice owner, while continuing to preserve unrelated newer notices; add a browser regression for Play on the failed original before proxy recovery. Evidence: .cache/reviewer-105/stale-play-rejection.json and stale-play-rejection.png."
+        ],
         "head_sha": "460d2ccf51302e6f837b77edc1db0af6f19bab4f",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Did not rerun the full backend suite or hosted matrix; inspected their exact-head receipts and local XML. Browser probes used the existing generated-media isolated server and mocked only cache-response delay; no server restart, data edits, annotation saves or inference jobs.",
+          "Review is restricted to the frozen playback notice scope and Chromium; it does not establish annotation accuracy or behavior in every browser. The complete import-browser script was not rerun because its fresh-empty catalog prerequisite is no longer true; direct real-media probes exercised the changed behavior."
+        ],
         "pr_number": 106,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/playback-tools.js",
+          "tests/import-browser.mjs"
+        ],
         "session_id": "mac-review105-01a15493",
-        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df"
+        "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df",
+        "verdict": "changes"
       },
       "review_epoch": 1,
       "spec": {
@@ -1224,7 +1251,7 @@
         ]
       },
       "spec_hash": "ebe203b942f9d684597d079821befd944d1dae6e4a354fc487aed9a3b4b5d3df",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
         "head_sha": "460d2ccf51302e6f837b77edc1db0af6f19bab4f",
