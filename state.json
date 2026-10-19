@@ -1397,6 +1397,15 @@
       "task_id": "108",
       "verb": "review-next"
     },
+    "windows-rally108-review-result-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1792438816,
+      "epoch": 3,
+      "fingerprint": "2f9a06424d8ff8396f19adc1d14cf4223655a0a42e457fdcd7120fdd154c1b4f",
+      "status": "review",
+      "task_id": "108",
+      "verb": "review-result"
+    },
     "windows-rally108-submit-e3-v1": {
       "actor": "Ken0u",
       "at": 1792438496,
@@ -1771,18 +1780,45 @@
       "planned_by": "dootz1",
       "pr_number": 112,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792438816,
         "base_sha": "246d14ff84424951adaf5ce10f5a27c2bda96f8a",
-        "epoch": 3,
-        "expires_at": 1792449296,
-        "granted_at": 1792438496,
+        "evidence": [
+          "Committed review-next receipt windows-rally108-review-next-e3-v1 grants task108 epoch3/review_epoch2 to MSI/windows-rally109-review-v1 at 1792438496, binding PR112/head a137ed5712f59e82acf55d126f4c04dbde6f96ab/base246d14ff84424951adaf5ce10f5a27c2bda96f8a/spec28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1. Task state and PR API were revalidated immediately before this verdict.",
+          "Independent detached worktree .cache/worktrees/rally108-review-e3-v1 is at the exact granted head. Read all four changed paths and the source, schema, storage, ingestion, identity, rotation and native FFmpeg logging contracts. Diff is confined to the four granted paths and tracked worktree remains clean.",
+          "Independent Python 3.12.14 pytest tests/test_rally_export.py: 33 passed in 4.43s, with explicit BADMINTON_ROOT, isolated BADMINTON_DATA_DIR and reviewer PYTHONPATH. Receipt: .cache/worktrees/rally108-review-e3-v1/.cache/reviewer-e3-v1/focused.xml.",
+          "Independent generated-only probes verify adjacent rallies retain disjoint native half-open ranges, all three mixed-eligibility rally IDs remain counted with explicit missing-boundary reasons, nonzero source origin/native PTS are preserved, and interior endings remain eligible via the next native PTS even without final sample duration. Receipt: .cache/worktrees/rally108-review-e3-v1/.cache/reviewer-e3-v1/probes-results.json.",
+          "The same probes preserve unknown player/family/side and original replay/camera context, reject boolean/infinite/negative timeline entries, reproduce an older revision plan after a newer save, and verify planning does not alter generated catalog/source/timeline bytes; new output is refused within application data.",
+          "Independent full Ruff check passes; Ruff format check reports 139 files already formatted. All four changed files pass UTF8/LF/document-link checks; git diff --check against the exact base passes. Existing uv pip check against the reviewer Python reports all 48 installed packages compatible; no packages were installed.",
+          "Independently queried check-runs for a137ed5712f59e82acf55d126f4c04dbde6f96ab: ci/gate and all constituent CI jobs succeeded in https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39312022582 . Reviewed behavior includes VFR/nonzero origin/rotation, final-frame endpoint availability, immutable revisions, concurrent input-change rejection, read-only SQLite access and exclusive-create output."
+        ],
+        "findings": [],
         "head_sha": "a137ed5712f59e82acf55d126f4c04dbde6f96ab",
-        "host_id": "MSI",
+        "limitations": [
+          "This independent review verifies the bounded immutable-revision source-frame export planner. It does not establish rendered-video behavior, audio synchronization, overlays, automatic annotation accuracy, complete event detection, or persistent player identity.",
+          "All exercised inputs and Stores were disposable generated fixtures under the detached reviewer worktree cache. No private source, shared application data, research job, model inference, model promotion, deployment, or running application was accessed or changed.",
+          "Local reviewer execution used the existing locked Python 3.12.14 environment. The full suite was not repeated locally by this reviewer; the 33 focused tests and additional independent probes passed, and the exact-head hosted CI run with Python 3.10/3.12, native Windows/macOS, browser/import, package and container checks was independently observed successful.",
+          "The current automation/policy check was still failing pending independent review when observed. Controller integration, merged-main verification and delivery remain separate gates; public-publishing compatibility incident 111 is outside this task and no publishing guard was changed.",
+          "An initial reviewer-only six-frame probe exceeded the existing fixture helper's uint8 color range. The probe was corrected to five frames in a fresh scratch directory, then passed; no implementation file was changed."
+        ],
         "pr_number": 112,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/badminton/rally_export.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_export.py",
+          "docs/REVIEWED_EXPORTS.md",
+          "backend/badminton/storage.py",
+          "backend/badminton/schemas.py",
+          "backend/badminton/ingest.py",
+          "backend/badminton/video.py",
+          "backend/badminton/orientation.py",
+          "backend/badminton/av_runtime.py",
+          "backend/badminton/identity.py"
+        ],
         "session_id": "windows-rally109-review-v1",
-        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
