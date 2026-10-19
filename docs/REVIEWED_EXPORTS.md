@@ -110,6 +110,8 @@ unknowns. Predicted events remain in provenance and are excluded from reviewed
 truth burn-in; the event report records included/excluded evidence and reasons.
 
 Saved visible shuttle points appear only at their exact native source frames.
+The panel background is composed before saved court edges, with exact shuttle
+markers drawn after text so upper-frame positions remain visible.
 Missing, invisible or unobserved positions do not become interpolated tracks.
 Reviewed scene labels and camera corrections remain visible context. Court
 geometry applies only within its saved range and expires at camera cuts; no

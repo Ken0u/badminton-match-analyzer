@@ -10,8 +10,9 @@ import numpy as np
 from .rally_export import _canonical
 
 OVERLAY_CONFIG = {
-    "version": 1,
+    "version": 2,
     "policy": "saved-reviewed-source-frames",
+    "layering": "panel background, saved court edges, text, exact saved shuttle markers",
     "events": "reviewed/corrected native exact frames or inclusive uncertainty intervals",
     "predictions": "provenance only; excluded from burn-in",
     "shuttle": "visible saved positions on exact source frames only",
@@ -183,6 +184,10 @@ def overlay_frame(pixels, snapshot, frame_index):
         factor = max(0.05, (panel_height - 4) / max(1, len(lines) * line_height))
         scale *= factor
         line_height = max(1, (panel_height - 4) // max(1, len(lines)))
+    # Compose the opaque background first, preserving saved spatial evidence
+    # even when its native coordinates intersect the text panel.
+    result[:panel_height] = 0
+    mask[:panel_height] = 1
     calibration = context["calibration"]
     if calibration:
         corners = np.array(
@@ -194,12 +199,6 @@ def overlay_frame(pixels, snapshot, frame_index):
         )
         cv2.polylines(result, [corners], True, (0, 220, 255), 2, cv2.LINE_8)
         cv2.polylines(mask, [corners], True, 1, 2, cv2.LINE_8)
-    for point in context["shuttle_points"]:
-        center = (round(point["x"] * (width - 1)), round(point["y"] * (height - 1)))
-        cv2.circle(result, center, 4, (255, 220, 0), 2, cv2.LINE_8)
-        cv2.circle(mask, center, 4, 1, 2, cv2.LINE_8)
-    result[:panel_height] = 0
-    mask[:panel_height] = 1
     for index, text in enumerate(lines):
         cv2.putText(
             result[:panel_height],
@@ -211,6 +210,11 @@ def overlay_frame(pixels, snapshot, frame_index):
             thickness,
             cv2.LINE_8,
         )
+    # Exact saved shuttle positions take visual priority over text glyphs.
+    for point in context["shuttle_points"]:
+        center = (round(point["x"] * (width - 1)), round(point["y"] * (height - 1)))
+        cv2.circle(result, center, 4, (255, 220, 0), 2, cv2.LINE_8)
+        cv2.circle(mask, center, 4, 1, 2, cv2.LINE_8)
     if source_frame is not None:
         rendered = av.VideoFrame.from_ndarray(result, format="rgb24")
         rendered.pts, rendered.time_base = source_frame.pts, source_frame.time_base

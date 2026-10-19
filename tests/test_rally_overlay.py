@@ -568,3 +568,75 @@ def test_long_and_unicode_saved_names_are_retained_in_wrapped_burn_in(tmp_path):
     )
     assert rendered == expected
     assert "A" * 80 + "\\u540d" in rendered
+
+
+@pytest.mark.parametrize("spatial", ["shuttle", "court"])
+def test_saved_spatial_evidence_inside_upper_text_panel_remains_visible(
+    tmp_path, spatial
+):
+    store, video, _, saved, _ = context(tmp_path)
+    snapshot = saved.model_dump()
+    # Isolate the upper-panel case found by independent review. The panel is
+    # valid too; spatial evidence must survive composition at its saved location.
+    snapshot["calibrations"] = []
+    snapshot["shuttle_points"] = []
+    if spatial == "shuttle":
+        snapshot["shuttle_points"] = [
+            {"frame": 0, "visible": True, "x": 0.5, "y": 0.04, "notes": ""}
+        ]
+        color = np.array([255, 220, 0])
+    else:
+        snapshot["calibrations"] = [
+            {
+                "start_frame": 0,
+                "end_frame": 3,
+                "corners": [
+                    {"x": 0.1, "y": 0.04},
+                    {"x": 0.9, "y": 0.04},
+                    {"x": 0.9, "y": 0.9},
+                    {"x": 0.1, "y": 0.9},
+                ],
+            }
+        ]
+        color = np.array([0, 220, 255])
+    times = timestamps_for(store.data, video["id"])
+    _, _, frame = next(iter_frames(video, tmp_path, times, 0, 1))
+    rendered, mask, ctx = overlay_frame(frame, snapshot, 0)
+    pixels = rendered.to_ndarray(format="rgb24")
+    row = round(0.04 * (video["height"] - 1))
+    top = pixels[max(0, row - 6) : row + 7]
+    assert np.any(np.all(top == color, axis=2))
+    if spatial == "shuttle":
+        column = round(0.5 * (video["width"] - 1))
+        region = top[:, column - 6 : column + 7]
+        assert np.count_nonzero(np.all(region == color, axis=2)) >= 20
+        assert ctx["shuttle_points"][0]["x"] == 0.5
+    else:
+        assert np.count_nonzero(np.all(top == color, axis=2)) > 300
+        assert ctx["calibration"] is not None
+    assert mask[max(0, row - 6) : row + 7].any()
+    revised = store.save_annotations(video["id"], Annotations.model_validate(snapshot))
+    plan = plan_rally_exports(store, video["id"], revised.revision, tmp_path)
+    output = tmp_path / "upper-panel-export"
+    manifest = render_annotated_videos(store, plan, tmp_path, output, scope="full")
+    path, _ = exported_path(output, manifest)
+    with av.open(str(path)) as container:
+        decoded = next(container.decode(video=0)).to_ndarray(format="rgb24")
+    top = decoded[max(0, row - 6) : row + 7]
+    if spatial == "shuttle":
+        region = top[:, column - 6 : column + 7]
+        assert (
+            np.count_nonzero(
+                (region[:, :, 0] > 180)
+                & (region[:, :, 1] > 140)
+                & (region[:, :, 2] < 100)
+            )
+            >= 20
+        )
+    else:
+        assert (
+            np.count_nonzero(
+                (top[:, :, 0] < 80) & (top[:, :, 1] > 160) & (top[:, :, 2] > 180)
+            )
+            > 300
+        )
