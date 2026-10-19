@@ -532,6 +532,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review108-01a15493-result-v1": {
+      "actor": "dootz1",
+      "at": 1792424330,
+      "epoch": 1,
+      "fingerprint": "8884d5444d5268cf35993a2d0fdc28664a7ef9c5e80e0f1d76065dbb62d046d5",
+      "status": "review",
+      "task_id": "108",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -598,6 +607,14 @@
       "fingerprint": "144208cb8b16cb549d07d1c61701e5c974f76d19ff9774658eccc961bc39bb88",
       "status": "ready",
       "task_id": "108",
+      "verb": "plan"
+    },
+    "spec-110-cc33c7f0bc2e1d205ba7c4a0f3eca8cd60a17614a1e348a10c027251f88987a5": {
+      "actor": "dootz1",
+      "at": 1792424330,
+      "fingerprint": "1f79d9a4a971bbefaaee96a6ef431c93d20fe8f3f1a2475fc5832d1bad3a1312",
+      "status": "ready",
+      "task_id": "110",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -1559,18 +1576,37 @@
       "planned_at": 1792422680,
       "planned_by": "dootz1",
       "pr_number": 109,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792424330,
         "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
-        "epoch": 1,
-        "expires_at": 1792434777,
-        "granted_at": 1792423977,
+        "evidence": [
+          "Committed review-next receipt mac-review108-01a15493-next-v1 grants task epoch 1/review_epoch 1 to fresh read-only session mac-review108-01a15493; exact PR head/base/spec revalidated before submission.",
+          "Read all four changed files plus surrounding schema, storage, ingestion, source resolution and orientation contracts; changed paths exactly match granted scope; clean worktree and git diff --check.",
+          "Independent .venv/bin/python -m pytest -q tests/test_rally_export.py: 33 passed; .cache/reviewer-108/focused.xml. An initial scratch-parent setup error was corrected before rerun.",
+          "Independent full .venv/bin/python -m pytest -q: 950 passed, 11 optional skips, one Starlette deprecation warning; .cache/reviewer-108/full.xml.",
+          "Independent generated probes reject boolean/infinite/negative timestamp inputs and a stale saved event timestamp, preserve next-native-PTS eligibility without final sample duration, and reject an output path symlinked into Store data; .cache/reviewer-108/probes/results.json.",
+          "Independent Ruff check and format checks pass: 137 files already formatted. Existing root uv pip check --python task/.venv/bin/python checks 47 installed packages, all compatible.",
+          "Observed generated VFR/nonzero-origin and rotation fixtures, final-frame endpoint exclusion when unavailable, old-revision stability, scene/camera/calibration preservation, unknown and predicted interior event retention, concurrent input rechecks, immutable SQLite reader, and exclusive-create JSON output behavior."
+        ],
+        "findings": [],
         "head_sha": "ec951b1e70d210a066d9593234eb9f51eaa90dd2",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "This review verifies source-frame export planning, not rendering, audio synchronization, overlays, full-match annotation accuracy, or persistent player identity.",
+          "No private sources, model inference, running applications, GPU jobs, research artifacts, deployment, or model promotion were exercised.",
+          "Local validation used Python 3.12.13; optional model/GPU cases remain skipped. Hosted exact-head CI was queued/in progress when the verdict was prepared; automation/policy currently reports failure and the controller remains responsible for integration eligibility.",
+          "The task environment lacks pip. Dependency compatibility was independently checked with the existing uv executable against the task Python; no packages were installed."
+        ],
         "pr_number": 109,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/rally_export.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_export.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
         "session_id": "mac-review108-01a15493",
-        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
+        "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
@@ -1619,6 +1655,54 @@
         "pr_number": 109,
         "spec_hash": "28650eeccbfdb43b3e6b1e99741440368fd8927293544b9be4160e2b1f909cc1"
       }
+    },
+    "110": {
+      "epoch": 0,
+      "planned_at": 1792424330,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Add a CLI and backend renderer consuming the source-audited plan from #108. Revalidate source bytes, native timeline, annotation revision/content and plan provenance before encoding; reject edited or stale plans rather than trusting arbitrary range fields.",
+          "For every plan rally preserve its eligibility/reasons in a manifest. Encode each eligible half-open source-frame range to H.264 MP4 with identity native-frame mapping, relative presentation times, correct display orientation and exact final sample duration; no interpolated or duplicated native frames.",
+          "Preserve source audio availability and relative timing including delayed/nonzero-origin audio. Disclose unavailable audio or source cases; do not infer exact boundaries for uncertain/partial/predicted/ineligible rallies.",
+          "Write only to a newly created requested output directory outside application data; use staged outputs and completion receipts, refuse overwrite/path traversal and clean incomplete outputs on failure. Keep original media, application annotations, prediction artifacts and previous exports immutable; preserve scene/camera/calibration context in per-clip provenance.",
+          "Verify decoded frame count, pixel orientation, PTS, packet/sample/container durations, audio offsets and output/source/revision hashes before publishing success. Include generated singles/doubles, VFR, nonzero origin, final-frame, odd-size/rotation, delayed/audio-free, stale-plan, cancellation/failure and non-overwrite regressions plus an independent browser seek/playback check. Document this delivers plain rally clips; burn-in annotation rendering and frontend controls remain explicit #70 follow-ups."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "108"
+        ],
+        "exclusions": [
+          "No frontend migration or editor features, annotation/inference/model changes, destructive data/storage migration, workflow/deployment changes, paid services, research restarts or running-application upgrades.",
+          "Do not render predicted event labels as reviewed truth or claim full-match annotation correctness from software/media checks."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Render source-time-preserving reviewed rally video clips from a verified immutable export plan.",
+        "paths": [
+          "backend/badminton/rally_video.py",
+          "backend/badminton/rally_export.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_video.py",
+          "docs/REVIEWED_EXPORTS.md"
+        ],
+        "priority": 90,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Focused generated source/video/audio/provenance/CLI tests, real FFmpeg and Chromium clip seek/playback evidence, required full project checks and exact-head CI.",
+          "Fresh independent exact-head/base/spec agent review, controller integration, exact merged-main verification and complete private candidate package/image receipts."
+        ]
+      },
+      "spec_hash": "7d1ef75d830f44e318ff36910d02591a8ed15387ff88047f8d24c681ef0ef829",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
