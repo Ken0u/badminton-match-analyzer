@@ -1330,6 +1330,14 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-public-candidates111-owner-scope-v1": {
+      "actor": "Ken0u",
+      "at": 1792438679,
+      "fingerprint": "d1188ca3c8b7285ac557b7e723d4631fd862204e1ae6c2c97d3b35f5647d89bb",
+      "status": "ready",
+      "task_id": "111",
+      "verb": "human-approved"
+    },
     "windows-public-candidates111-plan-v1": {
       "actor": "Ken0u",
       "at": 1792438589,
@@ -1874,8 +1882,14 @@
     },
     "111": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792438679,
+        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+      },
       "planned_at": 1792438589,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Introduce an explicit reviewed candidate visibility policy. Public publication is permitted only for the configured public repository in public mode; private mode retains its original private-repository and private-package requirements. Missing, invalid or mismatched visibility fails closed before publication.",
@@ -1919,7 +1933,7 @@
         ]
       },
       "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
