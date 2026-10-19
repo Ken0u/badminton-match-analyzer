@@ -3837,6 +3837,7 @@
       "status": "blocked"
     },
     "124": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39338668316",
       "checkpoint": {
         "artifacts": ".cache/export-download-124/.cache/{full-tests.xml,full-tests.log,evidence/implementation-handoff.md,evidence/before-race.json,evidence/after-race.json}",
         "base_sha": "c1ba9dc93738ccb01859337e4a3f5359b886291f",
@@ -3860,7 +3861,7 @@
         "spec_hash": "3eec683a6a8dda048aeb41497cf8950326047696d6c1a181fcf329188c355045"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792450477,
