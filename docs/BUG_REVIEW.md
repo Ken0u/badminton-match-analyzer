@@ -1,12 +1,14 @@
 # Bug review and implementation progress
 
-Reviewed October 18, 2026. Fixes and remaining failures have the checks listed below.
+Reviewed October 19, 2026. Fixes and remaining failures have the checks listed below.
+
+The October 19 [frozen holdout recovery](HOLDOUT_RECOVERY_REPORT.md) fixes unsafe one-shot restart assumptions after 67 completed rally input chains. The resumable CLI preserves original receipts and ordinal 67's player run, verifies native recipe/source context, uses real shared admission and completes all 75 audited inputs before frozen CPU heads. Independent preflight caught incomplete saved-summary metric checks and missing between-rally input revalidation; corruption/change regressions cover both repairs. Actual full-source execution retains 860 rows / 677 eligible per task. R3 strict conditional family/side accuracy is 0.421 without confidence abstention and 0.143 with unchanged validation thresholds; requested-family failures prevent promotion. Software checks pass (950 tests / four optional skips, plus all 12 implementation-head CI checks); they do not establish annotation accuracy.
 
 The [autonomous DevOps review](AUTONOMOUS_DEVOPS_REPORT.md) adds atomic task/resource reservations, stale ownership/review fencing, journalled merge recovery, failed-main repair and private publishing completion checks. Independent review found gaps in cross-host recovery, malformed-command handling, closed task eligibility, Windows executable resolution and privileged-entry-point classification; focused regressions cover their fixes. GitHub Free uses controller-enforced CI/review/conversation checks without requiring paid branch protections; GitHub cannot prevent direct writes or manual bypasses. Automation remains in observation mode until owner Project credentials and the two-host pilot pass. These software checks do not establish badminton accuracy.
 
 The [direct-video learner review](VISUAL_EVENT_LEARNING_REPORT.md) checks source clock/cut isolation, missing context, changed cache receipts, mixed encoder runtimes, held-out normalization leakage and altered validation selections. Generated-data tests verify fast/window equivalence and refuse changed weights or thresholds. Runtime inspection caught a copied research launcher using an isolated default data root; the existing worker was adopted into the real app's job lock without re-inference. All 800 source caches and the camera refactor now pass independent integrity/equivalence audits. The fixed 100-epoch experiment and 200-clip test are complete; independently recomputed contact F1 0.159 and full tuple F1 0.028 expose severe recognition/generalization failures. No model is promoted. The software suite remains 707 passed / four optional GPU skips; those tests do not establish annotation accuracy.
 
-The [follow-up source audit](FOLLOWUP_SUPERVISION_REPORT.md) identifies conflicting family labels, inferred results inside annotation containers, missing time fields, retained flawed rows and known cross-corpus match overlaps. These sources remain separate from the completed RGB experiment. All 75 original ShuttleSet holdout clips are recovered and clock-verified. Review of all 26 detected cuts finds close-ups and lingering wipes: a cut does not certify an immediately usable live-court view. Full native-input/model evaluation remains pending, with unsupported cases retained.
+The [follow-up source audit](FOLLOWUP_SUPERVISION_REPORT.md) identifies conflicting family labels, inferred results inside annotation containers, missing time fields, retained flawed rows and known cross-corpus match overlaps. These sources remain separate from the completed RGB experiment. All 75 original ShuttleSet holdout clips are recovered and clock-verified. Review of all 26 detected cuts finds close-ups and lingering wipes: a cut does not certify an immediately usable live-court view. The [subsequent frozen evaluation](HOLDOUT_RECOVERY_REPORT.md) is complete with unsupported cases retained; its recognition failures and conditional source assumptions remain explicit.
 
 The [AI CUP contact-supervision audit](AICUP_CONTACT_SUPERVISION_REPORT.md)
 identifies a different 1/2 backhand convention, numbered clips lacking original
@@ -81,8 +83,9 @@ additional flight samples. All 1,270 retained default vectors match the frozen
 experiment exactly. Validation family F1 improves modestly, but joint recognition
 and several families still fail; no new model is installed. The independent
 source has a red court and a source-verified cut at 24, so previous green-only
-research assumptions are explicitly inapplicable. Full-source scoring remains
-pending after its media fetch required sign-in.
+research assumptions are explicitly inapplicable. The later public-media recovery
+and [frozen full-source scoring](HOLDOUT_RECOVERY_REPORT.md) are complete; conditional
+recognition failures remain explicit and no model is promoted.
 
 The [first raw-video learning evaluation](R2_LEARNING_REPORT.md) has completed
 all 203 corrected native cases and both frozen held-out learners. Contact weak
