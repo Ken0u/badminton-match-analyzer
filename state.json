@@ -610,6 +610,28 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "windows-playback69-review-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792419399,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "epoch": 3,
+        "expires_at": 1792430199,
+        "granted_at": 1792419399,
+        "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "host_id": "MSI",
+        "pr_number": 102,
+        "review_epoch": 1,
+        "session_id": "windows-playback69-review-v1",
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+      },
+      "epoch": 3,
+      "fingerprint": "df068d698eb9946c4d99f963eaf7985a0e8d782759268bee373a1664671fd764",
+      "status": "granted",
+      "task_id": "69",
+      "verb": "review-next"
+    },
     "windows-playback69-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792418461,
@@ -1042,6 +1064,20 @@
       "planned_by": "dootz1",
       "pr_number": 102,
       "reason": "Active specification edited; preserve work and obtain a new scope grant",
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "77906a0aa27e151d482fc1d46f609daef7ff8855",
+        "epoch": 3,
+        "expires_at": 1792430199,
+        "granted_at": 1792419399,
+        "head_sha": "558a5ae7b26db68366e4085c7dff31463a5939e9",
+        "host_id": "MSI",
+        "pr_number": 102,
+        "review_epoch": 1,
+        "session_id": "windows-playback69-review-v1",
+        "spec_hash": "e302dc2127bc2bb0d10f838e502fd0dc32d8d6df854d546b0b031040fa09eefd"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Preserve source PTS, orientation and native frame identities across proxy playback and seeks.",
