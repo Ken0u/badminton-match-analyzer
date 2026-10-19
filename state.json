@@ -857,6 +857,40 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "windows-holdout63-final-review-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792423540,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "epoch": 1,
+        "expires_at": 1792434340,
+        "granted_at": 1792423540,
+        "head_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
+          "limitations": [
+            "Orchestration source byte SHA7bdfb1149c9684b178bf67997dc4138d329af5201733e22bd400abe35a4fae9f was frozen and independently reviewed before head predictions; native perception uses the unchanged original 54-file frozen runtime, and feature/evaluation uses its original 55-file frozen runtime.",
+            "All75source clips/21610frames/860rows/677eligible per task retained, including183unknown truth rows and109unavailable eligible inputs; all original67chains+ordinal67player preserved and exactly15missing native stages completed under real main Store admission.",
+            "Scores are conditional on published weak source clock, hitter foot association and court geometry, not automatic contacts, persistent identity, doubles or complete annotation accuracy. Perception pretraining overlap is unestablished. No app truth overwrite, model promotion or installation. This consumed holdout cannot tune future changes; use another complete-source holdout.",
+            "Independent actual saved-result audit receipt SHAe2fc946c246d8b0273a16504f26b57d944b6a5958ef5beb56e69e9e4b577f7b2 uses separate count logic without app/scoring imports, model loads or inference. Raw local artifacts are intentionally not supplied by a clone."
+          ],
+          "model_sha256": "cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc",
+          "receipt_sha256": "f8aca7e1c90bcdb65ef6fbd462bc6cdf555f72d1e683793695a845572a79ef5f",
+          "source_sha256": "76c75c4bcecff975926c91fb94ad1e3e4b49df96f376db5b06c46f76c8ac11c5"
+        },
+        "pr_number": 107,
+        "review_epoch": 1,
+        "session_id": "windows-holdout63-final-review-v1",
+        "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc"
+      },
+      "epoch": 1,
+      "fingerprint": "355e0e61d82739250ea0f91a0d6589d4851f999980c16b7cd0b5dbf4ad65386c",
+      "status": "granted",
+      "task_id": "63",
+      "verb": "review-next"
+    },
     "windows-holdout63-final-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792423390,
@@ -907,6 +941,15 @@
       "at": 1792423301,
       "epoch": 1,
       "fingerprint": "38a84fb0a494e4cd40e452a1a87a646856585a72dc5220d6e4ce750b7cf03953",
+      "status": "review",
+      "task_id": "63",
+      "verb": "submit"
+    },
+    "windows-holdout63-submit-main6e-v1": {
+      "actor": "Ken0u",
+      "at": 1792423540,
+      "epoch": 1,
+      "fingerprint": "7c0333f5d9fa02799aa8113787572da0bf83cab39ee394ce48f9f2d14f5fc886",
       "status": "review",
       "task_id": "63",
       "verb": "submit"
@@ -1560,6 +1603,32 @@
       "planned_by": "dootz1",
       "pr_number": 107,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "epoch": 1,
+        "expires_at": 1792434340,
+        "granted_at": 1792423540,
+        "head_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
+          "limitations": [
+            "Orchestration source byte SHA7bdfb1149c9684b178bf67997dc4138d329af5201733e22bd400abe35a4fae9f was frozen and independently reviewed before head predictions; native perception uses the unchanged original 54-file frozen runtime, and feature/evaluation uses its original 55-file frozen runtime.",
+            "All75source clips/21610frames/860rows/677eligible per task retained, including183unknown truth rows and109unavailable eligible inputs; all original67chains+ordinal67player preserved and exactly15missing native stages completed under real main Store admission.",
+            "Scores are conditional on published weak source clock, hitter foot association and court geometry, not automatic contacts, persistent identity, doubles or complete annotation accuracy. Perception pretraining overlap is unestablished. No app truth overwrite, model promotion or installation. This consumed holdout cannot tune future changes; use another complete-source holdout.",
+            "Independent actual saved-result audit receipt SHAe2fc946c246d8b0273a16504f26b57d944b6a5958ef5beb56e69e9e4b577f7b2 uses separate count logic without app/scoring imports, model loads or inference. Raw local artifacts are intentionally not supplied by a clone."
+          ],
+          "model_sha256": "cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc",
+          "receipt_sha256": "f8aca7e1c90bcdb65ef6fbd462bc6cdf555f72d1e683793695a845572a79ef5f",
+          "source_sha256": "76c75c4bcecff975926c91fb94ad1e3e4b49df96f376db5b06c46f76c8ac11c5"
+        },
+        "pr_number": 107,
+        "review_epoch": 1,
+        "session_id": "windows-holdout63-final-review-v1",
+        "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Revalidate original-host PID, creation time, command, working directory, shared/research Store status and all durable native/feature/audit hash chains before recovery. Preserve source/frozen code/models, original annotations, worker records and prior outputs; never restart the one-shot launchers blindly.",
@@ -1612,12 +1681,12 @@
         ]
       },
       "spec_hash": "ff66fad2eb08191abf7004244c1fb2bf64d8917222ff931f8680f5a3ca9570cc",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "2485d32bf9385d831220aa672b53e0ab38a23101",
-        "head_sha": "67a74987a4ef39281b7c9d1be5ac6baeabd409cd",
+        "base_sha": "6e23ffc567a9c2c632a727acc5dbf093d00168cb",
+        "head_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
         "native_evidence": {
-          "code_sha": "67a74987a4ef39281b7c9d1be5ac6baeabd409cd",
+          "code_sha": "a2dcdc84d38eb283767dece737f38c0952972649",
           "limitations": [
             "Orchestration source byte SHA7bdfb1149c9684b178bf67997dc4138d329af5201733e22bd400abe35a4fae9f was frozen and independently reviewed before head predictions; native perception uses the unchanged original 54-file frozen runtime, and feature/evaluation uses its original 55-file frozen runtime.",
             "All75source clips/21610frames/860rows/677eligible per task retained, including183unknown truth rows and109unavailable eligible inputs; all original67chains+ordinal67player preserved and exactly15missing native stages completed under real main Store admission.",
