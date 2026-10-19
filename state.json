@@ -269,6 +269,15 @@
       "task_id": "120",
       "verb": "checkpoint"
     },
+    "mac-01a15493-120-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792444150,
+      "epoch": 1,
+      "fingerprint": "519f667aea0e0e3763044c66d8de88ae4328fac705acab97cad16ced7c8f7fec",
+      "status": "review",
+      "task_id": "120",
+      "verb": "submit"
+    },
     "mac-01a15493-120-tested": {
       "actor": "dootz1",
       "at": 1792444074,
@@ -905,6 +914,35 @@
       "status": "review",
       "task_id": "116",
       "verb": "review-result"
+    },
+    "review120-next-01a15493": {
+      "actor": "dootz1",
+      "at": 1792444150,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "epoch": 1,
+        "expires_at": 1792454950,
+        "granted_at": 1792444150,
+        "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 121,
+        "review_epoch": 1,
+        "session_id": "mac-review120-01a15493",
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+      },
+      "epoch": 1,
+      "fingerprint": "a39ec6ea261eaa5cc90cf75537b1af25cbf184a900614880a816669214d1bb4d",
+      "status": "granted",
+      "task_id": "120",
+      "verb": "review-next"
+    },
+    "review120-register-01a15493": {
+      "actor": "dootz1",
+      "at": 1792444150,
+      "fingerprint": "529b38cf5f74c157af361f44c5fdcc55d45458187290ebcb89802ad0ee422244",
+      "status": "ok",
+      "verb": "register"
     },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
@@ -2929,6 +2967,21 @@
       "epoch": 1,
       "planned_at": 1792443507,
       "planned_by": "dootz1",
+      "pr_number": 121,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "epoch": 1,
+        "expires_at": 1792454950,
+        "granted_at": 1792444150,
+        "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 121,
+        "review_epoch": 1,
+        "session_id": "mac-review120-01a15493",
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Add a typed POST export request bound to an existing video and explicit saved annotation revision, selecting plain rally clips, annotated rally clips or an annotated full original video. Admit through the existing real Store/shared web job queue before any expensive source audit/encoding; return 202 promptly with a durable job identifier. Preserve concurrent-job conflicts, queued/running/completed/failed/interrupted reporting and existing analysis pause behavior.",
@@ -2970,7 +3023,13 @@
         ]
       },
       "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "822e1c0d5ce1a8ed7672060ff7cb5af5ca7d1112",
+        "head_sha": "06afa2a716eef55cfe9cc8a389a63e15880e3d35",
+        "pr_number": 121,
+        "spec_hash": "ce7dec72fa73cfa05d5ec6cf262aada019ccd9965f80ff150a921752467db5a1"
+      }
     },
     "62": {
       "epoch": 0,
@@ -4566,6 +4625,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792441640,
       "session_id": "mac-review116-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review120-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792444150,
+      "session_id": "mac-review120-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-20261019-01a15477": {
       "actor": "dootz1",
