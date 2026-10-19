@@ -235,6 +235,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-pilot80-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792415967,
+      "epoch": 1,
+      "fingerprint": "5abf601947a0211fba412f1ddcabd82ea33dfa33101fe537fce8741fa5b91cab",
+      "status": "running",
+      "task_id": "80",
+      "verb": "checkpoint"
+    },
     "windows-pilot80-next-v1": {
       "actor": "Ken0u",
       "at": 1792415601,
@@ -254,6 +263,15 @@
       "status": "granted",
       "task_id": "80",
       "verb": "next"
+    },
+    "windows-pilot80-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792416012,
+      "epoch": 1,
+      "fingerprint": "9a83d556ce6619210a9835a18f05ef983a7ba605219554538f372c7a45ac4b0f",
+      "status": "review",
+      "task_id": "80",
+      "verb": "submit"
     }
   },
   "tasks": {
@@ -748,12 +766,25 @@
       "status": "needs_human"
     },
     "80": {
+      "checkpoint": {
+        "branch": "codex/issue-80-document-a-reproducible-windows-locked-r",
+        "evidence": [
+          "906 passed / 11 skipped",
+          "120 focused tests passed",
+          "Ruff/Prettier/dependencies/repository/diff checks pass"
+        ],
+        "head_sha": "49c266486371784fc4bcbfad37bae0b6b40db0f7",
+        "human_authorization": "Owner confirmed dootz1 personally approved rollout #83 before merging, and explicitly requested manual merge of this Windows PR.",
+        "pr_number": 90,
+        "remaining": "Fresh independent review, passing exact-head CI, owner-requested manual merge, main and private candidate verification. Owner deprecated PROGRESS.md; issue checkpoints are authoritative."
+      },
+      "checkpoint_at": 1792415967,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9aa0f437fd5cacd948161ae09149ac2855f01c31",
         "branch": "codex/issue-80-document-a-reproducible-windows-locked-r",
         "epoch": 1,
-        "expires_at": 1792426401,
+        "expires_at": 1792426767,
         "granted_at": 1792415601,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -762,6 +793,7 @@
       "epoch": 1,
       "planned_at": 1792395547,
       "planned_by": "Ken0u",
+      "pr_number": 90,
       "spec": {
         "acceptance": [
           "Run on the actual Windows host as its own authenticated collaborator in a fresh linked worktree after a committed grant.",
@@ -798,7 +830,13 @@
         ]
       },
       "spec_hash": "7ffd88dc6c3f100b78da755bd605ca51863e5147bf6e5c12924e62ef3f81efab",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "9aa0f437fd5cacd948161ae09149ac2855f01c31",
+        "head_sha": "49c266486371784fc4bcbfad37bae0b6b40db0f7",
+        "pr_number": 90,
+        "spec_hash": "7ffd88dc6c3f100b78da755bd605ca51863e5147bf6e5c12924e62ef3f81efab"
+      }
     },
     "81": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39256504972",
