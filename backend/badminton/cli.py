@@ -93,6 +93,13 @@ def main():
         "--recognition-run", help="Completed shot-family recognition job ID"
     )
     evaluate.add_argument("--output", type=Path, help="Also save the JSON report")
+    export_plan = commands.add_parser(
+        "export-rally-plan",
+        help="Plan reviewed source-frame rally exports without rendering",
+    )
+    export_plan.add_argument("video_id")
+    export_plan.add_argument("--revision", type=int, required=True)
+    export_plan.add_argument("--output", type=Path, required=True)
     recognize = commands.add_parser(
         "recognize",
         help="Suggest singles shot families from cached pose and shuttle runs",
@@ -194,6 +201,17 @@ def main():
         except (ConflictError, ValueError, OSError, ImportError) as exc:
             parser.error(str(exc))
         print(json.dumps(result, indent=2))
+    elif args.command == "export-rally-plan":
+        from .rally_export import ExportPlanStore, plan_rally_exports, write_export_plan
+
+        try:
+            plan = plan_rally_exports(
+                ExportPlanStore(DATA), args.video_id, args.revision, ROOT
+            )
+            write_export_plan(args.output, plan, DATA)
+        except (KeyError, ValueError, OSError) as exc:
+            parser.error(str(exc))
+        print(json.dumps(plan, indent=2))
     elif args.command == "import-aicup2023":
         from .aicup_data import import_aicup2023
 
