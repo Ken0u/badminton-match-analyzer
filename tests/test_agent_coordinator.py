@@ -727,6 +727,25 @@ def test_controller_project_token_and_base_checkout_contract():
     assert "Private candidates" in workflow
 
 
+def test_candidate_workflow_separates_verified_source_from_frozen_publisher():
+    workflow = (
+        Path(__file__).resolve().parents[1] / ".github/workflows/release.yml"
+    ).read_text()
+    assert "AGENT_PROJECT_TOKEN" not in workflow
+    assert "publisher: ${{ steps.validate.outputs.publisher }}" in workflow
+    assert workflow.count("ref: main") == 1
+    for job in ("package:", "images:"):
+        block = workflow.split("  " + job, 1)[1].split("\n  images:", 1)[0]
+        assert "ref: ${{ needs.eligibility.outputs.source }}" in block
+        assert "ref: ${{ needs.eligibility.outputs.publisher }}" in block
+        assert "path: source" in block and "path: publisher" in block
+        assert "python publisher/scripts/release_candidate.py" in block
+        assert "PUBLISHER_SHA: ${{ needs.eligibility.outputs.publisher }}" in block
+    assert "context: source" in workflow
+    assert "inventory --source-root source" in workflow
+    assert "image-receipt --source-root source" in workflow
+
+
 def test_native_inference_evidence_is_bound_to_source_model_and_code():
     args = list(policy_fixture())
     args[5] = {**CONFIG, "native_evidence_paths": ["backend/time.py"]}

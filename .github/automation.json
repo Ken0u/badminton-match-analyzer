@@ -3,6 +3,7 @@
   "repository": "Ken0u/badminton-match-analyzer",
   "mode": "active",
   "integration_enforcement": "controller",
+  "candidate_visibility": "public",
   "coordination_branch": "codex/coordination",
   "trusted_logins": [
     "Ken0u",
