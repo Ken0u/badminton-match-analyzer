@@ -892,6 +892,26 @@
       "task_id": "108",
       "verb": "submit"
     },
+    "mac-01a156d5-next-after130-main-v1": {
+      "actor": "dootz1",
+      "at": 1792459313,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "branch": "codex/issue-95-establish-react-typescript-vite-frontend",
+        "epoch": 1,
+        "expires_at": 1792470113,
+        "granted_at": 1792459313,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+      },
+      "epoch": 1,
+      "fingerprint": "27575012a3fd98434f8c41ad0f248a511bf1c4cdb1bd8669f9b0590b6f7549e9",
+      "status": "granted",
+      "task_id": "95",
+      "verb": "next"
+    },
     "mac-01a156d5-next-v1": {
       "actor": "dootz1",
       "reason": "host already owns work in this lane",
@@ -2837,6 +2857,28 @@
       "status": "ready",
       "task_id": "91",
       "verb": "human-approved"
+    },
+    "windows-progress91-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792459313,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "epoch": 1,
+        "expires_at": 1792470113,
+        "granted_at": 1792459313,
+        "head_sha": "4564fa01109b34434643c4a76420beccbfc3d9de",
+        "host_id": "MSI",
+        "pr_number": 133,
+        "review_epoch": 1,
+        "session_id": "windows-progress91-review-v1",
+        "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a"
+      },
+      "epoch": 1,
+      "fingerprint": "aac844d5ebd17c855dc1e73bd191d8a4f383ab17d0b2e6c004247f1ad2437914",
+      "status": "granted",
+      "task_id": "91",
+      "verb": "review-next"
     },
     "windows-progress91-review-register-v1": {
       "actor": "Ken0u",
@@ -6513,6 +6555,20 @@
       "planned_by": "Ken0u",
       "pr_number": 133,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "epoch": 1,
+        "expires_at": 1792470113,
+        "granted_at": 1792459313,
+        "head_sha": "4564fa01109b34434643c4a76420beccbfc3d9de",
+        "host_id": "MSI",
+        "pr_number": 133,
+        "review_epoch": 1,
+        "session_id": "windows-progress91-review-v1",
+        "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "AGENTS.md, docs/COLLABORATION.md and docs/automation/worker.md consistently direct agents to current issues, Project and queue state for progress.",
@@ -6782,7 +6838,18 @@
       }
     },
     "95": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "branch": "codex/issue-95-establish-react-typescript-vite-frontend",
+        "epoch": 1,
+        "expires_at": 1792470113,
+        "granted_at": 1792459313,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+      },
+      "epoch": 1,
       "planned_at": 1792417955,
       "planned_by": "dootz1",
       "spec": {
@@ -6825,7 +6892,7 @@
         ]
       },
       "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
-      "status": "ready"
+      "status": "running"
     },
     "96": {
       "epoch": 0,
