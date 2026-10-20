@@ -380,6 +380,53 @@ def test_replay_is_idempotent_but_modified_replay_fails():
             apply_request(first, {**req, **mutation}, actor, h.now, h.config)
 
 
+@pytest.mark.parametrize("verb", ["plan", "extend-scope", "recover"])
+def test_accepted_requests_preserve_advanced_state(verb):
+    h = Harness().running()
+    if verb == "plan":
+        request = {"request_id": "r2", "verb": "plan", "task_id": "1", "spec": spec()}
+        h.owned("release", terminal_proof=terminal_proof())
+        h.plan(paths=["backend/new_clock.py"])
+        h.next()
+    elif verb == "extend-scope":
+        expanded = spec(paths=["backend/clock.py", "tests/clock.py"])
+        request = {
+            "request_id": "accepted-extension",
+            "verb": verb,
+            "task_id": "1",
+            "host_id": "mac",
+            "session_id": "mac1",
+            "epoch": 1,
+            "spec": expanded,
+        }
+        h.state = apply_request(h.state, request, "Ken0u", h.now, h.config)
+        h.owned("extend-scope", spec=spec(paths=[*expanded["paths"], "docs/clock.md"]))
+    else:
+        h.now += LEASE_SECONDS + 1
+        h.state = expire_leases(h.state, h.now)
+        request = {
+            "request_id": "accepted-recovery",
+            "verb": verb,
+            "task_id": "1",
+            "host_id": "mac",
+            "session_id": "mac1",
+            "epoch": 1,
+            "checkpoint": {
+                "branch": h.state["tasks"]["1"]["claim"]["branch"],
+                "head_sha": HEAD,
+            },
+        }
+        h.state = apply_request(h.state, request, "Ken0u", h.now, h.config)
+        h.next()
+    before = copy.deepcopy(h.state)
+    for now in (h.now, h.now + LEASE_SECONDS + 1):
+        assert apply_request(before, request, "ken0u", now, h.config) == before
+        for changed, actor in [({"task_id": "2"}, "Ken0u"), ({}, "dootz1")]:
+            with pytest.raises(QueueError, match="replay"):
+                apply_request(before, {**request, **changed}, actor, now, h.config)
+            assert h.state == before
+
+
 def test_unknown_actor_cannot_register_or_plan():
     h = Harness()
     with pytest.raises(QueueError, match="not trusted"):
@@ -637,6 +684,20 @@ def test_active_plan_cannot_replace_granted_scope():
     h = Harness().running()
     with pytest.raises(QueueError, match="scope change"):
         h.plan(paths=["backend/"])
+
+
+def test_same_scope_plan_acknowledgement_preserves_claim_and_authorization():
+    h = Harness().running()
+    h.state["tasks"]["1"]["human_approval"] = {
+        "actor": "dootz1",
+        "at": 90,
+        "spec_hash": h.state["tasks"]["1"]["spec_hash"],
+    }
+    before = copy.deepcopy(h.state["tasks"]["1"])
+    h.now += 20
+    receipt = h.send("plan", "dootz1", task_id="1", spec=spec())
+    assert receipt["status"] == "running"
+    assert h.state["tasks"]["1"] == before
 
 
 def test_review_requires_distinct_session_and_exact_binding():

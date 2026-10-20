@@ -20,7 +20,7 @@ from devops.coordinator import (
 from devops.github import GitHubError
 from devops.policy import policy_errors, sensitive
 from devops.queue import initial_state
-from test_agent_queue import Harness
+from test_agent_queue import Harness, terminal_proof
 
 HEAD, BASE = "a" * 40, "b" * 40
 CONFIG = {
@@ -207,6 +207,194 @@ def test_bad_request_does_not_starve_later_commands():
     state = reconcile(gh, CONFIG, now=100)
     assert state["receipts"]["bad"]["status"] == "rejected"
     assert state["receipts"]["good"]["status"] == "ok"
+
+
+def scope_fixture(*, explicit_plan=False):
+    gh = FakeGitHub()
+    original = spec()
+    body = "Human context\n<!-- agent-task:v1 -->\n```json\n"
+    body += json.dumps(original) + "\n```\nKeep concurrent notes."
+    gh.issues = [issue("control" if explicit_plan else body)]
+    messages = []
+    if explicit_plan:
+        messages.append(
+            comment(
+                {
+                    "request_id": "old-plan",
+                    "verb": "plan",
+                    "task_id": "1",
+                    "spec": original,
+                }
+            )
+        )
+    messages.extend(
+        [
+            comment(
+                {
+                    "request_id": "worker",
+                    "verb": "register",
+                    "host_id": "mac",
+                    "session_id": "s",
+                    "capabilities": ["cpu"],
+                    "artifacts": {},
+                },
+                id=2,
+            ),
+            comment(
+                {
+                    "request_id": "claim",
+                    "verb": "next",
+                    "host_id": "mac",
+                    "session_id": "s",
+                    "baseline_sha": BASE,
+                },
+                id=3,
+            ),
+        ]
+    )
+    gh.comments[1] = messages
+    state = reconcile(gh, CONFIG, now=100)
+    assert state["tasks"]["1"]["status"] == "running"
+    return gh, original, body
+
+
+def test_committed_extension_survives_old_issue_plan_and_safe_body_sync():
+    gh, original, body = scope_fixture()
+    expanded = {**original, "paths": [*original["paths"], "tests/test_time.py"]}
+    extension = {
+        "request_id": "extension",
+        "verb": "extend-scope",
+        "task_id": "1",
+        "host_id": "mac",
+        "session_id": "s",
+        "epoch": 1,
+        "spec": expanded,
+    }
+    gh.comments[1].append(comment(extension, id=4))
+    gh.race = True  # Retry the extension transaction after a concurrent commit.
+    state = reconcile(gh, CONFIG, now=101)
+    granted = copy.deepcopy(state["tasks"]["1"])
+    assert granted["spec"] == expanded
+    # Re-reading the original accepted issue is safe after extension, even if a
+    # prior state commit response was lost. No worker must race an issue edit.
+    for now in (102, 103):
+        assert reconcile(gh, CONFIG, now=now)["tasks"]["1"] == granted
+    assert gh.issues[0]["body"] == body
+    # A human can synchronize just the JSON after acknowledgement. Additional
+    # human text does not become a new task or disappear during reconciliation.
+    gh.issues[0]["body"] = body.replace(json.dumps(original), json.dumps(expanded))
+    gh.issues[0]["body"] += "\nAnother collaborator's new note."
+    synchronized = copy.deepcopy(gh.issues)
+    synchronized_request = collect(gh, CONFIG)[0][0]["request_id"]
+    for now in (104, 105):
+        result = reconcile(gh, CONFIG, now=now)
+        assert result["tasks"]["1"] == granted
+        assert result["receipts"][synchronized_request]["status"] == "running"
+    assert gh.issues == synchronized
+    assert not any(
+        path.startswith("issues/") and method != "GET" for path, method, _ in gh.calls
+    )
+
+
+@pytest.mark.parametrize("replay", ["identical", "actor", "payload", "new-unapproved"])
+def test_accepted_predecessor_plan_authenticates_before_fencing(replay):
+    gh, original, _ = scope_fixture(explicit_plan=True)
+    # Release and legitimately replace before claiming a newer frozen plan.
+    gh.comments[1].extend(
+        [
+            comment(
+                {
+                    "request_id": "release",
+                    "verb": "release",
+                    "task_id": "1",
+                    "host_id": "mac",
+                    "session_id": "s",
+                    "epoch": 1,
+                    "checkpoint": {"branch": "preserved", "head_sha": HEAD},
+                    "terminal_proof": terminal_proof(),
+                },
+                id=4,
+            ),
+            comment(
+                {
+                    "request_id": "new-plan",
+                    "verb": "plan",
+                    "task_id": "1",
+                    "spec": {**original, "paths": ["backend/new_time.py"]},
+                },
+                id=5,
+            ),
+            comment(
+                {
+                    "request_id": "new-claim",
+                    "verb": "next",
+                    "host_id": "mac",
+                    "session_id": "s",
+                    "baseline_sha": BASE,
+                },
+                id=6,
+            ),
+        ]
+    )
+    state = reconcile(gh, CONFIG, now=101)
+    granted = copy.deepcopy(state["tasks"]["1"])
+    assert granted["status"] == "running"
+    message = copy.deepcopy(gh.comments[1][0])
+    if replay == "actor":
+        message["user"]["login"] = "dootz1"
+    elif replay in {"payload", "new-unapproved"}:
+        payload = {
+            "request_id": "old-plan" if replay == "payload" else "unapproved",
+            "verb": "plan",
+            "task_id": "1",
+            "spec": {**original, "paths": ["backend/arbitrary.py"]},
+        }
+        message = comment(payload, id=7)
+    gh.comments[1] = [message]
+    for now in (102, 103):
+        state = reconcile(gh, CONFIG, now=now)
+        if replay == "new-unapproved":
+            assert state["tasks"]["1"]["status"] == "recovery_required"
+            assert state["tasks"]["1"]["claim"] == granted["claim"]
+        else:
+            assert state["tasks"]["1"] == granted
+
+
+def test_invalid_request_identity_cannot_fence_a_grant():
+    gh, original, _ = scope_fixture(explicit_plan=True)
+    before = copy.deepcopy(StateStore(gh, CONFIG["coordination_branch"]).read()[1])
+    gh.comments[1] = [
+        comment(
+            {
+                "request_id": "bad id",
+                "verb": "plan",
+                "task_id": "1",
+                "spec": {**original, "paths": ["backend/other.py"]},
+            }
+        )
+    ]
+    result = reconcile(gh, CONFIG, now=101)
+    assert result["tasks"] == before["tasks"]
+
+
+def test_replay_payload_cannot_fence_another_task():
+    gh, original, _ = scope_fixture(explicit_plan=True)
+    store = StateStore(gh, CONFIG["coordination_branch"])
+    tip, state = store.read()
+    state["tasks"]["2"] = copy.deepcopy(state["tasks"]["1"])
+    state["tasks"]["2"]["spec"]["paths"] = ["backend/other.py"]
+    from devops.queue import spec_hash
+
+    state["tasks"]["2"]["spec_hash"] = spec_hash(state["tasks"]["2"]["spec"])
+    state["tasks"]["2"]["claim"]["spec_hash"] = state["tasks"]["2"]["spec_hash"]
+    store.write(tip, state)
+    gh.comments[1] = [
+        comment(
+            {"request_id": "old-plan", "verb": "plan", "task_id": "2", "spec": original}
+        )
+    ]
+    result = reconcile(gh, CONFIG, now=101)
+    assert result == state
 
 
 def policy_fixture():

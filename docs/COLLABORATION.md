@@ -150,6 +150,36 @@ Before long work renew ownership; heartbeat comments are collected by the hourly
 watchdog, so use a normal checkpoint when an immediate acknowledgement matters.
 No background worker is installed by this setup.
 
+### Scope extensions and issue-plan synchronization
+
+The issue is the task specification; the committed grant is the authoritative
+scope for an active worker. For an eligible routine expansion, request
+`extend-scope` with the complete expanded specification and current ownership
+epoch **before** editing outside the existing paths/resources. Wait for its
+committed receipt and verify the new task/claim spec hash and reservations. A
+sensitive or human-approved scope still requires the separate configured-owner
+authorization flow; an issue edit is never that authorization.
+
+An unchanged predecessor issue plan remains safe after an accepted expansion.
+There is no need to race an issue edit against reconciliation, and interruption
+after the scope commit preserves the expanded grant. Accepted request IDs bind
+the complete canonical payload and authenticated actor. Identical retries retain
+their original receipts even after later extensions, replacement plans or
+recovery epochs; changing the actor or payload under an accepted ID is rejected
+before plan fencing or recovery-branch lookups.
+
+If a collaborator synchronizes the issue's fenced JSON, do it only after the
+extension acknowledgement, using the exact currently committed specification.
+Read the latest issue first, preserve surrounding human text and concurrent
+edits, and recheck the current grant before saving. Leave the issue unchanged if
+concurrent editing makes that unsafe; synchronization is optional. The controller
+does not rewrite issue bodies. A plan equal to an active task's committed scope
+is acknowledged without replacing its claim, authorization, epoch or lease.
+Interruptions before or after that acknowledgement are safe to reconcile again.
+For future expansions, use another scope request; never edit the issue first to
+authorize new paths. A genuinely new, unauthorized changed plan still fences
+active work and retains reservations for recovery.
+
 Code and base changes invalidate review evidence. Three failed repair rounds
 escalate once with a clear blocker. Routine work can merge automatically after
 CI and fresh independent agent review. Automation/security policy,

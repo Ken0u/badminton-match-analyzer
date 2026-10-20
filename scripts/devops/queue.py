@@ -381,6 +381,29 @@ def _milestone(spec: dict, config: dict) -> None:
         raise QueueError("task milestone is outside configured milestones")
 
 
+def request_fingerprint(request: dict, actor: str, config: dict) -> str:
+    """Authenticate canonical command identity before adapter side effects.
+
+    Transport metadata must be removed by the adapter, and actor must come from
+    authenticated transport rather than the command. Keep receipt hashes stable.
+    """
+    if not isinstance(request, dict):
+        raise QueueError("request must be an object")
+    _text(actor, "actor")
+    _identifier(request.get("request_id"), "request_id")
+    _text(request.get("verb"), "verb")
+    coordinator = (
+        actor.casefold()
+        == config.get("coordinator_login", "github-actions[bot]").casefold()
+    )
+    trusted = {login.casefold() for login in config.get("trusted_logins", [])}
+    if actor.casefold() not in trusted and not coordinator:
+        raise QueueError("actor is not trusted")
+    return hashlib.sha256(
+        _json({"request": request, "actor": actor.casefold()}).encode()
+    ).hexdigest()
+
+
 def apply_request(
     state: dict, request: dict, actor: str, now: int, config: dict
 ) -> dict:
@@ -392,21 +415,13 @@ def apply_request(
     _clock(now)
     if not isinstance(state, dict) or state.get("version") != 1:
         raise QueueError("unsupported queue state version")
-    if not isinstance(request, dict):
-        raise QueueError("request must be an object")
-    _text(actor, "actor")
-    request_id = _identifier(request.get("request_id"), "request_id")
-    verb = _text(request.get("verb"), "verb")
+    fingerprint = request_fingerprint(request, actor, config)
+    request_id = request["request_id"]
+    verb = request["verb"]
     coordinator = (
         actor.casefold()
         == config.get("coordinator_login", "github-actions[bot]").casefold()
     )
-    trusted = {login.casefold() for login in config.get("trusted_logins", [])}
-    if actor.casefold() not in trusted and not coordinator:
-        raise QueueError("actor is not trusted")
-    fingerprint = hashlib.sha256(
-        _json({"request": request, "actor": actor.casefold()}).encode()
-    ).hexdigest()
     previous = state["receipts"].get(request_id)
     if previous:
         if previous["fingerprint"] != fingerprint:
@@ -486,6 +501,12 @@ def apply_request(
         digest = spec_hash(spec)
         _milestone(spec, config)
         old = result["tasks"].get(task_id)
+        if old and old.get("claim") and old["spec_hash"] == digest:
+            # Synchronizing an issue to the exact committed scope acknowledges
+            # that scope; it cannot replace ownership, authorization or leases.
+            receipt.update(task_id=task_id, status=old["status"])
+            result["receipts"][request_id] = receipt
+            return result
         if old and old["status"] not in {"proposed", "ready", "needs_human", "blocked"}:
             raise QueueError(
                 "active/completed tasks require scope change or a new issue"
