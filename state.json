@@ -1444,6 +1444,15 @@
       "task_id": "103",
       "verb": "submit"
     },
+    "mac-01a15493-submit101-v1": {
+      "actor": "dootz1",
+      "at": 1792536482,
+      "epoch": 1,
+      "fingerprint": "3b6778e31c4be02335c011fc7316408eb72597a483a5a07aaeac3a9b80ec0579",
+      "status": "review",
+      "task_id": "101",
+      "verb": "submit"
+    },
     "mac-01a15493-submit105-v1": {
       "actor": "dootz1",
       "at": 1792422076,
@@ -1729,6 +1738,13 @@
       "status": "review",
       "task_id": "81",
       "verb": "submit"
+    },
+    "mac-review101-register-v1": {
+      "actor": "dootz1",
+      "at": 1792536482,
+      "fingerprint": "91c42f00613f9e26eed75744b2395eb2864636b27e1798b41ad09f79ef9e52c2",
+      "status": "ok",
+      "verb": "register"
     },
     "mac-review103-01a15493-next-v1": {
       "actor": "dootz1",
@@ -5756,6 +5772,7 @@
       },
       "planned_at": 1792459975,
       "planned_by": "Ken0u",
+      "pr_number": 156,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -5795,7 +5812,13 @@
         ]
       },
       "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "0002a8d78e9483deea31c62408d5e75d03ccffe9",
+        "head_sha": "ef8fdf6d86a8f551cfa6c86c78e24676c8712461",
+        "pr_number": 156,
+        "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901"
+      }
     },
     "103": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39272975409",
@@ -12187,6 +12210,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792411125,
       "session_id": "mac-pilot-review-85"
+    },
+    "Stanleys-Laptop.local/mac-review101-ef8fdf6-independent": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792536482,
+      "session_id": "mac-review101-ef8fdf6-independent"
     },
     "Stanleys-Laptop.local/mac-review103-01a15493": {
       "actor": "dootz1",
