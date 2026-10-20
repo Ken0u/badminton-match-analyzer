@@ -1799,6 +1799,14 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "roadmap-export-ui-plan138-v1": {
+      "actor": "dootz1",
+      "at": 1792465571,
+      "fingerprint": "5f87cc212bc5ac92e3e837ff71e68a9e64539e829f4b228be10830db39987af9",
+      "status": "ready",
+      "task_id": "138",
+      "verb": "plan"
+    },
     "roadmap-next-after96-v1": {
       "actor": "dootz1",
       "reason": "host already owns work in this lane",
@@ -1971,6 +1979,14 @@
       "fingerprint": "a6a317f4cb89e51036511301cd89d9039929b408bb4c335071f0ca4974e774b3",
       "status": "ready",
       "task_id": "130",
+      "verb": "plan"
+    },
+    "spec-138-1f632bee4a01ad60fc5ba319db90fa02721076939dd8314b899bb48ea755fc7a": {
+      "actor": "dootz1",
+      "at": 1792465571,
+      "fingerprint": "9fed0fc183fabb60d600bb147ddcbc561ed4c97f15f8949e074d84b8f2b63991",
+      "status": "ready",
+      "task_id": "138",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -5808,6 +5824,52 @@
         "pr_number": 132,
         "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86"
       }
+    },
+    "138": {
+      "epoch": 0,
+      "planned_at": 1792465571,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Add accessible explicit controls for plain-rallies, annotated-rallies and annotated-full using the existing typed media-export API and exact displayed saved annotation revision; require clean, non-saving annotations and show source/revision/mode before submission. Do not automatically save drafts or start exports on selection.",
+          "Keep export jobs and availability separate from review truth and inference jobs. Bind job/status/download results to their video and request generation; switching videos, late successes/errors and newer saves cannot replace drafts or mislabel historical export revisions. Preserve non-actionable unknown job states and explicit retry/failure/admission/authentication guidance.",
+          "Expose downloads only from completed, available export descriptors with selected-video/job-owned safe relative URLs and validated names/types/sizes/hashes; include the manifest and every listed file, all eligible/ineligible rally denominators and reasons without silently dropping unavailable results. Clearly distinguish saved reviewed overlays from original predictions and annotation accuracy.",
+          "Generated-media browser evidence must start real exports through shared Store admission, cover plain and annotated modes, exact requested historical revision after a newer save, downloaded JSON/MP4 provenance, empty eligible-rally output, active/failed/unavailable exports, 401/409 recovery, cross-video delayed status and keyboard/focus. Preserve source PTS/orientation, saved annotations, original predictions and existing editor/library contracts."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "97",
+          "120",
+          "124"
+        ],
+        "exclusions": [
+          "No backend/API/schema/storage/renderer changes, retention deletion, new download backend, source-path controls, models/inference, research jobs, datasets/weights, paid services, running application upgrade or default UI/package/CI cutover.",
+          "Keep phase98 owner approval/deployment boundaries intact; remain within frontend source and dedicated browser harness. No automatic accuracy claim or guessed eligible-rally denominator."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Expose existing reviewed media-export jobs and verified downloads in the opt-in React editor.",
+        "paths": [
+          "backend/frontend/",
+          "tests/frontend-exports.mjs"
+        ],
+        "priority": 65,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Strict frontend typecheck/build/OpenAPI contract and focused runtime/controller tests; generated owned-media browser integration with downloader/perception stubs and real source/export/Store paths.",
+          "Relevant editor/library/foundation regressions; required Python/Ruff/repository/diff/dependency/package checks. Fresh exact-head/base/spec independent review, exact CI, controller integration/main verification and complete candidate delivery receipts."
+        ]
+      },
+      "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
