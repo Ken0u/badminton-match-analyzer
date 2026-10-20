@@ -2804,6 +2804,14 @@
       "task_id": "145",
       "verb": "plan"
     },
+    "spec-149-8a4c9291a4c9749869163c25ce4955be160ced0d9a35beb40c754140422418da": {
+      "actor": "Ken0u",
+      "at": 1792514646,
+      "fingerprint": "b2d8349f2dcd1e7628e1ae38b846a41aba7a98df32f10b3f31c0044a13625226",
+      "status": "ready",
+      "task_id": "149",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -5187,6 +5195,13 @@
       "status": "running",
       "task_id": "145",
       "verb": "checkpoint"
+    },
+    "windows-shuttle149-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792514646,
+      "fingerprint": "efe5f37172f67411fc202a281aec8d134212f3e6037f5f61165e8e9504b4d38d",
+      "status": "ok",
+      "verb": "register"
     }
   },
   "tasks": {
@@ -8122,6 +8137,66 @@
         "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600"
       }
     },
+    "149": {
+      "epoch": 0,
+      "planned_at": 1792514646,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Pin merged main e4805cc7959f446b3dca3f7988522bba54a20c8b, original packet3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d, frozen labelsfd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158, baseline915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64 and original checkpointdf867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Search history/reservations and verify local inputs and original shared Store before grant/native work; a clone supplies none of the ignored data. Freeze and timestamp committed code, protocol, all recursive consumers, input hashes and runtime before new heatmaps.",
+          "Add a narrow opt-in Python research observer for the existing post-ensemble pre-threshold float32 heatmap in infer_camera_segment/track_shuttle. Default application behavior, persisted output schema, model/precision/input/background/temporal/selection policy and 0.5 threshold remain unchanged. Observer receives source frame/time and an isolated read-only copy; mutation cannot alter model output or another frame, and observer failure propagates to the admitted research job without modifying application truth. No public API/UI setting or always-on large artifacts.",
+          "Capture only the 60 exact frozen case heatmaps while executing the same 50 complete original same-camera core-owner views (13499 output rows) at512x288 with original checkpoint/CUDA float16/sequence8/background and scene resets. Use original source ordinal/PTS/display geometry and exact original baseline inputs, metadata, clocks and view membership. Before interpreting heatmaps, require all original native output structure/geometry/components/context to match the baseline, allowing only the previously fixed absolute confidence tolerance0.00001/relative0. A mismatch is a recorded incompatible outcome, never an invitation to replace baseline or tune the gate.",
+          "Use the real original shared data/processed Store admission through run_local_job plus gpu:windows-primary/data:windows-primary grants. Pin original roots/weights before imports, clear candidate credentials and initialize torchvision before threaded PyAV; preserve FFmpeg native logging restoration. Record original host/process lifetime/cwd/command/Store and durable artifacts privately. Use exclusive fresh outputs, immutable per-view/heatmap seals and externally recorded terminal/output history. Resume only after original-host exit and matching terminal Store proof plus unchanged frozen context; retain all completed views on early/partial/refused attempts, and never rerun successful sealed work on timeout. Native budget3600seconds cumulative across attempts.",
+          "Seal all raw outputs, exact60 case membership and each captured finite512x288 heatmap with its view/frame/time/source/model/protocol/code binding before fixed CPU interpretation. Retain missing/unavailable heatmaps as cases, all25visible/7confirmed-not-visible/28unknown states and zero visible-unlocalizable support; unknowns never become negatives. No interpolation, trajectory filling, relabeling or sample removal. Raw source/labels/heatmaps remain ignored.",
+          "Predeclare interpretation before native execution. For the25visible/localizable cases only, measure maximum response within the fixed0.005source-diagonal disk around the original label using heatmap-cell centers mapped to display pixels, plus global maximum, deterministic row-major first argmax, distance to frozen label and local/global response ratio with explicit zero support. Also compute local peak support using the original radial uncertainty as a separate sensitivity bound. Report all60 case availability and source/state/difficulty/selection groups; negative/unknown truth has no invented local-coordinate metric. Preserve original0.5 component outcomes and compare descriptive response values only: no threshold sweep, alternate detection, new accuracy score, best cutoff/model selection or promotion.",
+          "Publish reproducible code, public fixed protocol and aggregate diagnostic report with honest support, mismatch/unavailable cases, raw-response versus component/selection limitations and source-only next steps. These are familiar two-source development agent assessments, not expert truth, independent holdout, calibrated probabilities or complete annotation accuracy; no original data usage gate changes. Do not inspect consumed holdout63 inputs/predictions/protocol/private membership/artifacts or train/download/install weights. Keep detailed workstation evidence local and use sanitized repository hashes/aggregate public checkpoints.",
+          "Add meaningful generated tests for observer isolation/default parity/failure, temporal weighting/short views/cut boundaries/native frame-time identity, exact target membership, heatmap disk geometry/ties/zero/nonfinite/unavailable/unknown denominators, frozen context/tamper and real Store plus generated exited-process recovery. Required project checks, genuinely fresh independent exact-head review and CI, controller-only merge, exact merged-main verification and complete public candidate delivery are required. No redundant full-corpus145 rerun or environment changes."
+        ],
+        "artifacts": {
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle-visibility-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+          "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158"
+        },
+        "capabilities": [
+          "cuda",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "145"
+        ],
+        "exclusions": [
+          "No training/fine-tuning, threshold/resolution/background/selection search, replacement predictions, new weights/downloads, model/default/app truth/annotation/API/UI/dependency/storage/policy/credential/deployment changes, paid services, raw redistribution, unrelated process stops/restarts, rights approval, calibrated-confidence or new/unseen/full-accuracy claim. No consumed holdout63 artifacts."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 1,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Diagnose pre-threshold TrackNet responses on the 60 frozen development visibility cases, preserving the unchanged baseline, to distinguish absent/weak local responses from displaced or stronger background responses before another detector change.",
+        "paths": [
+          "backend/badminton/shuttle.py",
+          "backend/badminton/shuttle_heatmaps.py",
+          "scripts/diagnose_shuttle_heatmaps.py",
+          "tests/test_shuttle_heatmaps.py",
+          "data/manifests/shuttle_heatmap_protocol_v1.json",
+          "docs/SHUTTLE_HEATMAP_REPORT.md"
+        ],
+        "priority": 90,
+        "resources": [
+          "gpu:windows-primary",
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Unchanged512x288 native control over all50originalviews with raw60heatmaps, real shared Store/lifetime evidence and complete frozen input/output provenance.",
+          "Focused generated observer/geometry/recovery tests and required checks, genuine fresh independent review/CI/controller/main/full public delivery; no annotation-accuracy promotion."
+        ]
+      },
+      "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -10351,21 +10426,16 @@
       "actor": "Ken0u",
       "artifacts": {
         "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
-        "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
-        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
-        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
-        "shuttle-supervision-source-declaration": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b",
-        "shuttle-supervision-source-evidence": "baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4"
+        "shuttle-visibility-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158"
       },
       "capabilities": [
-        "cpu",
+        "cuda",
         "windows",
-        "amd64",
-        "review-inputs",
-        "cuda"
+        "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1792501455,
+      "registered_at": 1792514646,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
