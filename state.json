@@ -906,6 +906,15 @@
       "task_id": "130",
       "verb": "checkpoint"
     },
+    "mac-01a156d5-submit130-v1": {
+      "actor": "dootz1",
+      "at": 1792458510,
+      "epoch": 1,
+      "fingerprint": "8446b655a5066adba0ceb8db590236f49189a802a5220a0a97af8acb5700bd2e",
+      "status": "review",
+      "task_id": "130",
+      "verb": "submit"
+    },
     "mac-pilot-81-claim-v1": {
       "actor": "dootz1",
       "at": 1792410819,
@@ -1307,6 +1316,13 @@
       "task_id": "124",
       "verb": "review-result"
     },
+    "mac-review130-register-v1": {
+      "actor": "dootz1",
+      "at": 1792458510,
+      "fingerprint": "cf079226d9c4ce62793a0eb4bcf48117963cf4a8d40f01dde74607006d4780fb",
+      "status": "ok",
+      "verb": "register"
+    },
     "mac-review94-next-v1": {
       "actor": "dootz1",
       "at": 1792456060,
@@ -1692,6 +1708,14 @@
       "actor": "Ken0u",
       "at": 1792416601,
       "fingerprint": "4484ab8867bfd1422e544d25317386f636b9a29ba4c621a97b60824812ef684f",
+      "status": "needs_human",
+      "task_id": "91",
+      "verb": "plan"
+    },
+    "spec-91-18e2355ab8cb820e351e836331bc51ca25ddbe9f756a8a2ef634d1cbd1b2b145": {
+      "actor": "Ken0u",
+      "at": 1792458510,
+      "fingerprint": "91cccfb1c4ff684683c02e39bd8fa0347f34fd63befad26a2dc705488f680ec6",
       "status": "needs_human",
       "task_id": "91",
       "verb": "plan"
@@ -5007,6 +5031,7 @@
       "epoch": 1,
       "planned_at": 1792455380,
       "planned_by": "dootz1",
+      "pr_number": 132,
       "spec": {
         "acceptance": [
           "Reproduce the browser-confirmed baseline gap on generated media: save a manual calibration spanning frames0\u201399, review a camera cut at20 and inspect a later frame with stale tracking; the current viewer still reports Calibrated0\u201399. Preserve original baseline evidence and source bytes.",
@@ -5051,7 +5076,13 @@
         ]
       },
       "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "627081fb69af33b89036a12024efd59e702fd91a",
+        "head_sha": "5e12898ca1b67526e5a38a061a9364582af0dbd8",
+        "pr_number": 132,
+        "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86"
+      }
     },
     "62": {
       "epoch": 0,
@@ -6318,14 +6349,14 @@
     },
     "91": {
       "epoch": 0,
-      "planned_at": 1792416601,
+      "planned_at": 1792458510,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
           "AGENTS.md, docs/COLLABORATION.md and docs/automation/worker.md consistently direct agents to current issues, Project and queue state for progress.",
           "No live instruction requires reading or rewriting PROGRESS.md; historical files and existing local edits remain intact.",
-          "Keep claim epochs, path/resource reservations, independent review, sensitive human approval and main/candidate gates unchanged.",
-          "Use a committed grant and non-author human review for the sensitive guidance change; verify docs/links/LF and relevant policy checks."
+          "Keep claim epochs, path/resource reservations, configured-owner frozen-scope authorization, fresh independent agent review and main/candidate gates unchanged.",
+          "Use a committed grant and fresh independent exact-head/base/spec agent review; verify docs/links/UTF-8/LF and relevant policy checks. Non-author human PR approval is optional under the verified merged policy."
         ],
         "artifacts": {},
         "capabilities": [
@@ -6351,10 +6382,10 @@
         "resources": [],
         "risk": "human",
         "verification": [
-          "Repository UTF-8/LF/JSON/link checks, git diff --check and focused collaboration/policy checks pass on exact head; fresh independent and non-author human review."
+          "Repository UTF-8/LF/JSON/link checks, git diff --check and focused collaboration/policy checks pass on exact head; successful exact-head CI, genuine independent agent review and verified merged main."
         ]
       },
-      "spec_hash": "cda5613c2799138fd227dd4a8d7bffaa2e274dd31ca153ab742d7226674f6ebc",
+      "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a",
       "status": "needs_human"
     },
     "93": {
@@ -7067,6 +7098,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792450050,
       "session_id": "mac-review124-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review130-01a156d5": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792458510,
+      "session_id": "mac-review130-01a156d5"
     },
     "Stanleys-Laptop.local/mac-review94-01a15493": {
       "actor": "dootz1",
