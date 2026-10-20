@@ -645,6 +645,15 @@
       "task_id": "138",
       "verb": "checkpoint"
     },
+    "mac-01a15493-138-e3-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792503488,
+      "epoch": 3,
+      "fingerprint": "859162194501a47a6312be06fac3bb41420bfe0e62c268b2c9713288965c3314",
+      "status": "review",
+      "task_id": "138",
+      "verb": "submit"
+    },
     "mac-01a15493-138-next-recovered-v1": {
       "actor": "dootz1",
       "at": 1792503006,
@@ -1651,6 +1660,13 @@
       "status": "review",
       "task_id": "130",
       "verb": "review-result"
+    },
+    "mac-review138-register-v1": {
+      "actor": "dootz1",
+      "at": 1792503488,
+      "fingerprint": "f34c427e5a839a3629a555c0a13131d84dd2a19f076f4d78dae3d16530122b6f",
+      "status": "ok",
+      "verb": "register"
     },
     "mac-review94-next-v1": {
       "actor": "dootz1",
@@ -4696,6 +4712,15 @@
       "task_id": "145",
       "verb": "next"
     },
+    "windows-shuttle145-prenative-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792503435,
+      "epoch": 1,
+      "fingerprint": "956d78a896ba717c0cce5087685a35da964b052f84e57e77e4064dfbe6522888",
+      "status": "running",
+      "task_id": "145",
+      "verb": "checkpoint"
+    },
     "windows-shuttle145-register-v1": {
       "actor": "Ken0u",
       "at": 1792501455,
@@ -6871,6 +6896,7 @@
       ],
       "planned_at": 1792465571,
       "planned_by": "dootz1",
+      "pr_number": 147,
       "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
@@ -6912,7 +6938,13 @@
         ]
       },
       "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
+        "head_sha": "55f9d4f01b41597541256501a7f14640fc816639",
+        "pr_number": 147,
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+      }
     },
     "139": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39397139617",
@@ -7411,21 +7443,23 @@
     "145": {
       "checkpoint": {
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
-        "head_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
-        "native_status": "No real model inference, training or data acquisition started for145. Existing sources/checkpoint unchanged; eligibility flags remain false.",
-        "next": "Finish full suite; freeze and commit code/protocol/pending report, publish source hashes before actual all201 native run with real shared admission and genuine current grant.",
-        "phase": "Five granted new files implemented but not committed; no native predictions opened",
+        "consumer_files": 58,
+        "head_sha": "6a1f28ee1a71a27a81a45517d9e35784b731a12a",
+        "next": "Verify accepted lease/current ownership and real Store vacancy; run exact frozen CLI over all201 into new ignored lineage under real shared admission. No consumer/protocol edits while worker alive. Seal full native outputs and externally record terminal/index SHAs before fixed scoring; preserve all unavailable cases and false usage eligibility.",
+        "phase": "Tested code/protocol frozen and pushed before all-source native baseline",
+        "pr_number": 146,
+        "prefreeze_descriptor_sha256": "47b5201bc2c056854ecbffaf0b93f8b1af4509ebed9184d09dcec980a55126c3",
         "protocol_sha256": "90fe79c46fa9014ff96b1b8bb372cc457eaf1bc767b1ec097dea73163f2e861d",
         "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-        "verification": "32 focused tests pass, including original normalizer/schema, VFR projection, real Store admission with generated CPU stubs, live/PID-reuse/foreign-host fences, immutable resume history and terminal-index binding. Ruff/format163/pip/diff/help pass. Full suite running under existing exec79378; no full-pass claim yet."
+        "verification": "32focused/full1445PASS4optionalGPUskip; Ruff/format163/pip/diff/UTF8LF/JSON/links/help pass. Exact-head CI pending. No real native predictions opened yet."
       },
-      "checkpoint_at": 1792502940,
+      "checkpoint_at": 1792503435,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "epoch": 1,
-        "expires_at": 1792513740,
+        "expires_at": 1792514235,
         "granted_at": 1792501565,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -10098,6 +10132,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792458510,
       "session_id": "mac-review130-01a156d5"
+    },
+    "Stanleys-Laptop.local/mac-review138-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792503488,
+      "session_id": "mac-review138-01a15493"
     },
     "Stanleys-Laptop.local/mac-review94-01a15493": {
       "actor": "dootz1",
