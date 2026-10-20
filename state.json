@@ -1770,6 +1770,12 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "roadmap-next-after96-v1": {
+      "actor": "dootz1",
+      "reason": "host already owns work in this lane",
+      "status": "rejected",
+      "verb": "next"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
