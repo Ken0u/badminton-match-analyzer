@@ -62,6 +62,15 @@
       "task_id": "126",
       "verb": "fence-external-merge"
     },
+    "fresh-subagent-review97-d499-v4": {
+      "actor": "dootz1",
+      "at": 1792469751,
+      "epoch": 1,
+      "fingerprint": "3a9deef756f9a943f6777b0dde8a8257be78a91b5cf067085ce00a8b5004165f",
+      "status": "review",
+      "task_id": "97",
+      "verb": "review-result"
+    },
     "frontend-plan-93-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792418055,
@@ -8323,18 +8332,48 @@
       "pr_number": 137,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 2,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792469751,
         "base_sha": "0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa",
-        "epoch": 1,
-        "expires_at": 1792479950,
-        "granted_at": 1792469150,
+        "evidence": [
+          "Fresh independent read-only agent /root/review97_base_refresh reviewed the reserved logical session mac-cli-review97-d49973c on Stanleys-Laptop.local. The two recorded CLI threads failed during startup before any model/review turn; this verdict is solely this subagent's work and does not impersonate either failed thread.",
+          "Live dispatcher status was checked before and after review and remained bound to task97 epoch1, PR137, review_epoch4, headd49973c901c4b09e4dcd6faebb20d52902b05603, base0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa and specdad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da. Detached checkout HEAD and PR metadata matched; the PR remained open with exactly the 12 granted frontend/harness files.",
+          "Inspected all 12 changed files and relevant API, storage, legacy frontend, baseline protocol and prior review context. Native PTS/frame identity, orientation/proxy mapping, camera/scene/court expiry, unknown labels, explicit prediction acceptance, revision conflicts, dirty-save behavior, request ordering, evaluation/export semantics, keyboard behavior and playback render isolation are covered without an actionable source finding.",
+          "Re-examined both prior independent race findings. controller.ts now fences established-view changes with viewVersion and reconciles the first analysis publication against the latest source core; committed unit and browser regressions exercise delayed analysis/run/playback success and failure, rapid cross-core seeks and prevent transient stale runs.",
+          "Independently verified that d49973c and previously approved 90f6b6c have identical backend/frontend and tests/frontend-editor.mjs trees. The new base contributes only backend/badminton/stroke_learning.py, its manifest/report/CLI/tests. It has no editor or runtime integration reference beyond its dedicated CLI/tests and introduces no observed interaction regression.",
+          "Independently rehashed all 117 preserved source/runtime/helper/lock entries plus the new packaged training module in base-refresh-byte-parity.json; all 118 match the detached checkout.",
+          "Independently rehashed all 216 retained receipts in frontend-editor-repair2-comparison.json and matched every recorded current frontend source hash to this exact head. The frozen same-host three-run comparison passes: seek median 65.7ms <= 102.5ms relative ceiling, timeline 32.2ms <= 67.0ms, first advance 87.8ms <= 362.25ms and rAF 16.7ms <= 40.875ms; protocol, canonical source/PTS fixtures, helpers, host and dependencies match.",
+          "Audited supplied exact-new-base results: 1282 Python tests passed with 17 skipped; frontend production build, 68 checks and OpenAPI contract passed; the fresh 17-group generated browser run passed with seek65.8ms, timeline35.5ms, first advance89.3ms, rAF16.8ms and zero broad editor renders during playback; installed package verification covered 77 runtime files.",
+          "Exact-head CI run39367039952 is completed success at d49973c, including revision, package, repository, browser-import, frontend, Python3.10/3.12, Windows/macOS native, review/CPU containers and ci/gate. Final git diff --check and detached-worktree cleanliness checks passed."
+        ],
+        "findings": [],
         "head_sha": "d49973c901c4b09e4dcd6faebb20d52902b05603",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Approval applies only to headd49973c901c4b09e4dcd6faebb20d52902b05603/base0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa/specdad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da/review_epoch4. Any binding change requires another independent review.",
+          "The expected local grant.json convenience file was absent. The committed binding was instead verified directly from live dispatcher status and the matching queue-state/identity records.",
+          "I performed independent read-only source, Git, hash, receipt and binding probes. I audited the supplied test/browser/package logs and exact-head CI rather than personally rerunning their mutation-producing harnesses.",
+          "Generated-media software checks do not establish model behavior, full-match badminton annotation accuracy, persistent identities, doubles recognition, external downloader availability or assistive-technology certification. Native canvas labeling remains pointer-based.",
+          "No inference, research job, live catalog, user application, deployment or automatic upgrade was run. Controller integration, merged-main verification and candidate delivery remain separate required steps."
+        ],
         "pr_number": 137,
-        "review_epoch": 4,
+        "reviewed_files": [
+          "backend/frontend/README.md",
+          "backend/frontend/scripts/test.mjs",
+          "backend/frontend/src/App.tsx",
+          "backend/frontend/src/editor/EditorApp.tsx",
+          "backend/frontend/src/editor/Playback.tsx",
+          "backend/frontend/src/editor/controller.ts",
+          "backend/frontend/src/editor/editor.css",
+          "backend/frontend/src/editor/model.ts",
+          "backend/frontend/src/library/LibraryApp.tsx",
+          "backend/frontend/src/main.tsx",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs"
+        ],
         "session_id": "mac-cli-review97-d49973c",
-        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
+        "verdict": "approve"
       },
       "review_epoch": 4,
       "spec": {
