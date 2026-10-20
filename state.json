@@ -1739,6 +1739,28 @@
       "task_id": "81",
       "verb": "submit"
     },
+    "mac-review101-next-v1": {
+      "actor": "dootz1",
+      "at": 1792536600,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "0002a8d78e9483deea31c62408d5e75d03ccffe9",
+        "epoch": 1,
+        "expires_at": 1792547400,
+        "granted_at": 1792536600,
+        "head_sha": "ef8fdf6d86a8f551cfa6c86c78e24676c8712461",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 156,
+        "review_epoch": 1,
+        "session_id": "mac-review101-ef8fdf6-independent",
+        "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901"
+      },
+      "epoch": 1,
+      "fingerprint": "6edadfde5dae8ffca99c666d4098a068a04debacc755faeca4e15dea48c8d5b6",
+      "status": "granted",
+      "task_id": "101",
+      "verb": "review-next"
+    },
     "mac-review101-register-v1": {
       "actor": "dootz1",
       "at": 1792536482,
@@ -5774,6 +5796,20 @@
       "planned_by": "Ken0u",
       "pr_number": 156,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "0002a8d78e9483deea31c62408d5e75d03ccffe9",
+        "epoch": 1,
+        "expires_at": 1792547400,
+        "granted_at": 1792536600,
+        "head_sha": "ef8fdf6d86a8f551cfa6c86c78e24676c8712461",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 156,
+        "review_epoch": 1,
+        "session_id": "mac-review101-ef8fdf6-independent",
+        "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Reproduce an approved scope extension followed by an unchanged predecessor issue plan, and an accepted older explicit plan replayed after a legitimate replacement and claim; both must preserve the current grant and scope on repeated/interrupted reconciliation.",
