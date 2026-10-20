@@ -892,6 +892,15 @@
       "task_id": "108",
       "verb": "submit"
     },
+    "mac-01a156d5-95-start-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792459437,
+      "epoch": 1,
+      "fingerprint": "1aede7af7ae46b3f21d00b773fb36edcbc588bd0d981f20c2bbfab3b4187cce0",
+      "status": "running",
+      "task_id": "95",
+      "verb": "checkpoint"
+    },
     "mac-01a156d5-next-after130-main-v1": {
       "actor": "dootz1",
       "at": 1792459313,
@@ -6839,12 +6848,21 @@
       }
     },
     "95": {
+      "checkpoint": {
+        "base_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "branch": "codex/issue-95-establish-react-typescript-vite-frontend",
+        "head_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "remaining": "Foundation source/client/state/accessibility; locked workspace; contract/typecheck/build/generated-browser verification; fresh independent review, CI/controller merge/main/delivery.",
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
+        "stage": "Committed epoch1 grant confirmed; isolated .cache/frontend-foundation-95 created. Backend/frontend foundation implementation delegated with explicit ownership; parent owns root package manifests/lock and tests/frontend-foundation.mjs, integration/test/publication."
+      },
+      "checkpoint_at": 1792459437,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
         "branch": "codex/issue-95-establish-react-typescript-vite-frontend",
         "epoch": 1,
-        "expires_at": 1792470113,
+        "expires_at": 1792470237,
         "granted_at": 1792459313,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
