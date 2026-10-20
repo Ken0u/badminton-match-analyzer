@@ -1452,6 +1452,15 @@
       "task_id": "153",
       "verb": "submit"
     },
+    "mac-01a15493-submit84-v1": {
+      "actor": "dootz1",
+      "at": 1792535086,
+      "epoch": 1,
+      "fingerprint": "1a5407f74e5517bb4fdb4e56f0a18d02a7f2f4a7ba6e3c4c7b5ca69fa177d7c2",
+      "status": "review",
+      "task_id": "84",
+      "verb": "submit"
+    },
     "mac-01a156d5-95-pr-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792460259,
@@ -2191,6 +2200,13 @@
       "status": "review",
       "task_id": "153",
       "verb": "review-result"
+    },
+    "mac-review84-register-v1": {
+      "actor": "dootz1",
+      "at": 1792535086,
+      "fingerprint": "ead35725cc6cd122d68b22ee7ba381f65b86f54a56903409b501fb31bc703de6",
+      "status": "ok",
+      "verb": "register"
     },
     "mac-review94-next-v1": {
       "actor": "dootz1",
@@ -10211,6 +10227,7 @@
       },
       "planned_at": 1792419790,
       "planned_by": "dootz1",
+      "pr_number": 155,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -10247,7 +10264,13 @@
         ]
       },
       "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "68ac30b4b3024fcdb6b8c01bba09944220105c6d",
+        "head_sha": "3bc49ab9ed506f0ce770a2e09f7b37d128574b2d",
+        "pr_number": 155,
+        "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7"
+      }
     },
     "86": {
       "epoch": 0,
@@ -12187,6 +12210,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792532265,
       "session_id": "mac-review153-abad2fe-independent"
+    },
+    "Stanleys-Laptop.local/mac-review84-3bc49ab-independent": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792535086,
+      "session_id": "mac-review84-3bc49ab-independent"
     },
     "Stanleys-Laptop.local/mac-review94-01a15493": {
       "actor": "dootz1",
