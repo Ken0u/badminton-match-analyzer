@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "purpose": "Published shuttle-coordinate source preparation only; no training, inference or promotion",
+  "source_declaration_sha256": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b",
+  "archive": {
+    "url": "https://github.com/AnInsomniacy/tracknet-series-pytorch/releases/download/dataset-v1.0.0/Shuttlecock-Trajectory-Dataset.zip",
+    "bytes": 1731120724,
+    "sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465",
+    "supplier": "AnInsomniacy/tracknet-series-pytorch",
+    "release": "dataset-v1.0.0",
+    "release_commit": "6d91a1bd28a9cab4b09e7d0460b2bb0a1afe6764",
+    "creator_authenticity": "unverified separate mirror"
+  },
+  "sources": {
+    "dataset-description.md": {
+      "bytes": 13122,
+      "content_type": "text/markdown; charset=utf-8",
+      "sha256": "faed46f2bf88ee3c8c93015107aceb62c0cf08757f2ec5dc684b84ce3d47cebd",
+      "url": "https://hackmd.io/@TUIK/rJkRW54cU/download"
+    },
+    "mirror-release.json": {
+      "bytes": 5215,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "fb7c4ceecc7614b8f3fc0655f0f89521afb065c40e2b4c31df140f9b0ecf1858",
+      "url": "https://api.github.com/repos/AnInsomniacy/tracknet-series-pytorch/releases/tags/dataset-v1.0.0"
+    },
+    "mirror-tag-commit.json": {
+      "bytes": 36360,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "9e94ea087d1f2598bb7ae4f78ec299fa4ebc9f02460eadb6d576cc3a2b541c7c",
+      "url": "https://api.github.com/repos/AnInsomniacy/tracknet-series-pytorch/commits/dataset-v1.0.0"
+    },
+    "tracknetv3-dataset.py": {
+      "bytes": 41285,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "c8cf51f8fd59e466f3a1916ba99b24ac8b487ff85f69362ee72758b6b1643f92",
+      "url": "https://raw.githubusercontent.com/qaz812345/TrackNetV3/6eda442ada1740573f200f836d93edc9a541ee86/dataset.py"
+    },
+    "tracknetv3-license.txt": {
+      "bytes": 1097,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "1eeb31683deba741bce99f5f33bb813293a23b4e6c8302d6f056a587a30cd497",
+      "url": "https://raw.githubusercontent.com/qaz812345/TrackNetV3/6eda442ada1740573f200f836d93edc9a541ee86/LICENSE"
+    },
+    "tracknetv3-readme.md": {
+      "bytes": 9325,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "cda4991691ca354c4cdda8b63f535b21e1fad7d0344fbf16ff409745fecd6691",
+      "url": "https://raw.githubusercontent.com/qaz812345/TrackNetV3/6eda442ada1740573f200f836d93edc9a541ee86/README.md"
+    }
+  },
+  "upstream_tracknetv3_commit": "6eda442ada1740573f200f836d93edc9a541ee86",
+  "csv_columns": [
+    "Frame",
+    "Visibility",
+    "X",
+    "Y"
+  ],
+  "coordinate_basis": "Published original encoded-video pixels; nonzero orientation or changed dimensions stays ineligible without explicit annotation-space evidence",
+  "nominal_geometry": [
+    1280,
+    720
+  ],
+  "ordinal_policy": "Published zero-based Frame must cover every decoded native frame exactly once; never rebase or silently discard",
+  "visibility_policy": "Preserve publisher0/1 separately from source-reviewed truth; invisible is not an invented physical absence or an inferred coordinate",
+  "limits": {
+    "members": 250000,
+    "archive_uncompressed_bytes": 21474836480,
+    "extracted_bytes": 6442450944,
+    "video_bytes": 2147483648,
+    "csv_bytes": 4194304,
+    "description_bytes": 4194304,
+    "rows_per_csv": 200000,
+    "decoded_frames_per_video": 200000
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "reason": "Dataset rights, mirror authenticity, source identity/cross-corpus overlap and future source-disjoint selection are not certified by code/model MIT or published splits"
+  },
+  "exclusions": [
+    "No model/training/inference or application truth changes",
+    "No consumed holdout63 inputs, predictions, protocols, private membership metadata or artifacts",
+    "No dataset/model rights approval, raw redistribution or fresh/full-accuracy claim"
+  ]
+}
