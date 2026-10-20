@@ -3095,6 +3095,39 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "windows-portable64-review-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792462226,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "epoch": 1,
+        "expires_at": 1792473026,
+        "granted_at": 1792462226,
+        "head_sha": "10fbd3be99647feed61bf04dcdb59a54e28e55c2",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha256": "d7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3",
+          "comparison": "All selected tensors, normalization, support, thresholds, epoch295, 60 history rows and every validation metric exactly match original R3; all276 original input/model seals unchanged. Main refresh changes no Python source/test bytes; executed learner/metrics/input hashes unchanged.",
+          "heldout_predictions_opened": false,
+          "job_id": "5ff31a0441e947fa8e397787f4aa245d",
+          "kind": "Fixed CPU development-only training reproduction",
+          "manifest_sha256": "8d0fe34c21cda1f877b11ad967d643275c0a58ae377737e2f7759508f651d8d0",
+          "model_promoted": false,
+          "report": "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "status": "completed"
+        },
+        "pr_number": 135,
+        "review_epoch": 1,
+        "session_id": "windows-portable64-review-v1",
+        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c"
+      },
+      "epoch": 1,
+      "fingerprint": "09d1f1340b1a9b8fb0a0f1b0ae3e0864c2a807839e0c3ddd30d805885db76791",
+      "status": "granted",
+      "task_id": "64",
+      "verb": "review-next"
+    },
     "windows-portable64-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792461823,
@@ -5823,6 +5856,31 @@
       "planned_by": "dootz1",
       "pr_number": 135,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "epoch": 1,
+        "expires_at": 1792473026,
+        "granted_at": 1792462226,
+        "head_sha": "10fbd3be99647feed61bf04dcdb59a54e28e55c2",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha256": "d7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3",
+          "comparison": "All selected tensors, normalization, support, thresholds, epoch295, 60 history rows and every validation metric exactly match original R3; all276 original input/model seals unchanged. Main refresh changes no Python source/test bytes; executed learner/metrics/input hashes unchanged.",
+          "heldout_predictions_opened": false,
+          "job_id": "5ff31a0441e947fa8e397787f4aa245d",
+          "kind": "Fixed CPU development-only training reproduction",
+          "manifest_sha256": "8d0fe34c21cda1f877b11ad967d643275c0a58ae377737e2f7759508f651d8d0",
+          "model_promoted": false,
+          "report": "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "status": "completed"
+        },
+        "pr_number": 135,
+        "review_epoch": 1,
+        "session_id": "windows-portable64-review-v1",
+        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Supply a clone-contained Python module/CLI and public parameter/provenance manifest for the fixed 371-value R3 CPU training/validation recipe; accept explicit legally available external precomputed caches through relative file/hash seals, never execute imported local helper scripts.",
