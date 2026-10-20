@@ -5128,6 +5128,7 @@
         "session_id": "roadmap-20261019-01a15493",
         "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
