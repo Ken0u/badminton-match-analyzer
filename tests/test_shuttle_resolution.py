@@ -198,6 +198,28 @@ def test_frozen_experiment_keeps_complete_views_and_refuses_changed_code(frozen)
         experiment.load_experiment(n["root"], n["output"], n["experiment_sha"])
 
 
+def test_freeze_accepts_relative_cli_paths_without_changing_input_identity(
+    frozen, monkeypatch
+):
+    n = frozen
+    monkeypatch.chdir(n["root"])
+    result = experiment.freeze_experiment(
+        Path("."),
+        n["packet_root"].relative_to(n["root"]),
+        n["label_root"].relative_to(n["root"]),
+        n["baseline_path"].relative_to(n["root"]),
+        n["protocol"].relative_to(n["root"]),
+        experiment.audit.file_hash(n["protocol"]),
+        Path(".cache/relative-experiment"),
+    )
+    original = json.loads((n["output"] / "experiment.json").read_bytes())
+    relative = json.loads(
+        Path(".cache/relative-experiment/experiment.json").read_bytes()
+    )
+    assert relative == original
+    assert result["experiment_sha256"] == n["experiment_sha"]
+
+
 def test_control_gate_rejects_geometry_or_missing_rows_but_only_tolerates_scores():
     expected = [
         {

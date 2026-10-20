@@ -170,6 +170,9 @@ def baseline_runs(root, baseline):
 
 
 def verify_inputs(root, packet_root, label_root, baseline_path, protocol):
+    root, packet_root, label_root, baseline_path = (
+        path.resolve() for path in (root, packet_root, label_root, baseline_path)
+    )
     packet, sources, labels = audit.audit_inputs(
         root,
         packet_root,
