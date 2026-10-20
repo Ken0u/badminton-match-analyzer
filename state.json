@@ -3088,6 +3088,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-portable64-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792461903,
+      "fingerprint": "eae306126aed4fa009a6f5a1bcf07dc394decac5edc4d0a53ae823da46fe3d21",
+      "status": "idle",
+      "verb": "review-next"
+    },
     "windows-portable64-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792461823,
