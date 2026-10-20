@@ -796,6 +796,15 @@
       "task_id": "98",
       "verb": "human-approved"
     },
+    "mac-01a15493-98-currentmain-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792514735,
+      "epoch": 1,
+      "fingerprint": "2753fe05821505e6d8446829dceea2b6233658432b1365b36dabb9fc53d1f0c4",
+      "status": "running",
+      "task_id": "98",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-98-integration-progress-v1": {
       "actor": "dootz1",
       "at": 1792507213,
@@ -5196,6 +5205,14 @@
       "task_id": "145",
       "verb": "checkpoint"
     },
+    "windows-shuttle149-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792514744,
+      "fingerprint": "62eac407f4f3f0af0fb42c5d3bb52e891662f773fda8d2d035e254e07d1cf81f",
+      "status": "ready",
+      "task_id": "149",
+      "verb": "plan"
+    },
     "windows-shuttle149-register-v1": {
       "actor": "Ken0u",
       "at": 1792514646,
@@ -8139,7 +8156,7 @@
     },
     "149": {
       "epoch": 0,
-      "planned_at": 1792514646,
+      "planned_at": 1792514744,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
@@ -10331,21 +10348,21 @@
     },
     "98": {
       "checkpoint": {
-        "artifacts": ".cache/frontend-delivery-98/.cache/evidence; .cache/frontend-exports-138-e3/.cache/evidence/phase98-legacy-run{1,2,3}.log; .cache/frontend-delivery-98-ui/.cache/evidence/ui-handoff.md; .cache/frontend-delivery-98-package/.cache/package-handoff.md; .cache/frontend-delivery-98-browser/.cache/browser-handoff.md",
-        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "artifacts": ".cache/frontend-delivery-98/.cache/evidence; prior independent review preserved in .cache/review98-c0c9372.",
+        "base_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
         "branch": "codex/issue-98-integrate-react-package-container-assets",
-        "head_sha": "c0c9372bf9b863b12e049e8b7f45fdd023f59677",
-        "remaining": "Latest exact-head CI and genuine independent agent review; actual non-author human review of frozen workflow/Docker/packaging diff required before making DraftPR ready. Controller integration, exact-main and full public package/bothimage delivery remain, no taskcompletion claim.",
+        "head_sha": "5f2e760bde307e8748e9a486daef705c40a9f111",
+        "remaining": "Exact current-base CI/fresh independent review, actual non-author human final approval, controller integration/exact-main/full public candidate receipts.",
         "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-        "stage": "Draft PR148 published at c0c9372. Local final production18/library8/exports13, 1397Python/17skips, 89frontend+3staging, all frozen three-run relative/absolute budgets, clean installed wheel74package/5assets/3routes/auth and owned localreviewimage passed. Hosted initialCI39443347302 passed package/bothimages/Python/repository; repaired clean-checkout cache and browsercache path; latestCI39443972031 running. Controller automatically invalidated old submission, task running for refreshed exacthead review."
+        "stage": "Resumed after MSI145 controller merge/delivery; merged disjoint current main into task branch without conflicts. Old base review correctly invalidated by controller. Revalidate checks and obtain genuinely fresh exact-head/base review. Draft/human gate preserved."
       },
-      "checkpoint_at": 1792508309,
+      "checkpoint_at": 1792514735,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
         "branch": "codex/issue-98-integrate-react-package-container-assets",
         "epoch": 1,
-        "expires_at": 1792519109,
+        "expires_at": 1792525535,
         "granted_at": 1792505994,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
