@@ -2208,6 +2208,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "shuttle141-review-result-64a866d3b0a648e78d0fc6837481003e": {
+      "actor": "Ken0u",
+      "at": 1792493441,
+      "epoch": 1,
+      "fingerprint": "5aea7293c0be6ff3e979acba1c65cc5114f4e076c5b8678c2dc757ec876abae2",
+      "status": "review",
+      "task_id": "141",
+      "verb": "review-result"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -6854,14 +6863,28 @@
       "planned_at": 1792486696,
       "planned_by": "Ken0u",
       "pr_number": 142,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792493441,
         "base_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
-        "epoch": 1,
-        "expires_at": 1792503797,
-        "granted_at": 1792492997,
+        "evidence": [
+          "Genuine fresh read-only review session64a866d3b0a648e78d0fc6837481003e on MSI. Register request shuttle141-review-register-64a866d3b0a648e78d0fc6837481003e durably accepted at1792492889, fingerprint e575da16b8b0abaf5ca547ff229e3de17ace7970c30621efa423161d39632706. Review-next request shuttle141-review-next-64a866d3b0a648e78d0fc6837481003e durably granted at1792492997 with review_epoch1 and implementation epoch1, fingerprint62ef49a1a1480de49f28ebb19969c342aac34f81cfbc1784064d1de162a01818. Own isolated detached worktree .cache/worktrees/shuttle141-review-64a866d3b0a648e78d0fc6837481003e at exact78cd24287ab86e96d42a072243edcfbacca009cf. Final queue/PR binding revalidated immediately before submission; six changed files exactly match grant and frozen issue JSON independently hashes to spec2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec.",
+          "Read trusted AGENTS.md, COLLABORATION.md, reviewer protocol, PROJECT_PLAN.md, BUG_REVIEW.md, the actual issue141 frozen specification/checkpoints, complete six-file diff and surrounding shuttle/validation/model/Store admission code. Reviewed default512 compatibility; strict integer/boolean rejection and fixed geometry; native RGB/background resizing and source coordinates; unchanged source PTS/orientation/scene/cut/ensemble/selector behavior; complete view membership; baseline graph revalidation; candidate access gate; real shared Store/root pinning; torchvision/FFmpeg preservation; exclusive atomic checkpoints and prior process-lifetime recovery guards. No actionable defect found.",
+          "Independent full test command with root Python3.10.5 project venv, own backend/root/disposable test-data, FFmpeg PATH, credentials cleared and native model opt-in disabled: python -m pytest -q --basetemp=.cache/reviewer-full-temp --junitxml=.cache/reviewer-full.xml. Result1376 passed,4 optional skips in156.89s, including all23 new resolution tests. Artifacts .cache/worktrees/shuttle141-review-64a866d3b0a648e78d0fc6837481003e/.cache/reviewer-full.xml and reviewer-full.log. Ruff check backend tests scripts passed; Ruff format --check backend tests scripts:157 already formatted; pip check passed; git diff --check base..HEAD passed. All six changed files verified UTF-8/LF, public protocol JSON/hash and local report links verified.",
+          "Reviewer-owned standard-library/psutil audit .cache/shuttle141-review-64a866d3b0a648e78d0fc6837481003e/verify_seals.py and seal-verification.json checks all56 consumer bytes equal exacthead Git blobs, own detached tree, immutable author execution paths and frozen snapshots. Experiment SHAfffbc3a767eab9ab63b95b1978c447cd9edca0ba5ceed26579e6c46330941ef8, protocol95aaf88d546d8f8c72fb5483e36f12037286e8091c85f1a962eed554ca3d30cc, output index8c7daa0f10fbbffdf604fbf989967f5cb66823fd8a087123169ec6bb1705b012 and native compound60ad673e74efae355dd94db5b2bd47c0e712c22aa90134f4db5923f031a36632 verified. All209 output file seals match. Both variants have exactly50 complete views/13499 rows; original1280x720 source IDs and frame memberships retained. Native compound binds finalhead exactly.",
+          "Read-only specific shared catalog rows independently match frozen raw document hashes and completed status for control8c148e36c8b64c9ea092feb5f80b3477 and candidate644e6b322f57469a8643e56841d5e415. Admission/terminal files match frozen seals and originalPID14000/creation1792488828.9085903 and PID12156/creation1792490145.8195293; both original lifetimes independently verified exited. Terminal elapsed1154.316/1979.245s. No real shared Store creation/recovery/update or process interruption performed by reviewer; generated tests use disposable test Stores. Actual GitHub timestamps verified for protocol freeze issue141#issuecomment-6287921113, control gate6288310455 and pre-scoring output index6288895491.",
+          "Exact unmodified frozen report CLI reproduced SHA b0fd6fc7cd723401f2588e526567925e5ad85be5f1bd6b830d62d641991f9b36 byte-identically into .cache/shuttle141-review-64a866d3b0a648e78d0fc6837481003e/reproduced-report/report.json; compatible,60cases,50views each, zero original control row differences. Actual execution-location limitation above is explicit; root .venv Python3.10.5 used without credentials or inference. Reproduction log .cache/shuttle141-review-64a866d3b0a648e78d0fc6837481003e/reproduce-report.log.",
+          "Independent no-PR-import reviewer arithmetic in recompute_metrics.py and independent-metrics.json matches all22 groups each for original/control/candidate: full truth/unknown/unavailable denominators, visibility/localization confusion and precision/recall/F1, wrong-location FP+FN, conditional mean error, radial uncertainty bounds, component presence and performance. Original and512control groups identical. Both variants localize14/25 and components14/25; visibility15/3/10/4 to16/2/9/5; localization14/4/11/4 to14/4/11/5; mean conditional coordinate error32.429485608914426 to72.07255226276622px. Full60 cases include25visible,7absent,28unknown; no unavailable outputs. Inference1134.979 to1959.932s, peak385.4 to778.6decimalMB. Negative result and no promotion/default change accurately documented.",
+          "Independently read GitHub Actions run39409359129: completed success on exacthead78cd24287ab86e96d42a072243edcfbacca009cf; all12 jobs succeeded including python3.10/3.12, package, frontend, browser-import, Windows/macOS native, review/CPU containers, repository and ci/gate. https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39409359129. Author and own worktree tracked states remain clean; root PROGRESS.md and unrelated worktrees/data/processes preserved."
+        ],
+        "findings": [],
         "head_sha": "78cd24287ab86e96d42a072243edcfbacca009cf",
-        "host_id": "MSI",
+        "limitations": [
+          "This approval covers the bounded fixed-resolution experiment and unchanged application defaults. Familiar two-source development labels are independent agent assessments, not expert-certified or held-out truth; 28 unknowns and zero supported occlusion/camera-transition/visible-unlocalizable cases remain. It does not establish complete annotation accuracy or justify promotion. Parent issue65 is verified open.",
+          "No training, installation, downloads, native GPU inference, process interruption, implementation edits, consumed holdout63 inputs/metadata, Mac138 resources or unapproved101 resources were used. Four optional native/model tests were skipped in the local full suite; sealed original native outputs and process/Store evidence were audited instead of repeating inference.",
+          "The frozen receipt binds exact source locations as well as bytes, so report reproduction cannot run from the detached reviewer tree without violating validation. After independently checking all56 own-tree and exact-head Git bytes against author execution paths and frozen snapshots, the unmodified report CLI was executed read-only from .cache/worktrees/shuttle141/scripts/compare_shuttle_resolution.py with author backend on PYTHONPATH, original root/data/weights pinned and GH_TOKEN/GITHUB_TOKEN cleared plus an offline GH_CONFIG_DIR. Output is a new reviewer-owned ignored lineage. No validation was patched or bypassed.",
+          "Software tests, CI, sealed provenance and exact report reproduction support implementation integrity and exercised behavior. The reviewer independently recomputed metrics from sealed observations, but did not re-adjudicate source labels or establish unseen/full-match accuracy. Controller integration, merged-main verification and delivery remain subsequent controller/author responsibilities."
+        ],
         "native_evidence": {
           "code_sha": "78cd24287ab86e96d42a072243edcfbacca009cf",
           "limitations": [
@@ -6876,9 +6899,17 @@
           "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
         },
         "pr_number": 142,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/shuttle.py",
+          "backend/badminton/shuttle_resolution.py",
+          "scripts/compare_shuttle_resolution.py",
+          "tests/test_shuttle_resolution.py",
+          "data/manifests/shuttle_resolution_protocol_v1.json",
+          "docs/SHUTTLE_RESOLUTION_REPORT.md"
+        ],
         "session_id": "64a866d3b0a648e78d0fc6837481003e",
-        "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec"
+        "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
