@@ -5086,6 +5086,15 @@
       "task_id": "145",
       "verb": "submit"
     },
+    "windows-shuttle145-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792512563,
+      "epoch": 1,
+      "fingerprint": "206468729a626f482ee622db50af1a4ec8dc7ff3328eb7ec0e49d889b83fed62",
+      "status": "review",
+      "task_id": "145",
+      "verb": "submit"
+    },
     "windows-shuttle145-threequarter-v1": {
       "actor": "Ken0u",
       "at": 1792508431,
@@ -7890,64 +7899,6 @@
       "planned_by": "Ken0u",
       "pr_number": 146,
       "repair_rounds": 1,
-      "review": {
-        "actor": "Ken0u",
-        "at": 1792511997,
-        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
-        "evidence": [
-          "Genuinely fresh read-only session d45693fd670e4a8f86a15dba76fc903d, registered host MSI; committed review grant binds implementation epoch 1 separately from review_epoch 1 to this exact head/base/spec. Own detached exact-head checkout remained clean.",
-          "Independent full project suite: 1445 passed, four existing optional GPU skips, one existing deprecation warning. Focused diagnostic suite: 32 passed. Ruff, formatting of 163 files, pip check, repository verification, diff whitespace, CLI help and changed report UTF-8/LF/local links passed. Initial checkout-directory and codec-PATH setup issues were corrected before the successful complete run.",
-          "Checks workflow 39450646183 completed successfully on head 2e14174c3f54cf91d856faab9ba4c5278659fec2; independently observed all 12 jobs including ci/gate successful.",
-          "Independently rehashed the complete 773-file prepared source graph and 671-file native/score evidence graph, original checkpoint, native output/terminal/report relationships and matching sealed admission records. All 58 executed recursive Python consumers, including vendor code, equal producer 6a1f28ee1a71a27a81a45517d9e35784b731a12a and submitted-head Git bytes.",
-          "Independent arithmetic directly reread every original CSV, normalized source/native reference, complete checkpoint and raw prediction. The canonical summary and every one of 29 group/three partition rollups matched: 201 clips, 91579 native frames/predictions, zero unavailable, 91214 rows, 78979 eligible, 12235 rows in 25 whole-file quarantines, 365 unlabelled tails. All 201 clock projections match source PTS-derived times; three actual CPU-decoded source clocks/1611 frames independently matched native ordinals, PTS and geometry.",
-          "Visibility TP/FP/FN/TN 67073/1139/1570/9197 and localization 66774/1438/1869/9197 matched; conditional error support 67073, nearby-component present/absent 66810/1833 and wrong selections 36 matched. All 29 tracked group-table rows matched the independently recomputed report.",
-          "Protocol SHA256 90fe79c46fa9014ff96b1b8bb372cc457eaf1bc767b1ec097dea73163f2e861d; source evidence baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4; source graph df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f; checkpoint df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Issue timestamps confirm protocol/source freeze preceded native predictions and external native terminal/output seals preceded scoring.",
-          "Native output index 17d64a83b139cf648e4edcbd953e56501b6e24582c9dcad3f2e6e7828432baa5; native terminal 9c0fac43f5fa501d79fe239ab415bfca0047abc94814b07626225c0fc555fa0f; fixed score report c9d99fd249d51cb0d8ff057314ca40d07ea1dd306a4eb2a9e362e886d7d05ce9; complete evidence index 787217394686d73dfff09cd1819cd0ab59d93c71891fbf34ef463beb43172828; final sanitized native receipt 2fce9c858ad84fa38ede6f407208fa5c60f21cc90f393dc487d2574661814d87.",
-          "Two independent generated CPU-only reproductions confirmed both requested recovery changes. Existing generated tests pass but do not cover an emitted terminal roundtrip or preservation of all earlier completed clips after an interrupted resumed attempt.",
-          "The report's upstream-benchmark interpretation was checked against pinned upstream primary sources: https://github.com/qaz812345/TrackNetV3/blob/6eda442ada1740573f200f836d93edc9a541ee86/test.py and https://github.com/qaz812345/TrackNetV3/blob/6eda442ada1740573f200f836d93edc9a541ee86/README.md ; the different tolerance, effective-trajectory filtering and background choices are explicitly distinguished."
-        ],
-        "findings": [
-          "[P2] backend/badminton/shuttle_diagnostic.py:675: Emit the terminal history that resume_plan requires. run writes terminal.json without prior_terminal_seals, while resume_plan line 171 unconditionally indexes that field. An independent generated CPU-stub run completed, but passing its own emitted terminal and exact hash into resume_plan raised KeyError('prior_terminal_seals'). The actual sealed native terminal has the same omission. Persist cumulative history in every completed/failed/interrupted terminal and add a real writer-to-resume regression. Preserve the existing sealed scientific outputs and provide explicit safe handling for their existing receipt schema rather than rewriting those receipts.",
-          "[P2] backend/badminton/shuttle_diagnostic.py:519: Retain previously completed checkpoints when a resumed attempt fails before revisiting them. completed starts empty and receives reusable seals only as the loop reaches each clip; a refused or interrupted resumed attempt can emit an empty or shortened completed_clips list. _resume reads only the latest terminal list. An independent generated two-terminal fixture with a valid complete seal history was accepted by resume_plan but recovered zero reusable clips despite one prior sealed completion. After the missing-history field is fixed, this still permits successful immutable clips to be forgotten and rerun. Preserve the cumulative completed set across every terminal and test interruption before and partway through reusable enumeration, while retaining all context/lifetime/history guards."
-        ],
-        "head_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
-        "limitations": [
-          "This changes verdict concerns the bounded diagnostic's recovery behavior; independent arithmetic found no discrepancy in the completed scientific outputs.",
-          "Published/pretrained-source agreement is not expert-reviewed truth, a new independent test, an accuracy improvement or unseen/full-match correctness. Rights, authenticity, original identities, overlaps and semantic scene/label validity remain unresolved; all four usage eligibility flags remain false.",
-          "No inference, training, downloads, environment installation or consumed holdout-63 artifact access was performed. Source clock spotchecks covered three clips and 1611 native frames, not semantic adjudication of the corpus.",
-          "Original native and score lifetimes and matching sealed shared-admission records were checked locally. Scoring has no separately sealed launch command/working-directory snapshot; its sealed lifetime/report binding, absent original lifetime and guarded launcher were checked. Raw workstation metadata remains local.",
-          "The four existing optional GPU tests were skipped. Local generated-media verification and exact-head CI passed; those checks do not establish badminton annotation accuracy."
-        ],
-        "native_evidence": {
-          "code_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
-          "limitations": [
-            "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
-            "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
-            "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
-            "No training, tuning, new weights, interpolation, model/default installation or promotion",
-            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts"
-          ],
-          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
-          "receipt_sha256": "2fce9c858ad84fa38ede6f407208fa5c60f21cc90f393dc487d2574661814d87",
-          "source_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465"
-        },
-        "pr_number": 146,
-        "reviewed_files": [
-          "backend/badminton/shuttle_diagnostic.py",
-          "data/manifests/shuttle_corpus_diagnostic_v1.json",
-          "docs/SHUTTLE_CORPUS_DIAGNOSTIC_REPORT.md",
-          "scripts/diagnose_shuttle_corpus.py",
-          "tests/test_shuttle_diagnostic.py",
-          "backend/badminton/shuttle_supervision.py",
-          "backend/badminton/shuttle.py",
-          "backend/badminton/av_runtime.py",
-          "backend/badminton/jobs.py",
-          "backend/badminton/config.py"
-        ],
-        "session_id": "d45693fd670e4a8f86a15dba76fc903d",
-        "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -8000,21 +7951,22 @@
         ]
       },
       "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
-        "head_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+        "head_sha": "597f0b61dbf249dede73555d5951c059caa38de8",
         "native_evidence": {
-          "code_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+          "code_sha": "597f0b61dbf249dede73555d5951c059caa38de8",
           "limitations": [
             "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
             "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
             "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
             "No training, tuning, new weights, interpolation, model/default installation or promotion",
-            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts"
+            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts",
+            "All scientific predictions/scoring remain from the original frozen producer. The final source changes recovery metadata/history only; generated CPU-stub tests, not a new CUDA recovery run, validate that repair. Legacy history-free receipts are preserved and explicitly refused for in-place resume."
           ],
           "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
-          "receipt_sha256": "2fce9c858ad84fa38ede6f407208fa5c60f21cc90f393dc487d2574661814d87",
+          "receipt_sha256": "923602fb33eb464592715497304c0672a4dddf6f772811a34d790bca3bfcb68e",
           "source_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465"
         },
         "pr_number": 146,
