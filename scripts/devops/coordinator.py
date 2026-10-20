@@ -177,7 +177,13 @@ def collect(gh, config):
 
 
 def reconcile(gh, config, *, now=None):
-    from .queue import QueueError, apply_request, expire_leases, spec_hash
+    from .queue import (
+        QueueError,
+        apply_request,
+        expire_leases,
+        request_fingerprint,
+        spec_hash,
+    )
 
     now = int(now if now is not None else datetime.now(timezone.utc).timestamp())
     requests, issues = collect(gh, config)
@@ -236,6 +242,13 @@ def reconcile(gh, config, *, now=None):
                     for k, v in request.items()
                     if k not in ("actor", "created_at", "source_comment")
                 }
+                # Accepted requests have already performed their adapter work.
+                # Authenticate actor and complete payload before any plan fence
+                # or recovery lookup; replay cannot reinterpret advanced state.
+                request_fingerprint(command, request["actor"], config)
+                if previous:
+                    state = apply_request(state, command, request["actor"], now, config)
+                    continue
                 if command.get("verb") == "plan":
                     existing = state["tasks"].get(command.get("task_id"), {})
                     if (
