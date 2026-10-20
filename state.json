@@ -4829,6 +4829,7 @@
         "epoch": 1,
         "evidence_state_sha": "3a5111ad8339cd4d6e257dcb477f69bb51271818",
         "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+        "issue_closed_at": 1792458442,
         "merge_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
         "pr_number": 127,
         "request_id": "windows-policy126-adopt-verified-v1",
