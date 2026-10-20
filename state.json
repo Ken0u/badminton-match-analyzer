@@ -1996,6 +1996,13 @@
       "task_id": "96",
       "verb": "review-next"
     },
+    "mac-review98-register-v1": {
+      "actor": "dootz1",
+      "at": 1792508478,
+      "fingerprint": "41b53399daa15d494215d63be3e48f57eb1ae583a54e7a36a03272038b2f21ee",
+      "status": "ok",
+      "verb": "register"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -4961,6 +4968,15 @@
       "fingerprint": "f99642c2317505367d3b91787d5e42449fee85999e058322626c9b63ba0a47db",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-shuttle145-threequarter-v1": {
+      "actor": "Ken0u",
+      "at": 1792508431,
+      "epoch": 1,
+      "fingerprint": "75acb93cbb7beba6fed6372c7949422ef9a4a1d968a313045678ab7a78e6e662",
+      "status": "running",
+      "task_id": "145",
+      "verb": "checkpoint"
     }
   },
   "tasks": {
@@ -7731,19 +7747,19 @@
       "checkpoint": {
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "head_sha": "6a1f28ee1a71a27a81a45517d9e35784b731a12a",
-        "next": "Continue the same run through complete native output sealing and verified exit; then externally record receipt/index hashes and use the fixed scorer. Local scoring launcher is prepared. Preserve all source/quarantine/unavailability denominators and unchanged eligibility gates; genuine independent review and controller integration remain later gates.",
-        "phase": "Existing frozen native baseline checkpointed 101 of 201 clips; scoring pending",
+        "next": "Continue the same run through complete output sealing and verified exit. Then record native index/terminal hashes and invoke the frozen scorer through the completion gate. Preserve all source/quarantine/unavailability denominators and false eligibility gates. Fresh review, controller integration, main verification and delivery remain later steps.",
+        "phase": "Existing frozen native baseline checkpointed 150 of 201 clips; scoring pending",
         "pr_number": 146,
         "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-        "verification": "Original run remains active and advancing. Code/protocol unchanged; all 12 exact-head CI jobs passed. Detailed lifecycle evidence remains local."
+        "verification": "Same original admitted run remains active and advancing; fixed code/protocol unchanged. All 12 exact-head CI jobs passed. Lifecycle evidence remains local."
       },
-      "checkpoint_at": 1792506699,
+      "checkpoint_at": 1792508431,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "epoch": 1,
-        "expires_at": 1792517499,
+        "expires_at": 1792519231,
         "granted_at": 1792501565,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -10521,6 +10537,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792465401,
       "session_id": "mac-review97-01a156d5"
+    },
+    "Stanleys-Laptop.local/mac-review98-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792508478,
+      "session_id": "mac-review98-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-01a156d5-20261019": {
       "actor": "dootz1",
