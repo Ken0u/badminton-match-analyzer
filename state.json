@@ -1501,6 +1501,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review95-01a156d5-result1": {
+      "actor": "dootz1",
+      "at": 1792460669,
+      "epoch": 1,
+      "fingerprint": "0432c8b0ac7a9116037ad73e3a8a1ac01101de9cdd27fb7090b97986ad7c54f0",
+      "status": "running",
+      "task_id": "95",
+      "verb": "review-result"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -7070,18 +7079,61 @@
       "planned_by": "dootz1",
       "pr_number": 134,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_claim": {
+      "repair_rounds": 1,
+      "review": {
         "actor": "dootz1",
+        "at": 1792460669,
         "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
-        "epoch": 1,
-        "expires_at": 1792471287,
-        "granted_at": 1792460487,
+        "evidence": [
+          "Fresh independent reviewer mac-review95-01a156d5 acquired committed review_epoch1 for exact head/base/spec before execution; candidate checks used env -i and disposable HOME without inherited credentials.",
+          "Exact-head strict TypeScript,10 client/state tests, Vite static build, and actual-backend OpenAPI/schema byte drift check passed. Log .cache/reviewer-checks.log.",
+          "Reviewer-owned generated browser check passed7 checks with no page errors; actual HTTP client, built static React, keyboard/focus, ignored-abort late reads, in-flight edits,600 imperative playback ticks, and unchanged legacy/assets/source/annotations/predictions. Evidence .cache/evidence/frontend-foundation-RZIPjA; cleanup verified own PID/creation/cwd/command then stopped own listener. Tablet screenshot visually inspected.",
+          "Adversarial required-query probe compiled successfully despite missing required backend index; .cache/required-query.log exit0.",
+          "All existing root-lock dependency records unchanged; exact diff confined to26 granted frontend/package/harness files; git diff --check passed; reviewer symlinks removed and worktree clean.",
+          "Hosted ci/gate and every Checks workflow job observed SUCCESS for exact f2111bf/a4ccadb; snapshot .cache/hosted-ci-review.json. automation/policy still awaiting independent review/repair."
+        ],
+        "findings": [
+          "[P2] backend/frontend/src/api/client.ts:38-40 makes every query object optional. The generated backend contract requires query.index for GET /api/videos/{video_id}/frame, but request(\"get\", \"/api/videos/{video_id}/frame\", {path:{video_id:\"v\"}}) passes strict TypeScript and sends an invalid request that receives422. Require query whenever its generated type has required properties, preserve optional query for all-optional operations, and add compile-only negative probes for omitted query/index. The untyped client encoding unit case also uses frame:0 instead of the contract index:0; correct it. Reproduction .cache/required-query.ts and .cache/required-query-tsconfig.json compiled with exit0."
+        ],
         "head_sha": "f2111bf492cc796be9e02ded910f2c99e38f65e6",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "The requested changes prevent approval of this head; a repaired head/base requires a new committed review grant and fresh exact-head evidence.",
+          "No full Python suite or native inference rerun by reviewer; implementation full-suite/package evidence was reported separately and was not substituted for independent execution.",
+          "Browser checks use generated media and a synthetic foundation sandbox, not unseen badminton annotation accuracy, full editor parity, WCAG certification, or production cutover.",
+          "Hosted ci/gate and every Checks workflow job succeeded on this exact head; automation/policy remains failed pending independent review/required repairs. Controller must revalidate repaired exact head."
+        ],
         "pr_number": 134,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/frontend/.gitignore",
+          "backend/frontend/README.md",
+          "backend/frontend/index.html",
+          "backend/frontend/package.json",
+          "backend/frontend/scripts/contract.mjs",
+          "backend/frontend/scripts/test.mjs",
+          "backend/frontend/src/App.tsx",
+          "backend/frontend/src/api/client.ts",
+          "backend/frontend/src/api/generated/openapi.json",
+          "backend/frontend/src/api/generated/schema.ts",
+          "backend/frontend/src/main.tsx",
+          "backend/frontend/src/state/draft.ts",
+          "backend/frontend/src/state/playback.ts",
+          "backend/frontend/src/state/selection.ts",
+          "backend/frontend/src/state/server.ts",
+          "backend/frontend/src/state/store.ts",
+          "backend/frontend/src/style.css",
+          "backend/frontend/src/ui/controls.tsx",
+          "backend/frontend/tests/contract-types.ts",
+          "backend/frontend/tests/foundation.test.mjs",
+          "backend/frontend/tsconfig.json",
+          "backend/frontend/tsconfig.test.json",
+          "backend/frontend/vite.config.js",
+          "package-lock.json",
+          "package.json",
+          "tests/frontend-foundation.mjs"
+        ],
         "session_id": "mac-review95-01a156d5",
-        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
+        "verdict": "changes"
       },
       "review_epoch": 1,
       "spec": {
@@ -7124,7 +7176,7 @@
         ]
       },
       "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
         "head_sha": "f2111bf492cc796be9e02ded910f2c99e38f65e6",
