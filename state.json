@@ -2369,6 +2369,14 @@
       "task_id": "141",
       "verb": "plan"
     },
+    "spec-143-9cc3704f4bf29f1c54ed002484674362f83b2ea60d053f17dd758a0ee70630d3": {
+      "actor": "Ken0u",
+      "at": 1792495103,
+      "fingerprint": "fc3f0d36790e34069012acb626ec4530b710fcfc4a6730d44f3f70a5272b8e30",
+      "status": "ready",
+      "task_id": "143",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -4487,6 +4495,13 @@
       "status": "review",
       "task_id": "141",
       "verb": "submit"
+    },
+    "windows-shuttle143-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792495103,
+      "fingerprint": "554992b61c6e87ab3841698f7337b8484af97b93d484dae5501c0475be676842",
+      "status": "ok",
+      "verb": "register"
     }
   },
   "tasks": {
@@ -7017,6 +7032,60 @@
         "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec"
       }
     },
+    "143": {
+      "epoch": 0,
+      "planned_at": 1792495103,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Pin the ignored six-snapshot source declaration1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b and public mirror archivef87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465, exactly1731120724bytes, release dataset-v1.0.0 / commit6d91a1bd28a9cab4b09e7d0460b2bb0a1afe6764. Record creator documentation and TrackNetV3 revision6eda442ada1740573f200f836d93edc9a541ee86 separately. Creator SharePoint redirects to sign-in; the mirror is not certified as creator-authenticated data. Download only the declared public data archive, never checkpoints, into an exclusive ignored lineage; verify size/hash before opening.",
+          "Implement a portable source importer and CLI. Census every archive member before writes, reject traversal/absolute/drive/UNC/duplicate/case-colliding/symlink/encrypted or over-budget members, retain unknown layouts in diagnostics and extract only needed CSV/video/source-description files into new bounded ignored outputs. Preserve incomplete pending artifacts and publish verified outputs atomically without replacing existing bytes. No upstream code execution or application storage migration.",
+          "Preserve every published row and raw field separately from normalized source references, including unknown/malformed/ineligible/missing/unpaired media cases. Validate exact supported CSV schema, unique frame ordinals, visibility semantics, finite coordinates and native bounds; retain published zero/invisible semantics without inventing expert-reviewed absence, contacts, rally boundaries or identities. Do not silently rebase ordinals, infer missing frames, interpolate shuttles or filter difficult cases. Report eligibility reasons and every denominator; unexpected formats remain quarantined rather than guessed.",
+          "Scan every paired native video read-only through existing av_runtime/media helpers, preserving actual PTS, orientation, dimensions and complete frame identity. Verify CSV ordinal coverage against actual decoded frames and any provided source-frame metadata; nominal30fps or a rally score filename alone never certifies alignment or boundaries. Preserve unmatched/missing CSV and videos, variable clocks, decode failures and unavailable geometry. Record hashes, full consumer source/runtime bytes and resumable complete-file receipts; repeat scans only when justified.",
+          "Group by complete original match/session before any future split. Keep Professional/Amateur/Test namespaces and original publication splits distinct; audit declared source identities and current TrackNetV3 pretraining conventions using pinned public creator metadata/code, not local consumed-holdout files. Unknown match identity or cross-corpus overlap stays unknown/ineligible for an independent test. These upstream/pretrained sources do not become an unseen full-match benchmark. Keep dataset rights and mirror authenticity explicitly unverified unless observed source evidence establishes them; default all training/model/deployment eligibility to false in this task, and never equate repository/model MIT with dataset/media rights.",
+          "Use real original shared data/processed Store admission through run_local_job for heavy download/extraction/native-clock work plus the queue data reservation. Pin BADMINTON_ROOT/DATA_DIR/WEIGHTS_DIR before imports. Verify original-host PID/lifetime/cwd/command, Store state and durable files before resume; a timeout is not exit. Preserve existing environments, media, datasets, caches, predictions, saved labels and all unrelated research processes; initialize torchvision before threaded PyAV and preserve FFmpeg restoration.",
+          "Actually acquire and verify the pinned archive, census/import every supported published CSV/video, and publish aggregate corpus/schema/native-clock/group/usage-eligibility evidence with reproducible hashes and honest unavailable cases. Add meaningful generated regressions for archive safety, source/clock/label tampering, incomplete exclusive writes, real shared admission, resumability and complete denominators. Complete project checks, exact-head fresh independent review/CI, controller merge, merged-main verification and complete candidate delivery. Commit code/public source manifest/aggregate report only, never raw archive, labels, media or weights."
+        ],
+        "artifacts": {
+          "shuttle-supervision-source-declaration": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b"
+        },
+        "capabilities": [
+          "cpu",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "141"
+        ],
+        "exclusions": [
+          "No training, inference, model/checkpoint downloads, threshold/model tuning, model installation/promotion, new app/API/UI/default/dependency/storage/policy/credential/deployment behavior, paid services, raw data redistribution, saved-truth overwrite, unrelated process stops/restarts, dataset-rights approval or fresh/unseen/full-accuracy claim. Do not access consumed holdout63 inputs, predictions, protocols, private membership metadata or artifacts. Do not authenticate to Microsoft or submit access/contact forms. Dataset/source/code provenance is not annotation accuracy."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Prepare source-aligned published shuttle-coordinate supervision with explicit mirror provenance, native clocks and original-match groups, as a bounded data prerequisite for localization milestone65; no model training or accuracy promotion.",
+        "paths": [
+          "backend/badminton/shuttle_supervision.py",
+          "scripts/prepare_shuttle_supervision.py",
+          "tests/test_shuttle_supervision.py",
+          "data/manifests/shuttle_supervision_sources_v1.json",
+          "docs/SHUTTLE_SUPERVISION_REPORT.md"
+        ],
+        "priority": 100,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Pinned public archive/source metadata and exact-head code/runtime receipts; real shared Store admission and original-host process/Store/artifact evidence; all archive/schema/source-frame/group/rights denominators retained.",
+          "Generated source/clock/archive/recovery/admission tests and required checks; fresh actual independent exact-head review, CI, controller integration and verified main/full delivery. No model or full-match correctness claim."
+        ]
+      },
+      "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -9212,7 +9281,8 @@
         "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
         "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
         "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
-        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "shuttle-supervision-source-declaration": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b"
       },
       "capabilities": [
         "cpu",
@@ -9222,7 +9292,7 @@
         "cuda"
       ],
       "host_id": "MSI",
-      "registered_at": 1792486696,
+      "registered_at": 1792495103,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
