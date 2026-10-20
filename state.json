@@ -3021,6 +3021,15 @@
       "task_id": "64",
       "verb": "next"
     },
+    "windows-portable64-pretrain-v1": {
+      "actor": "Ken0u",
+      "at": 1792461098,
+      "epoch": 1,
+      "fingerprint": "304ae71f9631aed44bcbcc3c4d59352a4b6cf82c8938fb8ff1cf869d352255be",
+      "status": "running",
+      "task_id": "64",
+      "verb": "checkpoint"
+    },
     "windows-portable64-register-v1": {
       "actor": "Ken0u",
       "at": 1792460487,
@@ -5701,24 +5710,26 @@
     "64": {
       "checkpoint": {
         "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
+        "code_sha256": "d7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3",
         "evidence": [
-          "134 original development clips; full 624/672 reference rows and 608/662 available inputs verified",
-          "Pinned source Match.csv verifies separate original train/validation matches",
-          "No held-out predictions, inference or training started; original models/data/environments/jobs preserved",
-          "Known doctor FFmpeg probe false-negative is issue84; actual -version commands both exit0"
+          "All 134 development clips and source/feature seals audit successfully",
+          "No model, data, environment or original annotation changes; consumed holdout remains unopened",
+          "The new CLI pins actual root/data before configuration and uses the real main Store admission"
         ],
         "head_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
-        "input_inventory_sha256": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
-        "next": "Implement only the five granted files, verify meaningful generated-input tests, then admit one fixed CPU reproduction through real main Store before independent exact-revision review",
-        "phase": "Implementing portable fixed R3 development training and audit CLI"
+        "main_active_jobs_observed_read_only": [],
+        "manifest_sha256": "8d0fe34c21cda1f877b11ad967d643275c0a58ae377737e2f7759508f651d8d0",
+        "next": "Run fixed CPU recipe once under actual main run_local_job; wait for durable success and independent original-development parity before final source review",
+        "output": ".cache/portable64-reproduction-v1",
+        "phase": "35 focused tests pass; preparing one admitted fixed CPU development reproduction"
       },
-      "checkpoint_at": 1792460729,
+      "checkpoint_at": 1792461098,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
         "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
         "epoch": 1,
-        "expires_at": 1792471529,
+        "expires_at": 1792471898,
         "granted_at": 1792460570,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
