@@ -3128,6 +3128,15 @@
       "task_id": "64",
       "verb": "checkpoint"
     },
+    "windows-portable64-pretrain-v2": {
+      "actor": "Ken0u",
+      "at": 1792462821,
+      "epoch": 1,
+      "fingerprint": "be56f20a47559c9399c4f9a6a4a61f77745ef9d6c4779c5a9d654c33ca56989c",
+      "status": "running",
+      "task_id": "64",
+      "verb": "checkpoint"
+    },
     "windows-portable64-register-v1": {
       "actor": "Ken0u",
       "at": 1792460487,
@@ -5882,26 +5891,27 @@
     "64": {
       "checkpoint": {
         "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
-        "code_sha256": "d7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3",
+        "code_sha256": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
         "evidence": [
-          "All 134 development clips and source/feature seals audit successfully",
-          "No model, data, environment or original annotation changes; consumed holdout remains unopened",
-          "The new CLI pins actual root/data before configuration and uses the real main Store admission"
+          "Independent changes verdict durably accepted at1792462587, repair_round1 under unchanged grant",
+          "Four pinned development CSVs now enforce exact ordered source-row IDs; fabricated IDs, reordered rows and resealed source CSVs fail",
+          "All134clips/624+672rows audit; original276file seals unchanged; no held-out/test inputs opened",
+          "Original reproduction-v1 remains completed and immutable; new v2 lineage only"
         ],
-        "head_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
+        "head_sha": "10fbd3be99647feed61bf04dcdb59a54e28e55c2",
         "main_active_jobs_observed_read_only": [],
-        "manifest_sha256": "8d0fe34c21cda1f877b11ad967d643275c0a58ae377737e2f7759508f651d8d0",
-        "next": "Run fixed CPU recipe once under actual main run_local_job; wait for durable success and independent original-development parity before final source review",
-        "output": ".cache/portable64-reproduction-v1",
-        "phase": "35 focused tests pass; preparing one admitted fixed CPU development reproduction"
+        "manifest_sha256": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+        "next": "One newly admitted fixed CPU reproduction for repaired source provenance, then full checks, fresh exact-head independent review and normal controller integration",
+        "output": ".cache/portable64-reproduction-v2",
+        "phase": "Repair round1 canonical source identity guard;44focused tests pass; preparing new final-source reproduction"
       },
-      "checkpoint_at": 1792461098,
+      "checkpoint_at": 1792462821,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
         "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
         "epoch": 1,
-        "expires_at": 1792471898,
+        "expires_at": 1792473621,
         "granted_at": 1792460570,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
