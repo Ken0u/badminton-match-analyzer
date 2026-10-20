@@ -8350,6 +8350,7 @@
         "session_id": "roadmap-01a156d5-20261019",
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
