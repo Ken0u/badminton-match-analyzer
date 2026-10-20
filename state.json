@@ -10285,6 +10285,7 @@
       }
     },
     "84": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39509581849",
       "checkpoint": {
         "artifacts": ".cache/doctor-repair-84/.cache/evidence: working-diff.patch, regression-before-fix.log, environment-tests.xml, actual-before-fix-codec-flags.json, actual-codec-probes.json, full-tests.log/xml",
         "branch": "codex/issue-84-repair-ffmpeg-and-ffprobe-version-argume",
@@ -10306,7 +10307,7 @@
         "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "dootz1",
