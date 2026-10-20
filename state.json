@@ -764,6 +764,14 @@
       "task_id": "98",
       "verb": "human-approved"
     },
+    "mac-01a15493-98-visibility-alignment-plan-v1": {
+      "actor": "dootz1",
+      "at": 1792505524,
+      "fingerprint": "9716859ec610ab8f750263f091ddeb554aafab2d5aab6404d51009d57d819b2e",
+      "status": "needs_human",
+      "task_id": "98",
+      "verb": "plan"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -2737,6 +2745,14 @@
       "fingerprint": "0e632edcb163a4faa86b4e001a8af80f52dea0d9b5a84535c62a1bf389f6f11e",
       "status": "ready",
       "task_id": "97",
+      "verb": "plan"
+    },
+    "spec-98-1753ac9eba27f67991f94bc7c4fda408cc380eb711157207276942d149ffba82": {
+      "actor": "dootz1",
+      "at": 1792505524,
+      "fingerprint": "840298e313eec20f73fa4d3ccbfc856ae937e78f19899328d9c4e147baf96d54",
+      "status": "needs_human",
+      "task_id": "98",
       "verb": "plan"
     },
     "spec-98-3450f2d5553fc18a73580afccb83f706fdb0c268bcdfa40dfa2ba9a7a7f73497": {
@@ -9822,20 +9838,14 @@
     },
     "98": {
       "epoch": 0,
-      "human_approval": {
-        "actor": "dootz1",
-        "at": 1792504320,
-        "spec_hash": "051f9726f4d266c476bf1c36a30a0c9a21b729d47c8388a7fd57357add44d576"
-      },
-      "planned_at": 1792418018,
+      "planned_at": 1792505524,
       "planned_by": "dootz1",
-      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Build and serve the frontend from FastAPI; include correct assets in wheel/sdist and review/CPU images, excluding frontend source/build tooling where unnecessary. Keep one application container and no runtime frontend server.",
           "Add typecheck/build/browser CI gates, installed-package asset checks outside checkout, and authenticated container startup/static-routing checks. Preserve native Mac/Windows development.",
           "Pass the complete parity matrix and frozen performance/accessibility checks before default cutover or legacy removal; document reversible code-release rollback without changing annotation data.",
-          "Obtain real non-author human approval for workflow/Docker/packaging changes plus independent agent review, exact-head CI, merged-main verification and private candidate receipts. Do not upgrade running applications."
+          "Obtain real non-author human approval for workflow/Docker/packaging changes plus independent agent review, exact-head CI, merged-main verification and candidate receipts matching the existing approved publication visibility. Do not upgrade running applications."
         ],
         "artifacts": {},
         "capabilities": [
@@ -9877,8 +9887,8 @@
           "Fresh exact-head/base/spec independent review, required CI and controller integration/main verification."
         ]
       },
-      "spec_hash": "051f9726f4d266c476bf1c36a30a0c9a21b729d47c8388a7fd57357add44d576",
-      "status": "ready"
+      "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
+      "status": "needs_human"
     }
   },
   "version": 1,
