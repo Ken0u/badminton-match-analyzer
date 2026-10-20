@@ -2830,6 +2830,22 @@
       "task_id": "91",
       "verb": "human-approved"
     },
+    "windows-progress91-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792459205,
+      "fingerprint": "45b143e5b42ee06c3082791984daa01e5c774d539c28fb2a60b4e0f0fc28a3c8",
+      "status": "ok",
+      "verb": "register"
+    },
+    "windows-progress91-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792459205,
+      "epoch": 1,
+      "fingerprint": "a444f026f6909fea2fb54fb08b1afdb525185ed0293a6da5cd697ac510cbae3d",
+      "status": "review",
+      "task_id": "91",
+      "verb": "submit"
+    },
     "windows-public-candidates111-next-v1": {
       "actor": "Ken0u",
       "at": 1792439160,
@@ -6485,6 +6501,7 @@
       },
       "planned_at": 1792458510,
       "planned_by": "Ken0u",
+      "pr_number": 133,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -6521,7 +6538,13 @@
         ]
       },
       "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "head_sha": "4564fa01109b34434643c4a76420beccbfc3d9de",
+        "pr_number": 133,
+        "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a"
+      }
     },
     "93": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39265419115",
@@ -7047,6 +7070,18 @@
       "host_id": "MSI",
       "registered_at": 1792452168,
       "session_id": "windows-policy126-review-v2"
+    },
+    "MSI/windows-progress91-review-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792459205,
+      "session_id": "windows-progress91-review-v1"
     },
     "MSI/windows-public111-review-v1": {
       "actor": "Ken0u",
