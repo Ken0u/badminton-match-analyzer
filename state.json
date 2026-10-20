@@ -6522,6 +6522,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 2,
       "history": [
