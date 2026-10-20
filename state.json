@@ -1232,6 +1232,28 @@
       "task_id": "124",
       "verb": "review-result"
     },
+    "mac-review94-next-v1": {
+      "actor": "dootz1",
+      "at": 1792456060,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+        "epoch": 1,
+        "expires_at": 1792466860,
+        "granted_at": 1792456060,
+        "head_sha": "b3d0e3a7bdda64218e18746c70cd2abf820056de",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 131,
+        "review_epoch": 1,
+        "session_id": "mac-review94-01a15493",
+        "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38"
+      },
+      "epoch": 1,
+      "fingerprint": "ecd6f0d050c0c1b4f779dea6cdd97cbe9b51406ff4ac1e2e4ecd2008b3019967",
+      "status": "granted",
+      "task_id": "94",
+      "verb": "review-next"
+    },
     "mac-review94-register-v1": {
       "actor": "dootz1",
       "at": 1792455967,
@@ -5884,6 +5906,20 @@
       "planned_at": 1792417955,
       "planned_by": "dootz1",
       "pr_number": 131,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+        "epoch": 1,
+        "expires_at": 1792466860,
+        "granted_at": 1792456060,
+        "head_sha": "b3d0e3a7bdda64218e18746c70cd2abf820056de",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 131,
+        "review_epoch": 1,
+        "session_id": "mac-review94-01a15493",
+        "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "After playback proxies #69 integrate, capture generated-media coverage of upload/YouTube imports, library selection, stale requests, unsaved edits, revision conflicts, job progress/interruption, and JSON/CSV exports.",
