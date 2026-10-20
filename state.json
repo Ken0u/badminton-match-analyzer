@@ -25,6 +25,35 @@
       "task_id": "126",
       "verb": "adopt-external-merge"
     },
+    "cli-review97-next-v1": {
+      "actor": "dootz1",
+      "at": 1792469150,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa",
+        "epoch": 1,
+        "expires_at": 1792479950,
+        "granted_at": 1792469150,
+        "head_sha": "d49973c901c4b09e4dcd6faebb20d52902b05603",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 137,
+        "review_epoch": 4,
+        "session_id": "mac-cli-review97-d49973c",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "epoch": 1,
+      "fingerprint": "fc5674c2691ec17b5857bb1a9c24ea80049c1ff84979f4b3131ddf7db1ef4d32",
+      "status": "granted",
+      "task_id": "97",
+      "verb": "review-next"
+    },
+    "cli-review97-register-v1": {
+      "actor": "dootz1",
+      "at": 1792469150,
+      "fingerprint": "5bfb4f7f9b6c07c5d1124eb24c2e123b63e7547ce1c8011cf5e67301ad3cba80",
+      "status": "ok",
+      "verb": "register"
+    },
     "external-merge-126-f2866cae9c1b11ec14594ea8c4ff611fa751375d": {
       "actor": "github-actions[bot]",
       "at": 1792454004,
@@ -2146,6 +2175,14 @@
       "fingerprint": "9fed0fc183fabb60d600bb147ddcbc561ed4c97f15f8949e074d84b8f2b63991",
       "status": "ready",
       "task_id": "138",
+      "verb": "plan"
+    },
+    "spec-139-a5838abec835c87a9bd8fddaec5365369081bc6d1cc8126299d524e9fea80a8f": {
+      "actor": "Ken0u",
+      "at": 1792469150,
+      "fingerprint": "790a3de431fb15ffbce1940564cf32a8fa9f5daa4ca84a0e71b25fce2a7cec01",
+      "status": "ready",
+      "task_id": "139",
       "verb": "plan"
     },
     "spec-139-e84a3d97a9ba47cf55b2471f35b8867e17119a6735eac6a76b155bbf7e9eb47f": {
@@ -6146,7 +6183,7 @@
     },
     "139": {
       "epoch": 0,
-      "planned_at": 1792468733,
+      "planned_at": 1792469150,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
@@ -6164,8 +6201,7 @@
           "review-inputs"
         ],
         "dependencies": [
-          "64",
-          "45"
+          "64"
         ],
         "exclusions": [
           "No new model inference/training, GPU work, downloads, consumed holdout63 access, threshold/model tuning or promotion, application/API/UI/storage/schema changes, overwriting saved labels/predictions, unrelated research restarts, environment migration, policy/credential/deployment changes or paid services. Source frame rendering and read-only cached baseline auditing only."
@@ -6194,7 +6230,7 @@
           "Focused generated-input/CLI checks and required project checks, fresh independent exact-head/base/spec code review, all CI checks, normal controller merge/main verification and complete delivery."
         ]
       },
-      "spec_hash": "a321d61aad539bf108b6754d7ca6a1af6d23fdc85cafc3fae7a00877cccb5aac",
+      "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
       "status": "ready"
     },
     "62": {
@@ -8231,7 +8267,20 @@
       "pr_number": 137,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 2,
-      "review_epoch": 3,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa",
+        "epoch": 1,
+        "expires_at": 1792479950,
+        "granted_at": 1792469150,
+        "head_sha": "d49973c901c4b09e4dcd6faebb20d52902b05603",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 137,
+        "review_epoch": 4,
+        "session_id": "mac-cli-review97-d49973c",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "review_epoch": 4,
       "spec": {
         "acceptance": [
           "Migrate playback, timeline, overlays, camera/scene/court editing, player mappings, shuttle/contact/rally/stroke review and evaluation; cover every supported baseline action.",
@@ -8548,6 +8597,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792418159,
       "session_id": "frontend-plan-review-99"
+    },
+    "Stanleys-Laptop.local/mac-cli-review97-d49973c": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792469150,
+      "session_id": "mac-cli-review97-d49973c"
     },
     "Stanleys-Laptop.local/mac-pilot-review-85": {
       "actor": "dootz1",
