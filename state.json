@@ -636,6 +636,15 @@
       "task_id": "138",
       "verb": "recover"
     },
+    "mac-01a15493-138-e3-checked-v1": {
+      "actor": "dootz1",
+      "at": 1792503273,
+      "epoch": 3,
+      "fingerprint": "c1f7180e07308d98fa546028c88678eae9b826f136c81236b344b9d4e4d8555f",
+      "status": "running",
+      "task_id": "138",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-138-next-recovered-v1": {
       "actor": "dootz1",
       "at": 1792503006,
@@ -6807,24 +6816,25 @@
     },
     "138": {
       "checkpoint": {
-        "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
-        "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
+        "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
+        "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo-e3",
         "evidence": [
-          ".cache/frontend-exports-138 and .cache/frontend-exports-138-ui preserved; no edits on expired grant.",
-          "Original completed130/95/96/97 are Done with delivery_pending=false; no duplicate implementation."
+          ".cache/frontend-exports-138-e3/.cache/evidence/frontend-exports-NZ2Kuu/result.json; real plain+annotated modes/historical revision/download nativePTS/hash/pixels/auth/admission/failure/races/keyboard preserved.",
+          ".cache/frontend-exports-138-e3/.cache/python-final.xml; .cache/library-regression.log; .cache/package-check.log. Generated schema untouched; generated default formatting differs from Prettier, changed manual files pass.",
+          "Existing fixed runtime dependencies reused; no model/GPU/research/app/default UI upgrade."
         ],
-        "head_sha": "d004b45cf13536afe531be2eb8769406494b2c4e",
-        "remaining": "Reclaim through new committed grant; integrate retained UI repairs, finish browser/full/package checks, fresh review/CI/controller/main/delivery.",
+        "head_sha": "55f9d4f01b41597541256501a7f14640fc816639",
+        "remaining": "Finish required regression/package checks, publish exact granted branch/PR, genuine fresh independent review and hostedCI, controllermerge/exactmain/complete delivery receipts.",
         "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-        "stage": "Audited code-only recovery after original continuation systemError. Original remote granted branch preserved unchanged at d004b45; uncommitted browser patch saved /private/tmp/task138-uncommitted-browser-preserved.patch; bounded UI worker commits through f19fe4e retained in separate worktree. Original chat systemError, actual psutil process inventory found no task138 process, generated fixture cleanup retained. No resource/artifact reservation or heavy research job."
+        "stage": "Recovered epoch3 six preserved frontend/harness commits now committed clean. Frontend76tests/build/OpenAPI pass; actual native export browser12groups passed; library8groups passed; fullPython1397passed/17skip; Ruff160format/repository/diff/dependency47pass. Final package/foundation/editor regressions running on verified owned test sessions only."
       },
-      "checkpoint_at": 1792470889,
+      "checkpoint_at": 1792503273,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
         "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo-e3",
         "epoch": 3,
-        "expires_at": 1792513806,
+        "expires_at": 1792514073,
         "granted_at": 1792503006,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
