@@ -184,6 +184,7 @@ def infer_camera_segment(
     *,
     selection_reset_frames=(),
     input_size=(WIDTH, HEIGHT),
+    heatmap_observer=None,
 ):
     """Bounded temporal ensemble for exactly one camera view.
 
@@ -215,13 +216,18 @@ def infer_camera_segment(
 
     def finish(index):
         timestamp, heat = sums.pop(index)
+        heat = heat / denominators.pop(index)
+        if heatmap_observer is not None:
+            observed = heat.copy()
+            observed.setflags(write=False)
+            heatmap_observer(index, timestamp, observed)
         if index in reset_frames:
             selector.reset()
         return {
             "frame": index,
             "time_s": timestamp,
             "shuttle": selector.select(
-                locate_shuttle(heat / denominators.pop(index), width, height),
+                locate_shuttle(heat, width, height),
                 index,
                 timestamp,
             ),
@@ -252,6 +258,7 @@ def track_shuttle(
     camera_scan=None,
     *,
     input_size=(WIDTH, HEIGHT),
+    heatmap_observer=None,
 ):
     input_size = validate_input_size(input_size)
     import torch
@@ -361,6 +368,7 @@ def track_shuttle(
                 video["height"],
                 selection_reset_frames=selection_reset_frames,
                 input_size=input_size,
+                heatmap_observer=heatmap_observer,
             ):
                 row["camera_segment_start_frame"] = (
                     max(
