@@ -1261,6 +1261,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review94-result-v1": {
+      "actor": "dootz1",
+      "at": 1792456380,
+      "epoch": 1,
+      "fingerprint": "7068cb5eb5eb2977e1f90d842f87d1a0ac9ce881fc733cb92922182645fb3a6d",
+      "status": "review",
+      "task_id": "94",
+      "verb": "review-result"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -5906,18 +5915,38 @@
       "planned_at": 1792417955,
       "planned_by": "dootz1",
       "pr_number": 131,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792456380,
         "base_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
-        "epoch": 1,
-        "expires_at": 1792466860,
-        "granted_at": 1792456060,
+        "evidence": [
+          "Committed fresh session mac-review94-01a15493 / Stanleys-Laptop.local review grant mac-review94-next-v1, task epoch1/review_epoch1 at1792456060; .cache/review94-b3d0e3a/.cache/evidence/review-grant.json.",
+          "Full independent npm run test:frontend-baseline with env -i, scrubbed credentials/HOME and pinned review backend/root/data, locked Python47-package environment and Chromium1248, verified copied source bundle: .cache/review94-b3d0e3a/.cache/evidence/frontend-baseline-6pfcN6;17/17; p95 seek49.4ms/timeline48.5ms/playback262.1ms/rAF16.8ms; overlay lag0.2698s; exact protocol e3150b1199b325e325e13c5dba3c6f851fa2448b5a7be8226ae84c305bfdacd8.",
+          "Independent adversarial probes in .cache/review94-b3d0e3a/.cache/reviewer-probes.mjs and .cache/evidence/reviewer-probes/results.json: BASE_URL refusal with zero sentinel contacts; corrupted source/helper bundle refusal before listener; owned startup-failure cleanup and exited PIDs; all seven fixture routes reject missing token403; original prediction bytes/annotations preserved by derived reads.",
+          "Ordinary tablet-viewport.png and tablet-lower-viewport.png visually assessed; width768/scrollWidth768; .cache/review94-b3d0e3a/.cache/evidence/reviewer-probes.",
+          "Verified author receipts 3HSX1o/yUIKgC/VvMj6g exact protocol/current hashes/17 passed checks, cleanup receipts and source manifest; canonical fixture digest ae83e55189bfb8a9c86d9f1b7694481f831d0e15cf9eb95f8d04f97391f9cb5e; reproduced medians65.7/36.6/273.4/16.7ms; .cache/evidence/receipt-verification.json.",
+          "Node syntax bothMJS, Prettier all4files, git diff --check, repository checker pass; clean detached tracked state. All reviewer-owned PIDs verified exited by psutil.",
+          "Independently queried CI run39347426882 exact b3d0e3a7bdda64218e18746c70cd2abf820056de completed success, all12jobs including ci/gate success; .cache/evidence/ci-exact-head.json. PR head/base revalidated unchanged immediately before report."
+        ],
+        "findings": [],
         "head_sha": "b3d0e3a7bdda64218e18746c70cd2abf820056de",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Generated-only software baseline; external YouTube download/native perception/classifier operations are stubbed or synthetic. No annotation accuracy, model/GPU speed or real download throughput established.",
+          "Independently reran the complete 17-block browser contract once; verified all three author raw runs against exact current harness/protocol/helper/UI/lock hashes and canonical source/PTS records. One independent run is not a three-repeat migration speed comparison; probes overlapped parts of that run and no relative speed claim is made.",
+          "Known legacy manual-court-after-new-cut gap (#130), BODY focus after save/discard, pointer-only canvas, approximately 0.27 second timeupdate overlay lag and event-only CSV remain. They are explicitly recorded without correctness/conformance claims.",
+          "Ordinary 768x1024 viewport screenshots visually inspected; controls and viewer fit with no horizontal page overflow. Full-page sticky-tile artifacts are not vertical-layout evidence. Other viewports/assistive technology unverified.",
+          "Existing required CI succeeds on exact head including ci/gate, native Mac/Windows, Python3.10/3.12, package/container/browser/repository jobs. New baseline npm command is manual in this phase and is not added to CI. No local full Python rerun required for these four fixture/document/package-script paths."
+        ],
         "pr_number": 131,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "tests/frontend-fixtures.mjs",
+          "tests/frontend-parity.mjs",
+          "docs/FRONTEND_BASELINE.md",
+          "package.json"
+        ],
         "session_id": "mac-review94-01a15493",
-        "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38"
+        "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
