@@ -1619,6 +1619,35 @@
       "task_id": "95",
       "verb": "review-result"
     },
+    "mac-review96-01a156d5-register-v1": {
+      "actor": "dootz1",
+      "at": 1792462587,
+      "fingerprint": "00dfc88913fbcf79b12beb921e55d5f014be4b4e095163917e0fbcb1b3c0d968",
+      "status": "ok",
+      "verb": "register"
+    },
+    "mac-review96-01a156d5-review-next-v1": {
+      "actor": "dootz1",
+      "at": 1792462587,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "epoch": 1,
+        "expires_at": 1792473387,
+        "granted_at": 1792462587,
+        "head_sha": "5ccc6e15fca18207bb8fa474167f197a009193a5",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 136,
+        "review_epoch": 1,
+        "session_id": "mac-review96-01a156d5",
+        "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d"
+      },
+      "epoch": 1,
+      "fingerprint": "db4705a613b9ce7e07944186dc4824a263bea6bb1fa44028ff6d9e6c04843a2c",
+      "status": "granted",
+      "task_id": "96",
+      "verb": "review-next"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -3152,6 +3181,15 @@
       "fingerprint": "31cfa3941070bc03e908d40f65b6b4554928d74b3daa12a0d83f5f3b6e042915",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-portable64-review-result-v1": {
+      "actor": "Ken0u",
+      "at": 1792462587,
+      "epoch": 1,
+      "fingerprint": "e2532620f8be581e4baad5588a3595340871f557fc73e33dcce76b404701c29f",
+      "status": "running",
+      "task_id": "64",
+      "verb": "review-result"
     },
     "windows-portable64-start-v1": {
       "actor": "Ken0u",
@@ -5874,14 +5912,34 @@
       "planned_by": "dootz1",
       "pr_number": 135,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_claim": {
+      "repair_rounds": 1,
+      "review": {
         "actor": "Ken0u",
+        "at": 1792462587,
         "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
-        "epoch": 1,
-        "expires_at": 1792473026,
-        "granted_at": 1792462226,
+        "evidence": [
+          "Real independent MSI/windows-portable64-review-v1 registration accepted at 1792461823. Committed review-next-v2 grant accepted at 1792462226 with task epoch1/review_epoch1 and this exact head/base/spec; fingerprint 09d1f1340b1a9b8fb0a0f1b0ae3e0864c2a807839e0c3ddd30d805885db76791. The earlier stale-base request returned idle and was never treated as a grant.",
+          "Detached exact-head review worktree .cache/worktrees/portable64-review-v1 is clean; base-to-head diff contains exactly the five granted paths. Current task issue specification matches frozen acceptance and risk-routine scope.",
+          "Independent credentials-removed focused check on exact review backend/scripts, isolated GH_CONFIG_DIR and explicit BADMINTON roots: 35 passed in 6.20s using existing root Python3.10.5 / Torch2.8.0+cu126 / NumPy2.2.6. No environment installation or synchronization.",
+          "Independent Ruff check passed; Ruff format checked 151 files; pip check found no broken requirements; git diff --check passed; permitted tracked UTF-8/LF/JSON/link/credential-pattern checks passed on329 files with PROGRESS.md contents excluded.",
+          "Independently read exact-head GitHub checks: all12 required Checks jobs completed SUCCESS, including Python3.10/3.12, native macOS/Windows, repository/package/frontend/browser/container and ci/gate. Additional automation/policy failure specifically states Fresh independent agent review required; no bypass was attempted.",
+          "Independent read-only audit verifies all276 original inventory seals unchanged; complete actual inputs67/67 clips,624/672 source rows,608/662 available, disjoint fixed original source groups EpLD0HrwDJU/kbHgum5unYc, and input manifest SHA2568d0fe34c21cda1f877b11ad967d643275c0a58ae377737e2f7759508f651d8d0.",
+          "Independent torch.load(weights_only=True,map_location=cpu) comparison, without predictions or training: all selected state tensors, mean/std, family/side support, thresholds, epoch295, all60history records, threshold evidence and closed-set/abstention validation metrics exactly match sealed original R3. Original model SHA256cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc; new model SHA25679f3e397b4dfcf8359d0d400a1a6977a45ed01d3f4bf666e8e2499045806a257. All three executed code seals match reviewed source; learner SHAd7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3.",
+          "Read-only SQLite observation of real main data/processed/catalog.sqlite3 confirms job5ff31a0441e947fa8e397787f4aa245d completed/progress1, ownerPID11280 creation1792461112.4339652, matching immutable output/model/input hashes. Current PID11280 absent; durable completed.json matches job summary and main data root. No Store was constructed for this audit.",
+          "Source inspection confirms training-only normalization/class weights, separate known-label loss masks, validation-only fixed selection/thresholds, actual Store/main run_local_job admission, exclusive new output directory and publication after successful Store release, and code/input revalidation. Report distinguishes conditional weak-source classification, numerical portability and data redistribution limits; no application model/data/policy changes occur.",
+          "Concrete production-PROTOCOL row-substitution probe accepted s2doubles:1:1:1:999:999 in place of canonical s2doubles:1:1:1:1:2 with complete original counts, establishing the actionable blocker independently of the passing test fixture. Originals and implementation were not modified."
+        ],
+        "findings": [
+          "P2 backend/badminton/stroke_learning.py:304-314: Bind each row to the expected ordered source-stroke identity, rather than only a rally prefix and global uniqueness. Using the unchanged production PROTOCOL and complete actual 134-clip development manifest, I preserved every original input and copied only match1-1_01_00 metadata locally. Replacing its canonical first ID s2doubles:1:1:1:1:2 with s2doubles:1:1:1:999:999 and supplying an ordinary updated metadata seal passed audit with 624/672 rows and 608/662 available inputs, even though that clip has only 13 published strokes. This can silently replace a missing or misordered source stroke with a different same-rally row while all claimed completeness counts remain green, contrary to the frozen expected-row-identity/substitution acceptance. The canonical original metadata seal is 4658f466a0932de3d28177b317b91ec465ebe25fecb8b5283642a4f1f8801543; doubles_data.normalize_set defines the order/source-row suffix. Validate the canonical ordered per-rally membership from pinned original-source provenance before accepting the cache, and add regressions for same-rally substitution/reordering with unchanged counts. Probe: .cache/portable64-independent-evidence-v1.py and .cache/portable64-review-probe-v1/input-manifest.json."
+        ],
         "head_sha": "10fbd3be99647feed61bf04dcdb59a54e28e55c2",
-        "host_id": "MSI",
+        "limitations": [
+          "A changes verdict is required until the canonical within-rally row-membership audit and regression gap is repaired and independently reviewed on a new exact head/base binding.",
+          "The full local suite was not repeated because focused35tests and exact-head hosted all12-job CI provided appropriate independent verification. The author reports its separate full Windows run; this review does not relabel that run as independently executed.",
+          "No training, native perception, feature extraction, model inference, installation, dataset download, environment migration or production model promotion was performed. Saved development artifacts alone were loaded and compared. Consumed holdout63 saved predictions/caches were not opened.",
+          "Weak published clocks, hitter-foot association and mechanics do not establish exact contacts, complete events, persistent player identity or full-match annotation accuracy. Tensor equality is observed only for the recorded Windows/Python/Torch/NumPy CPU runtime, and does not promise cross-platform bit identity.",
+          "S2Doubles lacks a license file at the pinned source revision; labels, features, media, weights and local evidence remain ignored workstation artifacts and are not release assets. PROGRESS.md and unrelated edits, environments, branches and processes were preserved."
+        ],
         "native_evidence": {
           "code_sha256": "d7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3",
           "comparison": "All selected tensors, normalization, support, thresholds, epoch295, 60 history rows and every validation metric exactly match original R3; all276 original input/model seals unchanged. Main refresh changes no Python source/test bytes; executed learner/metrics/input hashes unchanged.",
@@ -5894,9 +5952,16 @@
           "status": "completed"
         },
         "pr_number": 135,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/stroke_learning.py",
+          "scripts/train_observed_strokes.py",
+          "tests/test_stroke_learning.py",
+          "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "data/manifests/portable_stroke_training_v1.json"
+        ],
         "session_id": "windows-portable64-review-v1",
-        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c"
+        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c",
+        "verdict": "changes"
       },
       "review_epoch": 1,
       "spec": {
@@ -5946,7 +6011,7 @@
         ]
       },
       "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
         "head_sha": "10fbd3be99647feed61bf04dcdb59a54e28e55c2",
@@ -7490,6 +7555,20 @@
       "planned_at": 1792417955,
       "planned_by": "dootz1",
       "pr_number": 136,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "epoch": 1,
+        "expires_at": 1792473387,
+        "granted_at": 1792462587,
+        "head_sha": "5ccc6e15fca18207bb8fa474167f197a009193a5",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 136,
+        "review_epoch": 1,
+        "session_id": "mac-review96-01a156d5",
+        "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Migrate library, uploads/progress, public YouTube import, empty/error states and processing progress/pause/resume using the typed API client.",
@@ -7996,6 +8075,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792460487,
       "session_id": "mac-review95-01a156d5"
+    },
+    "Stanleys-Laptop.local/mac-review96-01a156d5": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792462587,
+      "session_id": "mac-review96-01a156d5"
     },
     "Stanleys-Laptop.local/roadmap-01a156d5-20261019": {
       "actor": "dootz1",
