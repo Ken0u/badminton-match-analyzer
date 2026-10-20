@@ -4081,6 +4081,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle139-audit-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792483075,
+      "epoch": 2,
+      "fingerprint": "d796179dd4deb18b17d00c0fdb53cd83d7e93966634754093203b70825cc4f89",
+      "status": "running",
+      "task_id": "139",
+      "verb": "checkpoint"
+    },
     "windows-shuttle139-epoch2-source-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792481575,
@@ -6302,6 +6311,7 @@
       "epoch": 1,
       "planned_at": 1792465571,
       "planned_by": "dootz1",
+      "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
           "Add accessible explicit controls for plain-rallies, annotated-rallies and annotated-full using the existing typed media-export API and exact displayed saved annotation revision; require clean, non-saving annotations and show source/revision/mode before submission. Do not automatically save drafts or start exports on selection.",
@@ -6342,43 +6352,45 @@
         ]
       },
       "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-      "status": "running"
+      "status": "recovery_required"
     },
     "139": {
       "checkpoint": {
-        "assessment_sha256": [
-          "2ac3294ff310ae2a1d4a0691d2a894eabd15294dd457c9391131de718fe96536",
-          "91654166aa8d1b05feb241856671ab9fed126671b1031974d0ed49d4f12f4a6b"
-        ],
+        "baseline_sha256": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
         "branch": "codex/issue-139-establish-source-only-independently-asse-e2",
+        "cases": 60,
+        "consumer_source_sha256": "54e23dd58ee7c4c5ec077a8ae263f1eddcc3ff02d38dabad266e2bd5bc594959",
         "head_sha": "d8bcce6ea338305e4deb9aeb662909268e3c16f2",
-        "next": "Actually inspect source images for each disagreement and confirmed-absence label; freeze all60 adjudicated labels and timestamp seals before any cached native prediction access. No model inference/GPU/app truth/holdout access.",
+        "labels_sha256": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "native_evidence": "All60 outputs available;38 relevant stages,48 frozen runtime files,2 model checkpoints,2 manifests,2 native clocks,2 optional absent metadata sidecars and per-target read-only SQLite snapshots. No originals changed. Preliminary v1 index preserved; parser incorrectly required a metadata sidecar before source-code inspection confirmed SQLite registration is authoritative. Regression test preserves strict registered source/clock checks.",
+        "next": "Finish aggregate report, required full checks, focused commits/PR, fresh exact-head/base/spec independent review and controller integration/main/delivery.",
+        "outcomes": {
+          "correct_absence": 4,
+          "correct_localization": 14,
+          "false_detection": 3,
+          "localization_error": 1,
+          "miss": 10,
+          "unknown_truth": 28
+        },
         "packet_sha256": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
-        "phase": "Fresh epoch2 grant after audited expired epoch1 recovery. Complete source packet and two genuine immutable independent assessments validated. Explicit root source-only adjudication is next.",
-        "previous_epoch_preserved": {
-          "branch": "codex/issue-139-establish-source-only-independently-asse",
-          "local_head": "3fa0266814aaec67cef663bfd1f22740108c6218",
-          "recovery_receipt": "windows-shuttle139-expired-recover-v1",
-          "worktree": ".cache/worktrees/shuttle139"
-        },
-        "raw_disagreements": {
-          "camera_context": 0,
-          "difficulty": 28,
-          "disjoint_location": 0,
-          "point_estimate": 14,
-          "state": 6,
-          "uncertainty_radius": 9
-        },
+        "phase": "Frozen two-assessor/source-adjudicated labels and complete unchanged native baseline audit; aggregate report and final publication gates remain",
+        "report_sha256": "7c9a4bfb305c6fc3513db75749bc6d5f238fe9846b80cc954af17e378b24c895",
         "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
-        "verification": "30 focused generated tests passed in epoch1; label-freeze/score code still uncommitted and full/final project checks pending. No PR or approval claimed."
+        "states": {
+          "not_visible": 7,
+          "unknown": 28,
+          "visible": 25,
+          "visible_unlocalizable": 0
+        },
+        "verification": "51 focused generated tests pass; full project suite live in unified exec87848, FFmpeg/Py3.10 activated, new isolated temp directory and JUnit file. Consumer code copied/hash-checked before/after audit. No inference/GPU/holdout/app truth/model promotion."
       },
-      "checkpoint_at": 1792481575,
+      "checkpoint_at": 1792483075,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
         "branch": "codex/issue-139-establish-source-only-independently-asse-e2",
         "epoch": 2,
-        "expires_at": 1792492375,
+        "expires_at": 1792493875,
         "granted_at": 1792481430,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
