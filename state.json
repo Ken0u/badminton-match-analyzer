@@ -4579,6 +4579,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle143-review-result-7e09f59c": {
+      "actor": "Ken0u",
+      "at": 1792499796,
+      "epoch": 1,
+      "fingerprint": "57c2e95958c187062e61ca5ac085d5acd16320f4ad8fddf8ab2a411a4ad968ee",
+      "status": "review",
+      "task_id": "143",
+      "verb": "review-result"
+    },
     "windows-shuttle143-submit-v1": {
       "actor": "Ken0u",
       "at": 1792499038,
@@ -7162,18 +7171,42 @@
       "planned_at": 1792495103,
       "planned_by": "Ken0u",
       "pr_number": 144,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792499796,
         "base_sha": "ecef569e21afe9777a2cce7c392523876cc5ebef",
-        "epoch": 1,
-        "expires_at": 1792510158,
-        "granted_at": 1792499358,
+        "evidence": [
+          "Fresh independent reviewer: host MSI, session 7e09f59c-76d7-4231-a7be-c9e40572234e. Committed request windows-shuttle143-review-next-7e09f59c granted at 1792499358 with implementation epoch 1 and review_epoch 1. Exact head/base/spec match. Detached checkout: .cache/worktrees/shuttle143-review-7e09f59c. No implementation edits.",
+          "Root Python 3.10.5 ran PR code with GH_TOKEN/GITHUB_TOKEN cleared, private offline GH_CONFIG_DIR, and isolated review BADMINTON_ROOT/DATA/WEIGHTS/PYTHONPATH. No package installation or environment mutation.",
+          "Independent focused suite: 37 passed. JUnit .cache/worktrees/shuttle143-review-7e09f59c/.cache/focused-results.xml, SHA256 640cb934381e49c9c044c7fc244a98cfb46dbcfa03d51e74155be1c5211cde6f.",
+          "Independent full suite: 1,413 passed, four optional GPU skips, 150.26 seconds, actual process exit 0. JUnit .cache/worktrees/shuttle143-review-7e09f59c/.cache/full-results.xml, SHA256 71f35be510436861e967fd0fee073209397979c7d656a42a4259ab9c7d333df4. Ruff, format (160 files), pip check, exact revision diff check, clean checkout, five-file UTF8/LF, JSON/local documentation links and CLI help passed.",
+          "Independent artifact audit: .cache/shuttle143-review-7e09f59c-76d7-4231-a7be-c9e40572234e/independent-artifact-verification.json, SHA256 af005e1150eb35d73c5fbdd1798a6fd1f3e65d93897ba51003cf5b7efa7d8bfc. All 773 sealed files match index df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f. Archive is 1,731,120,724 bytes with SHA256 f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465. Declaration and final source receipt match the frozen hashes.",
+          "All 51 executed consumer snapshots match final Git bytes. All 201 raw CSV files equal retained raw_fields; all retained clocks preserve frame identity, PTS/timebase, 1280x720 geometry and zero rotation. Independently recomputed 29 groups, 201 clips, 91,214 rows, 91,579 native frames, 78,952 visible/12,262 not visible, 176 complete/25 incomplete clips, 365 unlabelled tails and 12,235 quarantined rows (10,309 visible/1,926 not visible). Exactly 68,643 visible points pass the structural gate; zero rows are training-ready. Complete report SHA256 d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa.",
+          "Original shared Store jobs c07992ea6d9f466683a59c83380b453a and 6b449ae83b5d4d85a2b5283cfa7f59d7 are completed. Actual raw document hashes match 4db2037ee2d00e6e173549582903aa8e207ef8a80de87a82cbe005bda6f25584 and f760bd6bc9596515612dac19ae267d844aa1aa0ba18c984d2c9e492fd0572325. Original PID 13464/creation 1792497396.4517105 and PID 14920/creation 1792497762.512466 lifetimes have exited. Admissions and terminal receipts match recorded cwd/command/lifetime/job evidence.",
+          "Native spotcheck receipt .cache/worktrees/shuttle143-review-7e09f59c/.cache/source-spotchecks.json, SHA256 672f2c87b21d008a23d3ea174f5b46b614ee1e125b5216c78bc750aa96c59b05. First three frames of amateur/match1/1_00_01, professional/match1/1_01_00 and test/match1/1_05_02 match retained PTS/timebase/geometry. Torchvision initialized before threaded PyAV; existing av_runtime logging restoration preserved. Three first-frame images visually inspected; no broad label-accuracy inference.",
+          "GitHub PR144 independently reread OPEN at exact head 71c257d/base ecef569 with only five granted new paths. All 12 Checks jobs including ci/gate succeeded: https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39421620211 . Pre-data issue143 checkpoint 6290270663 was created and last updated at 2026-10-20T11:55:33Z before original fetch. Policy check 118628866349 independently reread with sole summary: Fresh independent agent review required. This actual review-result supplies the independent verdict."
+        ],
+        "findings": [],
         "head_sha": "71c257d82a789178f036a3a1f0ba42cc7c6dd52b",
-        "host_id": "MSI",
+        "limitations": [
+          "Approval covers the frozen source-preparation scope only. Structural coordinate eligibility, passing software checks and sealed native clocks are not localization accuracy or expert-reviewed application truth.",
+          "Mirror authenticity, dataset/media rights, original-match identities, cross-corpus overlap, exact upstream checkpoint membership and independent-test eligibility remain unresolved; all usage eligibility remains false.",
+          "No independent full-corpus native rescan, download, extraction, training or model inference was performed. Original executed native evidence was independently hash-checked and all retained clocks/raw CSV arithmetic audited; nine first-frame native spotchecks from three namespace clips matched.",
+          "Native consumer code bytes and recorded runtime version context match the final head; this review does not certify every installed third-party/native-library binary byte.",
+          "Professional/match1/1_01_00 frame0 visibly contains a broadcast crossfade. Structural eligibility does not certify live-court scene context, occlusion type, contacts, boundaries, identities or doubles/full-match accuracy, as documented.",
+          "The ignored SHA-bound discovery declaration and six source snapshots are explicit required local inputs; a clone alone cannot reproduce this corpus. Four optional GPU tests were skipped. Controller integration, merged-main verification and complete candidate delivery remain subsequent gates."
+        ],
         "pr_number": 144,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/shuttle_supervision.py",
+          "scripts/prepare_shuttle_supervision.py",
+          "tests/test_shuttle_supervision.py",
+          "data/manifests/shuttle_supervision_sources_v1.json",
+          "docs/SHUTTLE_SUPERVISION_REPORT.md"
+        ],
         "session_id": "7e09f59c-76d7-4231-a7be-c9e40572234e",
-        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
+        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
