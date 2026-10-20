@@ -1,6 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { appendFile, readFile, rm, unlink, writeFile } from "node:fs/promises";
+import {
+  appendFile,
+  mkdir,
+  readFile,
+  rm,
+  unlink,
+  writeFile,
+} from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { stage } from "../scripts/stage.mjs";
@@ -11,6 +18,8 @@ const repoRoot = path.resolve(
 );
 const output = path.join(repoRoot, ".cache/frontend-stage-test");
 const main = path.join(repoRoot, "backend/frontend/src/main.tsx");
+// A clean checkout has no ignored cache directory before its first check.
+await mkdir(path.dirname(output), { recursive: true });
 
 test("production entry and staged runtime exclude foundation, source, and tools", async () => {
   await rm(output, { recursive: true, force: true });
