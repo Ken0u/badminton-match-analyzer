@@ -2230,6 +2230,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review84-result-v1": {
+      "actor": "dootz1",
+      "at": 1792535396,
+      "epoch": 1,
+      "fingerprint": "7f6561508e136a56a274162e4dea672eed7cc859e350c59e73f0494e5cfcd7a0",
+      "status": "review",
+      "task_id": "84",
+      "verb": "review-result"
+    },
     "mac-review94-next-v1": {
       "actor": "dootz1",
       "at": 1792456060,
@@ -10251,18 +10260,34 @@
       "planned_by": "dootz1",
       "pr_number": 155,
       "repair_rounds": 0,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792535396,
         "base_sha": "68ac30b4b3024fcdb6b8c01bba09944220105c6d",
-        "epoch": 1,
-        "expires_at": 1792545992,
-        "granted_at": 1792535192,
+        "evidence": [
+          "Independent read-only inspection of exact two-file diff and surrounding doctor/probe/bootstrap logic against frozen acceptance; no blocking findings.",
+          "Independent credential-empty focused pytest on exact head: 14 passed in 0.15s; JUnit .cache/evidence/focused-tests.xml.",
+          "Independent baseline replay: all 3 new codec command regression cases fail against base68ac30b4b3024fcdb6b8c01bba09944220105c6d without modifying implementation files.",
+          "Independent installed-tool probes: ffmpeg --version exit8, -version exit0; ffprobe --version exit1, -version exit0. No runtime/tool upgrade or inference.",
+          "Independent changed-file Ruff lint and format, git diff --check base..head, and rootvenv pip check passed.",
+          "Author full suite evidence .cache/doctor-repair-84/.cache/evidence/validation.json inspected:1456 passed6 skipped1warning, attributed to author rather than independently rerun.",
+          "Pre-submission GitHub metadata revalidated matching exact head/base and two-file scope; Checks run39507777675 ci/gate SUCCESS with Python3.10/3.12/native/repository/package/frontend/browser/container jobs successful. automation/policy currently FAILURE; controller gating is separate from this source verdict."
+        ],
+        "findings": [],
         "head_sha": "3bc49ab9ed506f0ce770a2e09f7b37d128574b2d",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Independent execution used macOS arm64 Python3.10 projectvenv; Windows/Linux and Python3.12 were not rerun locally.",
+          "Full1456-test suite and repository-wide checks are author evidence; reviewer independently ran the focused environment suite and changed-file quality checks.",
+          "Approval assesses this diagnostic repair only; CI/controller integration, merged-main verification and candidate delivery remain separate requirements. No application/model accuracy claim."
+        ],
         "pr_number": 155,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "scripts/devops/environment.py",
+          "tests/test_devops_environment.py"
+        ],
         "session_id": "mac-review84-3bc49ab-independent",
-        "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7"
+        "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
