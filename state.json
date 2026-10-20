@@ -1472,6 +1472,35 @@
       "task_id": "94",
       "verb": "review-result"
     },
+    "mac-review95-01a156d5-grant": {
+      "actor": "dootz1",
+      "at": 1792460487,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
+        "epoch": 1,
+        "expires_at": 1792471287,
+        "granted_at": 1792460487,
+        "head_sha": "f2111bf492cc796be9e02ded910f2c99e38f65e6",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 134,
+        "review_epoch": 1,
+        "session_id": "mac-review95-01a156d5",
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+      },
+      "epoch": 1,
+      "fingerprint": "e046d17bc9465638c7e7d427c5183591b645a7001039748fa3dc9c93c6c48991",
+      "status": "granted",
+      "task_id": "95",
+      "verb": "review-next"
+    },
+    "mac-review95-01a156d5-register": {
+      "actor": "dootz1",
+      "at": 1792460487,
+      "fingerprint": "33fd4dfbf479adcda2effd3c3d5210c8032c61a6e4153b676c1e2239c1716c3f",
+      "status": "ok",
+      "verb": "register"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -1718,6 +1747,14 @@
       "at": 1792393957,
       "fingerprint": "2ee5e86b8efbcf56a7e106bfab138b0fa53283a51f8cd6eb750851e41dbf0340",
       "status": "proposed",
+      "task_id": "64",
+      "verb": "plan"
+    },
+    "spec-64-c4f7876c863293ac9fbb3935939775b997564b19d9af679b2ee02b09a9a16cc3": {
+      "actor": "dootz1",
+      "at": 1792460487,
+      "fingerprint": "c214fd978bafb4f0d3a5d130b323260001d52dc5a01d7e05a33f80d7a6388d61",
+      "status": "ready",
       "task_id": "64",
       "verb": "plan"
     },
@@ -2898,6 +2935,13 @@
       "status": "review",
       "task_id": "126",
       "verb": "submit"
+    },
+    "windows-portable64-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792460487,
+      "fingerprint": "e0d43839aeb1ef313bfa29658b4bdc4b8d14fcc689b29e14785d1376828c8949",
+      "status": "ok",
+      "verb": "register"
     },
     "windows-post63-next-v1": {
       "actor": "Ken0u",
@@ -5562,21 +5606,29 @@
     },
     "64": {
       "epoch": 0,
-      "planned_at": 1792393957,
+      "planned_at": 1792460487,
       "planned_by": "dootz1",
       "spec": {
         "acceptance": [
-          "Reproduce a development-only recipe with pinned input/model/protocol hashes.",
-          "Keep conditional classification distinct from complete event detection and do not promote weights."
+          "Supply a clone-contained Python module/CLI and public parameter/provenance manifest for the fixed 371-value R3 CPU training/validation recipe; accept explicit legally available external precomputed caches through relative file/hash seals, never execute imported local helper scripts.",
+          "Audit all expected clips/rows, original-source groups, complete split membership, source/feature recipe hashes, metadata/NPZ bytes, row identities, finite typed arrays and label ranges before training; reject missing/changed inputs, overlapping original sources, path escapes and substituted or partial splits. Keep every unknown and unavailable row visible in per-output and joint denominators.",
+          "Use training-only normalization/class weights, fixed seeds/architecture/optimizer/schedule, validation-only selection and thresholds, and masks for each known output. Freeze parameters before execution; do not read test/held-out caches or use the consumed holdout for tuning.",
+          "Pin BADMINTON_ROOT and BADMINTON_DATA_DIR to the explicit real shared workspace before importing configuration; actual training must run under its Store run_local_job admission. Keep outputs in a new isolated ignored lineage with input/code/protocol/runtime hashes, progress and successful job receipts; reject overwrite, competing writers and changed inputs rather than replacing prior evidence.",
+          "Reproduce the existing complete development run on 67/67 clips and 624/672 reference rows, retaining 608/662 available inputs. Under the original Torch 2.8.0 CPU / NumPy 2.2.6 runtime, compare selected epoch 295, normalization, support, thresholds, tensor state and validation metrics against the sealed original R3 experiment. Explain numerical portability limits separately from byte identity.",
+          "Generated regressions cover changed input seals, source/split overlap, missing/duplicate/unknown/unavailable rows, validation leakage, partial-label masks, deterministic selection/thresholds, admission denial and immutable outputs. Publish a truthful aggregate report; no data/labels/weights are committed or installed and no accuracy improvement is claimed from reproduction."
         ],
-        "artifacts": {},
+        "artifacts": {
+          "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2"
+        },
         "capabilities": [
-          "cpu"
+          "cpu",
+          "torch"
         ],
-        "dependencies": [],
+        "dependencies": [
+          "63"
+        ],
         "exclusions": [
-          "No claim of full automatic annotation accuracy.",
-          "No production/model promotion or destructive storage changes."
+          "No native perception/feature re-extraction, new downloads, held-out/test prediction access, tuning, application model promotion, app/API/UI behavior change, credential/policy/workflow change, environment migration, research restart, dataset redistribution or paid service."
         ],
         "limits": {
           "max_review_rounds": 3,
@@ -5584,21 +5636,26 @@
           "paid_services": false
         },
         "milestone": "Event recognition",
-        "outcome": "Make supported training/evaluation recipes portable.",
+        "outcome": "Make the fixed R3 observed-stroke development training/validation recipe portable, source-group guarded and reproducible without changing app models or opening held-out predictions.",
         "paths": [
-          "scripts/",
-          "backend/badminton/"
+          "backend/badminton/stroke_learning.py",
+          "scripts/train_observed_strokes.py",
+          "tests/test_stroke_learning.py",
+          "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "data/manifests/portable_stroke_training_v1.json"
         ],
-        "priority": 500,
-        "resources": [],
+        "priority": 300,
+        "resources": [
+          "cpu:windows-training"
+        ],
         "risk": "routine",
         "verification": [
-          "Focused tests for changed behavior; required project checks on the exact head.",
-          "Record source/input/protocol hashes and material limitations for research."
+          "Meaningful focused generated-input/CLI regressions; required full project checks, exact-head CI, genuine independent exact-revision review, verified merged main and normal delivery.",
+          "One admitted development-only reproduction of the sealed original recipe with complete source/row counts and independent reference comparisons; preserve the consumed held-out result and all original artifacts."
         ]
       },
-      "spec_hash": "a278ee30cd36cd1d35c7ab5ae6027a949d3dd98bc3602b1db07f53addc371938",
-      "status": "proposed"
+      "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c",
+      "status": "ready"
     },
     "65": {
       "epoch": 0,
@@ -6982,6 +7039,20 @@
       "planned_by": "dootz1",
       "pr_number": 134,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
+        "epoch": 1,
+        "expires_at": 1792471287,
+        "granted_at": 1792460487,
+        "head_sha": "f2111bf492cc796be9e02ded910f2c99e38f65e6",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 134,
+        "review_epoch": 1,
+        "session_id": "mac-review95-01a156d5",
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Create a locked React + strict TypeScript + Vite source workspace at backend/frontend/, with typecheck/build scripts and a documented generated-asset policy. Keep the current default UI working.",
@@ -7180,20 +7251,22 @@
         "frozen_view_support": "1b2e035e536e6ef74b1704b37275fab0e30d74c58fb3d2e45c4cd656f1df8b78",
         "normalized_labels": "2fb3fdca1bd544179367b5bcc0cd3679c7001fb1f697e5cf29e69b327801a881",
         "r2_selected_model": "ef71574cac55f1cf5441e1ba11cbf2f4b9eafa31298d2078e87a7018d22ae10e",
+        "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
         "r3_selected_model": "cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc"
       },
       "capabilities": [
-        "cpu",
-        "windows",
         "amd64",
-        "review",
+        "cpu",
+        "cuda",
         "python-3.10",
         "python-3.12",
-        "cuda",
-        "shuttleset-holdout"
+        "review",
+        "shuttleset-holdout",
+        "torch",
+        "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1792420694,
+      "registered_at": 1792460487,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/windows-external119-review-v1": {
@@ -7505,6 +7578,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792455967,
       "session_id": "mac-review94-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review95-01a156d5": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792460487,
+      "session_id": "mac-review95-01a156d5"
     },
     "Stanleys-Laptop.local/roadmap-01a156d5-20261019": {
       "actor": "dootz1",
