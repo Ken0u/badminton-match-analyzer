@@ -1700,6 +1700,28 @@
       "task_id": "138",
       "verb": "review-next"
     },
+    "mac-review138-r2-next-v1": {
+      "actor": "dootz1",
+      "at": 1792504711,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
+        "epoch": 3,
+        "expires_at": 1792515511,
+        "granted_at": 1792504711,
+        "head_sha": "125b1dffcf46e5f234bf865b1a940098f092892c",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 147,
+        "review_epoch": 2,
+        "session_id": "mac-review138-r2-01a15493",
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+      },
+      "epoch": 3,
+      "fingerprint": "4a3446bb38f6ce1e31a3a5bb5635bde744d7a92c36ee52f145b5175678f6ccb8",
+      "status": "granted",
+      "task_id": "138",
+      "verb": "review-next"
+    },
     "mac-review138-r2-register-v1": {
       "actor": "dootz1",
       "at": 1792504597,
@@ -6963,7 +6985,20 @@
       "pr_number": 147,
       "reason": "implementation lease expired; reservations retained",
       "repair_rounds": 1,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
+        "epoch": 3,
+        "expires_at": 1792515511,
+        "granted_at": 1792504711,
+        "head_sha": "125b1dffcf46e5f234bf865b1a940098f092892c",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 147,
+        "review_epoch": 2,
+        "session_id": "mac-review138-r2-01a15493",
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Add accessible explicit controls for plain-rallies, annotated-rallies and annotated-full using the existing typed media-export API and exact displayed saved annotation revision; require clean, non-saving annotations and show source/revision/mode before submission. Do not automatically save drafts or start exports on selection.",
