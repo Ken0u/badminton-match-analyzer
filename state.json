@@ -4243,6 +4243,15 @@
       "status": "review",
       "task_id": "139",
       "verb": "submit"
+    },
+    "windows-shuttle139-submit-v3": {
+      "actor": "Ken0u",
+      "at": 1792485414,
+      "epoch": 2,
+      "fingerprint": "1667d0fb0ff6e79d0d616d42c5a4497cb504880ab2dd6680f61820b932479aff",
+      "status": "review",
+      "task_id": "139",
+      "verb": "submit"
     }
   },
   "tasks": {
@@ -6497,42 +6506,6 @@
       "pr_number": 140,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review": {
-        "actor": "Ken0u",
-        "at": 1792484956,
-        "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
-        "evidence": [
-          "Genuine fresh independent read-only session /root/shuttle139_review_v1, registered as MSI/shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6. Registration windows-shuttle139-review-v1-register accepted at 1792484291. Review request windows-shuttle139-review-v1-next granted at 1792484378, task epoch 2 / review_epoch 1, fingerprint 9eb4cb3eb2f104c89f5f5734d354226cabfe6683cf0f71b5464bb199177aec21. Grant binds exactly the head/base/spec in this verdict; pending was not treated as a grant.",
-          "Read current AGENTS.md, PROJECT_PLAN.md, docs/BUG_REVIEW.md, docs/COLLABORATION.md, automation config and reviewer prompt from the granted current worktree, frozen issue 139 and exact PR140 metadata. Reviewed the complete 3020-line five-file diff against base50efff1867de1ecac0093468f987d6b60d5d178d and relevant pipeline, shuttle selector, camera scan, scene, calibration, source/orientation and config helpers. Isolated detached review worktree .cache/worktrees/shuttle139-review-v1 remains tracked-clean at4b56f0351d7d38497f39d297b10628cee82ab995. Deprecated PROGRESS.md and existing root modifications were preserved.",
-          "Independently ran all53 focused generated tests: PASS in14.00s, .cache/worktrees/shuttle139-review-v1/.cache/reviewer-focused-v2.xml. Independently ran the full suite:1351 passed/4 optional skips in149.33s, terminal session11930 exit0; JUnit .cache/reviewer-full-v1.xml SHA-256 c3b3fb7a632a8b54fafebd62dfee24bf2f7d3981c1c4c0a3614257e3f67c0ca8. Ruff lint, Ruff format (154files), pip check, git diff --check, allfive UTF-8/LF files, protocol JSON and local documentation links pass.",
-          "Independently executed the candidate audit offline with the original root argument and isolated environment into new .cache/shuttle139-review-v1-audit-v1. It reproduces report SHA-256 b00016493645d4d2a886a50ce9876b397940dd62c8469f4cc3dddda0dc401615 exactly. Allten copied consumer hashes match the final PR tree, including auditor520aeeab59b6222638d271e89a75ed3ef1bafdb66e3e2215a39c99989b25c0f8. Native baseline index915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64 is unchanged; it seals92 existing files and2 optional-sidecar absences with both per-source SQLite target snapshots.",
-          "Verified source packet3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d, original inventory273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822, labelsfd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158 and original assessments A2ac3294ff310ae2a1d4a0691d2a894eabd15294dd457c9391131de718fe96536/B91654166aa8d1b05feb241856671ab9fed126671b1031974d0ed49d4f12f4a6b and adjudication1be266e4cf647ae9737c9464572a1aa279956a1e6df55a9365a37f9644a598c8. Source sessions are recorded separately as /root/source139_a and /root/source139_b. Issue139 comment6285925236 was created and last updated2026-10-20T07:39:20Z, explicitly freezing these hashes before additional baseline reads.",
-          "Actual read-only graph audit retains all60 outputs through38 relevant stages,48 runtime files,2 weights,2 manifests,2 clocks and registered source/inference context. Reproduced truth25 visible/7 absent/28 unknown; outcomes14 correct locations/10 misses/1 wrong location/3 false detections/4 correct absences/28 unknown. Visibility15TP/3FP/10FN/4TN; localization14TP/4FP/11FN/4TN; strict uncertainty recall0.28..0.56. Wrong locations count FP+FN, unknowns remain unscored and unavailable positives remain misses. Report correctly preserves small-development and unrepresented-coverage limits and keeps parent65 open.",
-          "Own complete generated-lineage reproduction validates a packet, both assessment documents and explicit adjudication with source cut1, then successfully freezes the baseline. Assertions verify cases0 and1 unavailable but case3 incorrectly available with background[0,4], despite source context[1,2,3]. The preserved script SHA-256 is91acc1b249a91f2cc9926d55bd98eee9ed45e63e319c868c5619762984459958; result SHA-256 a288c51e8f4526d9f192469cb53541fb66504e8bc23f2cc80d77cada5a168a51. No actual source labels or cached predictions were changed for this repro.",
-          "Immediately before verdict, trusted GitHub/controller reads confirmed PR140 OPEN at exact head4b56f0351d7d38497f39d297b10628cee82ab995 and base50efff1867de1ecac0093468f987d6b60d5d178d, task139 in review with this real review claim. Exact-head CI39391873176 is completed SUCCESS. The controller must require a repaired final head, fresh independent review and exact-head checks; this changes verdict supplies no merge approval."
-        ],
-        "findings": [
-          "[P2] Propagate source-observed camera cuts across all cases of the same video (backend/badminton/shuttle_validation.py:1499-1503). native_observations currently consults only by_label[case['id']]['observed_cut_frames']. A transition independently observed in another selected case can lie inside the current case's cached median-background/neural view even when it lies outside the current case's local +/-2 source context. The current case is then incorrectly marked available despite known cross-camera input. A complete generated packet/assessment/adjudication/freeze_labels/freeze_baseline repro records cut 1 on both cases whose source contexts include frames 0 and 1. Cases 0 and 1 become unavailable, but case 3 remains available with background_context_frames [0,4]; case 3's own source context is [1,2,3] so it cannot observe transition 0->1 locally. Union the explicit observed_cut_frames per video and apply that source-wide evidence to every cached context containing the transition. Add regressions for cuts recorded by earlier and later cases, preserving unrelated sources and every unavailable denominator. Repro: .cache/worktrees/shuttle139-review-v1/.cache/repro-global-cut-lineage.py and .cache/repro-global-cut-lineage-v1/repro-result.json (result SHA-256 a288c51e8f4526d9f192469cb53541fb66504e8bc23f2cc80d77cada5a168a51). The actual frozen labels have zero observed cuts, so this finding does not change their measured baseline; it blocks the reusable auditor's claimed camera-provenance correctness."
-        ],
-        "head_sha": "4b56f0351d7d38497f39d297b10628cee82ab995",
-        "limitations": [
-          "This review does not certify badminton truth. The 60 cases are two familiar development sources with ten known-gap selections; source-agent labels are not human-certified or held-out truth. Actual labels contain no confirmed occlusion or camera-transition cases. No model improvement, full-match correctness or unseen accuracy is established.",
-          "I verified the original assessment/adjudication bytes, distinct recorded source-agent session IDs and unedited public freeze timestamp, but did not repeat source labeling or personally witness those earlier image-inspection sessions. Independent source labeling is separate from this code review.",
-          "No implementation files, original media, annotations, native outputs, weights, policy or coordination state were edited. Candidate tests/audit ran with GH_TOKEN/GITHUB_TOKEN removed, offline GH_CONFIG_DIR, explicit review ROOT/DATA pins and the original Python 3.10.5 environment. No model inference/training, GPU work, downloads or real application Store construction was run by this review. Detailed inputs/labels/native artifacts remain ignored local evidence unavailable from a clone.",
-          "The first reviewer pytest attempt failed at fixture setup because the fresh worktree lacked the parent .cache directory. Creating that directory and using a fresh v2 basetemp resolved it; this was review harness setup, not an implementation defect. The generated repro emitted routine FFmpeg stderr, and its result file is written only after all reproduction assertions pass."
-        ],
-        "pr_number": 140,
-        "reviewed_files": [
-          "backend/badminton/shuttle_validation.py",
-          "scripts/evaluate_shuttle_cases.py",
-          "tests/test_shuttle_validation.py",
-          "docs/SHUTTLE_VISIBILITY_REPORT.md",
-          "data/manifests/shuttle_visibility_protocol_v1.json"
-        ],
-        "session_id": "shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6",
-        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -6580,10 +6553,10 @@
         ]
       },
       "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
-        "head_sha": "4b56f0351d7d38497f39d297b10628cee82ab995",
+        "head_sha": "b89bad0aa2a150758fdb6bca8c921d9e9ba4b442",
         "pr_number": 140,
         "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
       }
