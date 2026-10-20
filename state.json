@@ -5026,6 +5026,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle145-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792510859,
+      "epoch": 1,
+      "fingerprint": "420ce7954207c7939aed61ffdd94496b937113a295d7bb5a8733af376652113b",
+      "status": "review",
+      "task_id": "145",
+      "verb": "submit"
+    },
     "windows-shuttle145-threequarter-v1": {
       "actor": "Ken0u",
       "at": 1792508431,
@@ -7828,6 +7837,7 @@
       "epoch": 1,
       "planned_at": 1792501455,
       "planned_by": "Ken0u",
+      "pr_number": 146,
       "spec": {
         "acceptance": [
           "Pin main 029bae3f706e66ba4410fe87d1154292b892e261, source evidence baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4, 773-file index df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f, native source report d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa and original TrackNet checkpoint df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Freeze and timestamp the committed protocol/code/runtime before opening any new native predictions. No source/sample/model/threshold selection informed by this diagnostic.",
@@ -7879,7 +7889,26 @@
         ]
       },
       "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "head_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+        "native_evidence": {
+          "code_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+          "limitations": [
+            "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
+            "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
+            "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
+            "No training, tuning, new weights, interpolation, model/default installation or promotion",
+            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts"
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "2fce9c858ad84fa38ede6f407208fa5c60f21cc90f393dc487d2574661814d87",
+          "source_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465"
+        },
+        "pr_number": 146,
+        "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600"
+      }
     },
     "62": {
       "epoch": 0,
