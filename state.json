@@ -1980,6 +1980,28 @@
       "task_id": "138",
       "verb": "review-result"
     },
+    "mac-review151-next-v1": {
+      "actor": "dootz1",
+      "at": 1792519333,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "4ebd2f025da117ba617d5b092d5a9cc25d53eabc",
+        "epoch": 1,
+        "expires_at": 1792530133,
+        "granted_at": 1792519333,
+        "head_sha": "0a351a638d45e418c586cca7bfafa8116d7d80c5",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 152,
+        "review_epoch": 1,
+        "session_id": "mac-review151-0a351a6-independent",
+        "spec_hash": "f4846fab1f9b9418c6df528e34fe180b56ae1b63025d0f16cee5edec0b38fb21"
+      },
+      "epoch": 1,
+      "fingerprint": "4993f8568421d634cfc4dd08af64e763b096e8eb6c9f1373146258827df974d5",
+      "status": "granted",
+      "task_id": "151",
+      "verb": "review-next"
+    },
     "mac-review151-register-v1": {
       "actor": "dootz1",
       "at": 1792519241,
@@ -8412,6 +8434,20 @@
       "planned_at": 1792518749,
       "planned_by": "dootz1",
       "pr_number": 152,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "4ebd2f025da117ba617d5b092d5a9cc25d53eabc",
+        "epoch": 1,
+        "expires_at": 1792530133,
+        "granted_at": 1792519333,
+        "head_sha": "0a351a638d45e418c586cca7bfafa8116d7d80c5",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 152,
+        "review_epoch": 1,
+        "session_id": "mac-review151-0a351a6-independent",
+        "spec_hash": "f4846fab1f9b9418c6df528e34fe180b56ae1b63025d0f16cee5edec0b38fb21"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Update PROJECT_PLAN.md and docs/FRONTEND_REWRITE.md to describe delivered phases 94-98 and export controls 138 with owning issue/PR and exact merged-main/candidate evidence; claim delivery only after complete package and both image receipts are verified.",
