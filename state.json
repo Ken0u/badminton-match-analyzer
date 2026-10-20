@@ -5913,6 +5913,7 @@
       }
     },
     "94": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39349018992",
       "checkpoint": {
         "artifacts": ".cache/frontend-baseline-94/.cache/evidence/implementation-handoff.md;frontend-baseline-{3HSX1o,yUIKgC,VvMj6g};frontend-baseline-comparison.json; .cache/full-tests.xml",
         "base_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
@@ -5936,7 +5937,7 @@
         "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792456415,
