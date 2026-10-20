@@ -4846,6 +4846,15 @@
       "task_id": "143",
       "verb": "submit"
     },
+    "windows-shuttle145-half-v1": {
+      "actor": "Ken0u",
+      "at": 1792506699,
+      "epoch": 1,
+      "fingerprint": "9a6d4b2e2f4989b382113311dcb07f0428267cfb73e95583b1f3f5245c3e6407",
+      "status": "running",
+      "task_id": "145",
+      "verb": "checkpoint"
+    },
     "windows-shuttle145-implementation-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792502940,
@@ -7678,19 +7687,19 @@
       "checkpoint": {
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "head_sha": "6a1f28ee1a71a27a81a45517d9e35784b731a12a",
-        "next": "Continue observing the existing run to complete terminal evidence. Seal all raw outputs before fixed scoring; preserve every source/quarantine/unavailability denominator and all false usage-eligibility gates. Independent review and controller integration follow actual results.",
-        "phase": "Existing frozen native baseline checkpointed 50 of 201 clips; scoring pending",
+        "next": "Continue the same run through complete native output sealing and verified exit; then externally record receipt/index hashes and use the fixed scorer. Local scoring launcher is prepared. Preserve all source/quarantine/unavailability denominators and unchanged eligibility gates; genuine independent review and controller integration remain later gates.",
+        "phase": "Existing frozen native baseline checkpointed 101 of 201 clips; scoring pending",
         "pr_number": 146,
         "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-        "verification": "Same admitted run is advancing; fixed code/protocol unchanged. All 12 exact-head CI jobs passed. Workstation lifecycle evidence stays local."
+        "verification": "Original run remains active and advancing. Code/protocol unchanged; all 12 exact-head CI jobs passed. Detailed lifecycle evidence remains local."
       },
-      "checkpoint_at": 1792505034,
+      "checkpoint_at": 1792506699,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "epoch": 1,
-        "expires_at": 1792515834,
+        "expires_at": 1792517499,
         "granted_at": 1792501565,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
