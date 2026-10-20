@@ -2166,6 +2166,41 @@
       "task_id": "139",
       "verb": "review-result"
     },
+    "shuttle141-review-next-64a866d3b0a648e78d0fc6837481003e": {
+      "actor": "Ken0u",
+      "at": 1792492997,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
+        "epoch": 1,
+        "expires_at": 1792503797,
+        "granted_at": 1792492997,
+        "head_sha": "78cd24287ab86e96d42a072243edcfbacca009cf",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "78cd24287ab86e96d42a072243edcfbacca009cf",
+          "limitations": [
+            "Familiar two-source development cases, not a held-out or human-certified benchmark",
+            "Twenty-eight unknowns and no established occlusion, camera-transition or visible-unlocalizable support remain",
+            "Higher input resolution with unchanged weights can worsen outputs, runtime or memory; report both fixed variants without tuning",
+            "A negative or incompatible result is valid; broader source-separated singles/doubles and independent full-match validation remain required",
+            "No consumed holdout63 inputs or metadata, training, downloads, model installation/promotion or complete-accuracy claim"
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "60ad673e74efae355dd94db5b2bd47c0e712c22aa90134f4db5923f031a36632",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 142,
+        "review_epoch": 1,
+        "session_id": "64a866d3b0a648e78d0fc6837481003e",
+        "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec"
+      },
+      "epoch": 1,
+      "fingerprint": "62ef49a1a1480de49f28ebb19969c342aac34f81cfbc1784064d1de162a01818",
+      "status": "granted",
+      "task_id": "141",
+      "verb": "review-next"
+    },
     "shuttle141-review-register-64a866d3b0a648e78d0fc6837481003e": {
       "actor": "Ken0u",
       "at": 1792492889,
@@ -6819,6 +6854,33 @@
       "planned_at": 1792486696,
       "planned_by": "Ken0u",
       "pr_number": 142,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
+        "epoch": 1,
+        "expires_at": 1792503797,
+        "granted_at": 1792492997,
+        "head_sha": "78cd24287ab86e96d42a072243edcfbacca009cf",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "78cd24287ab86e96d42a072243edcfbacca009cf",
+          "limitations": [
+            "Familiar two-source development cases, not a held-out or human-certified benchmark",
+            "Twenty-eight unknowns and no established occlusion, camera-transition or visible-unlocalizable support remain",
+            "Higher input resolution with unchanged weights can worsen outputs, runtime or memory; report both fixed variants without tuning",
+            "A negative or incompatible result is valid; broader source-separated singles/doubles and independent full-match validation remain required",
+            "No consumed holdout63 inputs or metadata, training, downloads, model installation/promotion or complete-accuracy claim"
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "60ad673e74efae355dd94db5b2bd47c0e712c22aa90134f4db5923f031a36632",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 142,
+        "review_epoch": 1,
+        "session_id": "64a866d3b0a648e78d0fc6837481003e",
+        "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Before any new native predictions, freeze and timestamp a public reproducible protocol for exactly512x288 control and768x432 candidate, the unchanged TrackNet checkpoint and threshold0.5, source inventory273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822, packet3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d, frozen labelsfd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158 and original native baseline915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64. Preserve all60cases and every unavailable/unknown/ineligible denominator; this is familiar development evidence, not a holdout.",
