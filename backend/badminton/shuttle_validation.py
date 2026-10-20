@@ -1108,6 +1108,13 @@ def native_observations(root, sources, cases, labels, locations):
     for _, meta, times, _ in sources:
         vid = meta["id"]
         selected = [c for c in cases if c["video_id"] == vid]
+        # A locally inspected transition constrains every cached context from
+        # this source, even when another case's packet cannot see that edit.
+        source_cuts = {
+            cut
+            for case in selected
+            for cut in by_label[case["id"]]["observed_cut_frames"]
+        }
         paths = sorted((roots["data"] / vid / "analysis").glob("*/manifest.json"))
         if len(paths) > 1:
             raise ValueError(
@@ -1496,10 +1503,7 @@ def native_observations(root, sources, cases, labels, locations):
                                 reasons.add("incompatible_transitive_selection_history")
                 if ann is not None and excluded_scene(ann, *context) is not None:
                     reasons.add("excluded_scene_in_neural_or_background_context")
-                if any(
-                    context[0] < cut < context[1]
-                    for cut in by_label[case["id"]]["observed_cut_frames"]
-                ):
+                if any(context[0] < cut < context[1] for cut in source_cuts):
                     reasons.add("source_observed_cut_in_cached_context")
             observations[case["id"]] = {
                 "available": not reasons,

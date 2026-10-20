@@ -876,6 +876,58 @@ def test_native_context_incompatibility_is_unavailable_not_absence(native):
     )
 
 
+@pytest.mark.parametrize("source_index", [0, 1])
+def test_source_cut_invalidates_other_case_backgrounds_only_in_same_video(
+    native, source_index
+):
+    n = native
+    vid = n["sources"][source_index][1]["id"]
+    adjudication_path = n["root"] / "adjudication.json"
+    adjudication = audit.read_json(adjudication_path.read_bytes())
+    cases = {case["id"]: case for case in n["packet"]["cases"]}
+    for entry in adjudication["cases"]:
+        case = cases[entry["id"]]
+        frames = {item["frame"] for item in case["context"]}
+        if case["video_id"] == vid and {0, 1} <= frames:
+            entry["label"]["context_cut"] = True
+            entry["observed_cut_frames"] = [1]
+            entry["evidence_frames"] = [0, 1]
+    adjudication_path.write_bytes(audit.encoded(adjudication))
+    label_root = n["root"] / ".cache/labels-with-source-cut"
+    labels = audit.freeze_labels(
+        n["root"],
+        n["packet_root"],
+        n["packet_sha"],
+        [n["root"] / f"assessment-{i}.json" for i in range(2)],
+        adjudication_path,
+        label_root,
+    )
+    baseline_root = n["root"] / ".cache/baseline-with-source-cut"
+    audit.freeze_baseline(
+        n["root"],
+        n["packet_root"],
+        n["packet_sha"],
+        label_root,
+        labels["labels_sha256"],
+        n["locations"],
+        baseline_root,
+    )
+    observations = audit.read_json((baseline_root / "baseline.json").read_bytes())[
+        "evidence"
+    ]["observations"]
+    # Frame 3 cannot inspect transition 0->1 locally, but its cached median
+    # background still uses frames [0,4), crossing the independently seen cut.
+    assert [item["frame"] for item in cases[f"{vid}:3"]["context"]] == [1, 2, 3]
+    for case in cases.values():
+        row = observations[case["id"]]
+        assert row["background_context_frames"] == [0, 4]
+        if case["video_id"] == vid:
+            assert not row["available"]
+            assert "source_observed_cut_in_cached_context" in row["reason"]
+        else:
+            assert row["available"] and row["reason"] is None
+
+
 def test_invalid_transitive_selection_retains_case_and_known_truth(native):
     edit_native_shuttle(
         native,
