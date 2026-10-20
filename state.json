@@ -7172,6 +7172,7 @@
       }
     },
     "95": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39356145324",
       "checkpoint": {
         "base_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
         "branch": "codex/issue-95-establish-react-typescript-vite-frontend",
@@ -7199,7 +7200,7 @@
         "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792461017,
