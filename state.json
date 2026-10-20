@@ -2094,6 +2094,28 @@
       "task_id": "151",
       "verb": "review-result"
     },
+    "mac-review153-next-v1": {
+      "actor": "dootz1",
+      "at": 1792532360,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "0552727c4b1cd070175385d449dea4f973ffabe2",
+        "epoch": 1,
+        "expires_at": 1792543160,
+        "granted_at": 1792532360,
+        "head_sha": "abad2fe03b2855184abcad6be7388efc4e4641b0",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 154,
+        "review_epoch": 1,
+        "session_id": "mac-review153-abad2fe-independent",
+        "spec_hash": "2af05da9de1c13f43a02fab9971e056687b4b1fc4cfcef3d1495c5d175280a77"
+      },
+      "epoch": 1,
+      "fingerprint": "2eb0fd047a063678a9b3e318d035bdf4361ba1759827b3075ae69b9730ec2452",
+      "status": "granted",
+      "task_id": "153",
+      "verb": "review-next"
+    },
     "mac-review153-register-v1": {
       "actor": "dootz1",
       "at": 1792532265,
@@ -8671,6 +8693,20 @@
       "planned_by": "dootz1",
       "pr_number": 154,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "0552727c4b1cd070175385d449dea4f973ffabe2",
+        "epoch": 1,
+        "expires_at": 1792543160,
+        "granted_at": 1792532360,
+        "head_sha": "abad2fe03b2855184abcad6be7388efc4e4641b0",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 154,
+        "review_epoch": 1,
+        "session_id": "mac-review153-abad2fe-independent",
+        "spec_hash": "2af05da9de1c13f43a02fab9971e056687b4b1fc4cfcef3d1495c5d175280a77"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Replace the stale mandatory non-author final-human-review sentence in docs/DEPLOYMENT.md with the current distinction: explicit configured-owner authorization of sensitive frozen task scope, fresh independent agent approval and exact CI; non-author human final PR review optional.",
