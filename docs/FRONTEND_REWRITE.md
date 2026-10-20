@@ -1,10 +1,45 @@
 # Approved frontend rewrite
 
-The collaborators approved adding a phased React + TypeScript + Vite rewrite to
-the roadmap on October 19, 2026. This is planned work, not a claim that the new
-frontend is implemented. [Task #93](https://github.com/Ken0u/badminton-match-analyzer/issues/93)
-records the roadmap addition. The GitHub milestone is **Review and product**;
-issues define task requirements and dispatcher grants define ownership.
+The collaborators approved the phased React + TypeScript + Vite rewrite on
+October 19, 2026, recorded by
+[task #93](https://github.com/Ken0u/badminton-match-analyzer/issues/93).
+Phases #94–#98 are integrated and delivered as of October 20, 2026. React is the
+default packaged UI, served by FastAPI in the existing application/container.
+The GitHub milestone is **Review and product**; issues define task requirements
+and dispatcher grants define ownership.
+
+## Verified delivery
+
+[Phase #98 / PR #148](https://github.com/Ken0u/badminton-match-analyzer/pull/148)
+merged as `4ebd2f025da117ba617d5b092d5a9cc25d53eabc`. The controller recovered
+the external merge using the preserved original grant, exact source/base,
+independent review and identical reviewed/merged trees. The
+[owning checkpoint](https://github.com/Ken0u/badminton-match-analyzer/issues/98#issuecomment-6293143852)
+records the audit and complete delivery acknowledgement.
+
+- [Exact merged-main CI](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39462227527)
+  passed all 12 jobs, including 18 production, 8 library and 13 media-export
+  browser groups, installed-package checks, native Mac/Windows checks and
+  authenticated review/CPU container checks. Frozen parity and performance
+  evidence remains attached to the phase checkpoints.
+- [Candidate delivery](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39469465774)
+  succeeded for the package and both public images. Independent verification
+  matched all 75 application source/runtime files in the wheel and source archive
+  to that merged commit, verified the dependency-lock hash and anonymously
+  checked both immutable image manifests. The controller recorded
+  `delivery_pending=false`.
+- [Export controls #138 / PR #147](https://github.com/Ken0u/badminton-match-analyzer/pull/147)
+  are included in this default delivery. They expose the reviewed plain/annotated
+  export service with saved-revision submission, source-bound job status,
+  eligibility reasons and verified manifest/MP4 downloads. The preceding backend
+  increments and their receipts remain linked from
+  [the export milestone](https://github.com/Ken0u/badminton-match-analyzer/issues/70).
+
+These receipts establish software parity and artifact delivery. They do not
+establish full automatic badminton annotation accuracy or unseen-match product
+validation, which remains separate work under
+[task #71](https://github.com/Ken0u/badminton-match-analyzer/issues/71).
+No running application was upgraded by this delivery.
 
 ## Target architecture
 
@@ -36,13 +71,11 @@ issues define task requirements and dispatcher grants define ownership.
 | 4. Review editor | [#97](https://github.com/Ken0u/badminton-match-analyzer/issues/97) | #96 | Migrate playback, timeline, overlays and all existing review/evaluation interactions with parity evidence. |
 | 5. Delivery and legacy retirement | [#98](https://github.com/Ken0u/badminton-match-analyzer/issues/98) | #97 | Package/install/container/CI verification, default UI cutover and removal of replaced assets. |
 
-Prioritize foundation work before substantial new editor features, while backend,
-model and research tasks continue under compatible grants. Do not interrupt or
-overwrite the active playback-proxy task #69. Its broad backend/test reservation
-also prevents conflicting implementation from starting before integration.
-Each phase is a bounded increment, not a mandate to finish a whole migration in
-one session. Split further when necessary before claiming; never expand a running
-specification. Dependencies require verified completion, not just an open PR.
+The table preserves the completed migration order; playback-proxy task #69 and
+all five phase dependencies are now satisfied. Future frontend increments still
+require bounded specifications and compatible dispatcher grants. Respect current
+backend, model and research reservations; never expand a running specification
+without a grant. Dependencies require verified completion, not just an open PR.
 
 ## Acceptance criteria
 
@@ -76,16 +109,20 @@ scientific evaluation criteria.
 
 ## Integration and rollout boundaries
 
-Keep the working UI available during migration. Do not switch the default UI or
-remove legacy behavior until the full matrix and frozen budgets pass. The final
-integration task owns Python package discovery/data, built assets, Docker and CI
-wiring, and documents a reversible code-release cutover. It requires a real
-non-author human approval because it changes workflow/deployment configuration;
-this roadmap approval does not substitute for review of that actual diff.
+The default cutover and retirement of replaced assets followed the full parity
+matrix and frozen performance budgets. Phase #98 owns Python package discovery,
+built assets, Docker and CI wiring; [deployment documentation](DEPLOYMENT.md)
+describes the reversible code-release rollback without changing annotations.
+Future sensitive workflow/deployment scope requires explicit configured-owner
+authorization of the frozen task, as specified by [AGENTS.md](../AGENTS.md) and
+the [collaboration protocol](COLLABORATION.md). Fresh independent agent review
+and exact CI remain required; final non-author human PR review is optional.
+Original issue specifications and historical reviews remain audit evidence.
 
 Each implementation requires an isolated granted worktree, independent review,
-current CI and controller integration/main verification. The final phase also
-requires successful private candidate receipts. Deployment to a running instance
+current CI and controller integration/main verification. Completion also requires
+successful package and both image receipts matching the approved candidate
+visibility policy, currently public. Deployment to a running instance
 remains explicit; no automatic application upgrade, data migration, model change,
 paid service or research-process restart is authorized here. Shared frontend
 contracts remain with the phase owner; subagents may work only on bounded,
