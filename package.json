@@ -8,10 +8,20 @@
     "test:rallies": "node tests/rally-browser.mjs",
     "test:contact-profile": "node tests/contact-profile-browser.mjs",
     "test:pipeline": "node tests/pipeline-browser.mjs",
-    "test:frontend-baseline": "node tests/frontend-parity.mjs"
+    "test:frontend-baseline": "node tests/frontend-parity.mjs",
+    "frontend:typecheck": "npm run typecheck --workspace @badminton/frontend",
+    "frontend:build": "npm run build --workspace @badminton/frontend",
+    "frontend:test": "npm run test --workspace @badminton/frontend",
+    "frontend:contract": "npm run contract:check --workspace @badminton/frontend",
+    "frontend:contract:generate": "npm run contract:generate --workspace @badminton/frontend",
+    "test:frontend-foundation": "node tests/frontend-foundation.mjs",
+    "frontend:contract:check": "npm run contract:check --workspace @badminton/frontend"
   },
   "devDependencies": {
     "playwright": "^1.56.0",
     "prettier": "^3.9.10"
-  }
+  },
+  "workspaces": [
+    "backend/frontend"
+  ]
 }

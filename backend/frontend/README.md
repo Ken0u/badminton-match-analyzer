@@ -38,12 +38,14 @@ The check recreates both files in memory and fails on any byte difference.
 It requires the repository's locked Python review environment; set
 `FRONTEND_CONTRACT_PYTHON` to its executable if it is outside `.venv/`.
 
-`export_openapi.py` sets `BADMINTON_ROOT`, `BADMINTON_DATA_DIR` and
+The embedded exporter in `scripts/contract.mjs` sets `BADMINTON_ROOT`, `BADMINTON_DATA_DIR` and
 `BADMINTON_EXPORT_DIR` before any backend/config import. Every invocation uses a
 fresh temporary catalog/export directory, resolves platform temporary path
 aliases, and removes its own temporary files. It neither starts app lifespan/
 HTTP/inference nor reads an existing catalog. Backend imports still require the
-declared Python review dependencies. Do not point this tool at live data.
+declared Python review dependencies. The exporter stays embedded so this phase
+adds no Python namespace package to existing distributions. Packaging and default
+UI cutover remain scoped to phase 98. Do not point this tool at live data.
 
 The current backend provides request schemas, parameters and validation errors,
 but its JSON success responses generally have no declared response model.
