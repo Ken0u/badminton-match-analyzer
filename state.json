@@ -1729,6 +1729,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review138-r2-result-v1": {
+      "actor": "dootz1",
+      "at": 1792505139,
+      "epoch": 3,
+      "fingerprint": "85dd9a4b87a074b84367295b594c2ceae7fc82811be6c058c6529d0809c2bca4",
+      "status": "review",
+      "task_id": "138",
+      "verb": "review-result"
+    },
     "mac-review138-register-v1": {
       "actor": "dootz1",
       "at": 1792503488,
@@ -6994,18 +7003,47 @@
       "pr_number": 147,
       "reason": "implementation lease expired; reservations retained",
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792505139,
         "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
-        "epoch": 3,
-        "expires_at": 1792515511,
-        "granted_at": 1792504711,
+        "evidence": [
+          "Genuine fresh reviewer grant task epoch 3/review epoch 2 for this host/session and exact head/base/spec is saved at .cache/reviewer-evidence/grant.json; final-state.json revalidates current ownership and frozen submission.",
+          "Independent credential-scrubbed frontend runtime suite passed 89/89; strict TypeScript, production Vite build, OpenAPI contract and git diff checks passed. Logs are .cache/reviewer-evidence/{unit,typecheck,build,contract}.log.",
+          "Independent owned generated-media browser harness passed all 13 groups at .cache/evidence/frontend-exports-HWoN8F: real plain/annotated-rallies/annotated-full exports, historical revision after newer save, downloads and native PTS/orientation/hash/pixels, complete eligible/ineligible receipts, zero-eligible output, real shared Store 409 admission/retry, actual failed source job, injected 401/unknown/malformed/delayed replies, cross-video late replies and keyboard behavior. cleanup.json and admission-cleanup.json record owned process termination; direct PID recheck found neither process live.",
+          "Independent deterministic probe .cache/reviewer-evidence/race-probe.mjs reproduces the prior delayed-list plus POST-401 sequence on the repaired compiled controller and observes loading=false/starting=false, explicit GET recovery, one POST only; it also confirms a new selection refreshes while the old POST is fenced. Output is race-result.json and race-probe.log.",
+          "Independently compared the author after-fix native receipt's 30 in-scope frontend/harness source and built-asset hashes to this exact checkout with no mismatches; author-hash-audit.json. final-pr.json records exact head/base, exactly nine scoped paths, mergeable PR, and successful exact-head ci/gate plus all listed Checks jobs. Checkout remains detached and tracked-clean."
+        ],
+        "findings": [],
         "head_sha": "125b1dffcf46e5f234bf865b1a940098f092892c",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Generated synthetic media, explicit transport faults and software receipts establish application behavior, provenance and recovery, not badminton annotation accuracy, arbitrary real-match/YouTube throughput, or model/GPU performance.",
+          "I did not independently repeat the full 1,397-test Python suite, package build/install parity, container jobs, or the separate editor/library/foundation native harnesses; exact-head hosted CI reports their required jobs and ci/gate successful, while author evidence remains separately attributed.",
+          "The exact-head automation/policy check is failure before this verdict; I did not infer its cause or treat it as a software check. Controller integration, merged-main verification and candidate delivery remain outside this read-only review. Any changed head/base/spec invalidates this approval.",
+          "No tracked implementation edits, PR merge, deployment, running-app upgrade, model installation, dataset access or research/GPU jobs were performed."
+        ],
         "pr_number": 147,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/frontend/README.md",
+          "backend/frontend/scripts/test.mjs",
+          "backend/frontend/src/editor/EditorApp.tsx",
+          "backend/frontend/src/editor/editor.css",
+          "backend/frontend/src/editor/exports/ExportPanel.tsx",
+          "backend/frontend/src/editor/exports/controller.ts",
+          "backend/frontend/src/editor/exports/model.ts",
+          "backend/frontend/tests/exports.test.mjs",
+          "tests/frontend-exports.mjs",
+          "tests/frontend-fixtures.mjs",
+          "backend/frontend/src/api/client.ts",
+          "backend/frontend/src/state/draft.ts",
+          "backend/frontend/src/state/store.ts",
+          "backend/badminton/api.py",
+          "backend/badminton/export_service.py",
+          "backend/badminton/rally_export.py"
+        ],
         "session_id": "mac-review138-r2-01a15493",
-        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
