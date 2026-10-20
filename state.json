@@ -1805,6 +1805,15 @@
       "task_id": "97",
       "verb": "checkpoint"
     },
+    "roadmap97-final-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792465281,
+      "epoch": 1,
+      "fingerprint": "e1db89d25363efc84f188506d71f0c6ed793469e41367085b6a628bed9157824",
+      "status": "running",
+      "task_id": "97",
+      "verb": "checkpoint"
+    },
     "roadmap97-start-v1": {
       "actor": "dootz1",
       "at": 1792463536,
@@ -1813,6 +1822,15 @@
       "status": "running",
       "task_id": "97",
       "verb": "checkpoint"
+    },
+    "roadmap97-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792465334,
+      "epoch": 1,
+      "fingerprint": "9635927d05e09db7bb10cc764f56a9cd885635bb8818903efb7863cbf42150c2",
+      "status": "review",
+      "task_id": "97",
+      "verb": "submit"
     },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
@@ -7744,22 +7762,24 @@
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "evidence": [
-          "Isolated .cache/frontend-editor-97; frontend-only implementation, parent tests/frontend-editor.mjs; full nativeclock/orientation/realproxy, draft/conflict/race, camera/court/scene, identities/shuttle/strokes/rallies/classification, processing/recovery/exports/keyboard groups exercised. No accuracy claim.",
-          "Three fresh legacy17group baseline runs DPtXsW/4GTXyD/65gbFe, exact frozen5sourcebytes/helperprotocol/currentlocks/Chromium, frozen before React measurement in .cache/baseline97/frozen-before-editor.json. All limits unchanged.",
-          "Frontend development failure BAMGyl selector matched both image ownership data and video button; parent fixes button qualifier; owned listeners cleanup retained. Python fullsuite running, Ruff148files/UTF8JSONlinks/diff/47packagehealth passed."
+          "32 frontend unit tests; strict TypeScript/build/OpenAPI contract; Python 1242 passed/13 skipped; Ruff148files, changed-source Prettier, repository/diff,47package health; fresh installed archive parity76 runtime files. Initial contract invocation used browser interpreter variable instead of documented FRONTEND_CONTRACT_PYTHON; corrected without source changes. Broad Prettier probe included unchanged generated artifacts/.gitignore; changed12sourcefile gate passes without reformatting frozen generated contract.",
+          "Three final editor runs bwm6EP/de1nAX/7uXpMV each pass17 groups; source and harness byte hashes independently match committed a48fbca. All9 actual playback observations have0 broad editor rerenders. Native PTS/orientation/proxy pixel checks, full reviews/explicit acceptance/exports, selection/save/conflict races, processing pause/resume/window media seek, focus, contrast13.2:1/18px checkboxes and tablet fit covered.",
+          "Frozen same-host Node22/Chromium/source bundle/current-lock comparison against prespecified legacy swN0QR/OBjZjD/GdqTdx passes all budgets: median p95 seek81.5ms<=102.5, timeline31.5<=67.0, first advance86.2<=362.25, rAF16.8<=40.875. Formal report .cache/evidence/frontend-editor-comparison.json. First overlapping-build baseline preserved/excluded per preregistration before timing results.",
+          "Foundation7 and library8 compatibility groups pass; owned fixture/static cleanup receipts retained. Development failures preserved: BAMGyl ambiguous selector, RIIyAH real visual contrast/checkbox regression repaired via scoped CSS, XKAdeL focus test observed in-flight saving before completed request; corrected measurement now verifies event-notes focus. No failed timing samples removed or budgets raised."
         ],
-        "head_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "remaining": "Freeze source+build; final complete parity and3samehost performance comparison incl0broadframe rerenders; foundation/librarycompat, packageverification; commit/PR/exactCI freshindependentreview/controller/main/candidatereceipts.",
+        "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
+        "pr_number": 137,
+        "remaining": "Fresh independent exact-head/base/spec review, hosted exact-head CI/controller integration, exact merged-main CI and complete package/review+CPU image receipt verification. Preserve default legacy UI until separately authorized phase98; no accuracy, deployment or app-upgrade claim.",
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "stage": "React editor strict build and30unit checks pass; first generated browser development run passes16workflow groups with zero pageerrors. Parent corrected harness button selector ambiguity before performance; failed receipt preserved. Final source freeze/checks/3performance repeats pending."
+        "stage": "Committed opt-in React review editor and complete generated parity/performance driver; all local required and compatibility checks pass. Published PR #137; awaiting fresh independent exact-head/base/spec review and CI."
       },
-      "checkpoint_at": 1792464246,
+      "checkpoint_at": 1792465281,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "epoch": 1,
-        "expires_at": 1792475046,
+        "expires_at": 1792476081,
         "granted_at": 1792463404,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
@@ -7768,6 +7788,7 @@
       "epoch": 1,
       "planned_at": 1792418018,
       "planned_by": "dootz1",
+      "pr_number": 137,
       "spec": {
         "acceptance": [
           "Migrate playback, timeline, overlays, camera/scene/court editing, player mappings, shuttle/contact/rally/stroke review and evaluation; cover every supported baseline action.",
@@ -7805,7 +7826,13 @@
         ]
       },
       "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
+        "pr_number": 137,
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      }
     },
     "98": {
       "epoch": 0,
