@@ -1734,6 +1734,35 @@
       "task_id": "120",
       "verb": "review-result"
     },
+    "review97-next-v1": {
+      "actor": "dootz1",
+      "at": 1792465401,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "epoch": 1,
+        "expires_at": 1792476201,
+        "granted_at": 1792465401,
+        "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 137,
+        "review_epoch": 1,
+        "session_id": "mac-review97-01a156d5",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "epoch": 1,
+      "fingerprint": "1e10c04f1daff6eea6e0319618117b782896012ade974830b961f36dd993c513",
+      "status": "granted",
+      "task_id": "97",
+      "verb": "review-next"
+    },
+    "review97-register-v1": {
+      "actor": "dootz1",
+      "at": 1792465401,
+      "fingerprint": "facc044767e181b408edecc43c69f8c0f34823ea82ebb46ad08f532f1d62c96f",
+      "status": "ok",
+      "verb": "register"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -7789,6 +7818,20 @@
       "planned_at": 1792418018,
       "planned_by": "dootz1",
       "pr_number": 137,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "epoch": 1,
+        "expires_at": 1792476201,
+        "granted_at": 1792465401,
+        "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 137,
+        "review_epoch": 1,
+        "session_id": "mac-review97-01a156d5",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Migrate playback, timeline, overlays, camera/scene/court editing, player mappings, shuttle/contact/rally/stroke review and evaluation; cover every supported baseline action.",
@@ -8264,6 +8307,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792462587,
       "session_id": "mac-review96-01a156d5"
+    },
+    "Stanleys-Laptop.local/mac-review97-01a156d5": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792465401,
+      "session_id": "mac-review97-01a156d5"
     },
     "Stanleys-Laptop.local/roadmap-01a156d5-20261019": {
       "actor": "dootz1",
