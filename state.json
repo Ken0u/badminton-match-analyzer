@@ -10608,7 +10608,7 @@
       "planned_at": 1792505524,
       "planned_by": "dootz1",
       "pr_number": 148,
-      "reason": "PR merged outside the recorded integration; explicit recovery required",
+      "reason": "Issue closed; preserve reservations and checkpoint before recovery",
       "repair_rounds": 0,
       "review": {
         "actor": "dootz1",
