@@ -793,11 +793,26 @@ if (requestedModes.includes("--exports")) {
             ) < 25,
             "Proxy/native oriented quadrant mismatch",
           );
-      assert.deepEqual(
-        pixels.native.map((rgb) => rgb.indexOf(Math.max(...rgb))),
-        [1, 0, 0, 2],
-      );
       await write("oriented-pixel-comparison.json", pixels);
+      // Frame 2 is green/yellow/red/blue after its genuine 90-degree matrix.
+      // Yellow has equal R/G in the generator; codec rounding may put either
+      // channel first. Check all source RGB channels with the same frozen
+      // 25-level codec tolerance instead of assigning yellow a red argmax.
+      const expectedQuadrants = [
+        [20, 220, 30],
+        [220, 220, 30],
+        [230, 30, 20],
+        [30, 20, 230],
+      ];
+      for (let quadrant = 0; quadrant < 4; quadrant++)
+        for (let color = 0; color < 3; color++)
+          assert.ok(
+            Math.abs(
+              pixels.native[quadrant][color] -
+                expectedQuadrants[quadrant][color],
+            ) < 25,
+            `Native oriented quadrant ${quadrant}, channel ${color} differs from generated source`,
+          );
       await page.screenshot({
         path: path.join(evidence, "oriented-proxy.png"),
         fullPage: true,
