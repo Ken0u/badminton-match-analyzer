@@ -41,7 +41,9 @@ def doctor(profile: str, root: Path | None = None) -> dict:
         raise ValueError(f"Unknown profile: {profile}")
     root = (root or Path(__file__).resolve().parents[2]).resolve()
     tools = {
-        name: probe([name, "--version"], root)
+        name: probe(
+            [name, "-version" if name in {"ffmpeg", "ffprobe"} else "--version"], root
+        )
         for name in ("git", "uv", "node", "npm", "ffmpeg", "ffprobe", "gh", "codex")
     }
     auth = {
