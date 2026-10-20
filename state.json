@@ -4496,6 +4496,15 @@
       "task_id": "141",
       "verb": "submit"
     },
+    "windows-shuttle143-final-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792499026,
+      "epoch": 1,
+      "fingerprint": "daad47a66943e3ba981741b6ace76d5495c245984a70d57b19ef16f520710ab4",
+      "status": "running",
+      "task_id": "143",
+      "verb": "checkpoint"
+    },
     "windows-shuttle143-next-v1": {
       "actor": "Ken0u",
       "at": 1792495177,
@@ -4540,6 +4549,15 @@
       "fingerprint": "554992b61c6e87ab3841698f7337b8484af97b93d484dae5501c0475be676842",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-shuttle143-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792499038,
+      "epoch": 1,
+      "fingerprint": "54ac3929969fcd95a0a6ea8ea6fc757b08768271ad80864f139e8d8162cce57b",
+      "status": "review",
+      "task_id": "143",
+      "verb": "submit"
     }
   },
   "tasks": {
@@ -7073,73 +7091,39 @@
     "143": {
       "checkpoint": {
         "branch": "codex/issue-143-prepare-source-aligned-published-shuttle",
-        "fetch": {
-          "archive_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465",
-          "bytes": 1731120724,
-          "clip_ids": 201,
-          "description_or_license_members": 0,
-          "fetch_store_job_status": "completed",
-          "fetch_terminal_sha256": "bf9929504ce2fefa1e3639c558166bf15090bc15857cd7e7717fb2ead7637473",
-          "files": {
-            "labels": 201,
-            "video": 201
-          },
-          "groups": [
-            "amateur/match1",
-            "amateur/match2",
-            "amateur/match3",
-            "professional/match1",
-            "professional/match10",
-            "professional/match11",
-            "professional/match12",
-            "professional/match13",
-            "professional/match14",
-            "professional/match15",
-            "professional/match16",
-            "professional/match17",
-            "professional/match18",
-            "professional/match19",
-            "professional/match2",
-            "professional/match20",
-            "professional/match21",
-            "professional/match22",
-            "professional/match23",
-            "professional/match3",
-            "professional/match4",
-            "professional/match5",
-            "professional/match6",
-            "professional/match7",
-            "professional/match8",
-            "professional/match9",
-            "test/match1",
-            "test/match2",
-            "test/match3"
-          ],
-          "members": 492,
-          "namespace_clips": {
-            "amateur": 26,
-            "professional": 146,
-            "test": 29
-          },
-          "new_active_jobs": 0,
-          "original_fetch_lifetime_exited": true,
-          "source_frame_image_files": 0
-        },
-        "fetch_context_sha256": "27232a130865084106e43fd3ba5e6610f6d8fa774016ea34c4920e47fa41ac2b",
-        "fetch_store_job": "c07992ea6d9f466683a59c83380b453a",
-        "head_sha": "afded3907ee73771e0a2fbb6ad73e4a6e93041f6",
-        "next": "Run same frozen afded39 CLI import into NEW .cache/shuttle143-corpus-v1 using --archive .cache/shuttle143-fetch-v1/archive.zip and actual shared Store. Preserve original per-clip source/native clocks/CSV raw rows/unknowns. No provided image sidecars exist; reportabsence, do not invent validation. No source code edits while nativeworker live. All usage eligibility remainsfalse and no inference/model/training.",
-        "phase": "Pinned archive verified and fetch lifetime exited; all201 native clip audit next",
+        "evidence_index_sha256": "df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f",
+        "executed_context_sha256": "27232a130865084106e43fd3ba5e6610f6d8fa774016ea34c4920e47fa41ac2b",
+        "head_sha": "71c257d82a789178f036a3a1f0ba42cc7c6dd52b",
+        "next": "Ready and submit exactPR144; fresh reviewer actual register/review-next/grant/review-result+durable acceptance; finalCI/controllermerge/verifiedmain/completepackage+images delivery. Keep parent65open; no app/model/accuracy promotion.",
+        "phase": "Complete201clip native source audit; final source evidence bound; independent review pending",
         "pr_number": 144,
-        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
+        "processes": "Both original fetch/import lifetimes verified exited; both actual shared Store jobs completed. No native job running/restart needed.",
+        "report_sha256": "d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa",
+        "source_evidence_sha256": "baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4",
+        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e",
+        "summary": {
+          "clips": 201,
+          "complete_ordinal_clips": 176,
+          "incomplete_ordinal_clips": 25,
+          "native_frames": 91579,
+          "published_groups": 29,
+          "published_not_visible": 12262,
+          "published_rows": 91214,
+          "published_visible": 78952,
+          "quarantined_published_rows": 12235,
+          "structurally_eligible_visible_coordinates": 68643,
+          "training_ready_rows": 0,
+          "unlabelled_native_tail_frames": 365
+        },
+        "verification": "37focused/full1413PASS4optionalGPUskip; all12initialafded39CI pass. Finalhead docs-only; all51consumers equal executed bytes.773evidencefile seals verified. FinalheadCI and genuinely fresh formal review still required."
       },
-      "checkpoint_at": 1792497667,
+      "checkpoint_at": 1792499026,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "ecef569e21afe9777a2cce7c392523876cc5ebef",
         "branch": "codex/issue-143-prepare-source-aligned-published-shuttle",
         "epoch": 1,
-        "expires_at": 1792508467,
+        "expires_at": 1792509826,
         "granted_at": 1792495177,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -7148,6 +7132,7 @@
       "epoch": 1,
       "planned_at": 1792495103,
       "planned_by": "Ken0u",
+      "pr_number": 144,
       "spec": {
         "acceptance": [
           "Pin the ignored six-snapshot source declaration1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b and public mirror archivef87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465, exactly1731120724bytes, release dataset-v1.0.0 / commit6d91a1bd28a9cab4b09e7d0460b2bb0a1afe6764. Record creator documentation and TrackNetV3 revision6eda442ada1740573f200f836d93edc9a541ee86 separately. Creator SharePoint redirects to sign-in; the mirror is not certified as creator-authenticated data. Download only the declared public data archive, never checkpoints, into an exclusive ignored lineage; verify size/hash before opening.",
@@ -7196,7 +7181,13 @@
         ]
       },
       "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "ecef569e21afe9777a2cce7c392523876cc5ebef",
+        "head_sha": "71c257d82a789178f036a3a1f0ba42cc7c6dd52b",
+        "pr_number": 144,
+        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
+      }
     },
     "62": {
       "epoch": 0,
