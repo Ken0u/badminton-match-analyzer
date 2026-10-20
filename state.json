@@ -5146,6 +5146,7 @@
       }
     },
     "130": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39352922529",
       "checkpoint": {
         "base_sha": "627081fb69af33b89036a12024efd59e702fd91a",
         "branch": "codex/issue-130-expire-manual-court-overlays-at-currentl",
@@ -5171,7 +5172,7 @@
         "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792458963,
