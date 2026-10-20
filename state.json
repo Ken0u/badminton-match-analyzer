@@ -2009,6 +2009,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review151-result-v1": {
+      "actor": "dootz1",
+      "at": 1792519628,
+      "epoch": 1,
+      "fingerprint": "7ae47cb5db6437512c0a41a03cddf75c9b1d5b28e40f0727524c6b4010c6c141",
+      "status": "review",
+      "task_id": "151",
+      "verb": "review-result"
+    },
     "mac-review94-next-v1": {
       "actor": "dootz1",
       "at": 1792456060,
@@ -8434,18 +8443,36 @@
       "planned_at": 1792518749,
       "planned_by": "dootz1",
       "pr_number": 152,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792519628,
         "base_sha": "4ebd2f025da117ba617d5b092d5a9cc25d53eabc",
-        "epoch": 1,
-        "expires_at": 1792530133,
-        "granted_at": 1792519333,
+        "evidence": [
+          "Genuine fresh read-only subagent /root/review151, reviewer session mac-review151-0a351a6-independent on Stanleys-Laptop.local. Registration mac-review151-register-v1 committed ok; review grant mac-review151-next-v1 committed granted at1792519333 binds exact head/base/spec, task epoch1 and review_epoch1. Detached review checkout contains no tracked edits.",
+          "Inspected full two-file diff, frozen task151 specification and current trusted-main AGENTS.md, docs/COLLABORATION.md, docs/automation/reviewer.md and .github/automation.json. Changed paths exactly match task scope. Current scope authorization/final optional human review/public visibility wording is accurate; historical issue specifications/reviews are not changed. Source-clock, reviewed annotations, unknown/ineligible labels, rollback and no automatic application upgrade boundaries remain explicit.",
+          "Independent documentation checks passed: UTF-8/LF and final newlines for both changed files; all41 local Markdown file links resolve; git diff --check against exact base passed. No source, runtime, policy, configuration, workflow, data or model files changed.",
+          "Authoritative queue read at coordination20cad3421d9b4bc063b75023452ab655fcc51b6b confirms playback69, phases94-98 and export138 are Done with delivery_pending=false. Independently read linked task98 checkpoint6293143852, preserved recovery and original independent review. PR147 merge74fa08c419c82476a8a365087368afadcfd5d84d is included in main4ebd2f025da117ba617d5b092d5a9cc25d53eabc.",
+          "Workflow APIs independently confirm exact merged-main CI39462227527 success all12 jobs and full candidate39469465774 success, both source4ebd2f025da117ba617d5b092d5a9cc25d53eabc. Main browser logs confirm18 production checks,8 library checks and13 export groups. Inspected existing frozen performance comparison and preservation receipts; recorded medians pass frozen absolute and baseline-times1.25-plus20ms budgets.",
+          "Independently recomputed wheel SHA256 ece48cf503ad5a0e6eae66383f1d14d00e96de3e9ad0074eab89a53fcd50bfd7 and sdist6b64fee429ddaad74ad63933b2a88a51d4fd2623fc37c322c65e4fdea471765b; matched all75 application source/runtime files in EACH archive byte-for-byte against git source4ebd2f0; dependency-lock SHA256 fe4deca37e729cfe4bdf26c125e2d184659ecd1982ea9d8bf12e177e382de54d verified.",
+          "Independently fetched both public GHCR immutable manifests anonymously and verified body SHA256 plus Docker-Content-Digest: review sha256:077cd0c222ef64a05a027d514c9353e2a6a05cdf209d717828b0c0f72925efdb; CPU sha256:2650d645aea09a4b0b07ad439d24c127bc1a75d6b4d96386013d68f53a18a3ab. Source/publisher/public receipts match documented candidate.",
+          "PR CI39470677436 independently observed completed success for exact head0a351a638d45e418c586cca7bfafa8116d7d80c5. Inspected ci-revision receipt binding exact head/base to tested synthetic mergebbaa74ade073ce3ee3ed4f4bd8d773b082e8d5db and treebcfa2944f6bfa8adc20380c0f49d53b031ff88ec; local reviewed head tree equals that tested tree. Final PR API still reports the granted head/base."
+        ],
+        "findings": [],
         "head_sha": "0a351a638d45e418c586cca7bfafa8116d7d80c5",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Documentation-only review; no backend/inference, fresh browser benchmark, clean install or container execution was repeated. Existing successful workflow logs, source, package archives, receipts and public registry manifests were directly inspected as described.",
+          "The CI synthetic merge commit object was not independently fetched locally; its downloaded revision receipt was inspected and its tested tree matches the reviewed local head tree. PR head/base were revalidated through API.",
+          "Historical phase98 specification/review retains older mandatory human-review wording; this task correctly preserves those records and documents current merged policy. Unchanged docs/DEPLOYMENT.md also retains that older final-human-review sentence; correcting that sensitive file requires separately authorized scope.",
+          "No running application upgrade or model promotion was performed. Software parity and delivered artifacts do not establish complete badminton annotation accuracy or unseen-match validation."
+        ],
         "pr_number": 152,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "PROJECT_PLAN.md",
+          "docs/FRONTEND_REWRITE.md"
+        ],
         "session_id": "mac-review151-0a351a6-independent",
-        "spec_hash": "f4846fab1f9b9418c6df528e34fe180b56ae1b63025d0f16cee5edec0b38fb21"
+        "spec_hash": "f4846fab1f9b9418c6df528e34fe180b56ae1b63025d0f16cee5edec0b38fb21",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
