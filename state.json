@@ -802,6 +802,15 @@
       "task_id": "98",
       "verb": "checkpoint"
     },
+    "mac-01a15493-98-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792508013,
+      "epoch": 1,
+      "fingerprint": "9c6504a48d38194a10108b25eeebaf30096718b0c673613bf23196bcd9ff12c6",
+      "status": "review",
+      "task_id": "98",
+      "verb": "submit"
+    },
     "mac-01a15493-98-user-scope-approval-v1": {
       "actor": "dootz1",
       "at": 1792504320,
@@ -9932,6 +9941,7 @@
       },
       "planned_at": 1792505524,
       "planned_by": "dootz1",
+      "pr_number": 148,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -9981,7 +9991,13 @@
         ]
       },
       "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "head_sha": "3ce56edec13efa1399fc753fe133d40f8d1ee0de",
+        "pr_number": 148,
+        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
+      }
     }
   },
   "version": 1,
