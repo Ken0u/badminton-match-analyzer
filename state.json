@@ -10517,6 +10517,7 @@
       }
     },
     "98": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39469465774",
       "checkpoint": {
         "artifacts": ".cache/frontend-delivery-98/.cache/evidence; prior independent review preserved in .cache/review98-c0c9372.",
         "base_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
@@ -10539,7 +10540,7 @@
         "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "external_merge": {
         "at": 1792515588,
