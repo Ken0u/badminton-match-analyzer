@@ -8377,6 +8377,7 @@
       }
     },
     "97": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39369272737",
       "checkpoint": {
         "base_sha": "0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
@@ -8404,7 +8405,7 @@
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792469786,
