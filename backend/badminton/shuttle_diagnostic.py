@@ -168,9 +168,23 @@ def resume_plan(output, receipt_path, receipt_sha256, context_sha):
             "sha256": receipt_sha256,
         }
         receipt = read_json(_verified(output, supplied))
-        chain = receipt["prior_terminal_seals"] + [supplied]
+        history = receipt.get("prior_terminal_seals")
+        if not isinstance(history, list):
+            raise ValueError(
+                "Terminal receipt lacks sealed history; preserve it without rewriting "
+                "and use a fresh frozen output or authenticated recovery"
+            )
+        chain = [*history, supplied]
         if sorted(chain, key=lambda v: v["path"]) != seals:
             raise ValueError("Resume terminal history is incomplete or changed")
+        for seal in history:
+            previous = _resume(
+                output, _verified(output, seal), seal["sha256"], context_sha
+            )
+            for clip, checkpoint in previous.items():
+                if clip in reusable and reusable[clip] != checkpoint:
+                    raise ValueError("Conflicting completed clip history")
+                reusable[clip] = checkpoint
     durations = [read_json(path)["elapsed_s"] for path in terminals]
     if any(
         type(value) not in (int, float) or not math.isfinite(value) or value < 0
@@ -672,13 +686,16 @@ def run(root, output, protocol_path=PROTOCOL, resume_receipt=None, resume_sha256
         status = "interrupted"
         raise
     finally:
+        terminal_clips = {seal["path"]: seal for _, seal in reusable.values()}
+        terminal_clips.update((seal["path"], seal) for seal in completed)
         terminal = {
             "schema_version": 1,
             "context_sha256": context_sha,
             "status": status,
             "job_id": job_id,
             "elapsed_s": round(time.perf_counter() - began, 3),
-            "completed_clips": completed,
+            "completed_clips": list(terminal_clips.values()),
+            "prior_terminal_seals": prior_terminal_seals,
             "output_index": index_entry,
         }
         path = attempt / "terminal.json"

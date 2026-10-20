@@ -496,7 +496,66 @@ def test_exited_attempt_without_terminal_cannot_be_ignored(tmp_path, monkeypatch
         diagnostic.prior_proofs(root, output)
 
 
-def fake_native_fixture(tmp_path, monkeypatch, change_consumer=False):
+def test_legacy_terminal_is_preserved_with_explicit_recovery_error(tmp_path):
+    terminal = tmp_path / "attempts/original/terminal.json"
+    publish_json(
+        terminal,
+        {"context_sha256": "context", "completed_clips": [], "elapsed_s": 1},
+    )
+    original = terminal.read_bytes()
+    with pytest.raises(ValueError, match="preserve it without rewriting"):
+        diagnostic.resume_plan(tmp_path, terminal, file_hash(terminal), "context")
+    assert terminal.read_bytes() == original
+
+
+@pytest.mark.parametrize("change", [None, "conflict", "context", "tamper"])
+def test_resume_reads_all_sealed_history_without_accepting_conflicts(tmp_path, change):
+    output = tmp_path
+    clip = output / "first-complete.json"
+    publish_json(clip, {"clip": "clip", "context_sha256": "context"})
+    first = output / "attempts/first/terminal.json"
+    publish_json(
+        first,
+        {
+            "context_sha256": "other" if change == "context" else "context",
+            "completed_clips": [diagnostic._seal(output, clip)],
+            "prior_terminal_seals": [],
+            "elapsed_s": 2,
+        },
+    )
+    latest_clips = []
+    if change == "conflict":
+        other = output / "conflicting-complete.json"
+        publish_json(other, {"clip": "clip", "context_sha256": "context", "other": 1})
+        latest_clips.append(diagnostic._seal(output, other))
+    latest = output / "attempts/latest/terminal.json"
+    publish_json(
+        latest,
+        {
+            "context_sha256": "context",
+            "completed_clips": latest_clips,
+            "prior_terminal_seals": [diagnostic._seal(output, first)],
+            "elapsed_s": 3,
+        },
+    )
+    if change == "tamper":
+        clip.write_bytes(b"changed historical completion\n")
+    if change:
+        match = {
+            "conflict": "Conflicting",
+            "context": "another",
+            "tamper": "output changed",
+        }
+        with pytest.raises(ValueError, match=match[change]):
+            diagnostic.resume_plan(output, latest, file_hash(latest), "context")
+    else:
+        reusable, seals, elapsed = diagnostic.resume_plan(
+            output, latest, file_hash(latest), "context"
+        )
+        assert list(reusable) == ["clip"] and len(seals) == 2 and elapsed == 5
+
+
+def fake_native_fixture(tmp_path, monkeypatch, change_consumer=False, clip_count=1):
     """Generated CPU stub only: exercise real Store admission without a GPU task."""
     from badminton import shuttle
     from badminton.storage import Store
@@ -508,7 +567,7 @@ def fake_native_fixture(tmp_path, monkeypatch, change_consumer=False):
             "input_size": [512, 288],
             "heatmap_threshold": 0.5,
             "clock_tolerance_s": 0.00002,
-            "expected": {"clips": 1},
+            "expected": {"clips": clip_count},
             "source_report": spec["source_evidence"],
             "limitations": ["generated CPU stub, no model inference"],
         }
@@ -522,11 +581,20 @@ def fake_native_fixture(tmp_path, monkeypatch, change_consumer=False):
         SimpleNamespace(cuda=SimpleNamespace(is_available=lambda: True)),
     )
     monkeypatch.setitem(sys.modules, "torchvision", SimpleNamespace())
-    ref = {"clip": "professional/match1/rally", "path": "clip.json", "sha256": "a" * 64}
+    refs = [
+        {
+            "clip": f"professional/match1/rally{n}",
+            "path": f"clip{n}.json",
+            "sha256": "a" * 64,
+        }
+        for n in range(clip_count)
+    ]
+    monkeypatch.setattr(diagnostic, "source_catalog", lambda _root, _spec: (root, refs))
     monkeypatch.setattr(
-        diagnostic, "source_catalog", lambda _root, _spec: (root, [ref])
+        diagnostic,
+        "verify_clip",
+        lambda _corpus, ref, _root: {**source_clip(), "clip": ref["clip"]},
     )
-    monkeypatch.setattr(diagnostic, "verify_clip", lambda *_args: source_clip())
     monkeypatch.setattr(
         diagnostic,
         "_native_video",
@@ -587,6 +655,89 @@ def test_native_stub_seals_outputs_but_live_lifetime_still_blocks_scoring(
     assert job["status"] == "completed"
     with pytest.raises(ValueError, match="still alive"):
         diagnostic.prior_proofs(root, output)
+
+
+@pytest.mark.parametrize("completed_before_interrupt", [None, 0, 1])
+def test_emitted_resume_history_survives_early_interrupt_without_rerunning_clips(
+    tmp_path, monkeypatch, completed_before_interrupt
+):
+    from badminton import shuttle
+    from badminton.storage import ConflictError
+
+    root, output, protocol, store = fake_native_fixture(
+        tmp_path, monkeypatch, clip_count=2
+    )
+    diagnostic.run(root, output, protocol)
+    first = next((output / "attempts").glob("*/terminal.json"))
+    first_doc = diagnostic.read_json(first)
+    assert first_doc["prior_terminal_seals"] == []
+    reusable, _, _ = diagnostic.resume_plan(
+        output, first, file_hash(first), first_doc["context_sha256"]
+    )
+    assert len(reusable) == 2
+    original_raw = {
+        path: file_hash(path) for path in output.rglob("raw-prediction.json")
+    }
+    # Only the generated same-process stub bypasses lifecycle proof here.
+    # Separate tests require actual original-host exit/Store binding in production.
+    monkeypatch.setattr(
+        diagnostic, "prior_proofs", lambda *_args: [{"generated_stub": True}]
+    )
+    verify = diagnostic.verify_clip
+    visited = 0
+
+    def interrupted(*args):
+        nonlocal visited
+        if visited == completed_before_interrupt:
+            raise KeyboardInterrupt
+        visited += 1
+        return verify(*args)
+
+    def must_not_run(*_args, **_kwargs):
+        pytest.fail("Previously sealed complete clips must not run inference again")
+
+    monkeypatch.setattr(shuttle, "track_shuttle", must_not_run)
+    occupied = {
+        "id": "occupied",
+        "kind": "generated-no-gpu",
+        "video_id": None,
+        "status": "running",
+    }
+    if completed_before_interrupt is None:
+        store.claim_job(occupied)
+        expected_error = ConflictError
+    else:
+        monkeypatch.setattr(diagnostic, "verify_clip", interrupted)
+        expected_error = KeyboardInterrupt
+    with pytest.raises(expected_error):
+        diagnostic.run(root, output, protocol, first, file_hash(first))
+    second = next(
+        path for path in (output / "attempts").glob("*/terminal.json") if path != first
+    )
+    second_doc = diagnostic.read_json(second)
+    assert second_doc["status"] == (
+        "failed" if completed_before_interrupt is None else "interrupted"
+    )
+    assert second_doc["completed_clips"] == first_doc["completed_clips"]
+    assert second_doc["prior_terminal_seals"] == [diagnostic._seal(output, first)]
+    monkeypatch.setattr(diagnostic, "verify_clip", verify)
+    if completed_before_interrupt is None:
+        store.put_job({**occupied, "status": "completed"})
+    result = diagnostic.run(root, output, protocol, second, file_hash(second))
+    assert result["completed_clips"] == 2 and len(result["prior_terminal_seals"]) == 2
+    assert {
+        path: file_hash(path) for path in output.rglob("raw-prediction.json")
+    } == original_raw
+    with sqlite3.connect(store.data / "catalog.sqlite3") as cx:
+        statuses = [
+            json.loads(row[0])["status"]
+            for row in cx.execute("SELECT document FROM jobs")
+        ]
+    assert sorted(statuses) == (
+        ["completed", "completed", "completed"]
+        if completed_before_interrupt is None
+        else ["completed", "completed", "interrupted"]
+    )
 
 
 def test_real_store_admission_refuses_competing_native_stub(tmp_path, monkeypatch):
