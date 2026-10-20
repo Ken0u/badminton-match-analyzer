@@ -4963,6 +4963,15 @@
       "task_id": "145",
       "verb": "checkpoint"
     },
+    "windows-shuttle145-native-complete-v1": {
+      "actor": "Ken0u",
+      "at": 1792510030,
+      "epoch": 1,
+      "fingerprint": "7cdcd3484cf6a3eca35f2d55020eec4e12192f95ae71415e03eba28b29c8433a",
+      "status": "running",
+      "task_id": "145",
+      "verb": "checkpoint"
+    },
     "windows-shuttle145-native-status-v1": {
       "actor": "Ken0u",
       "at": 1792503965,
@@ -7794,20 +7803,23 @@
     "145": {
       "checkpoint": {
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
+        "external_verification_receipt_sha256": "122d10f4acdd8beacb1c973a99c9907886c159de8a503f8f070c816468520ab6",
         "head_sha": "6a1f28ee1a71a27a81a45517d9e35784b731a12a",
-        "next": "Continue the same run through complete output sealing and verified exit. Then record native index/terminal hashes and invoke the frozen scorer through the completion gate. Preserve all source/quarantine/unavailability denominators and false eligibility gates. Fresh review, controller integration, main verification and delivery remain later steps.",
-        "phase": "Existing frozen native baseline checkpointed 150 of 201 clips; scoring pending",
+        "native_output_index_sha256": "17d64a83b139cf648e4edcbd953e56501b6e24582c9dcad3f2e6e7828432baa5",
+        "native_terminal_sha256": "9c0fac43f5fa501d79fe239ab415bfca0047abc94814b07626225c0fc555fa0f",
+        "next": "Run only the frozen fixed scorer against these sealed outputs and matching native terminal. Preserve all full coverage/quarantine/unavailability denominators and false usage-eligibility gates. No inference rerun or tuning.",
+        "phase": "All 201 native clip checkpoints complete; original exit and matching Store completion verified locally; scoring not started",
         "pr_number": 146,
         "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-        "verification": "Same original admitted run remains active and advancing; fixed code/protocol unchanged. All 12 exact-head CI jobs passed. Lifecycle evidence remains local."
+        "verification": "Exact frozen native command completed with exit 0. All 58 executed consumer bytes match the initial frozen source; all 12 exact-head CI jobs passed. Detailed lifecycle evidence remains local."
       },
-      "checkpoint_at": 1792508431,
+      "checkpoint_at": 1792510030,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "epoch": 1,
-        "expires_at": 1792519231,
+        "expires_at": 1792520830,
         "granted_at": 1792501565,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
