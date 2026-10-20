@@ -2525,6 +2525,42 @@
       "task_id": "141",
       "verb": "review-result"
     },
+    "shuttle145-repair-db19e4c4-grant-v1": {
+      "actor": "Ken0u",
+      "at": 1792512886,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "epoch": 1,
+        "expires_at": 1792523686,
+        "granted_at": 1792512886,
+        "head_sha": "597f0b61dbf249dede73555d5951c059caa38de8",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "597f0b61dbf249dede73555d5951c059caa38de8",
+          "limitations": [
+            "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
+            "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
+            "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
+            "No training, tuning, new weights, interpolation, model/default installation or promotion",
+            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts",
+            "All scientific predictions/scoring remain from the original frozen producer. The final source changes recovery metadata/history only; generated CPU-stub tests, not a new CUDA recovery run, validate that repair. Legacy history-free receipts are preserved and explicitly refused for in-place resume."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "923602fb33eb464592715497304c0672a4dddf6f772811a34d790bca3bfcb68e",
+          "source_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465"
+        },
+        "pr_number": 146,
+        "review_epoch": 2,
+        "session_id": "db19e4c4f5434842914ececf7c903274",
+        "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600"
+      },
+      "epoch": 1,
+      "fingerprint": "05a10924b8fbeafa9f923eea5b0a460730c727ca1c67cf93fdae9acd1771edc3",
+      "status": "granted",
+      "task_id": "145",
+      "verb": "review-next"
+    },
     "shuttle145-repair-db19e4c4-register-v1": {
       "actor": "Ken0u",
       "at": 1792512779,
@@ -7906,7 +7942,34 @@
       "planned_by": "Ken0u",
       "pr_number": 146,
       "repair_rounds": 1,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "epoch": 1,
+        "expires_at": 1792523686,
+        "granted_at": 1792512886,
+        "head_sha": "597f0b61dbf249dede73555d5951c059caa38de8",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "597f0b61dbf249dede73555d5951c059caa38de8",
+          "limitations": [
+            "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
+            "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
+            "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
+            "No training, tuning, new weights, interpolation, model/default installation or promotion",
+            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts",
+            "All scientific predictions/scoring remain from the original frozen producer. The final source changes recovery metadata/history only; generated CPU-stub tests, not a new CUDA recovery run, validate that repair. Legacy history-free receipts are preserved and explicitly refused for in-place resume."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "923602fb33eb464592715497304c0672a4dddf6f772811a34d790bca3bfcb68e",
+          "source_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465"
+        },
+        "pr_number": 146,
+        "review_epoch": 2,
+        "session_id": "db19e4c4f5434842914ececf7c903274",
+        "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Pin main 029bae3f706e66ba4410fe87d1154292b892e261, source evidence baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4, 773-file index df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f, native source report d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa and original TrackNet checkpoint df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Freeze and timestamp the committed protocol/code/runtime before opening any new native predictions. No source/sample/model/threshold selection informed by this diagnostic.",
