@@ -293,6 +293,24 @@
   margin: 14px 0;
   font-size: 12px;
 }
+.editor-app .media-export-panel,
+.editor-app .media-export-job {
+  border: 1px solid #37523e;
+  border-radius: 8px;
+  padding: 12px;
+  margin: 14px 0;
+  background: #17291f;
+}
+.editor-app .media-export-job p {
+  margin: 8px 0;
+}
+.editor-app .media-export-job ul {
+  padding-left: 20px;
+  overflow-wrap: anywhere;
+}
+.editor-app code {
+  overflow-wrap: anywhere;
+}
 .editor-app .review-row,
 .editor-app .boundary-row {
   display: flex;

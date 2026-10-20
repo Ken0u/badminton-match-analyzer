@@ -11,6 +11,7 @@ try {
       "tests/foundation.test.mjs",
       "tests/library.test.mjs",
       "tests/editor.test.mjs",
+      "tests/exports.test.mjs",
     ],
   ]) {
     const result = spawnSync(process.execPath, args, {

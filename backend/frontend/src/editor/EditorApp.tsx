@@ -4,6 +4,7 @@ import { createEditorController } from "./controller.js";
 import type { EditorController, LoadedRun } from "./controller.js";
 import { Playback } from "./Playback.js";
 import type { PlaybackActions } from "./Playback.js";
+import { ExportPanel } from "./exports/ExportPanel.js";
 import {
   array,
   bounds,
@@ -1986,6 +1987,12 @@ export function EditorApp() {
                     </a>
                   ))}
                 </div>
+                <ExportPanel
+                  videoId={current.id}
+                  revision={draft.revision}
+                  dirty={draft.dirty}
+                  saving={draft.saving}
+                />
               </aside>
             </div>
             <footer>
