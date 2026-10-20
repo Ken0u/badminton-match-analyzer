@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "name": "published-shuttle-source-baseline-v1",
+  "baseline_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
+  "source_evidence": {
+    "path": ".cache/shuttle143-source-evidence-v1.json",
+    "sha256": "baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4"
+  },
+  "source_index_sha256": "df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f",
+  "source_report": {
+    "path": ".cache/shuttle143-corpus-v1/attempts/2c873f51c1474b40ae9d0f591ed7efa3/report.json",
+    "sha256": "d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa"
+  },
+  "corpus": ".cache/shuttle143-corpus-v1",
+  "archive_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465",
+  "checkpoint": {
+    "path": "models/weights/TrackNet_best.pt",
+    "sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a"
+  },
+  "expected": {
+    "clips": 201,
+    "groups": 29,
+    "native_frames": 91579,
+    "published_rows": 91214,
+    "complete_clips": 176,
+    "quarantined_clips": 25,
+    "quarantined_rows": 12235,
+    "unlabelled_native_frames": 365
+  },
+  "input_size": [512, 288],
+  "heatmap_threshold": 0.5,
+  "localization_tolerance_diagonal": 0.005,
+  "clock_tolerance_s": 0.00002,
+  "max_native_seconds": 10800,
+  "inference": "Unchanged application TrackNet, CUDA float16, existing camera/weighted-window/component-selection behavior; no manual annotations",
+  "coverage": "Attempt every native clip/frame; whole incomplete CSV files remain quarantined and all published rows/unlabelled native frames remain in coverage",
+  "scoring": "Conditional publisher-reference visibility/localization agreement only; wrong location contributes FP and FN; missing positive is FN; unavailable negative is never TN",
+  "component_diagnostic": "Count all observed above-threshold components within the same fixed source tolerance, without changing model selection",
+  "eligibility": {
+    "training_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false
+  },
+  "limitations": [
+    "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
+    "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
+    "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
+    "No training, tuning, new weights, interpolation, model/default installation or promotion",
+    "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts"
+  ]
+}
