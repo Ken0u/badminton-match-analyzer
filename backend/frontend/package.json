@@ -7,7 +7,9 @@
     "dev": "vite --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && vite build",
+    "build:foundation": "vite build --mode foundation",
     "test": "node scripts/test.mjs",
+    "test:delivery": "node --test tests/stage.test.mjs",
     "contract:generate": "node scripts/contract.mjs --write",
     "contract:check": "node scripts/contract.mjs"
   },

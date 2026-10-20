@@ -34,9 +34,10 @@ badminton = "badminton.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["backend"]
+include = ["badminton", "badminton.*"]
 
 [tool.setuptools.package-data]
-badminton = ["static/*", "assets/*", "model_manifest.json", "shuttleset_manifest.json", "s2doubles_manifest.json", "finebadminton_manifest.json", "aicup2023_manifest.json", "aicup_capture_groups_v1.json", "visual_learning_manifest.json", "side_training_manifest.json", "vendor/*.json", "vendor/*LICENSE", "vendor/bst/*.json", "vendor/bst/LICENSE"]
+badminton = ["static/*", "static/assets/*", "assets/*", "model_manifest.json", "shuttleset_manifest.json", "s2doubles_manifest.json", "finebadminton_manifest.json", "aicup2023_manifest.json", "aicup_capture_groups_v1.json", "visual_learning_manifest.json", "side_training_manifest.json", "vendor/*.json", "vendor/*LICENSE", "vendor/bst/*.json", "vendor/bst/LICENSE"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

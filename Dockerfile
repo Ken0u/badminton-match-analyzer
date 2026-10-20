@@ -3,6 +3,17 @@
 # Use --target cpu (the default) or --target gpu for tracking and family suggestions.
 FROM node:24-bookworm-slim@sha256:a5f4366e834695d5f363b920c104953a535d3a9864d1bdf74566a0ebe01daee5 AS javascript
 
+# Build tooling stays in this stage. Verify the committed asset snapshot so a
+# wheel, source distribution and image all deliver the same reviewed UI bytes.
+FROM javascript AS frontend
+WORKDIR /build
+COPY package.json package-lock.json .node-version ./
+COPY backend/frontend/package.json ./backend/frontend/package.json
+RUN npm ci --ignore-scripts
+COPY backend/frontend ./backend/frontend
+COPY backend/badminton/static ./backend/badminton/static
+RUN npm run frontend:build && npm run frontend:stage:check
+
 FROM python:3.12-slim-bookworm@sha256:34386ef0cb081344d7ec1c103ba398e6e9f64e9ab3a1509accc92a4e24a07258 AS review
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -29,7 +40,8 @@ COPY --from=javascript /usr/local/bin/node /usr/local/bin/node
 COPY --from=javascript /usr/local/LICENSE /usr/local/share/licenses/node/LICENSE
 WORKDIR /app
 COPY pyproject.toml uv.lock README.md ./
-COPY backend ./backend
+COPY backend/badminton ./backend/badminton
+COPY --from=frontend /build/backend/badminton/static ./backend/badminton/static
 COPY scripts/download_models.py ./scripts/download_models.py
 COPY docs ./docs
 RUN /usr/local/bin/python -m pip install --no-cache-dir uv==0.9.4 \

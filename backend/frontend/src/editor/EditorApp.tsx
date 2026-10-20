@@ -906,7 +906,7 @@ export function EditorApp() {
     <div className="editor-app">
       <aside className="sidebar">
         <div className="brand">
-          Court Notes<small>REACT REVIEW PREVIEW</small>
+          Court Notes<small>REVIEW EDITOR</small>
         </div>
         <a href="/library">Imports and match library ↗</a>
         <p>Automatic annotation accuracy is not established.</p>
@@ -945,7 +945,7 @@ export function EditorApp() {
       <main>
         <header>
           <div>
-            <p className="eyebrow">MATCH WORKSPACE · OPT-IN REACT EDITOR</p>
+            <p className="eyebrow">MATCH WORKSPACE · REVIEW EDITOR</p>
             <h1 id="title">{current?.name ?? "Review your match"}</h1>
             <p id="video-info">
               {current
@@ -1006,8 +1006,8 @@ export function EditorApp() {
           <section id="onboarding">
             <h2>Bring your match into view.</h2>
             <p>
-              Choose a match from the library, or add footage in the import
-              preview.
+              Choose a match from the library, or add footage from the import
+              workflow.
             </p>
             <a href="/library">Open imports and jobs</a>
           </section>

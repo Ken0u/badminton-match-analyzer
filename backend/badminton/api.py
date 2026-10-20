@@ -32,6 +32,27 @@ from .video import (
 logger = logging.getLogger(__name__)
 
 
+class _ViewerStaticFiles(StaticFiles):
+    """Serve the built application at its two routes without masking API errors."""
+
+    async def get_response(self, path, scope):
+        if path.strip("/") in {"library", "editor"}:
+            path = "index.html"
+        response = await super().get_response(path, scope)
+        if path in {
+            ".",
+            "",
+            "index.html",
+            "app.js",
+            "style.css",
+            "build-manifest.json",
+        }:
+            # Entry URLs remain stable across releases. Revalidate them so an
+            # older HTML/module cache cannot mix two versions of the viewer.
+            response.headers["Cache-Control"] = "no-cache"
+        return response
+
+
 class _ExportDownloadResponse(StreamingResponse):
     """Own the snapshot throughout ASGI, including cancellation before iteration."""
 
@@ -1002,7 +1023,7 @@ def create_app(
 
     app.mount(
         "/",
-        StaticFiles(directory=Path(__file__).parent / "static", html=True),
+        _ViewerStaticFiles(directory=Path(__file__).parent / "static", html=True),
         name="viewer",
     )
     return app

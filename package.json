@@ -11,10 +11,13 @@
     "test:frontend-baseline": "node tests/frontend-parity.mjs",
     "frontend:typecheck": "npm run typecheck --workspace @badminton/frontend",
     "frontend:build": "npm run build --workspace @badminton/frontend",
+    "frontend:stage": "node backend/frontend/scripts/stage.mjs",
+    "frontend:stage:check": "node backend/frontend/scripts/stage.mjs --check",
     "frontend:test": "npm run test --workspace @badminton/frontend",
     "frontend:contract": "npm run contract:check --workspace @badminton/frontend",
     "frontend:contract:generate": "npm run contract:generate --workspace @badminton/frontend",
     "test:frontend-foundation": "node tests/frontend-foundation.mjs",
+    "test:frontend-delivery": "node tests/frontend-delivery.mjs",
     "frontend:contract:check": "npm run contract:check --workspace @badminton/frontend"
   },
   "devDependencies": {
