@@ -204,3 +204,69 @@ As with the foundation harness, `FRONTEND_PYTHON` and
 test Chromium. The harness rejects `BASE_URL`, owns both loopback listeners,
 retains source/build hashes and cleanup receipts, and preserves generated
 source bytes, native timestamps, saved annotations and original predictions.
+
+## React review editor (phase 97)
+
+`/editor` opens the opt-in React/TypeScript review editor. `/editor?video=ID`
+selects that exact library entry after the library response is validated. The
+phase-96 library links to this route with the selected ID. Static preview hosts
+must return `index.html` for `/editor` as well as `/library`; both use the same
+owned development proxy. The FastAPI production default is unchanged.
+
+`src/editor/model.ts` validates unknown metadata, native timestamp tables,
+annotation collections, jobs and run payloads. It preserves original fields and
+unknown labels. The reviewed pure court-context/signature algorithms are ported
+into TypeScript: draft cuts and physical PTS gaps expire displayed geometry;
+manual ranges and raw predictions remain immutable. Automatic fits stay local
+to the run and are hidden when their camera/court context is stale. Source
+selection uses epochs and cancelled latest reads; jobs and derived artifacts
+never reopen or overwrite the annotation draft.
+
+`controller.ts` owns distinct server, draft and playback stores. Saves send a
+frozen snapshot with its exact revision. Newer edits remain dirty after an older
+save succeeds, and HTTP 409 leaves the local draft intact. Saving blocks switching;
+dirty switching asks explicitly before discarding. Reload and discard are
+explicit recovery actions. Evaluation results require the same selection and
+edit generation, and exports require a saved revision. Requesting suggestions,
+tracking or full-match processing requires saved annotations.
+
+`EditorApp.tsx` owns React forms, panels, timeline and explicit prediction
+acceptance. It covers events (serve/start, six shot families with separate sides,
+rally end and uncertain timing), camera/scene/court edits, player roster and
+reviewed tracker ranges, manual shuttle points, complete/unknown review windows,
+evaluation, full-match pause/resume/window selection and saved JSON/CSV exports.
+Unreviewed proposals do not become saved annotations until the user applies and
+saves them. Doubles experimental recognition remains unavailable.
+
+`Playback.tsx` isolates native media callbacks, frame stepping, source images and
+canvas painting from broad React renders. Exact review always requests a native
+source-frame index. Playback maps media time through the validated PTS table;
+nominal fps is never used to invent source identity. Prepared playback accepts
+only the selected video's same-origin relative proxy URL. Media/image listeners
+and video callbacks are removed on selection/unmount. The timeline is memoized
+and does not subscribe to playback ticks. Pointer court/shuttle labeling remains
+a limitation; no screen-reader or WCAG conformance is claimed.
+
+Run `node tests/frontend-editor.mjs` after building for the generated-source
+integration/performance contract. It retains the phase-94 native source recipes,
+clock/overlay actions and timing budgets and adapts the surface to `/editor`.
+Its source inputs, predictions and classifiers are synthetic; passing software,
+coverage and timing checks does not establish badminton annotation accuracy.
+Production asset packaging/default cutover remains phase 98.
+
+The editor browser check also verifies the explicit processing-window seek,
+source clock contrast, compact native checkboxes, focus after a completed save,
+and zero broad editor renders during each real playback observation. It uses a
+new owned static listener plus the production generated-media fixture; both are
+closed with retained cleanup receipts. `BASE_URL` is refused. Import UI behavior
+remains covered by `tests/frontend-library.mjs`; editor fixtures use production
+ingestion and check duplicate imports preserve reviewed annotations.
+
+For a same-host performance comparison, collect three legacy
+`node tests/frontend-parity.mjs` runs and three editor runs with the same current
+lockfiles, browser, interpreter and frozen source bundle, without concurrent
+builds or test suites. Follow the [frozen protocol](../../docs/FRONTEND_BASELINE.md):
+retain all samples/failures, compare the median of each run's p95, and require
+both the absolute limit and baseline × 1.25 + 20 ms. A clone must generate its
+own source bundle first; ignored worktree caches are not distributed inputs.
+The source bundle recipe and each byte hash are validated before ingestion.

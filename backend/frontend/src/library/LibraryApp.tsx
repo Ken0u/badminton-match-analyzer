@@ -95,7 +95,12 @@ export function LibraryApp() {
           the legacy editor.
         </p>
         <nav aria-label="Application">
-          <a href={__LEGACY_EDITOR_URL__}>Open legacy editor</a> ·{" "}
+          <a
+            href={`/editor${state.selectedId ? `?video=${encodeURIComponent(state.selectedId)}` : ""}`}
+          >
+            Open React review editor
+          </a>{" "}
+          · <a href={__LEGACY_EDITOR_URL__}>Open legacy editor</a> ·{" "}
           <a href="/">Frontend foundation sandbox</a>
         </nav>
       </header>
