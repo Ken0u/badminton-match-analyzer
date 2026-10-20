@@ -2525,6 +2525,13 @@
       "task_id": "141",
       "verb": "review-result"
     },
+    "shuttle145-repair-db19e4c4-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792512779,
+      "fingerprint": "6e0f092c577f3590cd643680b97fb482966b8ea1542010e05cf19af8cfd4aae2",
+      "status": "ok",
+      "verb": "register"
+    },
     "shuttle145-review-d45693fd-next-v1": {
       "actor": "Ken0u",
       "at": 1792511176,
@@ -10341,6 +10348,22 @@
       "host_id": "MSI",
       "registered_at": 1792511065,
       "session_id": "d45693fd670e4a8f86a15dba76fc903d"
+    },
+    "MSI/db19e4c4f5434842914ececf7c903274": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "shuttle-supervision-source-evidence": "baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792512779,
+      "session_id": "db19e4c4f5434842914ececf7c903274"
     },
     "MSI/shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6": {
       "actor": "Ken0u",
