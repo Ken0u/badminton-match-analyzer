@@ -4525,6 +4525,15 @@
       "task_id": "143",
       "verb": "checkpoint"
     },
+    "windows-shuttle143-preimport-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792497667,
+      "epoch": 1,
+      "fingerprint": "0725770b0dc74388613be112fef7b658efdb50bacfb4c28b4912058c586c74a5",
+      "status": "running",
+      "task_id": "143",
+      "verb": "checkpoint"
+    },
     "windows-shuttle143-register-v1": {
       "actor": "Ken0u",
       "at": 1792495103,
@@ -7063,49 +7072,74 @@
     },
     "143": {
       "checkpoint": {
-        "archive_bytes": 1731120724,
-        "archive_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465",
         "branch": "codex/issue-143-prepare-source-aligned-published-shuttle",
-        "head_sha": "afded3907ee73771e0a2fbb6ad73e4a6e93041f6",
-        "next": "Run exact committed CLI fetch in new ignored .cache/shuttle143-fetch-v1 under real shared Store/data grant. Preserve originalPID/lifetime/cwd/command/admission/Store/progress/artifacts to actual terminal. No source edits while live. After exit verify hash/receipt; inspect actual census before completing native import, including any source-image frame metadata. New import lineage may reuse verified archive after source refinements; never overwrite or duplicate live data work.",
-        "phase": "Acquisition code tested/frozen; pinned public data fetch next, actual import/scans pending",
-        "pr_number": 144,
-        "preflight": {
-          "active_shared_jobs": [],
-          "disk_free_bytes": 336206516224,
-          "observed_at": "2026-10-20T11:53:34.598239+00:00",
-          "planned_mode": "fetch only; no native scan/model",
-          "planned_output": ".cache/shuttle143-fetch-v1",
-          "root_python_lifetimes": [
-            {
-              "command_sha256": "1061888daf18b34561e375530d027aaebd7551e2ce59f87f787d8bba26fdadd3",
-              "creation_time": 1792497214.3732846,
-              "cwd": ".",
-              "pid": 10172,
-              "script_kind": "-"
-            },
-            {
-              "command_sha256": "c59f25f88e49568853805ef784e52eb83af22532b0275c2a7dada5974a6e9797",
-              "creation_time": 1792497214.3643525,
-              "cwd": ".",
-              "pid": 13828,
-              "script_kind": "-"
-            }
+        "fetch": {
+          "archive_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465",
+          "bytes": 1731120724,
+          "clip_ids": 201,
+          "description_or_license_members": 0,
+          "fetch_store_job_status": "completed",
+          "fetch_terminal_sha256": "bf9929504ce2fefa1e3639c558166bf15090bc15857cd7e7717fb2ead7637473",
+          "files": {
+            "labels": 201,
+            "video": 201
+          },
+          "groups": [
+            "amateur/match1",
+            "amateur/match2",
+            "amateur/match3",
+            "professional/match1",
+            "professional/match10",
+            "professional/match11",
+            "professional/match12",
+            "professional/match13",
+            "professional/match14",
+            "professional/match15",
+            "professional/match16",
+            "professional/match17",
+            "professional/match18",
+            "professional/match19",
+            "professional/match2",
+            "professional/match20",
+            "professional/match21",
+            "professional/match22",
+            "professional/match23",
+            "professional/match3",
+            "professional/match4",
+            "professional/match5",
+            "professional/match6",
+            "professional/match7",
+            "professional/match8",
+            "professional/match9",
+            "test/match1",
+            "test/match2",
+            "test/match3"
           ],
-          "shared_store_jobs": 70
+          "members": 492,
+          "namespace_clips": {
+            "amateur": 26,
+            "professional": 146,
+            "test": 29
+          },
+          "new_active_jobs": 0,
+          "original_fetch_lifetime_exited": true,
+          "source_frame_image_files": 0
         },
-        "source_declaration_sha256": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b",
-        "source_manifest_sha256": "4387319793df08dd410a39006584a0d9de97a20d4d9f7b85f094c6760fb9316e",
-        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e",
-        "verification": "37focused tests; full1413PASS4optionalGPUskip (exec14386 terminal0,145.93sec); Ruffall/format160/pip/diff/UTF8LF/JSON/reportlinks/CLIhelp pass. No archive/media acquired and no inference/training."
+        "fetch_context_sha256": "27232a130865084106e43fd3ba5e6610f6d8fa774016ea34c4920e47fa41ac2b",
+        "fetch_store_job": "c07992ea6d9f466683a59c83380b453a",
+        "head_sha": "afded3907ee73771e0a2fbb6ad73e4a6e93041f6",
+        "next": "Run same frozen afded39 CLI import into NEW .cache/shuttle143-corpus-v1 using --archive .cache/shuttle143-fetch-v1/archive.zip and actual shared Store. Preserve original per-clip source/native clocks/CSV raw rows/unknowns. No provided image sidecars exist; reportabsence, do not invent validation. No source code edits while nativeworker live. All usage eligibility remainsfalse and no inference/model/training.",
+        "phase": "Pinned archive verified and fetch lifetime exited; all201 native clip audit next",
+        "pr_number": 144,
+        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
       },
-      "checkpoint_at": 1792497217,
+      "checkpoint_at": 1792497667,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "ecef569e21afe9777a2cce7c392523876cc5ebef",
         "branch": "codex/issue-143-prepare-source-aligned-published-shuttle",
         "epoch": 1,
-        "expires_at": 1792508017,
+        "expires_at": 1792508467,
         "granted_at": 1792495177,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
