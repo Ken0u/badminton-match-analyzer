@@ -1026,6 +1026,15 @@
       "task_id": "151",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint153-v1": {
+      "actor": "dootz1",
+      "at": 1792532161,
+      "epoch": 1,
+      "fingerprint": "bc1d19c12fa19a8467ab9036ea24ac45fe419881c70696244d5a837e9af0a09b",
+      "status": "running",
+      "task_id": "153",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-heartbeat108-resume": {
       "actor": "dootz1",
       "reason": "lease cannot be renewed in current status",
@@ -1372,6 +1381,15 @@
       "fingerprint": "daf8810d8f00169d949d2bcdb2da630fbe6806cbdac234989384f1acf05ca566",
       "status": "review",
       "task_id": "151",
+      "verb": "submit"
+    },
+    "mac-01a15493-submit153-v1": {
+      "actor": "dootz1",
+      "at": 1792532161,
+      "epoch": 1,
+      "fingerprint": "8338dbe1e3bb62527a85ca1afabfc2aff376b0e78d3b10e5444172d4850ba3ca",
+      "status": "review",
+      "task_id": "153",
       "verb": "submit"
     },
     "mac-01a156d5-95-pr-checkpoint-v1": {
@@ -8614,12 +8632,23 @@
       }
     },
     "153": {
+      "checkpoint": {
+        "artifacts": ".cache/deployment-docs-153/.cache/evidence/docs-validation.json",
+        "base_sha": "0552727c4b1cd070175385d449dea4f973ffabe2",
+        "branch": "codex/issue-153-align-the-deployment-guide-final-review-",
+        "head_sha": "abad2fe03b2855184abcad6be7388efc4e4641b0",
+        "pr_number": 154,
+        "remaining": "Independent exact-head/base/spec approval, CI, controller integration, exact merged-main verification and full public package/both-image delivery receipts.",
+        "spec_hash": "2af05da9de1c13f43a02fab9971e056687b4b1fc4cfcef3d1495c5d175280a77",
+        "stage": "Authorized documentation correction committed and published; repository checks passed. Await fresh independent review and exact CI."
+      },
+      "checkpoint_at": 1792532161,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "0552727c4b1cd070175385d449dea4f973ffabe2",
         "branch": "codex/issue-153-align-the-deployment-guide-final-review-",
         "epoch": 1,
-        "expires_at": 1792542794,
+        "expires_at": 1792542961,
         "granted_at": 1792531994,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -8633,6 +8662,7 @@
       },
       "planned_at": 1792519847,
       "planned_by": "dootz1",
+      "pr_number": 154,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -8670,7 +8700,13 @@
         ]
       },
       "spec_hash": "2af05da9de1c13f43a02fab9971e056687b4b1fc4cfcef3d1495c5d175280a77",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "0552727c4b1cd070175385d449dea4f973ffabe2",
+        "head_sha": "abad2fe03b2855184abcad6be7388efc4e4641b0",
+        "pr_number": 154,
+        "spec_hash": "2af05da9de1c13f43a02fab9971e056687b4b1fc4cfcef3d1495c5d175280a77"
+      }
     },
     "62": {
       "epoch": 0,
