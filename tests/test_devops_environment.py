@@ -2,6 +2,7 @@
 
 import importlib.util
 import json
+import subprocess
 import sys
 import tarfile
 import zipfile
@@ -55,22 +56,75 @@ def test_cuda_refused_on_mac_before_running_tools(tmp_path):
     run.assert_not_called()
 
 
-def test_doctor_does_not_expose_auth_output(tmp_path):
+@pytest.mark.parametrize("failed_auth", [None, "github", "codex"])
+def test_doctor_does_not_expose_auth_output(tmp_path, failed_auth):
     (tmp_path / ".python-version").write_text("3.12\n")
     (tmp_path / "uv.lock").write_text("version = 1\n")
+
+    def run_probe(command, **kwargs):
+        failing = {
+            "github": ["/tools/gh", "auth", "status"],
+            "codex": ["/tools/codex", "login", "status"],
+        }.get(failed_auth)
+        return subprocess.CompletedProcess(
+            command, int(command == failing), "private-token", "secret"
+        )
+
     with (
         patch.object(
             environment.shutil, "which", side_effect=lambda name: f"/tools/{name}"
         ),
-        patch.object(environment.subprocess, "run") as run,
+        patch.object(environment.subprocess, "run", side_effect=run_probe),
     ):
-        run.return_value.returncode = 0
-        run.return_value.stdout = "private-token"
-        run.return_value.stderr = "secret"
         report = environment.doctor("review", tmp_path)
-    assert report["ok"]
+    assert report["ok"] is (failed_auth != "github")
+    for name in ("github", "codex"):
+        assert report["auth"][name] == {
+            "available": True,
+            "ok": name != failed_auth,
+        }
     assert "private-token" not in json.dumps(report)
     assert "secret" not in json.dumps(report)
+
+
+@pytest.mark.parametrize("failed_codec", [None, "ffmpeg", "ffprobe"])
+def test_doctor_uses_supported_version_commands(tmp_path, failed_codec):
+    (tmp_path / ".python-version").write_text("3.12\n")
+    (tmp_path / "uv.lock").write_text("version = 1\n")
+    expected = [
+        ["/tools/git", "--version"],
+        ["/tools/uv", "--version"],
+        ["/tools/node", "--version"],
+        ["/tools/npm", "--version"],
+        ["/tools/ffmpeg", "-version"],
+        ["/tools/ffprobe", "-version"],
+        ["/tools/gh", "--version"],
+        ["/tools/codex", "--version"],
+        ["/tools/gh", "auth", "status"],
+        ["/tools/codex", "login", "status"],
+    ]
+
+    def run_probe(command, **kwargs):
+        codec = command[0].rsplit("/", 1)[-1]
+        rejected = codec in {"ffmpeg", "ffprobe"} and (
+            command[1:] != ["-version"] or codec == failed_codec
+        )
+        return subprocess.CompletedProcess(command, int(rejected), "", "")
+
+    with (
+        patch.object(
+            environment.shutil, "which", side_effect=lambda name: f"/tools/{name}"
+        ),
+        patch.object(environment.subprocess, "run", side_effect=run_probe) as run,
+    ):
+        report = environment.doctor("review", tmp_path)
+    assert [call.args[0] for call in run.call_args_list] == expected
+    assert report["ok"] is (failed_codec is None)
+    for codec in ("ffmpeg", "ffprobe"):
+        assert report["tools"][codec] == {
+            "available": True,
+            "ok": codec != failed_codec,
+        }
 
 
 def test_repository_rejects_encoding_json_and_missing_links(tmp_path):
