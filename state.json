@@ -410,6 +410,14 @@
       "task_id": "97",
       "verb": "invalidate-review"
     },
+    "invalidate-98-c0c9372bf9b863b12e049e8b7f45fdd023f59677-74fa08c419c82476a8a365087368afadcfd5d84d": {
+      "actor": "github-actions[bot]",
+      "at": 1792508254,
+      "fingerprint": "12474ac3e8d59d0c04f2e199f52cb6b9c6bcafd9896b397398f282694c839ecf",
+      "status": "running",
+      "task_id": "98",
+      "verb": "invalidate-review"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -9942,6 +9950,7 @@
       "planned_at": 1792505524,
       "planned_by": "dootz1",
       "pr_number": 148,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -9991,7 +10000,7 @@
         ]
       },
       "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
         "head_sha": "3ce56edec13efa1399fc753fe133d40f8d1ee0de",
