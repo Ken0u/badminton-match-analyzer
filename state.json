@@ -945,12 +945,28 @@
       "task_id": "98",
       "verb": "plan"
     },
+    "mac-01a15493-authorize101-v1": {
+      "actor": "dootz1",
+      "at": 1792534720,
+      "fingerprint": "22954b5ed97ca204342ca76b6ee0f204389403dc09d5bf1bd6843d87d8bcfd96",
+      "status": "ready",
+      "task_id": "101",
+      "verb": "human-approved"
+    },
     "mac-01a15493-authorize153-v1": {
       "actor": "dootz1",
       "at": 1792531900,
       "fingerprint": "da379147528d6f0cbf805155962830af272a53d5caf2260621f0a16516211115",
       "status": "ready",
       "task_id": "153",
+      "verb": "human-approved"
+    },
+    "mac-01a15493-authorize84-v1": {
+      "actor": "dootz1",
+      "at": 1792534720,
+      "fingerprint": "d4e2031b05968a2e802251e0fad7d986a8810b368b5f73b81ae219e39d9c0a3d",
+      "status": "ready",
+      "task_id": "84",
       "verb": "human-approved"
     },
     "mac-01a15493-checkpoint-start": {
@@ -5584,8 +5600,14 @@
   "tasks": {
     "101": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "dootz1",
+        "at": 1792534720,
+        "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901"
+      },
       "planned_at": 1792459975,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Reproduce an approved scope extension followed by an unchanged predecessor issue plan, and an accepted older explicit plan replayed after a legitimate replacement and claim; both must preserve the current grant and scope on repeated/interrupted reconciliation.",
@@ -5624,7 +5646,7 @@
         ]
       },
       "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901",
-      "status": "needs_human"
+      "status": "ready"
     },
     "103": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39272975409",
@@ -10133,8 +10155,14 @@
     },
     "84": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "dootz1",
+        "at": 1792534720,
+        "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7"
+      },
       "planned_at": 1792419790,
       "planned_by": "dootz1",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Doctor invokes ffmpeg -version and ffprobe -version while retaining supported version probes for other executables.",
@@ -10170,7 +10198,7 @@
         ]
       },
       "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7",
-      "status": "needs_human"
+      "status": "ready"
     },
     "86": {
       "epoch": 0,
