@@ -986,6 +986,15 @@
       "task_id": "95",
       "verb": "submit"
     },
+    "mac-01a156d5-submit95-repair1-v3": {
+      "actor": "dootz1",
+      "at": 1792460756,
+      "epoch": 1,
+      "fingerprint": "18491cb0d7245a5cc44d0d7f5092a9ba2a1f7d7e9c6c85a5e1605c4aa080168e",
+      "status": "review",
+      "task_id": "95",
+      "verb": "submit"
+    },
     "mac-01a156d5-submit95-v1": {
       "actor": "dootz1",
       "at": 1792460260,
@@ -2971,6 +2980,15 @@
       "fingerprint": "e0d43839aeb1ef313bfa29658b4bdc4b8d14fcc689b29e14785d1376828c8949",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-portable64-start-v1": {
+      "actor": "Ken0u",
+      "at": 1792460729,
+      "epoch": 1,
+      "fingerprint": "c9ec3529833097d1883d87ce04b98efa3f5a144e050afbb238052f2f653fb8dd",
+      "status": "running",
+      "task_id": "64",
+      "verb": "checkpoint"
     },
     "windows-post63-next-v1": {
       "actor": "Ken0u",
@@ -5634,12 +5652,26 @@
       }
     },
     "64": {
+      "checkpoint": {
+        "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
+        "evidence": [
+          "134 original development clips; full 624/672 reference rows and 608/662 available inputs verified",
+          "Pinned source Match.csv verifies separate original train/validation matches",
+          "No held-out predictions, inference or training started; original models/data/environments/jobs preserved",
+          "Known doctor FFmpeg probe false-negative is issue84; actual -version commands both exit0"
+        ],
+        "head_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
+        "input_inventory_sha256": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
+        "next": "Implement only the five granted files, verify meaningful generated-input tests, then admit one fixed CPU reproduction through real main Store before independent exact-revision review",
+        "phase": "Implementing portable fixed R3 development training and audit CLI"
+      },
+      "checkpoint_at": 1792460729,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
         "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
         "epoch": 1,
-        "expires_at": 1792471370,
+        "expires_at": 1792471529,
         "granted_at": 1792460570,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -7080,61 +7112,6 @@
       "pr_number": 134,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792460669,
-        "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
-        "evidence": [
-          "Fresh independent reviewer mac-review95-01a156d5 acquired committed review_epoch1 for exact head/base/spec before execution; candidate checks used env -i and disposable HOME without inherited credentials.",
-          "Exact-head strict TypeScript,10 client/state tests, Vite static build, and actual-backend OpenAPI/schema byte drift check passed. Log .cache/reviewer-checks.log.",
-          "Reviewer-owned generated browser check passed7 checks with no page errors; actual HTTP client, built static React, keyboard/focus, ignored-abort late reads, in-flight edits,600 imperative playback ticks, and unchanged legacy/assets/source/annotations/predictions. Evidence .cache/evidence/frontend-foundation-RZIPjA; cleanup verified own PID/creation/cwd/command then stopped own listener. Tablet screenshot visually inspected.",
-          "Adversarial required-query probe compiled successfully despite missing required backend index; .cache/required-query.log exit0.",
-          "All existing root-lock dependency records unchanged; exact diff confined to26 granted frontend/package/harness files; git diff --check passed; reviewer symlinks removed and worktree clean.",
-          "Hosted ci/gate and every Checks workflow job observed SUCCESS for exact f2111bf/a4ccadb; snapshot .cache/hosted-ci-review.json. automation/policy still awaiting independent review/repair."
-        ],
-        "findings": [
-          "[P2] backend/frontend/src/api/client.ts:38-40 makes every query object optional. The generated backend contract requires query.index for GET /api/videos/{video_id}/frame, but request(\"get\", \"/api/videos/{video_id}/frame\", {path:{video_id:\"v\"}}) passes strict TypeScript and sends an invalid request that receives422. Require query whenever its generated type has required properties, preserve optional query for all-optional operations, and add compile-only negative probes for omitted query/index. The untyped client encoding unit case also uses frame:0 instead of the contract index:0; correct it. Reproduction .cache/required-query.ts and .cache/required-query-tsconfig.json compiled with exit0."
-        ],
-        "head_sha": "f2111bf492cc796be9e02ded910f2c99e38f65e6",
-        "limitations": [
-          "The requested changes prevent approval of this head; a repaired head/base requires a new committed review grant and fresh exact-head evidence.",
-          "No full Python suite or native inference rerun by reviewer; implementation full-suite/package evidence was reported separately and was not substituted for independent execution.",
-          "Browser checks use generated media and a synthetic foundation sandbox, not unseen badminton annotation accuracy, full editor parity, WCAG certification, or production cutover.",
-          "Hosted ci/gate and every Checks workflow job succeeded on this exact head; automation/policy remains failed pending independent review/required repairs. Controller must revalidate repaired exact head."
-        ],
-        "pr_number": 134,
-        "reviewed_files": [
-          "backend/frontend/.gitignore",
-          "backend/frontend/README.md",
-          "backend/frontend/index.html",
-          "backend/frontend/package.json",
-          "backend/frontend/scripts/contract.mjs",
-          "backend/frontend/scripts/test.mjs",
-          "backend/frontend/src/App.tsx",
-          "backend/frontend/src/api/client.ts",
-          "backend/frontend/src/api/generated/openapi.json",
-          "backend/frontend/src/api/generated/schema.ts",
-          "backend/frontend/src/main.tsx",
-          "backend/frontend/src/state/draft.ts",
-          "backend/frontend/src/state/playback.ts",
-          "backend/frontend/src/state/selection.ts",
-          "backend/frontend/src/state/server.ts",
-          "backend/frontend/src/state/store.ts",
-          "backend/frontend/src/style.css",
-          "backend/frontend/src/ui/controls.tsx",
-          "backend/frontend/tests/contract-types.ts",
-          "backend/frontend/tests/foundation.test.mjs",
-          "backend/frontend/tsconfig.json",
-          "backend/frontend/tsconfig.test.json",
-          "backend/frontend/vite.config.js",
-          "package-lock.json",
-          "package.json",
-          "tests/frontend-foundation.mjs"
-        ],
-        "session_id": "mac-review95-01a156d5",
-        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -7176,10 +7153,10 @@
         ]
       },
       "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
-        "head_sha": "f2111bf492cc796be9e02ded910f2c99e38f65e6",
+        "head_sha": "4dcc0390c89385c81f3e889100bfe696a58992ca",
         "pr_number": 134,
         "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
       }
