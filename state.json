@@ -2302,6 +2302,14 @@
       "task_id": "139",
       "verb": "plan"
     },
+    "spec-141-123f1a5ea716c7733067819310ddebf2d90cf8213ddaf9b43f38736664af8ec6": {
+      "actor": "Ken0u",
+      "at": 1792486696,
+      "fingerprint": "fe3c8563031d8609be64d3b570cc6e9d424e9d1ca399f7864d9179d1c24f210c",
+      "status": "ready",
+      "task_id": "141",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -4314,6 +4322,13 @@
       "status": "review",
       "task_id": "139",
       "verb": "submit"
+    },
+    "windows-shuttle141-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792486696,
+      "fingerprint": "afd57267bf99b625ed560940badadd8ee37c795e125efa6151d2a244e56b5a82",
+      "status": "ok",
+      "verb": "register"
     }
   },
   "tasks": {
@@ -6667,6 +6682,63 @@
         "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
       }
     },
+    "141": {
+      "epoch": 0,
+      "planned_at": 1792486696,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Before any new native predictions, freeze and timestamp a public reproducible protocol for exactly512x288 control and768x432 candidate, the unchanged TrackNet checkpoint and threshold0.5, source inventory273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822, packet3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d, frozen labelsfd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158 and original native baseline915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64. Preserve all60cases and every unavailable/unknown/ineligible denominator; this is familiar development evidence, not a holdout.",
+          "Add explicit opt-in input dimensions to the existing shuttle adapter with unchanged512x288 defaults and no global mutation. Validate integer dimensions excluding booleans, fixed allowed variants and model geometry; use matching RGB/background/heatmap dimensions and actual input-size provenance. Preserve source PTS/orientation/row identity, exact temporal ensemble/observed-component selection, scene resets, camera separation, calibration-independent native coordinates and no interpolation. Do not expose a new product option.",
+          "Revalidate the immutable baseline input/stage/runtime/model/registration graph read-only. Process exactly the union of original complete target camera/background views, using the original unique core owner's extents and annotations/scans; retain all model windows, background samples, selector history and source frames rather than cropped target neighborhoods. Predeclare comparison fields and numeric compatibility limits; require the new512 control's native target predictions/components/context to reproduce the original baseline before opening768 predictions. A mismatch remains preserved and blocks comparable candidate scoring; never silently replace the baseline.",
+          "Use real shared Store run_local_job admission on the original workstation in addition to the genuine queue GPU resource reservation. Before launch verify original-host live PIDs/lifetimes/cwd/commands, shared Store job status and durable artifacts without stopping/restarting unrelated work. Pin real roots/data/weights before imports, initialize torchvision before threaded PyAV and preserve native FFmpeg restoration. Write only exclusive ignored research outputs; preserve annotations, original caches and weights. Bind resume checkpoints to full source/frame/clock/protocol/code/runtime/model/view hashes, preserve interrupted artifacts and verify original lifetime/job evidence before resuming; timeout alone is never exit.",
+          "Publish both fixed variants and original-baseline comparison with per-source visibility/localization TP/FP/FN/TN, complete coverage/difficulty/unavailable/unknown counts, fixed diagonal tolerance0.005, wrong-location FP+FN, conditional coordinate errors and radial label-uncertainty bounds. Also distinguish true-shuttle component absence from selected-component errors and report actual elapsed time/peak memory. Do not tune variants, labels, thresholds or uncertainty to results. A negative or incompatible result is valid if honestly recorded. Keep issue65 open for actual occlusions, broader source-separated singles/doubles and an independent full-match holdout before promotion.",
+          "Generated regressions verify default compatibility, explicit resolution geometry/provenance, full view/ensemble/background equivalence, source PTS/orientation/cuts/scenes/selection dependencies, source/code/model/input tampering, exclusive/resumable output safety, real shared admission and unchanged denominators. Complete required checks, exact-head native evidence, fresh independent agent review, CI, controller integration and merged-main/delivery verification. Commit portable code/protocol and aggregate report only; raw data/labels/predictions/model bytes stay ignored."
+        ],
+        "artifacts": {
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+          "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+          "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+        },
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "139"
+        ],
+        "exclusions": [
+          "No training, downloads, consumed holdout63 inputs or metadata, threshold/search/model tuning, model installation/promotion, default behavior or product/API/UI/schema/storage/policy/credential/deployment/dependency changes, paid services, raw data redistribution, saved-label/prediction overwrite or unrelated process restarts. The only candidate is the explicitly frozen higher resolution using the existing weights; do not claim full-match or unseen accuracy."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Compare fixed TrackNet input resolutions against frozen source-only visibility development cases without changing application defaults or promoting a model, as a bounded component-recall improvement experiment under issue65.",
+        "paths": [
+          "backend/badminton/shuttle.py",
+          "backend/badminton/shuttle_resolution.py",
+          "scripts/compare_shuttle_resolution.py",
+          "tests/test_shuttle_resolution.py",
+          "data/manifests/shuttle_resolution_protocol_v1.json",
+          "docs/SHUTTLE_RESOLUTION_REPORT.md"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Timestamp immutable two-variant protocol/code/input/model/runtime/view hashes before predictions; genuine shared GPU admission and original-host lifetime/Store/artifact evidence; original512control compatibility gate before candidate scoring.",
+          "All60cases/source groups and unknown/ineligible/unavailable/error-bound denominators retained; no app truth or model promotion; generated regressions and required project checks; fresh exact-head review, native receipt and controller CI/main/delivery."
+        ]
+      },
+      "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -8859,18 +8931,20 @@
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
-        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
       },
       "capabilities": [
-        "amd64",
         "cpu",
-        "python-3.10",
+        "windows",
+        "amd64",
         "review-inputs",
-        "torch",
-        "windows"
+        "cuda"
       ],
       "host_id": "MSI",
-      "registered_at": 1792468733,
+      "registered_at": 1792486696,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/cfd18714-5a16-4720-811c-0bde1ada4c14": {
