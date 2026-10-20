@@ -1226,6 +1226,36 @@ try {
     );
     assert.equal(await page.locator("#analysis-windows option").count(), 3);
     assert.deepEqual(await api(largeRoot + "/annotations"), before);
+    // Same-video polling must not restore the old window over a newer user seek.
+    // Hold the real analysis GET after refresh has captured the previous view.
+    const pollRoute = `**${largeRoot}/analysis/${resumed}`;
+    let holdPoll = true,
+      releasePoll,
+      enteredPoll;
+    const pollGate = new Promise((resolve) => {
+      releasePoll = resolve;
+      releases.push(resolve);
+    });
+    const pollStarted = new Promise((resolve) => {
+      enteredPoll = resolve;
+    });
+    await page.route(pollRoute, async (route) => {
+      if (holdPoll && route.request().method() === "GET") {
+        holdPoll = false;
+        enteredPoll();
+        await pollGate;
+      }
+      await continueOwnedRoute(route);
+    });
+    await Promise.race([
+      pollStarted,
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(Error("Owned analysis poll did not start")),
+          15000,
+        ),
+      ),
+    ]);
     await page.locator("#analysis-windows").selectOption("1");
     await page.locator("#review-analysis").click();
     await imageReady(600);
@@ -1234,6 +1264,7 @@ try {
         Math.abs(document.querySelector("#video").currentTime - 60) < 0.00002,
     );
     assert.equal(await page.locator("#frame-number").inputValue(), "600");
+    releasePoll();
     await page.waitForFunction(
       () => document.querySelector("#candidate-count").textContent === "2",
     );
@@ -1246,6 +1277,15 @@ try {
       await page.locator("#stroke-predictions").textContent(),
       /Needs source review/,
     );
+    await page.locator('[data-candidate="qa-contact-600"]').waitFor();
+    await page.waitForTimeout(2200);
+    assert.equal(
+      await page.locator('[data-candidate="qa-contact-600"]').count(),
+      1,
+      "Late poll replaced current window proposals",
+    );
+    assert.equal(await page.locator("#frame-number").inputValue(), "600");
+    await page.unroute(pollRoute);
     const plan = await api(largeRoot + `/analysis/${resumed}`);
     const part = plan.parts.find((p) => p.window.core_start_frame === 600);
     const contactPath = path.join(
