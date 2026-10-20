@@ -801,6 +801,15 @@
       "task_id": "98",
       "verb": "next"
     },
+    "mac-01a15493-98-pr148-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792508309,
+      "epoch": 1,
+      "fingerprint": "fc175b06d5bf206eb0f07bc38ea9e338e354b3af4eae781de3fea92d409d5811",
+      "status": "running",
+      "task_id": "98",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-98-start-v1": {
       "actor": "dootz1",
       "at": 1792506277,
@@ -809,6 +818,15 @@
       "status": "running",
       "task_id": "98",
       "verb": "checkpoint"
+    },
+    "mac-01a15493-98-submit-ci-repair-v2": {
+      "actor": "dootz1",
+      "at": 1792508313,
+      "epoch": 1,
+      "fingerprint": "e39382c54f543686380dd285ac89dae84e227bbca6c7ec3790d408698b9f03fc",
+      "status": "review",
+      "task_id": "98",
+      "verb": "submit"
     },
     "mac-01a15493-98-submit-v1": {
       "actor": "dootz1",
@@ -9924,18 +9942,18 @@
         "artifacts": ".cache/frontend-delivery-98/.cache/evidence; .cache/frontend-exports-138-e3/.cache/evidence/phase98-legacy-run{1,2,3}.log; .cache/frontend-delivery-98-ui/.cache/evidence/ui-handoff.md; .cache/frontend-delivery-98-package/.cache/package-handoff.md; .cache/frontend-delivery-98-browser/.cache/browser-handoff.md",
         "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
         "branch": "codex/issue-98-integrate-react-package-container-assets",
-        "head_sha": "670932509c66e245da6b1b9fe2784537be2653e3",
-        "remaining": "Implement and test all delivery/parity/performance/installed/authenticated-container criteria; fresh exact-head independent review and required actual non-author human review; controller/main/full public delivery receipts.",
+        "head_sha": "c0c9372bf9b863b12e049e8b7f45fdd023f59677",
+        "remaining": "Latest exact-head CI and genuine independent agent review; actual non-author human review of frozen workflow/Docker/packaging diff required before making DraftPR ready. Controller integration, exact-main and full public package/bothimage delivery remain, no taskcompletion claim.",
         "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-        "stage": "Production frontend/staging committed (bb6b3d2); installed/HTTP verifier committed (c7ed39f); production 18-group browser driver committed (6709325). Parent API/package/static/Docker/CI/docs integration in progress. Three quiet legacy runs passed all17 frozen groups; first production run underway. Bounded worker extending new owned delivery harness for all library/export cases."
+        "stage": "Draft PR148 published at c0c9372. Local final production18/library8/exports13, 1397Python/17skips, 89frontend+3staging, all frozen three-run relative/absolute budgets, clean installed wheel74package/5assets/3routes/auth and owned localreviewimage passed. Hosted initialCI39443347302 passed package/bothimages/Python/repository; repaired clean-checkout cache and browsercache path; latestCI39443972031 running. Controller automatically invalidated old submission, task running for refreshed exacthead review."
       },
-      "checkpoint_at": 1792507213,
+      "checkpoint_at": 1792508309,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
         "branch": "codex/issue-98-integrate-react-package-container-assets",
         "epoch": 1,
-        "expires_at": 1792518013,
+        "expires_at": 1792519109,
         "granted_at": 1792505994,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -10000,10 +10018,10 @@
         ]
       },
       "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
-        "head_sha": "3ce56edec13efa1399fc753fe133d40f8d1ee0de",
+        "head_sha": "c0c9372bf9b863b12e049e8b7f45fdd023f59677",
         "pr_number": 148,
         "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
       }
