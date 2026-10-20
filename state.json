@@ -7946,6 +7946,7 @@
       }
     },
     "145": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39458514604",
       "checkpoint": {
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "external_verification_receipt_sha256": "122d10f4acdd8beacb1c973a99c9907886c159de8a503f8f070c816468520ab6",
@@ -7971,7 +7972,7 @@
         "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792513575,
