@@ -1550,6 +1550,14 @@
       "task_id": "101",
       "verb": "plan"
     },
+    "spec-101-a82b3e690049397f76ad94438f6803fc241e813e0d466c9b82388247759e0468": {
+      "actor": "Ken0u",
+      "at": 1792459975,
+      "fingerprint": "82d3c202bba44704a556f4a1f0ac02aaf1a7b2c22d1de6df04516045cb16c593",
+      "status": "needs_human",
+      "task_id": "101",
+      "verb": "plan"
+    },
     "spec-103-d06fae97f5b8a294b0ed1587e335c060412c390c7d13ef0c0e7e82dfdbe2394c": {
       "actor": "Ken0u",
       "at": 1792420409,
@@ -3207,14 +3215,15 @@
   "tasks": {
     "101": {
       "epoch": 0,
-      "planned_at": 1792419127,
+      "planned_at": 1792459975,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
-          "Reproduce extension acceptance followed by an unchanged predecessor issue specification on another reconciliation; implement and document a supported interruption-safe synchronization sequence.",
-          "Preserve unrelated human issue text and concurrent edits; never silently authorize arbitrary body changes or overwrite another collaborator's specification.",
-          "Keep stale ownership/review fencing, path/resource conflicts, request idempotency and unauthorized-plan-change recovery intact.",
-          "Cover repeated and interrupted reconciliations with adapter/queue regressions; obtain fresh independent and non-author human review before integration."
+          "Reproduce an approved scope extension followed by an unchanged predecessor issue plan, and an accepted older explicit plan replayed after a legitimate replacement and claim; both must preserve the current grant and scope on repeated/interrupted reconciliation.",
+          "Authenticate canonical request identity and payload before adapter replay side effects. Repeated accepted plan, extension and recovery requests must remain idempotent after state advances; changed actors or payloads must fail without changing another task or grant.",
+          "Document and verify an interruption-safe supported issue-plan synchronization sequence. Preserve unrelated human issue text and concurrent edits; never silently authorize arbitrary body changes or overwrite another collaborator's specification.",
+          "Preserve genuinely new unauthorized-plan-change fencing, stale ownership/review checks, path/resource conflicts, configured-owner frozen-scope authorization and controller-only state writes; retain exact-epoch reservations and audit history.",
+          "Cover repeated/interrupted reconciliation, accepted-replay controls, changed actor/payload rejection and genuinely new unauthorized-plan fencing with adapter/queue regressions. Use fresh independent exact-head/base/spec agent review, all required CI and verified merged main; non-author human PR approval remains optional under merged policy."
         ],
         "artifacts": {},
         "capabilities": [
@@ -3222,7 +3231,7 @@
         ],
         "dependencies": [],
         "exclusions": [
-          "No rollout/enforcement/permission changes, direct worker coordination writes, model/data/deployment changes, research restarts or paid services."
+          "No rollout/enforcement/permission changes, direct worker coordination writes, manual merge, new recovery bypass, closed-issue eligibility policy change, model/data/deployment change, research restart or paid service."
         ],
         "limits": {
           "max_review_rounds": 3,
@@ -3230,7 +3239,7 @@
           "paid_services": false
         },
         "milestone": "Infrastructure",
-        "outcome": "Preserve legitimate committed scope extensions through canonical issue-plan reconciliation without weakening scope or ownership checks.",
+        "outcome": "Preserve committed scope extensions and accepted-request idempotence through issue-plan reconciliation without weakening authorization or ownership.",
         "paths": [
           "scripts/devops/coordinator.py",
           "scripts/devops/queue.py",
@@ -3242,10 +3251,10 @@
         "resources": [],
         "risk": "human",
         "verification": [
-          "Focused queue/coordinator/policy tests, required project checks and exact-head CI; meaningful regression includes two reconcile passes around an approved extension."
+          "Focused queue/coordinator/policy/Free-integration tests, full required project checks and exact-head CI. Meaningful regressions use multiple reconciliation passes around a committed extension and advanced accepted-request history; verify merged main and normal delivery."
         ]
       },
-      "spec_hash": "d149214dd5636f3976b34af96de00b864317e42d98ca80b89cdb795cfef23ba4",
+      "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901",
       "status": "needs_human"
     },
     "103": {
