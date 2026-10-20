@@ -2,8 +2,11 @@
 
 GitHub Issues hold task requirements; the private Project is a dashboard.
 `codex/coordination` holds authoritative grants, reservations and transition
-history. `PROJECT_PLAN.md` remains the approved vision. `PROGRESS.md` summarizes
-integrated work; individual task checkpoints belong on their issues. Local
+history. `PROJECT_PLAN.md` remains the approved vision. Current progress and
+handoffs belong on the owning task issues; revalidate their specifications and
+coordination state before acting. `PROGRESS.md` is deprecated: do not use it for
+current instructions or update it. Preserve it, historical handoffs and existing
+local edits. The Project dashboard does not authorize ownership. Local
 Codex sessions perform implementation and review; there is no paid API daemon.
 Sleeping both computers pauses implementation, even while GitHub checks run.
 
