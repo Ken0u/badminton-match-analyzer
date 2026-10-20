@@ -6992,6 +6992,7 @@
       }
     },
     "138": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39437184717",
       "checkpoint": {
         "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
         "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo-e3",
@@ -7018,7 +7019,7 @@
         "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 3,
       "history": [
         {
