@@ -418,6 +418,14 @@
       "task_id": "97",
       "verb": "invalidate-review"
     },
+    "invalidate-98-663122175259b22ec1174dcb20e42a422b40fcc2-e4805cc7959f446b3dca3f7988522bba54a20c8b": {
+      "actor": "github-actions[bot]",
+      "at": 1792514419,
+      "fingerprint": "70687ac5630a83e26b72babaa900060740495c6676314e2535fb2463b4417e90",
+      "status": "running",
+      "task_id": "98",
+      "verb": "invalidate-review"
+    },
     "invalidate-98-82bee0da435e2702af4b030010037d4f911a95e7-74fa08c419c82476a8a365087368afadcfd5d84d": {
       "actor": "github-actions[bot]",
       "at": 1792508746,
@@ -10279,69 +10287,6 @@
       "pr_number": 148,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792510014,
-        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
-        "evidence": [
-          "Fresh reviewer CLI thread.started session 01a159d2-5ab4-7cf0-af53-44204889a014; queue alias mac-review98-01a15493; committed matching task epoch 1 / review epoch 1 grant validated immediately before review and verdict.",
-          "Independently inspected the exact 34-path diff and surrounding staging, package, API/static routing, Docker, CI, frontend route/controller/model, delivery harness, licensing, rollback and controller Draft policy code at head 663122175259b22ec1174dcb20e42a422b40fcc2 against base 74fa08c419c82476a8a365087368afadcfd5d84d; git diff --check passed and tracked checkout remained clean.",
-          "Independent frontend checks passed: strict TypeScript, 89 frontend unit/contract behavior tests, production Vite build, committed stage provenance check, and 3 adversarial stage tests covering tampered/missing/extra/stale assets and unsafe output paths.",
-          "Independent clean package verification passed outside the checkout: 74 package files, 5 exact frontend runtime files, wheel/sdist byte parity, isolated wheel import and pip compatibility, authenticated disposable HTTP verification for 3 SPA routes plus asset bytes/MIME/cache/auth/404 behavior; owned PID 24283 exited with recorded identity and SIGTERM cleanup.",
-          "Independent production browser run passed all 18 default delivery/parity groups including routes/assets, imports/library handoff, source clocks, revisions/conflicts, unknowns, original predictions, exports, accessibility and frozen absolute performance ceilings; protocol sha256 e3150b1199b325e325e13c5dba3c6f851fa2448b5a7be8226ae84c305bfdacd; owned PID 24439 identity-checked and stopped.",
-          "Focused Ruff check and format check passed for changed Python files; final tracked checkout was clean at the granted head.",
-          "Exact-head hosted CI run 39445676994 was independently queried and is completed/success at 663122175259b22ec1174dcb20e42a422b40fcc2: revision, Python 3.10/3.12, native macOS/Windows, repository, package, frontend, browser-import (production 18 + library 8 + exports 13), review/cpu containers, and ci/gate all succeeded.",
-          "Author evidence was consulted only as attributed context: author reports three-run frozen relative/absolute performance, full local Python suite, library/export browser runs, notice/source-byte preservation and local review-image checks; none was represented as independently executed here."
-        ],
-        "findings": [],
-        "head_sha": "663122175259b22ec1174dcb20e42a422b40fcc2",
-        "limitations": [
-          "This agent approval is not the frozen required non-author human approval of the workflow/Docker/packaging diff. PR 148 had zero human reviews and remained Draft at final validation; it must remain Draft until that real exact-head human approval exists.",
-          "Merged-main verification and public package/review-image/cpu-image candidate receipts do not yet exist and remain required after the human gate; no running application was upgraded.",
-          "I independently ran the 18 default production browser groups, not separate local library 8/export 13 modes or local Docker builds; those exact-head modes and both container targets are supported by hosted CI run 39445676994, with additional author evidence explicitly attributed above.",
-          "Generated fixtures and green software checks do not establish live YouTube availability, full-match annotation accuracy, model promotion, or unseen singles/doubles correctness."
-        ],
-        "pr_number": 148,
-        "reviewed_files": [
-          ".dockerignore",
-          ".github/workflows/ci.yml",
-          "Dockerfile",
-          "backend/badminton/api.py",
-          "backend/badminton/static/THIRD_PARTY_NOTICES.txt",
-          "backend/badminton/static/app.js",
-          "backend/badminton/static/build-manifest.json",
-          "backend/badminton/static/court-context.js",
-          "backend/badminton/static/import-tools.js",
-          "backend/badminton/static/index.html",
-          "backend/badminton/static/playback-tools.js",
-          "backend/badminton/static/processing-tools.js",
-          "backend/badminton/static/rally-tools.js",
-          "backend/badminton/static/recognition-tools.js",
-          "backend/badminton/static/review-tools.js",
-          "backend/badminton/static/segment-tools.js",
-          "backend/badminton/static/style.css",
-          "backend/frontend/README.md",
-          "backend/frontend/index.html",
-          "backend/frontend/package.json",
-          "backend/frontend/scripts/stage.mjs",
-          "backend/frontend/src/editor/EditorApp.tsx",
-          "backend/frontend/src/foundation.tsx",
-          "backend/frontend/src/library/LibraryApp.tsx",
-          "backend/frontend/src/library/controller.ts",
-          "backend/frontend/src/library/model.ts",
-          "backend/frontend/src/main.tsx",
-          "backend/frontend/tests/stage.test.mjs",
-          "backend/frontend/vite.config.js",
-          "docs/DEPLOYMENT.md",
-          "package.json",
-          "pyproject.toml",
-          "scripts/verify_package.py",
-          "tests/frontend-delivery.mjs"
-        ],
-        "session_id": "mac-review98-01a15493",
-        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-        "verdict": "approve"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -10391,7 +10336,7 @@
         ]
       },
       "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
         "head_sha": "663122175259b22ec1174dcb20e42a422b40fcc2",
