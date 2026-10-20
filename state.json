@@ -1776,6 +1776,26 @@
       "status": "rejected",
       "verb": "next"
     },
+    "roadmap-next-after96-v2": {
+      "actor": "dootz1",
+      "at": 1792463404,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
+        "epoch": 1,
+        "expires_at": 1792474204,
+        "granted_at": 1792463404,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "epoch": 1,
+      "fingerprint": "7f223fc246c8670d7c2c0f7183c35556966d29228896668dd64a83154bb8fbda",
+      "status": "granted",
+      "task_id": "97",
+      "verb": "next"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -7701,7 +7721,18 @@
       }
     },
     "97": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
+        "epoch": 1,
+        "expires_at": 1792474204,
+        "granted_at": 1792463404,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "epoch": 1,
       "planned_at": 1792418018,
       "planned_by": "dootz1",
       "spec": {
@@ -7741,7 +7772,7 @@
         ]
       },
       "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-      "status": "ready"
+      "status": "running"
     },
     "98": {
       "epoch": 0,
