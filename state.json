@@ -1796,6 +1796,15 @@
       "task_id": "97",
       "verb": "next"
     },
+    "roadmap97-start-v1": {
+      "actor": "dootz1",
+      "at": 1792463536,
+      "epoch": 1,
+      "fingerprint": "5673f2b42d041520f5f0071f2fcf4c178b4493f6ab8220220b116ecb0120675f",
+      "status": "running",
+      "task_id": "97",
+      "verb": "checkpoint"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -7722,12 +7731,25 @@
       }
     },
     "97": {
+      "checkpoint": {
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
+        "evidence": [
+          "Preserve full phase94 parity matrix and frozen protocol/fixture recipes; actual React components own UI, isolated playback lane; legacy default unchanged.",
+          "No existing app, catalog, models or native research jobs touched; generated source bundle will be validated before same-host comparison."
+        ],
+        "head_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "remaining": "Implement full editor, focused and fullchecks, generated parity and 3repeat frozenperformance comparison, fresh independent review, controllerintegration/exactmainCI/candidatereceipts.",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
+        "stage": "Committed epoch1 grant verified; isolated branch/worktree created. Bounded backend/frontend implementation delegated; parent owns tests/frontend-editor.mjs parity/performance driver and integration."
+      },
+      "checkpoint_at": 1792463536,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "epoch": 1,
-        "expires_at": 1792474204,
+        "expires_at": 1792474336,
         "granted_at": 1792463404,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
