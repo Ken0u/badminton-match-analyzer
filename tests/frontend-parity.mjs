@@ -989,14 +989,15 @@ try {
     await page.locator("#camera-apply").click();
     await save();
     await exact(30);
-    // Freeze the observed legacy gap: newly edited cuts invalidate runs but
-    // do not truncate an explicitly saved broad manual court in the viewer.
+    // Approved task130 repair: current cut truth expires the display even when
+    // tracking is stale. The historical phase94 gap remains in its receipts.
     const manualCourtAfterCut = await page
       .locator("#court-status")
       .textContent();
-    assert.equal(manualCourtAfterCut, "Calibrated · frames 0–99");
+    assert.equal(manualCourtAfterCut, "No calibration for this frame");
     const doc = await api(rallyRoot + "/annotations");
     assert.equal(doc.camera_corrections[0].is_cut, true);
+    assert.equal(doc.calibrations[0].end_frame, 100);
     const rerun = await page.request.post(
       fixture.base + rallyRoot + "/rallies",
       { data: { player_run_id: "qa-players", shuttle_run_id: "qa-shuttle" } },
@@ -1062,10 +1063,10 @@ try {
       staleRunStatus: 422,
       calibrationExpiryFrame: 20,
       sceneEditAndRemoval: true,
-      knownGap: {
+      manualCourtRepair: {
         manualCourtAfterCut,
-        reason:
-          "A new camera correction does not truncate saved manual calibration in the viewer",
+        savedCalibrationEndExclusive: doc.calibrations[0].end_frame,
+        task: 130,
       },
     };
   });
