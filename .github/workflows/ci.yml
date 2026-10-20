@@ -204,6 +204,14 @@ jobs:
       - run: uv sync --locked --extra dev --extra youtube
       - name: Build and verify clean installed wheel and source distribution
         run: uv run --no-sync python scripts/verify_package.py --build --dist-dir .cache/dist
+      - name: Installed-package HTTP ownership and delivery evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: installed-package-http
+          path: .cache/package-http
+          if-no-files-found: error
+          retention-days: 14
 
   frontend:
     needs: revision
@@ -269,7 +277,10 @@ jobs:
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - name: Verify default production UI and complete generated-media matrix
-        run: npm run test:frontend-delivery
+        run: |
+          npm run test:frontend-delivery
+          npm run test:frontend-delivery -- --library
+          npm run test:frontend-delivery -- --exports
       - name: Production browser evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4

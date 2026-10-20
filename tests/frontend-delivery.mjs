@@ -3891,9 +3891,9 @@ async function runLibraryMode() {
       true,
     );
     await check("navigation disposes library polling", async () => {
-      await page.goto(base + "/not-found");
+      await page.goto(base + "/editor");
       await page
-        .getByRole("heading", { name: "Page not found", exact: true })
+        .getByRole("heading", { name: "Review your match", exact: true })
         .waitFor();
       await page.waitForTimeout(1500);
       const count = requests.length;

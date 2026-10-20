@@ -372,11 +372,12 @@ def verify_installed_http(root: Path, python: Path, scratch: Path, env: dict) ->
         try:
             identity = process_identity(psutil.Process(process.pid))
             if (
-                identity["command"] != command
+                identity["command"][1:] != command[1:]
                 or Path(identity["cwd"]).resolve() != scratch.resolve()
             ):
                 raise ValueError("Installed HTTP fixture process identity differs")
             receipt.update(identity, status="running")
+            receipt["initial_identity"] = identity
             receipt_path.write_text(json.dumps(receipt, indent=2) + "\n")
             deadline = time.monotonic() + 45
             while not port_file.exists():
@@ -402,6 +403,17 @@ def verify_installed_http(root: Path, python: Path, scratch: Path, env: dict) ->
                 if process.poll() is not None or time.monotonic() >= deadline:
                     raise TimeoutError("Installed HTTP fixture did not become healthy")
                 time.sleep(0.1)
+            # macOS framework Python may rewrite argv[0] while initializing.
+            # Capture the settled command after application startup, retaining
+            # the spawned PID/lifetime/cwd and exact launcher arguments fence.
+            settled = process_identity(psutil.Process(process.pid))
+            if (
+                any(settled[key] != identity[key] for key in ("pid", "created", "cwd"))
+                or settled["command"][1:] != command[1:]
+            ):
+                raise ValueError("Installed HTTP fixture startup identity changed")
+            identity = settled
+            receipt.update(identity)
             result = verify_http(root, f"http://127.0.0.1:{port}", username, password)
             receipt.update(result, status="verified", port=port)
             return result
@@ -432,7 +444,7 @@ def verify_installed(root: Path, wheel: Path, uv: str) -> dict:
     cache = root / ".cache"
     cache.mkdir(exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="badminton-package-check-") as directory:
-        scratch = Path(directory)
+        scratch = Path(directory).resolve()
         environment = scratch / "venv"
         python = environment / (
             "Scripts/python.exe" if os.name == "nt" else "bin/python"
@@ -490,7 +502,7 @@ def verify_installed(root: Path, wheel: Path, uv: str) -> dict:
             env=env,
             text=True,
         ).strip()
-        installed_path = Path(installed)
+        installed_path = Path(installed).resolve()
         if not installed_path.is_relative_to(environment):
             raise ValueError("Package import escaped the clean environment")
         for name, content in package_sources(root).items():
