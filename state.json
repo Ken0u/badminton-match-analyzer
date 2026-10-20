@@ -5816,6 +5816,15 @@
       "task_id": "149",
       "verb": "plan"
     },
+    "windows-shuttle149-prenative-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792538799,
+      "epoch": 2,
+      "fingerprint": "f6e6ba4269258d40a1abffe3d9ca438cb7dc33196975bf62f46505bce04df614",
+      "status": "running",
+      "task_id": "149",
+      "verb": "checkpoint"
+    },
     "windows-shuttle149-recover-v1": {
       "actor": "Ken0u",
       "at": 1792538169,
@@ -8843,12 +8852,26 @@
       }
     },
     "149": {
+      "checkpoint": {
+        "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
+        "experiment_sha256": "8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68",
+        "head_sha": "4f81bf587dd2353ce705ea61cbbb4d95029c57e0",
+        "next": "After durable acceptance, execute only frozen 50-view capture with real shared Store; seal complete outputs before fixed interpretation. No code/protocol changes during live worker.",
+        "phase": "Committed code and fixed experiment frozen before native heatmaps; 1492 tests passed; waiting for checkpoint acceptance",
+        "pr_number": 157,
+        "prefreeze_receipt_sha256": "dd8aa5fa242a576bbecdfe48088882d0784638b37af2f6e47cbafe264f5b8e76",
+        "protocol_sha256": "d33208aa15a34bf2c5ac7a0d72cd2796b358655658279c1d8091c6bef8aa5f6a",
+        "runtime_sha256": "5ad6cc05be2b884ae6cae410cc5fc67b8bc60ec8ad582729a15ce69376e4b728",
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
+        "verification": "All 60 recorded consumer/config/script files equal committed Git bytes; 1492 tests / four existing skips, lint/format/pip/help/docs checks passed. Real input membership verified. Native not started."
+      },
+      "checkpoint_at": 1792538799,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
         "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
         "epoch": 2,
-        "expires_at": 1792549091,
+        "expires_at": 1792549599,
         "granted_at": 1792538291,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
