@@ -3407,6 +3407,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-portable64-review-register-v2": {
+      "actor": "Ken0u",
+      "at": 1792467639,
+      "fingerprint": "3c44b33428099639f1da61a906068fdd343001d927548ace8fd19dce0a4588e9",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-portable64-review-result-v1": {
       "actor": "Ken0u",
       "at": 1792462587,
@@ -8227,6 +8234,23 @@
       "host_id": "MSI",
       "registered_at": 1792461823,
       "session_id": "windows-portable64-review-v1"
+    },
+    "MSI/windows-portable64-review-v2": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2"
+      },
+      "capabilities": [
+        "cpu",
+        "torch",
+        "windows",
+        "amd64",
+        "review",
+        "python-3.10"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792467639,
+      "session_id": "windows-portable64-review-v2"
     },
     "MSI/windows-progress91-review-v1": {
       "actor": "Ken0u",
