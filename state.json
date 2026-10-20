@@ -7594,6 +7594,7 @@
       }
     },
     "96": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39359160091",
       "checkpoint": {
         "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
         "branch": "codex/issue-96-migrate-library-imports-and-job-monitori",
@@ -7621,7 +7622,7 @@
         "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792463050,
