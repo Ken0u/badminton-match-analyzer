@@ -2342,6 +2342,14 @@
       "task_id": "96",
       "verb": "verify-main"
     },
+    "verify-96-267ed42abaf0157aa2325f32f7568713ac4f8d2d-True": {
+      "actor": "github-actions[bot]",
+      "at": 1792463339,
+      "fingerprint": "bdf9d0edf10069ac7a279095027a4fc0e4f259d4947def295bd89ea817ec6834",
+      "status": "done",
+      "task_id": "96",
+      "verb": "verify-main"
+    },
     "windows-active-next-20261019-v1": {
       "actor": "Ken0u",
       "at": 1792417543,
@@ -7592,6 +7600,7 @@
         "session_id": "roadmap-01a156d5-20261019",
         "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d"
       },
+      "delivery_pending": true,
       "epoch": 1,
       "integration": {
         "at": 1792463050,
@@ -7682,7 +7691,7 @@
         ]
       },
       "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d",
-      "status": "verifying_main",
+      "status": "done",
       "submission": {
         "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
         "head_sha": "5ccc6e15fca18207bb8fa474167f197a009193a5",
