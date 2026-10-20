@@ -276,6 +276,14 @@
       "task_id": "63",
       "verb": "invalidate-review"
     },
+    "invalidate-64-3a0f4787f87c68b05576e9b91517b1228633266f-278ab975643160657f8d631ff498c804bf72f0e6": {
+      "actor": "github-actions[bot]",
+      "at": 1792461767,
+      "fingerprint": "8a687ce9ef995d4866c2feae1d7e315d75eed97021723b54d3b607632001fbd3",
+      "status": "running",
+      "task_id": "64",
+      "verb": "invalidate-review"
+    },
     "invalidate-69-a0004b67dac5ffb56b7c629a0a95141d5df7633f-77906a0aa27e151d482fc1d46f609daef7ff8855": {
       "actor": "github-actions[bot]",
       "at": 1792418630,
@@ -5791,6 +5799,7 @@
       "planned_at": 1792460487,
       "planned_by": "dootz1",
       "pr_number": 135,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Supply a clone-contained Python module/CLI and public parameter/provenance manifest for the fixed 371-value R3 CPU training/validation recipe; accept explicit legally available external precomputed caches through relative file/hash seals, never execute imported local helper scripts.",
@@ -5838,7 +5847,7 @@
         ]
       },
       "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
         "head_sha": "3a0f4787f87c68b05576e9b91517b1228633266f",
