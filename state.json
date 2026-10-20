@@ -4723,6 +4723,15 @@
       "task_id": "145",
       "verb": "checkpoint"
     },
+    "windows-shuttle145-native-status-v1": {
+      "actor": "Ken0u",
+      "at": 1792503965,
+      "epoch": 1,
+      "fingerprint": "5deed2f33ad2a3cea81cd12a1d8143a42da60e84b81fda9e0b5b1736e2c86c05",
+      "status": "running",
+      "task_id": "145",
+      "verb": "checkpoint"
+    },
     "windows-shuttle145-next-v1": {
       "actor": "Ken0u",
       "at": 1792501565,
@@ -7520,23 +7529,20 @@
     "145": {
       "checkpoint": {
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
-        "consumer_files": 58,
         "head_sha": "6a1f28ee1a71a27a81a45517d9e35784b731a12a",
-        "next": "Verify accepted lease/current ownership and real Store vacancy; run exact frozen CLI over all201 into new ignored lineage under real shared admission. No consumer/protocol edits while worker alive. Seal full native outputs and externally record terminal/index SHAs before fixed scoring; preserve all unavailable cases and false usage eligibility.",
-        "phase": "Tested code/protocol frozen and pushed before all-source native baseline",
+        "next": "Continue observing the existing native run. Lifecycle and Store evidence remain local. Seal all outputs before fixed scoring, fresh independent review, CI and controller integration. All training/deployment/redistribution/independent-test flags remain false.",
+        "phase": "Fixed native baseline running; last observed 6/201 clips complete; scoring pending",
         "pr_number": 146,
-        "prefreeze_descriptor_sha256": "47b5201bc2c056854ecbffaf0b93f8b1af4509ebed9184d09dcec980a55126c3",
-        "protocol_sha256": "90fe79c46fa9014ff96b1b8bb372cc457eaf1bc767b1ec097dea73163f2e861d",
         "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
-        "verification": "32focused/full1445PASS4optionalGPUskip; Ruff/format163/pip/diff/UTF8LF/JSON/links/help pass. Exact-head CI pending. No real native predictions opened yet."
+        "verification": "32 focused and 1,445 full tests pass, four optional skips; all 12 exact-head CI jobs pass in run 39431509009."
       },
-      "checkpoint_at": 1792503435,
+      "checkpoint_at": 1792503965,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
         "branch": "codex/issue-145-run-a-frozen-unchanged-tracknet-baseline",
         "epoch": 1,
-        "expires_at": 1792514235,
+        "expires_at": 1792514765,
         "granted_at": 1792501565,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
