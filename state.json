@@ -4530,6 +4530,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "external_merge": {
