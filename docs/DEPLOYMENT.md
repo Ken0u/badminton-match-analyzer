@@ -228,8 +228,14 @@ image digest or wheel. A rollback selects that previous complete code artifact
 against the same preserved data; it does not copy obsolete frontend files over a
 new backend or rewrite annotations. Stop and verify ownership of the deployed
 instance before replacing it. This development task does not perform that upgrade
-or rollback. Its final workflow/Docker/packaging diff also requires the frozen
-issue's actual non-author human approval before controller integration.
+or rollback. Under [repository guidance](../AGENTS.md) and the
+[collaboration protocol](COLLABORATION.md), sensitive frozen task scope requires
+explicit configured-owner authorization, fresh independent agent approval and
+exact CI. Final non-author human PR review is optional. The
+[phase 5 checkpoint](https://github.com/Ken0u/badminton-match-analyzer/issues/98#issuecomment-6293143852)
+records controller recovery, exact merged-main checks and complete public
+candidate delivery; original specifications and reviews remain preserved as
+historical evidence.
 
 ## Verification and current limits
 
