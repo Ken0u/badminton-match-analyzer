@@ -836,6 +836,15 @@
       "task_id": "98",
       "verb": "submit"
     },
+    "mac-01a15493-98-submit-export-ci-v4": {
+      "actor": "dootz1",
+      "at": 1792509080,
+      "epoch": 1,
+      "fingerprint": "202723a1e77fedc2c3d6e95278fd81bbbbf29f034bb030542a2193d93c7a5e69",
+      "status": "review",
+      "task_id": "98",
+      "verb": "submit"
+    },
     "mac-01a15493-98-submit-v1": {
       "actor": "dootz1",
       "at": 1792508013,
@@ -2002,6 +2011,28 @@
       "fingerprint": "db4705a613b9ce7e07944186dc4824a263bea6bb1fa44028ff6d9e6c04843a2c",
       "status": "granted",
       "task_id": "96",
+      "verb": "review-next"
+    },
+    "mac-review98-next-v1": {
+      "actor": "dootz1",
+      "at": 1792509080,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "epoch": 1,
+        "expires_at": 1792519880,
+        "granted_at": 1792509080,
+        "head_sha": "663122175259b22ec1174dcb20e42a422b40fcc2",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 148,
+        "review_epoch": 1,
+        "session_id": "mac-review98-01a15493",
+        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
+      },
+      "epoch": 1,
+      "fingerprint": "7e38bcebebdf879bb1b160f92566ce6c5255794d50f6643ded516b30e975c2ba",
+      "status": "granted",
+      "task_id": "98",
       "verb": "review-next"
     },
     "mac-review98-register-v1": {
@@ -9994,6 +10025,20 @@
       "pr_number": 148,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "epoch": 1,
+        "expires_at": 1792519880,
+        "granted_at": 1792509080,
+        "head_sha": "663122175259b22ec1174dcb20e42a422b40fcc2",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 148,
+        "review_epoch": 1,
+        "session_id": "mac-review98-01a15493",
+        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Build and serve the frontend from FastAPI; include correct assets in wheel/sdist and review/CPU images, excluding frontend source/build tooling where unnecessary. Keep one application container and no runtime frontend server.",
@@ -10042,10 +10087,10 @@
         ]
       },
       "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
-        "head_sha": "c0c9372bf9b863b12e049e8b7f45fdd023f59677",
+        "head_sha": "663122175259b22ec1174dcb20e42a422b40fcc2",
         "pr_number": 148,
         "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
       }
