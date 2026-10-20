@@ -2525,6 +2525,41 @@
       "task_id": "141",
       "verb": "review-result"
     },
+    "shuttle145-review-d45693fd-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792511176,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "epoch": 1,
+        "expires_at": 1792521976,
+        "granted_at": 1792511176,
+        "head_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+          "limitations": [
+            "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
+            "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
+            "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
+            "No training, tuning, new weights, interpolation, model/default installation or promotion",
+            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts"
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "2fce9c858ad84fa38ede6f407208fa5c60f21cc90f393dc487d2574661814d87",
+          "source_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465"
+        },
+        "pr_number": 146,
+        "review_epoch": 1,
+        "session_id": "d45693fd670e4a8f86a15dba76fc903d",
+        "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600"
+      },
+      "epoch": 1,
+      "fingerprint": "1195f4dd9de75cb4da1dc7db9716291ca5b3d0985ea93c4b4b9087aef810c990",
+      "status": "granted",
+      "task_id": "145",
+      "verb": "review-next"
+    },
     "shuttle145-review-d45693fd-register-v1": {
       "actor": "Ken0u",
       "at": 1792511065,
@@ -7845,6 +7880,33 @@
       "planned_at": 1792501455,
       "planned_by": "Ken0u",
       "pr_number": 146,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "epoch": 1,
+        "expires_at": 1792521976,
+        "granted_at": 1792511176,
+        "head_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "2e14174c3f54cf91d856faab9ba4c5278659fec2",
+          "limitations": [
+            "Published/pretrained-source data, not an independent unseen holdout or expert-reviewed truth",
+            "Mirror authenticity, dataset rights, original identities, cross-corpus overlap and live-scene validity remain unverified",
+            "Raw shuttle localization only; no complete-event, player identity, shot recognition or full-match accuracy claim",
+            "No training, tuning, new weights, interpolation, model/default installation or promotion",
+            "No consumed holdout-63 inputs, predictions, protocols, private membership metadata or artifacts"
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "2fce9c858ad84fa38ede6f407208fa5c60f21cc90f393dc487d2574661814d87",
+          "source_sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465"
+        },
+        "pr_number": 146,
+        "review_epoch": 1,
+        "session_id": "d45693fd670e4a8f86a15dba76fc903d",
+        "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Pin main 029bae3f706e66ba4410fe87d1154292b892e261, source evidence baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4, 773-file index df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f, native source report d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa and original TrackNet checkpoint df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Freeze and timestamp the committed protocol/code/runtime before opening any new native predictions. No source/sample/model/threshold selection informed by this diagnostic.",
