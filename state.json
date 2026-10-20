@@ -7151,6 +7151,7 @@
       }
     },
     "143": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39424700115",
       "checkpoint": {
         "branch": "codex/issue-143-prepare-source-aligned-published-shuttle",
         "evidence_index_sha256": "df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f",
@@ -7192,7 +7193,7 @@
         "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792499836,
