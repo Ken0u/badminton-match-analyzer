@@ -813,6 +813,15 @@
       "task_id": "98",
       "verb": "checkpoint"
     },
+    "mac-01a15493-98-external-recovery-v1": {
+      "actor": "dootz1",
+      "at": 1792518530,
+      "epoch": 1,
+      "fingerprint": "ae72ae49f3e92e9ec866317a8516800341d93f96d2c075e38a65bcbb367b91c9",
+      "status": "recovery_pending",
+      "task_id": "98",
+      "verb": "recover-merged"
+    },
     "mac-01a15493-98-integration-progress-v1": {
       "actor": "dootz1",
       "at": 1792507213,
@@ -10599,6 +10608,18 @@
             "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
           }
         }
+      },
+      "external_recovery_request": {
+        "actor": "dootz1",
+        "at": 1792518530,
+        "base_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
+        "epoch": 1,
+        "evidence_state_sha": "e083dafb93df566098b5f57b37265458cc90e628",
+        "head_sha": "5f2e760bde307e8748e9a486daef705c40a9f111",
+        "merge_sha": "4ebd2f025da117ba617d5b092d5a9cc25d53eabc",
+        "pr_number": 148,
+        "request_id": "mac-01a15493-98-external-recovery-v1",
+        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
       },
       "human_approval": {
         "actor": "dootz1",
