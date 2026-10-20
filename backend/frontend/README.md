@@ -1,9 +1,8 @@
-# Frontend foundation
+# Frontend preview workspace
 
 Phase [#95](https://github.com/Ken0u/badminton-match-analyzer/issues/95) introduces
 an opt-in development workspace. FastAPI still serves the existing legacy UI.
-The sandbox uses synthetic local samples; it is not a match library or annotation
-editor. Software checks do not establish badminton annotation accuracy.
+The root sandbox uses synthetic local samples. Phase [#96](https://github.com/Ken0u/badminton-match-analyzer/issues/96) adds an opt-in match library at `/library`; it is not an annotation editor. Software checks do not establish badminton annotation accuracy.
 
 ## Reproduce
 
@@ -81,7 +80,8 @@ aborting a save as proof it did not commit.
 | `src/state/playback.ts`  | Imperative high-frequency video/canvas snapshots; exact source identity supplied by a verified mapping, never computed from nominal fps.  |
 | `src/ui/`                | Native keyboard controls, labels/help/errors and live feedback. No API knowledge.                                                         |
 | `src/App.tsx`            | Synthetic foundation demonstration; no production feature migration.                                                                      |
-| Future feature modules   | Phase 96 owns library/import/jobs; phase 97 owns review editor, overlays, source-clock mapping and parity.                                |
+| `src/library/`           | Phase 96 library/import/jobs runtime validation, selection controller, upload transport and React screen.                                 |
+| Future feature modules   | Phase 97 owns review editor, overlays, source-clock mapping and parity.                                                                   |
 
 Before a selection change, require `drafts.canLeave()`. If dirty, ask the user to
 save or explicitly discard. Do not select first and then ask: selection aborts
@@ -117,7 +117,7 @@ and return focus. This foundation is not a WCAG or screen-reader certification.
 
 `npm run frontend:test` compiles modules to ignored `.test-build/`, runs focused
 Node tests and removes that directory. Compile-only probes reject missing paths,
-unsupported methods, invalid request enums and missing mutation bodies.
+required queries, unsupported methods, invalid request enums and missing mutation bodies.
 Unit probes cover structured/non-JSON errors, status/conflict preservation,
 request-body/revision forwarding, cancellation, late success/error, selection ABA,
 separate records/jobs, edits during save, failed/stale mutation preservation and
@@ -129,3 +129,78 @@ ignored. Do not copy built output into `backend/badminton/static/` in this phase
 Phase 98 owns production asset packaging, Python package discovery exclusions,
 CI/container wiring, the reversible default cutover and legacy retirement after
 full parity evidence. No running application is restarted/upgraded here.
+
+## Library preview (phase 96)
+
+The root route preserves the phase-95 foundation browser contract; `/library`
+opens the real library/import/job preview. Static hosts must serve `index.html`
+for `/library` and `/library/` and assets at `/assets/`. The default FastAPI UI
+and its source files are unchanged. No production package/cutover is included.
+The foundation page links to the preview, and the preview links back.
+
+Point only an owned development fixture at the Vite loopback proxy:
+
+```sh
+BADMINTON_FRONTEND_BACKEND_URL=http://127.0.0.1:8000/ npm run dev --workspace @badminton/frontend
+```
+
+The optional variable accepts a loopback HTTP(S) backend origin only. `/api`
+requests use the same-origin proxy and existing authentication; the browser
+client never forwards session credentials to a configured remote origin. The
+legacy editor link points to the actual backend root (this origin, or
+`http://127.0.0.1:8000/` when unset). It does not promise a selected-video deep
+link. For builds the origin is frozen at build time. A separate static preview
+server must proxy `/api` to its own backend. These settings neither launch nor
+upgrade an existing app. Node remains a build/development dependency only.
+
+The controller validates unknown success payloads at runtime, including video
+identity, finite progress, analysis ownership, server processing settings and the
+exact selected video's relative playback-proxy URL. Unknown video modes and job
+kind/status labels remain visible; they do not acquire pause/resume semantics.
+Annotation documents, source timestamps and original predictions are not written
+or reinterpreted by this phase. Preview media time is not exact source timing.
+
+Uploads use the generated multipart operation through the shared typed client
+with an XHR fetch adapter. This supplies actual transferred byte counts (or an
+indeterminate bar when unavailable), same-origin cookies, abort, network errors
+and a bounded 30-minute transfer timeout. Transfer completion precedes server
+import completion. Cancelling or timing out is not proof that the server rolled
+back an import; refresh jobs before retrying. Imports and completed background
+jobs never select a video or replace a draft. Failed imports remain visible.
+Only queued/running full-match analysis jobs can request cooperative pause;
+resume submits a new analysis job using its validated original settings and
+retains job history. Missing previous settings require an explicit new start.
+
+`createLibrarySession<T>()` owns the shared selection and draft navigation guard
+for the future editor. Inject that session into `createLibraryController` and
+use its draft store for the editor document. Selection checks `canLeave()`
+before aborting any reads. Dirty/saving drafts block navigation; callers must
+save successfully or explicitly discard through the draft store. The preview
+does not invent an editable annotation field to demonstrate this guard.
+Library/jobs polling, selected metadata, analysis and playback use independent
+latest-read lanes and selection epochs. Late successes/errors and mutation
+completions cannot overwrite another selected source. Dispose cancels timers,
+read lanes and pending upload transport; an already-submitted server job may
+continue. Job records are separate from the annotation draft.
+
+Focused unit probes cover malformed/unknown payloads, YouTube validation,
+late success/error, selection/draft guards, pause/resume settings, selected-job
+ownership, HTTP 401/403/413/409/422 guidance, upload bytes/cancellation and polling
+cleanup. `tests/frontend-library.mjs` exercises the built preview against an
+owned generated-media backend with downloader/perception stubs. It does not
+prove external downloader availability, model accuracy, source-clock editor
+parity, or screen-reader certification. The legacy editor remains available
+until the later review-editor and default-cutover phases establish parity.
+
+Run the built library integration from the repository root:
+
+```sh
+npm run frontend:build
+node tests/frontend-library.mjs
+```
+
+As with the foundation harness, `FRONTEND_PYTHON` and
+`PLAYWRIGHT_BROWSERS_PATH` may select the locked review interpreter and cached
+test Chromium. The harness rejects `BASE_URL`, owns both loopback listeners,
+retains source/build hashes and cleanup receipts, and preserves generated
+source bytes, native timestamps, saved annotations and original predictions.
