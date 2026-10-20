@@ -4170,6 +4170,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle139-review-v1-next": {
+      "actor": "Ken0u",
+      "at": 1792484378,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+        "epoch": 2,
+        "expires_at": 1792495178,
+        "granted_at": 1792484378,
+        "head_sha": "4b56f0351d7d38497f39d297b10628cee82ab995",
+        "host_id": "MSI",
+        "pr_number": 140,
+        "review_epoch": 1,
+        "session_id": "shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6",
+        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
+      },
+      "epoch": 2,
+      "fingerprint": "9eb4cb3eb2f104c89f5f5734d354226cabfe6683cf0f71b5464bb199177aec21",
+      "status": "granted",
+      "task_id": "139",
+      "verb": "review-next"
+    },
     "windows-shuttle139-review-v1-register": {
       "actor": "Ken0u",
       "at": 1792484291,
@@ -6474,6 +6496,20 @@
       "planned_by": "Ken0u",
       "pr_number": 140,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+        "epoch": 2,
+        "expires_at": 1792495178,
+        "granted_at": 1792484378,
+        "head_sha": "4b56f0351d7d38497f39d297b10628cee82ab995",
+        "host_id": "MSI",
+        "pr_number": 140,
+        "review_epoch": 1,
+        "session_id": "shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6",
+        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Supply a clone-contained source-packet/audit CLI and public protocol. Freeze exactly25 uniformly spaced center frames per original supplied video (floor((i+0.5)*frame_count/25), i0..24), plus singles2039..2043,2047..2048,2077..2079 known development-gap frames; deduplicate and retain every selected case. Pin source/metadata/native-clock hashes, frame identity/PTS/orientation, review context and metric rules before looking at additional predictions. Context is at most two adjacent source frames each side and must not imply motion through a cut.",
