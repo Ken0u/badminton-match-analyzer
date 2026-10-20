@@ -645,6 +645,15 @@
       "task_id": "138",
       "verb": "checkpoint"
     },
+    "mac-01a15493-138-e3-submit-r2-v1": {
+      "actor": "dootz1",
+      "at": 1792504408,
+      "epoch": 3,
+      "fingerprint": "8d20dcc004d07fb0f96bd6a8b3513499713ee3af8326aa7b16ebdab7fef63699",
+      "status": "review",
+      "task_id": "138",
+      "verb": "submit"
+    },
     "mac-01a15493-138-e3-submit-v1": {
       "actor": "dootz1",
       "at": 1792503488,
@@ -6947,50 +6956,6 @@
       "pr_number": 147,
       "reason": "implementation lease expired; reservations retained",
       "repair_rounds": 1,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792503942,
-        "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
-        "evidence": [
-          "Genuine fresh reviewer grant review_epoch1/taskepoch3 saved .cache/review138-55f9d4f/.cache/reviewer-evidence/grant.json; final-pr.json and final-state.json revalidate exacthead/base/spec and reviewer ownership.",
-          "Independent credential-scrubbed frontend runtime suite passed76/76; production strict TypeScript/Vite build and OpenAPI contract check passed. Logs .cache/review138-55f9d4f/.cache/reviewer-evidence/{unit,build,contract}.log.",
-          "Independent credential-scrubbed real generated-media browser harness passed12groups: allthree modes, historicalrevision/newsave, downloads and sourcePTS/orientation/hash/pixels, ineligible/empty outputs, realStore admission409/retry, actual failed source job, injected401/unknown/malformed/delayed replies and keyboard. Own receipts .cache/review138-55f9d4f/.cache/evidence/frontend-exports-10pBZX/{result,checks,cleanup,admission-cleanup}.json.",
-          "Independent adversarial controller probe .cache/review138-55f9d4f/.cache/reviewer-evidence/race-probe.mjs fails expected loading=false after overlapping select-list/POST401, with state and assertion saved race-result.json/race-probe.log. This case is absent from the passing submitted suite.",
-          "Independently recomputed all37 hashes in both author and reviewer native browser receipts against exact checked-out source/built assets; no mismatches; hash-audit.json. gitdiff--check passes; tracked checkout remains clean."
-        ],
-        "findings": [
-          "[P2] Clear loading when start invalidates an in-flight job-list read (backend/frontend/src/editor/exports/controller.ts:157-161). The Start button is enabled while refresh is loading. If select()/refresh() has a pending /api/jobs request and Start receives 401 or 409, start increments intent/readSequence, so the original read returns at lines106-111 without clearing loading; start never clears it either. After both requests finish the snapshot still has loading=true and no active jobs/timer, so ExportPanel.tsx disables Refresh jobs indefinitely while instructing the user to sign in then refresh. Reproduced independently with the exact compiled controller; race-result.json records loading=true, starting=false after POST401 and list completion. Transfer or release read-loading ownership when invalidating that read, and add coverage for a delayed list overlapping failed/terminal start, including usable Refresh recovery."
-        ],
-        "head_sha": "55f9d4f01b41597541256501a7f14640fc816639",
-        "limitations": [
-          "Finding is reproduced against the exact compiled controller with deterministic fake transport; native browser suite covers standard401 paths but not this overlapping initial-list/401 sequence.",
-          "Generated synthetic sources and explicitly injected HTTP faults establish software behavior, not badminton annotation accuracy, real YouTube throughput or model/GPU performance.",
-          "Did not repeat full Python/package/editor/library/foundation jobs independently; parent evidence remains separately attributed. No tracked implementation edits, deployments, model installs, running application upgrade or research jobs.",
-          "Final exact-head hosted snapshot shows Checks ci/gate and its jobs SUCCESS, while automation/policy is FAILURE; final-pr.json records this separately. I did not establish the policy-failure cause. Integration/main verification and candidate delivery remain parent/controller responsibilities. A changed head/base invalidates this review."
-        ],
-        "pr_number": 147,
-        "reviewed_files": [
-          "backend/frontend/README.md",
-          "backend/frontend/scripts/test.mjs",
-          "backend/frontend/src/editor/EditorApp.tsx",
-          "backend/frontend/src/editor/editor.css",
-          "backend/frontend/src/editor/exports/ExportPanel.tsx",
-          "backend/frontend/src/editor/exports/controller.ts",
-          "backend/frontend/src/editor/exports/model.ts",
-          "backend/frontend/tests/exports.test.mjs",
-          "tests/frontend-exports.mjs",
-          "tests/frontend-fixtures.mjs",
-          "backend/frontend/src/editor/controller.ts",
-          "backend/frontend/src/state/draft.ts",
-          "backend/frontend/src/api/client.ts",
-          "backend/badminton/api.py",
-          "backend/badminton/export_service.py",
-          "backend/badminton/rally_export.py"
-        ],
-        "session_id": "mac-review138-01a15493",
-        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -7032,10 +6997,10 @@
         ]
       },
       "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
-        "head_sha": "55f9d4f01b41597541256501a7f14640fc816639",
+        "head_sha": "125b1dffcf46e5f234bf865b1a940098f092892c",
         "pr_number": 147,
         "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
       }
