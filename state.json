@@ -424,6 +424,14 @@
       "task_id": "124",
       "verb": "checkpoint"
     },
+    "mac-01a15493-130-plan-v1": {
+      "actor": "dootz1",
+      "at": 1792455380,
+      "fingerprint": "8a52415da35bf959e63d5d1506faab138a05aed34d63bef652b0f4276c342217",
+      "status": "ready",
+      "task_id": "130",
+      "verb": "plan"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -1405,6 +1413,14 @@
       "fingerprint": "5ad38fb14f7fd4659d76d49553ab947e298baf1ff19a853a8d37ed7db0dbf4e4",
       "status": "needs_human",
       "task_id": "126",
+      "verb": "plan"
+    },
+    "spec-130-140f094f1ee9fb14cebf6a5f98b14cd812f0679bbc07762529c71b4bcf3fdb14": {
+      "actor": "dootz1",
+      "at": 1792455380,
+      "fingerprint": "a6a317f4cb89e51036511301cd89d9039929b408bb4c335071f0ca4974e774b3",
+      "status": "ready",
+      "task_id": "130",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -4354,6 +4370,56 @@
         "pr_number": 127,
         "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
       }
+    },
+    "130": {
+      "epoch": 0,
+      "planned_at": 1792455380,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Reproduce the browser-confirmed baseline gap on generated media: save a manual calibration spanning frames0\u201399, review a camera cut at20 and inspect a later frame with stale tracking; the current viewer still reports Calibrated0\u201399. Preserve original baseline evidence and source bytes.",
+          "Effective manual geometry and the court-status label must respect the current saved/unsaved reviewed camera-cut decisions independently of a valid tracking run. Expire the preceding calibration at the cut, preserve exact end-exclusive manual ranges, and require separately applicable calibration after the boundary. Do not re-enable stale automatic geometry, tracking or proposals.",
+          "Preserve original reviewed calibration records, source PTS/frame identity, camera-correction truth, immutable predictions and job admission. Compute display-effective ranges without silently rewriting or deleting user annotations. Test explicit not-cut/removal decisions and valid-run automatic/manual priority without weakening timestamp-gap or existing source-context guards.",
+          "Add deterministic real-browser generated-media regression for court polygon/status before/at/after a newly reviewed cut, stale/no tracking, save/reload, explicit manual expiry, correction changes and unchanged saved/exported calibration records. Retain the historical phase94 observed gap but update the current parity expectation as an explicit approved repair; do not relabel old runs or change frozen performance fixtures/measurement definitions/ceilings to hide regressions.",
+          "Run focused JS/browser and required project checks, fresh exact-head/base/spec independent review and hostedCI. Submit only through controller integration; verify exact merged main and complete package/both-image delivery receipts before completion."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "94"
+        ],
+        "exclusions": [
+          "No model, inference, data/schema migration, research job, source-clock, auth/policy/workflow, deployment, dependency/toolchain upgrade or running-instance change.",
+          "No annotation rewriting to manufacture geometry validity, stale automatic geometry fallback, false accuracy claims, or erasure of frozen phase94 receipts.",
+          "No React migration or extra editor feature; foundation95\u201398 phase order and other collaborator reservations remain intact."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Expire manual court overlays at currently reviewed camera cuts even when tracking is stale, preserving saved calibration truth and source context.",
+        "paths": [
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/court-context.js",
+          "tests/frontend-parity.mjs",
+          "tests/manual-court-boundary.mjs",
+          "docs/FRONTEND_BASELINE.md",
+          "docs/MANUAL_COURT_BOUNDARY_REPORT.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual generated-media Chromium before/after court overlay/status and saved annotation/export checks; existing court-context JS and relevant browser regressions.",
+          "Required Python/JS/repository/dependency/diff checks; genuine fresh independent review, exact-head hostedCI, controller integration, verified merged-main and complete delivery receipts."
+        ]
+      },
+      "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
