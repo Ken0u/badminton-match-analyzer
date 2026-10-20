@@ -254,6 +254,33 @@ Its source inputs, predictions and classifiers are synthetic; passing software,
 coverage and timing checks does not establish badminton annotation accuracy.
 Production asset packaging/default cutover remains phase 98.
 
+## Opt-in reviewed media exports
+
+The editor's **Export reviewed media** panel starts a native media job only after
+the user explicitly selects `plain-rallies`, `annotated-rallies`, or
+`annotated-full` and clicks Start. It displays the selected source and exact
+saved annotation revision before submission. Dirty or saving drafts disable the
+action; selecting a mode never saves annotations or starts a job. Jobs retain
+their original source, revision, and mode after later saves.
+
+Completed downloads are exposed only after runtime validation of the server's
+same-source completion receipt. The panel lists `manifest.json` and every
+validated MP4 with its type, byte size, and SHA-256, plus every rally's eligible
+or ineligible receipt and recorded reasons. Full-video exports remain one video
+even when some rallies are ineligible. Saved reviewed overlays preserve the
+reviewed/predicted distinction; exported media and software checks do not claim
+annotation accuracy. Unknown, failed, unavailable, authentication, and shared
+admission states remain non-actionable with explicit refresh/retry guidance.
+
+This remains an opt-in editor feature. It does not package assets, change the
+FastAPI default UI, or perform the phase-98 default cutover. After building with
+the existing generated-fixture environment instructions above, reproduce the
+owned browser contract from the repository root with:
+
+```sh
+node tests/frontend-exports.mjs
+```
+
 The editor browser check also verifies the explicit processing-window seek,
 source clock contrast, compact native checkboxes, focus after a completed save,
 and zero broad editor renders during each real playback observation. It uses a
