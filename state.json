@@ -1626,6 +1626,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review96-01a156d5-result-v1": {
+      "actor": "dootz1",
+      "at": 1792463024,
+      "epoch": 1,
+      "fingerprint": "379af8adfbd6050143645f0070f538832e49c282cc0eeb4947169577c2554ac7",
+      "status": "review",
+      "task_id": "96",
+      "verb": "review-result"
+    },
     "mac-review96-01a156d5-review-next-v1": {
       "actor": "dootz1",
       "at": 1792462587,
@@ -7565,18 +7574,47 @@
       "planned_at": 1792417955,
       "planned_by": "dootz1",
       "pr_number": 136,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792463024,
         "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
-        "epoch": 1,
-        "expires_at": 1792473387,
-        "granted_at": 1792462587,
+        "evidence": [
+          "Committed independent review grant mac-review96-01a156d5-review-next-v1: task epoch 1 / review_epoch 1; reviewed exact frozen head/base/spec and all 12 changed files; grant/spec/current PR snapshot retained in /Users/stanleygu/Stanley/Programming/badminton-match-analyzer/.cache/review96-5ccc6e1/.cache/reviewer-96.",
+          "Independent strict typecheck; own-source test.mjs 20/20; own-root Vite build and OpenAPI contract drift check passed with credentials scrubbed via env -i. Logs retained in /Users/stanleygu/Stanley/Programming/badminton-match-analyzer/.cache/review96-5ccc6e1/.cache/reviewer-96.",
+          "Own generated browser rerun .cache/evidence/frontend-library-XYVXxo: 8/8 groups, zero page errors. Exercised upload/invalid media/real byte progress, failed then recovered stubbed public import, late metadata selection, cooperative pause/new-job resume, selected-source playable proxy, source PTS/saved annotations/predictions/legacy preservation and polling cleanup. Inspected own desktop/selected/tablet PNGs.",
+          "Extra reviewer adversarial-results.json: A-B-A metadata and late mutation error fenced; same-video newer analysis beats delayed older success/error; disposed noncompliant mutation cannot publish/poll; encoded source proxy and wrong analysis ownership/settings/YouTube ambiguity rejected.",
+          "Extra reviewer keyboard-result.json: malformed library recovery, Enter selection, wrong-source playback URL rejection with source-A fallback, import error retry restores URL focus, mode/model accessible labels; zero page errors. Owned static listener cleanup retained.",
+          "continueOwnedRoute inspected: observed ignored Route is already handled error is a narrow duplicate/cancellation outcome retained in route-events.json; positive workflow assertions and errors/results gates remain effective; no observed false pass.",
+          "Owned fixture PID/lifetime/cwd/command verified before stop; independent cleanup-verification.json confirms PID 49606 absent and both owned ports closed. Own node_modules symlink and .test-build removed; tracked checkout clean and git diff --check passed.",
+          "Exact-head GitHub Checks run 39357770440 all required ci/gate and Python 3.10/3.12, native Mac/Windows, repository/package/frontend/browser-import/container checks SUCCESS; PR head/base remain frozen. Snapshot /Users/stanleygu/Stanley/Programming/badminton-match-analyzer/.cache/review96-5ccc6e1/.cache/reviewer-96/pr-ci.json."
+        ],
+        "findings": [],
         "head_sha": "5ccc6e15fca18207bb8fa474167f197a009193a5",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Offline generated software review only: native perception and YouTube downloads stubbed; no model accuracy, actual external download availability or full-match annotation accuracy claim.",
+          "Preview remains opt-in; exact source-frame review editor and production default/package cutover are future tasks 97/98. No running app restarted, real catalog accessed or deployment performed.",
+          "Focused reviewer checks cover frontend type/build/contract/20 unit tests, generated integration and extra adversarial cases; full Python/native/container suites were observed through exact-head successful CI, not rerun locally.",
+          "First reviewer build invocation used unsupported Vite --root, corrected without source changes. First generated browser run omitted installed FFmpeg from scrubbed PATH and failed playback preparation; failed receipts retained and rerun with installed FFmpeg passed all 8 groups.",
+          "Native Chromium labels/keyboard/focus inspected, no screen-reader or WCAG certification. automation/policy check currently fails independently of successful ci/gate; controller must enforce final integration policy."
+        ],
         "pr_number": 136,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/frontend/README.md",
+          "backend/frontend/scripts/test.mjs",
+          "backend/frontend/src/App.tsx",
+          "backend/frontend/src/library/LibraryApp.tsx",
+          "backend/frontend/src/library/controller.ts",
+          "backend/frontend/src/library/model.ts",
+          "backend/frontend/src/library/upload.ts",
+          "backend/frontend/src/main.tsx",
+          "backend/frontend/src/style.css",
+          "backend/frontend/tests/library.test.mjs",
+          "backend/frontend/vite.config.js",
+          "tests/frontend-library.mjs"
+        ],
         "session_id": "mac-review96-01a156d5",
-        "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d"
+        "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
