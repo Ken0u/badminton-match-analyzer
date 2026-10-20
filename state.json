@@ -1900,6 +1900,15 @@
       "task_id": "97",
       "verb": "checkpoint"
     },
+    "roadmap97-repair2-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792467280,
+      "epoch": 1,
+      "fingerprint": "21e5746e88991dcd751c897c96d7151cfb61d51e9f69e1690825eec77dddebf1",
+      "status": "running",
+      "task_id": "97",
+      "verb": "checkpoint"
+    },
     "roadmap97-repaired-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792466380,
@@ -7920,24 +7929,23 @@
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "evidence": [
-          "Repair commit 6cb74a3 fences async view reads by generation for reviewPart, source core crossings, manual mode/track and processing; obsolete ignored-abort requests cannot publish stale mode/window/runs/errors or block replacement current-view polling. Independent failed reproducer retained; pre-fix regression failure .cache/editor97-pre-repair-races.log; repaired 57 checks pass including 24 boundary/action/stale-success-error cases and current-run availability before stale release.",
-          "Three repaired editor runs frontend-editor-ojYmaR / frontend-editor-v6DmVM / frontend-editor-oJRdWm: see .cache/repaired97/tested-source.json for actual names and committed source/harness byte parity. Each passes all 17 groups including held real analysis GET then explicit review-window source/media/image seek, current window proposals after late response, saved focus, proxy/source/prediction truth and cleanup. All 9 playback observations have 0 broad rerenders.",
-          "Repaired comparison .cache/evidence/frontend-editor-repaired-comparison.json retains identical baseline sources/helpers/protocol/current locks/Node22/host/browser. Median seek 80.2 ms <=102.5, timeline31.4<=67.0, firstadvance85.1<=362.25,rAF16.8<=40.875; all absolute limits pass. Original head comparison/raw failures remain preserved.",
-          "Strict build/typecheck/OpenAPI/57checks, changed-source Prettier/repository/diff pass. Previous Python1242/13, health/package76files and foundation7/library8 remain applicable to unchanged backend/package/compatibility modules; exact new-head CI pending."
+          "Review epoch 2 independent initial-load probe preserved in .cache/review97-5805612/.cache/review-initial-race.mjs/log and changes payload. Established-window repair independently passes; initial core mismatch was a further variant.",
+          "Parent adds publication/error reconciliation against latest native source frame, clears mismatched runs/actors and starts a replacement current-core poll without exposing previous core runs or obsolete errors. Existing generation/mode fencing remains.",
+          "New tests begin before select resolves, hold first run/playback reads, seek or rapidly seek back/forth and release late success/error. Pre-repair 9 checks fail (.cache/repair2-before-tests.log); post-repair all 68 checks pass, strict build passes. First owned full browser run 9veD2K passes all 17 groups including actual initial-run GET hold, source image/media seek and current proposals after late response. No running app/catalog/models/research touched."
         ],
         "head_sha": "580561220218be22a1e791bd9833de3d22fb52e9",
         "pr_number": 137,
-        "remaining": "Fresh independent exact-head/base/spec review epoch, exact-head CI/controller/main CI and complete package/both-image delivery receipts.",
+        "remaining": "Finish all three frozen-source browser/performance repeats, strict checks/source byte audit, commit/resubmit exact head and independent review epoch 3. If a third formal failed repair occurs, consolidate human decision per policy; never self-approve or merge.",
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "stage": "Repaired independent P2 analysis-window polling race; published head 5805612. Requesting fresh review epoch after changed-head CI."
+        "stage": "Independent review epoch 2 changes committed (repair_rounds 2). Parent repaired initial-plan source-core publication; 68 frontend checks and first full 17-group browser repeat pass."
       },
-      "checkpoint_at": 1792466380,
+      "checkpoint_at": 1792467280,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "epoch": 1,
-        "expires_at": 1792477180,
+        "expires_at": 1792478080,
         "granted_at": 1792463404,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
