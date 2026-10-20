@@ -6842,6 +6842,7 @@
       }
     },
     "141": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39411883689",
       "checkpoint": {
         "artifacts": [
           ".cache/shuttle141-experiment-v1",
@@ -6884,7 +6885,7 @@
         "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792493474,
