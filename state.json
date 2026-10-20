@@ -4170,6 +4170,15 @@
       "status": "running",
       "task_id": "139",
       "verb": "checkpoint"
+    },
+    "windows-shuttle139-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792483472,
+      "epoch": 2,
+      "fingerprint": "ff03acf9816aec69fd1149bc2a175157b78c3ae352c0a062cdcf573503301ef0",
+      "status": "review",
+      "task_id": "139",
+      "verb": "submit"
     }
   },
   "tasks": {
@@ -6439,6 +6448,7 @@
       ],
       "planned_at": 1792469150,
       "planned_by": "Ken0u",
+      "pr_number": 140,
       "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
@@ -6486,7 +6496,13 @@
         ]
       },
       "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+        "head_sha": "ce9e9065388168e66512c19d3b20f49f72fe4097",
+        "pr_number": 140,
+        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
+      }
     },
     "62": {
       "epoch": 0,
