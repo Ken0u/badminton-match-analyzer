@@ -2385,6 +2385,14 @@
       "task_id": "143",
       "verb": "plan"
     },
+    "spec-145-bc52e6c105b6646dd73bc2bf38f63f7f77e7c41a6ca7762642a4e2c6bb65d216": {
+      "actor": "Ken0u",
+      "at": 1792501455,
+      "fingerprint": "b32d482c73f69cb044e0accc5af35ea1dca5329ba9f39157012b887589ecf9f8",
+      "status": "ready",
+      "task_id": "145",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -4620,6 +4628,13 @@
       "status": "review",
       "task_id": "143",
       "verb": "submit"
+    },
+    "windows-shuttle145-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792501455,
+      "fingerprint": "f99642c2317505367d3b91787d5e42449fee85999e058322626c9b63ba0a47db",
+      "status": "ok",
+      "verb": "register"
     }
   },
   "tasks": {
@@ -7298,6 +7313,63 @@
         "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
       }
     },
+    "145": {
+      "epoch": 0,
+      "planned_at": 1792501455,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Pin main 029bae3f706e66ba4410fe87d1154292b892e261, source evidence baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4, 773-file index df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f, native source report d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa and original TrackNet checkpoint df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Freeze and timestamp the committed protocol/code/runtime before opening any new native predictions. No source/sample/model/threshold selection informed by this diagnostic.",
+          "Implement portable exclusive-output run/score tooling using all 201 pinned clip records, all 91,579 native frames and all 91,214 raw published rows across 29 publication groups. Verify producer receipts, source/member/clock hashes and complete original-row membership; preserve every malformed, unknown, missing or quarantined input and unlabelled native frame. Do not alter original source outputs or application records. A clone alone does not supply the ignored declaration/corpus/receipts/checkpoint; document exact prerequisites.",
+          "Run the unchanged application TrackNet adapter at 512x288, threshold 0.5, original checkpoint and existing source-clock camera/selection behavior, with empty research-only manual annotations. Preserve native ordinal/PTS, orientation, camera context, every raw prediction/component and unavailable output reason. Never stitch rally clips, cross camera boundaries, interpolate trajectories, use inpainting, alter app defaults or install weights. Require real CUDA rather than an implicit CPU fallback; no extra model downloads or inference variants.",
+          "Actually attempt all 201 videos under the real original shared data/processed Store through run_local_job plus gpu:windows-primary and data:windows-primary reservations. Pin BADMINTON_ROOT/DATA_DIR/WEIGHTS_DIR before imports, clear candidate credentials and initialize torchvision before threaded PyAV. Preserve existing environments/data/processes; record PID, creation time, cwd, command, Store registration and durable artifacts. Resume only after original-host exited-lifetime and matching terminal-Store proof, unchanged frozen context and externally recorded terminal/output seals. A timeout is not exit. Preserve complete per-clip checkpoints and partial failures without rerunning successful immutable work.",
+          "Freeze source-only scoring before inference: retain the 25 incomplete CSVs and all 12,235 affected rows as quarantined; retain 365 unlabelled native tail frames. On 176 complete aligned files only, report agreement against the publisher 0/1 flags and coordinates at the existing 0.005-source-diagonal localization tolerance; publisher-not-visible is a publication state, not expert absence. Wrong localization contributes FP+FN. Missing known-positive output is a miss; unavailable negative output never becomes TN. Keep all 91,579 frames and 91,214 rows explicit in coverage, eligibility and unavailable denominators. Report micro counts, all 29 group/three partition rollups, conditional error with its exact support, and true-component-present versus selection/no-component failures. Never silently shrink the corpus or reinterpret unknown labels.",
+          "Seal raw predictions and source/frame coverage in an immutable output index before scoring. Publish aggregate diagnostic results, reproducible code/input/model/runtime/output hashes, actual execution and unavailable cases. Published Professional/Amateur/Test are upstream/pretrained-source namespaces, not new independent holdouts. Keep training, model deployment, dataset redistribution and independent-test eligibility false; mirror authenticity, dataset rights, identities/overlap and scene/label validity remain unresolved. This is conditional published-reference agreement, not expert truth, end-to-end events or unseen/full-match accuracy. No consumed holdout #63 inputs, predictions, protocols, private membership metadata or artifacts.",
+          "Add meaningful generated regressions for exact source/native-frame identity, source/clock/receipt tampering, quarantines/full denominators, unavailable outputs, immutable interrupted writes and original-host/shared-Store recovery. Complete required checks, genuine fresh independent exact-head review, all required CI, controller integration, verified merged main and full public candidate delivery. Commit only code, public fixed protocol and aggregate report; keep raw data, labels, predictions and weights ignored."
+        ],
+        "artifacts": {
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle-supervision-source-evidence": "baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4"
+        },
+        "capabilities": [
+          "cuda",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "143"
+        ],
+        "exclusions": [
+          "No training/fine-tuning, model/checkpoint downloads, threshold/resolution/background/selection tuning, model installation/promotion, app/API/UI/default/dependency/storage/policy/credential/deployment changes, paid services, raw redistribution, source-truth overwrite, unrelated process stops/restarts, dataset-rights approval or fresh/unseen/full-accuracy claim. Do not authenticate to Microsoft or contact dataset authors. No consumed holdout #63 artifacts."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Run a frozen unchanged-TrackNet baseline diagnostic on all 201 prepared published shuttle clips, preserving full source denominators and quarantines, to locate raw-detection versus component-selection failures before further localization development.",
+        "paths": [
+          "backend/badminton/shuttle_diagnostic.py",
+          "scripts/diagnose_shuttle_corpus.py",
+          "tests/test_shuttle_diagnostic.py",
+          "data/manifests/shuttle_corpus_diagnostic_v1.json",
+          "docs/SHUTTLE_CORPUS_DIAGNOSTIC_REPORT.md"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary",
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Frozen native baseline on all 201 clips, exact source/model/runtime and raw output seals, complete denominators, genuine real shared Store admission and exited-lifetime recovery proof.",
+          "Focused generated failure/coverage/recovery tests plus required checks; genuine fresh review/CI/controller/main/full delivery. No annotation-accuracy promotion."
+        ]
+      },
+      "spec_hash": "b98bf2b3b8b33091d2fc211fcd3f7f5c60a9f7014b7a397958b6c836fbe2a600",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -9494,7 +9566,8 @@
         "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
         "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
         "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
-        "shuttle-supervision-source-declaration": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b"
+        "shuttle-supervision-source-declaration": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b",
+        "shuttle-supervision-source-evidence": "baa2019e2f8354e2d5a923d29870a5042c7b8b089f7ce3c221074f07b7bf76a4"
       },
       "capabilities": [
         "cpu",
@@ -9504,7 +9577,7 @@
         "cuda"
       ],
       "host_id": "MSI",
-      "registered_at": 1792495103,
+      "registered_at": 1792501455,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
