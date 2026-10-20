@@ -1920,6 +1920,15 @@
       "task_id": "97",
       "verb": "next"
     },
+    "roadmap97-base-refresh-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792468733,
+      "epoch": 1,
+      "fingerprint": "dfdd37230bd3cfd8731885324ff0db237465577158fe705cd9b8fca7bac2565d",
+      "status": "running",
+      "task_id": "97",
+      "verb": "checkpoint"
+    },
     "roadmap97-browser-v1": {
       "actor": "dootz1",
       "at": 1792464246,
@@ -2128,6 +2137,14 @@
       "fingerprint": "9fed0fc183fabb60d600bb147ddcbc561ed4c97f15f8949e074d84b8f2b63991",
       "status": "ready",
       "task_id": "138",
+      "verb": "plan"
+    },
+    "spec-139-e84a3d97a9ba47cf55b2471f35b8867e17119a6735eac6a76b155bbf7e9eb47f": {
+      "actor": "Ken0u",
+      "at": 1792468733,
+      "fingerprint": "624069dece865b2737881bd64c00a3ecb8478fa531cbc110ba2a784c164945b1",
+      "status": "ready",
+      "task_id": "139",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -3944,6 +3961,13 @@
       "actor": "Ken0u",
       "at": 1792420694,
       "fingerprint": "16a4de40bcb150782adf8f7e4a876552555db6842f6076af70b889212caaf800",
+      "status": "ok",
+      "verb": "register"
+    },
+    "windows-shuttle139-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792468733,
+      "fingerprint": "ad3e230e5b5392ad7440d7ddadb83eae109a83d09e367bc125581ed248c8ddbf",
       "status": "ok",
       "verb": "register"
     }
@@ -6104,6 +6128,59 @@
       "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
       "status": "ready"
     },
+    "139": {
+      "epoch": 0,
+      "planned_at": 1792468733,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Supply a clone-contained source-packet/audit CLI and public protocol. Freeze exactly25 uniformly spaced center frames per original supplied video (floor((i+0.5)*frame_count/25), i0..24), plus singles2039..2043,2047..2048,2077..2079 known development-gap frames; deduplicate and retain every selected case. Pin source/metadata/native-clock hashes, frame identity/PTS/orientation, review context and metric rules before looking at additional predictions. Context is at most two adjacent source frames each side and must not imply motion through a cut.",
+          "Obtain two genuinely separate source-only agent assessments, with original-size inspection and recorded uncertainty, then explicit source-based disagreement adjudication. Keep visible/localizable, confirmed invisible and unresolved/unknown cases separate, preserving disagreements and unlocalizable observations with reasons. These are small agent-reviewed development cases, not human-certified or held-out truth; never derive labels from predictions, write app annotations or invent cases to satisfy coverage.",
+          "Audit the existing unchanged native shuttle artifacts with transitive source/frame/PTS/camera/scene/recipe/byte provenance. Missing or incompatible cache outputs remain unavailable cases and count as misses for known visible truth; retain every selected source case, unknown/ineligible denominator and reason. Report fixed diagonal tolerance0.005, visibility and localization separately, wrong localization as FP+FN, coordinate errors and label uncertainty without tuning thresholds. Reject duplicated/substituted source rows, changed inputs, mismatched frame clocks and nonfinite visible coordinates.",
+          "Publish aggregate per-source/visibility/difficulty/disagreement/availability results and concrete failure categories with original output/source/label/protocol hashes. Record unrepresented fast-flight/occlusion/distractor coverage honestly. Preserve existing originals and previous studies, and propose specific follow-up improvement from observed development evidence while issue65 stays open; no claim that baseline measurement completes localization improvement or full-match correctness.",
+          "Generated regressions exercise immutable source packets/label revisions, changed source/clock/cache seals, row membership/order, coordinate orientation, unknown/absent/unavailable outputs, uncertainty and complete denominators. Run required checks, independent exact-head review, normal controller integration and verified main/delivery. Inputs/labels/media/native artifacts remain ignored, and the public protocol/report contains no redistributed raw data."
+        ],
+        "artifacts": {
+          "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "capabilities": [
+          "cpu",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "64",
+          "45"
+        ],
+        "exclusions": [
+          "No new model inference/training, GPU work, downloads, consumed holdout63 access, threshold/model tuning or promotion, application/API/UI/storage/schema changes, overwriting saved labels/predictions, unrelated research restarts, environment migration, policy/credential/deployment changes or paid services. Source frame rendering and read-only cached baseline auditing only."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Establish source-only, independently assessed singles/doubles shuttle visibility development cases and audit unchanged cached localization failures as a bounded prerequisite to issue65 improvements.",
+        "paths": [
+          "backend/badminton/shuttle_validation.py",
+          "scripts/evaluate_shuttle_cases.py",
+          "tests/test_shuttle_validation.py",
+          "docs/SHUTTLE_VISIBILITY_REPORT.md",
+          "data/manifests/shuttle_visibility_protocol_v1.json"
+        ],
+        "priority": 100,
+        "resources": [
+          "cpu:windows-review-packets"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Independent source-only assessments/adjudication with frozen selection/protocol before cached baseline inspection; all case/source counts and unavailable reasons retained.",
+          "Focused generated-input/CLI checks and required project checks, fresh independent exact-head/base/spec code review, all CI checks, normal controller merge/main verification and complete delivery."
+        ]
+      },
+      "spec_hash": "a321d61aad539bf108b6754d7ca6a1af6d23fdc85cafc3fae7a00877cccb5aac",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -8106,27 +8183,26 @@
     },
     "97": {
       "checkpoint": {
-        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "base_sha": "0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "evidence": [
-          "Review epoch 2 first-load failure preserved in independent checkout .cache/review97-5805612. Parent regression suite fails nine probes before fix (.cache/repair2-before-tests.log); after fix all 68 checks pass including initial run/playback delays, rapid forward/back seeks and obsolete failure recovery. Publication/errors clear mismatched runs/actors and schedule matching current-core read; established view generation guards remain.",
-          "Three final editor 17-group runs: frontend-editor-PdEXqX, frontend-editor-2LoaZL, frontend-editor-dzDLqg. New actual initial-run GET hold plus source seek asserts current media/image/proposal ownership after completion, and existing held-analysis window-switch case remains. Native clock/orientation/proxy, review acceptance, saved revisions/conflicts/exports/unknowns/original predictions, focus/contrast/tablet and owned cleanup checks pass. All nine real playback observations have zero broad renders.",
-          "Current committed source/harness byte parity verified in .cache/repair2-final/tested-source.json. Frozen matching legacy baseline/source/helper/protocol/locks/host/browser comparison in .cache/evidence/frontend-editor-repair2-comparison.json passes: median seek65.7<=102.5 ms,timeline32.2<=67.0,firstadvance87.8<=362.25,rAF16.7<=40.875. Prior comparisons/raw runs preserved.",
-          "One intermediate run jUeCdD stopped before performance when next shortcut preceded previous deferred focus completion. Driver now waits completed kind+focus before next shortcut; all three final repeats use the same corrected harness. No failed timing samples removed or budgets changed. Strict build/typecheck/68checks/OpenAPI/changed-sourcePrettier/repository/diff checks pass. Backend/package/library/foundation unchanged from existing passing checks."
+          "Normal Git merge has no conflicts; PR diff against main remains the 12 granted frontend/harness files. No new changes to backend from this task: merged base adds portable training module/manifest/report/script/tests owned by #64; no research job or app upgrade started.",
+          "Exact frontend/harness, API/static playback/review code, fixture helpers, source recipes, package-lock and uv.lock bytes remain identical to approved 90f6b6c. New local suite 1282 passed/17 skipped; Ruff151files, repository/diff, strict build/68checks/OpenAPI pass. Fresh owned editor browser and77runtimefilepackage verification live; CI39367039952 live.",
+          "Original genuine review epoch 3 approved 90f6b6c; its approval is not reused across this base change. Three-run frozen performance/source comparison retained, new-base runtime byte equality to measured path will be audited alongside fresh correctness browser evidence."
         ],
-        "head_sha": "90f6b6caf9af1138bf525a3ea49381551977d310",
+        "head_sha": "d49973c901c4b09e4dcd6faebb20d52902b05603",
         "pr_number": 137,
-        "remaining": "Independent review epoch 3 and exact-head CI; controller integration, exact merged-main CI and complete candidate package/both-image receipt verification. A third formal failed repair requires one consolidated human decision under repository policy.",
+        "remaining": "Finish current new-base checks, resubmit binding d49973c/0a59057 and obtain independent review epoch4, then controller/main/candidate verification. No third formal failed repair occurred; this is a concurrent-base refresh.",
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "stage": "Second independent P2 repair committed: initial analysis publication reconciles latest native source core before exposing derived runs. Requesting exact new-head CI and independent review epoch 3."
+        "stage": "Controller merged parallel #64 as 0a59057; normal merge refresh creates d49973c. Source/base approval binding invalidated as required; task remains owned, repair_rounds stays 2. Refreshing checks before exact-new-base independent review."
       },
-      "checkpoint_at": 1792467763,
+      "checkpoint_at": 1792468733,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "epoch": 1,
-        "expires_at": 1792478563,
+        "expires_at": 1792479533,
         "granted_at": 1792463404,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
@@ -8244,26 +8320,18 @@
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
-        "frozen_holdout_protocol": "99b13bb12f0cacfee316547ee656ac69a0b6f273de20e75c80eb49e19892c6ed",
-        "frozen_view_support": "1b2e035e536e6ef74b1704b37275fab0e30d74c58fb3d2e45c4cd656f1df8b78",
-        "normalized_labels": "2fb3fdca1bd544179367b5bcc0cd3679c7001fb1f697e5cf29e69b327801a881",
-        "r2_selected_model": "ef71574cac55f1cf5441e1ba11cbf2f4b9eafa31298d2078e87a7018d22ae10e",
-        "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
-        "r3_selected_model": "cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc"
+        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
       },
       "capabilities": [
         "amd64",
         "cpu",
-        "cuda",
         "python-3.10",
-        "python-3.12",
-        "review",
-        "shuttleset-holdout",
+        "review-inputs",
         "torch",
         "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1792460487,
+      "registered_at": 1792468733,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/windows-external119-review-v1": {
