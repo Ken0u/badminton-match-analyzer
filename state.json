@@ -1986,6 +1986,15 @@
       "task_id": "138",
       "verb": "next"
     },
+    "roadmap138-start-v1": {
+      "actor": "dootz1",
+      "at": 1792470346,
+      "epoch": 1,
+      "fingerprint": "bb0048708e6bef2a544b59b9755904f101eaf7c6c4efca9b6c519eabb2615cc9",
+      "status": "running",
+      "task_id": "138",
+      "verb": "checkpoint"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -6218,12 +6227,25 @@
       }
     },
     "138": {
+      "checkpoint": {
+        "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+        "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
+        "head_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+        "ownership": {
+          "browser": "parent owns only tests/frontend-exports.mjs in granted worktree",
+          "frontend": "/root/exports138_ui owns backend/frontend/** in .cache/frontend-exports-138-ui; detached commit transported by parent"
+        },
+        "remaining": "Frontend/runtime validation/controller tests; real generated export jobs/download integrity/provenance/races; full checks/exact CI/fresh independent review/controller/main/full candidate receipts. No backend/schema/default/package cutover or research changes.",
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
+        "stage": "Committed grant verified. Isolated owning worktree and independent bounded frontend checkout created; implementing export controls and generated browser integration in disjoint granted paths."
+      },
+      "checkpoint_at": 1792470346,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
         "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
         "epoch": 1,
-        "expires_at": 1792481034,
+        "expires_at": 1792481146,
         "granted_at": 1792470234,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
