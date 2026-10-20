@@ -1316,6 +1316,28 @@
       "task_id": "124",
       "verb": "review-result"
     },
+    "mac-review130-next-v1": {
+      "actor": "dootz1",
+      "at": 1792458592,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "627081fb69af33b89036a12024efd59e702fd91a",
+        "epoch": 1,
+        "expires_at": 1792469392,
+        "granted_at": 1792458592,
+        "head_sha": "5e12898ca1b67526e5a38a061a9364582af0dbd8",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 132,
+        "review_epoch": 1,
+        "session_id": "mac-review130-01a156d5",
+        "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86"
+      },
+      "epoch": 1,
+      "fingerprint": "945a5f5b86bc1d758cc6199166f55f580cfdda3fde81e6b61a45d910bacc7cee",
+      "status": "granted",
+      "task_id": "130",
+      "verb": "review-next"
+    },
     "mac-review130-register-v1": {
       "actor": "dootz1",
       "at": 1792458510,
@@ -5032,6 +5054,20 @@
       "planned_at": 1792455380,
       "planned_by": "dootz1",
       "pr_number": 132,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "627081fb69af33b89036a12024efd59e702fd91a",
+        "epoch": 1,
+        "expires_at": 1792469392,
+        "granted_at": 1792458592,
+        "head_sha": "5e12898ca1b67526e5a38a061a9364582af0dbd8",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 132,
+        "review_epoch": 1,
+        "session_id": "mac-review130-01a156d5",
+        "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Reproduce the browser-confirmed baseline gap on generated media: save a manual calibration spanning frames0\u201399, review a camera cut at20 and inspect a later frame with stale tracking; the current viewer still reports Calibrated0\u201399. Preserve original baseline evidence and source bytes.",
