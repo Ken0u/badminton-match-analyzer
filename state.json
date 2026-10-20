@@ -276,6 +276,14 @@
       "task_id": "69",
       "verb": "invalidate-review"
     },
+    "invalidate-95-9a1813b23a3a8ce451861a2abd20eaba8a48b8e3-a4ccadb700b9782fc4c1ebf681ea9089e4adcc74": {
+      "actor": "github-actions[bot]",
+      "at": 1792460287,
+      "fingerprint": "1afd0621afd8b0848bc02793d4793525d22b53b8fe9ac312cb34cbd7f47f5788",
+      "status": "running",
+      "task_id": "95",
+      "verb": "invalidate-review"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -6964,6 +6972,7 @@
       "planned_at": 1792417955,
       "planned_by": "dootz1",
       "pr_number": 134,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Create a locked React + strict TypeScript + Vite source workspace at backend/frontend/, with typecheck/build scripts and a documented generated-asset policy. Keep the current default UI working.",
@@ -7004,7 +7013,7 @@
         ]
       },
       "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
         "head_sha": "9a1813b23a3a8ce451861a2abd20eaba8a48b8e3",
