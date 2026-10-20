@@ -1796,6 +1796,15 @@
       "task_id": "97",
       "verb": "next"
     },
+    "roadmap97-browser-v1": {
+      "actor": "dootz1",
+      "at": 1792464246,
+      "epoch": 1,
+      "fingerprint": "ba6bb26960bf5ccabaf4182dc5f02a2670d4b8ced46b44261692520ed35419cb",
+      "status": "running",
+      "task_id": "97",
+      "verb": "checkpoint"
+    },
     "roadmap97-start-v1": {
       "actor": "dootz1",
       "at": 1792463536,
@@ -7735,21 +7744,22 @@
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "evidence": [
-          "Preserve full phase94 parity matrix and frozen protocol/fixture recipes; actual React components own UI, isolated playback lane; legacy default unchanged.",
-          "No existing app, catalog, models or native research jobs touched; generated source bundle will be validated before same-host comparison."
+          "Isolated .cache/frontend-editor-97; frontend-only implementation, parent tests/frontend-editor.mjs; full nativeclock/orientation/realproxy, draft/conflict/race, camera/court/scene, identities/shuttle/strokes/rallies/classification, processing/recovery/exports/keyboard groups exercised. No accuracy claim.",
+          "Three fresh legacy17group baseline runs DPtXsW/4GTXyD/65gbFe, exact frozen5sourcebytes/helperprotocol/currentlocks/Chromium, frozen before React measurement in .cache/baseline97/frozen-before-editor.json. All limits unchanged.",
+          "Frontend development failure BAMGyl selector matched both image ownership data and video button; parent fixes button qualifier; owned listeners cleanup retained. Python fullsuite running, Ruff148files/UTF8JSONlinks/diff/47packagehealth passed."
         ],
         "head_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "remaining": "Implement full editor, focused and fullchecks, generated parity and 3repeat frozenperformance comparison, fresh independent review, controllerintegration/exactmainCI/candidatereceipts.",
+        "remaining": "Freeze source+build; final complete parity and3samehost performance comparison incl0broadframe rerenders; foundation/librarycompat, packageverification; commit/PR/exactCI freshindependentreview/controller/main/candidatereceipts.",
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "stage": "Committed epoch1 grant verified; isolated branch/worktree created. Bounded backend/frontend implementation delegated; parent owns tests/frontend-editor.mjs parity/performance driver and integration."
+        "stage": "React editor strict build and30unit checks pass; first generated browser development run passes16workflow groups with zero pageerrors. Parent corrected harness button selector ambiguity before performance; failed receipt preserved. Final source freeze/checks/3performance repeats pending."
       },
-      "checkpoint_at": 1792463536,
+      "checkpoint_at": 1792464246,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "epoch": 1,
-        "expires_at": 1792474336,
+        "expires_at": 1792475046,
         "granted_at": 1792463404,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
