@@ -1479,11 +1479,16 @@ def native_observations(root, sources, cases, labels, locations):
                                 any(
                                     not p.get("visible")
                                     or p.get("repaired") is not False
-                                    for p in predecessors
+                                    or p.get("selection_context_excluded") is not False
+                                    or type(p.get("selection_context_end_frame"))
+                                    is not int
+                                    or p.get("selection_context_end_frame")
+                                    != previous + 1
+                                    for previous, p in zip(history, predecessors)
                                 )
                                 or any(
-                                    type(f) is not int or not left <= f <= frame
-                                    for f in starts
+                                    type(f) is not int or not left <= f <= previous
+                                    for previous, f in zip(history, starts)
                                 )
                                 or start != min([frame, *starts])
                                 or end != frame + 1

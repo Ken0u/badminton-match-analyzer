@@ -988,3 +988,28 @@ def test_native_nonfinite_visible_coordinates_cannot_hide_in_unknown_cases(
         audit.native_rows(
             run, n["sources"][0][1], n["sources"][0][2], plan["parts"][0]["window"]
         )
+
+
+@pytest.mark.parametrize(
+    "invalid_context",
+    [
+        {"selection_context_start_frame": 2},
+        {"selection_context_end_frame": True},
+    ],
+)
+def test_invalid_predecessor_context_cannot_hide_behind_an_earlier_good_history(
+    native, invalid_context
+):
+    def change(run):
+        rows = run["frames"]
+        rows[0]["shuttle"].update(invalid_context)
+        for row in rows[1:]:
+            row["shuttle"]["selection_context_start_frame"] = 0
+            row["shuttle"]["selection_context_frames"] = list(range(row["frame"]))
+
+    edit_native_shuttle(native, change)
+    evidence = native_evidence(native)
+    vid = native["sources"][0][1]["id"]
+    last = evidence["observations"][f"{vid}:3"]
+    assert not last["available"]
+    assert "transitive_selection_history" in last["reason"]
