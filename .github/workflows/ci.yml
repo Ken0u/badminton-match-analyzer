@@ -271,7 +271,7 @@ jobs:
           cache: npm
       - name: Install browser media codec tools
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y ffmpeg
-      - run: uv sync --locked --extra youtube
+      - run: uv sync --locked --extra dev --extra youtube
       - name: Use locked Python environment for browser fixture servers
         shell: bash
         run: echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
