@@ -8464,6 +8464,7 @@
       "status": "running"
     },
     "151": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39473080794",
       "checkpoint": {
         "artifacts": ".cache/frontend-roadmap-151/.cache/evidence/docs-validation.json; phase98 complete public delivery audit .cache/frontend-delivery-98/.cache/evidence/candidate-39469465774/verified.json",
         "base_sha": "4ebd2f025da117ba617d5b092d5a9cc25d53eabc",
@@ -8487,7 +8488,7 @@
         "spec_hash": "f4846fab1f9b9418c6df528e34fe180b56ae1b63025d0f16cee5edec0b38fb21"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792519673,
