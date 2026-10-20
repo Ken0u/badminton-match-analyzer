@@ -6586,6 +6586,7 @@
       "status": "blocked"
     },
     "91": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39353950722",
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
@@ -6598,7 +6599,7 @@
         "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
