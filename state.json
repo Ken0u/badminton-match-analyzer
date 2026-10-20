@@ -1825,6 +1825,15 @@
       "task_id": "97",
       "verb": "review-result"
     },
+    "review97-result-v3": {
+      "actor": "dootz1",
+      "at": 1792468353,
+      "epoch": 1,
+      "fingerprint": "1973ff01d853966126a9b5329f9584fb9acaadaeeff3388c28169dedf391143d",
+      "status": "review",
+      "task_id": "97",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -3511,6 +3520,15 @@
       "epoch": 1,
       "fingerprint": "e2532620f8be581e4baad5588a3595340871f557fc73e33dcce76b404701c29f",
       "status": "running",
+      "task_id": "64",
+      "verb": "review-result"
+    },
+    "windows-portable64-review-result-v2": {
+      "actor": "Ken0u",
+      "at": 1792468353,
+      "epoch": 1,
+      "fingerprint": "d45f7c3d5b213254ecf99326263b068f83daee01aab30316e058ace8830175ce",
+      "status": "review",
       "task_id": "64",
       "verb": "review-result"
     },
@@ -6294,14 +6312,28 @@
       "pr_number": 135,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792468353,
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "epoch": 1,
-        "expires_at": 1792478689,
-        "granted_at": 1792467889,
+        "evidence": [
+          "Fresh genuine read-only session registered after verifying Python3.10.5/Torch2.8.0+cu126/NumPy2.2.6 CPU capability and frozen inventory ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2. Own review-next-v3 committed grant has review_epoch2, implementationepoch1 and exact head/base/spec. Binding independently refreshed before result.",
+          "Clean detached .cache/worktrees/portable64-review-v2 checkout contains only the five granted changed paths. Inspected the full candidate, owning issue/frozen task, repository guidance, reviewer protocol, original CSV normalization, recognition metrics, root/config setup, run_local_job and real Store claim admission. No implementation edits or review delegation.",
+          "All44 focused tests independently passed in11s using root venv, removed credential environment values, isolated GH_CONFIG_DIR, explicit root/data/PYTHONPATH pins and FFmpeg PATH. Generated tests cover masks, train-only normalization, unknown/unavailable denominators, ties/thresholds, admission denial, source identities and immutable publication.",
+          "Independent own CSV reconstruction verifies all134 clips/1296 source rows and four development CSV hashes against the pre-existing pinned S2Doubles manifest. Saved input audit retains67/67clips,624/672rows and608/662available. Copied and resealed fabricated within-rally ID, reversed complete metadata and changed original CSV probes are all rejected by exact-source guards.",
+          "Own independent helper .cache/portable64-independent-evidence-v2.py and .cache/portable64-review-probe-v2/evidence.json verify every276 original file seal before/after the probes. Eight selected state tensors, mean/std, both support masks, thresholds, epoch295, all60 history rows, threshold evidence and every saved closed-set/abstention validation metric exactly match original R3 via CPU weights_only loads; no new research training or predictions.",
+          "Read-only SQLite query verifies actual shared main job1c9d76083ee747b89763f261e0f31b11 completed/progress1, exact manifest and original owner process lifetime absent. Post-job completion receipt SHA e2c1113c693e3c8abddac69c5af2bf7f39e6be8a4c92ce9ac63a81043e30c768 verified. All four executed learner/metric/parser source hashes match the granted review checkout. New checkpoint SHA e1a138c96389277d8c618e314d4fc76158af1bb79dc7dcab157d6b67928f458a verified.",
+          "Independently ran Ruff check, Ruff format --check (151 files), pip check, module/script CLI help, git diff --check and unchanged repository verifier check_file over335 tracked files excluding deprecated PROGRESS.md content; all pass. Own durable software/repository/focused records are under review checkout .cache.",
+          "Independently inspected durable full-suite XML/log/exit:1302 total tests,1298 passed,4 optional GPU skipped,0 failures/errors,exit0. Independently queried exact-head CI run39365648564:all12 jobs completed SUCCESS, including Python3.10/3.12, native Windows/macOS and ci/gate; https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39365648564. PR135 head/base remain exact and current main equals granted base."
+        ],
+        "findings": [],
         "head_sha": "b502200dcc1f0be27e28095b2c026686af0e4fac",
-        "host_id": "MSI",
+        "limitations": [
+          "No fresh300-epoch research reproduction, native perception or GPU work was performed by this reviewer; verified the completed admitted development run through saved artifacts, original seals, executed source hashes and read-only durable job state. Full project suite was not repeated because exact-head CI and durable successful local full-suite evidence were independently available; focused tests and software checks were rerun.",
+          "Exact saved tensor/metric equality is established for the recorded Windows Python3.10.5/Torch2.8.0/NumPy2.2.6 CPU runtime. Cross-platform numerical or checkpoint archive byte equality is not established.",
+          "Precomputed features and published clock/hitter/label conventions remain weak conditional supervision. This review does not establish feature extraction accuracy, complete event detection, persistent identity or automatic full-match annotation accuracy.",
+          "No consumed held-out prediction files were opened, no external datasets downloaded, no environment synchronized and no application model promoted. Source labels/features/weights remain local because the pinned S2Doubles source has no license file. Controller integration and merged-main verification remain subsequent controller/author duties."
+        ],
         "native_evidence": {
           "code_sha": "b502200dcc1f0be27e28095b2c026686af0e4fac",
           "code_sha256": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
@@ -6323,9 +6355,16 @@
           "status": "completed"
         },
         "pr_number": 135,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/badminton/stroke_learning.py",
+          "scripts/train_observed_strokes.py",
+          "tests/test_stroke_learning.py",
+          "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "data/manifests/portable_stroke_training_v1.json"
+        ],
         "session_id": "windows-portable64-review-v2",
-        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c"
+        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
@@ -8058,18 +8097,45 @@
       "planned_by": "dootz1",
       "pr_number": 137,
       "repair_rounds": 2,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792468353,
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "epoch": 1,
-        "expires_at": 1792478965,
-        "granted_at": 1792468165,
+        "evidence": [
+          "Actual independent read-only session mac-review97-01a156d5 on Stanleys-Laptop.local received committed review97-next-v3 grant review_epoch3. Independently verified issue97/queue frozen specdad82a, taskepoch1, PR137 head90f6b6caf9af1138bf525a3ea49381551977d310/base267ed42abaf0157aa2325f32f7568713ac4f8d2d. New detached checkout .cache/review97-90f6b6c, no implementation edits; all12 original changed files reviewed across this continuous independent review, all3 repair-delta files inspected anew with surrounding ownership contracts.",
+          "Independent 68 frontend checks pass, including24 established-window delayed success/error cases and10 first-load run/playback/rapid-seek/late-error cases; TypeScript production build, exact backend OpenAPI contract and git diff --check pass.",
+          "Both original independent failing probes copied without implementation edits now pass at frozen head: .cache/review-races.log selected1/afterLatePoll1/sourceFrame5, and .cache/review-initial-race.log partIndex1/sourceFrame6. New independent .cache/review-multistep.mjs/.log tests initial held core0 -> seek6 -> held replacement core1 -> seek1 -> obsolete replacement success and error; both end part0/players0/frame1 without stale feedback. Matching-run eventual assertions and no-transient-wrong-run coverage also pass in the committed unit matrix.",
+          "Independent full exact-head generated browser run .cache/review97-90f6b6c/.cache/evidence/frontend-editor-S8OGi3 passes17/17 groups, including held initial-run and later-analysis polls. Exercised real production ingestion, native PTS/orientation/source-proxy pixels, seek/correct/save/reload, dirty/saving/conflict/order guards, all review controls, scene/camera/court expiry and unknowns, explicit prediction acceptance with unchanged original artifacts, JSON/CSV and evaluation. No page errors; owned disposable fixture/static listener cleanup receipts retained. Browser execution scrubbed GitHub credentials and did not use existing apps/catalogs.",
+          "Independent browser p95 seek65.9ms,timeline33.1ms,playbackfirstadvance87.4ms,rAF16.8ms meet absolute budgets; all3 real playback observations have zero broad render delta. Inspected actual desktop and768x1024 viewport captures; readable source clock, compact native checkboxes and focus evidence verified.",
+          "Independently audited latest external threelegacy/threecurrent comparison: all216 receipt SHA256 values; raw summaries and median budget arithmetic; all6 raw host/browser/Node/Python/protocol records; exact canonical source bytes/nativePTS records; and current frontend source/helper/harness/lock/static byte hashes against frozen review checkout. All match and every frozen relative/absolute median budget passes. Audit code/logs retained under own .cache. Prior failure evidence and both changes verdicts preserved.",
+          "Independently rechecked exact-head hosted CI run39365694196 is completed success at90f6b6c immediately before verdict; PR head/base unchanged. No blocking findings remain in reviewed scope."
+        ],
+        "findings": [],
         "head_sha": "90f6b6caf9af1138bf525a3ea49381551977d310",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Approval applies only to head90f6b6caf9af1138bf525a3ea49381551977d310/base267ed42abaf0157aa2325f32f7568713ac4f8d2d/specdad82a; any changed binding requires another independent review. Controller integration, exact merged-main verification and candidate delivery remain separate steps, not implied by this verdict.",
+          "Generated fixture software checks do not establish native model behavior, full-match badminton annotation accuracy, real downloader availability, persistent identities, doubles recognition or assistive-technology certification. Native canvas labeling remains pointer-based. No research/native inference, live catalog or user app was run or upgraded.",
+          "Full Python/release-package suites and separate foundation/library browser suites were not independently rerun for the frontend-only repair; exact-head hosted CI was observed and original independent broad UI/source/export review remains applicable to unchanged files.",
+          "Relative performance is independently audited external six-run evidence; own additional Node24 browser correctness run differs from comparison Node22 and is not a fresh three-run relative comparison. No thermal pinning or cross-host speedup claim."
+        ],
         "pr_number": 137,
-        "review_epoch": 3,
+        "reviewed_files": [
+          "backend/frontend/README.md",
+          "backend/frontend/scripts/test.mjs",
+          "backend/frontend/src/App.tsx",
+          "backend/frontend/src/editor/EditorApp.tsx",
+          "backend/frontend/src/editor/Playback.tsx",
+          "backend/frontend/src/editor/controller.ts",
+          "backend/frontend/src/editor/editor.css",
+          "backend/frontend/src/editor/model.ts",
+          "backend/frontend/src/library/LibraryApp.tsx",
+          "backend/frontend/src/main.tsx",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs"
+        ],
         "session_id": "mac-review97-01a156d5",
-        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
+        "verdict": "approve"
       },
       "review_epoch": 3,
       "spec": {
