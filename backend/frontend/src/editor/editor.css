@@ -115,6 +115,18 @@
 .editor-app .events-panel {
   min-width: 0;
 }
+.editor-app .review-panel {
+  background: #15271e;
+  border-color: #47604f;
+}
+.editor-app input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-height: 18px;
+  padding: 0;
+  flex: 0 0 18px;
+  accent-color: #b5ef91;
+}
 .editor-app .panel-bar {
   display: flex;
   gap: 12px;

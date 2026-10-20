@@ -253,3 +253,20 @@ clock/overlay actions and timing budgets and adapts the surface to `/editor`.
 Its source inputs, predictions and classifiers are synthetic; passing software,
 coverage and timing checks does not establish badminton annotation accuracy.
 Production asset packaging/default cutover remains phase 98.
+
+The editor browser check also verifies the explicit processing-window seek,
+source clock contrast, compact native checkboxes, focus after a completed save,
+and zero broad editor renders during each real playback observation. It uses a
+new owned static listener plus the production generated-media fixture; both are
+closed with retained cleanup receipts. `BASE_URL` is refused. Import UI behavior
+remains covered by `tests/frontend-library.mjs`; editor fixtures use production
+ingestion and check duplicate imports preserve reviewed annotations.
+
+For a same-host performance comparison, collect three legacy
+`node tests/frontend-parity.mjs` runs and three editor runs with the same current
+lockfiles, browser, interpreter and frozen source bundle, without concurrent
+builds or test suites. Follow the [frozen protocol](../../docs/FRONTEND_BASELINE.md):
+retain all samples/failures, compare the median of each run's p95, and require
+both the absolute limit and baseline × 1.25 + 20 ms. A clone must generate its
+own source bundle first; ignored worktree caches are not distributed inputs.
+The source bundle recipe and each byte hash are validated before ingestion.
