@@ -1280,6 +1280,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-01a15493-resume-post151-next-v1": {
+      "actor": "dootz1",
+      "at": 1792528358,
+      "fingerprint": "3993f5b7fcf7a4d92af83484bf704f00279b4703c2d0cef0ce8e6bbd016dfd84",
+      "status": "idle",
+      "verb": "next"
+    },
     "mac-01a15493-review-audit-v2": {
       "actor": "dootz1",
       "at": 1792424906,
@@ -8407,6 +8414,7 @@
       "epoch": 1,
       "planned_at": 1792514744,
       "planned_by": "Ken0u",
+      "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
           "Pin merged main e4805cc7959f446b3dca3f7988522bba54a20c8b, original packet3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d, frozen labelsfd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158, baseline915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64 and original checkpointdf867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Search history/reservations and verify local inputs and original shared Store before grant/native work; a clone supplies none of the ignored data. Freeze and timestamp committed code, protocol, all recursive consumers, input hashes and runtime before new heatmaps.",
@@ -8461,7 +8469,7 @@
         ]
       },
       "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
-      "status": "running"
+      "status": "recovery_required"
     },
     "151": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39473080794",
