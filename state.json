@@ -4550,6 +4550,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle143-review-register-7e09f59c": {
+      "actor": "Ken0u",
+      "at": 1792499263,
+      "fingerprint": "107f446096547681e00f7afd852406653e38367667e094a043a9a3bc719849e5",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-shuttle143-submit-v1": {
       "actor": "Ken0u",
       "at": 1792499038,
@@ -9415,6 +9422,20 @@
       "host_id": "MSI",
       "registered_at": 1792492889,
       "session_id": "64a866d3b0a648e78d0fc6837481003e"
+    },
+    "MSI/7e09f59c-76d7-4231-a7be-c9e40572234e": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "shuttle-supervision-source-declaration": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792499263,
+      "session_id": "7e09f59c-76d7-4231-a7be-c9e40572234e"
     },
     "MSI/cfd18714-5a16-4720-811c-0bde1ada4c14": {
       "actor": "Ken0u",
