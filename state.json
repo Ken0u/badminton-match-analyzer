@@ -4323,6 +4323,15 @@
       "task_id": "139",
       "verb": "submit"
     },
+    "windows-shuttle141-implementation-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792487880,
+      "epoch": 1,
+      "fingerprint": "79b9e164da1bcbcd8d8e324c38f75eaa5e3cf4ffb7433586f06c6e83e087ef04",
+      "status": "running",
+      "task_id": "141",
+      "verb": "checkpoint"
+    },
     "windows-shuttle141-next-v1": {
       "actor": "Ken0u",
       "at": 1792486798,
@@ -6704,12 +6713,23 @@
       }
     },
     "141": {
+      "checkpoint": {
+        "branch": "codex/issue-141-compare-fixed-tracknet-input-resolutions",
+        "head_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
+        "implementation": "Default512 pixels/ensemble preserved; opt-in768 uses matching RGB/background/input-size provenance. Fixed public protocol, exclusive frozen source/code/runtime/GPU-driver/view receipts, full source-view 512 control gate before candidate opening/inference, real shared Store admission, original PID-lifetime/Store/artifact recovery evidence, complete grouping/unknown/unavailable/FP+FN/uncertainty/component metrics and native performance report.",
+        "next": "Observe existing full suite to terminal, finish protocol/CLI/JSON/link/byte checks and inspect final implementation. Freeze exact experimental inputs/runtime/code/views into exclusive ignored lineage, timestamp hashes on owning issue before native predictions. Revalidate live process/Store/artifact state immediately before using real shared GPU admission; do not restart on timeout. Preserve mismatch and negative results. Final PR/review/CI/controller/main/delivery remain.",
+        "phase": "Opt-in resolution adapter and bounded portable runner implemented locally within all six granted paths; generated checks before any native predictions",
+        "preservation": "Dependency139 Done/delivery_pendingfalse with all12mainCI and4candidatejobs successful. Root original branch/PROGRESS.md modification, environments, app truth, weights, source-only labels, original native predictions and other research branches preserved. Otherhost138 recovery remains untouched.",
+        "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec",
+        "verification": "99 focused checks PASS19.54s, including21 new resolution regressions. Full suite is LIVE unified exec96624 in isolated worktree; fresh .cache/pytest-shuttle141-full-v1 and JUnit .cache/shuttle141-full-v1.xml. Ruff lint all, format157files, pip and diff pass. No native inference/training/GPU job, experiment freeze or predictions yet."
+      },
+      "checkpoint_at": 1792487880,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
         "branch": "codex/issue-141-compare-fixed-tracknet-input-resolutions",
         "epoch": 1,
-        "expires_at": 1792497598,
+        "expires_at": 1792498680,
         "granted_at": 1792486798,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
