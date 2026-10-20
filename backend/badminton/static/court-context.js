@@ -33,6 +33,42 @@ export function effectiveCalibrations(doc, run) {
   return [...manual, ...derived].sort((a, b) => a.start_frame - b.start_frame);
 }
 
+// Display decisions use today's draft, even when no tracking can be trusted.
+// Keep effectiveCalibrations/courtSignature tied to the original run context:
+// their signatures are persisted by the backend and invalidate stale inputs.
+export function displayCalibrations(
+  doc,
+  run,
+  { times = [], fps, automaticValid = false } = {},
+) {
+  const gaps = new Set(run?.known_preceding_timestamp_gaps ?? []);
+  for (const boundary of run?.boundaries ?? [])
+    if (boundary.reason === "timestamp_discontinuity") gaps.add(boundary.frame);
+  // Player artifacts need not contain in-window boundary reasons. Source PTS
+  // supplies those physical gaps, using the same threshold as scene review.
+  const threshold = Math.max(0.1, 2.5 / fps) + 1e-8;
+  for (let frame = 1; frame < times.length; frame++)
+    if (times[frame] - times[frame - 1] > threshold) gaps.add(frame);
+  const cuts = new Set([
+    ...(run?.raw_cut_frames ?? run?.cut_frames ?? []),
+    ...(run?.known_preceding_cut_frames ??
+      (run?.preceding_reviewed_cut_frame != null
+        ? [run.preceding_reviewed_cut_frame]
+        : [])),
+    ...gaps,
+  ]);
+  for (const correction of doc.camera_corrections ?? []) {
+    if (correction.is_cut) cuts.add(correction.frame);
+    else if (!gaps.has(correction.frame)) cuts.delete(correction.frame);
+  }
+  return effectiveCalibrations(doc, {
+    court_context_version: 1,
+    cut_frames: [...cuts],
+    // Never use old automatic fits merely because their cut metadata is useful.
+    automatic_calibrations: automaticValid ? run?.automatic_calibrations : [],
+  });
+}
+
 export function courtSignature(doc, run, start, end) {
   return effectiveCalibrations(doc, run)
     .filter((c) => c.start_frame < end && start < c.end_frame)

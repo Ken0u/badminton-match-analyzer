@@ -13,7 +13,7 @@ import {
   cameraContextChanged,
   courtContextChanged,
   courtSignature,
-  effectiveCalibrations,
+  displayCalibrations,
 } from "./court-context.js";
 const $ = (id) => document.getElementById(id);
 const state = {
@@ -287,10 +287,11 @@ function draw() {
         state.run.end_frame,
       ),
     ) === JSON.stringify(state.run.calibration_signature);
-  const calibration = effectiveCalibrations(
-    state.doc,
-    derivedValid ? state.run : null,
-  ).find((c) => c.start_frame <= state.frame && state.frame < c.end_frame);
+  const calibration = displayCalibrations(state.doc, state.run, {
+    times: state.times,
+    fps: state.video.fps,
+    automaticValid: derivedValid,
+  }).find((c) => c.start_frame <= state.frame && state.frame < c.end_frame);
   const corners = state.corners ?? calibration?.corners;
   if (corners?.length) {
     ctx.strokeStyle = "#b5ef91";
