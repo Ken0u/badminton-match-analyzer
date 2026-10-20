@@ -4323,6 +4323,15 @@
       "task_id": "139",
       "verb": "submit"
     },
+    "windows-shuttle141-frozen-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792488740,
+      "epoch": 1,
+      "fingerprint": "b82f548ff493b4de8837c873587060b23dfd111da38b8cc90e88bb2496d6a94a",
+      "status": "running",
+      "task_id": "141",
+      "verb": "checkpoint"
+    },
     "windows-shuttle141-implementation-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792487880,
@@ -6715,21 +6724,23 @@
     "141": {
       "checkpoint": {
         "branch": "codex/issue-141-compare-fixed-tracknet-input-resolutions",
-        "head_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
-        "implementation": "Default512 pixels/ensemble preserved; opt-in768 uses matching RGB/background/input-size provenance. Fixed public protocol, exclusive frozen source/code/runtime/GPU-driver/view receipts, full source-view 512 control gate before candidate opening/inference, real shared Store admission, original PID-lifetime/Store/artifact recovery evidence, complete grouping/unknown/unavailable/FP+FN/uncertainty/component metrics and native performance report.",
-        "next": "Observe existing full suite to terminal, finish protocol/CLI/JSON/link/byte checks and inspect final implementation. Freeze exact experimental inputs/runtime/code/views into exclusive ignored lineage, timestamp hashes on owning issue before native predictions. Revalidate live process/Store/artifact state immediately before using real shared GPU admission; do not restart on timeout. Preserve mismatch and negative results. Final PR/review/CI/controller/main/delivery remain.",
-        "phase": "Opt-in resolution adapter and bounded portable runner implemented locally within all six granted paths; generated checks before any native predictions",
-        "preservation": "Dependency139 Done/delivery_pendingfalse with all12mainCI and4candidatejobs successful. Root original branch/PROGRESS.md modification, environments, app truth, weights, source-only labels, original native predictions and other research branches preserved. Otherhost138 recovery remains untouched.",
+        "experiment_sha256": "fffbc3a767eab9ab63b95b1978c447cd9edca0ba5ceed26579e6c46330941ef8",
+        "head_sha": "bd7537ed108adec363685cce0af584e75a049c32",
+        "local_lineage": ".cache/shuttle141-experiment-v1",
+        "next": "Revalidate original-host lifetimes/sharedStore/artifacts and epoch, then run512control through realsharedadmission, observe samePID/session and record durableevidence. Do not start/open768 until everycontrolrow passes fixed gate. Keep mismatch/negative results. Finalreport/PR/nativeevidence/independentreview/CI/controller/main/delivery remain.",
+        "phase": "All required checks pass; exact source and two-variant experiment frozen before native predictions",
+        "preservation": "Original sourceinventory273e/packet3b22/labelsfd25/nativebaseline915f/checkpointdf86 unchanged. Root original branch and deprecatedPROGRESS.md modification, environments, apptruth and other research processes preserved.",
+        "protocol_sha256": "95aaf88d546d8f8c72fb5483e36f12037286e8091c85f1a962eed554ca3d30cc",
         "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec",
-        "verification": "99 focused checks PASS19.54s, including21 new resolution regressions. Full suite is LIVE unified exec96624 in isolated worktree; fresh .cache/pytest-shuttle141-full-v1 and JUnit .cache/shuttle141-full-v1.xml. Ruff lint all, format157files, pip and diff pass. No native inference/training/GPU job, experiment freeze or predictions yet."
+        "verification": "Full1376PASS/4optionalGPUskip145.33s,23newfocusedregressions,ruff/format157/pip/diff/UTF8LF/JSON/links/CLIpass. Sourcecommits remotelypreserved. ActualCPUfreeze50views/13499frames/all60cases;56consumerfiles/copiedbytes matchsourcehead. No new native predictions or sharedStorejob yet."
       },
-      "checkpoint_at": 1792487880,
+      "checkpoint_at": 1792488740,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
         "branch": "codex/issue-141-compare-fixed-tracknet-input-resolutions",
         "epoch": 1,
-        "expires_at": 1792498680,
+        "expires_at": 1792499540,
         "granted_at": 1792486798,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
