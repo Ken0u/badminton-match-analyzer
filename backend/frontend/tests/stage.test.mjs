@@ -16,6 +16,7 @@ test("production entry and staged runtime exclude foundation, source, and tools"
   await rm(output, { recursive: true, force: true });
   const result = await stage({ repoRoot, output });
   assert.deepEqual(result.files.sort(), [
+    "THIRD_PARTY_NOTICES.txt",
     "app.js",
     "build-manifest.json",
     "index.html",
@@ -30,12 +31,28 @@ test("production entry and staged runtime exclude foundation, source, and tools"
     /Frontend foundation|Synthetic sample|legacy editor|opt-in/i,
   );
   assert.match(app, /Match library/);
+  const notices = await readFile(
+    path.join(output, "THIRD_PARTY_NOTICES.txt"),
+    "utf8",
+  );
+  for (const dependency of [
+    "react - 19.3.1",
+    "react-dom - 19.3.1",
+    "scheduler",
+  ])
+    assert.ok(
+      notices.includes(dependency),
+      `Missing runtime license: ${dependency}`,
+    );
+  assert.match(notices, /Permission is hereby granted/);
+  assert.match(notices, /Meta Platforms/);
   const manifest = JSON.parse(
     await readFile(path.join(output, "build-manifest.json"), "utf8"),
   );
   assert.equal(manifest.schema_version, 1);
   assert.match(manifest.input_fingerprint, /^sha256:[a-f0-9]{64}$/);
   assert.deepEqual(Object.keys(manifest.assets).sort(), [
+    "THIRD_PARTY_NOTICES.txt",
     "app.js",
     "index.html",
     "style.css",

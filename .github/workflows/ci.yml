@@ -144,6 +144,17 @@ jobs:
         run: choco install ffmpeg --no-progress -y
       - name: Install locked native review environment
         run: uv sync --locked --python 3.12 --extra dev --extra youtube
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+      - name: Verify native frontend build and staged bytes
+        run: |
+          npm ci --ignore-scripts
+          npm run frontend:test
+          npm run frontend:build
+          npm run frontend:stage:check
+          npm run test:delivery --workspace @badminton/frontend
       - name: Verify native generated-media workflows
         env:
           BADMINTON_GPU_TESTS: "0"
@@ -207,9 +218,25 @@ jobs:
         with:
           node-version-file: .node-version
           cache: npm
-      - run: npm ci
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          version: "0.9.4"
+          enable-cache: true
+      - run: uv sync --locked --extra youtube
+      - run: npm ci --ignore-scripts
       - name: Check browser source formatting
-        run: npx prettier --check "backend/badminton/static/*" "tests/*.mjs" "scripts/*.mjs"
+        run: npx prettier --check "backend/frontend/src/**/*.{ts,tsx,css}" "!backend/frontend/src/api/generated/**" "backend/frontend/scripts/*.mjs" "backend/frontend/tests/*.mjs" "backend/frontend/*.js" "backend/frontend/*.html" "tests/*.mjs" "scripts/*.mjs"
+      - name: Verify API contract, strict types, tests and production asset provenance
+        run: |
+          npm run frontend:contract:check
+          npm run frontend:typecheck
+          npm run frontend:test
+          npm run frontend:build
+          npm run frontend:stage:check
+          npm run test:delivery --workspace @badminton/frontend
 
   browser-import:
     needs: revision
@@ -241,60 +268,16 @@ jobs:
         run: echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
       - run: npm ci
       - run: npx playwright install --with-deps chromium
-      - name: Verify upload and YouTube import interface with an isolated server
-        shell: bash
-        run: |
-          mkdir -p .cache
-          python scripts/import_ui_test_server.py > .cache/import-ui.log 2>&1 &
-          server_pid=$!
-          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
-          for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:8002/api/health; then break; fi
-            sleep 1
-          done
-          curl --fail --silent http://127.0.0.1:8002/api/health
-          node tests/import-browser.mjs
-          python scripts/rally_ui_test_server.py > .cache/rally-ui.log 2>&1 &
-          rally_pid=$!
-          trap 'kill "$server_pid" "$rally_pid" 2>/dev/null || true' EXIT
-          for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:8003/api/health; then break; fi
-            sleep 1
-          done
-          curl --fail --silent http://127.0.0.1:8003/api/health
-          node tests/rally-browser.mjs
-          python scripts/contact_ui_test_server.py > .cache/contact-ui.log 2>&1 &
-          contact_pid=$!
-          trap 'kill "$server_pid" "$rally_pid" "$contact_pid" 2>/dev/null || true' EXIT
-          for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:8004/api/health; then break; fi
-            sleep 1
-          done
-          curl --fail --silent http://127.0.0.1:8004/api/health
-          node tests/contact-profile-browser.mjs
-          python scripts/pipeline_ui_test_server.py > .cache/pipeline-ui.log 2>&1 &
-          pipeline_pid=$!
-          trap 'kill "$server_pid" "$rally_pid" "$contact_pid" "$pipeline_pid" 2>/dev/null || true' EXIT
-          for attempt in {1..30}; do
-            if curl --fail --silent http://127.0.0.1:8005/api/health; then break; fi
-            sleep 1
-          done
-          curl --fail --silent http://127.0.0.1:8005/api/health
-          node tests/pipeline-browser.mjs
-      - name: Import browser artifacts
+      - name: Verify default production UI and complete generated-media matrix
+        run: npm run test:frontend-delivery
+      - name: Production browser evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: import-browser
-          path: |
-            .cache/import-ui.log
-            .cache/rally-ui.log
-            .cache/contact-ui.log
-            .cache/pipeline-ui.log
-            data/processed/qa/import-*.png
-            data/processed/qa/rally-browser.png
-            data/processed/qa/contact-profile-browser.png
-            data/processed/qa/pipeline-browser.png
+          name: frontend-delivery
+          path: .cache/evidence/frontend-delivery-*
+          if-no-files-found: error
+          retention-days: 14
 
   container:
     needs: revision
@@ -309,6 +292,9 @@ jobs:
         with:
           ref: ${{ needs.revision.outputs.tested_sha }}
           persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
       - name: Build the ${{ matrix.target }} image without media or weights
         run: docker build --target "${{ matrix.target }}" --tag badminton-review:ci .
       - name: Start with single-user authentication
@@ -318,7 +304,9 @@ jobs:
             --env BADMINTON_USERNAME=reviewer \
             --env BADMINTON_PASSWORD=ci-only-generated-environment \
             badminton-review:ci
-      - name: Check health, authentication, static UI, and an empty catalog
+      - name: Check authenticated production routes and asset bytes
+        env:
+          BADMINTON_VERIFY_PASSWORD: ci-only-generated-environment
         shell: bash
         run: |
           for attempt in {1..30}; do
@@ -326,10 +314,8 @@ jobs:
             sleep 1
           done
           curl --fail --silent http://127.0.0.1:8000/api/health
-          test "$(curl --silent --output /dev/null --write-out '%{http_code}' http://127.0.0.1:8000/api/videos)" = 401
-          curl --fail --silent --user reviewer:ci-only-generated-environment --output /tmp/badminton-index.html http://127.0.0.1:8000/
-          grep -q '<html' /tmp/badminton-index.html
-          test "$(curl --fail --silent --user reviewer:ci-only-generated-environment http://127.0.0.1:8000/api/videos)" = '[]'
+          python scripts/verify_package.py --url http://127.0.0.1:8000 --username reviewer --password-env BADMINTON_VERIFY_PASSWORD
+          docker exec badminton-review python -c "from pathlib import Path; assert not Path('/app/backend/frontend').exists(); assert not Path('/app/node_modules').exists()"
           docker exec badminton-review uv pip check --python /opt/venv/bin/python
       - name: Container logs
         if: always()

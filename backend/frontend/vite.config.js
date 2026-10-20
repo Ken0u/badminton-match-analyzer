@@ -37,6 +37,7 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    license: { fileName: "THIRD_PARTY_NOTICES.txt" },
     rollupOptions: {
       output: {
         entryFileNames: "app.js",

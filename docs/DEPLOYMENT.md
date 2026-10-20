@@ -161,21 +161,92 @@ source revision and the dependency/model inventory with a deployment; do not
 describe an AGPL-dependent image as unrestricted proprietary software. This guide
 records upstream terms rather than granting any additional permissions.
 
+## Frontend build, delivery and rollback
+
+FastAPI serves the production React library at `/` and `/library`, and the review
+editor at `/editor`. The same single application process serves API, media and UI;
+there is no runtime Vite or frontend server. Unknown application paths, missing
+assets and unknown API routes return 404. Authentication covers each route and
+asset except `/api/health`. HTML, the manifest and stable entry assets revalidate
+on release, so a browser does not retain an old entry bundle indefinitely.
+
+Build from a Git checkout with the pinned Node major in `.node-version`:
+
+```sh
+npm ci --ignore-scripts
+npm run frontend:typecheck
+npm run frontend:test
+npm run frontend:build
+npm run frontend:stage
+npm run frontend:stage:check
+```
+
+`backend/badminton/static/build-manifest.json` records source-input SHA-256 hashes
+and the exact production asset set, including bundled dependency license notices
+in `THIRD_PARTY_NOTICES.txt`. Commit the staged snapshot with its frontend
+source. CI and Docker rebuild the frontend and compare every staged byte and input
+hash; they fail on stale, missing, changed or extra output. Generated bundles are
+verified this way instead of reformatting minified build output. The synthetic
+foundation is an explicit development/test build and is excluded from production.
+
+Wheels and source distributions include the prebuilt runtime assets. Installing
+them requires no frontend build toolchain; Python package discovery excludes the
+frontend workspace. Rebuilding the frontend or Docker image requires the Git
+checkout, not the Python source distribution. The Docker frontend stage contains
+npm and build tooling; application stages copy only the verified assets and
+Python package. The existing Node executable remains for YouTube import.
+
+Use `python scripts/verify_package.py --build --dist-dir .cache/dist` with the
+project's locked review interpreter and uv to check archive/source parity and a
+fresh installed wheel outside the checkout. The verifier starts its own disposable,
+authenticated loopback app with empty storage and checks entry pages, asset hashes,
+MIME types, auth refusals and unknown paths. It records and verifies its own process
+identity before cleanup. It does not connect to an installed application.
+
+For an independently started disposable review/CPU container, the same HTTP probe
+can run without Python application dependencies on the host:
+
+```sh
+python scripts/verify_package.py --url http://127.0.0.1:8000 --username reviewer --password-env BADMINTON_VERIFY_PASSWORD
+```
+
+Set that environment variable to the disposable container's password. The probe
+requires an empty catalog and uses GET requests only. Never point test fixtures
+at an existing catalog. The package/container probes do not download models or
+run inference.
+
+Candidate publication follows the existing approved `public` policy in
+`.github/automation.json`; the private Project dashboard is separate. Phase 5's
+receipt requirement uses that current visibility, as explicitly approved on its
+owning issue. Keep the exact source SHA, package hashes and review/CPU image digests
+with each candidate. Publication does not upgrade a running application.
+
+The default UI cutover is a code release and changes no annotation/source-clock
+schema. If an operator later authorizes deployment, preserve the state volume and
+source media, use one application instance, and retain the previously verified
+image digest or wheel. A rollback selects that previous complete code artifact
+against the same preserved data; it does not copy obsolete frontend files over a
+new backend or rewrite annotations. Stop and verify ownership of the deployed
+instance before replacing it. This development task does not perform that upgrade
+or rollback. Its final workflow/Docker/packaging diff also requires the frozen
+issue's actual non-author human approval before controller integration.
+
 ## Verification and current limits
 
-CI runs Python tests on generated media without the supplied videos or model
-weights, checks browser source formatting, exercises the upload/import UI in
-Chromium using synthetic videos and a stubbed downloader, and builds/starts the review and CPU images to
-check its health, authentication, UI response, and empty catalog. These checks
-do not claim trained-model accuracy, live YouTube availability, or GPU inference.
-The Windows/CUDA `requirements.lock` is not a Linux container lock; container
-dependencies resolve from `pyproject.toml`, with PyTorch variants pinned above.
+CI checks strict frontend types, the generated OpenAPI contract, frontend tests,
+reproducible production output, clean installed-package routes/assets and native
+Mac/Windows builds. The production browser harness exercises the complete frozen
+generated-media workflow matrix through FastAPI, including imports, source-native
+playback, editing, jobs, save/reload, exports, keyboard access and performance
+ceilings. External downloads and unavailable inference are explicitly stubbed in
+those generated fixtures. Review and CPU containers must each pass authenticated
+route/asset checks and dependency verification. A destination GPU remains a
+separate explicit validation requirement.
 
-The review image built successfully on GitHub Actions and passed startup,
-health, authentication, static UI, empty catalog, and dependency checks in
-[this CI run](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39015501445).
-The local Docker Desktop Linux daemon was unavailable, so no local image build is
-claimed. The workflow also builds the CPU target; check the latest run for its
-result. GPU image installation and real GPU inference still require explicit
-validation on the destination host. A passing container smoke check does not
-establish video-analysis accuracy.
+Local parity and frozen three-run performance results, exact CI runs, independent
+review and any human approval are recorded on the owning phase-5 issue/PR. Do not
+infer a successful image build or rollout from these documented commands. The
+runtime dependency graph uses `pyproject.toml` and the committed `uv.lock`; no
+running application is upgraded by a candidate build. Green software checks do not
+establish live YouTube availability, full-match annotation accuracy or model
+promotion.

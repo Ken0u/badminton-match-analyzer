@@ -22,8 +22,6 @@ import urllib.request
 import zipfile
 from pathlib import Path, PurePosixPath
 
-import psutil
-
 
 def safe_relative(name: str) -> bool:
     return (
@@ -249,7 +247,6 @@ def package_sources(root: Path) -> dict[str, bytes]:
 
 
 def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
-    assets = frontend_assets(root)
     expected = package_sources(root)
     with zipfile.ZipFile(wheel) as archive:
         for name in archive.namelist():
@@ -325,6 +322,7 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
         raise ValueError(
             "Source distribution package bytes differ from tracked sources"
         )
+    assets = frontend_assets(root)
     return {
         "package_files": len(expected),
         "frontend_files": len(assets),
@@ -333,7 +331,7 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
     }
 
 
-def process_identity(process: psutil.Process) -> dict:
+def process_identity(process) -> dict:
     return {
         "pid": process.pid,
         "created": process.create_time(),
@@ -344,6 +342,10 @@ def process_identity(process: psutil.Process) -> dict:
 
 def verify_installed_http(root: Path, python: Path, scratch: Path, env: dict) -> dict:
     """Serve only a newly installed wheel, preserving an owned-process receipt."""
+    # URL-only container checks run with the host's standard library. Process
+    # ownership needs psutil only when this verifier launches its own fixture.
+    import psutil
+
     token = secrets.token_hex(8)
     evidence = root / ".cache/package-http" / token
     evidence.mkdir(parents=True)
