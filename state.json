@@ -868,12 +868,27 @@
       "task_id": "108",
       "verb": "submit"
     },
+    "mac-01a156d5-next-v1": {
+      "actor": "dootz1",
+      "reason": "host already owns work in this lane",
+      "status": "rejected",
+      "verb": "next"
+    },
     "mac-01a156d5-register-v1": {
       "actor": "dootz1",
       "at": 1792458239,
       "fingerprint": "1af890ad5e94fe35ba84fae39bd5f51706fd69b9e2ad55278762727a6cf76baf",
       "status": "ok",
       "verb": "register"
+    },
+    "mac-01a156d5-resume130-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792458306,
+      "epoch": 1,
+      "fingerprint": "f2d8a4419cf902a9cfa8829403c2cbf5450e0c80b288b11368c48172b8d94753",
+      "status": "running",
+      "task_id": "130",
+      "verb": "checkpoint"
     },
     "mac-pilot-81-claim-v1": {
       "actor": "dootz1",
@@ -4489,21 +4504,24 @@
     },
     "130": {
       "checkpoint": {
-        "artifacts": ".cache/manual-court-130; /private/tmp/task130-implementation-assignment.md",
         "base_sha": "627081fb69af33b89036a12024efd59e702fd91a",
         "branch": "codex/issue-130-expire-manual-court-overlays-at-currentl",
-        "head_sha": "627081fb69af33b89036a12024efd59e702fd91a",
-        "remaining": "Implementation, generated browser regressions, full required checks, genuine fresh independent review, hostedCI, controller integration, merged-main and complete delivery receipts.",
+        "evidence": [
+          "Generated court regression25 observations, direct helper checks, three17/17 baseline runs are preserved under .cache/manual-court-130/.cache/evidence.",
+          "Original UI truth/predictions and primary checkout preserved. Main627081f current; no remote task130 branch yet."
+        ],
+        "head_sha": "5e12898ca1b67526e5a38a061a9364582af0dbd8",
+        "remaining": "Full required checks, publication, exact-head CI, genuine fresh independent review, controller integration, exact-main checks and complete candidate receipts.",
         "spec_hash": "7ba7472510db147d8739164ff6eee1955d0fa64ef181c71d108b621ab16c3e86",
-        "stage": "Committed grant confirmed; isolated worktree created, bounded six-file implementation worker assigned. Reproduce and repair effective manual geometry at current reviewed cuts while retaining source/annotations/stale guards."
+        "stage": "Resume interrupted original implementation activity on the same actor and host; previous chat01a15493 is systemError, current chat01a156d5 continues its grant. This is no independent review or new implementation claim. Preserved six-file commit5e12898 and generated receipts; no active task130 child process found."
       },
-      "checkpoint_at": 1792457197,
+      "checkpoint_at": 1792458306,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "627081fb69af33b89036a12024efd59e702fd91a",
         "branch": "codex/issue-130-expire-manual-court-overlays-at-currentl",
         "epoch": 1,
-        "expires_at": 1792467997,
+        "expires_at": 1792469106,
         "granted_at": 1792457116,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
