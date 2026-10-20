@@ -76,7 +76,7 @@ export function ExportPanel({
           id="media-export-refresh"
           type="button"
           onClick={() => void controller.refresh()}
-          disabled={state.loading}
+          disabled={state.loading || state.starting}
         >
           Refresh jobs
         </button>

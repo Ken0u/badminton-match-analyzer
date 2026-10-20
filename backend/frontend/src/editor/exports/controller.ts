@@ -84,7 +84,10 @@ export function createExportController({
   };
   async function refresh() {
     const videoId = selection;
-    if (!videoId || disposed) return;
+    // A list captured before the POST settles can omit its durable new job.
+    // A new selection still refreshes while the old selection's POST finishes.
+    if (!videoId || disposed || store.getSnapshot().starting) return;
+    clearTimer();
     const ticket = generation;
     const readIntent = intent;
     const read = ++readSequence;
@@ -112,7 +115,6 @@ export function createExportController({
       const previous = store.getSnapshot();
       publish({
         jobs: results,
-        loading: false,
         message: previous.error
           ? previous.message
           : jobs.length
@@ -125,11 +127,18 @@ export function createExportController({
       if (
         !owns(videoId, ticket) ||
         readIntent !== intent ||
-        read !== readSequence ||
-        isCancellation(error)
+        read !== readSequence
       )
         return;
-      publish({ loading: false, error: true, message: exportError(error) });
+      if (!isCancellation(error))
+        publish({ error: true, message: exportError(error) });
+    } finally {
+      if (
+        owns(videoId, ticket) &&
+        readIntent === intent &&
+        read === readSequence
+      )
+        publish({ loading: false });
     }
   }
   async function start(
@@ -155,10 +164,12 @@ export function createExportController({
       return;
     }
     starting = true;
+    clearTimer();
     ++intent;
     const ticket = generation;
     const read = ++readSequence;
-    publish({ starting: true, error: false });
+    // This start now owns the view; the superseded read cannot release loading.
+    publish({ starting: true, loading: false, error: false });
     try {
       const raw = await api.request(
         "post",
@@ -185,7 +196,6 @@ export function createExportController({
         message: `Started ${request.mode} from saved revision ${request.revision}.`,
         error: false,
       });
-      schedule(request.videoId, ticket);
     } catch (error) {
       if (
         owns(request.videoId, ticket) &&
@@ -194,7 +204,10 @@ export function createExportController({
         publish({ error: true, message: exportError(error) });
     } finally {
       starting = false;
-      if (owns(request.videoId, ticket)) publish({ starting: false });
+      if (owns(request.videoId, ticket)) {
+        publish({ starting: false });
+        schedule(request.videoId, ticket);
+      }
     }
   }
   return {
