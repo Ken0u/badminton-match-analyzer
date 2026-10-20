@@ -29,15 +29,18 @@ type BodyOptions<O> = [JsonBody<O>] extends [never]
     ? { json?: never; body?: never }
     : { body: FormData; json?: never }
   : { json: JsonBody<O>; body?: never };
+type QueryOptions<Q> = [Q] extends [never]
+  ? { query?: never }
+  : {} extends Q
+    ? { query?: Q }
+    : { query: Q };
 export type RequestOptions<O> = {
   signal?: AbortSignal;
   headers?: HeadersInit;
 } & ([Parameters<O, "path">] extends [never]
   ? { path?: never }
   : { path: Parameters<O, "path"> }) &
-  ([Parameters<O, "query">] extends [never]
-    ? { query?: never }
-    : { query?: Parameters<O, "query"> }) &
+  QueryOptions<Parameters<O, "query">> &
   BodyOptions<O>;
 type SuccessResponse<O> = O extends { responses: infer R }
   ? R[Extract<keyof R, 200 | 201 | 202 | 203 | 204 | 205 | 206>]

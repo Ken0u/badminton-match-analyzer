@@ -18,6 +18,21 @@ export function contractProbes(document: components["schemas"]["Annotations"]) {
   void client.request("delete", "/api/videos", {});
   // @ts-expect-error Required path parameters cannot be omitted.
   void client.request("get", "/api/videos/{video_id}", {});
+  // @ts-expect-error A frame's required query index cannot be omitted.
+  void client.request("get", "/api/videos/{video_id}/frame", {
+    path: { video_id: "example" },
+  });
+  void client.request("get", "/api/videos/{video_id}/frame", {
+    path: { video_id: "example" },
+    // @ts-expect-error Providing an empty query also omits the required index.
+    query: {},
+  });
+  void client.request("get", "/api/videos/{video_id}/frame", {
+    path: { video_id: "example" },
+    query: { index: 0 },
+  });
+  // An operation with only optional query fields still accepts no query object.
+  void client.request("get", "/api/jobs", {});
   void client.request("post", "/api/import/youtube", {
     // @ts-expect-error Backend request enums come from the actual OpenAPI schema.
     json: { url: "https://example.com", mode: "triples" },

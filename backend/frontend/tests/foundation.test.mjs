@@ -34,13 +34,13 @@ test("client encodes path/query, preserves unknown JSON and forwards cancellatio
   });
   const result = await client.request("get", "/api/videos/{video_id}/frame", {
     path: { video_id: "a/b ?" },
-    query: { frame: 0 },
+    query: { index: 0 },
     signal: controller.signal,
   });
   assert.deepEqual(result, { not_yet_typed: [null, "unknown"] });
   assert.equal(
     call.url,
-    "https://example.test/api/videos/a%2Fb%20%3F/frame?frame=0",
+    "https://example.test/api/videos/a%2Fb%20%3F/frame?index=0",
   );
   assert.equal(call.init.signal, controller.signal);
   assert.equal(call.init.credentials, "same-origin");
