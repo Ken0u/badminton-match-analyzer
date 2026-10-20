@@ -1282,7 +1282,10 @@ export function EditorApp() {
                   <button
                     id="review-analysis"
                     disabled={!objects(plan?.parts).length || stale}
-                    onClick={() => controller.reviewPart(part)}
+                    onClick={() => {
+                      const target = controller.reviewPart(part);
+                      if (target !== undefined) seek(target);
+                    }}
                   >
                     Review window
                   </button>

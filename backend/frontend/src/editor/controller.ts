@@ -598,8 +598,10 @@ export function createEditorController() {
     );
     if (part) {
       publish({ analysisEnabled: true, partIndex: index, runs: {} });
-      setFrame(num(object(part.window).core_start_frame));
+      const frame = num(object(part.window).core_start_frame);
+      setFrame(frame);
       void refresh();
+      return frame;
     }
   }
   function leave() {
