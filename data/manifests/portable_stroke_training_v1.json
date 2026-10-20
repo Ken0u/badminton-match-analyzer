@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "name": "observed-stroke-r3-development-reproduction-v1",
+  "input_dim": 371,
+  "source_commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
+  "source_catalog_git_blob": "df71918b487c297aa1aa53edb57e369b283187d5",
+  "source_plan_sha256": "6212563928e49b08e93ecf26e3699b606c2fbbb44155aa76451413a7d0cdef89",
+  "feature_recipe_sha256": "76cba8529f2bc55ba8a17a6c34b5fc448292e7159006873ae99fefe3c1492506",
+  "groups": {
+    "train": {
+      "match_id": 1,
+      "source_id": "EpLD0HrwDJU",
+      "clips": 67,
+      "rows": 624,
+      "available": 608
+    },
+    "validation": {
+      "match_id": 2,
+      "source_id": "kbHgum5unYc",
+      "clips": 67,
+      "rows": 672,
+      "available": 662
+    }
+  },
+  "training": {
+    "seed": 20261018,
+    "device": "cpu",
+    "cpu_threads": 2,
+    "hidden": [
+      128,
+      64
+    ],
+    "dropout": 0.1,
+    "epochs": 300,
+    "evaluate_every": 5,
+    "batch_size": 64,
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "family_loss_weight": 1.0,
+    "side_loss_weight": 0.5,
+    "std_floor": 0.05,
+    "normalized_clip": 10,
+    "class_weights": "inverse sqrt training count, normalized over supported labels",
+    "selection": "mean validation family macro F1 and side balanced recall; then joint accuracy; then earlier epoch",
+    "threshold_grid": [
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      0.95
+    ],
+    "minimum_threshold_support": 10,
+    "family_threshold_precision": 0.8,
+    "side_threshold_precision": 0.9,
+    "disabled_threshold": 1.01
+  },
+  "family_labels": [
+    "clear",
+    "lift",
+    "net",
+    "drop",
+    "smash",
+    "drive",
+    "other",
+    "serve"
+  ],
+  "side_labels": [
+    "forehand",
+    "backhand"
+  ],
+  "conditional_on": "Published weak source clock and hitter-foot association; not automatic contact or identity detection",
+  "exact_truth": false,
+  "model_installed_in_app": false,
+  "test_policy": "No test inputs or predictions. The original holdout is consumed; test-informed changes require another complete-source holdout.",
+  "terms": "S2Doubles has no license file at the pinned commit; do not redistribute source labels, features or derived weights as product assets."
+}
