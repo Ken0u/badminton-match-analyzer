@@ -805,6 +805,98 @@ try {
   );
 
   await check(
+    "A delayed selection list cannot strand explicit recovery after a rejected export",
+    async () => {
+      const results = [];
+      for (const denied of [401, 409]) {
+        const entered = defer(),
+          release = defer(),
+          postUrl = frontendBase + endpoint(rally);
+        let held = 0;
+        const listHandler = async (route) => {
+          const url = new URL(route.request().url());
+          if (url.searchParams.get("video_id") !== rally.id)
+            return route.continue();
+          const response = await route.fetch();
+          held++;
+          entered.resolve();
+          await release.promise;
+          await safeFulfill(route, { response });
+        };
+        const postHandler = async (route) =>
+          route.request().method() === "POST"
+            ? route.fulfill({
+                status: denied,
+                contentType: "application/json",
+                body: JSON.stringify({
+                  detail: `Generated ${denied} during delayed job-list recovery`,
+                }),
+              })
+            : route.continue();
+        const before = (await jobs(rally)).length;
+        await page.route(frontendBase + "/api/jobs?*", listHandler);
+        await page.route(postUrl, postHandler);
+        try {
+          await page.reload();
+          await page.locator(`button[data-video="${rally.id}"]`).click();
+          await page.locator("#media-export-start").waitFor();
+          await enteredGate(entered);
+          await page.waitForFunction(
+            () => document.querySelector("#media-export-refresh").disabled,
+          );
+          const startWasBlocked = await page
+            .locator("#media-export-start")
+            .isDisabled();
+          if (startWasBlocked) {
+            release.resolve();
+            await page.waitForFunction(
+              () => !document.querySelector("#media-export-refresh").disabled,
+            );
+          }
+          const response = page.waitForResponse(
+            (r) => r.url() === postUrl && r.request().method() === "POST",
+          );
+          await page.locator("#media-export-start").click();
+          assert.equal((await response).status(), denied);
+          await waitFor(
+            async () =>
+              /authentication|sign.in|unavailable|admission|busy/i.test(
+                await page.locator("#media-export-status").textContent(),
+              ),
+            "Rejected mutation lost its recovery guidance",
+          );
+          release.resolve();
+          await page.waitForFunction(
+            () => !document.querySelector("#media-export-refresh").disabled,
+          );
+          await page.unroute(frontendBase + "/api/jobs?*", listHandler);
+          await page.unroute(postUrl, postHandler);
+          await refresh();
+          await card(historical.job.id)
+            .locator('[data-export-file="manifest.json"]')
+            .waitFor();
+          assert.equal((await jobs(rally)).length, before);
+          assert.deepEqual(
+            await api(`/api/videos/${rally.id}/annotations`),
+            current,
+          );
+          results.push({
+            denied,
+            held,
+            startWasBlocked,
+            explicitRefresh: true,
+          });
+        } finally {
+          release.resolve();
+          await page.unroute(frontendBase + "/api/jobs?*", listHandler);
+          await page.unroute(postUrl, postHandler);
+        }
+      }
+      return results;
+    },
+  );
+
+  await check(
     "A real failed renderer job stays unavailable without changing annotations",
     async () => {
       const file = path.join(fixture.root, rally.path),
