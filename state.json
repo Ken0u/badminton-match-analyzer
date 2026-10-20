@@ -2794,6 +2794,26 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-progress91-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792459017,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "branch": "codex/issue-91-remove-deprecated-progress-md-from-live-",
+        "epoch": 1,
+        "expires_at": 1792469817,
+        "granted_at": 1792459017,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a"
+      },
+      "epoch": 1,
+      "fingerprint": "be1909d34751e40cdfbbcc2eb8d8ed7dc619c72823a88d4b29d3249438854631",
+      "status": "granted",
+      "task_id": "91",
+      "verb": "next"
+    },
     "windows-progress91-owner-scope-v1": {
       "actor": "Ken0u",
       "at": 1792458935,
@@ -6437,7 +6457,18 @@
       "status": "blocked"
     },
     "91": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c65b85a2b26ee72f395829f4f5afba2054ea731f",
+        "branch": "codex/issue-91-remove-deprecated-progress-md-from-live-",
+        "epoch": 1,
+        "expires_at": 1792469817,
+        "granted_at": 1792459017,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792458935,
@@ -6481,7 +6512,7 @@
         ]
       },
       "spec_hash": "97df0bf653b86378088cfcd7cacb878cddf1f32ef7b01143e393c6c9e55f779a",
-      "status": "ready"
+      "status": "running"
     },
     "93": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39265419115",
