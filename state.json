@@ -453,6 +453,15 @@
       "task_id": "94",
       "verb": "next"
     },
+    "mac-01a15493-94-start-v1": {
+      "actor": "dootz1",
+      "at": 1792454476,
+      "epoch": 1,
+      "fingerprint": "a7959aeb09202c72b1c44f2974b8a6c0f18396d1d38467b57bc34724a2a2fdfb",
+      "status": "running",
+      "task_id": "94",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -5749,12 +5758,20 @@
       }
     },
     "94": {
+      "checkpoint": {
+        "branch": "codex/issue-94-freeze-frontend-parity-and-performance-b",
+        "head_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+        "remaining": "Implement fullgeneratedbrowsermatrix+actualrepeatablemeasurements; focused/fullchecks; exactPRheadCI, freshindependentreview, controllermerge/main/completecandidateverification.",
+        "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38",
+        "stage": "Committed epoch1 grant after verified69recovery/delivery. Isolated .cache/frontend-baseline-94; only granted twoMJS/docsbaseline/packagejson. Freeze existingUI parity/performance using generatedVFR/orientedmedia; noUIrewrite/appupgrade/inference. Boundedworkerowns4files; parentretainsqueue/publication/independentreview."
+      },
+      "checkpoint_at": 1792454476,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
         "branch": "codex/issue-94-freeze-frontend-parity-and-performance-b",
         "epoch": 1,
-        "expires_at": 1792465171,
+        "expires_at": 1792465276,
         "granted_at": 1792454371,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
