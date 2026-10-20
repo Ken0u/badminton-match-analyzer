@@ -2166,6 +2166,13 @@
       "task_id": "139",
       "verb": "review-result"
     },
+    "shuttle141-review-register-64a866d3b0a648e78d0fc6837481003e": {
+      "actor": "Ken0u",
+      "at": 1792492889,
+      "fingerprint": "e575da16b8b0abaf5ca547ff229e3de17ace7970c30621efa423161d39632706",
+      "status": "ok",
+      "verb": "register"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -9091,6 +9098,24 @@
       "host_id": "MSI",
       "registered_at": 1792486696,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    },
+    "MSI/64a866d3b0a648e78d0fc6837481003e": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "shuttle-experiment": "fffbc3a767eab9ab63b95b1978c447cd9edca0ba5ceed26579e6c46330941ef8",
+        "shuttle-frozen-outputs": "8c7daa0f10fbbffdf604fbf989967f5cb66823fd8a087123169ec6bb1705b012",
+        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "shuttle-native-evidence": "60ad673e74efae355dd94db5b2bd47c0e712c22aa90134f4db5923f031a36632"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792492889,
+      "session_id": "64a866d3b0a648e78d0fc6837481003e"
     },
     "MSI/cfd18714-5a16-4720-811c-0bde1ada4c14": {
       "actor": "Ken0u",
