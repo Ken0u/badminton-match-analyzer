@@ -627,6 +627,15 @@
       "task_id": "130",
       "verb": "checkpoint"
     },
+    "mac-01a15493-138-code-recovery-v1": {
+      "actor": "dootz1",
+      "at": 1792502900,
+      "epoch": 2,
+      "fingerprint": "71778bcbafb099207eb4f4ab6c8202c159c92102b9d7f85cf4c431ec0f15119d",
+      "status": "ready",
+      "task_id": "138",
+      "verb": "recover"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -6772,28 +6781,44 @@
         "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
         "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
         "evidence": [
-          "Initial build/unit/diff checks pass; first real browser fixture recorded owned active export, historical revision2 manifest and31native frames10..41, exact1.24s and display pixels MAE0 after newerrevision3 save. It failed on missing partial-rally ID display, matching source finding; first failure retained under .cache/evidence/frontend-exports-042U90 and exports-first.log.",
-          "First fixture verified process identity then stopped its listener; generatedsource/export artifacts retained. All final browser/native/CI checks remain pending; no independent verdict claimed.",
-          "Previous task97 fully delivered: main50efff1 CI39368828617, candidate39369272737, downloaded77runtimefilewheel/sdist parity and image receipts; committeddelivery_pending=false."
+          ".cache/frontend-exports-138 and .cache/frontend-exports-138-ui preserved; no edits on expired grant.",
+          "Original completed130/95/96/97 are Done with delivery_pending=false; no duplicate implementation."
         ],
         "head_sha": "d004b45cf13536afe531be2eb8769406494b2c4e",
-        "remaining": "Integrate bounded frontend repairs, run real export suite including admission/failure/downloads/races/keyboard, regression/full/package checks; fresh exact-head review/CI/controller/main/delivery. No backend/default cutover/research work.",
+        "remaining": "Reclaim through new committed grant; integrate retained UI repairs, finish browser/full/package checks, fresh review/CI/controller/main/delivery.",
         "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-        "stage": "Frontend initial commit integrated; generated real-export harness preserved. Before formal review, parent inspection identified missing per-rally receipts, stale-link/per-job-error handling, overlapping reads and native focused-control keyboard behavior; bounded worker is repairing frontend with regression tests."
+        "stage": "Audited code-only recovery after original continuation systemError. Original remote granted branch preserved unchanged at d004b45; uncommitted browser patch saved /private/tmp/task138-uncommitted-browser-preserved.patch; bounded UI worker commits through f19fe4e retained in separate worktree. Original chat systemError, actual psutil process inventory found no task138 process, generated fixture cleanup retained. No resource/artifact reservation or heavy research job."
       },
       "checkpoint_at": 1792470889,
-      "claim": {
-        "actor": "dootz1",
-        "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
-        "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
-        "epoch": 1,
-        "expires_at": 1792481689,
-        "granted_at": 1792470234,
-        "host_id": "Stanleys-Laptop.local",
-        "session_id": "roadmap-01a156d5-20261019",
-        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
-      },
-      "epoch": 1,
+      "epoch": 2,
+      "history": [
+        {
+          "at": 1792502900,
+          "checkpoint": {
+            "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+            "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
+            "evidence": [
+              ".cache/frontend-exports-138 and .cache/frontend-exports-138-ui preserved; no edits on expired grant.",
+              "Original completed130/95/96/97 are Done with delivery_pending=false; no duplicate implementation."
+            ],
+            "head_sha": "d004b45cf13536afe531be2eb8769406494b2c4e",
+            "remaining": "Reclaim through new committed grant; integrate retained UI repairs, finish browser/full/package checks, fresh review/CI/controller/main/delivery.",
+            "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
+            "stage": "Audited code-only recovery after original continuation systemError. Original remote granted branch preserved unchanged at d004b45; uncommitted browser patch saved /private/tmp/task138-uncommitted-browser-preserved.patch; bounded UI worker commits through f19fe4e retained in separate worktree. Original chat systemError, actual psutil process inventory found no task138 process, generated fixture cleanup retained. No resource/artifact reservation or heavy research job."
+          },
+          "claim": {
+            "actor": "dootz1",
+            "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+            "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
+            "epoch": 1,
+            "expires_at": 1792481689,
+            "granted_at": 1792470234,
+            "host_id": "Stanleys-Laptop.local",
+            "session_id": "roadmap-01a156d5-20261019",
+            "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+          }
+        }
+      ],
       "planned_at": 1792465571,
       "planned_by": "dootz1",
       "reason": "implementation lease expired; reservations retained",
@@ -6837,7 +6862,7 @@
         ]
       },
       "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-      "status": "recovery_required"
+      "status": "ready"
     },
     "139": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39397139617",
