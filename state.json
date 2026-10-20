@@ -1794,6 +1794,15 @@
       "task_id": "97",
       "verb": "review-result"
     },
+    "review97-result-v2": {
+      "actor": "dootz1",
+      "at": 1792466793,
+      "epoch": 1,
+      "fingerprint": "a59840f8885adb82831a87b01819b979c6a94efadbaa1c1d53e5eb230f7db5e8",
+      "status": "running",
+      "task_id": "97",
+      "verb": "review-result"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -7938,19 +7947,47 @@
       "planned_at": 1792418018,
       "planned_by": "dootz1",
       "pr_number": 137,
-      "repair_rounds": 1,
-      "review_claim": {
+      "repair_rounds": 2,
+      "review": {
         "actor": "dootz1",
+        "at": 1792466793,
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "epoch": 1,
-        "expires_at": 1792477358,
-        "granted_at": 1792466558,
+        "evidence": [
+          "Committed independent review-next review97-next-v2 granted actual reviewer mac-review97-01a156d5 review_epoch2 on Stanleys-Laptop.local. Independently verified live queue submission and PR137 head5805612/base267ed42/specdad82a. New detached checkout .cache/review97-5805612; reviewed all3 repair-delta files and surrounding ownership contracts, carrying forward unchanged9file source review from epoch1. No implementation edits.",
+          "Independent frontend57checks including24 delayed analysis/run/playback success/error cases pass; strict TypeScript production build, exact backend OpenAPI contract and git diff --check pass. Original independent failing probe copied unchanged into new checkout now passes: selected1,afterLatePoll1,sourceFrame5.",
+          "Independent additional initial-load probe .cache/review97-5805612/.cache/review-initial-race.mjs and .log fails: prior to release plan:null/analysisEnabled:false; after seek and first result plus extra refresh partIndex0,sourceFrame6,runIdplayers0. This preserves the remaining related ordering failure.",
+          "Independent full repaired-head generated browser .cache/review97-5805612/.cache/evidence/frontend-editor-AbA9Fx passes17/17 groups including held real analysis poll/window selection, native source/proxy mapping, revisions/exports, explicit predictions and all editor actions. No page errors; owned fixture/static cleanup receipts retained. All3 playback samples have zero broad render delta. p95 seek65.5ms,timeline32.4ms,firstadvance86.8ms,rAF16.7ms meet absolute budgets. Executed with GitHub credentials scrubbed against owned disposable catalog/listeners.",
+          "Audited repaired external comparison all216 retained receipt SHA256 values, six raw run summaries, all3 current source trees against exact repaired checkout and median budget arithmetic. Supplied three-run relative comparison passes unchanged budgets. These remain audited external receipts, not a new independently collected relative comparison.",
+          "Exact-head hosted CI run39363585818 completed success independently observed with head580561220218be22a1e791bd9833de3d22fb52e9; PR base remains267ed42."
+        ],
+        "findings": [
+          "[P2] Reconcile the source core before publishing the first analysis view (backend/frontend/src/editor/controller.ts:237-247,289-303,394-395). The view-generation repair fixes established-window races, but an initial load has plan:null and analysisEnabled:false until refresh finishes its run/playback requests. If the user seeks across a core boundary during those requests, setFrame does not invalidate the generation. The pending result then publishes the part chosen before the seek. Independently reproduced by holding the first players-run GET during select(v), seeking frame6, and releasing: partIndex0 and players0 remain paired with sourceFrame6, including after another refresh. A real user can seek as soon as the source video appears, so the displayed window candidates and overlays can still refer to the old core. Reconcile pending/new plans against the latest source frame at publication and obtain matching runs, or otherwise fence source-core changes before a plan has first published. Add a regression that delays the initial run/playback read rather than arming after awaiting select."
+        ],
         "head_sha": "580561220218be22a1e791bd9833de3d22fb52e9",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Changes verdict: first-analysis-load source-core race remains; established-window original failure is repaired. New head requires subsequent independent review.",
+          "Generated fixture software checks do not establish native model behavior, full-match annotation accuracy, real downloader availability, persistent identity, doubles recognition or assistive-technology certification. No native research/live app run.",
+          "Full Python/release and foundation/library suites not independently rerun for this3file frontend repair; exact-head hosted CI observed. Epoch1 covers the unchanged broad UI/native/export contracts and screenshots.",
+          "Relative performance uses independently audited six supplied receipts; own browser Node24 differs from comparison Node22. No thermal pinning or cross-host claim."
+        ],
         "pr_number": 137,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/frontend/README.md",
+          "backend/frontend/scripts/test.mjs",
+          "backend/frontend/src/App.tsx",
+          "backend/frontend/src/editor/EditorApp.tsx",
+          "backend/frontend/src/editor/Playback.tsx",
+          "backend/frontend/src/editor/controller.ts",
+          "backend/frontend/src/editor/editor.css",
+          "backend/frontend/src/editor/model.ts",
+          "backend/frontend/src/library/LibraryApp.tsx",
+          "backend/frontend/src/main.tsx",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs"
+        ],
         "session_id": "mac-review97-01a156d5",
-        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
+        "verdict": "changes"
       },
       "review_epoch": 2,
       "spec": {
@@ -7990,7 +8027,7 @@
         ]
       },
       "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "head_sha": "580561220218be22a1e791bd9833de3d22fb52e9",
