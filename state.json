@@ -2552,6 +2552,15 @@
       "task_id": "123",
       "verb": "recover"
     },
+    "windows-policy126-adopt-verified-v1": {
+      "actor": "Ken0u",
+      "at": 1792458377,
+      "epoch": 1,
+      "fingerprint": "5ed0b866a3be2c07dd88b231532480609f5141a77ccc59b2fbabb03e7247bd3d",
+      "status": "recovery_pending",
+      "task_id": "126",
+      "verb": "recover-merged"
+    },
     "windows-policy126-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792449566,
@@ -2741,6 +2750,15 @@
       "status": "needs_human",
       "task_id": "111",
       "verb": "plan"
+    },
+    "windows-public111-adopt-after126-v1": {
+      "actor": "Ken0u",
+      "at": 1792458377,
+      "epoch": 2,
+      "fingerprint": "1b23155c824650e0f1fb8bf45c2d8eaf8b916a70b1c611fb1f9c4c06bfabf4bc",
+      "status": "recovery_pending",
+      "task_id": "111",
+      "verb": "recover-merged"
     },
     "windows-public111-checkpoint-v1": {
       "actor": "Ken0u",
@@ -3537,6 +3555,24 @@
       },
       "checkpoint_at": 1792441108,
       "epoch": 2,
+      "external_recovery_request": {
+        "actor": "Ken0u",
+        "at": 1792458377,
+        "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
+        "epoch": 2,
+        "evidence_state_sha": "2e2d3b146b9c66fe1ea0ecfc63430f7f526fbc0f",
+        "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
+        "human_review_attestation": {
+          "head_sha": "1fed758054c3c0becb37da9936eea07193521340",
+          "kind": "owner_attestation",
+          "reviewer": "dootz1",
+          "statement": "On 2026-10-19 the owner explicitly confirmed in this session that dootz1 personally reviewed and approved PR114 exact head1fed758054c3c0becb37da9936eea07193521340 before merging. GitHub has no approval-review record; this is the owner confirmation, not a fabricated GitHub review."
+        },
+        "merge_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
+        "pr_number": 114,
+        "request_id": "windows-public111-adopt-after126-v1",
+        "spec_hash": "493659da68f1edf17edb79ba43be60db284809923bfc73e5d30aaf5dea2e84b5"
+      },
       "history": [
         {
           "at": 1792442943,
@@ -4390,6 +4426,18 @@
             "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
           }
         }
+      },
+      "external_recovery_request": {
+        "actor": "Ken0u",
+        "at": 1792458377,
+        "base_sha": "37eb3974a61af4ac754b61b2fb9db1ad24401297",
+        "epoch": 1,
+        "evidence_state_sha": "3a5111ad8339cd4d6e257dcb477f69bb51271818",
+        "head_sha": "dd06d050dc24cd703816e4cbb626b409bc4a641d",
+        "merge_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+        "pr_number": 127,
+        "request_id": "windows-policy126-adopt-verified-v1",
+        "spec_hash": "a272d714f78ca632080437cf292fe4dc2687a7290d888f27bb790cea915bd2b5"
       },
       "human_approval": {
         "actor": "Ken0u",
