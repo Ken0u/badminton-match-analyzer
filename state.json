@@ -5788,6 +5788,26 @@
       "task_id": "149",
       "verb": "next"
     },
+    "windows-shuttle149-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792538291,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
+        "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
+        "epoch": 2,
+        "expires_at": 1792549091,
+        "granted_at": 1792538291,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
+      },
+      "epoch": 2,
+      "fingerprint": "47c8dfec5a36a7efd33cc6f2fa24076aa7144d81c401edb7423129896c9e878a",
+      "status": "granted",
+      "task_id": "149",
+      "verb": "next"
+    },
     "windows-shuttle149-plan-v1": {
       "actor": "Ken0u",
       "at": 1792514744,
@@ -8823,7 +8843,18 @@
       }
     },
     "149": {
-      "epoch": 1,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
+        "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
+        "epoch": 2,
+        "expires_at": 1792549091,
+        "granted_at": 1792538291,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
+      },
+      "epoch": 2,
       "history": [
         {
           "at": 1792538169,
@@ -8922,7 +8953,7 @@
         ]
       },
       "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
-      "status": "ready"
+      "status": "running"
     },
     "151": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39473080794",
