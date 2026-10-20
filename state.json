@@ -2149,6 +2149,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "shuttle139-review-v2-result-cfd18714": {
+      "actor": "Ken0u",
+      "at": 1792486104,
+      "epoch": 2,
+      "fingerprint": "fe568fd5f2a5a80ebe5d80dd3df4848534fde2cadd0f1cf836c0690351de8aea",
+      "status": "review",
+      "task_id": "139",
+      "verb": "review-result"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -6535,18 +6544,41 @@
       "pr_number": 140,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792486104,
         "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
-        "epoch": 2,
-        "expires_at": 1792496387,
-        "granted_at": 1792485587,
+        "evidence": [
+          "Fresh actual reviewer session cfd18714-5a16-4720-811c-0bde1ada4c14 on MSI; registration shuttle139-review-v2-register-cfd18714 durably ok. Review grant shuttle139-review-v2-grant-cfd18714 at 1792485587, fingerprint 4a03bfafad0579a08c9ca91b6a36cce8a2217f40247964c55f23fc4c90118880, binds task epoch 2 / review epoch 2 and the exact head/base/spec. Ownership and PR revisions revalidated immediately before verdict.",
+          "Whole final diff reviewed: 5 granted files, 3076 insertions, plus relevant native producer/window/stage hashing, shuttle background/selection and camera/scene/calibration guards. Prior repair inspected: source-observed cuts are unioned per video before every cached case context; two generated complete freeze/baseline regressions cover both sources and preserve unrelated source availability. No actionable findings.",
+          "Own isolated detached worktree .cache/worktrees/shuttle139-review-v2 remains clean at b89bad0aa2a150758fdb6bca8c921d9e9ba4b442. Root branch and original PROGRESS.md local modification preserved. Candidate execution used absolute root Python3.10 venv, review-worktree BADMINTON_ROOT/DATA/PYTHONPATH pins, removed GH_TOKEN/GITHUB_TOKEN and offline GH_CONFIG_DIR.",
+          "Own focused run: 55 passed in 14.95 seconds; .cache/worktrees/shuttle139-review-v2/.cache/review-v2-focused.xml. Own full run: 1,353 passed, 4 optional skips, 1 existing Starlette/httpx deprecation warning in 148.60 seconds; JUnit .cache/worktrees/shuttle139-review-v2/.cache/review-v2-full.xml. Both processes returned terminal exit 0.",
+          "Own ruff check backend tests scripts passes; ruff format --check passes 154 files; pip check passes; git diff --check base..head passes. All 5 changed files validate UTF-8/LF, public protocol JSON and SHA 49062b9b904b76010e35314d0e98d2ba2481f85cf1acfb59996eb2d0d14578d1 validate, and all local report links resolve.",
+          "Own actual read-only CLI audit returned terminal exit 0 into NEW .cache/shuttle139-review-v2-audit-cfd18714. Report SHA a6d4f5d75ccd1a282d2a9ed7fab9d7ba7de6c79cd02d5a55d2f48c4736309c6e equals author v5 byte for byte; all 10 consumer file hashes and bytes equal exact-head source, consumer SHA 80f1db0bc2ce340f541205ac711aaafe5ef43956074ba9e024701f82237d7c30. Immutable packet 3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d, labels fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158 and baseline 915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64 were verified by CLI.",
+          "Actual reproduced outputs: all 60 available; 25 visible/localizable, 7 confirmed absent, 28 unknown; 14 correct locations, 10 visible misses, 1 wrong location, 3 false detections, 4 correct absences. Visibility TP 15 / FP 3 / FN 10 / TN 4; localization TP 14 / FP 4 / FN 11 / TN 4. Fixed diagonal tolerance 0.005 and uncertainty strict recall 0.28..0.56 remain preserved. Complete denominators and every group reproduce.",
+          "Task 139 frozen spec and source-freeze checkpoint https://github.com/Ken0u/badminton-match-analyzer/issues/139#issuecomment-6285925236 read. Freeze timestamp 2026-10-20T07:39:20Z records separate source139_a/source139_b assessments and source adjudication before cache access. Task-scoped repair checkpoint 6286922497 and current coordination read; no consumed holdout material opened.",
+          "Exact-head CI run 39394464720 and ci/gate successful on b89bad0aa2a150758fdb6bca8c921d9e9ba4b442; current main and PR base remain 50efff1867de1ecac0093468f987d6b60d5d178d. No merge attempted."
+        ],
+        "findings": [],
         "head_sha": "b89bad0aa2a150758fdb6bca8c921d9e9ba4b442",
-        "host_id": "MSI",
+        "limitations": [
+          "Read-only exact-head code review and native audit reproduction; I did not independently re-adjudicate all source images. Frozen source-label lineage and issue139 source-only assessment/adjudication timing were verified. These 60 known development cases are agent-reviewed, not human-certified or unseen/full-match truth.",
+          "Actual frozen labels contain no observed camera cuts or established occlusion cases. Cross-case cut propagation is exercised by complete generated label-freeze/baseline regressions for both sources, while actual report groups remain unchanged.",
+          "Four optional GPU tests were skipped. No inference, training, GPU work, downloads, environment migration, threshold tuning, model promotion, app annotation writes, consumed holdout inputs or prior holdout review-result metadata were accessed or performed.",
+          "Successful software checks do not establish shuttle label or full automatic annotation accuracy. All 28 unknowns, zero-support groups and unavailable-output policies remain explicit; issue65 improvement and broader validation remain open.",
+          "Exact-head ci/gate and all 12 project CI jobs were observed successful. The separate automation/policy check was observed failed before acceptance of this fresh review; controller integration and main/delivery verification remain outside this read-only review."
+        ],
         "pr_number": 140,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/badminton/shuttle_validation.py",
+          "scripts/evaluate_shuttle_cases.py",
+          "tests/test_shuttle_validation.py",
+          "docs/SHUTTLE_VISIBILITY_REPORT.md",
+          "data/manifests/shuttle_visibility_protocol_v1.json"
+        ],
         "session_id": "cfd18714-5a16-4720-811c-0bde1ada4c14",
-        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
+        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
