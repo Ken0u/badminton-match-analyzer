@@ -3731,6 +3731,7 @@
           "reviewer": "dootz1",
           "statement": "On 2026-10-19 the owner explicitly confirmed in this session that dootz1 personally reviewed and approved PR114 exact head1fed758054c3c0becb37da9936eea07193521340 before merging. GitHub has no approval-review record; this is the owner confirmation, not a fabricated GitHub review."
         },
+        "issue_closed_at": 1792458423,
         "merge_sha": "38eaeaff966dddc1c7a9466fc6948a84c36162bb",
         "pr_number": 114,
         "request_id": "windows-public111-adopt-after126-v1",
