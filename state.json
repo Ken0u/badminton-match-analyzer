@@ -992,6 +992,15 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "mac-01a15493-checkpoint101-v1": {
+      "actor": "dootz1",
+      "at": 1792536329,
+      "epoch": 1,
+      "fingerprint": "4d7c9856aaf12040edea223eae44efddf54723ef327ed9cee88132cd7c6f891a",
+      "status": "running",
+      "task_id": "101",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint105-repair": {
       "actor": "dootz1",
       "reason": "checkpoint requires running work",
@@ -5719,12 +5728,21 @@
   },
   "tasks": {
     "101": {
+      "checkpoint": {
+        "artifacts": ".cache/coordination-repair-101/.cache/evidence: working-diff.patch,regressions-original-baseline.log,focused-tests.xml; full-tests.log/xml pending",
+        "branch": "codex/issue-101-preserve-committed-scope-extensions-and-",
+        "head_sha": "0002a8d78e9483deea31c62408d5e75d03ccffe9",
+        "remaining": "Complete fullsuite/quality, commit/publish, fresh independentreview, exactCI/controller/exactmain/fullpublicdelivery. OriginalMSI149reservationspreserved.",
+        "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901",
+        "stage": "Committed grant101/epoch1; reproduced6false-fencing/replay failures against originalbaseline; initial repair and242focusedcoordination/queue/policytests pass. Starting fullsuite with disposable roots/credentialsempty."
+      },
+      "checkpoint_at": 1792536329,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "0002a8d78e9483deea31c62408d5e75d03ccffe9",
         "branch": "codex/issue-101-preserve-committed-scope-extensions-and-",
         "epoch": 1,
-        "expires_at": 1792546768,
+        "expires_at": 1792547129,
         "granted_at": 1792535968,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
