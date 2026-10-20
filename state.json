@@ -1199,6 +1199,14 @@
       "task_id": "116",
       "verb": "plan"
     },
+    "mac-01a15493-plan151-v1": {
+      "actor": "dootz1",
+      "at": 1792518749,
+      "fingerprint": "719936313ba654f5a6874f6a2a557e6a66e924ac7d24006d98572fc9d20eb545",
+      "status": "ready",
+      "task_id": "151",
+      "verb": "plan"
+    },
     "mac-01a15493-post98-next-v1": {
       "actor": "dootz1",
       "at": 1792518646,
@@ -2898,6 +2906,14 @@
       "fingerprint": "b2d8349f2dcd1e7628e1ae38b846a41aba7a98df32f10b3f31c0044a13625226",
       "status": "ready",
       "task_id": "149",
+      "verb": "plan"
+    },
+    "spec-151-a735aae34927d10010b688e422fa2d7765aa469fd6cc4e10ef569889724053b8": {
+      "actor": "dootz1",
+      "at": 1792518749,
+      "fingerprint": "6ea83f80d1dc5164bc4765206a96106d6c30de9eafaf740823dc08c811f0fb6a",
+      "status": "ready",
+      "task_id": "151",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -8323,6 +8339,50 @@
       },
       "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
       "status": "running"
+    },
+    "151": {
+      "epoch": 0,
+      "planned_at": 1792518749,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Update PROJECT_PLAN.md and docs/FRONTEND_REWRITE.md to describe delivered phases 94-98 and export controls 138 with owning issue/PR and exact merged-main/candidate evidence; claim delivery only after complete package and both image receipts are verified.",
+          "Replace stale mandatory non-author final human review and private-only candidate wording with current AGENTS.md/COLLABORATION.md policy: explicit configured-owner authorization of sensitive frozen scope, fresh independent agent review and exact CI; final human PR review optional; candidate visibility follows approved public policy. Preserve original historical issue specifications and reviews.",
+          "Preserve source-clock, reviewed annotation, unknown/ineligible case, rollback and no automatic running-app upgrade boundaries. State that software parity and delivery do not establish full badminton annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "98",
+          "138"
+        ],
+        "exclusions": [
+          "Documentation only; no policy/configuration/workflow/source/runtime/model/data changes or app upgrades.",
+          "Do not edit PROGRESS.md, historical issue specifications or other collaborator files."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Record the integrated React rewrite and reviewed-export delivery in the active roadmap, correcting stale review and visibility wording to match current approved policy.",
+        "paths": [
+          "PROJECT_PLAN.md",
+          "docs/FRONTEND_REWRITE.md"
+        ],
+        "priority": 75,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Validate UTF-8/LF, Markdown links and referenced owning evidence; git diff --check and focused repository documentation checks.",
+          "Fresh independent review on exact head/base/spec; required CI, controller integration, exact merged-main verification and full candidate receipts."
+        ]
+      },
+      "spec_hash": "f4846fab1f9b9418c6df528e34fe180b56ae1b63025d0f16cee5edec0b38fb21",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
