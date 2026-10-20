@@ -433,6 +433,15 @@
       "task_id": "69",
       "verb": "recover-merged"
     },
+    "mac-01a15493-94-browser-midrun-v1": {
+      "actor": "dootz1",
+      "at": 1792455124,
+      "epoch": 1,
+      "fingerprint": "329c810fd34c448487de41f0a75baa754afd8e777341fea687f8d76aca5c7168",
+      "status": "running",
+      "task_id": "94",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-94-next-after69recovery-v1": {
       "actor": "dootz1",
       "at": 1792454371,
@@ -5761,17 +5770,17 @@
       "checkpoint": {
         "branch": "codex/issue-94-freeze-frontend-parity-and-performance-b",
         "head_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
-        "remaining": "Implement fullgeneratedbrowsermatrix+actualrepeatablemeasurements; focused/fullchecks; exactPRheadCI, freshindependentreview, controllermerge/main/completecandidateverification.",
+        "remaining": "Complete all browsermatrix blocks and repeated frozen-source measurements; preserve failed runs/processcleanup evidence; source review/fullprojectchecks; fresh independent exact-head/base/spec review, hostedCI, controllermerge/main/complete delivery. No benchmark pass/completion claimed yet.",
         "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38",
-        "stage": "Committed epoch1 grant after verified69recovery/delivery. Isolated .cache/frontend-baseline-94; only granted twoMJS/docsbaseline/packagejson. Freeze existingUI parity/performance using generatedVFR/orientedmedia; noUIrewrite/appupgrade/inference. Boundedworkerowns4files; parentretainsqueue/publication/independentreview."
+        "stage": "Four-path implementation in progress. New generated real-app browser harness reached imports/source-clock/proxy/stale-selection/drafts/revisionconflicts/rallies/identities/review/evaluation. Production correctly rejected invalid test rally placement; fixture being repaired, no application UI edits or weakened validation. Protocol declared before measurements; exact generated-source/helper hash bundle reuse added; Windows/Python override and startup PID-lifetime cleanup implemented. Locked isolated Chromium installed under worktree cache only."
       },
-      "checkpoint_at": 1792454476,
+      "checkpoint_at": 1792455124,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
         "branch": "codex/issue-94-freeze-frontend-parity-and-performance-b",
         "epoch": 1,
-        "expires_at": 1792465276,
+        "expires_at": 1792465924,
         "granted_at": 1792454371,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
