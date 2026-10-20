@@ -170,7 +170,12 @@ export function createExportController({
       );
       const job = parseExportJob(raw, request);
       if (!owns(request.videoId, ticket)) return;
-      const result = await status(job);
+      let result: ExportStatus;
+      try {
+        result = await status(job);
+      } catch (error) {
+        result = unavailable(job, error);
+      }
       if (!owns(request.videoId, ticket) || read !== readSequence) return;
       const old = store
         .getSnapshot()

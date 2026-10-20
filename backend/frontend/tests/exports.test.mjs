@@ -295,3 +295,28 @@ test("synchronous repeated starts submit one mutation and focused export control
   assert.equal(isMediaExportInteractive("DIV"), false);
   controller.dispose();
 });
+
+test("a known posted job keeps a per-card unavailable error when its first status read fails", async () => {
+  const controller = createExportController({
+    api: {
+      request(method, path) {
+        if (path === "/api/jobs") return Promise.resolve([]);
+        if (method === "post") return Promise.resolve(job());
+        throw Object.assign(new Error("login required"), { status: 401 });
+      },
+    },
+  });
+  controller.select(request.videoId);
+  await controller.start(request, () => ({
+    videoId: request.videoId,
+    revision: 2,
+    dirty: false,
+    saving: false,
+  }));
+  assert.equal(controller.getSnapshot().jobs[0].available, false);
+  assert.match(
+    controller.getSnapshot().jobs[0].unavailableReason,
+    /login required/,
+  );
+  controller.dispose();
+});
