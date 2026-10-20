@@ -1661,6 +1661,28 @@
       "task_id": "130",
       "verb": "review-result"
     },
+    "mac-review138-next-v1": {
+      "actor": "dootz1",
+      "at": 1792503595,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
+        "epoch": 3,
+        "expires_at": 1792514395,
+        "granted_at": 1792503595,
+        "head_sha": "55f9d4f01b41597541256501a7f14640fc816639",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 147,
+        "review_epoch": 1,
+        "session_id": "mac-review138-01a15493",
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+      },
+      "epoch": 3,
+      "fingerprint": "8a9c6dbe94293cc67fe5d7b3dd3a9c19a3a6b66165969d8a91ac8f19ae8bb482",
+      "status": "granted",
+      "task_id": "138",
+      "verb": "review-next"
+    },
     "mac-review138-register-v1": {
       "actor": "dootz1",
       "at": 1792503488,
@@ -6898,6 +6920,20 @@
       "planned_by": "dootz1",
       "pr_number": 147,
       "reason": "implementation lease expired; reservations retained",
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "029bae3f706e66ba4410fe87d1154292b892e261",
+        "epoch": 3,
+        "expires_at": 1792514395,
+        "granted_at": 1792503595,
+        "head_sha": "55f9d4f01b41597541256501a7f14640fc816639",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 147,
+        "review_epoch": 1,
+        "session_id": "mac-review138-01a15493",
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Add accessible explicit controls for plain-rallies, annotated-rallies and annotated-full using the existing typed media-export API and exact displayed saved annotation revision; require clean, non-saving annotations and show source/revision/mode before submission. Do not automatically save drafts or start exports on selection.",
