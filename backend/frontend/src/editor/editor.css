@@ -1,0 +1,347 @@
+.editor-app {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: 100vh;
+  background: #101b18;
+  color: #e5eee5;
+}
+.editor-app * {
+  box-sizing: border-box;
+}
+.editor-app main {
+  max-width: none;
+  padding: 28px;
+  min-width: 0;
+}
+.editor-app .sidebar {
+  padding: 24px;
+  background: #17251f;
+  overflow: auto;
+}
+.editor-app .brand {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+.editor-app small {
+  display: block;
+  color: #b7c9bf;
+  margin-top: 5px;
+}
+.editor-app p {
+  color: #b7c9bf;
+}
+.editor-app header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+}
+.editor-app h1 {
+  font-size: 30px;
+}
+.editor-app h2 {
+  font-size: 13px;
+  letter-spacing: 0.05em;
+}
+.editor-app button,
+.editor-app input,
+.editor-app select,
+.editor-app textarea {
+  font: inherit;
+}
+.editor-app button {
+  padding: 9px 12px;
+  cursor: pointer;
+  background: #263d32;
+  color: #e5eee5;
+  border: 1px solid #47604f;
+  border-radius: 6px;
+}
+.editor-app button:hover {
+  background: #345443;
+}
+.editor-app button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.editor-app :focus-visible {
+  outline: 3px solid #b5ef91;
+  outline-offset: 3px;
+}
+.editor-app input,
+.editor-app select,
+.editor-app textarea {
+  background: #13251c;
+  color: #e5eee5;
+  border: 1px solid #4d6857;
+  border-radius: 4px;
+  padding: 8px;
+  min-width: 0;
+  max-width: 100%;
+}
+.editor-app label {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  gap: 5px;
+  margin: 9px 0;
+}
+.editor-app label:has(input[type="checkbox"]),
+.editor-app .inline {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 10px;
+}
+.editor-app a {
+  color: #c2f7a2;
+}
+.editor-app #notice {
+  padding: 12px;
+  background: #1e3528;
+  margin: 18px 0;
+  border-radius: 8px;
+}
+.editor-app #notice.error {
+  background: #5b2927;
+}
+.editor-app .workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 22px;
+}
+.editor-app .review-panel,
+.editor-app .events-panel {
+  min-width: 0;
+}
+.editor-app .panel-bar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: #223b2d;
+  font-size: 12px;
+}
+.editor-app #stage {
+  position: relative;
+  background: #000;
+  width: 100%;
+  overflow: hidden;
+}
+.editor-app #stage video,
+.editor-app #stage img,
+.editor-app #stage canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.editor-app #overlay {
+  z-index: 3;
+}
+.editor-app #calibration-hint,
+.editor-app #frame-loading {
+  position: absolute;
+  z-index: 4;
+  left: 15px;
+  top: 15px;
+  padding: 10px;
+  background: #13251cdd;
+  pointer-events: none;
+}
+.editor-app #frame-loading {
+  top: auto;
+  bottom: 15px;
+}
+.editor-app .transport {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 12px 0;
+}
+.editor-app .transport label {
+  flex-direction: row;
+  align-items: center;
+}
+.editor-app #frame-number {
+  width: 85px;
+}
+.editor-app #scrubber {
+  width: 100%;
+  padding: 0;
+}
+.editor-app .mark-bar,
+.editor-app .playback-options {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 14px 0;
+}
+.editor-app .tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.editor-app .tool-card,
+.editor-app .suggestions-panel,
+.editor-app .players-panel {
+  border: 1px solid #37523e;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 14px 0;
+  background: #17291f;
+}
+.editor-app summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.editor-app .row {
+  display: flex;
+  gap: 8px;
+}
+.editor-app .row > * {
+  min-width: 0;
+  flex: 1;
+}
+.editor-app .library-item {
+  display: block;
+  text-align: left;
+  width: 100%;
+  margin: 9px 0;
+}
+.editor-app .library-item img {
+  width: 100%;
+  max-height: 110px;
+  object-fit: cover;
+}
+.editor-app #event-form {
+  padding: 16px;
+  background: #192d22;
+}
+.editor-app .event-row,
+.editor-app .candidate-row {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  margin: 6px 0;
+  align-items: center;
+}
+.editor-app .event-row.active {
+  border-color: #b5ef91;
+  background: #345443;
+}
+.editor-app .event-row time,
+.editor-app .candidate-row time {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.editor-app #events {
+  max-height: 600px;
+  overflow: auto;
+  contain: content;
+}
+.editor-app .event-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  background: #9ae07c;
+  border-radius: 50%;
+}
+.editor-app .event-dot.shot {
+  background: #ffd379;
+}
+.editor-app .event-dot.rally_end {
+  background: #91bde8;
+}
+.editor-app #event-markers {
+  position: relative;
+  height: 20px;
+  contain: layout paint;
+}
+.editor-app #event-markers button {
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 16px;
+  padding: 0;
+  background: #b5ef91;
+}
+.editor-app .list-header,
+.editor-app .export-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+  margin: 14px 0;
+  font-size: 12px;
+}
+.editor-app .review-row,
+.editor-app .boundary-row {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+.editor-app .player-row {
+  display: grid;
+  grid-template-columns: 30px 1fr 70px 90px;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0;
+}
+.editor-app footer {
+  display: flex;
+  justify-content: space-between;
+  color: #b7c9bf;
+  font-size: 12px;
+  margin: 25px 0;
+}
+.editor-app [hidden] {
+  display: none !important;
+}
+@media (max-width: 1050px) {
+  .editor-app {
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+  .editor-app main {
+    padding: 16px;
+  }
+  .editor-app .workspace-grid {
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+  .editor-app .tools-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 780px) {
+  .editor-app {
+    display: block;
+  }
+  .editor-app .sidebar {
+    max-height: 280px;
+  }
+  .editor-app #library {
+    display: flex;
+    gap: 10px;
+    overflow: auto;
+  }
+  .editor-app .library-item {
+    min-width: 160px;
+  }
+  .editor-app .workspace-grid {
+    display: block;
+  }
+  .editor-app header {
+    display: block;
+  }
+  .editor-app .events-panel {
+    margin-top: 20px;
+  }
+}

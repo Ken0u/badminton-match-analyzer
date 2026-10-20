@@ -120,7 +120,8 @@ export function App() {
       <header>
         <p className="eyebrow">Badminton match analyzer · Phase 95</p>
         <h1>Frontend foundation</h1>
-        <a href="/library">Open match library preview</a>
+        <a href="/library">Open match library preview</a> ·{" "}
+        <a href="/editor">Open React review editor</a>
         <p>
           A development sandbox for typed requests, safe state ownership and
           reusable controls.

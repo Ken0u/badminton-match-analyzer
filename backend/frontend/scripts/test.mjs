@@ -6,7 +6,12 @@ const compiler = fileURLToPath(import.meta.resolve("typescript/bin/tsc"));
 try {
   for (const args of [
     [compiler, "-p", "tsconfig.test.json"],
-    ["--test", "tests/foundation.test.mjs", "tests/library.test.mjs"],
+    [
+      "--test",
+      "tests/foundation.test.mjs",
+      "tests/library.test.mjs",
+      "tests/editor.test.mjs",
+    ],
   ]) {
     const result = spawnSync(process.execPath, args, {
       cwd: workspace,
