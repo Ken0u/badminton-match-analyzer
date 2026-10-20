@@ -3360,6 +3360,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-portable64-repair-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792467657,
+      "epoch": 1,
+      "fingerprint": "766bd3e0ce32b08b9b07a00b545e12ab49011b4db80da6fd742c0b0c131596be",
+      "status": "running",
+      "task_id": "64",
+      "verb": "checkpoint"
+    },
     "windows-portable64-review-next-v1": {
       "actor": "Ken0u",
       "at": 1792461903,
@@ -6159,28 +6168,30 @@
     },
     "64": {
       "checkpoint": {
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
         "code_sha256": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
         "evidence": [
-          "Independent changes verdict durably accepted at1792462587, repair_round1 under unchanged grant",
-          "Four pinned development CSVs now enforce exact ordered source-row IDs; fabricated IDs, reordered rows and resealed source CSVs fail",
-          "All134clips/624+672rows audit; original276file seals unchanged; no held-out/test inputs opened",
-          "Original reproduction-v1 remains completed and immutable; new v2 lineage only"
+          "Exact ordered source IDs are derived from four pinned original development CSV Git blobs;44focused tests pass",
+          "New v2 job completed all300epochs, selected295; all tensors, normalization, support, thresholds,60history rows and every validation metric exactly match original R3",
+          "All276original file seals and four upstream development CSVs verified; no consumed holdout access or model promotion",
+          "Previous full test handle94099 missing and authoritative process inventory contains no Python/pytest/FFmpeg workers; no research job restarted",
+          "Merged non-overlapping current main267ed42; current full suite85313 records durable log, XML and exit under .cache/portable64-repaired-full-v2.*"
         ],
-        "head_sha": "10fbd3be99647feed61bf04dcdb59a54e28e55c2",
-        "main_active_jobs_observed_read_only": [],
+        "head_sha": "36c5a8fc5bdd5d8e43192fb42fb95e8326430f16",
+        "job_id": "1c9d76083ee747b89763f261e0f31b11",
         "manifest_sha256": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
-        "next": "One newly admitted fixed CPU reproduction for repaired source provenance, then full checks, fresh exact-head independent review and normal controller integration",
+        "next": "Finish full checks, publish exact revision and obtain fresh independent review-v2 before normal controller integration",
         "output": ".cache/portable64-reproduction-v2",
-        "phase": "Repair round1 canonical source identity guard;44focused tests pass; preparing new final-source reproduction"
+        "phase": "Repair round1 implemented; final-source admitted CPU reproduction complete; full tests and final publication in progress"
       },
-      "checkpoint_at": 1792462821,
+      "checkpoint_at": 1792467657,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
         "branch": "codex/issue-64-make-the-fixed-r3-observed-stroke-develo",
         "epoch": 1,
-        "expires_at": 1792473621,
+        "expires_at": 1792478457,
         "granted_at": 1792460570,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
