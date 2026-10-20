@@ -224,6 +224,41 @@ export function createEditorController() {
     }
     return !j.analysis_key;
   }
+  function latestCore(plan: ObjectData) {
+    const frame =
+      playback.getSnapshot().sourceFrame ??
+      snapshot().video?.review_start_frame ??
+      0;
+    const part = objects(plan.parts).find((p) => {
+      const window = object(p.window);
+      return (
+        num(window.core_start_frame) <= frame &&
+        frame < num(window.core_end_frame)
+      );
+    });
+    return part ? num(object(part.window).index) : null;
+  }
+  // The first plan is not yet available to setFrame while its runs load.
+  // Reconcile that pending view before exposing any frame-scoped results.
+  function reconcileInitialCore(
+    plan: ObjectData | null,
+    enabled: boolean,
+    index: number | null,
+  ) {
+    if (!plan || !enabled || planStale(plan)) return false;
+    const current = latestCore(plan);
+    if (current === index) return false;
+    invalidateView();
+    publish({
+      plan,
+      analysisEnabled: true,
+      partIndex: current,
+      runs: {},
+      actors: [],
+    });
+    void refresh();
+    return true;
+  }
   function setFrame(frame: number) {
     const s = snapshot();
     if (!s.video) return;
@@ -260,6 +295,13 @@ export function createEditorController() {
     polling = true;
     pollingView = version;
     pollAgain = false;
+    const pendingView: {
+      value: {
+        plan: ObjectData | null;
+        enabled: boolean;
+        index: number | null;
+      } | null;
+    } = { value: null };
     try {
       await resource.run(
         owner,
@@ -318,6 +360,11 @@ export function createEditorController() {
             }
           }
           if (plan && planStale(plan)) analysisEnabled = false;
+          pendingView.value = {
+            plan,
+            enabled: analysisEnabled,
+            index: partIndex,
+          };
           const part =
             analysisEnabled && plan
               ? objects(plan.parts).find(
@@ -392,11 +439,32 @@ export function createEditorController() {
           };
         },
         (result) => {
-          if (version === viewVersion && result) publish(result);
+          if (
+            version === viewVersion &&
+            result &&
+            !reconcileInitialCore(
+              result.plan,
+              result.analysisEnabled,
+              result.partIndex,
+            )
+          )
+            publish(result);
         },
       );
     } catch (e) {
-      if (scope.isCurrent(owner) && version === viewVersion) handle(e);
+      if (
+        scope.isCurrent(owner) &&
+        version === viewVersion &&
+        !(
+          pendingView.value &&
+          reconcileInitialCore(
+            pendingView.value.plan,
+            pendingView.value.enabled,
+            pendingView.value.index,
+          )
+        )
+      )
+        handle(e);
     } finally {
       // An ignored abort may outlive a replacement poll. Only the active
       // poll may release its busy flag or consume its queued refresh.

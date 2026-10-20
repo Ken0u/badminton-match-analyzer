@@ -1316,6 +1316,58 @@ try {
     assert.deepEqual(await api(largeRoot + "/annotations"), reviewed);
     await write("pipeline-plan.json", plan);
     await write("pipeline-jobs.json", { paused, complete, cached });
+    // Initial selection exposes the source before the first derived plan returns.
+    // Seeking during that first run read must reconcile the view at publication.
+    const firstPlan = await api(largeRoot + `/analysis/${reused}`);
+    const firstPlayers = firstPlan.parts.find(
+      (p) => p.window.core_start_frame === 0,
+    ).stages.players.run_id;
+    await page.reload();
+    await page.locator(`button[data-video="${seeded.large.id}"]`).waitFor();
+    const firstRoute = `**${largeRoot}/runs/${firstPlayers}`;
+    let firstHeld = false,
+      releaseFirst,
+      enteredFirst;
+    const firstGate = new Promise((resolve) => {
+      releaseFirst = resolve;
+      releases.push(resolve);
+    });
+    const firstStarted = new Promise((resolve) => {
+      enteredFirst = resolve;
+    });
+    await page.route(firstRoute, async (route) => {
+      if (!firstHeld) {
+        firstHeld = true;
+        enteredFirst();
+        await firstGate;
+      }
+      await continueOwnedRoute(route);
+    });
+    await selected(seeded.large);
+    await Promise.race([
+      firstStarted,
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(Error("Initial owned players read did not start")),
+          15000,
+        ),
+      ),
+    ]);
+    await exact(600);
+    releaseFirst();
+    await page.locator('[data-candidate="qa-contact-600"]').waitFor();
+    await page.waitForTimeout(2200);
+    assert.equal(
+      await page.locator('[data-candidate="qa-contact-600"]').count(),
+      1,
+      "Initial run response restored the old source core",
+    );
+    assert.equal(await page.locator("#frame-number").inputValue(), "600");
+    assert.equal(
+      await page.locator('[data-candidate="qa-contact-0"]').count(),
+      0,
+    );
+    await page.unroute(firstRoute);
     return {
       paused: paused.status,
       resumed: complete.status,
@@ -1478,6 +1530,18 @@ try {
     ]) {
       await page.locator("#next-frame").focus();
       await page.keyboard.press(key);
+      await page.waitForFunction((kind) => {
+        const focus =
+          kind === "shot"
+            ? "event-family"
+            : kind === "serve"
+              ? "event-player"
+              : "event-frame";
+        return (
+          document.querySelector("#event-kind").value === kind &&
+          document.activeElement.id === focus
+        );
+      }, kind);
       assert.equal(await page.locator("#event-kind").inputValue(), kind);
     }
     await addShot(16, "Keyboard saved QA");

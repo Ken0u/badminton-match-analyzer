@@ -604,3 +604,150 @@ test("review view changes fence delayed analysis, run and playback responses and
           },
         );
 });
+
+test("first analysis publication follows seeks while initial derived reads are pending", async (t) => {
+  const { createEditorController } =
+    await import("../.test-build/editor/controller.js");
+  for (const boundary of ["run", "playback"])
+    for (const sequence of [[6], [6, 1, 8], [6, 1]])
+      for (const staleFailure of [false, true]) {
+        // A failure for a core that is still current is a real current error.
+        if (staleFailure && sequence.at(-1) < 5) continue;
+        await t.test(
+          `${boundary}: seek ${sequence.join(" → ")}, late ${staleFailure ? "error" : "success"}`,
+          async () => {
+            const previousFetch = globalThis.fetch;
+            const annotation = parseDocument({
+              mode: "singles",
+              players: [{ id: "p", name: "Player", team: "T1" }],
+              revision: 0,
+            });
+            const video = {
+              id: "v",
+              name: "initial-load",
+              mode: "singles",
+              duration_s: 1,
+              frame_count: 10,
+              width: 64,
+              height: 32,
+              fps: 10,
+            };
+            const analysis = {
+              id: "analysis",
+              video_id: "v",
+              kind: "analysis",
+              status: "completed",
+              progress: 1,
+            };
+            const jobs = [
+              analysis,
+              ...[0, 1].map((index) => ({
+                id: `players${index}`,
+                video_id: "v",
+                kind: "players",
+                status: "completed",
+                progress: 1,
+                analysis_key: "analysis",
+              })),
+            ];
+            const plan = {
+              job: analysis,
+              state: "completed",
+              requires_processing_rerun: false,
+              recipe: {
+                context_signature: contextSignature(annotation, 0, 10),
+              },
+              parts: [0, 1].map((index) => ({
+                window: {
+                  index,
+                  core_start_frame: index * 5,
+                  core_end_frame: (index + 1) * 5,
+                },
+                stages: { players: { run_id: `players${index}` } },
+              })),
+            };
+            const entered = deferred(),
+              release = deferred();
+            let held = false;
+            globalThis.fetch = async (url) => {
+              const p = String(url).split("?")[0];
+              if (
+                !held &&
+                (boundary === "run"
+                  ? p.includes("/runs/")
+                  : p.endsWith("/playback"))
+              ) {
+                held = true;
+                entered.resolve();
+                await release.promise;
+                if (staleFailure) throw Error("Obsolete initial core failed");
+              }
+              let value;
+              if (p === "/api/videos") value = [video];
+              else if (p === "/api/jobs") value = jobs;
+              else if (p.endsWith("/annotations")) value = annotation;
+              else if (p.endsWith("/timestamps"))
+                value = Array.from({ length: 10 }, (_, i) => i / 10);
+              else if (p.endsWith("/analysis/analysis")) value = plan;
+              else if (p.includes("/runs/")) {
+                const index = p.endsWith("players1") ? 1 : 0;
+                value = {
+                  start_frame: index * 5,
+                  end_frame: (index + 1) * 5,
+                  frames: [],
+                };
+              } else if (p.endsWith("/playback"))
+                value = { status: "missing", url: null };
+              else value = video;
+              return new Response(JSON.stringify(value));
+            };
+            try {
+              const c = createEditorController(),
+                selecting = c.select("v");
+              await entered.promise;
+              assert.equal(
+                c.snapshot().plan,
+                null,
+                "Regression must begin before the first plan is installed",
+              );
+              for (const frame of sequence) c.setFrame(frame);
+              c.notice("Current source review");
+              const frame = sequence.at(-1),
+                expected = frame < 5 ? 0 : 1,
+                history = [];
+              const unsubscribe = c.subscribe(() =>
+                history.push(structuredClone(c.snapshot())),
+              );
+              release.resolve();
+              await selecting;
+              await eventually(
+                () => c.snapshot().runs.players?.id === `players${expected}`,
+                "Initial derived results did not converge on the current native core",
+              );
+              await c.refresh();
+              unsubscribe();
+              assert.equal(c.playback.getSnapshot().sourceFrame, frame);
+              assert.equal(c.snapshot().partIndex, expected);
+              assert.equal(c.snapshot().error, false);
+              assert.doesNotMatch(c.snapshot().notice, /Obsolete/);
+              for (const state of history)
+                if (state.runs.players) {
+                  assert.equal(
+                    state.partIndex,
+                    expected,
+                    "No first-load old core may be published",
+                  );
+                  assert.equal(
+                    state.runs.players.id,
+                    `players${expected}`,
+                    "Initial run belongs to another source core",
+                  );
+                }
+            } finally {
+              release.resolve();
+              globalThis.fetch = previousFetch;
+            }
+          },
+        );
+      }
+});
