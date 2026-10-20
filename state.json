@@ -1503,6 +1503,28 @@
       "task_id": "95",
       "verb": "review-next"
     },
+    "mac-review95-01a156d5-grant2": {
+      "actor": "dootz1",
+      "at": 1792460851,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
+        "epoch": 1,
+        "expires_at": 1792471651,
+        "granted_at": 1792460851,
+        "head_sha": "4dcc0390c89385c81f3e889100bfe696a58992ca",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 134,
+        "review_epoch": 2,
+        "session_id": "mac-review95-01a156d5",
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+      },
+      "epoch": 1,
+      "fingerprint": "cbc8c52be9bd1246fc35f5c8198da8128f58ef4b1d1683e0a227c721cf61145e",
+      "status": "granted",
+      "task_id": "95",
+      "verb": "review-next"
+    },
     "mac-review95-01a156d5-register": {
       "actor": "dootz1",
       "at": 1792460487,
@@ -7112,7 +7134,20 @@
       "pr_number": 134,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
+        "epoch": 1,
+        "expires_at": 1792471651,
+        "granted_at": 1792460851,
+        "head_sha": "4dcc0390c89385c81f3e889100bfe696a58992ca",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 134,
+        "review_epoch": 2,
+        "session_id": "mac-review95-01a156d5",
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Create a locked React + strict TypeScript + Vite source workspace at backend/frontend/, with typecheck/build scripts and a documented generated-asset policy. Keep the current default UI working.",
