@@ -117,7 +117,7 @@ and return focus. This foundation is not a WCAG or screen-reader certification.
 
 `npm run frontend:test` compiles modules to ignored `.test-build/`, runs focused
 Node tests and removes that directory. Compile-only probes reject missing paths,
-unsupported methods, invalid request enums and missing mutation bodies.
+required queries, unsupported methods, invalid request enums and missing mutation bodies.
 Unit probes cover structured/non-JSON errors, status/conflict preservation,
 request-body/revision forwarding, cancellation, late success/error, selection ABA,
 separate records/jobs, edits during save, failed/stale mutation preservation and
@@ -191,3 +191,16 @@ owned generated-media backend with downloader/perception stubs. It does not
 prove external downloader availability, model accuracy, source-clock editor
 parity, or screen-reader certification. The legacy editor remains available
 until the later review-editor and default-cutover phases establish parity.
+
+Run the built library integration from the repository root:
+
+```sh
+npm run frontend:build
+node tests/frontend-library.mjs
+```
+
+As with the foundation harness, `FRONTEND_PYTHON` and
+`PLAYWRIGHT_BROWSERS_PATH` may select the locked review interpreter and cached
+test Chromium. The harness rejects `BASE_URL`, owns both loopback listeners,
+retains source/build hashes and cleanup receipts, and preserves generated
+source bytes, native timestamps, saved annotations and original predictions.
