@@ -4170,6 +4170,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle139-review-v1-register": {
+      "actor": "Ken0u",
+      "at": 1792484291,
+      "fingerprint": "7861fa6ff08b810f0457445121b80e90e688953b27978481dcf0a289a160854e",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-shuttle139-start-v1": {
       "actor": "Ken0u",
       "at": 1792469338,
@@ -8726,6 +8733,22 @@
       "host_id": "MSI",
       "registered_at": 1792468733,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    },
+    "MSI/shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "python-3.10",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792484291,
+      "session_id": "shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6"
     },
     "MSI/windows-external119-review-v1": {
       "actor": "Ken0u",
