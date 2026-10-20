@@ -4,7 +4,6 @@ import { createLibraryController } from "./controller.js";
 import { activeJob } from "./model.js";
 import type { Job } from "./model.js";
 
-declare const __LEGACY_EDITOR_URL__: string;
 function Jobs({ jobs, label }: { jobs: Job[]; label: string }) {
   return (
     <div
@@ -86,22 +85,21 @@ export function LibraryApp() {
   return (
     <main>
       <header>
-        <p className="eyebrow">Badminton match analyzer · Phase 96 preview</p>
+        <p className="eyebrow">Badminton match analyzer</p>
         <h1>Match library</h1>
         <p>Import videos and monitor full-match processing.</p>
         <p className="boundary">
           Automatic annotation accuracy is not established. Processing coverage
-          and completed jobs do not prove correct labels. Review annotations in
-          the legacy editor.
+          and completed jobs do not prove correct labels. Review every
+          annotation in the editor.
         </p>
         <nav aria-label="Application">
           <a
             href={`/editor${state.selectedId ? `?video=${encodeURIComponent(state.selectedId)}` : ""}`}
           >
-            Open React review editor
+            Open review editor
           </a>{" "}
-          · <a href={__LEGACY_EDITOR_URL__}>Open legacy editor</a> ·{" "}
-          <a href="/">Frontend foundation sandbox</a>
+          · <a href="/library">Match library</a>
         </nav>
       </header>
       <section aria-labelledby="import-heading">

@@ -414,7 +414,7 @@ export function createLibraryController({
       error(
         "media",
         new Error(
-          "Video playback could not load. Prepare playback, retry the compatible copy, or open the legacy editor for exact-frame review.",
+          "Video playback could not load. Prepare playback or retry the compatible copy. Exact-frame review remains available in the review editor.",
         ),
       );
     },

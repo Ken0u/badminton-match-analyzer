@@ -1,17 +1,21 @@
 import { createRoot } from "react-dom/client";
-import { App } from "./App.js";
 import { EditorApp } from "./editor/EditorApp.js";
 import { LibraryApp } from "./library/LibraryApp.js";
 import "./style.css";
 
 const root = document.getElementById("root");
 if (!root) throw new Error("Missing application root");
+const route = location.pathname.replace(/\/$/, "") || "/";
 createRoot(root).render(
-  location.pathname.replace(/\/$/, "") === "/editor" ? (
+  route === "/editor" ? (
     <EditorApp />
-  ) : location.pathname.replace(/\/$/, "") === "/library" ? (
+  ) : route === "/" || route === "/library" ? (
     <LibraryApp />
   ) : (
-    <App />
+    <main>
+      <h1>Page not found</h1>
+      <p>This application route is not available.</p>
+      <a href="/">Open the match library</a>
+    </main>
   ),
 );

@@ -30,7 +30,7 @@ export interface Analysis {
 }
 export class PayloadError extends Error {
   constructor(resource: string) {
-    super(`Invalid ${resource} response. Reload or use the legacy editor.`);
+    super(`Invalid ${resource} response. Reload before continuing.`);
   }
 }
 function record(value: unknown): Record<string, unknown> {
@@ -184,7 +184,7 @@ export function errorMessage(error: unknown): string {
           : error.message;
     const hint =
       error.status === 401 || error.status === 403
-        ? " Authentication is required; open the legacy editor to sign in."
+        ? " Authentication is required; sign in and retry."
         : error.status === 413
           ? " Choose a smaller video."
           : error.status === 409

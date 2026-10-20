@@ -1,8 +1,10 @@
-# Frontend preview workspace
+# React frontend workspace
 
-Phase [#95](https://github.com/Ken0u/badminton-match-analyzer/issues/95) introduces
-an opt-in development workspace. FastAPI still serves the existing legacy UI.
-The root sandbox uses synthetic local samples. Phase [#96](https://github.com/Ken0u/badminton-match-analyzer/issues/96) adds an opt-in match library at `/library`; it is not an annotation editor. Software checks do not establish badminton annotation accuracy.
+The production build serves the match library at `/` and `/library`, and the
+complete review workflow at `/editor`. FastAPI owns those routes and serves the
+same static build; Node is never required at application runtime. Software
+checks and successful processing do not establish automatic annotation
+accuracy, so every annotation remains reviewable.
 
 ## Reproduce
 
@@ -17,14 +19,57 @@ npm run frontend:contract:check
 npm run test:frontend-foundation
 ```
 
-For development, `npm run dev --workspace @badminton/frontend` starts an opt-in
+The root scripts are expected to delegate to the workspace commands shown
+below. The delivery integration should add equivalents for `frontend:stage` and
+`frontend:stage:check`; this bounded workspace intentionally does not edit the
+root package file.
+
+For development, `npm run dev --workspace @badminton/frontend` starts a
 loopback Vite server. `npm run build --workspace @badminton/frontend` produces
-static HTML/CSS/JS in `backend/frontend/dist/`; Node is a build/development tool.
+production HTML/CSS/JS in `backend/frontend/dist/`; Node is a build/development tool.
 This workspace does not add a production Node server. The Vite configuration
 uses its built-in automatic JSX transform without an additional React plugin.
 TypeScript 5.9.3 meets openapi-typescript 7.13.0's declared TypeScript 5 peer range.
 Dependencies are exact and the workspace is resolved by the root package lock;
 do not create another lockfile here.
+
+## Production build and staging
+
+Build, stage, and verify in separate explicit steps:
+
+```sh
+npm run build --workspace @badminton/frontend
+node backend/frontend/scripts/stage.mjs --output .cache/frontend-static
+node backend/frontend/scripts/stage.mjs --check --output .cache/frontend-static
+npm run test:delivery --workspace @badminton/frontend
+```
+
+Omitting `--output` targets `backend/badminton/static`. Staging never runs an
+install or build. It accepts only a canonical output directory inside the
+repository, allows only `backend/badminton/static` or a directory below
+`.cache`, rejects symlinks and unsafe paths, and replaces that specific output
+directory with the reviewed files from `dist`. Do not run the
+default staging command against a working tree whose static assets should be
+preserved.
+
+The runtime set contains root-relative `index.html`, `app.js`, `style.css`, and
+any nested hashed runtime assets, plus `build-manifest.json`. The manifest has
+`schema_version`, a `sha256:` `input_fingerprint`, sorted `inputs`, and sorted
+`assets`; both maps use repository/build-relative filenames and raw lowercase
+SHA-256 values. Inputs cover `.node-version`, the root lockfile, and frontend
+configuration, package, scripts, and source. They contain no timestamp,
+absolute path, port, private data, or Git revision. `--check` refuses missing,
+extra, altered, or input-stale files without writing.
+
+The synthetic foundation is excluded from production output. It remains an
+explicit local test artifact only:
+
+```sh
+npm run build:foundation --workspace @badminton/frontend
+```
+
+That command replaces `dist`; run the production build again before staging.
+Building or staging does not restart or upgrade any running application.
 
 ## Contract ownership and limitations
 
@@ -42,9 +87,8 @@ The embedded exporter in `scripts/contract.mjs` sets `BADMINTON_ROOT`, `BADMINTO
 fresh temporary catalog/export directory, resolves platform temporary path
 aliases, and removes its own temporary files. It neither starts app lifespan/
 HTTP/inference nor reads an existing catalog. Backend imports still require the
-declared Python review dependencies. The exporter stays embedded so this phase
-adds no Python namespace package to existing distributions. Packaging and default
-UI cutover remain scoped to phase 98. Do not point this tool at live data.
+declared Python review dependencies. The exporter stays embedded and adds no
+Python namespace package to distributions. Do not point this tool at live data.
 
 The current backend provides request schemas, parameters and validation errors,
 but its JSON success responses generally have no declared response model.
@@ -125,18 +169,16 @@ imperative subscriber cleanup. The browser harness exercises the compiled
 sandbox, native focus/keyboard behavior and actual backend HTTP contracts.
 
 `dist/`, `.test-build/`, caches, node_modules, catalogs and browser receipts remain
-ignored. Do not copy built output into `backend/badminton/static/` in this phase.
-Phase 98 owns production asset packaging, Python package discovery exclusions,
-CI/container wiring, the reversible default cutover and legacy retirement after
-full parity evidence. No running application is restarted/upgraded here.
+ignored. Use the staging command above to copy only audited runtime output.
+Python package discovery, CI/container wiring, and committed generated assets
+remain owned by the delivery integrator. No running application is
+restarted/upgraded here.
 
-## Library preview (phase 96)
+## Match library
 
-The root route preserves the phase-95 foundation browser contract; `/library`
-opens the real library/import/job preview. Static hosts must serve `index.html`
-for `/library` and `/library/` and assets at `/assets/`. The default FastAPI UI
-and its source files are unchanged. No production package/cutover is included.
-The foundation page links to the preview, and the preview links back.
+The root route and `/library` open the library/import/job workflow. Static hosts
+must serve `index.html` for `/library` and `/library/`; FastAPI provides this
+fallback in production.
 
 Point only an owned development fixture at the Vite loopback proxy:
 
@@ -146,12 +188,10 @@ BADMINTON_FRONTEND_BACKEND_URL=http://127.0.0.1:8000/ npm run dev --workspace @b
 
 The optional variable accepts a loopback HTTP(S) backend origin only. `/api`
 requests use the same-origin proxy and existing authentication; the browser
-client never forwards session credentials to a configured remote origin. The
-legacy editor link points to the actual backend root (this origin, or
-`http://127.0.0.1:8000/` when unset). It does not promise a selected-video deep
-link. For builds the origin is frozen at build time. A separate static preview
-server must proxy `/api` to its own backend. These settings neither launch nor
-upgrade an existing app. Node remains a build/development dependency only.
+client never forwards session credentials to a configured remote origin. A
+separate static development server must proxy `/api` to its own backend. These
+settings neither launch nor upgrade an existing app. Node remains a
+build/development dependency only.
 
 The controller validates unknown success payloads at runtime, including video
 identity, finite progress, analysis ownership, server processing settings and the
@@ -205,13 +245,12 @@ test Chromium. The harness rejects `BASE_URL`, owns both loopback listeners,
 retains source/build hashes and cleanup receipts, and preserves generated
 source bytes, native timestamps, saved annotations and original predictions.
 
-## React review editor (phase 97)
+## Review editor
 
-`/editor` opens the opt-in React/TypeScript review editor. `/editor?video=ID`
-selects that exact library entry after the library response is validated. The
-phase-96 library links to this route with the selected ID. Static preview hosts
-must return `index.html` for `/editor` as well as `/library`; both use the same
-owned development proxy. The FastAPI production default is unchanged.
+`/editor` opens the React/TypeScript review editor. `/editor?video=ID` selects
+that exact library entry after the library response is validated. The library
+links to this route with the selected ID. Static development hosts must return
+`index.html` for `/editor` as well as `/library`; both use the same owned proxy.
 
 `src/editor/model.ts` validates unknown metadata, native timestamp tables,
 annotation collections, jobs and run payloads. It preserves original fields and
@@ -252,9 +291,9 @@ integration/performance contract. It retains the phase-94 native source recipes,
 clock/overlay actions and timing budgets and adapts the surface to `/editor`.
 Its source inputs, predictions and classifiers are synthetic; passing software,
 coverage and timing checks does not establish badminton annotation accuracy.
-Production asset packaging/default cutover remains phase 98.
+Installed-package, container, and browser verification remain integration work.
 
-## Opt-in reviewed media exports
+## Reviewed media exports
 
 The editor's **Export reviewed media** panel starts a native media job only after
 the user explicitly selects `plain-rallies`, `annotated-rallies`, or
@@ -272,10 +311,8 @@ reviewed/predicted distinction; exported media and software checks do not claim
 annotation accuracy. Unknown, failed, unavailable, authentication, and shared
 admission states remain non-actionable with explicit refresh/retry guidance.
 
-This remains an opt-in editor feature. It does not package assets, change the
-FastAPI default UI, or perform the phase-98 default cutover. After building with
-the existing generated-fixture environment instructions above, reproduce the
-owned browser contract from the repository root with:
+After building with the existing generated-fixture environment instructions
+above, reproduce the owned browser contract from the repository root with:
 
 ```sh
 node tests/frontend-exports.mjs

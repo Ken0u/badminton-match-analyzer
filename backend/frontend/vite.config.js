@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 
-// Optional development proxy only; never point this preview at a live catalog.
+// Optional development proxy only; never point this server at a live catalog.
 const backend = new URL(
   process.env.BADMINTON_FRONTEND_BACKEND_URL ?? "http://127.0.0.1:8000/",
 );
@@ -19,10 +19,35 @@ if (
 const proxy = process.env.BADMINTON_FRONTEND_BACKEND_URL
   ? { "/api": { target: backend.origin } }
   : undefined;
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   base: "/",
-  define: { __LEGACY_EDITOR_URL__: JSON.stringify(backend.href) },
-  build: { outDir: "dist", emptyOutDir: true },
+  plugins:
+    mode === "foundation"
+      ? [
+          {
+            name: "foundation-entry",
+            transformIndexHtml: {
+              order: "pre",
+              handler: (html) =>
+                html.replace("/src/main.tsx", "/src/foundation.tsx"),
+            },
+          },
+        ]
+      : [],
+  build: {
+    outDir: "dist",
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        entryFileNames: "app.js",
+        assetFileNames: (asset) =>
+          asset.names?.some((name) => name.endsWith(".css"))
+            ? "style.css"
+            : "assets/[name]-[hash][extname]",
+        chunkFileNames: "assets/[name]-[hash].js",
+      },
+    },
+  },
   server: { host: "127.0.0.1", strictPort: true, proxy },
   preview: { host: "127.0.0.1", strictPort: true, proxy },
-});
+}));
