@@ -1244,6 +1244,14 @@
       "task_id": "151",
       "verb": "plan"
     },
+    "mac-01a15493-plan153-v1": {
+      "actor": "dootz1",
+      "at": 1792519847,
+      "fingerprint": "749860953a777a98165b992f3aacc93b286d069f67080691168172065bd24bc2",
+      "status": "needs_human",
+      "task_id": "153",
+      "verb": "plan"
+    },
     "mac-01a15493-post98-next-v1": {
       "actor": "dootz1",
       "at": 1792518646,
@@ -2998,6 +3006,14 @@
       "fingerprint": "6ea83f80d1dc5164bc4765206a96106d6c30de9eafaf740823dc08c811f0fb6a",
       "status": "ready",
       "task_id": "151",
+      "verb": "plan"
+    },
+    "spec-153-85fa5c846258602ad3a0cf39c2c2183cea85e723b09c7002346c00ed44fbfb84": {
+      "actor": "dootz1",
+      "at": 1792519847,
+      "fingerprint": "81b4f79543e416becdaa5ee5c0f8ee92e61c7eee6db3a43ed13872bf539cbcd8",
+      "status": "needs_human",
+      "task_id": "153",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -8542,6 +8558,48 @@
         "pr_number": 152,
         "spec_hash": "f4846fab1f9b9418c6df528e34fe180b56ae1b63025d0f16cee5edec0b38fb21"
       }
+    },
+    "153": {
+      "epoch": 0,
+      "planned_at": 1792519847,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Replace the stale mandatory non-author final-human-review sentence in docs/DEPLOYMENT.md with the current distinction: explicit configured-owner authorization of sensitive frozen task scope, fresh independent agent approval and exact CI; non-author human final PR review optional.",
+          "Link current AGENTS.md and docs/COLLABORATION.md and the phase98 complete controller/main/public-delivery checkpoint. Preserve original phase98 historical issue/review records.",
+          "Keep explicit operator authorization for actual deployment, process ownership checks, rollback/data preservation, public candidate receipts and the prohibition on automatic upgrades."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "151"
+        ],
+        "exclusions": [
+          "Documentation only; no changes to policy, authentication, workflow, Docker, source/runtime, datasets/models, or running applications.",
+          "Do not reinterpret original historical reviews or fabricate human approval."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Align the deployment guide final-review wording with the existing approved repository policy, preserving all deployment and running-app restrictions.",
+        "paths": [
+          "docs/DEPLOYMENT.md"
+        ],
+        "priority": 80,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Repository UTF-8/LF/JSON/local-link and diff checks; fresh independent exact-head/base/spec review and required CI.",
+          "Controller integration, exact merged-main verification and full approved-visibility package/review-image/CPU-image receipts."
+        ]
+      },
+      "spec_hash": "2af05da9de1c13f43a02fab9971e056687b4b1fc4cfcef3d1495c5d175280a77",
+      "status": "needs_human"
     },
     "62": {
       "epoch": 0,
