@@ -784,6 +784,15 @@
       "task_id": "98",
       "verb": "next"
     },
+    "mac-01a15493-98-start-v1": {
+      "actor": "dootz1",
+      "at": 1792506277,
+      "epoch": 1,
+      "fingerprint": "9a75138d35433f5dcf190fa0df54dbeb519c7f9a93d18e82ae565ef92994cf12",
+      "status": "running",
+      "task_id": "98",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-98-user-scope-approval-v1": {
       "actor": "dootz1",
       "at": 1792504320,
@@ -9876,12 +9885,22 @@
       }
     },
     "98": {
+      "checkpoint": {
+        "artifacts": ".cache/frontend-delivery-98/.cache/grant.json; .cache/frontend-delivery-98-ui/.cache/evidence/cli-events.jsonl; /private/tmp/task98-ui-assignment.md",
+        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "branch": "codex/issue-98-integrate-react-package-container-assets",
+        "head_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
+        "remaining": "Implement and test all delivery/parity/performance/installed/authenticated-container criteria; fresh exact-head independent review and required actual non-author human review; controller/main/full public delivery receipts.",
+        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
+        "stage": "Confirmed human-authorized epoch1 grant; isolated parent and bounded frontend worker worktrees created. Worker owns frontend only; parent handles API/package/static/Docker/CI/delivery tests/docs. Final PR must stay Draft pending actual non-author human review."
+      },
+      "checkpoint_at": 1792506277,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
         "branch": "codex/issue-98-integrate-react-package-container-assets",
         "epoch": 1,
-        "expires_at": 1792516794,
+        "expires_at": 1792517077,
         "granted_at": 1792505994,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
