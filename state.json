@@ -1983,6 +1983,15 @@
       "task_id": "97",
       "verb": "checkpoint"
     },
+    "roadmap97-resubmit-base-v4": {
+      "actor": "dootz1",
+      "at": 1792468811,
+      "epoch": 1,
+      "fingerprint": "4409e67aa677836ef34696a006023ec350aa098bb4cfc34b73c8ccc3b9d111d8",
+      "status": "review",
+      "task_id": "97",
+      "verb": "submit"
+    },
     "roadmap97-resubmit-v2": {
       "actor": "dootz1",
       "at": 1792466390,
@@ -8252,10 +8261,10 @@
         ]
       },
       "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "head_sha": "90f6b6caf9af1138bf525a3ea49381551977d310",
+        "base_sha": "0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa",
+        "head_sha": "d49973c901c4b09e4dcd6faebb20d52902b05603",
         "pr_number": 137,
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
       }
