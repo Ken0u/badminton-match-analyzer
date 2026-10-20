@@ -1860,6 +1860,15 @@
       "task_id": "97",
       "verb": "checkpoint"
     },
+    "roadmap97-repair-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792465760,
+      "epoch": 1,
+      "fingerprint": "18a98969e9af8562ba405cbc3f71a8dfa4e86d1f4a94d2fb1b715165b26f82df",
+      "status": "running",
+      "task_id": "97",
+      "verb": "checkpoint"
+    },
     "roadmap97-start-v1": {
       "actor": "dootz1",
       "at": 1792463536,
@@ -7862,24 +7871,22 @@
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "evidence": [
-          "32 frontend unit tests; strict TypeScript/build/OpenAPI contract; Python 1242 passed/13 skipped; Ruff148files, changed-source Prettier, repository/diff,47package health; fresh installed archive parity76 runtime files. Initial contract invocation used browser interpreter variable instead of documented FRONTEND_CONTRACT_PYTHON; corrected without source changes. Broad Prettier probe included unchanged generated artifacts/.gitignore; changed12sourcefile gate passes without reformatting frozen generated contract.",
-          "Three final editor runs bwm6EP/de1nAX/7uXpMV each pass17 groups; source and harness byte hashes independently match committed a48fbca. All9 actual playback observations have0 broad editor rerenders. Native PTS/orientation/proxy pixel checks, full reviews/explicit acceptance/exports, selection/save/conflict races, processing pause/resume/window media seek, focus, contrast13.2:1/18px checkboxes and tablet fit covered.",
-          "Frozen same-host Node22/Chromium/source bundle/current-lock comparison against prespecified legacy swN0QR/OBjZjD/GdqTdx passes all budgets: median p95 seek81.5ms<=102.5, timeline31.5<=67.0, first advance86.2<=362.25, rAF16.8<=40.875. Formal report .cache/evidence/frontend-editor-comparison.json. First overlapping-build baseline preserved/excluded per preregistration before timing results.",
-          "Foundation7 and library8 compatibility groups pass; owned fixture/static cleanup receipts retained. Development failures preserved: BAMGyl ambiguous selector, RIIyAH real visual contrast/checkbox regression repaired via scoped CSS, XKAdeL focus test observed in-flight saving before completed request; corrected measurement now verifies event-notes focus. No failed timing samples removed or budgets raised."
+          "Independent reviewer mac-review97-01a156d5 verified all 12 files, own full 17 browser groups, 32 unit tests, typecheck/build/contract, exact-head CI and 216 supplied receipt hashes. Formal finding and failed deterministic probe retained in .cache/review97-a48fbca/.cache/review-result.json and review-races.mjs/log.",
+          "P2 delayed refresh snapshots old analysis mode/window then overwrites reviewPart/seek/leave/track changes. Worker owns only controller.ts and editor.test.mjs generation fix; parent owns browser held-real-analysis-GET window switch regression. Legacy source, data/models/processes untouched."
         ],
         "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
         "pr_number": 137,
-        "remaining": "Fresh independent exact-head/base/spec review, hosted exact-head CI/controller integration, exact merged-main CI and complete package/review+CPU image receipt verification. Preserve default legacy UI until separately authorized phase98; no accuracy, deployment or app-upgrade claim.",
+        "remaining": "Freeze repaired head, strict/focused checks plus three unchanged-protocol editor performance reruns against retained matching legacy runs; fresh exact-head CI and new independent review epoch, controller/main/candidate verification.",
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "stage": "Committed opt-in React review editor and complete generated parity/performance driver; all local required and compatibility checks pass. Published PR #137; awaiting fresh independent exact-head/base/spec review and CI."
+        "stage": "Fresh independent review epoch 1 requested changes; committed status running with repair_rounds 1. Repairing same-video analysis-window poll ordering before new review."
       },
-      "checkpoint_at": 1792465281,
+      "checkpoint_at": 1792465760,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "epoch": 1,
-        "expires_at": 1792476081,
+        "expires_at": 1792476560,
         "granted_at": 1792463404,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
