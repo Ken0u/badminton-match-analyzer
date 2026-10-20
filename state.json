@@ -861,6 +861,15 @@
       "task_id": "98",
       "verb": "submit"
     },
+    "mac-01a15493-98-submit-currentmain-v5": {
+      "actor": "dootz1",
+      "at": 1792514851,
+      "epoch": 1,
+      "fingerprint": "747441205bbc50f313bd27b4e3fbaa5aada9d8e3aac5325018b1a46d55ed98d0",
+      "status": "review",
+      "task_id": "98",
+      "verb": "submit"
+    },
     "mac-01a15493-98-submit-export-ci-v4": {
       "actor": "dootz1",
       "at": 1792509080,
@@ -2059,6 +2068,13 @@
       "status": "granted",
       "task_id": "98",
       "verb": "review-next"
+    },
+    "mac-review98-r2-register-v1": {
+      "actor": "dootz1",
+      "at": 1792514851,
+      "fingerprint": "080103b93d3c99373d804fef47b8131a0f011e503d6132f0bb1f6bcf5338688c",
+      "status": "ok",
+      "verb": "register"
     },
     "mac-review98-register-v1": {
       "actor": "dootz1",
@@ -5205,6 +5221,26 @@
       "task_id": "145",
       "verb": "checkpoint"
     },
+    "windows-shuttle149-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792514851,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
+        "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response",
+        "epoch": 1,
+        "expires_at": 1792525651,
+        "granted_at": 1792514851,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
+      },
+      "epoch": 1,
+      "fingerprint": "8723765ce63e9b469afe4a5d6e289b079b2ba3eaeec5b5a41a99988953611574",
+      "status": "granted",
+      "task_id": "149",
+      "verb": "next"
+    },
     "windows-shuttle149-plan-v1": {
       "actor": "Ken0u",
       "at": 1792514744,
@@ -8155,7 +8191,18 @@
       }
     },
     "149": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
+        "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response",
+        "epoch": 1,
+        "expires_at": 1792525651,
+        "granted_at": 1792514851,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
+      },
+      "epoch": 1,
       "planned_at": 1792514744,
       "planned_by": "Ken0u",
       "spec": {
@@ -8212,7 +8259,7 @@
         ]
       },
       "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "epoch": 0,
@@ -10428,10 +10475,10 @@
         ]
       },
       "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "74fa08c419c82476a8a365087368afadcfd5d84d",
-        "head_sha": "663122175259b22ec1174dcb20e42a422b40fcc2",
+        "base_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
+        "head_sha": "5f2e760bde307e8748e9a486daef705c40a9f111",
         "pr_number": 148,
         "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
       }
@@ -10970,6 +11017,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792508478,
       "session_id": "mac-review98-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review98-r2-01a15493": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792514851,
+      "session_id": "mac-review98-r2-01a15493"
     },
     "Stanleys-Laptop.local/roadmap-01a156d5-20261019": {
       "actor": "dootz1",
