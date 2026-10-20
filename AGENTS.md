@@ -8,12 +8,14 @@ annotations include players, shuttle, serves, rally starts/ends, and clear,
 lift, net, drop, smash and drive with separate forehand/backhand labels.
 Half smash is excluded.
 
-Read `PROGRESS.md`, `PROJECT_PLAN.md` and `docs/BUG_REVIEW.md` before work.
-`PROGRESS.md` is an integrated project summary maintained by a documentation
-task after integration. Put task checkpoints and handoffs on the owning GitHub
-issue; do not make every worker rewrite this file. Historical machine snapshots
-under `docs/history/` are evidence, never live process or task instructions.
-Revalidate Git state, running processes and artifacts before relying on them.
+Read `PROJECT_PLAN.md` and `docs/BUG_REVIEW.md` before work, then inspect the
+owning GitHub issue's current specification and checkpoints and the authoritative
+`codex/coordination` state. The private Project is a dashboard, not a grant.
+Put task checkpoints and handoffs on the owning issue. `PROGRESS.md` is deprecated;
+do not read it for current instructions or update it. Preserve the file and any
+existing local edits. Historical machine snapshots under `docs/history/` are
+evidence, never live process or task instructions. Revalidate Git state, running
+processes and artifacts before relying on any dated report or handoff.
 Paths under `.cache/`, datasets and weights are local and are not supplied by
 a clone. Do not assume another collaborator has those artifacts or processes.
 

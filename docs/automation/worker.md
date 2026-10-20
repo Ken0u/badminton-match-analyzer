@@ -1,8 +1,12 @@
 # Implementation worker prompt
 
-Read AGENTS.md, PROJECT_PLAN.md, PROGRESS.md, docs/BUG_REVIEW.md and
-[the collaboration protocol](../COLLABORATION.md). Validate current Git/process
-state rather than adopting dated machine-specific handoffs.
+Read AGENTS.md, PROJECT_PLAN.md, docs/BUG_REVIEW.md and
+[the collaboration protocol](../COLLABORATION.md). Inspect the owning task issue's
+current specification and checkpoints, the private Project dashboard and the
+authoritative coordination state. Only a committed grant authorizes ownership.
+PROGRESS.md is deprecated; do not read it for current instructions or update it.
+Preserve the file, historical handoffs and existing local edits. Validate current
+Git/process/artifact state rather than adopting dated machine-specific handoffs.
 
 1. Run the queue doctor and register the authenticated collaborator, unique
    host/session, OS/architecture, Python profile and available input hashes.
