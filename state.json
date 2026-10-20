@@ -479,6 +479,24 @@
       "task_id": "94",
       "verb": "checkpoint"
     },
+    "mac-01a15493-94-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792455867,
+      "epoch": 1,
+      "fingerprint": "5790612c984d2bb48cf09c9c1f98506760f98c991d945d08d6e29ed9b7d9fb32",
+      "status": "review",
+      "task_id": "94",
+      "verb": "submit"
+    },
+    "mac-01a15493-94-tested-v1": {
+      "actor": "dootz1",
+      "at": 1792455867,
+      "epoch": 1,
+      "fingerprint": "80d847e36190af8d6b98968c2a6fa71771362d8a6b7a1e99d283a06c454f337c",
+      "status": "running",
+      "task_id": "94",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -5834,19 +5852,22 @@
     },
     "94": {
       "checkpoint": {
+        "artifacts": ".cache/frontend-baseline-94/.cache/evidence/implementation-handoff.md;frontend-baseline-{3HSX1o,yUIKgC,VvMj6g};frontend-baseline-comparison.json; .cache/full-tests.xml",
+        "base_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
         "branch": "codex/issue-94-freeze-frontend-parity-and-performance-b",
-        "head_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
-        "remaining": "Complete all browsermatrix blocks and repeated frozen-source measurements; preserve failed runs/processcleanup evidence; source review/fullprojectchecks; fresh independent exact-head/base/spec review, hostedCI, controllermerge/main/complete delivery. No benchmark pass/completion claimed yet.",
+        "head_sha": "b3d0e3a7bdda64218e18746c70cd2abf820056de",
+        "pr_number": 131,
+        "remaining": "Genuinelyfresh independent exacthead/base/spec browserreview+adversarialprobes; hostedCI/controllermerge/exactmain/completepackagebothimagereceipts. Phase95/repair130wait94verifiedcomplete.",
         "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38",
-        "stage": "Four-path implementation in progress. New generated real-app browser harness reached imports/source-clock/proxy/stale-selection/drafts/revisionconflicts/rallies/identities/review/evaluation. Production correctly rejected invalid test rally placement; fixture being repaired, no application UI edits or weakened validation. Protocol declared before measurements; exact generated-source/helper hash bundle reuse added; Windows/Python override and startup PID-lifetime cleanup implemented. Locked isolated Chromium installed under worktree cache only."
+        "stage": "Four-filebaseline committed clean; threefinal17/17same-sourcebrowserruns/protocolhashmatches,medianp95seek65.7ms/timeline36.6ms/playback273.4ms. Allfrozenceilingsunchanged; fullPython1242pass/13skips,lint/format147,locked47packages,repository/Prettier/MJSsyntax/diffcheckspass. Native/proxypixel/sourcePTS/revisions/unknowns/predictions/job/recovery/export checks realgeneratedapp; explicitexternal/inferencestubs,documentedcourtfocus/laggaps."
       },
-      "checkpoint_at": 1792455124,
+      "checkpoint_at": 1792455867,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
         "branch": "codex/issue-94-freeze-frontend-parity-and-performance-b",
         "epoch": 1,
-        "expires_at": 1792465924,
+        "expires_at": 1792466667,
         "granted_at": 1792454371,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
@@ -5855,6 +5876,7 @@
       "epoch": 1,
       "planned_at": 1792417955,
       "planned_by": "dootz1",
+      "pr_number": 131,
       "spec": {
         "acceptance": [
           "After playback proxies #69 integrate, capture generated-media coverage of upload/YouTube imports, library selection, stale requests, unsaved edits, revision conflicts, job progress/interruption, and JSON/CSV exports.",
@@ -5895,7 +5917,13 @@
         ]
       },
       "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "f2866cae9c1b11ec14594ea8c4ff611fa751375d",
+        "head_sha": "b3d0e3a7bdda64218e18746c70cd2abf820056de",
+        "pr_number": 131,
+        "spec_hash": "533d1a35e679a7670b6b23481faa55d56534e04ccada793bd1b4a1a15b464d38"
+      }
     },
     "95": {
       "epoch": 0,
