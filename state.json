@@ -2201,6 +2201,28 @@
       "task_id": "153",
       "verb": "review-result"
     },
+    "mac-review84-next-v1": {
+      "actor": "dootz1",
+      "at": 1792535192,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "68ac30b4b3024fcdb6b8c01bba09944220105c6d",
+        "epoch": 1,
+        "expires_at": 1792545992,
+        "granted_at": 1792535192,
+        "head_sha": "3bc49ab9ed506f0ce770a2e09f7b37d128574b2d",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 155,
+        "review_epoch": 1,
+        "session_id": "mac-review84-3bc49ab-independent",
+        "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7"
+      },
+      "epoch": 1,
+      "fingerprint": "731613782268339f1f16060602c26f55979b6de5c996f404b82637da8f58fb80",
+      "status": "granted",
+      "task_id": "84",
+      "verb": "review-next"
+    },
     "mac-review84-register-v1": {
       "actor": "dootz1",
       "at": 1792535086,
@@ -10229,6 +10251,20 @@
       "planned_by": "dootz1",
       "pr_number": 155,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "68ac30b4b3024fcdb6b8c01bba09944220105c6d",
+        "epoch": 1,
+        "expires_at": 1792545992,
+        "granted_at": 1792535192,
+        "head_sha": "3bc49ab9ed506f0ce770a2e09f7b37d128574b2d",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 155,
+        "review_epoch": 1,
+        "session_id": "mac-review84-3bc49ab-independent",
+        "spec_hash": "7625951a2348e031a449c330813b364ffba4c187795a4bbbf32364ce230b23f7"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Doctor invokes ffmpeg -version and ffprobe -version while retaining supported version probes for other executables.",
