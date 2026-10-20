@@ -408,3 +408,199 @@ test("editor ignores late selected resource success and preserves newer video ge
     globalThis.fetch = previousFetch;
   }
 });
+
+function deferred() {
+  let resolve;
+  const promise = new Promise((done) => {
+    resolve = done;
+  });
+  return { promise, resolve };
+}
+async function eventually(predicate, message) {
+  const deadline = Date.now() + 2000;
+  while (!predicate()) {
+    if (Date.now() > deadline) assert.fail(message);
+    await new Promise((resolve) => setTimeout(resolve, 1));
+  }
+}
+
+test("review view changes fence delayed analysis, run and playback responses and errors", async (t) => {
+  const { createEditorController } =
+    await import("../.test-build/editor/controller.js");
+  for (const boundary of ["analysis", "run", "playback"])
+    for (const action of ["review", "cross-core", "leave", "track"])
+      for (const staleFailure of [false, true])
+        await t.test(
+          `${action} during ${boundary}: stale ${staleFailure ? "error" : "success"}`,
+          async () => {
+            const previousFetch = globalThis.fetch;
+            const annotation = parseDocument({
+              mode: "singles",
+              players: [{ id: "P1", name: "Player", team: "T1" }],
+              revision: 0,
+            });
+            const video = {
+              id: "v",
+              name: "view-owned",
+              mode: "singles",
+              duration_s: 1,
+              frame_count: 10,
+              width: 64,
+              height: 32,
+              fps: 10,
+            };
+            const analysisJob = {
+              id: "analysis",
+              video_id: "v",
+              kind: "analysis",
+              status: "completed",
+              progress: 1,
+            };
+            let generation = "old",
+              armed = false,
+              used = false;
+            const started = deferred(),
+              release = deferred();
+            const playerId = (part) => `players-${part}-${generation}`;
+            const job = (part) => ({
+              id: playerId(part),
+              video_id: "v",
+              kind: "players",
+              status: "completed",
+              progress: 1,
+              analysis_key: part === "manual" ? null : "analysis",
+              summary: {
+                start_frame: part === 1 ? 5 : 0,
+                end_frame: part === 0 ? 5 : 10,
+              },
+            });
+            const plan = () => ({
+              job: analysisJob,
+              state: "completed",
+              requires_processing_rerun: false,
+              recipe: {
+                context_signature: contextSignature(annotation, 0, 10),
+              },
+              parts: [0, 1].map((index) => ({
+                window: {
+                  index,
+                  core_start_frame: index * 5,
+                  core_end_frame: (index + 1) * 5,
+                },
+                stages: { players: { run_id: playerId(index) } },
+              })),
+            });
+            globalThis.fetch = async (url, options = {}) => {
+              const p = String(url).split("?")[0];
+              const delayed =
+                boundary === "analysis"
+                  ? p.endsWith("/analysis/analysis")
+                  : boundary === "run"
+                    ? p.includes("/runs/")
+                    : p.endsWith("/playback");
+              if (armed && !used && delayed && options.method !== "POST") {
+                used = true;
+                started.resolve();
+                // Deliberately ignore AbortSignal so publication, not transport cooperation, is tested.
+                await release.promise;
+                if (staleFailure) throw Error(`obsolete ${boundary} failure`);
+              }
+              let value;
+              if (options.method === "POST")
+                value = { id: "new-window-tracking" };
+              else if (p === "/api/videos") value = [video];
+              else if (p === "/api/jobs")
+                value = [analysisJob, job(0), job(1), job("manual")];
+              else if (p.endsWith("/annotations")) value = annotation;
+              else if (p.endsWith("/timestamps"))
+                value = Array.from({ length: 10 }, (_, i) => i / 10);
+              else if (p.endsWith("/analysis/analysis")) value = plan();
+              else if (p.includes("/runs/")) {
+                const manual = p.includes("manual"),
+                  part = p.includes("players-1") ? 1 : 0;
+                value = {
+                  start_frame: manual ? 0 : part * 5,
+                  end_frame: manual ? 10 : (part + 1) * 5,
+                  frames: [],
+                };
+              } else if (p.endsWith("/playback"))
+                value = { status: "missing", url: null };
+              else value = video;
+              return new Response(JSON.stringify(value));
+            };
+            try {
+              const c = createEditorController();
+              await c.select("v");
+              assert.equal(c.snapshot().partIndex, 0);
+              generation = "next";
+              armed = true;
+              const pending = c.refresh();
+              await started.promise;
+              const manual = action === "leave" || action === "track",
+                expectedPart = manual ? null : 1;
+              const history = [];
+              const unsubscribe = c.subscribe(() =>
+                history.push(structuredClone(c.snapshot())),
+              );
+              if (action === "review") c.reviewPart(1);
+              else if (action === "cross-core") c.setFrame(6);
+              else if (action === "leave") c.leave();
+              else
+                c.track("players", { duration: 1, model: "small", auto: true });
+              c.notice("Current view notice");
+              // Current-view loading must finish while the obsolete transport
+              // remains stalled and deliberately ignores cancellation.
+              await eventually(
+                () =>
+                  c.snapshot().runs.players?.id ===
+                  playerId(manual ? "manual" : 1),
+                "The obsolete request blocked the current review view",
+              );
+              release.resolve();
+              await pending;
+              await eventually(
+                () =>
+                  c.snapshot().runs.players?.id ===
+                  playerId(manual ? "manual" : 1),
+                "Fresh poll did not load the current view's player run",
+              );
+              unsubscribe();
+              assert.equal(c.snapshot().partIndex, expectedPart);
+              assert.equal(c.snapshot().analysisEnabled, !manual);
+              assert.equal(c.snapshot().error, false);
+              assert.doesNotMatch(c.snapshot().notice, /obsolete/);
+              for (const s of history) {
+                assert.equal(
+                  s.partIndex,
+                  expectedPart,
+                  "No transient stale window may be published",
+                );
+                assert.equal(
+                  s.analysisEnabled,
+                  !manual,
+                  "No transient stale mode may be published",
+                );
+                if (s.runs.players)
+                  assert.equal(
+                    s.runs.players.id,
+                    playerId(manual ? "manual" : 1),
+                    "Runs must belong to the current review view",
+                  );
+                assert.equal(
+                  s.error,
+                  false,
+                  "Late errors must not replace current-view feedback",
+                );
+              }
+              if (!manual)
+                assert.equal(
+                  c.playback.getSnapshot().sourceFrame,
+                  action === "review" ? 5 : 6,
+                );
+            } finally {
+              release.resolve();
+              globalThis.fetch = previousFetch;
+            }
+          },
+        );
+});

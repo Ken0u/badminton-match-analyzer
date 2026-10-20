@@ -69,9 +69,20 @@ export function createEditorController() {
   let disposed = false,
     polling = false,
     pollAgain = false,
+    pollingView = 0,
+    activePoll = 0,
     selectionBusy = false;
   let edits = 0,
-    librarySequence = 0;
+    librarySequence = 0,
+    viewVersion = 0;
+  let automaticAnalysis = true;
+  // A review view owns its async reads independently of the selected video.
+  // Ordinary frame ticks do not invalidate reads; only window/mode changes do.
+  function invalidateView() {
+    ++viewVersion;
+    resource.cancel();
+    evaluation.cancel();
+  }
   const snapshot = store.getSnapshot;
   function publish(patch: Partial<EditorSnapshot>) {
     if (disposed) return;
@@ -110,6 +121,8 @@ export function createEditorController() {
         return;
       drafts.discard();
     }
+    invalidateView();
+    automaticAnalysis = true;
     const owner = scope.select(id);
     publish({
       loading: true,
@@ -228,6 +241,7 @@ export function createEditorController() {
       });
       const index = part ? num(object(part.window).index) : null;
       if (index !== s.partIndex) {
+        invalidateView();
         publish({ partIndex: index, runs: {} });
         void refresh();
       }
@@ -235,13 +249,17 @@ export function createEditorController() {
   }
   async function refresh() {
     if (disposed) return;
-    if (polling) {
+    if (polling && pollingView === viewVersion) {
       pollAgain = true;
       return;
     }
     const owner = scope.current();
     if (!owner) return;
+    const version = viewVersion,
+      poll = ++activePoll;
     polling = true;
+    pollingView = version;
+    pollAgain = false;
     try {
       await resource.run(
         owner,
@@ -268,7 +286,10 @@ export function createEditorController() {
               ),
             );
             parseAnalysis(plan, v.id, analysis.id);
-            if (!s.plan || object(s.plan.job).id !== analysis.id) {
+            if (
+              automaticAnalysis &&
+              (!s.plan || object(s.plan.job).id !== analysis.id)
+            ) {
               analysisEnabled = true;
               const frame =
                 playback.getSnapshot().sourceFrame ?? v.review_start_frame;
@@ -371,16 +392,20 @@ export function createEditorController() {
           };
         },
         (result) => {
-          if (result) publish(result);
+          if (version === viewVersion && result) publish(result);
         },
       );
     } catch (e) {
-      if (scope.isCurrent(owner)) handle(e);
+      if (scope.isCurrent(owner) && version === viewVersion) handle(e);
     } finally {
-      polling = false;
-      if (pollAgain) {
-        pollAgain = false;
-        void refresh();
+      // An ignored abort may outlive a replacement poll. Only the active
+      // poll may release its busy flag or consume its queued refresh.
+      if (poll === activePoll) {
+        polling = false;
+        if (pollAgain) {
+          pollAgain = false;
+          void refresh();
+        }
       }
     }
   }
@@ -417,15 +442,16 @@ export function createEditorController() {
     return v;
   }
   async function command(action: () => Promise<unknown>, message: string) {
-    const owner = scope.current();
+    const owner = scope.current(),
+      version = viewVersion;
     try {
       await action();
-      if (owner && scope.isCurrent(owner)) {
+      if (owner && scope.isCurrent(owner) && version === viewVersion) {
         notice(message);
         await refresh();
       }
     } catch (e) {
-      if (owner && scope.isCurrent(owner)) handle(e);
+      if (owner && scope.isCurrent(owner) && version === viewVersion) handle(e);
     }
   }
   function track(
@@ -448,7 +474,10 @@ export function createEditorController() {
         (s.times[start] ?? 0) + settings.duration - 0.00001
     )
       end++;
+    invalidateView();
+    automaticAnalysis = false;
     publish({ analysisEnabled: false, partIndex: null, runs: {} });
+    void refresh();
     void command(
       () =>
         api.request("post", "/api/videos/{video_id}/track", {
@@ -528,6 +557,8 @@ export function createEditorController() {
       handle(e);
       return;
     }
+    invalidateView();
+    automaticAnalysis = true;
     void command(
       () =>
         api.request("post", "/api/videos/{video_id}/analysis", {
@@ -597,6 +628,7 @@ export function createEditorController() {
       (p) => num(object(p.window).index) === index,
     );
     if (part) {
+      invalidateView();
       publish({ analysisEnabled: true, partIndex: index, runs: {} });
       const frame = num(object(part.window).core_start_frame);
       setFrame(frame);
@@ -605,6 +637,8 @@ export function createEditorController() {
     }
   }
   function leave() {
+    invalidateView();
+    automaticAnalysis = false;
     publish({ analysisEnabled: false, partIndex: null, runs: {} });
     void refresh();
   }
