@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "purpose": "Fixed two-resolution development comparison; no model promotion or application default change",
+  "inventory_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+  "packet_sha256": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+  "labels_sha256": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+  "baseline_sha256": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+  "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+  "variants": {"control": [512, 288], "candidate": [768, 432]},
+  "heatmap_threshold": 0.5,
+  "sequence_length": 8,
+  "device": "cuda:0",
+  "precision": "float16",
+  "background": "Original complete unique core-owner camera view; same at-most48 native-resolution median samples before resize",
+  "temporal_ensemble": "Every original native source frame in the complete target view; unchanged weighted overlapping windows and scene resets",
+  "localization": "Unchanged observed components and bounded selector; no interpolation, threshold search or coordinate correction",
+  "control_gate": {
+    "source_frames": "Compare every native row in every complete original target view before any candidate inference or scoring",
+    "exact": ["frame", "time_s", "camera_segment_start_frame", "all shuttle fields except confidence", "component order and all component fields except confidence"],
+    "confidence_absolute_tolerance": 0.00001,
+    "confidence_relative_tolerance": 0.0,
+    "mismatch": "Preserve all output and diagnostics; block candidate inference and comparable scoring; never substitute the new control for the baseline"
+  },
+  "metrics": {
+    "case_count": 60,
+    "diagonal_tolerance": 0.005,
+    "visibility_and_localization_separate": true,
+    "wrong_location": "One localization FP and FN; remains visibility TP",
+    "unknown": "Unscored truth; retained in all coverage denominators",
+    "unavailable": "Retained; known positives are misses and unavailable negatives never become true negatives",
+    "uncertainty": "Frozen radial-label lower/upper error and strict localization recall bounds, not statistical confidence intervals",
+    "observed_component_recall": "For available visible/localizable cases, any observed component within the same fixed nominal tolerance; distinguish component absence from selection errors",
+    "groups": ["all", "source", "visibility state", "difficulty", "disagreement", "availability", "uniform versus known-gap selection"],
+    "performance": ["decoded view frames", "elapsed seconds", "peak GPU tensor allocation MB (10^6 bytes)"]
+  },
+  "execution": {
+    "admission": "Real original shared data/processed Store through run_local_job plus committed queue GPU grant; isolated research storage never supplies admission",
+    "outputs": "Exclusive ignored per-view checkpoints and immutable receipts bound to complete source, clock, label, protocol, code, runtime, model and view hashes",
+    "resume": "Only complete matching sealed view checkpoints after verified prior PID/lifetime, Store status and artifact evidence; never assume exit from timeout",
+    "preservation": "No source, label, original prediction, app annotation, environment or weight changes"
+  },
+  "limitations": [
+    "Familiar two-source development cases, not a held-out or human-certified benchmark",
+    "Twenty-eight unknowns and no established occlusion, camera-transition or visible-unlocalizable support remain",
+    "Higher input resolution with unchanged weights can worsen outputs, runtime or memory; report both fixed variants without tuning",
+    "A negative or incompatible result is valid; broader source-separated singles/doubles and independent full-match validation remain required",
+    "No consumed holdout63 inputs or metadata, training, downloads, model installation/promotion or complete-accuracy claim"
+  ]
+}

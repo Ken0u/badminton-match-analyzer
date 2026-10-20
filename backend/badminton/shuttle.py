@@ -158,12 +158,32 @@ class _ComponentSelector:
         return result
 
 
-def _rgb(frame):
-    return np.asarray(frame.to_image().resize((WIDTH, HEIGHT)), dtype=np.uint8)
+def validate_input_size(input_size):
+    """Only the fixed default and explicitly scoped research variant are valid."""
+    if (
+        not isinstance(input_size, (tuple, list))
+        or len(input_size) != 2
+        or any(type(value) is not int for value in input_size)
+        or tuple(input_size) not in ((WIDTH, HEIGHT), (768, 432))
+    ):
+        raise ValueError("TrackNet input size must be 512x288 or 768x432")
+    return tuple(input_size)
+
+
+def _rgb(frame, input_size=(WIDTH, HEIGHT)):
+    return np.asarray(frame.to_image().resize(input_size), dtype=np.uint8)
 
 
 def infer_camera_segment(
-    frames, background, length, predict, width, height, *, selection_reset_frames=()
+    frames,
+    background,
+    length,
+    predict,
+    width,
+    height,
+    *,
+    selection_reset_frames=(),
+    input_size=(WIDTH, HEIGHT),
 ):
     """Bounded temporal ensemble for exactly one camera view.
 
@@ -171,6 +191,7 @@ def infer_camera_segment(
     half-open segment. No real frame or heatmap can leak across its boundary.
     Only a short segment's final frame is repeated for model shape padding.
     """
+    input_size = validate_input_size(input_size)
     buffer = deque()
     sums, denominators = {}, {}
     weights = np.minimum(np.arange(1, length + 1), np.arange(length, 0, -1)).astype(
@@ -207,7 +228,7 @@ def infer_camera_segment(
         }
 
     for index, timestamp, frame in frames:
-        buffer.append((index, timestamp, _rgb(frame)))
+        buffer.append((index, timestamp, _rgb(frame, input_size)))
         if len(buffer) == length:
             predict_window(list(buffer))
             yield finish(buffer[0][0])
@@ -229,7 +250,10 @@ def track_shuttle(
     output,
     annotations=None,
     camera_scan=None,
+    *,
+    input_size=(WIDTH, HEIGHT),
 ):
+    input_size = validate_input_size(input_size)
     import torch
 
     from .vendor.tracknet_model import TrackNet
@@ -325,7 +349,7 @@ def track_shuttle(
                     offset + fraction * 0.15 * (index - first + 1) / (last - first)
                 )
             median = np.median(np.stack(samples), axis=0).astype(np.uint8)
-            background = np.asarray(Image.fromarray(median).resize((WIDTH, HEIGHT)))
+            background = np.asarray(Image.fromarray(median).resize(input_size))
             del samples, median
             frames = iter_frames(video, root, times, first, last)
             for row in infer_camera_segment(
@@ -336,6 +360,7 @@ def track_shuttle(
                 video["width"],
                 video["height"],
                 selection_reset_frames=selection_reset_frames,
+                input_size=input_size,
             ):
                 row["camera_segment_start_frame"] = (
                     max(
@@ -372,7 +397,7 @@ def track_shuttle(
             "model": "TrackNetV3",
             "checkpoint_sha256": checksum,
             "device": device,
-            "input_size": [WIDTH, HEIGHT],
+            "input_size": list(input_size),
             "seq_len": length,
             "precision": "float16" if device.startswith("cuda") else "float32",
             "ensemble": "weighted overlapping windows",
