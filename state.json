@@ -4550,6 +4550,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle143-review-next-7e09f59c": {
+      "actor": "Ken0u",
+      "at": 1792499358,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "ecef569e21afe9777a2cce7c392523876cc5ebef",
+        "epoch": 1,
+        "expires_at": 1792510158,
+        "granted_at": 1792499358,
+        "head_sha": "71c257d82a789178f036a3a1f0ba42cc7c6dd52b",
+        "host_id": "MSI",
+        "pr_number": 144,
+        "review_epoch": 1,
+        "session_id": "7e09f59c-76d7-4231-a7be-c9e40572234e",
+        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
+      },
+      "epoch": 1,
+      "fingerprint": "0395f45d8dfa559ef41f620f96dd485b94adb9946994d3da67c89cd80554f921",
+      "status": "granted",
+      "task_id": "143",
+      "verb": "review-next"
+    },
     "windows-shuttle143-review-register-7e09f59c": {
       "actor": "Ken0u",
       "at": 1792499263,
@@ -7140,6 +7162,20 @@
       "planned_at": 1792495103,
       "planned_by": "Ken0u",
       "pr_number": 144,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "ecef569e21afe9777a2cce7c392523876cc5ebef",
+        "epoch": 1,
+        "expires_at": 1792510158,
+        "granted_at": 1792499358,
+        "head_sha": "71c257d82a789178f036a3a1f0ba42cc7c6dd52b",
+        "host_id": "MSI",
+        "pr_number": 144,
+        "review_epoch": 1,
+        "session_id": "7e09f59c-76d7-4231-a7be-c9e40572234e",
+        "spec_hash": "1422ba1da836c8b25d05348ac469da67068aa1dbb60c11e4c71db8a30e326c3e"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Pin the ignored six-snapshot source declaration1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b and public mirror archivef87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465, exactly1731120724bytes, release dataset-v1.0.0 / commit6d91a1bd28a9cab4b09e7d0460b2bb0a1afe6764. Record creator documentation and TrackNetV3 revision6eda442ada1740573f200f836d93edc9a541ee86 separately. Creator SharePoint redirects to sign-in; the mirror is not certified as creator-authenticated data. Download only the declared public data archive, never checkpoints, into an exclusive ignored lineage; verify size/hash before opening.",
