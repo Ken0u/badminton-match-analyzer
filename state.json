@@ -954,6 +954,26 @@
       "task_id": "95",
       "verb": "next"
     },
+    "mac-01a156d5-next-after95-done-v2": {
+      "actor": "dootz1",
+      "at": 1792461509,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "branch": "codex/issue-96-migrate-library-imports-and-job-monitori",
+        "epoch": 1,
+        "expires_at": 1792472309,
+        "granted_at": 1792461509,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d"
+      },
+      "epoch": 1,
+      "fingerprint": "4484aac01b042932bc39a516f32bd43701f5a8ba0093076728f63997f8021d23",
+      "status": "granted",
+      "task_id": "96",
+      "verb": "next"
+    },
     "mac-01a156d5-next-after95-main-v1": {
       "actor": "dootz1",
       "reason": "host already owns work in this lane",
@@ -7295,7 +7315,18 @@
       }
     },
     "96": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "branch": "codex/issue-96-migrate-library-imports-and-job-monitori",
+        "epoch": 1,
+        "expires_at": 1792472309,
+        "granted_at": 1792461509,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d"
+      },
+      "epoch": 1,
       "planned_at": 1792417955,
       "planned_by": "dootz1",
       "spec": {
@@ -7335,7 +7366,7 @@
         ]
       },
       "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d",
-      "status": "ready"
+      "status": "running"
     },
     "97": {
       "epoch": 0,
