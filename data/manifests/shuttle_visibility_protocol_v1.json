@@ -1,0 +1,69 @@
+{
+  "assessment_policy": "Two genuinely separate source-only agent assessments, explicit source-based disagreement adjudication, and frozen labels before additional cached prediction access.",
+  "clock_tolerance_s": 2e-05,
+  "context_each_side": 2,
+  "context_policy": "Inspect the center at original display size. Adjacent frames may clarify a streak, but never infer a hidden coordinate or motion across a camera cut. Record mixed-view context explicitly.",
+  "coordinate_convention": "Display-oriented source pixels; center of observed shuttle/streak, with explicit radial uncertainty in pixels. No model overlays or inferred coordinates.",
+  "difficulty_tags": [
+    "ordinary",
+    "fast_flight",
+    "occlusion",
+    "distractor",
+    "blur",
+    "small_far",
+    "camera_transition",
+    "non_play",
+    "unresolved"
+  ],
+  "extra_frames": {
+    "970dbd8adfe548d8": [
+      2039,
+      2040,
+      2041,
+      2042,
+      2043,
+      2047,
+      2048,
+      2077,
+      2078,
+      2079
+    ]
+  },
+  "grid_formula": "floor((i+0.5)*frame_count/25), i=0..24",
+  "grid_points_per_source": 25,
+  "inventory_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+  "limitations": [
+    "Small known development sources, including ten known failure-neighborhood frames; not blinded held-out or human-certified truth.",
+    "No complete-match or unseen accuracy claim, model inference, threshold tuning, app truth changes or model promotion."
+  ],
+  "localization_tolerance_diagonal": 0.005,
+  "missing_output_policy": "Unavailable outputs remain cases and are misses for known visible truth; missing invisible outputs never become true negatives.",
+  "name": "source-only-shuttle-visibility-development-v1",
+  "schema_version": 1,
+  "sources": [
+    {
+      "frame_count": 12023,
+      "id": "970dbd8adfe548d8",
+      "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f"
+    },
+    {
+      "frame_count": 12148,
+      "id": "c406a1187130b845",
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd"
+    }
+  ],
+  "state_definitions": {
+    "not_visible": "Source/context supports no visible shuttle, such as confirmed occlusion or outside the image. Failure to find a tiny shuttle alone is insufficient; use unknown.",
+    "unknown": "Visibility or shuttle identity cannot be resolved. Preserve the reason; never treat this as absence.",
+    "visible": "An observed shuttle/streak center can be localized, with finite coordinates and radial uncertainty.",
+    "visible_unlocalizable": "Source evidence confirms visibility, but a defensible center/uncertainty cannot be supplied. Visibility positive; localization truth unavailable."
+  },
+  "states": [
+    "visible",
+    "visible_unlocalizable",
+    "not_visible",
+    "unknown"
+  ],
+  "uncertainty_policy": "Also report error bounds max(0,distance-radius)..distance+radius. Nominal point metrics and uncertainty-straddling outcomes remain separate; no threshold tuning.",
+  "wrong_localization": "One false detection and one miss; visibility scored separately."
+}
