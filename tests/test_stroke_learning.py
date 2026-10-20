@@ -33,6 +33,19 @@ def corpus(tmp_path, monkeypatch):
     protocol["feature_recipe_sha256"] = learning.digest(recipe)
     (features / "recipe.json").write_bytes(recipe)
     (tmp_path / "Match.csv").write_bytes(catalog)
+    for description in protocol["source_labels"]:
+        rows = "rally,ball_round\n"
+        if description["set_id"] == 1:
+            rows += "".join(
+                f"{rally},{order}\n" for rally in (1, 2) for order in (1, 2, 3)
+            )
+        raw = rows.encode("utf-8")
+        path = tmp_path / description["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(raw)
+        description["git_blob"] = hashlib.sha1(
+            b"blob " + str(len(raw)).encode() + b"\0" + raw
+        ).hexdigest()
     rng = np.random.default_rng(7)
     for split, group in protocol["groups"].items():
         match = group["match_id"]
@@ -58,7 +71,7 @@ def corpus(tmp_path, monkeypatch):
             )
             records = [
                 {
-                    "id": f"s2doubles:{match}:1:{rally}:{i}",
+                    "id": f"s2doubles:{match}:1:{rally}:{i + 1}:{2 + (rally - 1) * 3 + i}",
                     "features_available": bool(available[i]),
                     "family_target": learning.FAMILIES[family[i]],
                     "side_target": learning.SIDES[side[i]],
@@ -254,6 +267,55 @@ def test_original_source_and_clip_bytes_cannot_overlap_splits(corpus, monkeypatc
         learning.expected_requests(
             learning.read_json((root / "plan.json").read_bytes())
         )
+
+
+@pytest.mark.parametrize(
+    "replacement",
+    ["s2doubles:1:1:1:999:999", "s2doubles:1:1:1:1:999", "s2doubles:1:1:1:999:2"],
+)
+def test_same_rally_substituted_source_identity_fails_after_resealing(
+    corpus, replacement
+):
+    rewrite_clip(
+        corpus, 0, change=lambda meta: meta["records"][0].update(id=replacement)
+    )
+    with pytest.raises(ValueError, match="Canonical source row identity"):
+        load(corpus)
+
+
+def test_reordered_complete_rows_fail_even_with_matching_resealed_arrays(corpus):
+    def reorder(arrays, meta):
+        for key in arrays:
+            arrays[key] = arrays[key][::-1].copy()
+        meta["records"].reverse()
+
+    rewrite_clip(corpus, 0, arrays=reorder)
+    with pytest.raises(ValueError, match="Canonical source row identity or order"):
+        load(corpus)
+
+
+@pytest.mark.parametrize("index", range(4))
+def test_original_label_bytes_cannot_be_substituted_with_a_new_local_seal(
+    corpus, index
+):
+    root, manifest_path = corpus
+    manifest = learning.read_json(manifest_path.read_bytes())
+    name = list(manifest["source_labels"])[index]
+    path = root / manifest["source_labels"][name]["path"]
+    path.write_bytes(path.read_bytes() + b"999,999\n")
+    manifest["source_labels"][name] = learning.seal(root, path)
+    manifest_path.write_bytes(learning.encoded(manifest))
+    with pytest.raises(ValueError, match="Changed original source labels"):
+        load(corpus)
+
+
+def test_canonical_source_label_set_must_be_complete(corpus):
+    _root, path = corpus
+    manifest = learning.read_json(path.read_bytes())
+    manifest["source_labels"].pop(next(iter(manifest["source_labels"])))
+    path.write_bytes(learning.encoded(manifest))
+    with pytest.raises(ValueError, match="Incomplete original source label"):
+        load(corpus)
 
 
 def test_unknown_truth_and_unavailable_input_remain_distinct(corpus):

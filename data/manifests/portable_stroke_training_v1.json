@@ -4,6 +4,32 @@
   "input_dim": 371,
   "source_commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
   "source_catalog_git_blob": "df71918b487c297aa1aa53edb57e369b283187d5",
+  "source_labels": [
+    {
+      "match_id": 1,
+      "set_id": 1,
+      "path": "Match 001/label/set1.csv",
+      "git_blob": "2f6b736f24a20ba8b3b8fe74500b061ac6ccbfed"
+    },
+    {
+      "match_id": 1,
+      "set_id": 2,
+      "path": "Match 001/label/set2.csv",
+      "git_blob": "197e6d145d464bf80a0590cc5f8a2fc10ba2c603"
+    },
+    {
+      "match_id": 2,
+      "set_id": 1,
+      "path": "Match 002/label/set1.csv",
+      "git_blob": "cc6c44f72719f7d3faeb3398617389591926a605"
+    },
+    {
+      "match_id": 2,
+      "set_id": 2,
+      "path": "Match 002/label/set2.csv",
+      "git_blob": "c990e694e1b26bc0461528b165ce20d0d1db44b9"
+    }
+  ],
   "source_plan_sha256": "6212563928e49b08e93ecf26e3699b606c2fbbb44155aa76451413a7d0cdef89",
   "feature_recipe_sha256": "76cba8529f2bc55ba8a17a6c34b5fc448292e7159006873ae99fefe3c1492506",
   "groups": {

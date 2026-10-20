@@ -16,6 +16,8 @@ from pathlib import Path, PurePosixPath
 
 import numpy as np
 
+from .datasets import integer, read_rows
+
 FAMILIES = ("clear", "lift", "net", "drop", "smash", "drive", "other", "serve")
 SIDES = ("forehand", "backhand")
 PROTOCOL = {
@@ -24,6 +26,32 @@ PROTOCOL = {
     "input_dim": 371,
     "source_commit": "c9168210e13f4869cbc8ebf47f9bc671b056cbab",
     "source_catalog_git_blob": "df71918b487c297aa1aa53edb57e369b283187d5",
+    "source_labels": [
+        {
+            "match_id": 1,
+            "set_id": 1,
+            "path": "Match 001/label/set1.csv",
+            "git_blob": "2f6b736f24a20ba8b3b8fe74500b061ac6ccbfed",
+        },
+        {
+            "match_id": 1,
+            "set_id": 2,
+            "path": "Match 001/label/set2.csv",
+            "git_blob": "197e6d145d464bf80a0590cc5f8a2fc10ba2c603",
+        },
+        {
+            "match_id": 2,
+            "set_id": 1,
+            "path": "Match 002/label/set1.csv",
+            "git_blob": "cc6c44f72719f7d3faeb3398617389591926a605",
+        },
+        {
+            "match_id": 2,
+            "set_id": 2,
+            "path": "Match 002/label/set2.csv",
+            "git_blob": "c990e694e1b26bc0461528b165ce20d0d1db44b9",
+        },
+    ],
     "source_plan_sha256": "6212563928e49b08e93ecf26e3699b606c2fbbb44155aa76451413a7d0cdef89",
     "feature_recipe_sha256": "76cba8529f2bc55ba8a17a6c34b5fc448292e7159006873ae99fefe3c1492506",
     "groups": {
@@ -164,6 +192,12 @@ def prepare(root, plan, features, source_catalog, protocol, target):
         "protocol": seal(root, protocol),
         "plan": seal(root, plan),
         "source_catalog": seal(root, source_catalog),
+        "source_labels": {
+            entry["path"]: seal(
+                root, inside(source_catalog.parent.resolve(), entry["path"])
+            )
+            for entry in PROTOCOL["source_labels"]
+        },
         "feature_recipe": seal(root, features / "recipe.json"),
         "clips": [],
     }
@@ -186,6 +220,32 @@ def prepare(root, plan, features, source_catalog, protocol, target):
     return {"manifest_sha256": digest(raw), "clips": len(manifest["clips"])}
 
 
+def canonical_source_rows(root, entries):
+    """Derive exact ordered IDs from original pinned development CSV bytes."""
+    expected = {entry["path"]: entry for entry in PROTOCOL["source_labels"]}
+    if not isinstance(entries, dict) or set(entries) != set(expected):
+        raise ValueError("Incomplete original source label files")
+    result = {}
+    for name, description in expected.items():
+        raw = sealed_bytes(root, entries[name])
+        blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+        if blob != description["git_blob"]:
+            raise ValueError("Changed original source labels")
+        rows = read_rows(raw)
+        if rows and not {"rally", "ball_round"}.issubset(rows[0]):
+            raise ValueError("Original source labels lack identity columns")
+        match, set_id = description["match_id"], description["set_id"]
+        # Match normalize_set exactly, including its source data-row numbering.
+        # Unselected flawed/unknown rows remain in the source; no evaluation
+        # reference is removed or renumbered when constructing an included rally.
+        for number, row in enumerate(rows, 2):
+            rally, order = integer(row["rally"], 1), integer(row["ball_round"], 1)
+            result.setdefault((match, set_id, rally), []).append(
+                f"s2doubles:{match}:{set_id}:{rally}:{order}:{number}"
+            )
+    return result
+
+
 def audit(root, raw, manifest_sha256):
     """Parse the exact hashed bytes, retaining every original reference row."""
     root = root.resolve()
@@ -197,6 +257,7 @@ def audit(root, raw, manifest_sha256):
         "protocol",
         "plan",
         "source_catalog",
+        "source_labels",
         "feature_recipe",
         "clips",
     }:
@@ -220,6 +281,7 @@ def audit(root, raw, manifest_sha256):
     ):
         raise ValueError("Changed original match catalog")
     requests = expected_requests(read_json(plan_bytes))
+    canonical = canonical_source_rows(root, manifest["source_labels"])
     clips = manifest["clips"]
     if len(clips) != len(requests):
         raise ValueError("Incomplete clip list")
@@ -232,6 +294,7 @@ def audit(root, raw, manifest_sha256):
         manifest[key]
         for key in ("protocol", "plan", "source_catalog", "feature_recipe")
     ]
+    seals.extend(manifest["source_labels"].values())
     for entry, (split, request) in zip(clips, requests):
         if (
             set(entry) != {"split", "request", "metadata", "features"}
@@ -273,6 +336,11 @@ def audit(root, raw, manifest_sha256):
         size = len(records)
         if size != request["published_strokes"]:
             raise ValueError("Incomplete source records for clip")
+        expected_ids = canonical.get(
+            (request["match_id"], request["set_id"], request["rally_id"]), []
+        )
+        if [record["id"] for record in records] != expected_ids:
+            raise ValueError("Canonical source row identity or order mismatch")
         if (
             x.dtype != np.float32
             or x.shape != (size, PROTOCOL["input_dim"])
@@ -653,6 +721,7 @@ def train(workspace, root, manifest_path, manifest_sha256, output):
         Path(__file__),
         Path(__file__).with_name("recognition_evaluation.py"),
         Path(__file__).with_name("evaluation.py"),
+        Path(__file__).with_name("datasets.py"),
     ]
     code = {p.name: digest(p.read_bytes()) for p in source_paths}
 

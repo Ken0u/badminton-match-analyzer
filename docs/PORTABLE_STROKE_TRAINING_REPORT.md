@@ -15,8 +15,11 @@ inputs with their pinned hashes. S2Doubles has no license file at the pinned
 commit; keep labels, derived features and weights local, outside release assets.
 
 The input root must contain the original corpus plan, its complete match-1 and
-match-2 R3 metadata/NPZ pairs, feature recipe, pinned original `Match.csv` and a
-copy of the public parameter manifest. Match 1 is the whole-match training group
+match-2 R3 metadata/NPZ pairs, feature recipe, pinned original `Match.csv`, its
+four development label CSVs and a copy of the public parameter manifest. Keep
+`Match 001/label/set1.csv`, `set2.csv` and the corresponding `Match 002` files
+beside the catalog in their original directory layout. Their original Git blob
+hashes are pinned in the public manifest. Match 1 is the whole-match training group
 `EpLD0HrwDJU`; match 2 is validation group `kbHgum5unYc`. Each has 67 clips. The
 sealed source plan and original catalog prevent relabeling another source as a
 group. Every original row remains in the manifest, including unavailable inputs.
@@ -55,6 +58,13 @@ any retry; v1 does not resume or overwrite an earlier training attempt.
 The input audit checks the complete ordered clip list, original-source groups,
 source/feature recipe hashes, metadata and NPZ bytes, per-clip source row counts,
 row identities, finite float32 features, boolean availability and integer labels.
+It derives the exact ordered per-rally IDs from the four pinned original label
+files, including the published shot ordinal and CSV source-row number. A
+same-rally fabricated ID or reordered complete records fails even when updated
+local metadata/array seals and row counts agree. Resealing changed source CSVs
+also fails against their pinned upstream Git blobs. Count and prefix checks alone
+were insufficient; these source-membership guards close the independent review
+finding without changing the training algorithm or interpreting labels as truth.
 Changed inputs, path escapes, duplicate files/rows, overlapping sources and
 substituted or partial splits fail. Parsing uses the exact hashed bytes rather
 than reopening an unverified feature file.
@@ -79,7 +89,7 @@ serialization check, without another model prediction.
 ## Actual development reproduction
 
 Windows Python 3.10, PyTorch 2.8.0+cu126 in CPU mode and NumPy 2.2.6 completed all
-300 epochs under real main job `5ff31a0441e947fa8e397787f4aa245d`. The process
+300 epochs under real main job `1c9d76083ee747b89763f261e0f31b11`. The process
 exited successfully, the durable job is completed, and the post-job completion
 receipt exists. The original input/model inventory's 276 seals remain unchanged.
 
@@ -97,7 +107,7 @@ receipt exists. The original input/model inventory's 276 seals remain unchanged.
 | Validation conditional family/side accuracy | 0.5744047619047619 |
 
 The reproduced checkpoint SHA-256 is
-`79f3e397b4dfcf8359d0d400a1a6977a45ed01d3f4bf666e8e2499045806a257`;
+`e1a138c96389277d8c618e314d4fc76158af1bb79dc7dcab157d6b67928f458a`;
 the original is
 `cae34a9f39cef5c0c45185c354c967ace2d81f9ea4750233ef9f8881e4b42dcc`.
 The container metadata and provenance differ; saved tensor values agree exactly.
@@ -107,21 +117,26 @@ recording the actual runtime, rather than treating a different archive hash as
 proof of a different learned state.
 
 The execution input manifest SHA-256 is
-`8d0fe34c21cda1f877b11ad967d643275c0a58ae377737e2f7759508f651d8d0`.
+`0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059`.
 The executed learner source SHA-256 is
-`d7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3`.
-Local evidence remains under `.cache/portable64-reproduction-v1/` and
-`.cache/portable64-original-comparison.json`; neither is supplied by a clone.
+`745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932`.
+The receipt also seals the committed dataset CSV parser alongside the metric
+modules. All four development label files pass their original Git blob checks.
+Local evidence remains under `.cache/portable64-reproduction-v2/` and
+`.cache/portable64-original-comparison-v2.json`; neither is supplied by a clone.
+The earlier completed run remains preserved in its separate v1 lineage.
 
 ## Verification and limits
 
-All 35 focused generated-input tests pass, including changed seals, source/split
+All 44 focused generated-input tests pass, including changed seals, source/split
 overlap, unknown/unavailable denominators, partial-label learning, deterministic
 selection, validation-normalization isolation, admission denial, changed inputs
-during execution and immutable outputs. The complete Windows Python 3.10 run
-passes 1,289 tests with four opt-in GPU checks skipped; generated-media checks
-execute with FFmpeg/FFprobe on the verification PATH. Ruff, formatting, dependency
-consistency and repository UTF-8/LF/JSON/link checks pass. Exact-revision CI,
+during execution, canonical source membership/order and immutable outputs.
+The full Windows Python 3.10 suite passes 1,298 tests with four opt-in GPU checks
+skipped. Generated-media checks execute with FFmpeg/FFprobe on the verification
+PATH; the durable test log, XML and successful exit are retained locally.
+Ruff, formatting, dependency consistency and repository UTF-8/LF/JSON/link checks
+pass. Exact-revision CI,
 independent controller review and integration receipts are recorded on
 [the owning task](https://github.com/Ken0u/badminton-match-analyzer/issues/64).
 
