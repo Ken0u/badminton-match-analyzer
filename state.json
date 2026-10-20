@@ -1199,6 +1199,13 @@
       "task_id": "116",
       "verb": "plan"
     },
+    "mac-01a15493-post98-next-v1": {
+      "actor": "dootz1",
+      "at": 1792518646,
+      "fingerprint": "88fa4a9042c4a45ed213a9a2999a9bce750d5a2063c9a2700b4d53837a791b22",
+      "status": "idle",
+      "verb": "next"
+    },
     "mac-01a15493-register": {
       "actor": "dootz1",
       "at": 1792420473,
