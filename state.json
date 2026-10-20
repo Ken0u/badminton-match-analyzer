@@ -1980,6 +1980,13 @@
       "task_id": "138",
       "verb": "review-result"
     },
+    "mac-review151-register-v1": {
+      "actor": "dootz1",
+      "at": 1792519241,
+      "fingerprint": "b6d1e22892cb1ff72503c33809b82d17c81fed6fffb952f2efcc78173c7e6764",
+      "status": "ok",
+      "verb": "register"
+    },
     "mac-review94-next-v1": {
       "actor": "dootz1",
       "at": 1792456060,
@@ -11722,6 +11729,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792504597,
       "session_id": "mac-review138-r2-01a15493"
+    },
+    "Stanleys-Laptop.local/mac-review151-0a351a6-independent": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792519241,
+      "session_id": "mac-review151-0a351a6-independent"
     },
     "Stanleys-Laptop.local/mac-review94-01a15493": {
       "actor": "dootz1",
