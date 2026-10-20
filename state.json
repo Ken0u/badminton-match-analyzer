@@ -4323,6 +4323,15 @@
       "task_id": "139",
       "verb": "submit"
     },
+    "windows-shuttle141-control-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792489034,
+      "epoch": 1,
+      "fingerprint": "cdaa13f8270abe48aaa192ef661d91879a3610f3298f6363182b82adf07e8dd0",
+      "status": "running",
+      "task_id": "141",
+      "verb": "checkpoint"
+    },
     "windows-shuttle141-frozen-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792488740,
@@ -6723,24 +6732,39 @@
     },
     "141": {
       "checkpoint": {
+        "artifacts": "One complete sealed controlview and no candidateviews at09:34:46UTC; exclusive atomic per-view receipts. Readonly monitor .cache/shuttle141-monitor.py; original sources/labels/nativebaseline/weights/apptruth unchanged.",
+        "attempt": ".cache/shuttle141-experiment-v1/attempts/d0c871b0e241463fb0c911b602639e92",
         "branch": "codex/issue-141-compare-fixed-tracknet-input-resolutions",
         "experiment_sha256": "fffbc3a767eab9ab63b95b1978c447cd9edca0ba5ceed26579e6c46330941ef8",
         "head_sha": "bd7537ed108adec363685cce0af584e75a049c32",
-        "local_lineage": ".cache/shuttle141-experiment-v1",
-        "next": "Revalidate original-host lifetimes/sharedStore/artifacts and epoch, then run512control through realsharedadmission, observe samePID/session and record durableevidence. Do not start/open768 until everycontrolrow passes fixed gate. Keep mismatch/negative results. Finalreport/PR/nativeevidence/independentreview/CI/controller/main/delivery remain.",
-        "phase": "All required checks pass; exact source and two-variant experiment frozen before native predictions",
-        "preservation": "Original sourceinventory273e/packet3b22/labelsfd25/nativebaseline915f/checkpointdf86 unchanged. Root original branch and deprecatedPROGRESS.md modification, environments, apptruth and other research processes preserved.",
-        "protocol_sha256": "95aaf88d546d8f8c72fb5483e36f12037286e8091c85f1a962eed554ca3d30cc",
+        "next": "Poll the SAME23336 handle and actualPID/lifetime/Store/artifacts; do not restart on timeout or missing observation. Wait all50controlviews and complete native-row compatibility gate. Only if gatecompatible and original process is terminal/verified exited may fixed768 run. Preserve mismatch/negative outputs. No consumer code edits while frozen job runs.",
+        "phase": "Original512 control LIVE through real shared Store; candidate has not started or been opened",
+        "prelaunch": "At09:32:56UTC realrootStore68jobs/zeroactive and GPU4GB0used/no compute process; only own preflight Python workers. Current epoch1/spec/capability/input/resource matches revalidated. Public frozen checkpoint6287921113 predates actual native worker. Shell PATH-prefix assignment emitted a harness error, leaving inheritedPATH intact; actual PyAV/CUDA processing and native checks started successfully. Do not restart or migrate runtime for routine decoder SEI warnings.",
+        "process": {
+          "command": "rootPython3.10 -u scripts/compare_shuttle_resolution.py run --root ../../.. --experiment ../../../.cache/shuttle141-experiment-v1 --experiment-sha256 fffbc3a767eab9ab63b95b1978c447cd9edca0ba5ceed26579e6c46330941ef8 --variant control",
+          "creation_time": 1792488828.9085903,
+          "cwd": "C:/Users/enkra/Documents/Projects/badminton-match-analyzer/.cache/worktrees/shuttle141",
+          "observation": "Unified exec23336 confirmed running; actual psutil PID/lifetime/cwd/command match stored admission at09:34:46UTC",
+          "pid": 14000
+        },
         "spec_hash": "2c8b276bb90cb21894a32c7a0f02d553abc96cd77211101426e125a159be6bec",
-        "verification": "Full1376PASS/4optionalGPUskip145.33s,23newfocusedregressions,ruff/format157/pip/diff/UTF8LF/JSON/links/CLIpass. Sourcecommits remotelypreserved. ActualCPUfreeze50views/13499frames/all60cases;56consumerfiles/copiedbytes matchsourcehead. No new native predictions or sharedStorejob yet."
+        "store": {
+          "data": "data/processed",
+          "job_id": "8c148e36c8b64c9ea092feb5f80b3477",
+          "kind": "feature-preparation",
+          "owner_pid": 14000,
+          "owner_started": 1792488828.9085903,
+          "progress_observed": 0.036,
+          "status": "running"
+        }
       },
-      "checkpoint_at": 1792488740,
+      "checkpoint_at": 1792489034,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "956773ac9f90e8638b962d83bfb6e3f60dbc7d11",
         "branch": "codex/issue-141-compare-fixed-tracknet-input-resolutions",
         "epoch": 1,
-        "expires_at": 1792499540,
+        "expires_at": 1792499834,
         "granted_at": 1792486798,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
