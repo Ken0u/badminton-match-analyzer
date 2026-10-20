@@ -308,6 +308,7 @@ try {
     fullPage: true,
   });
   await page.setViewportSize({ width: 768, height: 1024 });
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.evaluate(
     () =>
       new Promise((resolve) =>
