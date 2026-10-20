@@ -3554,6 +3554,7 @@
       }
     },
     "111": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39320656490",
       "checkpoint": {
         "branch": "codex/issue-111-publish-verified-public-build-artifacts-",
         "evidence": [
@@ -3570,7 +3571,7 @@
         "remaining": "Issue111 was closed with remaining external-merge adoption/bookkeeping explicitly transferred to owner-authorized119. Preserve111 as a fenced historical closed task, not a fabricated Done. Code-only recovery archives its original grant and releases host ownership through the dispatcher. No reimplementation or duplicate candidate is needed. Task119 requires its own exact grant and later fresh independent/non-author human review."
       },
       "checkpoint_at": 1792441108,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 2,
       "external_recovery": {
         "base_sha": "fb0fb37ec8ca28d2cd1f56c3129e8764e06ad9e1",
