@@ -739,6 +739,14 @@
       "task_id": "94",
       "verb": "checkpoint"
     },
+    "mac-01a15493-98-user-scope-approval-v1": {
+      "actor": "dootz1",
+      "at": 1792504320,
+      "fingerprint": "96c86f158a2e55854af761661b44acfce7163fd0537976790c81dd40dced6f93",
+      "status": "ready",
+      "task_id": "98",
+      "verb": "human-approved"
+    },
     "mac-01a15493-checkpoint-start": {
       "actor": "dootz1",
       "at": 1792420549,
@@ -9738,8 +9746,14 @@
     },
     "98": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "dootz1",
+        "at": 1792504320,
+        "spec_hash": "051f9726f4d266c476bf1c36a30a0c9a21b729d47c8388a7fd57357add44d576"
+      },
       "planned_at": 1792418018,
       "planned_by": "dootz1",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Build and serve the frontend from FastAPI; include correct assets in wheel/sdist and review/CPU images, excluding frontend source/build tooling where unnecessary. Keep one application container and no runtime frontend server.",
@@ -9788,7 +9802,7 @@
         ]
       },
       "spec_hash": "051f9726f4d266c476bf1c36a30a0c9a21b729d47c8388a7fd57357add44d576",
-      "status": "needs_human"
+      "status": "ready"
     }
   },
   "version": 1,
