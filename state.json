@@ -3527,6 +3527,14 @@
       "task_id": "98",
       "verb": "plan"
     },
+    "verify-101-9d7ee10b6bf474993b4781abdc533ebfdca751e8-False": {
+      "actor": "github-actions[bot]",
+      "at": 1792537003,
+      "fingerprint": "413057a9a72a035b1a6e25a1fa520ec1e666e9aaf9b355e27552eb9a97e09b35",
+      "status": "verifying_main",
+      "task_id": "101",
+      "verb": "verify-main"
+    },
     "verify-103-2485d32bf9385d831220aa672b53e0ab38a23101-False": {
       "actor": "github-actions[bot]",
       "at": 1792421414,
@@ -5814,6 +5822,7 @@
         "base_sha": "0002a8d78e9483deea31c62408d5e75d03ccffe9",
         "head_sha": "ef8fdf6d86a8f551cfa6c86c78e24676c8712461"
       },
+      "merge_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
       "planned_at": 1792459975,
       "planned_by": "Ken0u",
       "pr_number": 156,
@@ -5890,7 +5899,7 @@
         ]
       },
       "spec_hash": "5ba3898cf8a7db92aa642be28ed15fd87ca7ac334dd26d23f3485a1fd6ff3901",
-      "status": "integrating",
+      "status": "verifying_main",
       "submission": {
         "base_sha": "0002a8d78e9483deea31c62408d5e75d03ccffe9",
         "head_sha": "ef8fdf6d86a8f551cfa6c86c78e24676c8712461",
