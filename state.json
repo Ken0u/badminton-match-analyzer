@@ -3120,6 +3120,15 @@
       "task_id": "64",
       "verb": "submit"
     },
+    "windows-portable64-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792462144,
+      "epoch": 1,
+      "fingerprint": "b92a155633875ac7b22c1d4514e708209554232a1c3f22127645d1108b60770a",
+      "status": "review",
+      "task_id": "64",
+      "verb": "submit"
+    },
     "windows-post63-next-v1": {
       "actor": "Ken0u",
       "at": 1792437874,
@@ -5861,13 +5870,13 @@
         ]
       },
       "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
-        "head_sha": "3a0f4787f87c68b05576e9b91517b1228633266f",
+        "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "head_sha": "10fbd3be99647feed61bf04dcdb59a54e28e55c2",
         "native_evidence": {
           "code_sha256": "d7622c37916bf4144e5fe52d539e2cee6e9b1875a9c2c38f81367131288565c3",
-          "comparison": "All selected tensors, normalization, support, thresholds, epoch295, 60 history rows and every validation metric exactly match original R3; all276 original input/model seals unchanged",
+          "comparison": "All selected tensors, normalization, support, thresholds, epoch295, 60 history rows and every validation metric exactly match original R3; all276 original input/model seals unchanged. Main refresh changes no Python source/test bytes; executed learner/metrics/input hashes unchanged.",
           "heldout_predictions_opened": false,
           "job_id": "5ff31a0441e947fa8e397787f4aa245d",
           "kind": "Fixed CPU development-only training reproduction",
