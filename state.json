@@ -1778,6 +1778,28 @@
       "task_id": "97",
       "verb": "review-next"
     },
+    "review97-next-v3": {
+      "actor": "dootz1",
+      "at": 1792468165,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "epoch": 1,
+        "expires_at": 1792478965,
+        "granted_at": 1792468165,
+        "head_sha": "90f6b6caf9af1138bf525a3ea49381551977d310",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 137,
+        "review_epoch": 3,
+        "session_id": "mac-review97-01a156d5",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "epoch": 1,
+      "fingerprint": "f519d2cfd66f8b563d45fc56ba106860f21405710b1b85fb3bd65e0377f08373",
+      "status": "granted",
+      "task_id": "97",
+      "verb": "review-next"
+    },
     "review97-register-v1": {
       "actor": "dootz1",
       "at": 1792465401,
@@ -8036,7 +8058,20 @@
       "planned_by": "dootz1",
       "pr_number": 137,
       "repair_rounds": 2,
-      "review_epoch": 2,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "epoch": 1,
+        "expires_at": 1792478965,
+        "granted_at": 1792468165,
+        "head_sha": "90f6b6caf9af1138bf525a3ea49381551977d310",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 137,
+        "review_epoch": 3,
+        "session_id": "mac-review97-01a156d5",
+        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
+      },
+      "review_epoch": 3,
       "spec": {
         "acceptance": [
           "Migrate playback, timeline, overlays, camera/scene/court editing, player mappings, shuttle/contact/rally/stroke review and evaluation; cover every supported baseline action.",
