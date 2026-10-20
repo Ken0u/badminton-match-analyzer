@@ -316,6 +316,14 @@
       "task_id": "95",
       "verb": "invalidate-review"
     },
+    "invalidate-97-d49973c901c4b09e4dcd6faebb20d52902b05603-0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa": {
+      "actor": "github-actions[bot]",
+      "at": 1792468691,
+      "fingerprint": "44d44a55e19028b384ee50bcd8d24f28ae34a65461ed83f76fd097b8607821ef",
+      "status": "running",
+      "task_id": "97",
+      "verb": "invalidate-review"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -8128,47 +8136,8 @@
       "planned_at": 1792418018,
       "planned_by": "dootz1",
       "pr_number": 137,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 2,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792468353,
-        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "evidence": [
-          "Actual independent read-only session mac-review97-01a156d5 on Stanleys-Laptop.local received committed review97-next-v3 grant review_epoch3. Independently verified issue97/queue frozen specdad82a, taskepoch1, PR137 head90f6b6caf9af1138bf525a3ea49381551977d310/base267ed42abaf0157aa2325f32f7568713ac4f8d2d. New detached checkout .cache/review97-90f6b6c, no implementation edits; all12 original changed files reviewed across this continuous independent review, all3 repair-delta files inspected anew with surrounding ownership contracts.",
-          "Independent 68 frontend checks pass, including24 established-window delayed success/error cases and10 first-load run/playback/rapid-seek/late-error cases; TypeScript production build, exact backend OpenAPI contract and git diff --check pass.",
-          "Both original independent failing probes copied without implementation edits now pass at frozen head: .cache/review-races.log selected1/afterLatePoll1/sourceFrame5, and .cache/review-initial-race.log partIndex1/sourceFrame6. New independent .cache/review-multistep.mjs/.log tests initial held core0 -> seek6 -> held replacement core1 -> seek1 -> obsolete replacement success and error; both end part0/players0/frame1 without stale feedback. Matching-run eventual assertions and no-transient-wrong-run coverage also pass in the committed unit matrix.",
-          "Independent full exact-head generated browser run .cache/review97-90f6b6c/.cache/evidence/frontend-editor-S8OGi3 passes17/17 groups, including held initial-run and later-analysis polls. Exercised real production ingestion, native PTS/orientation/source-proxy pixels, seek/correct/save/reload, dirty/saving/conflict/order guards, all review controls, scene/camera/court expiry and unknowns, explicit prediction acceptance with unchanged original artifacts, JSON/CSV and evaluation. No page errors; owned disposable fixture/static listener cleanup receipts retained. Browser execution scrubbed GitHub credentials and did not use existing apps/catalogs.",
-          "Independent browser p95 seek65.9ms,timeline33.1ms,playbackfirstadvance87.4ms,rAF16.8ms meet absolute budgets; all3 real playback observations have zero broad render delta. Inspected actual desktop and768x1024 viewport captures; readable source clock, compact native checkboxes and focus evidence verified.",
-          "Independently audited latest external threelegacy/threecurrent comparison: all216 receipt SHA256 values; raw summaries and median budget arithmetic; all6 raw host/browser/Node/Python/protocol records; exact canonical source bytes/nativePTS records; and current frontend source/helper/harness/lock/static byte hashes against frozen review checkout. All match and every frozen relative/absolute median budget passes. Audit code/logs retained under own .cache. Prior failure evidence and both changes verdicts preserved.",
-          "Independently rechecked exact-head hosted CI run39365694196 is completed success at90f6b6c immediately before verdict; PR head/base unchanged. No blocking findings remain in reviewed scope."
-        ],
-        "findings": [],
-        "head_sha": "90f6b6caf9af1138bf525a3ea49381551977d310",
-        "limitations": [
-          "Approval applies only to head90f6b6caf9af1138bf525a3ea49381551977d310/base267ed42abaf0157aa2325f32f7568713ac4f8d2d/specdad82a; any changed binding requires another independent review. Controller integration, exact merged-main verification and candidate delivery remain separate steps, not implied by this verdict.",
-          "Generated fixture software checks do not establish native model behavior, full-match badminton annotation accuracy, real downloader availability, persistent identities, doubles recognition or assistive-technology certification. Native canvas labeling remains pointer-based. No research/native inference, live catalog or user app was run or upgraded.",
-          "Full Python/release-package suites and separate foundation/library browser suites were not independently rerun for the frontend-only repair; exact-head hosted CI was observed and original independent broad UI/source/export review remains applicable to unchanged files.",
-          "Relative performance is independently audited external six-run evidence; own additional Node24 browser correctness run differs from comparison Node22 and is not a fresh three-run relative comparison. No thermal pinning or cross-host speedup claim."
-        ],
-        "pr_number": 137,
-        "reviewed_files": [
-          "backend/frontend/README.md",
-          "backend/frontend/scripts/test.mjs",
-          "backend/frontend/src/App.tsx",
-          "backend/frontend/src/editor/EditorApp.tsx",
-          "backend/frontend/src/editor/Playback.tsx",
-          "backend/frontend/src/editor/controller.ts",
-          "backend/frontend/src/editor/editor.css",
-          "backend/frontend/src/editor/model.ts",
-          "backend/frontend/src/library/LibraryApp.tsx",
-          "backend/frontend/src/main.tsx",
-          "backend/frontend/tests/editor.test.mjs",
-          "tests/frontend-editor.mjs"
-        ],
-        "session_id": "mac-review97-01a156d5",
-        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "verdict": "approve"
-      },
       "review_epoch": 3,
       "spec": {
         "acceptance": [
@@ -8207,7 +8176,7 @@
         ]
       },
       "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "head_sha": "90f6b6caf9af1138bf525a3ea49381551977d310",
