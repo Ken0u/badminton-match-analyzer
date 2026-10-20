@@ -3427,6 +3427,48 @@
       "task_id": "64",
       "verb": "review-next"
     },
+    "windows-portable64-review-next-v3": {
+      "actor": "Ken0u",
+      "at": 1792467889,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "epoch": 1,
+        "expires_at": 1792478689,
+        "granted_at": 1792467889,
+        "head_sha": "b502200dcc1f0be27e28095b2c026686af0e4fac",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "b502200dcc1f0be27e28095b2c026686af0e4fac",
+          "code_sha256": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
+          "comparison": "All selected tensors, normalization, support, thresholds, epoch295,60history rows and every validation metric exactly match original R3; all276original seals unchanged and four canonical development label files verified. Main267ed42 refresh changes only frontend files, leaving all executed learner/metric/parser and input hashes unchanged.",
+          "heldout_predictions_opened": false,
+          "job_id": "1c9d76083ee747b89763f261e0f31b11",
+          "kind": "Fixed CPU development-only training reproduction after canonical source-row membership repair",
+          "limitations": [
+            "Development-only conditional weak-source reproduction; no contact, persistent identity or full-match annotation correctness established",
+            "Exact tensor parity observed only in recorded Windows Python3.10/Torch2.8/NumPy2.2 CPU runtime; archive metadata differs",
+            "No held-out inputs, new perception, data downloads, model promotion or redistributable weights"
+          ],
+          "manifest_sha256": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+          "model_promoted": false,
+          "model_sha256": "e1a138c96389277d8c618e314d4fc76158af1bb79dc7dcab157d6b67928f458a",
+          "receipt_sha256": "e2c1113c693e3c8abddac69c5af2bf7f39e6be8a4c92ce9ac63a81043e30c768",
+          "report": "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "source_sha256": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+          "status": "completed"
+        },
+        "pr_number": 135,
+        "review_epoch": 2,
+        "session_id": "windows-portable64-review-v2",
+        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c"
+      },
+      "epoch": 1,
+      "fingerprint": "4c14cfc70f84f5eb331d1078def91a24552a49baed8d636d482293ba769965f2",
+      "status": "granted",
+      "task_id": "64",
+      "verb": "review-next"
+    },
     "windows-portable64-review-register-v1": {
       "actor": "Ken0u",
       "at": 1792461823,
@@ -6230,7 +6272,40 @@
       "pr_number": 135,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
+        "epoch": 1,
+        "expires_at": 1792478689,
+        "granted_at": 1792467889,
+        "head_sha": "b502200dcc1f0be27e28095b2c026686af0e4fac",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "b502200dcc1f0be27e28095b2c026686af0e4fac",
+          "code_sha256": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
+          "comparison": "All selected tensors, normalization, support, thresholds, epoch295,60history rows and every validation metric exactly match original R3; all276original seals unchanged and four canonical development label files verified. Main267ed42 refresh changes only frontend files, leaving all executed learner/metric/parser and input hashes unchanged.",
+          "heldout_predictions_opened": false,
+          "job_id": "1c9d76083ee747b89763f261e0f31b11",
+          "kind": "Fixed CPU development-only training reproduction after canonical source-row membership repair",
+          "limitations": [
+            "Development-only conditional weak-source reproduction; no contact, persistent identity or full-match annotation correctness established",
+            "Exact tensor parity observed only in recorded Windows Python3.10/Torch2.8/NumPy2.2 CPU runtime; archive metadata differs",
+            "No held-out inputs, new perception, data downloads, model promotion or redistributable weights"
+          ],
+          "manifest_sha256": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+          "model_promoted": false,
+          "model_sha256": "e1a138c96389277d8c618e314d4fc76158af1bb79dc7dcab157d6b67928f458a",
+          "receipt_sha256": "e2c1113c693e3c8abddac69c5af2bf7f39e6be8a4c92ce9ac63a81043e30c768",
+          "report": "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "source_sha256": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+          "status": "completed"
+        },
+        "pr_number": 135,
+        "review_epoch": 2,
+        "session_id": "windows-portable64-review-v2",
+        "spec_hash": "82851f7c91450e53ad6e3a9f039ff4f43ad365e18dcabba7556729f4b0ed1e6c"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Supply a clone-contained Python module/CLI and public parameter/provenance manifest for the fixed 371-value R3 CPU training/validation recipe; accept explicit legally available external precomputed caches through relative file/hash seals, never execute imported local helper scripts.",
