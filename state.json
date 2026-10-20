@@ -4170,6 +4170,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle139-repair1-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792485145,
+      "epoch": 2,
+      "fingerprint": "b2e3b982fe8e1ff669f235a1c3ff77446d3779ccdeeb9ab2dfb330e763ad969b",
+      "status": "running",
+      "task_id": "139",
+      "verb": "checkpoint"
+    },
     "windows-shuttle139-review-v1-next": {
       "actor": "Ken0u",
       "at": 1792484378,
@@ -6420,41 +6429,23 @@
     },
     "139": {
       "checkpoint": {
-        "baseline_sha256": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
         "branch": "codex/issue-139-establish-source-only-independently-asse-e2",
-        "cases": 60,
-        "consumer_source_sha256": "54e23dd58ee7c4c5ec077a8ae263f1eddcc3ff02d38dabad266e2bd5bc594959",
-        "head_sha": "d8bcce6ea338305e4deb9aeb662909268e3c16f2",
-        "labels_sha256": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
-        "native_evidence": "All60 outputs available;38 relevant stages,48 frozen runtime files,2 model checkpoints,2 manifests,2 native clocks,2 optional absent metadata sidecars and per-target read-only SQLite snapshots. No originals changed. Preliminary v1 index preserved; parser incorrectly required a metadata sidecar before source-code inspection confirmed SQLite registration is authoritative. Regression test preserves strict registered source/clock checks.",
-        "next": "Finish aggregate report, required full checks, focused commits/PR, fresh exact-head/base/spec independent review and controller integration/main/delivery.",
-        "outcomes": {
-          "correct_absence": 4,
-          "correct_localization": 14,
-          "false_detection": 3,
-          "localization_error": 1,
-          "miss": 10,
-          "unknown_truth": 28
-        },
-        "packet_sha256": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
-        "phase": "Frozen two-assessor/source-adjudicated labels and complete unchanged native baseline audit; aggregate report and final publication gates remain",
-        "report_sha256": "7c9a4bfb305c6fc3513db75749bc6d5f238fe9846b80cc954af17e378b24c895",
+        "head_sha": "4b56f0351d7d38497f39d297b10628cee82ab995",
+        "next": "Observe existing processes to terminal, update aggregate report seals/counts, commit and publish revised head only after checks, then resubmit and obtain fresh independent exact-head/base/spec review before controller integration.",
+        "phase": "Repairing independently reproduced P2 after durable changes verdict; source labels and native baseline immutable",
+        "preservation": "Original source packet, two assessments, adjudication, labelsfd25029a and baseline915f678f unchanged. Root deprecated PROGRESS.md original modification preserved. Reviewer preserved all evidence; administrative prior holdout review metadata was unnecessarily read in review, disclosed in verdict; no underlying held-out media, labels, caches or predictions accessed.",
+        "repair": "Union independently observed cuts per source video before validating every target's transitive native background. Two full generated label-freeze/baseline regressions failed before fix and all55 focused tests pass after fix; unrelated source stays available.",
+        "review_receipt": "windows-shuttle139-review-v1-result accepted1792484956 fingerprint3806b752999abffad3fcada0f0900b289059fa80d20fed00328365d98c0d09d6",
         "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
-        "states": {
-          "not_visible": 7,
-          "unknown": 28,
-          "visible": 25,
-          "visible_unlocalizable": 0
-        },
-        "verification": "51 focused generated tests pass; full project suite live in unified exec87848, FFmpeg/Py3.10 activated, new isolated temp directory and JUnit file. Consumer code copied/hash-checked before/after audit. No inference/GPU/holdout/app truth/model promotion."
+        "verification": "Full suite live session86057, fresh .cache/pytest-shuttle139-full-e2-v4 and JUnit .cache/shuttle139-full-e2-v4.xml under e2 worktree. Read-only native audit live session59215 into NEW root .cache/shuttle139-audit-v5. Lint/format154files/pip/diff pass. No models/Store jobs/GPU work or scientific holdout inputs accessed."
       },
-      "checkpoint_at": 1792483075,
+      "checkpoint_at": 1792485145,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
         "branch": "codex/issue-139-establish-source-only-independently-asse-e2",
         "epoch": 2,
-        "expires_at": 1792493875,
+        "expires_at": 1792495945,
         "granted_at": 1792481430,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
