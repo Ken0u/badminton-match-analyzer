@@ -1869,6 +1869,24 @@
       "task_id": "97",
       "verb": "checkpoint"
     },
+    "roadmap97-repaired-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792466380,
+      "epoch": 1,
+      "fingerprint": "43f0ed7728cb6def3b902831294f3c754acedb69fd26d6640cf78b5a0f6cd82b",
+      "status": "running",
+      "task_id": "97",
+      "verb": "checkpoint"
+    },
+    "roadmap97-resubmit-v2": {
+      "actor": "dootz1",
+      "at": 1792466390,
+      "epoch": 1,
+      "fingerprint": "88e70427ff5a42b952f7fa438f64b47b709c08b42567dd072b661dc7fba680d6",
+      "status": "review",
+      "task_id": "97",
+      "verb": "submit"
+    },
     "roadmap97-start-v1": {
       "actor": "dootz1",
       "at": 1792463536,
@@ -7871,22 +7889,24 @@
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "evidence": [
-          "Independent reviewer mac-review97-01a156d5 verified all 12 files, own full 17 browser groups, 32 unit tests, typecheck/build/contract, exact-head CI and 216 supplied receipt hashes. Formal finding and failed deterministic probe retained in .cache/review97-a48fbca/.cache/review-result.json and review-races.mjs/log.",
-          "P2 delayed refresh snapshots old analysis mode/window then overwrites reviewPart/seek/leave/track changes. Worker owns only controller.ts and editor.test.mjs generation fix; parent owns browser held-real-analysis-GET window switch regression. Legacy source, data/models/processes untouched."
+          "Repair commit 6cb74a3 fences async view reads by generation for reviewPart, source core crossings, manual mode/track and processing; obsolete ignored-abort requests cannot publish stale mode/window/runs/errors or block replacement current-view polling. Independent failed reproducer retained; pre-fix regression failure .cache/editor97-pre-repair-races.log; repaired 57 checks pass including 24 boundary/action/stale-success-error cases and current-run availability before stale release.",
+          "Three repaired editor runs frontend-editor-ojYmaR / frontend-editor-v6DmVM / frontend-editor-oJRdWm: see .cache/repaired97/tested-source.json for actual names and committed source/harness byte parity. Each passes all 17 groups including held real analysis GET then explicit review-window source/media/image seek, current window proposals after late response, saved focus, proxy/source/prediction truth and cleanup. All 9 playback observations have 0 broad rerenders.",
+          "Repaired comparison .cache/evidence/frontend-editor-repaired-comparison.json retains identical baseline sources/helpers/protocol/current locks/Node22/host/browser. Median seek 80.2 ms <=102.5, timeline31.4<=67.0, firstadvance85.1<=362.25,rAF16.8<=40.875; all absolute limits pass. Original head comparison/raw failures remain preserved.",
+          "Strict build/typecheck/OpenAPI/57checks, changed-source Prettier/repository/diff pass. Previous Python1242/13, health/package76files and foundation7/library8 remain applicable to unchanged backend/package/compatibility modules; exact new-head CI pending."
         ],
-        "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
+        "head_sha": "580561220218be22a1e791bd9833de3d22fb52e9",
         "pr_number": 137,
-        "remaining": "Freeze repaired head, strict/focused checks plus three unchanged-protocol editor performance reruns against retained matching legacy runs; fresh exact-head CI and new independent review epoch, controller/main/candidate verification.",
+        "remaining": "Fresh independent exact-head/base/spec review epoch, exact-head CI/controller/main CI and complete package/both-image delivery receipts.",
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "stage": "Fresh independent review epoch 1 requested changes; committed status running with repair_rounds 1. Repairing same-video analysis-window poll ordering before new review."
+        "stage": "Repaired independent P2 analysis-window polling race; published head 5805612. Requesting fresh review epoch after changed-head CI."
       },
-      "checkpoint_at": 1792465760,
+      "checkpoint_at": 1792466380,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
         "branch": "codex/issue-97-migrate-the-frame-accurate-review-editor",
         "epoch": 1,
-        "expires_at": 1792476560,
+        "expires_at": 1792477180,
         "granted_at": 1792463404,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
@@ -7897,48 +7917,6 @@
       "planned_by": "dootz1",
       "pr_number": 137,
       "repair_rounds": 1,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792465657,
-        "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "evidence": [
-          "Actual fresh read-only reviewer session mac-review97-01a156d5 on Stanleys-Laptop.local; committed review-next review97-next-v1 granted review_epoch1. Independently read live issue97 spec, queue submission and PR137 head/base. Detached checkout .cache/review97-a48fbca at frozen head; no implementation edits.",
-          "Independent TypeScript check, all32 frontend unit tests, production build, exact backend OpenAPI contract and git diff --check pass. First tool invocation used PATH without npm and failed before checks; corrected PATH preserved above source without edits.",
-          "Independent full generated-media browser .cache/review97-a48fbca/.cache/evidence/frontend-editor-JE2n60 passes17/17 groups. Source PTS/orientation/proxy pixels, draft/save/conflict and selection races, predictions accepted only explicitly, camera/court/scene exclusions, player mapping, shuttle/contact/rally/stroke review, exports and evaluation exercised. No page errors; fixture process and static listener cleanup receipts retained. PR scripts executed with GitHub credentials removed against their owned disposable catalog/listeners.",
-          "Independent browser p95 seek81.7ms, timeline32.9ms, playback first advance88.2ms, rAF16.7ms; all3 playback samples have zero broad editor render delta. Audited all216 receipt SHA256 values across six supplied comparison runs, source bytes for all3 current runs against own frozen checkout, raw summaries and median budget arithmetic; supplied relative comparison passes. Own run is correctness/absolute-budget evidence, not a new three-run relative comparison.",
-          "Inspected own actual desktop and768x1024 viewport screenshots; source clock readable,18px native checkboxes, focus after completed save observed. Native source/proxy/original artifact assertions and JSON/CSV outputs reviewed.",
-          "Adversarial deterministic delayed-analysis probe .cache/review97-a48fbca/.cache/review-races.mjs with .cache/review-races.log fails: {selected:1,afterLatePoll:0,sourceFrame:5}. This is additional coverage absent from the passing generated workflow.",
-          "Independently verified exact-head hosted CI run39361995464 completed success at a48fbca; PR base remains267ed42."
-        ],
-        "findings": [
-          "[P2] Fence analysis-view changes against in-flight refresh publication (backend/frontend/src/editor/controller.ts:252-258,362-374). refresh snapshots analysisEnabled/partIndex before awaiting analysis/run/playback requests. reviewPart(), setFrame() crossing a core boundary, leave() or track() can change that view while the poll is pending, but the result later publishes the old mode/part/runs. Reproduced independently by holding the analysis GET, selecting reviewPart(1), then releasing it: selected part 1 is overwritten to 0 while sourceFrame remains 5. pollAgain does not repair it because its next refresh starts from the restored old part. Real window runs and candidate lists can consequently belong to the previous window until another seek. Add a view-generation/ownership fence or cancel/restart that lane on user mode/window changes, with a delayed analysis/run/playback regression verifying selected window and matching runs remain current."
-        ],
-        "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
-        "limitations": [
-          "Changes verdict: the reproduced in-selection analysis-window request-ordering defect must be repaired and the new head independently reviewed before integration.",
-          "Generated fixture software checks do not establish native model behavior, full-match badminton annotation accuracy, external downloader availability, persistent identities, doubles recognition or assistive-technology certification. No research/native inference or live user app was run.",
-          "Independent full Python/release archive suites were not rerun: no backend/schema/production asset changes; focused frontend checks and exact-head hosted CI were observed. Library/foundation compatibility runs supplied by author were not independently rerun in this session.",
-          "Relative performance uses independently audited external six-run receipts; own additional run uses Node24 rather than supplied comparison Node22 and cannot itself prove relative speedup. No thermal pinning or cross-host claim."
-        ],
-        "pr_number": 137,
-        "reviewed_files": [
-          "backend/frontend/README.md",
-          "backend/frontend/scripts/test.mjs",
-          "backend/frontend/src/App.tsx",
-          "backend/frontend/src/editor/EditorApp.tsx",
-          "backend/frontend/src/editor/Playback.tsx",
-          "backend/frontend/src/editor/controller.ts",
-          "backend/frontend/src/editor/editor.css",
-          "backend/frontend/src/editor/model.ts",
-          "backend/frontend/src/library/LibraryApp.tsx",
-          "backend/frontend/src/main.tsx",
-          "backend/frontend/tests/editor.test.mjs",
-          "tests/frontend-editor.mjs"
-        ],
-        "session_id": "mac-review97-01a156d5",
-        "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -7977,10 +7955,10 @@
         ]
       },
       "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "267ed42abaf0157aa2325f32f7568713ac4f8d2d",
-        "head_sha": "a48fbca9e7d420f7c56fdcae7f75c2789e2ac1e2",
+        "head_sha": "580561220218be22a1e791bd9833de3d22fb52e9",
         "pr_number": 137,
         "spec_hash": "dad82a10277346aa7c2fbe2fdedee195f15f12e96274e1e6838802bd24ce67da"
       }
