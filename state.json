@@ -1966,6 +1966,26 @@
       "task_id": "97",
       "verb": "next"
     },
+    "roadmap-next-after97-v1": {
+      "actor": "dootz1",
+      "at": 1792470234,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+        "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
+        "epoch": 1,
+        "expires_at": 1792481034,
+        "granted_at": 1792470234,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+      },
+      "epoch": 1,
+      "fingerprint": "554966897890d4fa05405eea0f89ede5eff937c4750586c178795c9e9d9d9e42",
+      "status": "granted",
+      "task_id": "138",
+      "verb": "next"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -6198,7 +6218,18 @@
       }
     },
     "138": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
+        "branch": "codex/issue-138-expose-existing-reviewed-media-export-jo",
+        "epoch": 1,
+        "expires_at": 1792481034,
+        "granted_at": 1792470234,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-01a156d5-20261019",
+        "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459"
+      },
+      "epoch": 1,
       "planned_at": 1792465571,
       "planned_by": "dootz1",
       "spec": {
@@ -6241,7 +6272,7 @@
         ]
       },
       "spec_hash": "1fb16c327bcf61de6f32bce5569eb475328fe0889cec38576c29e07625ce8459",
-      "status": "ready"
+      "status": "running"
     },
     "139": {
       "checkpoint": {
