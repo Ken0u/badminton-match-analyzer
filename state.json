@@ -330,6 +330,14 @@
       "task_id": "126",
       "verb": "invalidate-review"
     },
+    "invalidate-139-4b56f0351d7d38497f39d297b10628cee82ab995-50efff1867de1ecac0093468f987d6b60d5d178d": {
+      "actor": "github-actions[bot]",
+      "at": 1792484051,
+      "fingerprint": "8b3a362de0a83eec9b1eaa3c10d7a67ca92116f95cac147174bb76bbef0bda0d",
+      "status": "running",
+      "task_id": "139",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -6449,7 +6457,7 @@
       "planned_at": 1792469150,
       "planned_by": "Ken0u",
       "pr_number": 140,
-      "reason": "released after terminal proof",
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Supply a clone-contained source-packet/audit CLI and public protocol. Freeze exactly25 uniformly spaced center frames per original supplied video (floor((i+0.5)*frame_count/25), i0..24), plus singles2039..2043,2047..2048,2077..2079 known development-gap frames; deduplicate and retain every selected case. Pin source/metadata/native-clock hashes, frame identity/PTS/orientation, review context and metric rules before looking at additional predictions. Context is at most two adjacent source frames each side and must not imply motion through a cut.",
@@ -6496,7 +6504,7 @@
         ]
       },
       "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
         "head_sha": "ce9e9065388168e66512c19d3b20f49f72fe4097",
