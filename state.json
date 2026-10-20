@@ -934,6 +934,15 @@
       "task_id": "95",
       "verb": "checkpoint"
     },
+    "mac-01a156d5-96-start-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792461665,
+      "epoch": 1,
+      "fingerprint": "1b986625927aebd173f6b9c3631cb95d99e2768253f16a22d17a1af4d33601b2",
+      "status": "running",
+      "task_id": "96",
+      "verb": "checkpoint"
+    },
     "mac-01a156d5-next-after130-main-v1": {
       "actor": "dootz1",
       "at": 1792459313,
@@ -7316,12 +7325,25 @@
       }
     },
     "96": {
+      "checkpoint": {
+        "base_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "branch": "codex/issue-96-migrate-library-imports-and-job-monitori",
+        "evidence": [
+          "Task95 controllermerge278ab97 exactmainCI39355752096 and completecandidate39356145324 verified; dispatcherDone/delivery_pending=false. Package76fileparity and both anonymousimages matched.",
+          "Locked58packages installed from priorcache without lifecycle scripts; no dependency/versionchanges, no app/model/data/inference restart."
+        ],
+        "head_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
+        "remaining": "Library/import/uploadprogress/job/pause/resume/frontendfeatures, generatedbrowsernegative/recovery/selection checks, fullchecks, fresh independent review,CI/controllermerge/main/delivery.",
+        "spec_hash": "b1cabdbf649aca38d33dc5ae586c3bc00d2eab46076c128561aea3f72087307d",
+        "stage": "Committed epoch1 task96 grant confirmed, isolatedworktree created; backend/frontend implementation delegated to bounded worker. Parent owns tests/frontend-library.mjs, coordination/publication/fullverification. Rootfoundationroute preserved; library opt-in /library until phase98 cutover."
+      },
+      "checkpoint_at": 1792461665,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "278ab975643160657f8d631ff498c804bf72f0e6",
         "branch": "codex/issue-96-migrate-library-imports-and-job-monitori",
         "epoch": 1,
-        "expires_at": 1792472309,
+        "expires_at": 1792472465,
         "granted_at": 1792461509,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-01a156d5-20261019",
