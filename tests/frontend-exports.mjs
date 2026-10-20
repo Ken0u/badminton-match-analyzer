@@ -591,6 +591,11 @@ try {
         await enteredGate(entered);
         assert.equal(active.available, false);
         assert.ok(["queued", "running"].includes(active.job.status));
+        assert.equal(
+          await page.locator("#media-export-start").isDisabled(),
+          true,
+          "A submitted mutation must block duplicate exports until its response is reconciled",
+        );
         await page.locator("#event-frame").fill("50");
         await page.locator("#rally-id").fill("partial");
         await page.locator("#event-kind").selectOption("shot");
