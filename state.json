@@ -2069,6 +2069,28 @@
       "task_id": "98",
       "verb": "review-next"
     },
+    "mac-review98-r2-next-v1": {
+      "actor": "dootz1",
+      "at": 1792514941,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
+        "epoch": 1,
+        "expires_at": 1792525741,
+        "granted_at": 1792514941,
+        "head_sha": "5f2e760bde307e8748e9a486daef705c40a9f111",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 148,
+        "review_epoch": 2,
+        "session_id": "mac-review98-r2-01a15493",
+        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
+      },
+      "epoch": 1,
+      "fingerprint": "e55ce8fa70ad307530d0e822423a38a55fc424afc3811ee0f112226dc00544c0",
+      "status": "granted",
+      "task_id": "98",
+      "verb": "review-next"
+    },
     "mac-review98-r2-register-v1": {
       "actor": "dootz1",
       "at": 1792514851,
@@ -10426,7 +10448,20 @@
       "pr_number": 148,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 0,
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "e4805cc7959f446b3dca3f7988522bba54a20c8b",
+        "epoch": 1,
+        "expires_at": 1792525741,
+        "granted_at": 1792514941,
+        "head_sha": "5f2e760bde307e8748e9a486daef705c40a9f111",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 148,
+        "review_epoch": 2,
+        "session_id": "mac-review98-r2-01a15493",
+        "spec_hash": "365725230f7c3c52cd0fb6da547a13f50cf2a639ff434d54246847b662974628"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Build and serve the frontend from FastAPI; include correct assets in wheel/sdist and review/CPU images, excluding frontend source/build tooling where unnecessary. Keep one application container and no runtime frontend server.",
