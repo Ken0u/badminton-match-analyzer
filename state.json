@@ -4081,6 +4081,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle139-epoch2-source-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792481575,
+      "epoch": 2,
+      "fingerprint": "1b92e0ccefda297e7c69adcd3052836a37837d030fc36831fec40f49369305a5",
+      "status": "running",
+      "task_id": "139",
+      "verb": "checkpoint"
+    },
     "windows-shuttle139-expired-recover-v1": {
       "actor": "Ken0u",
       "at": 1792481331,
@@ -6337,27 +6346,39 @@
     },
     "139": {
       "checkpoint": {
-        "branch": "codex/issue-139-establish-source-only-independently-asse",
-        "evidence": [
-          "Real MSI/session3283a9953d4445739251c6b8dfdb55bd task139epoch1 grant accepted1792469239; fingerprintac584c71da886b6dd02a170a00a22f9c5ac3b194a8c03b28aee8d5cd537d86a8",
-          "Task64 fully Done with cleared delivery, all12exact-main checks and4publishing jobs success",
-          "Corrected nonexistent historical dependency45 before any grant; no predecessor explicit plans or raw coordination writes",
-          "Current five paths/resources disjoint from Mac97; source metadata/clock/raw file inventory verified read-only",
-          "No source packets, new labels, cached baseline prediction reads, inference, GPU work, downloads or app annotation changes started"
+        "assessment_sha256": [
+          "2ac3294ff310ae2a1d4a0691d2a894eabd15294dd457c9391131de718fe96536",
+          "91654166aa8d1b05feb241856671ab9fed126671b1031974d0ed49d4f12f4a6b"
         ],
-        "head_sha": "0a59057d0eef5d3f22d93b1a1a2cb356baefdeaa",
-        "input_inventory_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
-        "next": "Implement only granted packet/audit code and public fixed protocol; freeze source-only source/selection/metric/context rules before two genuine independent source assessments and before any new cached prediction access. Preserve unknown/disagreement/unavailable cases.",
-        "phase": "Granted source-only shuttle development audit; isolated branch and worktree prepared, no implementation or labels yet",
-        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119"
+        "branch": "codex/issue-139-establish-source-only-independently-asse-e2",
+        "head_sha": "d8bcce6ea338305e4deb9aeb662909268e3c16f2",
+        "next": "Actually inspect source images for each disagreement and confirmed-absence label; freeze all60 adjudicated labels and timestamp seals before any cached native prediction access. No model inference/GPU/app truth/holdout access.",
+        "packet_sha256": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+        "phase": "Fresh epoch2 grant after audited expired epoch1 recovery. Complete source packet and two genuine immutable independent assessments validated. Explicit root source-only adjudication is next.",
+        "previous_epoch_preserved": {
+          "branch": "codex/issue-139-establish-source-only-independently-asse",
+          "local_head": "3fa0266814aaec67cef663bfd1f22740108c6218",
+          "recovery_receipt": "windows-shuttle139-expired-recover-v1",
+          "worktree": ".cache/worktrees/shuttle139"
+        },
+        "raw_disagreements": {
+          "camera_context": 0,
+          "difficulty": 28,
+          "disjoint_location": 0,
+          "point_estimate": 14,
+          "state": 6,
+          "uncertainty_radius": 9
+        },
+        "spec_hash": "096399633892e2d042beeb5907e83990fc117caaa1c7e67b30e426335a6a2119",
+        "verification": "30 focused generated tests passed in epoch1; label-freeze/score code still uncommitted and full/final project checks pending. No PR or approval claimed."
       },
-      "checkpoint_at": 1792469338,
+      "checkpoint_at": 1792481575,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "50efff1867de1ecac0093468f987d6b60d5d178d",
         "branch": "codex/issue-139-establish-source-only-independently-asse-e2",
         "epoch": 2,
-        "expires_at": 1792492230,
+        "expires_at": 1792492375,
         "granted_at": 1792481430,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
