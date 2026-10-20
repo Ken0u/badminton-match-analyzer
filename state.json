@@ -3973,6 +3973,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle139-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792468905,
+      "fingerprint": "cdfcfa4c8b751c797b7b90f6cd58140d9ddd3014981e7bcfcb8f4b7517a99af5",
+      "status": "idle",
+      "verb": "next"
+    },
     "windows-shuttle139-register-v1": {
       "actor": "Ken0u",
       "at": 1792468733,
