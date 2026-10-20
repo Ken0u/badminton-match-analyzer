@@ -1541,6 +1541,15 @@
       "task_id": "95",
       "verb": "review-result"
     },
+    "mac-review95-01a156d5-result2": {
+      "actor": "dootz1",
+      "at": 1792460987,
+      "epoch": 1,
+      "fingerprint": "c1eb93635affd095f98cc2c57c01010c71f556194d5a49bb728fc748582d0d7b",
+      "status": "review",
+      "task_id": "95",
+      "verb": "review-result"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -7134,18 +7143,58 @@
       "pr_number": 134,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792460987,
         "base_sha": "a4ccadb700b9782fc4c1ebf681ea9089e4adcc74",
-        "epoch": 1,
-        "expires_at": 1792471651,
-        "granted_at": 1792460851,
+        "evidence": [
+          "Committed new review_epoch2 for exact4dcc039/a4ccadb/spec a85b6236; same truthful independent reviewer session mac-review95-01a156d5. Grant .cache/review-grant-status.json. No implementation edits; scrubbed env -i and disposable HOME for candidate checks.",
+          "Reviewed all26 foundation files against the frozen acceptance in first review and inspected the complete three-file repair diff. Required/optional QueryOptions conditional faithfully preserves generated required keys. Prior changes verdict remains recorded for oldf2111bf.",
+          "Raw independent negative TypeScript compilation now exits2: missing query TS2345 and empty query missing index TS2741. Required frame index, no-query/empty-query/video_id optional jobs and no-query health positives compile exit0. Probe files and logs retained in .cache/.",
+          "Exact repaired-head strict TypeScript, all10 client/state tests, Vite static production build and actual-backend deterministic OpenAPI/schema check pass. Log .cache/reviewer-checks.log.",
+          "Exact repaired-head generated browser checks pass7 with no page errors: actualHTTP client, built static assets, keyboard/focus, late read fencing, edit-during-save,600 imperative ticks and legacy/source/annotations/prediction preservation. Evidence .cache/evidence/frontend-foundation-IE2VIS; desktop screenshot visually inspected. Own fixture cleanup validates PID/creation/cwd/command and stops only owned listener.",
+          "Exact repaired-head hosted ci/gate and every Checks job SUCCESS, snapshot .cache/hosted-ci-review.json; policy awaiting independent review. Earlier independent review verified all existing lock dependency records unchanged; repair touches only client and2tests. git diff --check passed and checkout clean after reviewer symlink removal."
+        ],
+        "findings": [],
         "head_sha": "4dcc0390c89385c81f3e889100bfe696a58992ca",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "This approval binds only exact head4dcc0390c89385c81f3e889100bfe696a58992ca/basea4ccadb700b9782fc4c1ebf681ea9089e4adcc74/frozen spec; controller must revalidate current-main ancestry, policy and exact checks before integration. No merge performed.",
+          "No full Python suite, native inference or archive reconstruction rerun by reviewer; hosted full Python/native/package/container jobs pass, and author local full-suite/package/legacy17 evidence remains separately attributed.",
+          "Browser checks use generated media and synthetic development sandbox. They establish software behavior, not unseen annotation accuracy, full editor parity, WCAG certification or production cutover.",
+          "Backend JSON success schemas remain unknown until narrowed; generated types provide compile-time checks rather than runtime validation. Production packaging/default UI integration remain phase98."
+        ],
         "pr_number": 134,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/frontend/.gitignore",
+          "backend/frontend/README.md",
+          "backend/frontend/index.html",
+          "backend/frontend/package.json",
+          "backend/frontend/scripts/contract.mjs",
+          "backend/frontend/scripts/test.mjs",
+          "backend/frontend/src/App.tsx",
+          "backend/frontend/src/api/client.ts",
+          "backend/frontend/src/api/generated/openapi.json",
+          "backend/frontend/src/api/generated/schema.ts",
+          "backend/frontend/src/main.tsx",
+          "backend/frontend/src/state/draft.ts",
+          "backend/frontend/src/state/playback.ts",
+          "backend/frontend/src/state/selection.ts",
+          "backend/frontend/src/state/server.ts",
+          "backend/frontend/src/state/store.ts",
+          "backend/frontend/src/style.css",
+          "backend/frontend/src/ui/controls.tsx",
+          "backend/frontend/tests/contract-types.ts",
+          "backend/frontend/tests/foundation.test.mjs",
+          "backend/frontend/tsconfig.json",
+          "backend/frontend/tsconfig.test.json",
+          "backend/frontend/vite.config.js",
+          "package-lock.json",
+          "package.json",
+          "tests/frontend-foundation.mjs"
+        ],
         "session_id": "mac-review95-01a156d5",
-        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887"
+        "spec_hash": "a85b6236ce459e605734fef0d2e27bffd3b64b0d4d4cf78b02ba91611fae2887",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
