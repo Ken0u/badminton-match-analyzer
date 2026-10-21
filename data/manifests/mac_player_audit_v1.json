@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "video_id": "970dbd8adfe548d8",
+  "source_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+  "clock_sha256": "78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b",
+  "annotation_revision": 1,
+  "annotation_sha256": "537318fc735c392f8ca402c0d273205b28e29a5661738e491c84e79518780688",
+  "run_path": "970dbd8adfe548d8/runs/dd708cbaf1264917ba8583e2e0a804a6.json",
+  "run_sha256": "3f43dd8ad8d528012e6b8c6e0aa64d9910cbe39f6c0297190f14021aad3b8945",
+  "start_frame": 434,
+  "end_frame": 685,
+  "sample_frames": [434, 459, 484, 509, 534, 559, 584, 609, 634, 659, 684],
+  "iou_threshold": 0.5,
+  "max_output_bytes": 67108864,
+  "max_runtime_seconds": 900,
+  "source_role": "Previously used supplied singles development source; sparse automated source assessment, not human gold or an unseen test",
+  "protocol": {
+    "sampling": "Every 25th native frame from 434 through 684 inclusive; fixed before opening predictions",
+    "assessments": "Two genuine fresh source-only sessions; originals sealed before comparison; source-only adjudication before cached predictions are opened",
+    "localization": "All visible on-court persons; native display-pixel boxes; unknown/unlocalizable persons and incomplete frames retained",
+    "matching": "Deterministic one-to-one maximum total IoU using only pairs with IoU >= 0.5; ties deterministic; no threshold selection",
+    "identity": "Adjacent sampled source actors within one source view and uninterrupted cached camera/eligible scene context; unknown/missing cases break eligibility",
+    "limitations": "court_view means a visible court image, not independently certified live play; sparse continuity cannot measure full-run switches or persistent named identities",
+    "inference_calls": 0,
+    "promotion": false
+  }
+}
