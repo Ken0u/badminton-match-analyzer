@@ -1818,6 +1818,12 @@
       "task_id": "176",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player176-e2-merged-checkpoint": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player176-e2-submit-r2": {
       "actor": "dootz1",
       "at": 1792616787,
