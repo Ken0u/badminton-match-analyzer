@@ -6548,6 +6548,15 @@
       "task_id": "164",
       "verb": "checkpoint"
     },
+    "windows-shuttle164-checkpoint-v3": {
+      "actor": "Ken0u",
+      "at": 1792565816,
+      "epoch": 1,
+      "fingerprint": "7ba84f8849282a78cd7a0174fc156d9eb72d3acda806a1660a5a14b3a2f0e3d3",
+      "status": "running",
+      "task_id": "164",
+      "verb": "checkpoint"
+    },
     "windows-shuttle164-initial-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792563978,
@@ -10413,19 +10422,19 @@
     "164": {
       "checkpoint": {
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
-        "head_sha": "f4b9e2618f0bb7f87ed9fde010d94079579dd7ce",
-        "next": "Complete verification of overlap-validation ordering and preserve repaired commit. Explicit authorization is needed to send remaining assigned original source PNGs and minimal frame/hash/protocol context to the existing ChatGPT-authenticated Codex CLI; automatic review rejected that transmission for missing payload/destination authorization. Do not retry or route around rejection. Once authorized, continue genuine bounded sessions (four centers,6MiB unique PNGs),seal both full streams before comparison,then distinct source adjudication,exclusive freeze,aggregate report,fresh independent PR review,exact-head CI,controller/main/full delivery. No consumed63 access or partial163 label reuse; eligibility flags remain false. Private preservation receipt:.cache/shuttle164-source-checkpoint-v2.json.",
-        "phase": "Validator integrated and pushed; both source streams have 8 of 128 cases. Remaining image inspection awaiting explicit source-transmission authorization after automatic approval rejection.",
+        "head_sha": "150097e9f328b179d416abe0a30a6489c3a2c61d",
+        "next": "Owner decision pending: authorize remaining task164 original broadcast PNGs and minimal frame/hash/protocol context to existing ChatGPT-authenticated Codex CLI for bounded genuine assessment/adjudication sessions (four centers,6MiB unique inspected images each),or keep transmission stopped. Automatic approval rejected the launch for missing explicit payload/destination authorization; do not retry or route around rejection. After authorization complete120 remaining cases per stream,seal both complete indexes and originals before comparison,then distinct required source adjudication,exclusive private freeze,aggregate report,fresh independent exact-head PR review/CI,controller integration,merged-main and full delivery. Task is not complete; parent65/full accuracy remain open. No consumed63 access,163-label reuse,eligibility changes,inference/training/model promotion or PROGRESS.md edits. Private receipts:.cache/shuttle164-source-checkpoint-v2.json and .cache/shuttle164-output-audit-v1.json.",
+        "phase": "Verification complete; original assessment streams remain incomplete (8/128 each); awaiting explicit image-transmission authorization after automatic review rejection.",
         "spec_hash": "7ab1b287ebe380945b014d0c29fc29356025a64b8ec1f1555062a784c0bcb0df",
-        "verification": "131 focused generated tests passed on integrated validator in delegate; Ruff check/format, pip check and diff check pass. Initial full run failed because its temporary parent did not exist (879 passed,162 skipped,642 setup errors). Corrected full run:1520 passed,162 skipped,one failure: overlap rejection checked Git-ignore before path overlap. Small granted-module repair is uncommitted and its focused verification is running; current remote head remains f4b9e26. All four original assessment segments mechanically hashed; two segments/eight cases per stream, no comparison/sealing/adjudication. No CLI assessor launched. Existing original research/processes and PROGRESS.md untouched."
+        "verification": "Final full suite at150097e:1521 passed,162 skipped,one Starlette deprecation warning,310.96s. Focused validator:131 passed,136.71s. Ruff check/format172 files,pip check,diff check pass. Fixed overlap validation before Git ignore checks. Earlier failed runs and all generated output preserved. Audit measured199988472 bytes plus8388608 accounting reserve,below268435456. Four original segments retain four distinct actual session locators and immutable byte hashes; no label comparison,stream sealing or adjudication. No CLI assessor launched. Root checkout retains only its pre-existing PROGRESS.md modification; task worktree clean."
       },
-      "checkpoint_at": 1792565302,
+      "checkpoint_at": 1792565816,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
         "epoch": 1,
-        "expires_at": 1792576102,
+        "expires_at": 1792576616,
         "granted_at": 1792563485,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
