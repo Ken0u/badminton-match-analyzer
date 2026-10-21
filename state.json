@@ -2936,6 +2936,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review176-bc2861c-register": {
+      "actor": "dootz1",
+      "at": 1792616064,
+      "fingerprint": "6983269553b41e25c79cfcaf3afa8cdd04f9f16fc7c2e43a7f4eee66cc09fc73",
+      "status": "ok",
+      "verb": "register"
+    },
     "mac-review177-efed31d-next": {
       "actor": "dootz1",
       "at": 1792614692,
@@ -15966,6 +15973,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792588855,
       "session_id": "mac-review166-746587a-independent"
+    },
+    "Stanleys-Laptop.local/mac-review176-bc2861c": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792616064,
+      "session_id": "mac-review176-bc2861c"
     },
     "Stanleys-Laptop.local/mac-review177-efed31d": {
       "actor": "dootz1",
