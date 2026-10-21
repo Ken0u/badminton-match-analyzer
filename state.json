@@ -9658,6 +9658,7 @@
       }
     },
     "158": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39532206195",
       "checkpoint": {
         "branch": "codex/issue-158-keep-exact-native-source-frame-review-us",
         "evidence_sha256": "13a3bfa3e1c1f5ac874c0c5cb2a116a803240358742a59af660ddb3a8b7448bc",
@@ -9680,7 +9681,7 @@
         "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792548651,
