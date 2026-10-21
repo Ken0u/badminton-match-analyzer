@@ -2352,6 +2352,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review158-6270fe0-grant-20261020": {
+      "actor": "dootz1",
+      "at": 1792548285,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
+        "epoch": 1,
+        "expires_at": 1792559085,
+        "granted_at": 1792548285,
+        "head_sha": "6270fe0f2378177ff09cf7b5529f5a40f2f4e95a",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 159,
+        "review_epoch": 2,
+        "session_id": "mac-review158-6270fe0-independent",
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
+      },
+      "epoch": 1,
+      "fingerprint": "0ba52604baf0d554bc8f0ead0aa48cf5726e21e811b478f25918237f1f847f15",
+      "status": "granted",
+      "task_id": "158",
+      "verb": "review-next"
+    },
     "mac-review158-6270fe0-register-20261020": {
       "actor": "dootz1",
       "at": 1792548202,
@@ -4135,6 +4157,13 @@
       "status": "granted",
       "task_id": "158",
       "verb": "next"
+    },
+    "windows-exact158-review-07727-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792548285,
+      "fingerprint": "fa0ad6e9639462fb46debab329e48ec6c8b3616e638611cf9399204b90f0d348",
+      "status": "idle",
+      "verb": "review-next"
     },
     "windows-exact158-review-07727-register-v1": {
       "actor": "Ken0u",
@@ -9593,7 +9622,20 @@
       "planned_by": "Ken0u",
       "pr_number": 159,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_epoch": 1,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
+        "epoch": 1,
+        "expires_at": 1792559085,
+        "granted_at": 1792548285,
+        "head_sha": "6270fe0f2378177ff09cf7b5529f5a40f2f4e95a",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 159,
+        "review_epoch": 2,
+        "session_id": "mac-review158-6270fe0-independent",
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
+      },
+      "review_epoch": 2,
       "spec": {
         "acceptance": [
           "Reproduce the actual production browser failure from CI39522977490 browser-import at tested source headf6a0e5d068c634ffc714aedf6a59d54903a2ed1b/base9d7ee10b6bf474993b4781abdc533ebfdca751e8. All UI source is unchanged in shuttle PR157. Generated long-gap-vfr.mkv has PTS0/0.04/0.08/0.68; selected frame3/currentTime0.68 ends with unsupported-stream error, empty/hidden exact image and no source-frame request. Preserve the failed evidence and link issue149/PR157 and completed frontend98/PR148; search history/grants before implementation.",
