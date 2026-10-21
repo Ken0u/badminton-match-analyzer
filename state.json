@@ -10920,6 +10920,7 @@
       }
     },
     "70": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39534305723",
       "checkpoint": {
         "branch": "codex/issue-70-export-reviewed-rally-clips-and-annotate",
         "head_sha": "6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565",
@@ -10941,7 +10942,7 @@
         "spec_hash": "963e4a6e8d830aa2f3a73863bb47e7294669bf6b81da98b2f9c5d94cbe62277d"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792550013,
