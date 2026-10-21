@@ -372,6 +372,10 @@ def shared_setup(tmp_path, monkeypatch):
     from badminton import config
     from badminton.storage import Store
 
+    # Admission tests must start credential-free regardless of the invoking
+    # environment or other collected modules. The guard itself is tested below.
+    for name in ("GH_TOKEN", "GITHUB_TOKEN", "AGENT_PROJECT_TOKEN", "OPENAI_API_KEY"):
+        monkeypatch.delenv(name, raising=False)
     shared = tmp_path / "data/processed"
     store = Store(shared)
     monkeypatch.setattr(config, "ROOT", tmp_path)
@@ -384,6 +388,27 @@ def shared_setup(tmp_path, monkeypatch):
     )
     monkeypatch.setattr(sources, "_freeze", lambda *_args: ({}, {}, "c" * 64))
     return store
+
+
+@pytest.mark.parametrize(
+    "name", ["GH_TOKEN", "GITHUB_TOKEN", "AGENT_PROJECT_TOKEN", "OPENAI_API_KEY"]
+)
+def test_external_credentials_block_before_snapshot_or_admission(
+    tmp_path, monkeypatch, name
+):
+    store = shared_setup(tmp_path, monkeypatch)
+    monkeypatch.setenv(name, "generated-test-placeholder")
+    output = tmp_path / ".cache/out"
+    with patch.object(sources, "_freeze") as freeze:
+        with pytest.raises(ValueError, match="Clear external credentials"):
+            sources.run_preparation(
+                tmp_path,
+                output,
+                sources_path=tmp_path / "sources",
+                protocol_path=tmp_path / "protocol",
+            )
+        freeze.assert_not_called()
+    assert not output.exists() and not store.jobs()
 
 
 def test_real_occupied_shared_store_blocks_before_downloader(tmp_path, monkeypatch):
