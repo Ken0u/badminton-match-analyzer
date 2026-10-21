@@ -7048,6 +7048,15 @@
       "task_id": "172",
       "verb": "checkpoint"
     },
+    "windows-shuttle172-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792611254,
+      "epoch": 1,
+      "fingerprint": "6a333a6a22f7269e0c5b7483092a52e758b53263fdaa7600bfc99b3108078c2e",
+      "status": "running",
+      "task_id": "172",
+      "verb": "checkpoint"
+    },
     "windows-shuttle172-next-v1": {
       "actor": "Ken0u",
       "at": 1792610565,
@@ -11339,19 +11348,19 @@
     "172": {
       "checkpoint": {
         "branch": "codex/issue-172-adjudicate-and-freeze-the-remaining80-so",
-        "head_sha": "237c016",
-        "next": "Observe existing remaining-phase manager tool24434, never duplicate its live assignments. Original source root .cache/shuttle164-source-only-v2; successor helpers run-shuttle172-adjudications-v1.py and run-shuttle172-cli-adjudicator-v1.py. Fixed80requiredcases/20sessions,concurrency2. Deadline1792624965; no old164 deadline reset. After all originals validate,seal adjudication,exclusive freeze/reverify and execution provenance,aggregate report,requiredchecks,freshindependentreview,exactCI,controller/main/fullpublicdelivery. Parent65/fullgoal active.",
-        "phase": "Granted successor172; preserved164 implementation carried onto trusted main e504535. Two genuinely fresh blind adjudication CLI sessions launched; both original streams remain immutable.",
+        "head_sha": "909017fd5ba7e551bc0d7bbdcae2ca95ba2cac19",
+        "next": "Observe existing adjudication manager PID9632 creation1792610656.1046402/tool24434 and pytest observer tool44757; verify actual lifetimes before any restart. Finish exact 80 cases, validate and seal exact adjudication inventory, exclusive freeze and native identity reverification, execution seal, aggregate-only report, fresh exact-head independent review, required checks/CI, controller integration/main/full public delivery. Remaining-phase deadline1792624965, cumulative output budget256MiB. No model/native decode/training, consumed63 access, eligibility changes or PROGRESS edits. Parent65/full goal remain active.",
+        "phase": "44/80 required blind adjudication cases recorded in 11 genuine fresh sessions. Existing manager remains active; no successor retries.",
         "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422",
-        "verification": "Original source streams each128cases/32segments/64globallydistinctsessions sealed before comparison. Structural/native/inspection/session validation re-passed before launch; no prior labels disclosed. Audit measured204885734bytes plus8388608reserve against268435456 cumulative limit, including interruption snapshot. Explicit owner authorization covers same original image payload/destination and method. No Store/native inference/training/decode worker, new media copies, consumed63 access, eligibility change, PROGRESS edit or model promotion."
+        "verification": "131 generated focused tests pass on original Python 3.10; Ruff check/format all 172 files, pip check and diff check pass. Fixed omitted CODEX_API_KEY cleanup and expanded the existing isolation regression. Both unchanged public protocol hashes verified. Full suite remains in its original verified pytest lifetime PID12048 creation1792610976.174958; a private directory-size monitor failed on concurrent temporary cleanup, original pytest did not stop, observation was reattached without duplicate work. Latest cumulative output 209424791 bytes plus 8388608 reserve under 268435456. All source session/label originals and failures remain private and preserved."
       },
-      "checkpoint_at": 1792610715,
+      "checkpoint_at": 1792611254,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e504535a05f83b35e6c02ee2f5f815921782ac11",
         "branch": "codex/issue-172-adjudicate-and-freeze-the-remaining80-so",
         "epoch": 1,
-        "expires_at": 1792621515,
+        "expires_at": 1792622054,
         "granted_at": 1792610565,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
