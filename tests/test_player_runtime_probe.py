@@ -291,8 +291,9 @@ def test_exhausted_budget_preserves_partial_artifacts_and_interrupted_job(
 
 
 @pytest.mark.parametrize("target", ["original_prediction", "raw_annotations"])
-def test_input_change_during_inference_blocks_second_model_and_records_failure(
-    probe_case, target
+@pytest.mark.parametrize("variant", ["nano", "small"])
+def test_input_change_during_either_model_fails_the_admitted_job(
+    probe_case, target, variant
 ):
     case = probe_case
     tracker, calls = fake_tracker(case)
@@ -300,6 +301,8 @@ def test_input_change_during_inference_blocks_second_model_and_records_failure(
 
     def changing_tracker(*args, **kwargs):
         summary = tracker(*args, **kwargs)
+        if kwargs["player_model"] != variant:
+            return summary
         if target == "original_prediction":
             prediction.write_bytes(b"simulated concurrent prediction edit")
         else:
@@ -315,13 +318,14 @@ def test_input_change_during_inference_blocks_second_model_and_records_failure(
 
     with pytest.raises(ValueError, match=r"changed|frozen"):
         run(case, changing_tracker)
-    assert calls == ["nano"]
+    assert calls == (["nano"] if variant == "nano" else ["nano", "small"])
     assert case.store.jobs()[0]["status"] == "failed"
     receipt = json.loads((case.output / "receipt.json").read_text())
     assert receipt["status"] == "failed"
+    assert receipt["shared_job"]["status"] == "failed"
     assert receipt["inputs_preserved"] is False
     assert "nano/predictions.json" in receipt["artifacts"]
-    assert not (case.output / "small").exists()
+    assert (case.output / "small").exists() == (variant == "small")
     assert case.source.read_bytes() == case.protected[case.source]
     assert case.clock.read_bytes() == case.protected[case.clock]
     if target == "original_prediction":
@@ -485,7 +489,7 @@ def test_two_variants_preserve_truth_and_write_native_overlay_receipts(probe_cas
                 )
         assert (case.output / variant / "contact-sheet.jpg").is_file()
     expected_artifacts = {
-        str(path.relative_to(case.output)): digest(path)
+        path.relative_to(case.output).as_posix(): digest(path)
         for path in case.output.rglob("*")
         if path.is_file() and path.name != "receipt.json"
     }

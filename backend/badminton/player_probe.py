@@ -324,8 +324,10 @@ def run_probe(
     }
     write_json(output / "receipt.json", receipt)
     began = time.monotonic()
+    after = None
 
     def task(job_id, update):
+        nonlocal after
         receipt["job_id"] = job_id
         write_json(output / "receipt.json", receipt)
 
@@ -378,16 +380,18 @@ def run_probe(
                 lambda _value: progress((position + 1) / 2),
             )
             write_json(output / "receipt.json", receipt)
-        progress(1)
-        return {"output": str(output), "variants": receipt["variants"]}
-
-    try:
-        run_local_job(store, "player_runtime_probe", video["id"], task)
+        # Verify the final variant before releasing shared admission. A late
+        # change must fail the Store job as well as this probe's receipt.
         after = _snapshot(root, data, weights, manifest)[2]
         if after != before:
             raise ValueError(
                 "Source, annotations, weights or original predictions changed"
             )
+        progress(1)
+        return {"output": str(output), "variants": receipt["variants"]}
+
+    try:
+        run_local_job(store, "player_runtime_probe", video["id"], task)
         receipt.update(status="completed", inputs_preserved=True)
     except BaseException as exc:
         receipt.update(
@@ -399,7 +403,10 @@ def run_probe(
         raise
     finally:
         try:
-            after = _snapshot(root, data, weights, manifest)[2]
+            # Successful after-evidence belongs to the admitted interval. Do
+            # not race a subsequent job after our Store job has completed.
+            if after is None:
+                after = _snapshot(root, data, weights, manifest)[2]
             receipt["inputs_preserved"] = after == before
             write_json(output / "inputs-after.json", after)
         except Exception as exc:

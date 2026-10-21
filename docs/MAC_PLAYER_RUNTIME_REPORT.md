@@ -51,7 +51,8 @@ PyAV 16.1.0 were already installed. Nothing was downloaded or upgraded.
 
 The executed code commit is `492489ff9e4103a43e395be54313f42ced109c9d`.
 Later receipt-only repairs normalize inventory keys to slash-separated paths
-on Windows and keep shared progress monotonic across both models and overlays.
+on Windows, keep shared progress monotonic across both models and overlays,
+and validate final input preservation before the admitted job can complete.
 They do not change detector/tracker code, weights, thresholds, native inputs or
 the preserved predictions. Generated tests and fresh platform CI cover those
 repairs; the 100 frozen model-frame calls are not repeated. The local ignored
@@ -87,7 +88,7 @@ processing job. Do not rerun merely because a terminal observation times out;
 first verify the recorded process lifetime, shared job and durable artifacts.
 Its cooperative 900-second and 64 MiB limits preserve partial evidence.
 
-The 30 focused generated/injected regressions cover rotated native VFR frames,
+The 32 focused generated/injected regressions cover rotated native VFR frames,
 complete PTS denominators, frozen-input guards, real shared admission, camera/
 scene/calibration context, malformed predictions, preservation, interrupted
 variants and runtime/output budgets. They use synthetic predictions and cannot
