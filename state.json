@@ -2910,6 +2910,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "review166-746587a-reserve": {
+      "actor": "dootz1",
+      "at": 1792588992,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
+        "epoch": 1,
+        "expires_at": 1792599792,
+        "granted_at": 1792588992,
+        "head_sha": "746587aad832710c0e611f9fd971e425d3348df3",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 167,
+        "review_epoch": 1,
+        "session_id": "mac-review166-746587a-independent",
+        "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f"
+      },
+      "epoch": 1,
+      "fingerprint": "746c481f587dfcaaca6fa16b2d702153f1cd6eba386993bd49c00a048d699e15",
+      "status": "granted",
+      "task_id": "166",
+      "verb": "review-next"
+    },
     "review70-01a15c4a-register-v1": {
       "actor": "Ken0u",
       "at": 1792549876,
@@ -10636,6 +10658,20 @@
       "planned_by": "dootz1",
       "pr_number": 167,
       "repair_rounds": 0,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
+        "epoch": 1,
+        "expires_at": 1792599792,
+        "granted_at": 1792588992,
+        "head_sha": "746587aad832710c0e611f9fd971e425d3348df3",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 167,
+        "review_epoch": 1,
+        "session_id": "mac-review166-746587a-independent",
+        "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "The configured owner explicitly requested in this session: make development autonomous and do not require mandatory reviews. Add an explicit boolean policy setting, with absent/invalid configuration retaining the existing required-review behavior; set the repository to optional independent code review. This change itself follows the current trusted-main grant, exact CI, independent review and controller integration process.",
