@@ -11515,6 +11515,7 @@
       }
     },
     "173": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39665033719",
       "checkpoint": {
         "branch": "codex/issue-173-reject-incomplete-or-nonconsecutive-nati",
         "evidence": [
@@ -11539,7 +11540,7 @@
         "spec_hash": "19e9f5b688c032159ee6054403f2e2b9418573784ff4ce1bf61e10f5a889bf44"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792611808,
