@@ -6391,6 +6391,15 @@
       "status": "ready",
       "task_id": "160",
       "verb": "plan"
+    },
+    "windows-shuttle160-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792558459,
+      "epoch": 1,
+      "fingerprint": "5fa7418858f49f5da589866053ea1441caf1a163f2084d70999aefc6229660f4",
+      "status": "review",
+      "task_id": "160",
+      "verb": "submit"
     }
   },
   "tasks": {
@@ -9990,6 +9999,7 @@
       "epoch": 1,
       "planned_at": 1792549388,
       "planned_by": "Ken0u",
+      "pr_number": 162,
       "spec": {
         "acceptance": [
           "Under parent65 and completed139/143/145/149/158, inspect all issue/PR/history/grants for duplicates before implementation. Pin exactly official BWF TV singles go2uajSiBnE (4320s metadata) and doubles H1setLK1tig (3950s metadata), channel UChh-akEbUM8_6ghGVnJd6cQ, video-only AVC format137 at1920x1080/30fps. Anonymous metadata preflight succeeded but no source bytes were downloaded during planning. Reject the483s kEQBaobDUFY highlights candidate; preserve all source-selection/access evidence. Actual decoded duration/frame count and full-match semantic completeness remain unverified until source inspection; metadata is not ground truth.",
@@ -10037,7 +10047,13 @@
         ]
       },
       "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
+        "head_sha": "6dd4bd53f93be85ded110004649b999c5432fa37",
+        "pr_number": 162,
+        "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
+      }
     },
     "62": {
       "epoch": 0,
