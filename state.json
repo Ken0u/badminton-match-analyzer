@@ -3336,6 +3336,14 @@
       "task_id": "158",
       "verb": "plan"
     },
+    "spec-158-9ed9b6177e717ba01a0514b549cf20a1ac898c06b3d94322fecd0ef91eada1c3": {
+      "actor": "Ken0u",
+      "at": 1792546298,
+      "fingerprint": "be7b47b8d56d604e7bb69b1ca6b2bf29ca982d8339c5ef57567047ba43962046",
+      "status": "ready",
+      "task_id": "158",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -4047,6 +4055,26 @@
       "status": "ready",
       "task_id": "158",
       "verb": "plan"
+    },
+    "windows-exact158-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792546298,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
+        "branch": "codex/issue-158-keep-exact-native-source-frame-review-us",
+        "epoch": 1,
+        "expires_at": 1792557098,
+        "granted_at": 1792546298,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
+      },
+      "epoch": 1,
+      "fingerprint": "9b7b3c734dd319850e633de262308184aac29a820d303806d7bdfaa56fa8e03b",
+      "status": "granted",
+      "task_id": "158",
+      "verb": "next"
     },
     "windows-export-stream124-plan-v1": {
       "actor": "Ken0u",
@@ -9448,8 +9476,19 @@
       }
     },
     "158": {
-      "epoch": 0,
-      "planned_at": 1792545833,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
+        "branch": "codex/issue-158-keep-exact-native-source-frame-review-us",
+        "epoch": 1,
+        "expires_at": 1792557098,
+        "granted_at": 1792546298,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
+      },
+      "epoch": 1,
+      "planned_at": 1792546298,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
@@ -9493,7 +9532,7 @@
         ]
       },
       "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "epoch": 0,
