@@ -5777,6 +5777,15 @@
       "task_id": "149",
       "verb": "checkpoint"
     },
+    "windows-shuttle149-halfway-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792542414,
+      "epoch": 2,
+      "fingerprint": "dd02d824c7ab488969b7152a58f0bdf3bda7f0423c6a9a7611b17e6c9d0f3708",
+      "status": "running",
+      "task_id": "149",
+      "verb": "checkpoint"
+    },
     "windows-shuttle149-next-v1": {
       "actor": "Ken0u",
       "at": 1792514851,
@@ -8872,29 +8881,24 @@
     "149": {
       "checkpoint": {
         "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
-        "charged_elapsed_upper_bound_s": 2902,
-        "completed_views": 22,
+        "completed_views": 25,
         "experiment_sha256": "8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68",
-        "external_recovery_sha256": "f87ccfe88c26108d3f16bae118faf1ae2f4d12f5f6baec471fcd055f96417e89",
         "head_sha": "4f81bf587dd2353ce705ea61cbbb4d95029c57e0",
-        "launcher_sha256": "c29849a89dd6e67e4425131144fd7c75fc79fb78329daecb5adc9a19a7d91d77",
-        "next": "After acknowledgement, launch detached exact committed CLI resume with credentials cleared and real original Store. Preserve 22 completed views and original 3600s cumulative budget. Seal all final outputs before unchanged control gate and fixed interpretation.",
-        "phase": "Original-host interrupted recovery sealed before exact-CLI resume",
+        "next": "Continue the same live admitted process. After full completion and actual exit, verify Store/process terminal, all 50 views/60 heatmaps/13499 rows, original artifact preservation and cumulative budget before external sealing and fixed interpretation.",
+        "original_complete_views_preserved": 22,
+        "phase": "25 of 50 complete views sealed; exact frozen resume is live",
         "pr_number": 157,
-        "recovered_terminal_sha256": "fb9f0612ea95f5098d63ae821a8c9b6aeca2b1db4461bc51e8d2984893171605",
-        "recovery_result_sha256": "594fc41c1449b3c6192b8ae8d96b7b93fe3c1c64a0da4247dd322eba8af87166",
-        "remaining_budget_s": 698,
         "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
         "total_views": 50,
-        "verification": "Original lifetime absent, official Store API interrupted only original dead row, all original artifacts unchanged, all 22 complete views validated and reusable through committed prior_proofs/resume_plan. Explicit external recovery, not worker-success evidence. No source or protocol changes and no interpretation."
+        "verification": "Actual resumed lifetime, creation, cwd and command match its shared Store admission. All 22 originally completed views retained without rerunning; three additional views completed. Code/protocol unchanged; conservative original budget retained. No heatmap interpretation or response metrics opened."
       },
-      "checkpoint_at": 1792542175,
+      "checkpoint_at": 1792542414,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
         "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
         "epoch": 2,
-        "expires_at": 1792552975,
+        "expires_at": 1792553214,
         "granted_at": 1792538291,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
