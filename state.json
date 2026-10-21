@@ -6392,6 +6392,13 @@
       "task_id": "160",
       "verb": "plan"
     },
+    "windows-shuttle160-review-register-01a15ccf-v1": {
+      "actor": "Ken0u",
+      "at": 1792558563,
+      "fingerprint": "8bbaaacb0c85484b855b4242b635ec168bb0ca501b05000d9b618bcfe2e6d26b",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-shuttle160-submit-v1": {
       "actor": "Ken0u",
       "at": 1792558459,
@@ -13017,6 +13024,19 @@
       "host_id": "MSI",
       "registered_at": 1792549876,
       "session_id": "01a15c4a-b79d-7ef1-aa5a-dedbddff5ae0"
+    },
+    "MSI/01a15ccf-b26b-7b13-8474-cc8619291089": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792558563,
+      "session_id": "01a15ccf-b26b-7b13-8474-cc8619291089"
     },
     "MSI/07727ebc-b884-496e-87ba-23c262d285a3": {
       "actor": "Ken0u",
