@@ -927,6 +927,15 @@
       "task_id": "168",
       "verb": "submit"
     },
+    "mac-01a15493-170-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792605390,
+      "epoch": 1,
+      "fingerprint": "c1a7c1c54b184c74b1c124fbd2e9522e73eb52bae3d4c7a138cb726eaf1f26f8",
+      "status": "running",
+      "task_id": "170",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -11038,12 +11047,24 @@
       }
     },
     "170": {
+      "checkpoint": {
+        "branch": "codex/issue-170-retry-transient-github-project-dashboard",
+        "evidence": [
+          "baseline-regression.log reproduces all three real errors as failures before implementation",
+          "Complete projection retries at most three times, rereads state/cards after ambiguous response, delays2/4 seconds, recognizes only narrow transient failures; sanitized diagnostics and restores prior token.",
+          "No workflow/policy/permissions/generic transport changes; no MSI takeover, data/model or app upgrade."
+        ],
+        "next": "Run focused/full/static checks, inspect exact scope and current epoch, commit/publish PR, required CI/controller/main/public receipts; code review optional.",
+        "phase": "Implemented within two granted paths; focused Project/backfill43 passed before two additional boundary regressions; full checks next.",
+        "spec_hash": "c8874546f5ff99d3321eb1f350a4dacc3b5779bef886ccd28f7ae791f131fcf0"
+      },
+      "checkpoint_at": 1792605390,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "ee83d8fbc2b233bfa7b30b674d1f21c0445a42df",
         "branch": "codex/issue-170-retry-transient-github-project-dashboard",
         "epoch": 1,
-        "expires_at": 1792615974,
+        "expires_at": 1792616190,
         "granted_at": 1792605174,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
