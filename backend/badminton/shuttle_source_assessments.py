@@ -909,7 +909,7 @@ def freeze(
     output,
 ):
     """Publish an exclusive bounded lineage; preserve partial output on failure."""
-    output = _ignored_output(output)
+    output = Path(output).absolute()
     supplied = [
         Path(p).resolve()
         for p in (
@@ -928,6 +928,7 @@ def freeze(
         ),
         "Output overlaps an input",
     )
+    output = _ignored_output(output)
     inputs = load_inputs(packet_root, protocol_path, protocol_sha256)
     protocol = _protocol(protocol_path, protocol_sha256)
     originals, shas, differences, resolved, aggregate = _validated_documents(
