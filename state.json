@@ -4010,6 +4010,13 @@
       "task_id": "69",
       "verb": "next"
     },
+    "windows-browser-capability-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792545324,
+      "fingerprint": "5ea347eec1bf313a7247587e069c725a3737171d4722a9f04a83a992efaf5a1d",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-duration103-next-v1": {
       "actor": "Ken0u",
       "at": 1792420473,
@@ -12348,10 +12355,11 @@
       "capabilities": [
         "cuda",
         "windows",
-        "review-inputs"
+        "review-inputs",
+        "browser"
       ],
       "host_id": "MSI",
-      "registered_at": 1792514646,
+      "registered_at": 1792545324,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
