@@ -962,6 +962,15 @@
       "task_id": "173",
       "verb": "checkpoint"
     },
+    "mac-01a15493-173-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792611506,
+      "epoch": 1,
+      "fingerprint": "7a895adfd052c883052cddcad02dedcf523097556c43aebba4f6d1d8e698b8a7",
+      "status": "review",
+      "task_id": "173",
+      "verb": "submit"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -11461,6 +11470,7 @@
       "epoch": 1,
       "planned_at": 1792610999,
       "planned_by": "dootz1",
+      "pr_number": 174,
       "spec": {
         "acceptance": [
           "Reproduce current iter_frames behavior on a newly generated four-frame VFR video: controlled decoder omission of middle1 returns0,2,3 and final3 returns0,1,2 without an error. This is a reader-integrity failure, not evidence about badminton detection accuracy. Check existing issues/tests/grants before creating work and preserve MSI172 source-adjudication ownership.",
@@ -11497,7 +11507,13 @@
         ]
       },
       "spec_hash": "19e9f5b688c032159ee6054403f2e2b9418573784ff4ce1bf61e10f5a889bf44",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e504535a05f83b35e6c02ee2f5f815921782ac11",
+        "head_sha": "c1d273f8cec46e5f6c0c157c49e8e031ff07dcc0",
+        "pr_number": 174,
+        "spec_hash": "19e9f5b688c032159ee6054403f2e2b9418573784ff4ce1bf61e10f5a889bf44"
+      }
     },
     "62": {
       "epoch": 0,
