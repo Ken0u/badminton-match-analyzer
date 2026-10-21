@@ -7003,6 +7003,15 @@
       "task_id": "164",
       "verb": "release"
     },
+    "windows-shuttle172-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792610715,
+      "epoch": 1,
+      "fingerprint": "1a206239ff2e29893b18d76be2d3f66180ac1e87dfd9f21b0c6fba3d5aad85bb",
+      "status": "running",
+      "task_id": "172",
+      "verb": "checkpoint"
+    },
     "windows-shuttle172-next-v1": {
       "actor": "Ken0u",
       "at": 1792610565,
@@ -11292,12 +11301,21 @@
       }
     },
     "172": {
+      "checkpoint": {
+        "branch": "codex/issue-172-adjudicate-and-freeze-the-remaining80-so",
+        "head_sha": "237c016",
+        "next": "Observe existing remaining-phase manager tool24434, never duplicate its live assignments. Original source root .cache/shuttle164-source-only-v2; successor helpers run-shuttle172-adjudications-v1.py and run-shuttle172-cli-adjudicator-v1.py. Fixed80requiredcases/20sessions,concurrency2. Deadline1792624965; no old164 deadline reset. After all originals validate,seal adjudication,exclusive freeze/reverify and execution provenance,aggregate report,requiredchecks,freshindependentreview,exactCI,controller/main/fullpublicdelivery. Parent65/fullgoal active.",
+        "phase": "Granted successor172; preserved164 implementation carried onto trusted main e504535. Two genuinely fresh blind adjudication CLI sessions launched; both original streams remain immutable.",
+        "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422",
+        "verification": "Original source streams each128cases/32segments/64globallydistinctsessions sealed before comparison. Structural/native/inspection/session validation re-passed before launch; no prior labels disclosed. Audit measured204885734bytes plus8388608reserve against268435456 cumulative limit, including interruption snapshot. Explicit owner authorization covers same original image payload/destination and method. No Store/native inference/training/decode worker, new media copies, consumed63 access, eligibility change, PROGRESS edit or model promotion."
+      },
+      "checkpoint_at": 1792610715,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e504535a05f83b35e6c02ee2f5f815921782ac11",
         "branch": "codex/issue-172-adjudicate-and-freeze-the-remaining80-so",
         "epoch": 1,
-        "expires_at": 1792621365,
+        "expires_at": 1792621515,
         "granted_at": 1792610565,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
