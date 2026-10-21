@@ -1960,6 +1960,15 @@
       "task_id": "176",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player183-initial-checkpoint": {
+      "actor": "dootz1",
+      "at": 1792618606,
+      "epoch": 1,
+      "fingerprint": "c0a648e30eff22470c93ec027bf79c1b5eac06ed46cc3d6203e6418d5fb99a8e",
+      "status": "running",
+      "task_id": "183",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player183-plan-v1": {
       "actor": "dootz1",
       "at": 1792617513,
@@ -12575,12 +12584,26 @@
       "status": "ready"
     },
     "183": {
+      "checkpoint": {
+        "base_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
+        "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
+        "evidence": [
+          "Input source/clock/annotation/original cached run SHA and11 deterministic frames frozen before prediction-content read. Source-only two fresh sessions and separate adjudication pass will be sealed before scoring.",
+          "Parent owns launcher/manifest/report; task-owned core subagent owns only backend/badminton/player_audit.py and tests/test_player_development_audit.py in isolated .cache/player-audit-183-core. No MSI reservations or data touched.",
+          "Parent launcher static lint/format/compile pass; required generated/full checks remain before publication. #176 completion and full public receipts recorded at issuecomment6327047685."
+        ],
+        "manifest_sha256": "8badea2ab41d043d865fd81025e696d363c2531b2486b0d814abde2a51616b67",
+        "next": "Integrate tested core; prepare11source-only native images via real shared Store; collect and seal genuine blind assessments and source-only adjudication; only then open fixed cached prediction for scoring.",
+        "phase": "Committed grant validated; isolated parent/core worktrees active. Frozen source-only protocol and preparation/seal/scoring launcher implemented, core/test implementation in bounded owned subagent worktree. No actual predictions or source images opened; no inference.",
+        "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
+      },
+      "checkpoint_at": 1792618606,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "epoch": 1,
-        "expires_at": 1792628968,
+        "expires_at": 1792629406,
         "granted_at": 1792618168,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
