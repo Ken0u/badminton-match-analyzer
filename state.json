@@ -12143,6 +12143,7 @@
         "session_id": "roadmap-20261019-01a15493",
         "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 2,
       "history": [
