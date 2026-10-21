@@ -908,3 +908,55 @@ def test_bounded_matcher_agrees_with_exhaustive_generated_assignments():
         matches = maximum_iou_matching(source, predictions)
         assert sum(m["iou"] for m in matches) == pytest.approx(best)
         assert len({m["prediction_index"] for m in matches}) == len(matches)
+
+
+@pytest.mark.parametrize(
+    "mutation", ["packet", "image", "streams_seal", "adjudication_seal"]
+)
+def test_launcher_scoring_rechecks_sealed_source_packet(
+    launcher, source_case, monkeypatch, mutation
+):
+    import json
+
+    import badminton.player_audit
+
+    prepare_case(launcher, source_case)
+    _, adjudication = seal_case(launcher, source_case)
+    original = badminton.player_audit.score_audit
+
+    def mutate(*args, **kwargs):
+        result = original(*args, **kwargs)
+        if mutation == "image":
+            target = next(source_case.output.glob("source-*.png"))
+        else:
+            target = (
+                source_case.output
+                / {
+                    "packet": "packet.json",
+                    "streams_seal": "streams-seal.json",
+                    "adjudication_seal": "adjudication-seal.json",
+                }[mutation]
+            )
+        target.write_bytes(target.read_bytes() + b" ")
+        return result
+
+    monkeypatch.setattr(badminton.player_audit, "score_audit", mutate)
+    with pytest.raises(ValueError, match="changed during scoring"):
+        launcher.finish(
+            "score",
+            source_case.root,
+            source_case.data,
+            source_case.manifest,
+            source_case.manifest_sha,
+            source_case.output,
+            [adjudication],
+        )
+    assert not (source_case.output / "score.json").exists()
+    receipt = json.loads(
+        (source_case.output / "score-receipt-1.json").read_text(encoding="utf-8")
+    )
+    assert receipt["status"] == "failed"
+    assert "changed during scoring" in receipt["error"]
+    job = source_case.store.job(receipt["job_id"])
+    assert job["kind"] == "player-source-score"
+    assert job["status"] == "failed"
