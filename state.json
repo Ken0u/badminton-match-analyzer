@@ -1940,6 +1940,14 @@
       "task_id": "176",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player183-plan-v1": {
+      "actor": "dootz1",
+      "at": 1792617513,
+      "fingerprint": "6fd09e5ad7bc68842e0a5f122271ec2f2564651fc131d74702cb226570cf4419",
+      "status": "ready",
+      "task_id": "183",
+      "verb": "plan"
+    },
     "mac-01a15493-post101-next-v1": {
       "actor": "dootz1",
       "at": 1792537385,
@@ -4326,6 +4334,14 @@
       "fingerprint": "21c94ebc7a6d1342d822d4cd11ffd4020110591e646f29f65cd9952b9b523654",
       "status": "ready",
       "task_id": "181",
+      "verb": "plan"
+    },
+    "spec-183-551934c710cca18a0b7a1ce89da26c60bf292f2d5b7bc76f6bb53fb22234dc71": {
+      "actor": "dootz1",
+      "at": 1792617513,
+      "fingerprint": "c0a22eb6d97e6f682182b0a5f9f75fc6c4c68a1b50983d9dd5bf1a21f7b8f6ef",
+      "status": "ready",
+      "task_id": "183",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -12525,6 +12541,66 @@
         ]
       },
       "spec_hash": "2b2f35d036d4238b207985e55cc295dc970cc20fadb9e7ffdf5d5253d9f3f4dc",
+      "status": "ready"
+    },
+    "183": {
+      "epoch": 0,
+      "planned_at": 1792617513,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Advance approved Perception identity parent #66 after #176. Before opening cached prediction contents, freeze original supplied singles source970dbd8adfe548d8 SHA970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f, clockSHA78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b, annotation revision1 rawSHA537318fc735c392f8ca402c0d273205b28e29a5661738e491c84e79518780688 and existing player run dd708cbaf1264917ba8583e2e0a804a6.json SHA3f43dd8ad8d528012e6b8c6e0aa64d9910cbe39f6c0297190f14021aad3b8945. Freeze sample frames434,459,484,509,534,559,584,609,634,659,684 from its original [434,685) development window. Missing/conflicting provenance must stop scoring and be reported, never inferred or replaced.",
+          "Generate exactly the11 native source images with source frame/PTS/orientation lineage and hashes in a new ignored cache. No overlays, predictions, tracker IDs or report conclusions are supplied to assessors. Two genuine fresh read-only agent sessions independently record every visible on-court person with native pixel box, within-view provisional source actor label, occlusion/eligibility/scene/camera uncertainty and source evidence for all11frames. They may not inspect predictions, each other or consumed holdout63/MSI artifacts. Freeze originals before any comparison; disclose these are automated visual assessments, not human gold labels.",
+          "Preserve both original streams byte-for-byte and record every disagreement, including unknown/unlocalizable people, boxes and actor continuity. A separate source-only adjudication pass retains unresolved cases rather than forcing consensus and records its actual session and evidence. No scientific independence or accuracy claim beyond this frozen sparse development audit; no keypoint, cross-camera, doubles, unseen-match or complete-frame identity claim.",
+          "After both streams and source-only adjudication are sealed, score the single unchanged cached run with fixed one-to-one maximum-IoU matching at IoU>=0.5, retaining all11sampleframes and all raw person observations/unknowns. Report eligible/unavailable/unknown denominators, matched/unmatched predictions and source persons, IoU distribution, and sampled adjacent identity transitions only when both source identity and matches are eligible in the same camera view. Track ID reuse/fragmentation/switches remain distinct; do not interpolate through unknown/missing/excluded cases or label sparse continuity as full-run ID accuracy. Do not tune sampling, metric threshold, labels or model from results.",
+          "Add bounded reproducible preparation/scoring code and meaningful generated regressions for source/clock/receipt mismatch, duplicate/missing samples, malformed boxes/IDs, one-to-one ambiguity, unmatched/unknown people, cuts/exclusions and original-input preservation. Pin root/data before imports; use real shared Store admission for source decoding, refuse concurrent processing/occupied output and preserve process/Store/artifact evidence. No inference/training, research-weight install, app annotation/prediction writes or downloads.",
+          "Commit only reproducible code, frozen public hash/protocol manifest and aggregate report. Raw images/private source annotations/predictions and both assessment documents stay ignored/local with immutable hashes. Run required focused/full/static checks and fresh independent exact-head review, controller integration, exact-main checks and complete public wheel/sdist/both-image delivery before completion. Propose follow-up defects separately without changing tracker or association math in this task."
+        ],
+        "artifacts": {
+          "mac-singles-development-clock": "78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b",
+          "mac-singles-development-source": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f"
+        },
+        "capabilities": [
+          "cpu",
+          "darwin",
+          "arm64"
+        ],
+        "dependencies": [
+          "176"
+        ],
+        "exclusions": [
+          "No new inference/model calls, thresholds/weights/recipe changes, tuning, promotion, consumed63 test or MSI source/data/reservations, new downloads, paid services, app upgrades, deployments, application truth changes, dependency/workflow/auth/policy/storage edits or PROGRESS.md.",
+          "No claim of human-adjudicated ground truth, full-match detection or identity accuracy, independent held-out test, doubles/shot/shuttle/rally correctness."
+        ],
+        "limits": {
+          "max_inference_frames": 0,
+          "max_output_bytes": 67108864,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "max_source_frames": 11,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Measure sampled Mac player localization and identity continuity on an existing singles development run using two blinded source-only assessment streams, retaining disagreements and unknowns without inference or application truth changes.",
+        "paths": [
+          "backend/badminton/player_audit.py",
+          "scripts/audit_player_development.py",
+          "tests/test_player_development_audit.py",
+          "data/manifests/mac_player_audit_v1.json",
+          "docs/MAC_PLAYER_AUDIT_REPORT.md"
+        ],
+        "priority": 150,
+        "resources": [
+          "cpu:mac-player-audit",
+          "data:mac-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Frozen source-only independent assessment/provenance and complete sparse-sample denominators; original inputs and assessment streams unchanged.",
+          "Meaningful generated regressions, required project checks, genuine fresh exact-head agent review, exact-head/main CI/controller integration and full public delivery."
+        ]
+      },
+      "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3",
       "status": "ready"
     },
     "62": {
