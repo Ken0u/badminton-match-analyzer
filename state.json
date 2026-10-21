@@ -865,6 +865,15 @@
       "task_id": "166",
       "verb": "submit"
     },
+    "mac-01a15493-166-submit-v2": {
+      "actor": "dootz1",
+      "at": 1792589706,
+      "epoch": 1,
+      "fingerprint": "e8f58476dc4f34b6d55a3947b20ab03014e4cc92e7257da9519aa54ddfce511e",
+      "status": "review",
+      "task_id": "166",
+      "verb": "submit"
+    },
     "mac-01a15493-168-plan-v1": {
       "actor": "dootz1",
       "at": 1792588855,
@@ -10667,51 +10676,6 @@
       "planned_by": "dootz1",
       "pr_number": 167,
       "repair_rounds": 1,
-      "review": {
-        "actor": "dootz1",
-        "at": 1792589237,
-        "base_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
-        "evidence": [
-          "Fresh independent session mac-review166-746587a-independent on Stanleys-Laptop.local; trusted-client register committed ok; review-next request review166-746587a-reserve committed granted epoch1/review_epoch1 on exact head/base/spec before candidate inspection.",
-          "Detached isolated checkout .cache/review166-746587a-independent at 746587aad832710c0e611f9fd971e425d3348df3; all 15 changed files reviewed plus unchanged coordinator integration/recovery context. No tracked edits; git diff --check base..head passes.",
-          "Credential-empty execution with own BADMINTON_ROOT/DATA and PYTHONPATH=backend: Python3.10 pytest tests/test_agent_policy.py tests/test_agent_queue.py tests/test_agent_coordinator.py:312 passed in0.56s; cached Python3.12 same focused suite:312 passed in0.50s.",
-          "Credential-empty adversarial queue probe: actual distinct-session changes verdict followed by identical submit erases review and coordinator-only integrate succeeds.",
-          "Credential-empty adversarial full mocked controller probe: actual changes verdict with nonempty findings followed by identical submit and integrate: same_rejected_source=True, blocker_record_retained=False, status=integrating, controller_merged=True.",
-          "Focused suite covers explicit false/no-verdict integration through main/delivery, default/invalid strictness, reservations/epochs, source/native/owner/conversation gates, and original historical recovery; these pass but do not cover unchanged rejected-source resubmission."
-        ],
-        "findings": [
-          "[P1] Preserve actual changes-requested findings across identical resubmission (scripts/devops/policy.py:17-18; scripts/devops/queue.py:1008-1009). With require_agent_review=false, a genuine independent reviewer can return changes with nonempty findings on head/base/spec; the owner then submits the identical binding, submit unconditionally deletes the review, and the new absent-review fast path lets the controller merge that unchanged rejected source. Reproduced through actual queue review-next/review-result/submit and mocked coordinator integrate: same_rejected_source=True, blocker_record_retained=False, status=integrating, controller_merged=True. This violates frozen acceptance to respect actual current changes-requested findings. Retain a blocking verdict for the same binding (or explicitly require genuine resolution/re-review) and add queue/controller regressions proving no-op resubmission cannot erase it. The existing optional changes test immediately takes another review and misses the no-review path."
-        ],
-        "head_sha": "746587aad832710c0e611f9fd971e425d3348df3",
-        "limitations": [
-          "Read-only review; no implementation, dependency/environment/data/model changes or native inference performed.",
-          "Full1616-test author report and hosted CI39606835023 not independently rerun/read in this review. Fresh focused suite was run on both existing Python3.10 and3.12. Mock controller probes establish deterministic transition behavior, not a real remote merge/delivery.",
-          "No claim of full automatic badminton accuracy. Exact merged-main/public package/both-image delivery remain the author/controller responsibility after repair and approval.",
-          "README one-line stale review guidance is outside frozen166paths and has authorized dependent followup168 per parent; not treated as an in-scope implementation finding."
-        ],
-        "pr_number": 167,
-        "reviewed_files": [
-          ".github/automation.json",
-          "AGENTS.md",
-          "PROJECT_PLAN.md",
-          "docs/AUTONOMOUS_DEVOPS_REPORT.md",
-          "docs/COLLABORATION.md",
-          "docs/DEPLOYMENT.md",
-          "docs/FRONTEND_REWRITE.md",
-          "docs/OWNER_SETUP.md",
-          "docs/automation/reviewer.md",
-          "docs/automation/worker.md",
-          "scripts/devops/policy.py",
-          "scripts/devops/queue.py",
-          "scripts/devops/coordinator.py",
-          "tests/test_agent_coordinator.py",
-          "tests/test_agent_policy.py",
-          "tests/test_agent_queue.py"
-        ],
-        "session_id": "mac-review166-746587a-independent",
-        "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f",
-        "verdict": "changes"
-      },
       "review_epoch": 1,
       "spec": {
         "acceptance": [
@@ -10763,10 +10727,10 @@
         ]
       },
       "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
-        "head_sha": "746587aad832710c0e611f9fd971e425d3348df3",
+        "head_sha": "2b76d60f61a4d25224427393f92bc77fa59d6fd4",
         "pr_number": 167,
         "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f"
       }
