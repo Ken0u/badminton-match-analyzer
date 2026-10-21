@@ -1387,6 +1387,15 @@
       "task_id": "177",
       "verb": "next"
     },
+    "mac-01a15493-main177-playback-scope-v1": {
+      "actor": "dootz1",
+      "at": 1792614051,
+      "epoch": 1,
+      "fingerprint": "cf735e538815b9550084729336ed2abae44277310240617dc953824dee10dc3e",
+      "status": "running",
+      "task_id": "177",
+      "verb": "extend-scope"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -11947,7 +11956,7 @@
         "granted_at": 1792613915,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
-        "spec_hash": "950de5225fc970a4f8994e886eb06f786b949519e21bab5b274105621d6923ca"
+        "spec_hash": "e0c0de4c84dfa5a1ab157aef5ab512e95f9eddce3d73f6ab0da6011704f158bc"
       },
       "epoch": 1,
       "planned_at": 1792613559,
@@ -11985,7 +11994,8 @@
           "data/manifests/shuttle_source_assessment_protocol_v1.json",
           "docs/SHUTTLE_SOURCE_ASSESSMENT_REPORT.md",
           "data/manifests/shuttle_source_assessment_protocol_v2.json",
-          "tests/"
+          "tests/",
+          "backend/frontend/src/editor/Playback.tsx"
         ],
         "priority": 0,
         "resources": [],
@@ -11995,7 +12005,7 @@
           "Generated structural/provenance/adjudication checks, cumulative256MiB output audit, remaining-phase4h budget, exact-head independent review/CI,controller/main/fullpublic delivery; no consumed63 access."
         ]
       },
-      "spec_hash": "950de5225fc970a4f8994e886eb06f786b949519e21bab5b274105621d6923ca",
+      "spec_hash": "e0c0de4c84dfa5a1ab157aef5ab512e95f9eddce3d73f6ab0da6011704f158bc",
       "status": "running"
     },
     "62": {
