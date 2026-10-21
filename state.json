@@ -1584,6 +1584,14 @@
       "task_id": "153",
       "verb": "plan"
     },
+    "mac-01a15493-plan170-dashboard-retry-v1": {
+      "actor": "dootz1",
+      "at": 1792604140,
+      "fingerprint": "1fc3745efac508d5fd123fb6bb5084df37ccf12f0b57c4662d285276daeb64bd",
+      "status": "needs_human",
+      "task_id": "170",
+      "verb": "plan"
+    },
     "mac-01a15493-post101-next-v1": {
       "actor": "dootz1",
       "at": 1792537385,
@@ -3807,6 +3815,14 @@
       "fingerprint": "eded1399bc97193ed41884b09a3507676706c96a49db3a322c2596c900629280",
       "status": "ready",
       "task_id": "168",
+      "verb": "plan"
+    },
+    "spec-170-a81db6dd8cc1c809490f6bc4822db4ff866f9a55f108edd5de6e77c58f842bab": {
+      "actor": "dootz1",
+      "at": 1792604140,
+      "fingerprint": "e76a218d14688aaf560bc6bd5f5d7fa2c05e4c7992186ae5013d409722057033",
+      "status": "needs_human",
+      "task_id": "170",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -10992,6 +11008,48 @@
         "pr_number": 169,
         "spec_hash": "9bfe1c15e3996e568098d1e9ab1bc34927d4d9a67f2f330b588db877d83d7997"
       }
+    },
+    "170": {
+      "epoch": 0,
+      "planned_at": 1792604140,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Reproduce the observed Project projection HTTP502, GitHub internal-query error and HTTP2 REFUSED_STREAM failures without live credentials. Add at most three total projection attempts with bounded delays, only for narrowly recognized transient GitHub transport/server failures; report sanitized retry diagnostics and final success or nonzero exhaustion.",
+          "Each full projection retry must freshly read authoritative coordination state and existing Project cards before reconciling, preserving historical unmanaged cards and avoiding duplicate cards after an ambiguous successful mutation response. Unknown results cannot authorize grants or alter coordination state.",
+          "Authentication/authorization, missing credentials, invalid schema/status, inaccessible/misconfigured Project and unknown/permanent errors fail promptly without retry or success masking. Keep the dedicated Project token isolated and do not print credentials, raw bodies or secret-bearing diagnostics.",
+          "Keep the existing workflow failure semantics and CI gates: no continue-on-error, notification suppression, raw coordination writes, policy relaxation, extra token permissions or change to generic controller/merge transports. Change only project_status.py and its focused tests.",
+          "Add meaningful tests for transient recovery/exhaustion, fail-fast permanent errors, ambiguous applied mutation followed by fresh inventory, preservation of unmanaged cards/current state and retry bounds; run focused/full required checks, exact-head/main CI and complete public package/both-image delivery. Independent code review remains optional under current policy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No workflow/automation policy, credentials/Project configuration, generic GitHub transport or merge/grant changes; no application/dependency/environment upgrades, data/model changes, new paid service, scientific label assessment changes or PROGRESS.md updates."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Retry transient GitHub Project dashboard projection failures with bounded, idempotent attempts while preserving real coordination and permission failures.",
+        "paths": [
+          "scripts/project_status.py",
+          "tests/test_project_status.py"
+        ],
+        "priority": 10,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Reproduce observed errors with injected transports; focused Project status/backfill/queue tests and full required project checks, Ruff/format/pip/diff checks.",
+          "Committed owner scope authorization and dispatcher grant before implementation; optional genuine code review, required exact CI/controller integration/exact merged-main/full public delivery; record real dashboard outcome if safely exercised by the existing trusted workflow."
+        ]
+      },
+      "spec_hash": "c8874546f5ff99d3321eb1f350a4dacc3b5779bef886ccd28f7ae791f131fcf0",
+      "status": "needs_human"
     },
     "62": {
       "epoch": 0,
