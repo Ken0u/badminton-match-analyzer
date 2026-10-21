@@ -1,8 +1,8 @@
 # Independent source-only shuttle assessments
 
 Task [#172](https://github.com/Ken0u/badminton-match-analyzer/issues/172),
-October 21, 2026. Both predecessor source streams are complete and sealed;
-the remaining blind adjudication and exclusive freeze are in progress.
+October 21, 2026. Both predecessor source streams and all 80 required adjudications are complete.
+The exclusive private freeze and original source identities have been reverified.
 These are development agent observations, not expert-certified labels or measured
 shuttle localization accuracy. Full automatic match annotation remains unproven.
 
@@ -77,7 +77,7 @@ hash/bytes/header geometry and the original unknown templates. No new media
 acquisition, native decoding, inference or training is part of this task.
 
 Two independent assessment streams each cover every available center at original
-resolution. Each is planned as 32 genuinely fresh sessions of four centers, with a
+resolution. Each comprises 32 genuinely fresh sessions of four centers, with a
 6 MiB cap on unique inspected PNG bytes per session. Sessions receive only the
 committed protocol, blind source identities and assigned cases;
 they cannot access other labels, prior assessments, research code,
@@ -95,13 +95,97 @@ with an explicit uncertainty radius. Other states carry no coordinates.
 `not_visible` requires affirmative source evidence; failure to locate a tiny
 object remains unknown. Neighboring context cannot supply a hidden center's point.
 
-After both complete indexes and all original segments are sealed, distinct
-bounded source-only adjudication sessions coordinated by the owner must
-inspect every raw label disagreement and every agreed negative. Disagreements
+After both complete indexes and all original segments were sealed, 20 distinct
+bounded source-only adjudication sessions coordinated by the owner inspected
+every raw label disagreement and every agreed negative. Disagreements
 include visibility, coordinates, uncertainty, scene and difficulty tag sets.
 The freeze preserves all original index/segment bytes, raw differences and explicit
 source decisions. It never averages coordinates. Matching cases without a third
 inspection retain only two-assessor agreement.
+
+## Aggregate development observations
+
+All 128 selected cases and 640 requested context memberships remain in the
+denominators, with 632 unique image identities. Two complete streams contain
+32 sessions each. Four initial sessions used genuine delegated tools and 60
+used genuinely fresh CLI sessions; the remaining phase adds 20 fresh CLI
+adjudication sessions, for 84 distinct successful sessions. Each inspected at
+most four centers and 6 MiB of unique original PNG bytes including context.
+The coordinating parent did not personally inspect the images and does not
+claim that it did. Three failed predecessor CLI attempts produced no originals;
+their failure evidence remains preserved. No adjudication retry was needed.
+
+| Comparison or resolution | Cases |
+| --- | ---: |
+| Raw exact field agreement | 54 |
+| Raw field disagreement | 74 |
+| Agreed negatives additionally requiring adjudication | 6 |
+| Explicit source adjudication | 80 |
+| Two-assessor agreement without a third inspection | 48 |
+
+Exact agreement compares visibility, pixel coordinates, uncertainty radius,
+scene and difficulty-tag sets without a tolerance or point averaging. It is
+not a localization accuracy metric. All required cases received distinct blind
+source inspection; unresolved observations remain unknown.
+
+| Resolved visibility state | Cases |
+| --- | ---: |
+| `not_visible` | 5 |
+| `unknown` | 85 |
+| `visible_localizable` | 37 |
+| `visible_unlocalizable` | 1 |
+
+| Resolved scene observation | Cases |
+| --- | ---: |
+| `non_play` | 82 |
+| `play_view` | 41 |
+| `replay` | 3 |
+| `unknown` | 2 |
+
+| Resolved difficulty tag | Cases |
+| --- | ---: |
+| `blur` | 29 |
+| `camera_transition` | 4 |
+| `distractor` | 38 |
+| `fast_flight` | 3 |
+| `non_play` | 80 |
+| `occlusion` | 36 |
+| `ordinary` | 2 |
+| `small_far` | 32 |
+| `unresolved` | 87 |
+
+Unavailable centers: 0. Difficulty tags may overlap;
+scene and visibility counts retain the complete 128-case denominator. These
+source observations are neither expert truth nor proof of localization quality,
+full-match completeness or statistical independence. No model predictions were
+opened or compared. All four usage flags remain false.
+
+| Opaque retained artifact | SHA256 |
+| --- | --- |
+| Sealed assessor A index | `1ad0eda8ae5ac29c49d8c8148e846dbfb160da15236852ea9454054b29764787` |
+| Sealed assessor B index | `0a1aa0ca24167d076115100fbf894c3eef53b66a033d0c3529e8775f2e77800e` |
+| Sealed adjudication index | `0a0497960a80e35443ed8c9cc8d249c62066f5176a9f6c2e5875d43707f3bc44` |
+| Exclusive freeze manifest | `f0193b4c0ae3bf98c0592c82c9e252ead94b4cf3286e642e4bfadd3791a3db62` |
+| Aggregate support | `e361f43a8f3122b449cc357a78bcc8890ed5d67a42133f28cba80f3ccfa722de` |
+| Private execution evidence receipt | `66da256510cc36bfe68b77c20b4991baea52a1cea0353c2572efe71d9142a634` |
+
+Original indexes, segments, raw differences, resolved observations, exact
+inspection memberships and process/thread receipts remain ignored. The freeze
+preserves original small documents and consumer source, and revalidates external
+source media, clocks and PNGs in place. No original video or PNG is copied.
+Execution receipts bind authentic process lifetimes and actual CLI thread IDs;
+hashes and self-reported viewing cannot independently certify visual truth.
+
+At implementation revision `909017fd5ba7e551bc0d7bbdcae2ca95ba2cac19`,
+Python 3.10 checks passed: 131 focused tests, the complete suite (1,625 passed,
+162 optional skips), Ruff check/format on 172 files, dependency consistency and
+diff checks. The full suite emitted one existing Starlette deprecation warning.
+A private file-count monitor raced with pytest temporary cleanup; the verified
+original pytest lifetime continued and exited zero without restarting tests.
+The CLI also now clears `CODEX_API_KEY`, with the existing credential-isolation
+regression expanded to verify it. Final exact-head CI, independent review,
+controller integration, merged-main verification and delivery are tracked on
+the owning task; local software checks do not establish annotation accuracy.
 
 ## Reproduction and limits
 
