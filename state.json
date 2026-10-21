@@ -4111,6 +4111,14 @@
       "task_id": "176",
       "verb": "plan"
     },
+    "spec-179-4d0420d2e34300e69ef971aad511f58e0df526bb6e097d07e207324f6053efbf": {
+      "actor": "Ken0u",
+      "at": 1792614469,
+      "fingerprint": "4b60b83416561d6d245f8506c9b112578b06964796c37ea15bbc1ea4bf054bac",
+      "status": "ready",
+      "task_id": "179",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -4920,6 +4928,14 @@
       "status": "granted",
       "task_id": "69",
       "verb": "next"
+    },
+    "windows-broadcast179-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792614469,
+      "fingerprint": "6b7cea9a15b30fff9998c00a3f3950e399cf1fa5bb926f6e913a8a428e570389",
+      "status": "ready",
+      "task_id": "179",
+      "verb": "plan"
     },
     "windows-browser-capability-register-v1": {
       "actor": "Ken0u",
@@ -12046,6 +12062,72 @@
       },
       "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4",
       "status": "running"
+    },
+    "179": {
+      "epoch": 0,
+      "planned_at": 1792614469,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Continue approved localization parent65 after172 and priority repair177. Search open/closed history, PRs and grants; preserve Mac176/PR178 and all predecessor evidence. Before claiming/native work verify172 source freeze and complete repaired-main public delivery; use current trusted main and a genuine Windows CUDA/data grant. This is a new fixed development diagnostic, not an independent test, a rights approval or a change to172 scientific observations.",
+          "Use exactly172 manifest f0193b4c0ae3bf98c0592c82c9e252ead94b4cf3286e642e4bfadd3791a3db62, aggregate e361f43a8f3122b449cc357a78bcc8890ed5d67a42133f28cba80f3ccfa722de, v2 protocol79653290b0dd8c1d09c244fce14019447cc6c1bf5402e27aa08bd498133a3a42 and original160 packets singles31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b and doubles73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056. Verify every sealed original source/clock/orientation/PNG/assessment consumer and resolved-case identity without editing or copying originals. Retain128 cases,640 memberships,632 image identities and all37 localizable/1 unlocalizable/5 negative/85 unknown states. Rights/overlap/upstream membership remain unresolved and all four eligibility flags remain false.",
+          "Commit and externally timestamp a prospective protocol, complete recursive code/config/entrypoint consumer hashes, runtime, exact input/model hashes and all128 center/window memberships before native execution. Use the existing manifest-pinned checkpoint df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a only. Each unchanged center c has the fixed half-open window[max(0,c-32),min(N,c+33)); on these two fixed native clocks this yields8192 requested output rows across128 windows. Do not pick windows using labels or predictions. Frame outputs are not all decoder/background/model-frame calls; separately report actual accounting and the fixed8-frame overlapping ensemble.",
+          "Run existing track_shuttle unchanged at512x288/CUDA float16/sequence8, existing source-resolution median background, default0.5 components and source-motion selection. Use its current camera scan/cut reset and native reader; preserve actual source ordinals, PTS, time base, orientation, geometry and unavailable/corrupt/discontinuous cases. Do not reconstruct clocks from fps or pass context across detected cuts. These new research sources have no reviewed continuous scene/calibration context: record it unavailable, never invent full live/replay intervals from a center observation. Retain raw model observations and center-only source scene strata separately; no registration into application catalog/truth. No alternate thresholds, resolutions, background policies, selection sweep or new heatmap capture.",
+          "Heavy capture must use run_local_job on the real original shared data/processed Store, never an isolated research Store. Pin real BADMINTON_ROOT/DATA_DIR/weights before configuration imports, initialize torchvision before threaded PyAV, preserve av_runtime FFmpeg restoration and clear all five account credential variables. Use exclusive fresh ignored output; verify source/clock/checkpoint/config and no competing Store worker, record actual PID/create/cwd/command/Store identity and committed code. Native worker wall time is at most1800seconds cumulative across attempts, with8192 unique requested output rows and256MiB cumulative new task output including failures/tests/review. Preserve terminal and partial evidence. Resume only after original-host verified terminal lifetime plus matching Store proof and unchanged frozen context; reuse sealed successful windows without reinference, do not restart on timeout and do not overwrite occupied output.",
+          "Seal all raw outputs and exact128 planned case/window availability with source/model/code/protocol/native-context hashes before fixed CPU interpretation. Original inputs, annotations/history and existing predictions must be hash-preserved before/after. For each37 localizable case classify the default selected point as within fixed0.005 source-display-diagonal radius, displaced, missing or input/output unavailable; keep37 as strict denominator, and report the original uncertainty radius as separate predeclared sensitivity only. For five supported negatives report false observations/absence/unavailable without assuming nonplay means absent. Visible-unlocalizable and85 unknowns keep availability and raw observation/component counts but no invented coordinate error or negative truth. Retain all128 in totals and provide source, scene, visibility and overlapping difficulty support; undefined support remains undefined. Report default selected component versus any already observed component inside the same fixed disk as a descriptive attribution only, never an oracle replacement or new detector.",
+          "Publish reproducible code, fixed public protocol and aggregate complete-denominator report, including misses, displaced observations, false observations, abstention/unavailable causes, raw versus center-scene limitations, runtime and input/model/output seals. These are agent-labeled development agreement diagnostics, not expert accuracy, independent/unseen evaluation, persistent trajectories, full-match correctness or eligibility for training/deployment. A mismatch/refusal/partial execution must be preserved and reported with every planned case, not repaired by changing source, recipe, support or thresholds. Any subsequent improvement needs its own prospective task and evaluation scope.",
+          "Add meaningful generated regressions for exact membership/endpoints/source PTS and orientation, cut isolation, unknown/unlocalizable/negative and unavailable denominators, selected versus observed-component attribution, invalid/changed/occupied inputs, recursive consumer seals, real Store contention, partial/resume behavior and verified process lifetime. Run focused and required project checks using the existing project environment, fresh independent exact-head review, exact-head/main CI, controller merge and complete public package/both-image verification. No consumed holdout63 inputs/predictions/protocol/private membership/artifacts, source/model downloads, training, tuning, truth/label/default/model installation, policy/dependency/storage/deployment changes, unrelated process stops or PROGRESS edits."
+        ],
+        "artifacts": {
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle160-doubles-packet": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+          "shuttle160-singles-packet": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b",
+          "shuttle172-aggregate": "e361f43a8f3122b449cc357a78bcc8890ed5d67a42133f28cba80f3ccfa722de",
+          "shuttle172-freeze": "f0193b4c0ae3bf98c0592c82c9e252ead94b4cf3286e642e4bfadd3791a3db62"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "172",
+          "177"
+        ],
+        "exclusions": [
+          "No consumed63 access, new acquisition, label edits, training, independent-test claim, hyperparameter/threshold/resolution/model search, interpolation/trajectory filling, new heatmap capture, raw redistribution, eligibility change, app registration/truth/default/model promotion, dependency/auth/workflow/publishing/deployment edits, paid services or PROGRESS.md changes."
+        ],
+        "limits": {
+          "max_output_bytes": 268435456,
+          "max_requested_output_frames": 8192,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "native_worker_seconds": 1800,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Diagnose unchanged TrackNet localization on all 128 frozen broadcast development cases, with complete source/scene/visibility denominators and no tuning or promotion.",
+        "paths": [
+          "backend/badminton/shuttle_broadcast_baseline.py",
+          "scripts/diagnose_shuttle_broadcasts.py",
+          "tests/test_shuttle_broadcast_baseline.py",
+          "data/manifests/shuttle_broadcast_baseline_protocol_v1.json",
+          "docs/SHUTTLE_BROADCAST_BASELINE_REPORT.md"
+        ],
+        "priority": 90,
+        "resources": [
+          "gpu:windows-primary",
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Actual unchanged native tracker on the complete frozen128-case cohort; prospective recipe and input/output/consumer/process/Store seals, fixed descriptive metrics with unknown/unavailable cases retained.",
+          "Meaningful generated/focused and required checks; fresh independent exact-head review, exact CI/controller/repaired-main/full public delivery; no annotation-accuracy or model-promotion claim."
+        ]
+      },
+      "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
