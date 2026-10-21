@@ -910,6 +910,15 @@
       "task_id": "168",
       "verb": "plan"
     },
+    "mac-01a15493-168-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792591615,
+      "epoch": 1,
+      "fingerprint": "cb766e8745a6a1bd463b28950a077be5f6dc9a79a6389eef8d57dd14c444d8c8",
+      "status": "review",
+      "task_id": "168",
+      "verb": "submit"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -10886,6 +10895,7 @@
       "epoch": 1,
       "planned_at": 1792588855,
       "planned_by": "dootz1",
+      "pr_number": 169,
       "spec": {
         "acceptance": [
           "After policy166 is fully delivered, read its actual merged trusted configuration and current README. Replace the stale mandatory independent-code-review wording with implement/test/submit for automatic controller integration and optional code review. Explain current active queue/public candidate status without rewriting historical evidence or implying an app upgrade.",
@@ -10921,7 +10931,13 @@
         ]
       },
       "spec_hash": "9bfe1c15e3996e568098d1e9ab1bc34927d4d9a67f2f330b588db877d83d7997",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "3136d426903758466808ab7cf7cc270e09bba393",
+        "head_sha": "3acba94185b3095f8338aacb9d34cc630b395309",
+        "pr_number": 169,
+        "spec_hash": "9bfe1c15e3996e568098d1e9ab1bc34927d4d9a67f2f330b588db877d83d7997"
+      }
     },
     "62": {
       "epoch": 0,
