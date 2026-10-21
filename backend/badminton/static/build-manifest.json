@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "input_fingerprint": "sha256:640ff69561b21a9f179cb416c8760f69aeef52feacbc29809d3d95a2896f1b6f",
+  "input_fingerprint": "sha256:d987aba5d760af32f6e42421cb656ac55ca12639a8edbb5420e3fb1fc5ace441",
   "inputs": {
     ".node-version": "68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53",
     "backend/frontend/index.html": "bc21de002d9459b6bff3d63ce245438503732614dc8cc9448826c871ee1f793c",
@@ -13,7 +13,7 @@
     "backend/frontend/src/api/generated/openapi.json": "41ffb372458af1f37088ae339ebbd11f169c144682057fcc97ae5467dc4756eb",
     "backend/frontend/src/api/generated/schema.ts": "7553ab387e67927b1dae028ec455adc0d370bd807d44d2e288e67c2fcb0c98c1",
     "backend/frontend/src/editor/EditorApp.tsx": "0bd44904bc3e04d7cff8633dc7fc1a1df201944fd157fccbe9a159a6675eac3a",
-    "backend/frontend/src/editor/Playback.tsx": "96a271547aa149a97d8f550258943b8fedee8587d4305c09bd790cdc26790dbc",
+    "backend/frontend/src/editor/Playback.tsx": "64455873e02d33b4791ef0a2230d919a8d989182c94cf2dbc8087193f50f82d0",
     "backend/frontend/src/editor/controller.ts": "12994bcb0330b8bbcfa2fdf846fbb6196e3879520d5c18aec0b83d3a8c35f11b",
     "backend/frontend/src/editor/editor.css": "b17fea625a64243fe0cc9f6f07c899aa87c4b7c8bae1057df1dfcecca26e474e",
     "backend/frontend/src/editor/exports/ExportPanel.tsx": "6246302c66cf350074222438de949da561d1f7180eac0dc2a8bb95b58e475446",
@@ -40,7 +40,7 @@
   },
   "assets": {
     "THIRD_PARTY_NOTICES.txt": "711200ed091dc3a2714bfe95bd803097f004ac1ab71c1cd6c8b1226466aef609",
-    "app.js": "d9ee80dcb142c06c203abb7d5d3754009328e444eed0d0137ac4d050ab8bdcd0",
+    "app.js": "d12a8094bdac9dcf698a28840c3cbf4cc6eae88a680910cc7a6641c0ef64a53b",
     "index.html": "f7092d0e8e1c8702e5aaa13ba61427a0da4c22539c25bc2388d7caf6764b3789",
     "style.css": "3024e012dbf84bd8dd888bf6583beb3037a62776f08bda10e53d56cc51020395"
   }

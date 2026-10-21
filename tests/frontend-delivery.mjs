@@ -135,16 +135,23 @@ if (requestedModes.includes("--exports")) {
     await page.locator("#frame-number").dispatchEvent("change");
     await imageReady(frame);
   }
-  async function imageReady(frame) {
-    await page.waitForFunction((f) => {
-      const img = document.querySelector("#exact-frame");
-      return (
-        img.src.endsWith(`index=${f}`) &&
-        !img.hidden &&
-        img.complete &&
-        img.naturalWidth > 0
-      );
-    }, frame);
+  async function imageReady(frame, videoId) {
+    await page.waitForFunction(
+      ({ f, id }) => {
+        const img = document.querySelector("#exact-frame");
+        return (
+          img.src.endsWith(`index=${f}`) &&
+          (!id ||
+            (img.dataset.video === id &&
+              img.dataset.frame === String(f) &&
+              new URL(img.src).pathname === `/api/videos/${id}/frame`)) &&
+          !img.hidden &&
+          img.complete &&
+          img.naturalWidth > 0
+        );
+      },
+      { f: frame, id: videoId },
+    );
   }
   async function save() {
     const response = page.waitForResponse(
@@ -754,16 +761,16 @@ if (requestedModes.includes("--exports")) {
           Math.abs(document.querySelector("#video").currentTime - 0.12) <
           0.00002,
       );
+      await page.waitForFunction(
+        () =>
+          !document.querySelector("#video").seeking &&
+          document.querySelector("#video").readyState >= 2,
+      );
       assert.deepEqual(
         await page
           .locator("#video")
           .evaluate((v) => [v.videoWidth, v.videoHeight]),
         [64, 128],
-      );
-      await page.waitForFunction(
-        () =>
-          !document.querySelector("#video").seeking &&
-          document.querySelector("#video").readyState >= 2,
       );
       const pixels = await page.evaluate(() => {
         const image = document.querySelector("#exact-frame"),
@@ -823,16 +830,183 @@ if (requestedModes.includes("--exports")) {
       await exact(3);
       assert.equal((await api(root + "/annotations")).events[0].time_s, 0.12);
       await upload("long-gap-vfr.mkv");
-      await page.reload();
       const gap = (await api("/api/videos")).find(
         (v) => v.name === "long-gap-vfr.mkv",
       );
+      // Hold the real media request until after a manual source-frame seek.
+      // A real HTTP error then produces the browser's own MediaError, making
+      // this race deterministic even on hosts that can decode the MKV codec.
+      const mediaRoute = `**/api/videos/${gap.id}/media`;
+      let releaseMedia;
+      const mediaGate = new Promise((resolve) => {
+        releaseMedia = resolve;
+        releases.push(resolve);
+      });
+      const mediaStarted = page.waitForRequest(
+        (request) =>
+          new URL(request.url()).pathname === `/api/videos/${gap.id}/media`,
+      );
+      await page.route(mediaRoute, async (route) => {
+        await mediaGate;
+        await route.fulfill({
+          status: 415,
+          contentType: "text/plain",
+          body: "Generated unsupported native playback; exact source frames remain available",
+        });
+      });
+      await page.reload();
       await selected(gap);
+      await mediaStarted;
       assert.deepEqual(
         await api(`/api/videos/${gap.id}/timestamps`),
         [0, 0.04, 0.08, 0.68],
       );
+      assert.equal(await page.locator("#video").evaluate((v) => v.error), null);
+      await page.locator("#frame-number").fill("3");
+      await page.locator("#frame-number").dispatchEvent("change");
+      assert.equal(await page.locator("#clock").textContent(), "0:00.68");
+      releaseMedia();
+      await page.waitForFunction(() => document.querySelector("#video").error);
+      await write("unsupported-seek-before-error.json", {
+        video: gap.id,
+        requestedFrame: 3,
+        sourcePts: 0.68,
+        stateAfterNativeError: await page.evaluate(() => {
+          const v = document.querySelector("#video"),
+            img = document.querySelector("#exact-frame");
+          return {
+            frame: document.querySelector("#frame-number").value,
+            clock: document.querySelector("#clock").textContent,
+            readyState: v.readyState,
+            nativeError: v.error.code,
+            exactSrc: img.getAttribute("src"),
+            exactHidden: img.hidden,
+          };
+        }),
+      });
+      await imageReady(3, gap.id);
+      await exact(2);
+      await imageReady(2, gap.id);
+      assert.equal(await page.locator("#clock").textContent(), "0:00.08");
+      const gapRoot = `/api/videos/${gap.id}`,
+        originalGapAnnotations = await api(gapRoot + "/annotations"),
+        recoveryNote = "Unsupported-media exact-frame draft";
+      await addShot(2, recoveryNote);
+      await page.locator("#play").click();
+      await page.waitForFunction(() => {
+        const v = document.querySelector("#video");
+        return v.paused && v.error;
+      });
+      await imageReady(2, gap.id);
+      assert.equal(await page.locator("#frame-number").inputValue(), "2");
+      assert.equal(await page.locator("#save").isEnabled(), true);
+      assert.equal(
+        await page.locator("#event-notes").inputValue(),
+        recoveryNote,
+      );
+      assert.deepEqual(
+        await api(gapRoot + "/annotations"),
+        originalGapAnnotations,
+        "Native playback errors must not save or discard the current draft",
+      );
+
+      await save();
+      const savedGapAnnotations = await api(gapRoot + "/annotations");
+      assert.equal(savedGapAnnotations.events[0].notes, recoveryNote);
+      assert.equal(savedGapAnnotations.events[0].frame, 2);
+
+      // Hold real source-frame requests while newer frame/video selections
+      // finish. A superseded image may be cancelled by the browser; either
+      // outcome must leave the current image and source clock untouched.
+      async function delayedFrame(frame, changeSelection) {
+        const routePattern = `**/api/videos/${gap.id}/frame?index=${frame}`;
+        let release, completed;
+        const gate = new Promise((resolve) => {
+          release = resolve;
+          releases.push(resolve);
+        });
+        const started = page.waitForRequest((request) => {
+          const url = new URL(request.url());
+          return (
+            url.pathname === `/api/videos/${gap.id}/frame` &&
+            url.searchParams.get("index") === String(frame)
+          );
+        });
+        const finished = new Promise((resolve) => {
+          completed = resolve;
+        });
+        await page.route(routePattern, async (route) => {
+          await gate;
+          await continueOwnedRoute(route);
+          completed();
+        });
+        await page.locator("#frame-number").fill(String(frame));
+        await page.locator("#frame-number").dispatchEvent("change");
+        await started;
+        await changeSelection();
+        release();
+        await finished;
+        await page.waitForLoadState("networkidle");
+        await page.unroute(routePattern);
+      }
+      await delayedFrame(1, () => exact(3));
+      await imageReady(3, gap.id);
+      assert.equal(await page.locator("#clock").textContent(), "0:00.68");
+      await delayedFrame(0, async () => {
+        await selected(oriented);
+        await exact(2);
+      });
+      await imageReady(2, oriented.id);
+      assert.equal(await page.locator("#clock").textContent(), "0:00.12");
+      await selected(gap);
+      await page.waitForFunction(() => document.querySelector("#video").error);
       await exact(3);
+      await imageReady(3, gap.id);
+      assert.deepEqual(
+        await api(gapRoot + "/annotations"),
+        savedGapAnnotations,
+      );
+      // Preserve a genuine unavailable-frame error, then recover by retrying
+      // the same native frame after removing only this generated fault.
+      // Use a fresh document so the earlier delayed frame cannot be satisfied
+      // from Chromium's decoded-image cache without issuing a new request.
+      const unavailableRoute = `**/api/videos/${gap.id}/frame?index=0`;
+      await page.route(unavailableRoute, (route) =>
+        route.fulfill({
+          status: 404,
+          body: "Generated unavailable source frame",
+        }),
+      );
+      await page.reload();
+      await selected(gap);
+      await page.locator("#frame-number").fill("0");
+      await page.locator("#frame-number").dispatchEvent("change");
+      await page.waitForFunction(() =>
+        document
+          .querySelector("#frame-loading")
+          .textContent.includes("unavailable"),
+      );
+      assert.equal(await page.locator("#exact-frame").isHidden(), true);
+      await page.unroute(unavailableRoute);
+      await exact(0);
+      await imageReady(0, gap.id);
+      await page
+        .locator(`[data-event="${savedGapAnnotations.events[0].id}"]`)
+        .click();
+      assert.equal(
+        await page.locator("#event-notes").inputValue(),
+        recoveryNote,
+      );
+      await write("unsupported-media-recovery.json", {
+        beforeErrorSeek: { frame: 3, sourcePts: 0.68, video: gap.id },
+        afterErrorSeek: { frame: 2, sourcePts: 0.08, video: gap.id },
+        failedPlayRestoresExactImage: true,
+        unavailableFrameAndRetry: true,
+        delayedPriorFrameAndVideoIgnored: true,
+        unsavedDraftPreservedUntilExplicitSave: true,
+        savedAnnotationsUnchangedByRecovery: true,
+      });
+      await page.unroute(mediaRoute);
       await page.locator("#prepare-playback").click();
       await page.waitForFunction(() =>
         document
@@ -852,6 +1026,10 @@ if (requestedModes.includes("--exports")) {
       await page.locator("#play").click();
       await page.waitForFunction(() => document.querySelector("#video").ended);
       assert.equal(await page.locator("#frame-number").inputValue(), "3");
+      assert.deepEqual(
+        await api(gapRoot + "/annotations"),
+        savedGapAnnotations,
+      );
       await page.screenshot({
         path: path.join(evidence, "vfr-gap.png"),
         fullPage: true,
@@ -3610,6 +3788,11 @@ async function runLibraryMode() {
           await gate;
           await continueOwnedRoute(route);
         });
+        const uploadResponse = page.waitForResponse(
+          (response) =>
+            response.url().endsWith("/api/upload") &&
+            response.request().method() === "POST",
+        );
         await page
           .getByRole("button", { name: "Upload video", exact: true })
           .click();
@@ -3626,6 +3809,23 @@ async function runLibraryMode() {
           true,
         );
         release();
+        const acceptedUpload = await uploadResponse;
+        assert.equal(acceptedUpload.status(), 202, await acceptedUpload.text());
+        const uploadJob = await acceptedUpload.json();
+        // The initial catalog registration may still use the temporary source
+        // filename. Freeze expectations only after this exact job commits its
+        // final original-name metadata, not merely when one row first appears.
+        await until(
+          () => api("/api/jobs"),
+          (rows) => {
+            const job = rows.find((row) => row.id === uploadJob.id);
+            if (!job || ["queued", "running"].includes(job.status))
+              return false;
+            assert.equal(job.status, "completed", JSON.stringify(job));
+            return true;
+          },
+          "uploaded video metadata finalized",
+        );
         const videos = await until(
           () => api("/api/videos"),
           (rows) => rows.length === 1,
