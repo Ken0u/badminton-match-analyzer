@@ -6485,6 +6485,15 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "windows-shuttle163-failure-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792563255,
+      "epoch": 1,
+      "fingerprint": "62a05537763deb6771f700cce3121de208779c11564308b52bea3ae79467568a",
+      "status": "running",
+      "task_id": "163",
+      "verb": "checkpoint"
+    },
     "windows-shuttle163-initial-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792560294,
@@ -6520,6 +6529,14 @@
       "fingerprint": "9df09ef4a99b6f381fad75fd63d3afc2f1c064a7d000d26fc17dd1adef91cfc3",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-shuttle164-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792563278,
+      "fingerprint": "3cea7b6c3150c6f0a627d92d67d8fa2997f396987d58afdcf347f4a97b64f97e",
+      "status": "ready",
+      "task_id": "164",
+      "verb": "plan"
     }
   },
   "tasks": {
@@ -10230,19 +10247,19 @@
     "163": {
       "checkpoint": {
         "branch": "codex/issue-163-freeze-independent-source-only-assessmen",
-        "head_sha": "139701d",
-        "next": "Complete both actual128-center source-only assessments; preserve original bytes. After both sealed, owning actual session01a1487b-8328-7960-a200-c26703ad12cc adjudicates disagreements/agreed negatives through original source inspection. Parent owns protocol/report, integrates delegate3files, validates/freezes exclusive lineage,required checks/fresh separate PR review/controller/main/full public delivery. No model/prediction/holdout63 access or data-rights/eligibility/accuracy promotion. PROGRESS.md deprecated and untouched.",
-        "phase": "Protocol committed/published before visual inspection; source inputs reverified; two fresh source-only assessors active",
+        "head_sha": "2f2af2ce288394cd52cf93f7f4c49caf3bc2dd83",
+        "next": "Successor164 uses a fresh grant and prospective v2 protocol for bounded genuine source-only session segments with per-case provenance. Repeat all128 cases in two disjoint streams. Preserve163 as incomplete,not delivered; no manual merge. Audit receipt2b50fd6ff0881be2245a913469128a96778b214f77fc799cefae780aa5dbef6d.",
+        "phase": "Incomplete attempt preserved; both assessors explicitly terminal on context transport failures; no comparison/adjudication begun",
         "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c",
-        "verification": "Protocol SHA256 f7a985e162e7d48f2c8cff8ee9f8d9c718a4acfa07239c6dfbb84c0f5466b95b. Blind input SHA256 c86dbd69b2e3c02ee355cb32c538cc37bcb8a270848f9e630aea55e0ebcc351c. Separate credential-free input audit reverified both raw hashes,all248100 native clock identities,56 frozen consumer hashes,all632 PNG hashes/bytes/geometry,128 cases/640 memberships and preserved unknown templates/false flags; no native decode or inference. Protocol139701d published before either actual source-only session began inspecting images. Assessor A actual01a15cea-5ca8-7d90-a604-cdc67c70a06b; B actual01a15cea-a37f-7f13-8062-92ded534685e. Their original labels remain separate and unshared. Validation delegate owns only module,launcher,tests in isolated shuttle163-validation worktree,not an independent reviewer."
+        "verification": "77 generated validator tests pass; Ruff clean; original source packets and all partial snapshots reverified in a credential-free audit whose actual recorded PID/lifetime is now externally confirmed exited. No acquisition/decode/inference/training/Store workload launched. Original A96/B68 recorded cases remain immutable and incomplete. No existing process/environment/data/PROGRESS.md changed."
       },
-      "checkpoint_at": 1792560294,
+      "checkpoint_at": 1792563255,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
         "branch": "codex/issue-163-freeze-independent-source-only-assessmen",
         "epoch": 1,
-        "expires_at": 1792571094,
+        "expires_at": 1792574055,
         "granted_at": 1792559730,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -10303,7 +10320,7 @@
     },
     "164": {
       "epoch": 0,
-      "planned_at": 1792563156,
+      "planned_at": 1792563278,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
