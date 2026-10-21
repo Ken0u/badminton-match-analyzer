@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "video_id": "970dbd8adfe548d8",
+  "source_sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+  "clock_sha256": "78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b",
+  "annotation_revision": 1,
+  "annotation_sha256": "537318fc735c392f8ca402c0d273205b28e29a5661738e491c84e79518780688",
+  "start_frame": 2000,
+  "end_frame": 2050,
+  "sample_frames": [2000, 2010, 2020, 2030, 2049],
+  "variants": [
+    {"variant": "nano", "name": "yolo11n-pose.pt", "sha256": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0"},
+    {"variant": "small", "name": "yolo11s-pose.pt", "sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba"}
+  ],
+  "max_runtime_seconds": 900,
+  "max_output_bytes": 67108864,
+  "source_role": "original supplied singles development source, previously inspected; never a held-out accuracy test",
+  "fixed_settings": {"device": "cpu", "stride": 1, "auto_calibrate": false, "tracking_recipe": "unchanged application recipe"}
+}
