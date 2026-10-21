@@ -6339,6 +6339,15 @@
       "task_id": "160",
       "verb": "checkpoint"
     },
+    "windows-shuttle160-checkpoint-native-live-v1": {
+      "actor": "Ken0u",
+      "at": 1792557672,
+      "epoch": 1,
+      "fingerprint": "ffe2de88377fc172d651fde4091c8bfa0d6287f5a732a4307478f1e2d3211052",
+      "status": "running",
+      "task_id": "160",
+      "verb": "checkpoint"
+    },
     "windows-shuttle160-checkpoint-preflight-v2": {
       "actor": "Ken0u",
       "at": 1792556807,
@@ -9961,18 +9970,18 @@
       "checkpoint": {
         "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
         "head_sha": "a4598f403fd19a8a34cc96043cd49e0dbf87d26d",
-        "next": "Afterfullv4passandcheckpointacceptance, secondboundedattempt v2 using same source/protocol and prior external exitSHA22697d1a16e6dadc654c718b814be6370a7b1b9ab5fceb9adcbf3729b9026209. Worker validates prior terminal/Store/process/context, carries4.625s/871620bytes/0download into limits. No retryfromtimeout orsourcechangeswhilelive. Thenaggregate/freshreview/CI/controller/main/publicdelivery.",
-        "phase": "Ended-livestream metadata repair and explicit cumulative retry evidence frozen",
+        "next": "Observe same actual PID/creation/cwd/command/Store/artifacts, no timeoutrestart. Afterterminal+externalexit+Storeverify, run .cache/verify-shuttle160-packet-v1.py for separateartifactaudit; thenaggregate-onlyreport/freshreview/CI/controller/main/fullpublicdelivery. Alllabelsunknown/all4flagsfalse; scientificaccuracyunproven.",
+        "phase": "Both exact public video-only streams acquired; admitted native census in progress",
         "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a",
-        "verification": "Firstactualattempt exited1 after4.625observedseconds, StorefailedwithmatchingPIDcreation; originalworker17028andobserver1660lifetimesexited. 0mediabytes/871620outputbytes, allfrozenmetadata/admission/terminal/exitevidencepreserved. Failurewasoverstrictlive_status==not_live; actualendedbroadcastwas_live. Repairedacceptsonlynot_live/was_live; preservesexactIDs/channel/137/geometry/protocol/sampling. 56focusedtestspass13.95s, lintformatdependencydiffpass. Newfullv4inprogress. Actualread-onlyprior_attemptproofpasses unchangedpriorrecords. DraftPR162."
+        "verification": "Frozena4598f4 full1548pass4GPUskip168.80s actualexit0. V2actualworker424creation1792557516.0045044/observer7688 originalStoreecfcf11ea6ed46bcb87f049981c9b6bb externalidentity_verifiedtrue; lifetimeslive. Singlessealed1135039222bytes anddoubles1137172263bytes, exactselected137. No clocks/packetsclaimedcompleteyet. Priorfailedmetadataattemptpreserved; verified4.625s/871620bytes/0downloadcarried. No sourceconsumereditswhilelive."
       },
-      "checkpoint_at": 1792557430,
+      "checkpoint_at": 1792557672,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
         "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
         "epoch": 1,
-        "expires_at": 1792568230,
+        "expires_at": 1792568472,
         "granted_at": 1792550468,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
