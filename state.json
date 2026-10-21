@@ -865,6 +865,14 @@
       "task_id": "166",
       "verb": "submit"
     },
+    "mac-01a15493-168-plan-v1": {
+      "actor": "dootz1",
+      "at": 1792588855,
+      "fingerprint": "f2f77cd2a3681b70f7f320321c97125466b01c9af940a1dcb02a9df22f819be7",
+      "status": "ready",
+      "task_id": "168",
+      "verb": "plan"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -2895,6 +2903,13 @@
       "task_id": "120",
       "verb": "review-result"
     },
+    "review166-746587a-register": {
+      "actor": "dootz1",
+      "at": 1792588855,
+      "fingerprint": "2b88523843693992bbb7429ed41c2893fef4454790330c6aebaa09dcbcd4ea9f",
+      "status": "ok",
+      "verb": "register"
+    },
     "review70-01a15c4a-register-v1": {
       "actor": "Ken0u",
       "at": 1792549876,
@@ -3640,6 +3655,14 @@
       "fingerprint": "30b712843fa2774aca3fad6aa5650b3275d686554e9e19b555ec8d16b083e73d",
       "status": "needs_human",
       "task_id": "166",
+      "verb": "plan"
+    },
+    "spec-168-c7515f2866a4b5acc898db023ce76bf7f59e59d41d9cb3581858b521cbc49e15": {
+      "actor": "dootz1",
+      "at": 1792588855,
+      "fingerprint": "eded1399bc97193ed41884b09a3507676706c96a49db3a322c2596c900629280",
+      "status": "ready",
+      "task_id": "168",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -10671,6 +10694,47 @@
         "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f"
       }
     },
+    "168": {
+      "epoch": 0,
+      "planned_at": 1792588855,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "After policy166 is fully delivered, read its actual merged trusted configuration and current README. Replace the stale mandatory independent-code-review wording with implement/test/submit for automatic controller integration and optional code review. Explain current active queue/public candidate status without rewriting historical evidence or implying an app upgrade.",
+          "Change README.md only; preserve links, ownership grants, tests/CI, controller-only serial integration, exact-main/public delivery, no paid services/weights/application upgrades and scientific source-assessment requirements. No code, dependency or policy change.",
+          "Verify Markdown/local links/UTF8LF/diff and exact CI. Under the now-active optional review policy, submit the genuine task with no manufactured reviewer/verdict and let the controller enforce its normal checks, merge and verify main/full public delivery. Any actual review reservation or blocking findings remain binding."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "166"
+        ],
+        "exclusions": [
+          "No code/policy/workflow/data/model/dependency changes, app upgrades, raw artifacts, paid services, coordination-state writes or mandatory-review bypass before policy166 is actually active."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Align README autonomous workflow instructions with the delivered optional code-review policy.",
+        "paths": [
+          "README.md"
+        ],
+        "priority": 15,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Markdown/local links/UTF8LF/diff and exact CI, current trusted optional setting verified.",
+          "Controller-owned integration, exact main and full public delivery without inventing a review."
+        ]
+      },
+      "spec_hash": "9bfe1c15e3996e568098d1e9ab1bc34927d4d9a67f2f330b588db877d83d7997",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -14211,6 +14275,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792548202,
       "session_id": "mac-review158-6270fe0-independent"
+    },
+    "Stanleys-Laptop.local/mac-review166-746587a-independent": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792588855,
+      "session_id": "mac-review166-746587a-independent"
     },
     "Stanleys-Laptop.local/mac-review70-b12e9de-independent": {
       "actor": "dootz1",
