@@ -2452,6 +2452,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review70-b12e9de-review-next-v1": {
+      "actor": "dootz1",
+      "at": 1792549679,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565",
+        "epoch": 1,
+        "expires_at": 1792560479,
+        "granted_at": 1792549679,
+        "head_sha": "b12e9de912d2db12bcb3618fa7a590612968b5a9",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 161,
+        "review_epoch": 1,
+        "session_id": "mac-review70-b12e9de-independent",
+        "spec_hash": "963e4a6e8d830aa2f3a73863bb47e7294669bf6b81da98b2f9c5d94cbe62277d"
+      },
+      "epoch": 1,
+      "fingerprint": "30fc768ace0e71509e623b9f5e54d41baa70a8802cb90d571ba29cbe62b26231",
+      "status": "granted",
+      "task_id": "70",
+      "verb": "review-next"
+    },
     "mac-review84-next-v1": {
       "actor": "dootz1",
       "at": 1792535192,
@@ -10844,6 +10866,20 @@
       "planned_at": 1792393957,
       "planned_by": "dootz1",
       "pr_number": 161,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565",
+        "epoch": 1,
+        "expires_at": 1792560479,
+        "granted_at": 1792549679,
+        "head_sha": "b12e9de912d2db12bcb3618fa7a590612968b5a9",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 161,
+        "review_epoch": 1,
+        "session_id": "mac-review70-b12e9de-independent",
+        "spec_hash": "963e4a6e8d830aa2f3a73863bb47e7294669bf6b81da98b2f9c5d94cbe62277d"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Derive overlays and clip boundaries from reviewed annotations and source time.",
