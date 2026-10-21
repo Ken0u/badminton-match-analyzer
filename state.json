@@ -4040,6 +4040,14 @@
       "task_id": "158",
       "verb": "plan"
     },
+    "windows-exact-frame158-plan-v2": {
+      "actor": "Ken0u",
+      "at": 1792545833,
+      "fingerprint": "bafd784c19a1aacdc2b802e5da30fb672ac9107530ee94b9ecd1d775676616fd",
+      "status": "ready",
+      "task_id": "158",
+      "verb": "plan"
+    },
     "windows-export-stream124-plan-v1": {
       "actor": "Ken0u",
       "at": 1792447108,
@@ -9440,13 +9448,14 @@
     },
     "158": {
       "epoch": 0,
-      "planned_at": 1792544127,
+      "planned_at": 1792545833,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
           "Reproduce the actual production browser failure from CI39522977490 browser-import at tested source headf6a0e5d068c634ffc714aedf6a59d54903a2ed1b/base9d7ee10b6bf474993b4781abdc533ebfdca751e8. All UI source is unchanged in shuttle PR157. Generated long-gap-vfr.mkv has PTS0/0.04/0.08/0.68; selected frame3/currentTime0.68 ends with unsupported-stream error, empty/hidden exact image and no source-frame request. Preserve the failed evidence and link issue149/PR157 and completed frontend98/PR148; search history/grants before implementation.",
           "Add a deterministic generated-media browser regression that controls unsupported-media/error ordering so the user seeks before the media error/metadata resolves. Demonstrate failure on unchanged base before the fix. Verify exact native frame3 becomes visible with correct source identity and source PTS even when browser-native playback remains unsupported. Cover both seek-before-error and seek-after-error without artificial success, skipped coverage, fixed sleeps or a larger timeout.",
           "Repair the narrow Playback lifecycle/request race. Manual exact-frame review must not be permanently gated on browser media metadata or error-event order. Preserve correct frame index/source PTS, loading and genuine unavailable-frame errors, video/source-switch and stale image-request guards, existing proxy replacement/play/pause behavior, and all reviewed annotations/drafts. Delayed events or images for a previous video/frame must not overwrite the current review image or selection.",
+          "Repository inspection confirms production static assets are tracked. Regenerate only existing backend/badminton/static/app.js and build-manifest.json with the pinned Node24/locked frontend build after the source fix, and commit them so installed applications receive it. Verify source/input fingerprints, preserve index.html/style.css/THIRD_PARTY_NOTICES.txt byte-for-byte, and never hand-edit compiled output or introduce unrelated generated assets.",
           "Run the meaningful focused regression plus the full existing production default/library/exports generated-media browser matrix, frontend contract/types/tests/production build and staged-asset provenance checks with pinned Node24 and locked dependencies. Run required project checks, fresh independent exact-head review and CI, controller-only integration, exact merged-main and complete public delivery verification. Preserve failed and successful evidence; a passing retry alone does not prove the race fixed.",
           "Publish a focused aggregate repair report with exact trigger/before/after, deterministic failing-base and passing-fix evidence, source-clock/stale-state checks and any remaining limitations. This is media-review correctness, not badminton annotation accuracy or improved model performance. Keep generated fixtures and detailed process evidence ignored and preserve original local changes/environments/datasets/processes. PROGRESS.md remains deprecated and untouched."
         ],
@@ -9458,7 +9467,7 @@
           "98"
         ],
         "exclusions": [
-          "No API/backend/model/dataset/weight/training/threshold/annotation-schema or authentication/security/workflow/deployment/publishing-policy changes, no global environment upgrades, no committed generated asset bundles or new dependencies, no paid services, no raw research data or credentials, no unrelated process stops, no weakening/skipping browser checks or merely increasing timeouts. No consumed holdout63 artifacts."
+          "No API/backend/model/dataset/weight/training/threshold/annotation-schema or authentication/security/workflow/deployment/publishing-policy changes, no global environment upgrades, no hand-edited compiled output, unrelated generated asset bundles or new dependencies, no paid services, no raw research data or credentials, no unrelated process stops, no weakening/skipping browser checks or merely increasing timeouts. No consumed holdout63 artifacts."
         ],
         "limits": {
           "max_review_rounds": 3,
@@ -9470,7 +9479,9 @@
         "paths": [
           "backend/frontend/src/editor/Playback.tsx",
           "tests/frontend-delivery.mjs",
-          "docs/EXACT_FRAME_RECOVERY_REPORT.md"
+          "docs/EXACT_FRAME_RECOVERY_REPORT.md",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json"
         ],
         "priority": 5,
         "resources": [],
@@ -9480,7 +9491,7 @@
           "Full production default/library/exports browser matrix, frontend and required project checks, independent review/CI/controller/main/public delivery; no annotation-accuracy claim."
         ]
       },
-      "spec_hash": "99a6d3117df44047dfa00d82e20fe57a203382ff5b7f94de5909ae80db3e1b76",
+      "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d",
       "status": "ready"
     },
     "62": {
