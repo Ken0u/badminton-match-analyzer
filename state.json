@@ -6321,6 +6321,15 @@
       "task_id": "160",
       "verb": "checkpoint"
     },
+    "windows-shuttle160-checkpoint-preflight-v2": {
+      "actor": "Ken0u",
+      "at": 1792556807,
+      "epoch": 1,
+      "fingerprint": "ee0a2d428151f138b2e4f2856a2367fa4684e5f6f23d4cf29bfbe79b1290f69d",
+      "status": "running",
+      "task_id": "160",
+      "verb": "checkpoint"
+    },
     "windows-shuttle160-next-v1": {
       "actor": "Ken0u",
       "at": 1792549595,
@@ -9933,19 +9942,19 @@
     "160": {
       "checkpoint": {
         "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
-        "head_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
-        "next": "Combine final focusedtests, commit exact consumers/declarations/protocol before acquisition, run requiredchecks, then renew/check ownership and start durable observed original-Store source prep. Preserve all original edits, environments, data, PR30, consumedholdout63 and deprecatedPROGRESS.",
-        "phase": "Bounded six-path source-only implementation and generated-media verification before acquisition",
+        "head_sha": "cacbfbada3b8bde0676a6a3c9cad4e29cab4d587",
+        "next": "Run durable fullsuite, commit test-onlyfix, freeze/push checkpoint beforeboundedrealdata. No sourcechangeswhilefrozenconsumerslive.",
+        "phase": "Pre-acquisition commit frozen; full regression interruption verified, safe test rerun",
         "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a",
-        "verification": "Fresh grant next-v2 epoch1 baseline5256. Isolatedworktree .cache/worktrees/shuttle160; bounded delegates own declarations/launcher/report and tests in separate detachedworktrees. Thirty focusedtests passed, finalrange/acquisition tests underway. Root Ruffclean. Public exact-ID audit checks only four permitted public descriptors with no matches; original-match/upstream/rights remain unresolved. No source videos downloaded or nativejobsstarted."
+        "verification": "46focusedpassed;firstfullrun1536passed4skip2newfixturefailures;guardcorrectlyrefusedambientcredentials. Fixturesnowexplicitlyclear4credentialvarswith4newguardtests. Secondfullrunlostobservation, no matchingtestprocessaliveandnoJUnitcompletion; retainedincompleteartifacts. No mediaacquisition/nativeworkerstarted. Core/protocol/declarationsunchangedincommitcacbfba; onlytestisolationfixuncommitted."
       },
-      "checkpoint_at": 1792551131,
+      "checkpoint_at": 1792556807,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
         "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
         "epoch": 1,
-        "expires_at": 1792561931,
+        "expires_at": 1792567607,
         "granted_at": 1792550468,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
