@@ -7177,6 +7177,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle172-review-result-v1": {
+      "actor": "Ken0u",
+      "at": 1792612883,
+      "epoch": 1,
+      "fingerprint": "40cb1d9128f1426c2e83cd04d35eb9687c92ff186a3e8d45ee7e47cf9a6afe99",
+      "status": "review",
+      "task_id": "172",
+      "verb": "review-result"
+    },
     "windows-shuttle172-submit-v1": {
       "actor": "Ken0u",
       "at": 1792612021,
@@ -11474,18 +11483,38 @@
       "planned_by": "Ken0u",
       "pr_number": 175,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792612883,
         "base_sha": "f45eeeabc3cee4ad692cfbc8648d119cccf0b730",
-        "epoch": 1,
-        "expires_at": 1792623331,
-        "granted_at": 1792612531,
+        "evidence": [
+          "Committed review grant windows-shuttle172-review-next-v1 at1792612531 binds task172 epoch1/review_epoch1, PR175, this exact head/base/spec, MSI/root_shuttle172_review. Live GitHub PR rechecked OPEN and draft with matching head/base before verdict.",
+          "Read all six changed paths and relevant trusted review guidance. Checked complete128-case stream membership, global session disjointness, <=4 cases/6MiB unique inspected PNG/session, ordered assessor index binding, every disagreement/agreed-negative adjudication, immutable originals, exclusive ignored freeze, strict false eligibility, unknown/unavailable denominator retention, finite oriented-native point constraints and no accuracy/promotion claims. No blocking findings.",
+          "Independent original Python3.10 generated focused run:131 passed in134.13s, exit0; tests/test_shuttle_source_assessments.py. Credentials GH_TOKEN,GITHUB_TOKEN,AGENT_PROJECT_TOKEN,OPENAI_API_KEY,CODEX_API_KEY cleared, CUDA disabled, BADMINTON_ROOT/PYTHONPATH pinned to detached87b1 review worktree and BADMINTON_DATA_DIR/basetemp pinned under .cache/shuttle172-review-output-v1; failed retention enabled. Log focused-tests-v1.log.",
+          "Permitted aggregate/manifest metadata agrees with report:128cases/640memberships/632identities,54agreements/74disagreements/80required+explicit adjudications/48two-assessor-only; visibility37localizable/1unlocalizable/5negative/85unknown; no eligibility flag. 103 retained freeze files/84segments mechanically size+hash verified with0mismatches. Frozen module and CLI SHA256 match exact reviewed head.",
+          "Public protocol SHA256s unchanged: v1 f7a985e162e7d48f2c8cff8ee9f8d9c718a4acfa07239c6dfbb84c0f5466b95b; v2 79653290b0dd8c1d09c244fce14019447cc6c1bf5402e27aa08bd498133a3a42. Published freeze manifest f0193b4c0ae3bf98c0592c82c9e252ead94b4cf3286e642e4bfadd3791a3db62, aggregate e361f43a8f3122b449cc357a78bcc8890ed5d67a42133f28cba80f3ccfa722de, execution seal66da256510cc36bfe68b77c20b4991baea52a1cea0353c2572efe71d9142a634 all match actual allowed artifacts.",
+          "Clean detached worktree, only six scoped diff paths, git diff --check passed; all six files strict UTF-8/LF and report relative links valid. Evidence files identity.json, metadata-verification-v1.json, seal-hash-check-v1.json,text-scope-checks-v1.json and focused-tests-v1.log retained in .cache/shuttle172-review-output-v1. Configured failed-only retention was used; remaining generated module fixtures and all evidence remain in the review output root (about2.12MiB). No failed evidence was removed."
+        ],
+        "findings": [],
         "head_sha": "87b1a2c390f917605811dad72bd4a88404b914f6",
-        "host_id": "MSI",
+        "limitations": [
+          "Read-only independent software/provenance/report review by actual canonical session /root/shuttle172_review, queue-encoded root_shuttle172_review on MSI. The first literal slash-containing registration was rejected; registration-v2 was accepted. No implementation edits.",
+          "No image viewing/transmission, decoding, inference, training, real label semantic reading, source relabeling, dependency installation, consumed holdout63 access or application truth/model changes. Hashing private freeze originals establishes bytes only.",
+          "Software checks and hash consistency cannot independently prove actual source viewing, genuine scientific session independence, correctness of private raw labels or localization/full-match accuracy. These remain development agent observations; four eligibility flags remain false.",
+          "Did not rerun the full suite or native media reverification; reviewed generated focused tests and permitted existing aggregate/manifest/execution-seal metadata. Parent retains cumulative ledger/deadline audit and controller CI/integration/main/delivery duties. No completion of those later duties is implied."
+        ],
         "pr_number": 175,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/shuttle_source_assessments.py",
+          "scripts/freeze_shuttle_source_assessments.py",
+          "tests/test_shuttle_source_assessments.py",
+          "data/manifests/shuttle_source_assessment_protocol_v1.json",
+          "data/manifests/shuttle_source_assessment_protocol_v2.json",
+          "docs/SHUTTLE_SOURCE_ASSESSMENT_REPORT.md"
+        ],
         "session_id": "root_shuttle172_review",
-        "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422"
+        "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
