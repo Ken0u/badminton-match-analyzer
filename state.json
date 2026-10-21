@@ -3157,6 +3157,15 @@
       "task_id": "177",
       "verb": "review-result"
     },
+    "mac-review183-final-4c04f44-result-v1": {
+      "actor": "dootz1",
+      "at": 1792621547,
+      "epoch": 1,
+      "fingerprint": "d30fbc6d32a0ea21c84caa0196410d4ba8b1397fafa98d9835c946a01b18f2a4",
+      "status": "review",
+      "task_id": "183",
+      "verb": "review-result"
+    },
     "mac-review183-final-next-v1": {
       "actor": "dootz1",
       "at": 1792621321,
@@ -12688,18 +12697,38 @@
       "planned_at": 1792617513,
       "planned_by": "dootz1",
       "pr_number": 184,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792621547,
         "base_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
-        "epoch": 1,
-        "expires_at": 1792632121,
-        "granted_at": 1792621321,
+        "evidence": [
+          "Genuinely fresh read-only reviewer mac-review183-final-4c04f44 obtained committed review grant mac-review183-final-next-v1 at1792621321; isolated detached .cache/review183-final exact final head/base/spec and all five granted files inspected. No implementation edits.",
+          "Independent generated-only focused run: 123 passed in5.62s, terminal14437 actual exit0, .cache/review183-final/.cache/review-focused.log. No real source decoding, native inference or model calls.",
+          "Rehashed all20 frozen files from successful score receipt, including11 source PNG byte hashes, packet, input snapshots, prepare receipt, both original assessments, original adjudication and both seals. All matched. Score hash fb519bede2d29f9fef3c08c1b99c4e506df7fca352b6690e0323bbf7153eb202 unchanged. Source/clock/catalog/history/original runs independently resnapshotted read-only and identical.",
+          "Inspected original session JSONL: distinct actual threads01a16086-bb4b-7283-8275-5fc72522f7c7/01a16086-c06b-77a3-99e1-b7972ed6adb9 executed packet/hash-only commands; completed final messages byte-identical to original assessment documents. Third actual source-only adjudication thread01a16089-8171-7b51-a749-6bd991d7a44a final matches original and preserves24 disagreements including view continuity. No prediction commands in any source-session log.",
+          "Independently recomputed pure score from existing frozen run/adjudication using exact final code; all14 returned fields identical to saved score.11frames/22people/23predictions/20matches,2 unmatched eligible people at584/659,3 unmatched predictions at684,24 transition candidates/14 eligible/10 unavailable/14sameID/0changedID; IoU range0.6019839..0.9847844 mean0.8641143. No interpolation or unknown-denominator removal.",
+          "Finalhead differs from executed scoring a2c85fc only in aggregate report. Report discloses both actual execution revisions, automated development labels, conditional IoU, sparse identity limits and no accuracy/promotion/full-match claim. Shared admission and sealed-artifact rechecks precede score publication; generated regressions cover provenance mutations and optional vision runtime behavior.",
+          "Exact final-head CI39685735451 inspected live: browser-import/frontend/revision/repository/native macOS successful; native Windows still running. Prior scoring-head full CI is documented; finalhead CI/main/full public delivery remain controller gates."
+        ],
+        "findings": [],
         "head_sha": "4c04f44cfa059f947f01041dccc4316b01f1b8cb",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "This is independent code/provenance review, not a new scientific source assessment or human gold adjudication. Reviewer did not visually reopen/export native images; checked bytes, original sessions and frozen score. Automated labels may share model biases.",
+          "Only sparse previously used singles development frames are measured. No full-run identity, unseen/doubles/keypoint/shuttle/shot/contact/serve/rally accuracy is established; no tuning/model promotion is authorized.",
+          "No full-suite rerun by this reviewer; independently ran123 generated focused tests. Exact final-head CI39685735451 remained live with native Windows pending at review. Controller merge, exact-main CI and complete public wheel/sdist/both OCI delivery still required before completion.",
+          "No source decoding, inference, installation, app upgrade, MSI artifact access or consumed holdout63 access performed. Original raw documents/seals unchanged."
+        ],
         "pr_number": 184,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/player_audit.py",
+          "scripts/audit_player_development.py",
+          "tests/test_player_development_audit.py",
+          "data/manifests/mac_player_audit_v1.json",
+          "docs/MAC_PLAYER_AUDIT_REPORT.md"
+        ],
         "session_id": "mac-review183-final-4c04f44",
-        "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
+        "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
