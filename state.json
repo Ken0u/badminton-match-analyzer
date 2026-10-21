@@ -1996,6 +1996,15 @@
       "task_id": "183",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player183-final-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792621321,
+      "epoch": 1,
+      "fingerprint": "d8524248fcd181588a07e2058e6eaac5bfee39d555345d9560ecd2f13c27b375",
+      "status": "review",
+      "task_id": "183",
+      "verb": "submit"
+    },
     "mac-01a15493-player183-initial-checkpoint": {
       "actor": "dootz1",
       "at": 1792618606,
@@ -3147,6 +3156,35 @@
       "status": "review",
       "task_id": "177",
       "verb": "review-result"
+    },
+    "mac-review183-final-next-v1": {
+      "actor": "dootz1",
+      "at": 1792621321,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
+        "epoch": 1,
+        "expires_at": 1792632121,
+        "granted_at": 1792621321,
+        "head_sha": "4c04f44cfa059f947f01041dccc4316b01f1b8cb",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 184,
+        "review_epoch": 1,
+        "session_id": "mac-review183-final-4c04f44",
+        "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
+      },
+      "epoch": 1,
+      "fingerprint": "4895c4c699a6d9f96b78cc4626891f50be231ab811c9f7ec5212d0681f48e4e4",
+      "status": "granted",
+      "task_id": "183",
+      "verb": "review-next"
+    },
+    "mac-review183-final-register-v1": {
+      "actor": "dootz1",
+      "at": 1792621321,
+      "fingerprint": "ac33b5e1778068c1dc0cf7d7a0f5d859028efba7a6f0ac1669dad5ec841ea799",
+      "status": "ok",
+      "verb": "register"
     },
     "mac-review70-b12e9de-register-v1": {
       "actor": "dootz1",
@@ -12649,6 +12687,21 @@
       "epoch": 1,
       "planned_at": 1792617513,
       "planned_by": "dootz1",
+      "pr_number": 184,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
+        "epoch": 1,
+        "expires_at": 1792632121,
+        "granted_at": 1792621321,
+        "head_sha": "4c04f44cfa059f947f01041dccc4316b01f1b8cb",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 184,
+        "review_epoch": 1,
+        "session_id": "mac-review183-final-4c04f44",
+        "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Advance approved Perception identity parent #66 after #176. Before opening cached prediction contents, freeze original supplied singles source970dbd8adfe548d8 SHA970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f, clockSHA78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b, annotation revision1 rawSHA537318fc735c392f8ca402c0d273205b28e29a5661738e491c84e79518780688 and existing player run dd708cbaf1264917ba8583e2e0a804a6.json SHA3f43dd8ad8d528012e6b8c6e0aa64d9910cbe39f6c0297190f14021aad3b8945. Freeze sample frames434,459,484,509,534,559,584,609,634,659,684 from its original [434,685) development window. Missing/conflicting provenance must stop scoring and be reported, never inferred or replaced.",
@@ -12703,7 +12756,13 @@
         ]
       },
       "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
+        "head_sha": "4c04f44cfa059f947f01041dccc4316b01f1b8cb",
+        "pr_number": 184,
+        "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
+      }
     },
     "62": {
       "epoch": 0,
@@ -16319,6 +16378,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792614692,
       "session_id": "mac-review177-efed31d"
+    },
+    "Stanleys-Laptop.local/mac-review183-final-4c04f44": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792621321,
+      "session_id": "mac-review183-final-4c04f44"
     },
     "Stanleys-Laptop.local/mac-review70-b12e9de-independent": {
       "actor": "dootz1",
