@@ -9020,6 +9020,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 2,
       "history": [
