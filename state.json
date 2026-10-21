@@ -6566,6 +6566,15 @@
       "task_id": "164",
       "verb": "checkpoint"
     },
+    "windows-shuttle164-checkpoint-v5": {
+      "actor": "Ken0u",
+      "at": 1792569652,
+      "epoch": 1,
+      "fingerprint": "ae02a1e2fadce5dc27901ab240e2432d4be95bd054869ec9e7e7bf67da9d5cea",
+      "status": "running",
+      "task_id": "164",
+      "verb": "checkpoint"
+    },
     "windows-shuttle164-initial-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792563978,
@@ -10432,18 +10441,18 @@
       "checkpoint": {
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
         "head_sha": "150097e9f328b179d416abe0a30a6489c3a2c61d",
-        "next": "Continue existing manager (tool session66750),do not duplicate active assignments. Preserve failure/partial originals and audit real process exit before recovery. Both complete128-case streams and all originals must be sealed before raw label comparison; preparation helper enforces both full inventories and global session independence. Then distinct blind bounded source adjudication,exclusive private freeze,final aggregate report,new independent exact-head PR reviewer/CI,controller integration,merged-main/full delivery. Four-hour task runtime remains bounded from original grant; manager stops new launches30minutes before deadline. No APIkeys,new paid services,raw data publication,consumed63 access,163label reuse,inference/training/eligibility changes/model promotion or PROGRESS.md updates. Parent65 and full accuracy remain open.",
-        "phase": "Owner explicitly authorized remaining164 original source-image and minimal protocol/frame/hash transmission to existing ChatGPT-authenticated Codex CLI; bounded actual sessions are running.",
+        "next": "Observe existing manager tool6447; never duplicate its live assignments or overwrite failed/original files. Counts/structural checks:.cache/shuttle164-streams-v2.py status and .cache/validate-shuttle164-partials-v1.py. After both complete128-case streams finish,seal with streams helper before executing .cache/prepare-shuttle164-adjudication-v1.py; it validates both full inventories/sessions and prepares distinct blind source-only adjudication. Then run prepared adjudication helper,seal exact j inventory,exclusive freeze,final aggregate report,new exact-head agent review/CI,controller/main/full delivery. Four-hour runtime remains from original grant1792563485,not reset; source manager stops launches30minutes before deadline. Test/research output remains bounded256MiB. No consumed63 access,163label reuse,eligibility change,APIkeys/newpaidservice or model promotion. Parent65/full accuracy stay open.",
+        "phase": "Draft PR165 CI gate green; source streams84/128 and76/128 at07:59UTC; owner-authorized same-model sessions resume at concurrency2 after upstream capacity error.",
         "spec_hash": "7ab1b287ebe380945b014d0c29fc29356025a64b8ec1f1555062a784c0bcb0df",
-        "verification": "Both streams20/128 cases in5 genuine segments each at07:33UTC. First CLI attempts exited0 with real distinct thread.started IDs, immutable four-case originals and affirmative native viewing reports. Parent has not compared labels. At most3 CLI sessions active; each<=4 centers and6MiB unique raw PNGs. Manager durable process metadata:.cache/shuttle164-manager-process-v1.json; execution start/finish/event hashes and prompts under .cache/shuttle164-source-only-v2/execution. Source-only index helper prints counts only. Full suite1521passed/162skipped;131focusedtests and Ruff/format/pip/diff pass at150097e. Prior output audit199988472bytes+8388608reserve below268435456; new session receipts remain small."
+        "verification": "Real partial structural validation passes for all40 original segments: native identity/inspection hashes, finite/null coordinate conventions, negative/unknown rules, global session separation and6MiB unique image budget. No raw A/B label comparison or adjudication. Both prior failed a014/a015 attempts exited1 before any segment; genuine v2 retries succeeded and original failures remain preserved. b019 v1 explicitly reported selected model at capacity and exited1 without a segment. Existing v2 manager21360 exited and preserved logs; new v3 manager tool6447 retries only b019 once with a genuine new session, at most2 concurrent, same model and unchanged protocol. Private source execution metadata, prompts, event hashes, finishes and partial originals remain in .cache/shuttle164-source-only-v2. No inference/training/native decode or Store worker. Current data labels/weights and PROGRESS.md unchanged."
       },
-      "checkpoint_at": 1792568067,
+      "checkpoint_at": 1792569652,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
         "epoch": 1,
-        "expires_at": 1792578867,
+        "expires_at": 1792580452,
         "granted_at": 1792563485,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
