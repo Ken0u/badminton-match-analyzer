@@ -7190,6 +7190,13 @@
       "task_id": "172",
       "verb": "checkpoint"
     },
+    "windows-shuttle172-main-repair-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792613643,
+      "fingerprint": "52797b6b0bc521106e55325fecd9f99d40c95c026acb06dc713aea36145a7cfe",
+      "status": "idle",
+      "verb": "next"
+    },
     "windows-shuttle172-next-v1": {
       "actor": "Ken0u",
       "at": 1792610565,
