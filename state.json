@@ -7142,6 +7142,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle172-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792612531,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "f45eeeabc3cee4ad692cfbc8648d119cccf0b730",
+        "epoch": 1,
+        "expires_at": 1792623331,
+        "granted_at": 1792612531,
+        "head_sha": "87b1a2c390f917605811dad72bd4a88404b914f6",
+        "host_id": "MSI",
+        "pr_number": 175,
+        "review_epoch": 1,
+        "session_id": "root_shuttle172_review",
+        "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422"
+      },
+      "epoch": 1,
+      "fingerprint": "c2b9be9d68c6bdd0191177b8c847a40804fc08eefc32a5aa5c90137e9067358b",
+      "status": "granted",
+      "task_id": "172",
+      "verb": "review-next"
+    },
     "windows-shuttle172-review-register-v1": {
       "actor": "Ken0u",
       "reason": "invalid session_id",
@@ -11452,6 +11474,20 @@
       "planned_by": "Ken0u",
       "pr_number": 175,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "f45eeeabc3cee4ad692cfbc8648d119cccf0b730",
+        "epoch": 1,
+        "expires_at": 1792623331,
+        "granted_at": 1792612531,
+        "head_sha": "87b1a2c390f917605811dad72bd4a88404b914f6",
+        "host_id": "MSI",
+        "pr_number": 175,
+        "review_epoch": 1,
+        "session_id": "root_shuttle172_review",
+        "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Routine remaining phase under approved parent65 and completed160, successor to incomplete164 after an offline interruption exceeded its original four-hour calendar window and lease. Search issues/PRs/grants/history for duplicates. Preserve164 branch/head150097e9f328b179d416abe0a30a6489c3a2c61d, unmerged draftPR165, its all-green exact-head CI, original protocols/validator/tests, both complete immutable source streams and all failed/private execution evidence. Do not mark164 delivered. Original-host audit must prove recorded CLI/coordinator exits and no Store job before release; retain interruption snapshot receipt342aedebf1b1c7c48092c426cff5f5b8a4f4a079be87587a23d8249e8e2534f5. Do not reset or claim compliance with164 elapsed deadline. This successor bounds only the remaining adjudication/freezing/integration phase; disclose the split and interruption.",
