@@ -66,6 +66,14 @@ successful completion before freezing expected metadata. It still checks upload
 progress, source orientation, the original name and real UI selection. No test
 timeout or production library code is changed.
 
+The [first repair-head CI run](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39529882891)
+also exposed a proxy-test ordering assumption:
+an exact image can now arrive while browser metadata still reports dimensions
+`0 x 0`. The test's existing media-ready/non-seeking wait now precedes its
+dimension assertion and pixel comparison. All checks, thresholds and timeouts
+remain unchanged; exact-image availability no longer stands in for video
+readiness. The failed run and its artifacts remain preserved.
+
 ## Verification and limits
 
 Local verification uses Node 24.22.0, locked frontend dependencies, cached

@@ -761,16 +761,16 @@ if (requestedModes.includes("--exports")) {
           Math.abs(document.querySelector("#video").currentTime - 0.12) <
           0.00002,
       );
+      await page.waitForFunction(
+        () =>
+          !document.querySelector("#video").seeking &&
+          document.querySelector("#video").readyState >= 2,
+      );
       assert.deepEqual(
         await page
           .locator("#video")
           .evaluate((v) => [v.videoWidth, v.videoHeight]),
         [64, 128],
-      );
-      await page.waitForFunction(
-        () =>
-          !document.querySelector("#video").seeking &&
-          document.querySelector("#video").readyState >= 2,
       );
       const pixels = await page.evaluate(() => {
         const image = document.querySelector("#exact-frame"),
