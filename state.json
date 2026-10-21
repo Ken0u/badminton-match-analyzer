@@ -6421,6 +6421,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle160-review-result-01a15ccf-v1": {
+      "actor": "Ken0u",
+      "at": 1792558986,
+      "epoch": 1,
+      "fingerprint": "9816f6b6cf6a15282cc22e43785395c6c7832d0af831a63016b1c69f0b215b16",
+      "status": "review",
+      "task_id": "160",
+      "verb": "review-result"
+    },
     "windows-shuttle160-submit-v1": {
       "actor": "Ken0u",
       "at": 1792558459,
@@ -10035,18 +10044,47 @@
       "planned_at": 1792549388,
       "planned_by": "Ken0u",
       "pr_number": 162,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792558986,
         "base_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
-        "epoch": 1,
-        "expires_at": 1792569460,
-        "granted_at": 1792558660,
+        "evidence": [
+          "Committed genuine review-next grant: request windows-shuttle160-review-next-01a15ccf-v1, actor Ken0u, host MSI, actual fresh session 01a15ccf-b26b-7b13-8474-cc8619291089, task epoch 1, separate review_epoch 1, exact head/base/spec confirmed immediately before submission.",
+          "Read all six changed files plus admission, path containment, JSON/hash publication, FFmpeg lifecycle and packaging surroundings. No actionable regression or acceptance defect found. Diff stays within frozen six-path scope; producer a4598f4 to final 6dd4bd5 changes only the aggregate report.",
+          "Independent credential-free focused run at detached final head: tests/test_shuttle_sources.py, tests/test_av_runtime.py and tests/test_orientation.py: 65 passed in16.01s. JUnit .cache/worktrees/shuttle160-review-01a15ccf/.cache/reviewer-focused-01a15ccf-v2.xml. Generated VFR, display rotation/native pixels, clamped denominators, corrupt/unavailable support, tamper, public range continuity, metadata, credentials, exclusive output, budgets, shared Store admission and prior terminal lifetime paths exercised.",
+          "Independent Ruff check and format check passed across backend/tests/scripts (169 files already formatted); existing Python3.10 environment pip check passed; git diff --check passed. All six changed files verified UTF-8/LF, declarations parsed as JSON, local report links resolved, raw/media/cache artifacts absent from changed tracked paths. Detached review worktree clean; existing original PROGRESS edit preserved.",
+          "Own reviewer audit script .cache/shuttle160-review-audit-01a15ccf.py executed without candidate imports/network/decode. Receipt .cache/shuttle160-review-audit-01a15ccf.json SHA256 07d72a528f89d89a3d0768bfbca0a3c4f87cda50fbad1818d5becc5990134d92. Independently recomputed both 2.272GB raw-source hashes, all 56 consumer hashes against producer and exact final Git bytes, both native-clock and packet seals, all248100 native timing/geometry/corruption rows, every632 PNG hash/bytes/geometry, exact128 cases/640 memberships, unknown templates and false flags.",
+          "Own evidence audit also checked both attempts' matching actual process creation/cwd/command, admission/observation/terminal hashes, external exit0/1, original shared Store completed/failed owner lifetimes and both exited worker/observer lifetimes. Preserved prior4.625s/871620bytes/0download carried; total scientific output2979318337bytes and external cumulative723.671s within frozen limits. No pending transfer artifacts.",
+          "Independently inspected https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39546488131: completed success at exact6dd4bd53f93be85ded110004649b999c5432fa37, all12 verification jobs including ci/gate success. PR162 head6dd4bd5/base5256b3b unchanged. Automation policy summary currently only Fresh independent agent review required."
+        ],
+        "findings": [],
         "head_sha": "6dd4bd53f93be85ded110004649b999c5432fa37",
-        "host_id": "MSI",
+        "limitations": [
+          "This is fresh independent read-only review by actual CODEX_THREAD_ID 01a15ccf-b26b-7b13-8474-cc8619291089 on MSI. No implementation edits, original-data writes, inference, source downloads, repeat full native decode, or consumed holdout63 access occurred.",
+          "Saved packet integrity and generated-media tests do not adjudicate semantic full-match completeness, live/replay context, visibility or difficulty support, labels, original-match overlap, upstream membership, media rights or badminton accuracy. All four eligibility flags remain false.",
+          "Public descriptor audit was limited to exact ID strings in the four permitted declarations/aggregate reports; absence of those strings cannot prove independence.",
+          "The local full Python suite was not repeated. I independently ran 65 relevant focused tests and inspected the successful complete exact-head hosted CI, including Python 3.10 and 3.12, native Windows/macOS, package, browser, frontend and containers.",
+          "The first reviewer pytest invocation failed because its .cache parent directory did not exist; creating that parent and using a fresh basetemp produced 65 passing tests. No product defect was implicated.",
+          "Controller integration, exact merged-main verification and complete public candidate delivery remain subsequent controller/owner duties. The current automation policy check correctly awaits this fresh review. Parent65 and the full application goal remain open."
+        ],
         "pr_number": 162,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/shuttle_sources.py",
+          "scripts/prepare_shuttle_sources.py",
+          "tests/test_shuttle_sources.py",
+          "data/manifests/shuttle_review_sources_v1.json",
+          "data/manifests/shuttle_review_packet_protocol_v1.json",
+          "docs/SHUTTLE_SOURCE_PACKET_REPORT.md",
+          "backend/badminton/shuttle_supervision.py",
+          "backend/badminton/jobs.py",
+          "backend/badminton/av_runtime.py",
+          "pyproject.toml",
+          "MANIFEST.in",
+          ".gitignore"
+        ],
         "session_id": "01a15ccf-b26b-7b13-8474-cc8619291089",
-        "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
+        "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
