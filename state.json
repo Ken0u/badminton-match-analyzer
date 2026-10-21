@@ -2352,6 +2352,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review158-6270fe0-register-20261020": {
+      "actor": "dootz1",
+      "at": 1792548202,
+      "fingerprint": "2365f7637ee691f4ef00a159a4cc16db3b97cdaf356bc825edf6c31ba5f3db1d",
+      "status": "ok",
+      "verb": "register"
+    },
     "mac-review84-next-v1": {
       "actor": "dootz1",
       "at": 1792535192,
@@ -4149,6 +4156,15 @@
       "actor": "Ken0u",
       "reason": "submit requires running work",
       "status": "rejected",
+      "verb": "submit"
+    },
+    "windows-exact158-submit-v3": {
+      "actor": "Ken0u",
+      "at": 1792548202,
+      "epoch": 1,
+      "fingerprint": "47761ceb72d43391d15412f2b874b7a7ad01f902c8c1c3d6586caf9bb9c9e343",
+      "status": "review",
+      "task_id": "158",
       "verb": "submit"
     },
     "windows-export-stream124-plan-v1": {
@@ -9620,10 +9636,10 @@
         ]
       },
       "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
-        "head_sha": "1857ef97e47e3fd1b492222edccd22f44ad369c6",
+        "head_sha": "6270fe0f2378177ff09cf7b5529f5a40f2f4e95a",
         "pr_number": 159,
         "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
       }
@@ -13050,6 +13066,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792547913,
       "session_id": "mac-review158-1857ef9-independent"
+    },
+    "Stanleys-Laptop.local/mac-review158-6270fe0-independent": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792548202,
+      "session_id": "mac-review158-6270fe0-independent"
     },
     "Stanleys-Laptop.local/mac-review84-3bc49ab-independent": {
       "actor": "dootz1",
