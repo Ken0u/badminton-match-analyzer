@@ -1367,6 +1367,15 @@
       "task_id": "170",
       "verb": "human-approved"
     },
+    "mac-01a15493-main177-implementation-v1": {
+      "actor": "dootz1",
+      "at": 1792614189,
+      "epoch": 1,
+      "fingerprint": "19148fa9d3e6f286b8bef08b6663e7196d50a89cca9165addd83e245dace8a56",
+      "status": "running",
+      "task_id": "177",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-main177-next-v1": {
       "actor": "dootz1",
       "at": 1792613915,
@@ -5371,6 +5380,13 @@
       "status": "needs_human",
       "task_id": "123",
       "verb": "plan"
+    },
+    "windows-main177-after-mac-release-v1": {
+      "actor": "Ken0u",
+      "at": 1792614198,
+      "fingerprint": "e399aaa01c98178ea2c436db3a4698e74e4ee763d9a48c262ca7f8f709ad1e00",
+      "status": "idle",
+      "verb": "next"
     },
     "windows-main177-next-v2": {
       "actor": "Ken0u",
@@ -11947,12 +11963,24 @@
       "status": "ready"
     },
     "177": {
+      "checkpoint": {
+        "branch": "codex/issue-177-repair-main-verification-for-494160da064",
+        "evidence": [
+          "Failed main39667395764 artifact failure-state.json has gap source frame2, prepared media ready4, paused at0.08; handler onMetadata calls seek which pauses pending Play.",
+          "Deterministic regression holds prepared media response until after exact frame2 review and explicit Play. Existing generated production browser harness retains source/label/long-gap/end checks and all limits.",
+          "Code correction restores native source time on metadata without invoking manual-seek pause. Only Playback.tsx and frontend-delivery.mjs change; no workflow/threshold/data/app upgrade."
+        ],
+        "next": "Finish baseline reproduction; build/stage corrected assets, full generated browser matrix and focused frontend/full Python/static checks, then exacthead/controller/main/publicdelivery.",
+        "phase": "Committed repair grant epoch1 and exact Playback.tsx scope expansion accepted. Preserved failed main browser artifacts and reproduced metadata/play race in generated fixture.",
+        "spec_hash": "e0c0de4c84dfa5a1ab157aef5ab512e95f9eddce3d73f6ab0da6011704f158bc"
+      },
+      "checkpoint_at": 1792614189,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "494160da064db2924ce70a49d717d57630ccf4ca",
         "branch": "codex/issue-177-repair-main-verification-for-494160da064",
         "epoch": 1,
-        "expires_at": 1792624715,
+        "expires_at": 1792624989,
         "granted_at": 1792613915,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
