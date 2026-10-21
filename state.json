@@ -11103,6 +11103,7 @@
         "session_id": "roadmap-20261019-01a15493",
         "spec_hash": "c8874546f5ff99d3321eb1f350a4dacc3b5779bef886ccd28f7ae791f131fcf0"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "human_approval": {
