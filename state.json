@@ -1660,6 +1660,14 @@
       "task_id": "170",
       "verb": "plan"
     },
+    "mac-01a15493-plan173-native-frames-v1": {
+      "actor": "dootz1",
+      "at": 1792610999,
+      "fingerprint": "15dbd9c03b75e09700caf59541bab3664d15b454ee88702ea962516bcc3b5c44",
+      "status": "ready",
+      "task_id": "173",
+      "verb": "plan"
+    },
     "mac-01a15493-post101-next-v1": {
       "actor": "dootz1",
       "at": 1792537385,
@@ -3899,6 +3907,14 @@
       "fingerprint": "0546e2e3979d1b68229ba91c7aac2124c7567bac2ff912ee586bb163480ac9e8",
       "status": "ready",
       "task_id": "172",
+      "verb": "plan"
+    },
+    "spec-173-f20af87c0d9aca5b3123876219a3ebc9d0296a06f1ce2f96e614dafbccac60a7": {
+      "actor": "dootz1",
+      "at": 1792610999,
+      "fingerprint": "9a1bb1914ba122763ec1fd1a5d1d32ed4eab8b7c57e0d5edbc67eb3cb8ba2f62",
+      "status": "ready",
+      "task_id": "173",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -11379,6 +11395,48 @@
       },
       "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422",
       "status": "running"
+    },
+    "173": {
+      "epoch": 0,
+      "planned_at": 1792610999,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Reproduce current iter_frames behavior on a newly generated four-frame VFR video: controlled decoder omission of middle1 returns0,2,3 and final3 returns0,1,2 without an error. This is a reader-integrity failure, not evidence about badminton detection accuracy. Check existing issues/tests/grants before creating work and preserve MSI172 source-adjudication ownership.",
+          "Require the shared reader to emit each requested imported native frame exactly once and in order during complete consumption. Raise an actionable SourceChangedError for missing/skipped/duplicate/backward/mismatched decoded identities or premature exhaustion; never synthesize images/timestamps or silently shrink the requested range. Validate requested bounds without adding the clip-analysis120-second limit to full-match readers.",
+          "Preserve legitimate keyframe preroll, exact existing PTS matching/orientation/dimensions/source-hash behavior and supported full/partial VFR ranges. Stop safely at the requested range end. Explicit early consumer close/cancellation must still close the media context cleanly without a spurious incomplete-range exception; preserve av_runtime logging restoration and initialize no model libraries.",
+          "Change only video.py and a focused new test_video_frames.py. Test empty/middle/tail omissions, duplicate/backward/mismatched or missing timestamps, valid subranges/preroll, early close and actual generated VFR/cardinal-oriented media; retain existing camera/source/label invariants. Exercise a processing consumer where useful through injected dependencies without changing tracking/model math, data or thresholds.",
+          "Run focused native timing/orientation/scene/perception/export checks and full required project verification, exact-head/main CI and controller/public package/both-image delivery. Code review remains optional under trusted policy. Keep all reviewed annotations, predictions, source files and weights unchanged; no accuracy/model-promotion claim."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No MSI172 files/resources/source images/labels/protocols, consumed63 holdout, acquisition/downloads, GPU/model training/inference, experimental weight install, dependencies, workflow/auth/policy changes, running-app upgrade, production deployment, PROGRESS.md or other tracked files."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Reject incomplete or nonconsecutive native decoded frame ranges before image/video analysis can silently accept partial inputs.",
+        "paths": [
+          "backend/badminton/video.py",
+          "tests/test_video_frames.py"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Real PyAV generated-source baseline reproduction plus meaningful incomplete-stream/order/end/closure/VFR/orientation tests; relevant perception/native-frame regressions and required full pytest/Ruff/format/pip/diff checks.",
+          "Committed dispatcher grant and isolated worktree, exact CI/controller integration, exact merged-main and full public receipt audit before completion. No fabricated review and no unsupported accuracy claim."
+        ]
+      },
+      "spec_hash": "19e9f5b688c032159ee6054403f2e2b9418573784ff4ce1bf61e10f5a889bf44",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
