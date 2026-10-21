@@ -781,3 +781,463 @@ assert os.environ['BADMINTON_DATA_DIR'].endswith('.cache'+os.sep+'shuttle-assess
     )
     assert result.returncode == 0, result.stderr
     assert json.loads(result.stdout)["case_count"] == 128
+
+
+@pytest.fixture(scope="module")
+def generated_v2(generated):
+    """Reuse generated media identities, binding a separate prospective protocol."""
+    protocol = assessments.read_json(
+        PROJECT / "data/manifests/shuttle_source_assessment_protocol_v2.json"
+    )
+    for key in (
+        "sources",
+        "packet_context_sha256",
+        "source_declaration_sha256",
+        "source_packet_protocol_sha256",
+    ):
+        protocol[key] = copy.deepcopy(generated["protocol"][key])
+    path = generated["base"] / "protocol-v2.json"
+    sha = write(path, protocol)
+    inputs = assessments.load_inputs(generated["root"], path, sha)
+    inputs_path = generated["base"] / "inputs-v2.json"
+    write(inputs_path, inputs)
+    return {
+        **generated,
+        "protocol": protocol,
+        "protocol_path": path,
+        "sha": sha,
+        "inputs": inputs,
+        "inputs_path": inputs_path,
+    }
+
+
+def stream_documents(generated, folder, a=None, b=None, adjudicated=None):
+    """Generate many synthetic sessions; no real inspection or independence claimed."""
+    paths = [folder / name for name in assessments.ORIGINAL_NAMES]
+    for sid, path, cases in zip(
+        ("a", "b", "adjudication"),
+        paths,
+        (
+            document(generated)["cases"] if a is None else a,
+            document(generated)["cases"] if b is None else b,
+            [] if adjudicated is None else adjudicated,
+        ),
+    ):
+        index = {
+            "schema_version": 2,
+            "role": "source_only_adjudication_stream"
+            if sid == "adjudication"
+            else "source_only_assessment_stream",
+            "stream_id": sid,
+            "protocol_sha256": generated["sha"],
+            "inputs_sha256": assessments.file_hash(generated["inputs_path"]),
+            "eligibility": dict(assessments.ELIGIBILITY),
+            "segments": [],
+        }
+        if sid == "adjudication":
+            index["assessment_sha256"] = [assessments.file_hash(p) for p in paths[:2]]
+        for number, offset in enumerate(range(0, len(cases), 4)):
+            segment = document(generated, sid)
+            segment["cases"] = copy.deepcopy(cases[offset : offset + 4])
+            segment["session_id"] = f"generated {sid} session {number}"
+            if sid == "adjudication":
+                del segment["assessor_id"]
+                segment["role"] = "source_only_adjudication"
+                segment["adjudicator_id"] = sid
+                segment["assessment_sha256"] = index["assessment_sha256"]
+            name = f"segments/{sid}/{number:03d}.json"
+            # Deliberate whitespace proves exact original segment bytes survive freezing.
+            raw = json.dumps(segment, ensure_ascii=False).encode() + b"\n\n"
+            sha = write(folder / name, raw)
+            index["segments"].append(
+                {
+                    "path": name,
+                    "sha256": sha,
+                    "bytes": len(raw),
+                    "session_id": segment["session_id"],
+                    "case_keys": [row["key"] for row in segment["cases"]],
+                }
+            )
+        write(path, index)
+    return paths
+
+
+def validated_streams(generated, paths):
+    return assessments._validated_documents(
+        generated["inputs"], generated["protocol"], generated["inputs_path"], *paths
+    )
+
+
+def edit_segment(index_path, number, edit):
+    index = assessments.read_json(index_path)
+    entry = index["segments"][number]
+    path = index_path.parent / entry["path"]
+    segment = assessments.read_json(path)
+    edit(segment)
+    entry["sha256"] = write(path, segment)
+    entry["bytes"] = path.stat().st_size
+    write(index_path, index)
+    return segment
+
+
+def test_v2_freeze_retains_every_original_and_actual_case_session(
+    generated_v2, tmp_path
+):
+    a, b = document(generated_v2)["cases"], document(generated_v2)["cases"]
+    a[0] = row_for(generated_v2["inputs"]["cases"][0], "visible_localizable")
+    a[1] = row_for(generated_v2["inputs"]["cases"][1], "not_visible")
+    b[1] = copy.deepcopy(a[1])
+    adjudicated = [row_for(generated_v2["inputs"]["cases"][0]), copy.deepcopy(a[1])]
+    paths = stream_documents(generated_v2, tmp_path / "originals", a, b, adjudicated)
+    originals = {
+        p.relative_to(paths[0].parent).as_posix(): p.read_bytes()
+        for p in paths[0].parent.rglob("*")
+        if p.is_file()
+    }
+    output = ignored_output(tmp_path)
+    aggregate = assessments.freeze(*freeze_args(generated_v2, paths, output))
+    assert aggregate["raw_label_disagreements"] == 1
+    assert (
+        aggregate["explicit_adjudications"] == aggregate["required_adjudications"] == 2
+    )
+    assert aggregate["resolved_visibility_support"]["unknown"] == 127
+    assert aggregate["resolved_visibility_support"]["not_visible"] == 1
+    assert aggregate["two_assessor_agreement_only"] == 126
+    assert all((output / name).read_bytes() == raw for name, raw in originals.items())
+    resolved = assessments.read_json(output / "resolved.json")
+    assert resolved[0]["inspection_sessions"] == {
+        "assessor_a": "generated a session 0",
+        "assessor_b": "generated b session 0",
+        "adjudication": "generated adjudication session 0",
+    }
+    assert resolved[4]["inspection_sessions"] == {
+        "assessor_a": "generated a session 1",
+        "assessor_b": "generated b session 1",
+    }
+    differences = assessments.read_json(output / "raw-differences.json")
+    assert differences[0]["inspection_sessions"] == resolved[0]["inspection_sessions"]
+    manifest = assessments.read_json(output / "manifest.json")
+    assert (
+        len([name for name in manifest["files"] if name.startswith("segments/")]) == 65
+    )
+    assert all("session" not in key for key in aggregate)
+    assert (
+        assessments.verify_freeze(output, generated_v2["root"], generated_v2["sha"])
+        == aggregate
+    )
+    # Renewing a copied metadata seal cannot disguise divergence from packet originals.
+    name = "packet/sources/generated_single/returned-metadata.json"
+    original_metadata = (output / name).read_bytes()
+    original_manifest = (output / "manifest.json").read_bytes()
+    altered_metadata = original_metadata + b" "
+    write(output / name, altered_metadata)
+    manifest["files"][name] = {
+        "sha256": assessments.digest(altered_metadata),
+        "bytes": len(altered_metadata),
+    }
+    write(output / "manifest.json", manifest)
+    with pytest.raises(ValueError, match="Frozen packet original changed"):
+        assessments.verify_freeze(output, generated_v2["root"], generated_v2["sha"])
+    write(output / name, original_metadata)
+    write(output / "manifest.json", original_manifest)
+    result = subprocess.run(
+        [
+            sys.executable,
+            str(PROJECT / "scripts/freeze_shuttle_source_assessments.py"),
+            "verify-freeze",
+            "--packet-root",
+            str(generated_v2["root"]),
+            "--protocol-sha256",
+            generated_v2["sha"],
+            "--output",
+            str(output),
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
+    assert json.loads(result.stdout) == aggregate
+    assert "generated a session" not in result.stdout
+    assert generated_v2["inputs"]["cases"][0]["key"] not in result.stdout
+    extra = output / "segments/a/extra.json"
+    extra.write_bytes(b"{}")
+    with pytest.raises(ValueError, match="Unmanifested"):
+        assessments.verify_freeze(output, generated_v2["root"], generated_v2["sha"])
+
+
+def test_v2_empty_adjudication_only_for_no_required_cases(generated_v2, tmp_path):
+    paths = stream_documents(generated_v2, tmp_path / "originals")
+    result = validated_streams(generated_v2, paths)
+    assert result[-1]["explicit_adjudications"] == 0
+    assert result[-1]["resolved_visibility_support"]["unknown"] == 128
+    assert result[-1]["two_assessor_agreement_only"] == 128
+    assert len(result[0]) == 67  # Three indexes plus 32 segments per assessor.
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        "extra",
+        "missing_entry",
+        "missing_file",
+        "duplicate_path",
+        "duplicate_case",
+        "case_keys_order",
+        "foreign_case",
+        "changed_bytes",
+        "wrong_size",
+        "empty_segment",
+        "too_many_cases",
+        "unsafe_path",
+        "other_stream_path",
+        "noncanonical_path",
+        "extra_adjudication_file",
+        "missing_case",
+        "extra_segment_field",
+    ],
+)
+def test_v2_segment_inventory_is_exact(generated_v2, tmp_path, change):
+    paths = stream_documents(generated_v2, tmp_path / "originals")
+    index = assessments.read_json(paths[0])
+    entry = index["segments"][0]
+    segment_path = paths[0].parent / entry["path"]
+    if change == "extra":
+        write(segment_path.parent / "extra.json", b"{}")
+    elif change == "missing_entry":
+        index["segments"].pop()
+    elif change == "missing_file":
+        segment_path.unlink()
+    elif change == "duplicate_path":
+        index["segments"].append(copy.deepcopy(entry))
+    elif change == "duplicate_case":
+        previous = assessments.read_json(segment_path)["cases"][0]
+        edit_segment(paths[0], 1, lambda d: d["cases"].__setitem__(0, previous))
+        index = assessments.read_json(paths[0])
+        index["segments"][1]["case_keys"][0] = previous["key"]
+    elif change == "case_keys_order":
+        entry["case_keys"].reverse()
+    elif change == "foreign_case":
+        edit_segment(paths[0], 0, lambda d: d["cases"][0].update(key="foreign:00"))
+        index = assessments.read_json(paths[0])
+    elif change == "changed_bytes":
+        segment_path.write_bytes(segment_path.read_bytes() + b" ")
+    elif change == "wrong_size":
+        entry["bytes"] += 1
+    elif change == "empty_segment":
+        edit_segment(paths[0], 0, lambda d: d.update(cases=[]))
+        index = assessments.read_json(paths[0])
+        index["segments"][0]["case_keys"] = []
+    elif change == "too_many_cases":
+        row = row_for(generated_v2["inputs"]["cases"][4])
+        edit_segment(paths[0], 0, lambda d: d["cases"].append(row))
+        index = assessments.read_json(paths[0])
+        index["segments"][0]["case_keys"].append(row["key"])
+    elif change == "unsafe_path":
+        entry["path"] = "segments/a/../../../outside.json"
+    elif change == "other_stream_path":
+        entry["path"] = "segments/b/000.json"
+    elif change == "noncanonical_path":
+        entry["path"] = "segments/a//000.json"
+    elif change == "extra_adjudication_file":
+        write(paths[0].parent / "segments/adjudication/extra.json", b"{}")
+    elif change == "missing_case":
+        removed = index["segments"].pop()
+        (paths[0].parent / removed["path"]).unlink()
+    else:
+        edit_segment(paths[0], 0, lambda d: d.update(unexpected=True))
+        index = assessments.read_json(paths[0])
+    write(paths[0], index)
+    with pytest.raises(ValueError):
+        validated_streams(generated_v2, paths)
+
+
+@pytest.mark.parametrize("scope", ["within_a", "a_b", "a_j", "b_j", "within_j"])
+def test_v2_sessions_globally_disjoint(generated_v2, tmp_path, scope):
+    # Five optional adjudications establish that additional inspected cases remain allowed.
+    paths = stream_documents(
+        generated_v2,
+        tmp_path / "originals",
+        adjudicated=document(generated_v2)["cases"][:5],
+    )
+    origin, target, number = {
+        "within_a": (0, 0, 1),
+        "a_b": (0, 1, 0),
+        "a_j": (0, 2, 0),
+        "b_j": (1, 2, 0),
+        "within_j": (2, 2, 1),
+    }[scope]
+    session = assessments.read_json(paths[origin])["segments"][0]["session_id"]
+    edit_segment(paths[target], number, lambda d: d.update(session_id=session))
+    index = assessments.read_json(paths[target])
+    index["segments"][number]["session_id"] = session
+    write(paths[target], index)
+    with pytest.raises(ValueError, match="globally distinct"):
+        validated_streams(generated_v2, paths)
+
+
+@pytest.mark.parametrize("field", [*assessments.LABEL_FIELDS, "agreed_negative"])
+def test_v2_every_raw_difference_and_agreed_negative_requires_source_adjudication(
+    generated_v2, tmp_path, field
+):
+    a, b = document(generated_v2)["cases"], document(generated_v2)["cases"]
+    a[0] = row_for(generated_v2["inputs"]["cases"][0], "visible_localizable")
+    b[0] = copy.deepcopy(a[0])
+    if field == "agreed_negative":
+        a[0] = row_for(generated_v2["inputs"]["cases"][0], "not_visible")
+        b[0] = copy.deepcopy(a[0])
+    else:
+        b[0][field] = {
+            "visibility": "visible_unlocalizable",
+            "x": 8,
+            "y": 3,
+            "uncertainty_radius": 3,
+            "scene": "play_view",
+            "difficulty": ["blur"],
+        }[field]
+        if field == "visibility":
+            b[0].update(x=None, y=None, uncertainty_radius=None)
+    paths = stream_documents(generated_v2, tmp_path / "originals", a, b)
+    with pytest.raises(ValueError, match="Explicit adjudication required"):
+        validated_streams(generated_v2, paths)
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        "index_assessment_order",
+        "segment_assessment_order",
+        "segment_session",
+        "segment_assessor",
+        "index_schema",
+        "index_stream",
+        "index_role",
+        "index_protocol",
+        "index_inputs",
+        "index_eligibility",
+        "index_extra_field",
+        "segment_protocol",
+        "segment_inputs",
+        "segment_eligibility",
+        "negative_without_evidence",
+        "unknown_with_coordinates",
+        "missing_inspection",
+    ],
+)
+def test_v2_provenance_and_observation_contract(generated_v2, tmp_path, change):
+    paths = stream_documents(
+        generated_v2,
+        tmp_path / "originals",
+        adjudicated=document(generated_v2)["cases"][:1],
+    )
+    if change == "index_assessment_order":
+        index = assessments.read_json(paths[2])
+        index["assessment_sha256"].reverse()
+        write(paths[2], index)
+    elif change == "segment_assessment_order":
+        edit_segment(paths[2], 0, lambda d: d["assessment_sha256"].reverse())
+    elif change.startswith("index_"):
+        field, value = {
+            "index_schema": ("schema_version", True),
+            "index_stream": ("stream_id", "b"),
+            "index_role": ("role", "source_only_assessment"),
+            "index_protocol": ("protocol_sha256", "0" * 64),
+            "index_inputs": ("inputs_sha256", "0" * 64),
+            "index_eligibility": (
+                "eligibility",
+                dict.fromkeys(assessments.ELIGIBILITY, True),
+            ),
+            "index_extra_field": ("unexpected", True),
+        }[change]
+        index = assessments.read_json(paths[0])
+        index[field] = value
+        write(paths[0], index)
+    else:
+
+        def mutate(segment):
+            if change == "segment_session":
+                segment["session_id"] = "unbound generated session"
+            elif change == "segment_assessor":
+                segment["assessor_id"] = "b"
+            elif change in ("segment_protocol", "segment_inputs"):
+                segment[change.removeprefix("segment_") + "_sha256"] = "0" * 64
+            elif change == "segment_eligibility":
+                segment["eligibility"]["training_allowed"] = True
+            elif change == "negative_without_evidence":
+                segment["cases"][0]["visibility"] = "not_visible"
+            elif change == "unknown_with_coordinates":
+                segment["cases"][0]["x"] = 1
+            else:
+                segment["cases"][0]["inspected_frames"] = []
+
+        edit_segment(paths[0], 0, mutate)
+    with pytest.raises(ValueError):
+        validated_streams(generated_v2, paths)
+
+
+@pytest.mark.parametrize("mode", ["uninspected", "shared", "one_byte_excess"])
+def test_v2_session_png_budget_counts_unique_paths_across_rows(
+    generated_v2, tmp_path, mode
+):
+    # Synthetic receipt sizes exercise transport accounting without allocating large PNGs.
+    inputs = copy.deepcopy(generated_v2["inputs"])
+    first = inputs["cases"][0]
+    selected = first["context"][-1]["identity"]
+    for member in first["context"]:
+        member["identity"]["image"]["bytes"] = assessments.MAX_SESSION_IMAGES // 4
+    # The first center is repeated by clamping: its PNG counts once.
+    for case in inputs["cases"][1:4]:
+        center = next(m for m in case["context"] if m["offset"] == 0)
+        center["identity"]["image"]["bytes"] = assessments.MAX_SESSION_IMAGES // 4
+    if mode != "uninspected":
+        selected["image"]["bytes"] = 1
+    if mode == "shared":
+        for member in first["context"]:
+            if member["frame"] == first["center_frame"]:
+                member["identity"]["image"]["bytes"] -= 1
+        # A context PNG shared across rows is charged once for this session.
+        for case in inputs["cases"][1:4]:
+            case["context"][0].update(
+                frame=selected["frame"], identity=copy.deepcopy(selected)
+            )
+    alternate = {
+        **generated_v2,
+        "inputs": inputs,
+        "inputs_path": tmp_path / "synthetic-inputs.json",
+    }
+    write(alternate["inputs_path"], inputs)
+    rows = document(alternate)["cases"]
+    if mode != "uninspected":
+        for row in rows[:4] if mode == "shared" else rows[:1]:
+            row["inspected_frames"].append(
+                {
+                    "frame": selected["frame"],
+                    "image_sha256": selected["image"]["sha256"],
+                }
+            )
+    paths = stream_documents(alternate, tmp_path / "originals", a=rows)
+    if mode == "one_byte_excess":
+        with pytest.raises(ValueError, match="PNG byte budget"):
+            validated_streams(alternate, paths)
+    else:
+        assert validated_streams(alternate, paths)[-1]["case_count"] == 128
+
+
+def test_v2_rejects_full_v1_documents(generated_v2, tmp_path):
+    paths = documents(generated_v2, tmp_path / "originals")
+    with pytest.raises(ValueError, match="Stream index fields"):
+        validated_streams(generated_v2, paths)
+
+
+def test_v2_originals_obey_total_byte_budget(generated_v2, tmp_path, monkeypatch):
+    paths = stream_documents(generated_v2, tmp_path / "originals")
+    monkeypatch.setattr(assessments, "MAX_OUTPUT", sum(p.stat().st_size for p in paths))
+    with pytest.raises(ValueError, match="originals exceed byte budget"):
+        validated_streams(generated_v2, paths)
+
+
+def test_v2_relative_index_paths_remain_portable(generated_v2, tmp_path, monkeypatch):
+    paths = stream_documents(generated_v2, tmp_path / "originals")
+    monkeypatch.chdir(tmp_path)
+    relative_paths = [p.relative_to(tmp_path) for p in paths]
+    assert validated_streams(generated_v2, relative_paths)[-1]["case_count"] == 128
