@@ -6429,6 +6429,12 @@
       "status": "review",
       "task_id": "160",
       "verb": "submit"
+    },
+    "windows-shuttle160-terminal-checkpoint-v1": {
+      "actor": "Ken0u",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
     }
   },
   "tasks": {
