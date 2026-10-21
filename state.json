@@ -1960,6 +1960,15 @@
       "task_id": "176",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player183-authorization-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792619355,
+      "epoch": 1,
+      "fingerprint": "99a83167d6fb7334062a7d972dae80b433b0bd97eaf01deab3ab731b0f814b53",
+      "status": "running",
+      "task_id": "183",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player183-initial-checkpoint": {
       "actor": "dootz1",
       "at": 1792618606,
@@ -12588,22 +12597,25 @@
         "base_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "evidence": [
-          "Input source/clock/annotation/original cached run SHA and11 deterministic frames frozen before prediction-content read. Source-only two fresh sessions and separate adjudication pass will be sealed before scoring.",
-          "Parent owns launcher/manifest/report; task-owned core subagent owns only backend/badminton/player_audit.py and tests/test_player_development_audit.py in isolated .cache/player-audit-183-core. No MSI reservations or data touched.",
-          "Parent launcher static lint/format/compile pass; required generated/full checks remain before publication. #176 completion and full public receipts recorded at issuecomment6327047685."
+          "All5granted paths implemented and pushed, draftPR184 not submitted for integration. Parent/core ownership preserved; original independent implementation-session regression findings fixed.",
+          "120focused generated tests and full1957passed/6existing skips, actual session20803 exit0. Ruff/format179/pip/repository/docs/UTF8LF/diff checks pass. Evidence .cache/evidence/local-checks.json and full-audit-tests.log.",
+          "Exactly11native source PNGs prepared once,9,505,180imagebytes; packetSHA2df667caa140df6c5f4b15c9d423faab23272fb1cacd27ef53f2848cd3fe3b34. Real Storejobfc9bcdea98d44168818534916fe21e73 completed; process65899 lifetime1792618930.394355 exited0 and absent; all original inputs bytepreserved. No active real processing job at final verification.",
+          "Automatic review rejected external fresh-Codex image assessment because explicit permission to export private native images to that service was not established. No external assessment process started; no streams, adjudication or scores exist; predictions remain unopened. Preserve packet/seals and do not bypass via another export method.",
+          "Source packet .cache/source-packet-v1 and blocker/provenance .cache/evidence/assessment-authorization-checkpoint.json retained. No MSI data, heldout63, model changes, new inference or app upgrades. #176 verified complete with deliveryfalse."
         ],
-        "manifest_sha256": "8badea2ab41d043d865fd81025e696d363c2531b2486b0d814abde2a51616b67",
-        "next": "Integrate tested core; prepare11source-only native images via real shared Store; collect and seal genuine blind assessments and source-only adjudication; only then open fixed cached prediction for scoring.",
-        "phase": "Committed grant validated; isolated parent/core worktrees active. Frozen source-only protocol and preparation/seal/scoring launcher implemented, core/test implementation in bounded owned subagent worktree. No actual predictions or source images opened; no inference.",
+        "head_sha": "e0bbb37509116e95fdd04a15bde5435b14ca05a5",
+        "next": "Await explicit permission for only these11frames to existing Codex source-assessment/adjudication sessions; revalidate epoch/spec before resuming. Then seal two genuine independent originals, adjudicate source-only, seal before opening fixed cache, score, finish report, fresh code review, exactCI/controller/main/fullpublicdelivery. Without that permission, scientific scoring is blocked. Other ready179/181 require Windows/CUDA or actualWindows input and are not Mac eligible.",
+        "phase": "Tested draft PR184 preserved; independent source assessment awaits explicit permission to send11private frames to fresh Codex sessions after automatic approval review rejected export.",
+        "pr_number": 184,
         "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
       },
-      "checkpoint_at": 1792618606,
+      "checkpoint_at": 1792619355,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "epoch": 1,
-        "expires_at": 1792629406,
+        "expires_at": 1792630155,
         "granted_at": 1792618168,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
