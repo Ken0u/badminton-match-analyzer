@@ -2936,6 +2936,28 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review176-bc2861c-grant": {
+      "actor": "dootz1",
+      "at": 1792616201,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "22f99a84fb71bf9c1704e1b488b2e2cfdebeca08",
+        "epoch": 2,
+        "expires_at": 1792627001,
+        "granted_at": 1792616201,
+        "head_sha": "bc2861c2eb4893391a22bb5b6237b07d6748ea34",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 182,
+        "review_epoch": 1,
+        "session_id": "mac-review176-bc2861c",
+        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
+      },
+      "epoch": 2,
+      "fingerprint": "04e77f222aaa7f9e9fe26ef9fb9974b4dd22be2aa382a71185dc4941df3eb259",
+      "status": "granted",
+      "task_id": "176",
+      "verb": "review-next"
+    },
     "mac-review176-bc2861c-register": {
       "actor": "dootz1",
       "at": 1792616064,
@@ -12081,6 +12103,20 @@
       "planned_by": "dootz1",
       "pr_number": 182,
       "reason": "released after terminal proof",
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "22f99a84fb71bf9c1704e1b488b2e2cfdebeca08",
+        "epoch": 2,
+        "expires_at": 1792627001,
+        "granted_at": 1792616201,
+        "head_sha": "bc2861c2eb4893391a22bb5b6237b07d6748ea34",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 182,
+        "review_epoch": 1,
+        "session_id": "mac-review176-bc2861c",
+        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Continue the approved Perception roadmap toward player identity evaluation #66, preserving active MSI172 source assessment/reviewer resources. Freeze the existing original singles source970dbd8adfe548d8 SHA970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f, original timestamp map SHA78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b, current revision1 annotation raw document SHA537318fc735c392f8ca402c0d273205b28e29a5661738e491c84e79518780688 and frames[2000,2050) PTS80.0 through81.96 before inference. This is a reused development source, never a held-out accuracy test.",
