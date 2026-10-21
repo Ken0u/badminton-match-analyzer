@@ -2912,6 +2912,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review177-efed31d-result": {
+      "actor": "dootz1",
+      "at": 1792614932,
+      "epoch": 1,
+      "fingerprint": "a1d03d06a82425109ec989f9165c1865923f896c0e364b671f60c53c8fca93c2",
+      "status": "review",
+      "task_id": "177",
+      "verb": "review-result"
+    },
     "mac-review70-b12e9de-register-v1": {
       "actor": "dootz1",
       "at": 1792549595,
@@ -4155,6 +4164,14 @@
       "fingerprint": "4b60b83416561d6d245f8506c9b112578b06964796c37ea15bbc1ea4bf054bac",
       "status": "ready",
       "task_id": "179",
+      "verb": "plan"
+    },
+    "spec-181-5699d4ee0eb459d578278802d603806c71052309ca01e3eab13882bc676ff38d": {
+      "actor": "Ken0u",
+      "at": 1792614932,
+      "fingerprint": "21c94ebc7a6d1342d822d4cd11ffd4020110591e646f29f65cd9952b9b523654",
+      "status": "ready",
+      "task_id": "181",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -12061,18 +12078,37 @@
       "planned_by": "github-actions[bot]",
       "pr_number": 180,
       "repair_for": "172",
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792614932,
         "base_sha": "494160da064db2924ce70a49d717d57630ccf4ca",
-        "epoch": 1,
-        "expires_at": 1792625492,
-        "granted_at": 1792614692,
+        "evidence": [
+          "Fresh read-only session mac-review177-efed31d on Stanleys-Laptop.local cpu/darwin/arm64; committed review-next mac-review177-efed31d-next granted review_epoch1 at1792614692, exact head/base/spec binding verified.",
+          "Inspected complete four-file diff and relevant Playback/controller context. Metadata now restores current native PTS without calling manual seek/pause or auto-playing. Explicit seek still pauses; paused metadata requests exact source image. Existing late-image/selection/error handlers remain intact.",
+          "Deterministic generated prepared-response hold asserts readyState0, exact source frame2, and actual play pending before release; requires ended/frame3 and byte-equivalent saved annotations. No existing assertion, timeout, provenance, orientation, unknown-label or performance ceiling was relaxed.",
+          "Read retained baseline frontend-delivery-I9c7Vf result/failure-state/delivery-assets: same ended wait fails at source frame2,time0.08,ready4 using original base app/manifest hashes. Corrected frontend-delivery-vC9VPF passes18 groups incl source-clock, unsupported/error/selection/unknown/draft/saved preservation; play-before-metadata receipt confirms held state and endframe3.",
+          "Independently recomputed all manifest inputs/assets and retained corrected editor/export result hashes against exact current source. All match. Compiled app.js differs only by the metadata handler span (8 original bytes replaced by87), corresponding to source change; staged unrelated assets unchanged. git diff --check passes.",
+          "Read retained exports-gFtdtT13groups/library-hSx1gw8groups/frontend-unit89pass/full.log1805pass6skip/locked contract/local-checks evidence. These are inspected author runs, not claimed independent reruns.",
+          "GitHub PR180 exact head/base unchanged; Checks workflow39670585840 all12 jobs including native macOS/Windows, Python3.10/3.12, frontend, browser-import, package, both containers and ci/gate succeeded at20:34:22UTC. Also inspected hosted frontend-delivery-8eXl44 held-metadata receipt confirming readyState0/frame2 and endedframe3."
+        ],
+        "findings": [],
         "head_sha": "efed31dc2e046d9c087d244a741161e54bc25176",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Review independently inspected source, compiled delta, hashes and retained local/hosted evidence; it did not rerun complete application suites or decode real match videos.",
+          "New deterministic response-hold covers Play before metadata. Pause-before-metadata and video-switch-during-pending-Play are reasoned from unchanged controls and preserved general regressions, not new dedicated held-media scenarios.",
+          "Generated playback checks establish software behavior and annotation preservation, not badminton annotation accuracy, model quality or full-match correctness.",
+          "Controller integration, exact merged-main verification and complete public candidate delivery remain separate outstanding gates. Separate automation/policy check showed failure while review reservation was active; review does not waive controller policy."
+        ],
         "pr_number": 180,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/frontend/src/editor/Playback.tsx",
+          "tests/frontend-delivery.mjs",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json"
+        ],
         "session_id": "mac-review177-efed31d",
-        "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4"
+        "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
@@ -12193,6 +12229,54 @@
         ]
       },
       "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23",
+      "status": "ready"
+    },
+    "181": {
+      "epoch": 0,
+      "planned_at": 1792614932,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Routine Infrastructure follow-up discovered during172/177 browser diagnosis. Search history/PRs/grants; begin only after177 repaired-main/public delivery and a committed Windows grant. Preserve active Mac176/PR178 and broadcast179. Original Windows failure evidence is private at .cache/worktrees/shuttle172/.cache/evidence/frontend-delivery-jN1sEv and frontend-delivery-7szQyK; startup expected spawn PID6920/5184 but actual listener reported15340/18764. All four recorded fixture attempts have verified terminal lifetimes, seal6455f2f8b494ae21e4619cdbbd5dc16adb2ac4ad6cfff3d56014044aaa6c6b1f. Do not claim those PID values are current workers.",
+          "Repair only tests/frontend-fixtures.mjs and generated fixture-process tests. Keep existing generated-only root, authenticated fixture nonce/receipt and app/UI behavior unchanged. Establish startup ownership from the originally spawned executable PID/create/cwd/exact command and the actual listener receipt. Support a direct interpreter or its verified expected descendant created by a Windows venv redirector; bind actual listener PID/create/cwd/command and same expected launcher arguments/fixture root/nonce. An arbitrary receipt PID, unrelated descendant, changed/reused lifetime or mismatch must fail closed and never authorize a stop. No production API/auth/worker/Store policy changes.",
+          "Cleanup verifies each owned lifetime immediately before acting, terminates the actual generated listener and wrapper as needed, waits for verified terminal state and preserves cleanup/partial evidence on timeout/failure. Do not record an owned listener stopped merely because the launcher exited. Never recursively kill an unverified process tree or unrelated listeners. Preserve previous test artifacts, and never adopt or stop a research/application worker. Prove idempotent cleanup and no leaked generated server after startup assertion failures.",
+          "Use injected/generated process-tree cases for direct interpreter, verified redirector child, wrong command/cwd/nonce/root, PID reuse, unrelated receipt/listener, early child exit and partial startup/cleanup. Exercise the existing project Python3.10 .venv/Scripts/python.exe directly on this Windows workstation through actual generated-only browser fixtures, without relying on the prior base-interpreter/PYTHONPATH workaround; record real process receipts and cleanup. Preserve metadata/early-Play, frame PTS/orientation, errors/selection and annotation invariants in the existing production browser matrix.",
+          "Use original environments and existing pinned Node/FFmpeg/Chromium; no installs/downloads or dependency/workflow changes. Pin generated test roots before app imports, clear GH_TOKEN,GITHUB_TOKEN,AGENT_PROJECT_TOKEN,OPENAI_API_KEY,CODEX_API_KEY from tests. Keep real media/annotations/models/predictions, consumed63 inputs/protocol/private membership/artifacts and PROGRESS.md untouched. No CV inference/training or source imagery is involved.",
+          "Publish the narrow reproducible harness fix, meaningful regressions and concise aggregate evidence report. Run focused fixture/browser checks and required project checks, exact-head/main CI, controller merge and full public candidate/package/both-image verification. Record limitations: these process/software checks do not improve or certify badminton annotation accuracy. Bound new output including failed attempts/tests/review to256MiB,2h from grant and3 repair rounds; preserve failures and do not restart a live fixture on timeout."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "177"
+        ],
+        "exclusions": [
+          "No production auth/policy/Store/API/worker changes, unverified or unrelated process termination, research/data/model access, source image sessions, inference/training, new dependencies/downloads/environment replacement, workflow/publishing/deployment changes, paid services or PROGRESS.md edits."
+        ],
+        "limits": {
+          "max_output_bytes": 268435456,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Make generated browser fixture startup and cleanup verify the actual owned listener when Windows virtual-environment launchers create a child Python process.",
+        "paths": [
+          "tests/frontend-fixtures.mjs",
+          "tests/frontend-fixture-process.test.mjs",
+          "docs/FRONTEND_FIXTURE_PROCESS_REPORT.md"
+        ],
+        "priority": 150,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual project-venv Python3.10 Windows generated server/real browser matrix, complete owned-lifetime and cleanup evidence; injected negative ownership/PID-reuse cases never stop unrelated processes.",
+          "Focused and required project checks, exact CI/controller/main/full public delivery; no badminton accuracy claim."
+        ]
+      },
+      "spec_hash": "2b2f35d036d4238b207985e55cc295dc970cc20fadb9e7ffdf5d5253d9f3f4dc",
       "status": "ready"
     },
     "62": {
