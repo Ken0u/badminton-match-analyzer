@@ -6539,6 +6539,15 @@
       "task_id": "163",
       "verb": "release"
     },
+    "windows-shuttle164-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792565302,
+      "epoch": 1,
+      "fingerprint": "373b9b9abe2352ad37925029ac2d5ce521baf851ae0b32e43a831dc9555ff7d2",
+      "status": "running",
+      "task_id": "164",
+      "verb": "checkpoint"
+    },
     "windows-shuttle164-initial-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792563978,
@@ -10404,19 +10413,19 @@
     "164": {
       "checkpoint": {
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
-        "head_sha": "e86ddd18d03607730fd87c2eddf66839a4eb0eb5",
-        "next": "Complete all32 fresh source-only sessions in each stream; preserve originals and actual session identity; mechanically assemble/seal both indexes before label comparison or distinct bounded source adjudication. Final freeze,aggregate report,required checks,new independent PR reviewer,controller integration,main/full public delivery. No consumed63 access; usage flags false; PROGRESS.md untouched.",
-        "phase": "Fresh grant confirmed; v2 protocol committed/published before any reinspection; first bounded independent sessions active",
+        "head_sha": "f4b9e2618f0bb7f87ed9fde010d94079579dd7ce",
+        "next": "Complete verification of overlap-validation ordering and preserve repaired commit. Explicit authorization is needed to send remaining assigned original source PNGs and minimal frame/hash/protocol context to the existing ChatGPT-authenticated Codex CLI; automatic review rejected that transmission for missing payload/destination authorization. Do not retry or route around rejection. Once authorized, continue genuine bounded sessions (four centers,6MiB unique PNGs),seal both full streams before comparison,then distinct source adjudication,exclusive freeze,aggregate report,fresh independent PR review,exact-head CI,controller/main/full delivery. No consumed63 access or partial163 label reuse; eligibility flags remain false. Private preservation receipt:.cache/shuttle164-source-checkpoint-v2.json.",
+        "phase": "Validator integrated and pushed; both source streams have 8 of 128 cases. Remaining image inspection awaiting explicit source-transmission authorization after automatic approval rejection.",
         "spec_hash": "7ab1b287ebe380945b014d0c29fc29356025a64b8ec1f1555062a784c0bcb0df",
-        "verification": "v2 SHA25679653290b0dd8c1d09c244fce14019447cc6c1bf5402e27aa08bd498133a3a42; new blind input SHA256603b62afeea3f1fc2ab3f88d0337b65fb69eba72d02cb0ebb029261464f2000c. Original128 centers/640 memberships/632 PNGs and all raw source/consumer/clock seals reverified without new decode,inference or training.32 four-center groups per stream;6MiB unique viewed-PNG transport limit per actual session. No partial163 labels reused; snapshot and old branch preserved.77 tests pass for carried validator; bounded delegate adapting segment/index validation with generated tests only."
+        "verification": "131 focused generated tests passed on integrated validator in delegate; Ruff check/format, pip check and diff check pass. Initial full run failed because its temporary parent did not exist (879 passed,162 skipped,642 setup errors). Corrected full run:1520 passed,162 skipped,one failure: overlap rejection checked Git-ignore before path overlap. Small granted-module repair is uncommitted and its focused verification is running; current remote head remains f4b9e26. All four original assessment segments mechanically hashed; two segments/eight cases per stream, no comparison/sealing/adjudication. No CLI assessor launched. Existing original research/processes and PROGRESS.md untouched."
       },
-      "checkpoint_at": 1792563978,
+      "checkpoint_at": 1792565302,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
         "epoch": 1,
-        "expires_at": 1792574778,
+        "expires_at": 1792576102,
         "granted_at": 1792563485,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
