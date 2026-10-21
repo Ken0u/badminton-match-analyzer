@@ -6476,6 +6476,13 @@
       "reason": "checkpoint requires running work",
       "status": "rejected",
       "verb": "checkpoint"
+    },
+    "windows-shuttle163-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792559548,
+      "fingerprint": "9df09ef4a99b6f381fad75fd63d3afc2f1c064a7d000d26fc17dd1adef91cfc3",
+      "status": "ok",
+      "verb": "register"
     }
   },
   "tasks": {
@@ -13231,7 +13238,9 @@
       "artifacts": {
         "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
         "shuttle-visibility-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
-        "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158"
+        "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "shuttle160-doubles-packet": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+        "shuttle160-singles-packet": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b"
       },
       "capabilities": [
         "cuda",
@@ -13240,7 +13249,7 @@
         "browser"
       ],
       "host_id": "MSI",
-      "registered_at": 1792545324,
+      "registered_at": 1792559548,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
