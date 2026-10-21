@@ -1969,6 +1969,15 @@
       "task_id": "183",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player183-ci-repair-v1": {
+      "actor": "dootz1",
+      "at": 1792619827,
+      "epoch": 1,
+      "fingerprint": "0342173d3b9cd92b30d72300ba1336bee7b9e5bb94967bd2048939ec1090262c",
+      "status": "running",
+      "task_id": "183",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player183-initial-checkpoint": {
       "actor": "dootz1",
       "at": 1792618606,
@@ -12594,28 +12603,26 @@
     },
     "183": {
       "checkpoint": {
-        "base_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "evidence": [
-          "All5granted paths implemented and pushed, draftPR184 not submitted for integration. Parent/core ownership preserved; original independent implementation-session regression findings fixed.",
-          "120focused generated tests and full1957passed/6existing skips, actual session20803 exit0. Ruff/format179/pip/repository/docs/UTF8LF/diff checks pass. Evidence .cache/evidence/local-checks.json and full-audit-tests.log.",
-          "Exactly11native source PNGs prepared once,9,505,180imagebytes; packetSHA2df667caa140df6c5f4b15c9d423faab23272fb1cacd27ef53f2848cd3fe3b34. Real Storejobfc9bcdea98d44168818534916fe21e73 completed; process65899 lifetime1792618930.394355 exited0 and absent; all original inputs bytepreserved. No active real processing job at final verification.",
-          "Automatic review rejected external fresh-Codex image assessment because explicit permission to export private native images to that service was not established. No external assessment process started; no streams, adjudication or scores exist; predictions remain unopened. Preserve packet/seals and do not bypass via another export method.",
-          "Source packet .cache/source-packet-v1 and blocker/provenance .cache/evidence/assessment-authorization-checkpoint.json retained. No MSI data, heldout63, model changes, new inference or app upgrades. #176 verified complete with deliveryfalse."
+          "OriginalCI39681738846 terminalfailed, all4Python/nativejobs had21setup errors from unconditional optionaltorchvision import. Exact raw logs retained under.cache/evidence/head-ci-39681738846; minimal3.12focused reproduction99pass21errors.",
+          "Repair within3granted paths makes model extras optional for decoding while ensuring installed vision initializes before threadeddecode and broken installedvision stillraises. No dependencies upgraded, tests skipped or native images/inference repeated.",
+          "Three meaningful regressions plus prior120pass in installedvision environment; complete minimal3.12actualsession9593exit0 with1946pass17existing optional skips includingall123audit tests. Static project checks pass.",
+          "Original11framepacket/realStorejob/process terminalproof retained. No external assessment process started, no rawstreams/adjudication/scores, predictions unopened. Auto-review image-export rejection remains unresolved and is not bypassed."
         ],
-        "head_sha": "e0bbb37509116e95fdd04a15bde5435b14ca05a5",
-        "next": "Await explicit permission for only these11frames to existing Codex source-assessment/adjudication sessions; revalidate epoch/spec before resuming. Then seal two genuine independent originals, adjudicate source-only, seal before opening fixed cache, score, finish report, fresh code review, exactCI/controller/main/fullpublicdelivery. Without that permission, scientific scoring is blocked. Other ready179/181 require Windows/CUDA or actualWindows input and are not Mac eligible.",
-        "phase": "Tested draft PR184 preserved; independent source assessment awaits explicit permission to send11private frames to fresh Codex sessions after automatic approval review rejected export.",
+        "head_sha": "a2c85fcf28a8362244687ddb93bdf1726d56c64c",
+        "next": "Audit freshCI39682709322. Await explicit authorization for these11privateframes to existingCodex independent source assessment/adjudication sessions; complete frozen scientific protocol, fresh finalreview, controller/main/publicdelivery before completion.",
+        "phase": "Repaired actual draft CI optional-dependency failure; pushed exact a2c85fc.123focused installed-vision tests and complete minimal3.12suite1946pass17optional skips. Fresh exact-head CI39682709322 live; scientific assessment remains awaiting explicit private-image export approval.",
         "pr_number": 184,
         "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
       },
-      "checkpoint_at": 1792619355,
+      "checkpoint_at": 1792619827,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "epoch": 1,
-        "expires_at": 1792630155,
+        "expires_at": 1792630627,
         "granted_at": 1792618168,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
