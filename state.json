@@ -7132,6 +7132,13 @@
       "status": "rejected",
       "verb": "register"
     },
+    "windows-shuttle172-review-register-v2": {
+      "actor": "Ken0u",
+      "at": 1792612133,
+      "fingerprint": "b892acec0eb6baf268803bffc32bce33389043f4316b40d45c3a55b02cbf5ac5",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-shuttle172-submit-v1": {
       "actor": "Ken0u",
       "at": 1792612021,
@@ -14661,6 +14668,18 @@
       "host_id": "MSI",
       "registered_at": 1792543788,
       "session_id": "f17becf5129f4035af82b3cbb973914f"
+    },
+    "MSI/root_shuttle172_review": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792612133,
+      "session_id": "root_shuttle172_review"
     },
     "MSI/shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6": {
       "actor": "Ken0u",
