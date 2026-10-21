@@ -6312,6 +6312,26 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-shuttle160-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792550468,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
+        "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
+        "epoch": 1,
+        "expires_at": 1792561268,
+        "granted_at": 1792550468,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
+      },
+      "epoch": 1,
+      "fingerprint": "7e241d7a1b201e35a46b473a520d2d9cc0a7573692556a6c1482241598ca1c0a",
+      "status": "granted",
+      "task_id": "160",
+      "verb": "next"
+    },
     "windows-shuttle160-plan-v1": {
       "actor": "Ken0u",
       "at": 1792549388,
@@ -9895,7 +9915,18 @@
       }
     },
     "160": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
+        "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
+        "epoch": 1,
+        "expires_at": 1792561268,
+        "granted_at": 1792550468,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
+      },
+      "epoch": 1,
       "planned_at": 1792549388,
       "planned_by": "Ken0u",
       "spec": {
@@ -9945,7 +9976,7 @@
         ]
       },
       "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "epoch": 0,
