@@ -195,6 +195,11 @@ def prepare(root, data, manifest, manifest_sha256, output):
         write(output / "inputs-after.json", after)
         if after != before:
             raise ValueError("Frozen inputs changed inside source preparation")
+        if (
+            sum(p.stat().st_size for p in output.rglob("*") if p.is_file())
+            > manifest["max_output_bytes"]
+        ):
+            raise ValueError("Source packet exceeded its frozen output budget")
         receipt["inputs_preserved"] = True
         return {"source_frames": len(packet["samples"]), "inference_calls": 0}
 
@@ -217,6 +222,8 @@ def exclusive_json(path, document):
 def finish(command, root, data, manifest, manifest_sha256, output, assessments):
     from badminton.player_audit import score_audit, validate_assessment
 
+    if command not in {"seal", "score"}:
+        raise ValueError("Choose seal or score for an existing packet")
     if not output.is_relative_to(root / ".cache") or not output.is_dir():
         raise ValueError("Use the existing ignored source packet directory")
     packet, packet_sha256 = verify_packet(output, manifest, manifest_sha256)
