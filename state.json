@@ -4056,6 +4056,15 @@
       "task_id": "158",
       "verb": "plan"
     },
+    "windows-exact158-base-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792546612,
+      "epoch": 1,
+      "fingerprint": "f4e549cbcc0e8c2226232f5ea2590970fe599d04c1be57b5fbed328df83fea30",
+      "status": "running",
+      "task_id": "158",
+      "verb": "checkpoint"
+    },
     "windows-exact158-next-v1": {
       "actor": "Ken0u",
       "at": 1792546298,
@@ -9476,12 +9485,22 @@
       }
     },
     "158": {
+      "checkpoint": {
+        "branch": "codex/issue-158-keep-exact-native-source-frame-review-us",
+        "evidence_sha256": "13a3bfa3e1c1f5ac874c0c5cb2a116a803240358742a59af660ddb3a8b7448bc",
+        "head_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
+        "next": "Narrow paused exact-frame lifecycle repair, then deterministic seek-before/after/stale/error/draft checks, regenerated tracked bundle, full browser matrix and required checks before fresh independent review.",
+        "phase": "Deterministic unchanged-base browser failure verified before fix",
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d",
+        "verification": "Playback source and all five tracked static files equal granted base. Real held HTTP media response -> manual frame3/PTS0.68 -> browser MediaError4 -> exactSrc null/hidden. Regression failed at original15000ms timeout; both earlier blocks pass. Actual run exited1, owned fixture lifetime exited; original environment preserved, no model inference."
+      },
+      "checkpoint_at": 1792546612,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
         "branch": "codex/issue-158-keep-exact-native-source-frame-review-us",
         "epoch": 1,
-        "expires_at": 1792557098,
+        "expires_at": 1792557412,
         "granted_at": 1792546298,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
