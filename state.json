@@ -1908,6 +1908,15 @@
       "task_id": "176",
       "verb": "next"
     },
+    "mac-01a15493-player176-review-fix-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792616656,
+      "epoch": 2,
+      "fingerprint": "017e0289edfdb2735962086e59b7fce59d6c6627936937eae2fb06604dd83689",
+      "status": "running",
+      "task_id": "176",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-post101-next-v1": {
       "actor": "dootz1",
       "at": 1792537385,
@@ -12026,23 +12035,23 @@
       "checkpoint": {
         "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal-e2",
         "evidence": [
-          "Portable .as_posix inventory/source keys address genuine Windows-only6-test failure in prior draft CI; monotonic shared progress regression now added.30 focused tests pass; Ruff/format176files/pip/repository/diff pass.",
-          "Original receipt f53efb9b366c18c3471132e153dbcee5c0bdf2223381cce4ce766c4cb106d871 and all16 artifacts verified unchanged; original process51612 is absent and real shared Store job completed. Model calls remain100 total.",
-          "Exact original executed code492489f is preserved as an ancestor of the new granted branch; updated report accurately distinguishes inference source from later receipt-only fixes.",
-          "Full Python suite running once in task-owned test data; preserve process/session55554 and .cache/evidence/full.log on interruption."
+          "P1: expected full artifact inventory now uses portable slash keys with all strict hashes/equality retained; Windows rawjoblog preserved.",
+          "P2: final frozen input validation now occurs within real admitted task before completion; success reuses its admission-bounded after snapshot, avoiding a post-completion race with another job.",
+          "New second-model original-prediction/raw-annotation mutation cases reproduce2failures against baseline; both now fail real Store jobs and receipts consistently.32 focused tests pass.",
+          "Static required checks pass; fulltest session42415 .cache/evidence/full-review-fix.log live; no native inference repeated, original100calls and16artifacts retained."
         ],
-        "head_sha": "bc2861c2eb4893391a22bb5b6237b07d6748ea34",
-        "next": "Finish full-suite actual exit; publish new epoch2 PR/close superseded draft178 with preservation links, then exact CI/controller/main/full public delivery. Optional review policy unchanged.",
-        "phase": "Epoch2 resumed after repaired-main22f99a84; carried exact existing implementation and original inference evidence without rerunning models.",
+        "head_sha": "79a0d7707dfe9f860c87700852d0fb4e8a75a2bb",
+        "next": "Finish actual fullsuite exit; push/resubmit changed head, obtain new exact reviewer grant/verdict, freshCI/main/fullpublicdelivery. Oldchangesverdict preserved forbc2861c.",
+        "phase": "Accepted genuine review epoch1 changes addressed in focused commit;32tests pass, fullsuite live.",
         "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
       },
-      "checkpoint_at": 1792615789,
+      "checkpoint_at": 1792616656,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "22f99a84fb71bf9c1704e1b488b2e2cfdebeca08",
         "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal-e2",
         "epoch": 2,
-        "expires_at": 1792626589,
+        "expires_at": 1792627456,
         "granted_at": 1792615565,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
