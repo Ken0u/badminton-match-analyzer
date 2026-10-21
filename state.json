@@ -10912,6 +10912,7 @@
       }
     },
     "168": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39616188713",
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "3136d426903758466808ab7cf7cc270e09bba393",
@@ -10924,7 +10925,7 @@
         "spec_hash": "9bfe1c15e3996e568098d1e9ab1bc34927d4d9a67f2f330b588db877d83d7997"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792591929,
