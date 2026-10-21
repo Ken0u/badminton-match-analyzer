@@ -856,6 +856,15 @@
       "task_id": "166",
       "verb": "plan"
     },
+    "mac-01a15493-166-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792588717,
+      "epoch": 1,
+      "fingerprint": "be2aae9e89b3d34f1adc44cae7e886ff7e3ddb085b700d7c8c77c31e4f6373e2",
+      "status": "review",
+      "task_id": "166",
+      "verb": "submit"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -10602,6 +10611,7 @@
       },
       "planned_at": 1792587862,
       "planned_by": "dootz1",
+      "pr_number": 167,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -10653,7 +10663,13 @@
         ]
       },
       "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
+        "head_sha": "746587aad832710c0e611f9fd971e425d3348df3",
+        "pr_number": 167,
+        "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f"
+      }
     },
     "62": {
       "epoch": 0,
