@@ -2883,6 +2883,35 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review177-efed31d-next": {
+      "actor": "dootz1",
+      "at": 1792614692,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "494160da064db2924ce70a49d717d57630ccf4ca",
+        "epoch": 1,
+        "expires_at": 1792625492,
+        "granted_at": 1792614692,
+        "head_sha": "efed31dc2e046d9c087d244a741161e54bc25176",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 180,
+        "review_epoch": 1,
+        "session_id": "mac-review177-efed31d",
+        "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4"
+      },
+      "epoch": 1,
+      "fingerprint": "26b0b07c56c88a84f7640c66113e75a34a9253976ca35294bbefcfe3a4f02297",
+      "status": "granted",
+      "task_id": "177",
+      "verb": "review-next"
+    },
+    "mac-review177-efed31d-register": {
+      "actor": "dootz1",
+      "at": 1792614692,
+      "fingerprint": "58fbddce8841158b29be7376aa008cea34c15ebfde3098023da78c5b82e40d2f",
+      "status": "ok",
+      "verb": "register"
+    },
     "mac-review70-b12e9de-register-v1": {
       "actor": "dootz1",
       "at": 1792549595,
@@ -12025,6 +12054,20 @@
       "planned_by": "github-actions[bot]",
       "pr_number": 180,
       "repair_for": "172",
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "494160da064db2924ce70a49d717d57630ccf4ca",
+        "epoch": 1,
+        "expires_at": 1792625492,
+        "granted_at": 1792614692,
+        "head_sha": "efed31dc2e046d9c087d244a741161e54bc25176",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 180,
+        "review_epoch": 1,
+        "session_id": "mac-review177-efed31d",
+        "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Routine remaining phase under approved parent65 and completed160, successor to incomplete164 after an offline interruption exceeded its original four-hour calendar window and lease. Search issues/PRs/grants/history for duplicates. Preserve164 branch/head150097e9f328b179d416abe0a30a6489c3a2c61d, unmerged draftPR165, its all-green exact-head CI, original protocols/validator/tests, both complete immutable source streams and all failed/private execution evidence. Do not mark164 delivered. Original-host audit must prove recorded CLI/coordinator exits and no Store job before release; retain interruption snapshot receipt342aedebf1b1c7c48092c426cff5f5b8a4f4a079be87587a23d8249e8e2534f5. Do not reset or claim compliance with164 elapsed deadline. This successor bounds only the remaining adjudication/freezing/integration phase; disclose the split and interruption.",
@@ -15723,6 +15766,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792588855,
       "session_id": "mac-review166-746587a-independent"
+    },
+    "Stanleys-Laptop.local/mac-review177-efed31d": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792614692,
+      "session_id": "mac-review177-efed31d"
     },
     "Stanleys-Laptop.local/mac-review70-b12e9de-independent": {
       "actor": "dootz1",
