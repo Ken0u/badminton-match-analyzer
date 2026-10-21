@@ -1,10 +1,11 @@
-# Reviewed rally export plans
+# Reviewed rally and annotated video exports
 
 The backend for [roadmap #70](https://github.com/Ken0u/badminton-match-analyzer/issues/70)
 produces an inspectable JSON plan, plain reviewed rally clips and annotated full
 videos or rally clips. The web API can start shared export jobs and download their
-verified output. Frontend controls remain a separate phased increment; the
-media-export roadmap is not complete.
+verified output. The default React editor exposes all three media export modes
+and their saved-revision receipts. The integrated implementation is available
+through the CLI, API and editor; see the acceptance evidence below.
 
 ```sh
 badminton export-rally-plan VIDEO_ID --revision 3 --output /path/to/new-plan.json
@@ -129,8 +130,8 @@ encoder padding is disclosed separately from audible source sample timing.
 
 These exports visualize saved reviewed evidence. They do not establish complete
 contacts, persistent identities, correct stroke labels or automatic badminton
-annotation accuracy. Frontend export controls remain a separate phased UI task;
-these commands do not switch or upgrade a running application.
+annotation accuracy. The editor controls below use the same saved-revision
+exports; these commands do not switch or upgrade a running application.
 
 ## Web API export jobs
 
@@ -218,7 +219,69 @@ until an operator removes them. Their downloads depend on retaining both the
 export files and the original job catalog. Existing full-match analysis pause
 controls remain unchanged; there is no new media-export pause endpoint.
 
-This API prepares later React controls under the approved frontend phases; it
-does not migrate the editor, change the default UI or upgrade running instances.
-Its verification concerns source-preserving exports of saved evidence, not
-automatic badminton annotation accuracy.
+The default React editor uses this API under the completed frontend phases.
+Publishing verified packages and containers does not upgrade running instances.
+Verification concerns source-preserving exports of saved evidence, not automatic
+badminton annotation accuracy.
+
+## Export from the editor
+
+Open a source in the default React editor and save annotation changes before
+using **EXPORT REVIEWED MEDIA**. The panel shows the source ID, saved revision
+and selected mode. Choose `plain-rallies`, `annotated-rallies` or `annotated-full`,
+then select **Start media export**. Starting is disabled while annotations are
+unsaved, a save is in progress or an export request is starting. The editor does
+not save drafts or start exports automatically.
+
+Jobs show their bound mode, revision, status and progress. Active jobs refresh
+automatically; **Refresh jobs** also reloads them after reopening a source.
+A newer saved revision does not change an existing export. A source switch
+cannot apply an old source's delayed export response to the new selection.
+Starting an export is an explicit write and is never retried automatically.
+
+Only completed, verified output exposes download links, sizes and SHA-256
+hashes. Download `manifest.json` with the media to retain the annotation snapshot,
+source timing, eligible/ineligible rally counts and exclusion reasons. Full-video
+mode retains the source even when every rally is ineligible. Authentication,
+busy shared admission, changed artifacts and failed or interrupted work remain
+visible errors or unavailable jobs; refresh or explicitly start a new export
+when the cause is resolved. An export never accepts a prediction as reviewed
+truth or establishes that the saved annotations are accurate.
+
+## Integrated acceptance evidence
+
+The two frozen criteria of [parent #70](https://github.com/Ken0u/badminton-match-analyzer/issues/70)
+are implemented across delivered children. This audit preserves that work rather
+than adding another export implementation.
+
+| Parent criterion | Delivered implementation and verification |
+| --- | --- |
+| Derive clip boundaries from reviewed annotations and source time | [Plan #108 / PR #112](https://github.com/Ken0u/badminton-match-analyzer/pull/112) and [native clips #110 / PR #115](https://github.com/Ken0u/badminton-match-analyzer/pull/115) require reviewed/corrected exact serve and terminal boundaries, retain ineligible rallies, audit source hashes and native PTS, and verify video/audio endpoints. |
+| Derive overlays from reviewed annotations without changing predictions | [Overlays #116 / PR #118](https://github.com/Ken0u/badminton-match-analyzer/pull/118) preserve the complete saved snapshot, prediction/unknown provenance, scene/camera/calibration context and source-frame identity in annotated full/rally exports. Tests verify unchanged source and stored evidence bytes. |
+| Verify generated media and downloads | [API #120 / PR #121](https://github.com/Ken0u/badminton-match-analyzer/pull/121) and [download repair #124 / PR #128](https://github.com/Ken0u/badminton-match-analyzer/pull/128) exercise all three modes through actual HTTP, shared admission, orientation/audio/native clocks, output tampering and verified private download snapshots. |
+| Expose the delivered exports in the default application | [React controls #138 / PR #147](https://github.com/Ken0u/badminton-match-analyzer/pull/147) and [frontend delivery #98 / PR #148](https://github.com/Ken0u/badminton-match-analyzer/pull/148) provide saved-revision controls, guarded job recovery/downloads and packaged React assets. [Frontend rewrite evidence](FRONTEND_REWRITE.md) records the completed phases. |
+
+At audited base `6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565`, the existing
+`tests/test_rally_export.py`, `tests/test_rally_overlay.py` and
+`tests/test_media_export_api.py` pass 139 cases on this Mac, with two
+Windows-specific skips. These generated native-media checks cover source-clock
+boundaries, orientation, relative audio, unknown/ineligible cases, immutable
+snapshots, overlays, all API modes and download failure/race handling. The
+Windows path checks are also covered by successful native Windows CI.
+
+[Exact-base CI 39531731982](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39531731982)
+passed all required jobs. Its source-bound artifacts record 18 default, eight
+library and 13 export browser groups; installed-package checks verify five
+assets, three SPA routes, authentication and owned-process cleanup.
+[Public candidate 39532206195](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39532206195)
+has matching source/lock bytes for all 76 application files in wheel and sdist,
+plus independently verified anonymous CPU/review image manifests. Task #70's
+own fresh review, exact-head/main checks and delivery receipts belong on its
+issue and PR after this documentation update is integrated.
+
+These checks use generated media and explicit saved fixtures. They demonstrate
+export behavior and provenance, not correct automatic full-match annotations,
+independently adjudicated contacts or persistent player identity. Private sample
+videos, labels, predictions, weights and detailed workstation evidence remain
+ignored. No inference, model promotion, data rewrite or running application
+upgrade is part of this acceptance audit.
