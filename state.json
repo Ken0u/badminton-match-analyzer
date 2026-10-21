@@ -10059,6 +10059,7 @@
       }
     },
     "160": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39547968624",
       "checkpoint": {
         "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
         "head_sha": "a4598f403fd19a8a34cc96043cd49e0dbf87d26d",
@@ -10080,7 +10081,7 @@
         "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792559022,
