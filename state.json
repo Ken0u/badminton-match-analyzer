@@ -811,6 +811,15 @@
       "task_id": "138",
       "verb": "next"
     },
+    "mac-01a15493-166-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792588317,
+      "epoch": 1,
+      "fingerprint": "6e76b865ca0f082f2cf510a684c411c21e330a55e0c053408f367d465c4d1e9f",
+      "status": "running",
+      "task_id": "166",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-166-next-v1": {
       "actor": "dootz1",
       "at": 1792588056,
@@ -10565,12 +10574,21 @@
       "status": "recovery_required"
     },
     "166": {
+      "checkpoint": {
+        "branch": "codex/issue-166-make-independent-code-review-optional-fo",
+        "head_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
+        "next": "Combine core commit, run meaningful optional/no-review positive and negative gate/recovery tests plus full checks; fresh transition review/CI/controller merge/main/full public delivery before optional policy effective. Preserve MSI164, no app/environment upgrades.",
+        "phase": "Granted optional-code-review policy implementation; config/guidance ready, core regressions in progress",
+        "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f",
+        "verification": "Explicit configured-owner instruction accepted as mac-01a15493-166-owner-approved-v1; committed grant epoch1. Parent owns config/current guidance only; bounded worker owns policy/queue/coordinator and three test files in its own isolated worktree. No implementation edits in original checkout. Historical external recovery/scientific assessment requirements preserved."
+      },
+      "checkpoint_at": 1792588317,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
         "branch": "codex/issue-166-make-independent-code-review-optional-fo",
         "epoch": 1,
-        "expires_at": 1792598856,
+        "expires_at": 1792599117,
         "granted_at": 1792588056,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
