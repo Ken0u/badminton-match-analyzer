@@ -9650,6 +9650,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
