@@ -1863,6 +1863,13 @@
       "task_id": "176",
       "verb": "release"
     },
+    "mac-01a15493-player176-resume-after-repair-v1": {
+      "actor": "dootz1",
+      "at": 1792615407,
+      "fingerprint": "858563a28a18037378125264794a99bda48ec2a43fdff8c43e754d50d50ec3c6",
+      "status": "idle",
+      "verb": "next"
+    },
     "mac-01a15493-post101-next-v1": {
       "actor": "dootz1",
       "at": 1792537385,
