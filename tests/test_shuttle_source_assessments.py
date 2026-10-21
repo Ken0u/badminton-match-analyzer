@@ -740,7 +740,13 @@ def test_cli_redacts_errors_and_does_not_import_heavy_runtime(generated, tmp_pat
     )
     env.update(
         dict.fromkeys(
-            ("GH_TOKEN", "GITHUB_TOKEN", "AGENT_PROJECT_TOKEN", "OPENAI_API_KEY"),
+            (
+                "GH_TOKEN",
+                "GITHUB_TOKEN",
+                "AGENT_PROJECT_TOKEN",
+                "OPENAI_API_KEY",
+                "CODEX_API_KEY",
+            ),
             "generated-secret-never-print",
         )
     )
@@ -767,7 +773,7 @@ def test_cli_redacts_errors_and_does_not_import_heavy_runtime(generated, tmp_pat
 spec=importlib.util.spec_from_file_location('source_cli',sys.argv[1])
 module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
 assert module.main(sys.argv[2:]) == 0
-assert not any(key in os.environ for key in ('GH_TOKEN','GITHUB_TOKEN','AGENT_PROJECT_TOKEN','OPENAI_API_KEY'))
+assert not any(key in os.environ for key in ('GH_TOKEN','GITHUB_TOKEN','AGENT_PROJECT_TOKEN','OPENAI_API_KEY','CODEX_API_KEY'))
 assert not {'torch','torchvision','av','badminton.config','badminton.storage'} & sys.modules.keys()
 assert os.environ['BADMINTON_DATA_DIR'].endswith('.cache'+os.sep+'shuttle-assessment-cli-isolated')
 """

@@ -10,7 +10,13 @@ from pathlib import Path
 
 
 def main(argv=None):
-    for key in ("GH_TOKEN", "GITHUB_TOKEN", "AGENT_PROJECT_TOKEN", "OPENAI_API_KEY"):
+    for key in (
+        "GH_TOKEN",
+        "GITHUB_TOKEN",
+        "AGENT_PROJECT_TOKEN",
+        "OPENAI_API_KEY",
+        "CODEX_API_KEY",
+    ):
         os.environ.pop(key, None)
     root = Path(__file__).resolve().parents[1]
     os.environ["BADMINTON_ROOT"] = str(root)

@@ -1,10 +1,29 @@
 # Independent source-only shuttle assessments
 
-Task [#164](https://github.com/Ken0u/badminton-match-analyzer/issues/164),
-October 21, 2026. Bounded source inspection is in progress; final aggregate
-support will be recorded after both complete streams and adjudication are sealed.
+Task [#172](https://github.com/Ken0u/badminton-match-analyzer/issues/172),
+October 21, 2026. Both predecessor source streams are complete and sealed;
+the remaining blind adjudication and exclusive freeze are in progress.
 These are development agent observations, not expert-certified labels or measured
 shuttle localization accuracy. Full automatic match annotation remains unproven.
+
+Predecessor [#164](https://github.com/Ken0u/badminton-match-analyzer/issues/164)
+completed both 128-case streams in 64 genuinely distinct source sessions. Their
+indexes and originals were sealed before comparison: 74 cases had raw field
+differences and six additional cases were agreed negatives. All 80 require
+source adjudication, in 20 fresh four-center sessions under the unchanged v2
+protocol. An offline interruption exceeded #164's four-hour calendar window and
+lease before any adjudication started. Original-host checks verified all 63 CLI
+attempts (60 successful and three failed without originals), coordinator exits
+and no Store worker. An exclusive preservation snapshot has receipt SHA256
+`342aedebf1b1c7c48092c426cff5f5b8a4f4a079be87587a23d8249e8e2534f5`.
+The controller released the incomplete task; its branch, draft PR #165, tests
+and CI remain preserved. No completed delivery is claimed for #164.
+
+The separately granted #172 phase carries those sealed streams unchanged. Its
+four-hour remaining-phase limit begins at its own grant; it does not reset or
+claim compliance with #164's expired limit. One cumulative 256 MiB output
+ledger includes predecessor failures, tests, the interruption snapshot and all
+new adjudication, freeze and review output. Original media remain in place.
 
 The previous [#163 attempt](https://github.com/Ken0u/badminton-match-analyzer/issues/163)
 is incomplete and was controller-released, then closed as superseded. Both
