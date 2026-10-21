@@ -15,11 +15,18 @@ commands; reconciliation tolerates retries, malformed requests and lost wakeups.
 The control issue projects task owners, blockers, lease status and recent verified
 merges without comment notifications; the private Project separately projects status.
 
-Routine integration requires exact-head/base review, current CI, granted paths
-and resolved review conversations. The default `integration_enforcement` value
+Current routine integration requires exact-head/base CI, granted paths and
+resolved review conversations. The owner-authorized `require_agent_review: false`
+setting makes code review optional; missing or malformed values retain the
+original mandatory-review behavior. Optional reviews retain genuine session/epoch
+fencing, active reservations and actionable findings. Historical external-merge
+recovery still requires its original independent approval. Scientific source
+assessments and adjudication remain separate from optional code review. The
+default `integration_enforcement` value
 `controller` enforces these conditions in the serial controller and works on a
-private GitHub Free repository. Sensitive entry points need non-author human
-approval. Optional `github` mode additionally requires verified branch protections
+private GitHub Free repository. Sensitive frozen scope needs explicit
+configured-owner authorization; final non-author human PR approval is optional.
+Optional `github` mode additionally requires verified branch protections
 and fails closed when they are absent or unverifiable.
 Inference changes require source/model/code-bound native evidence with explicit
 limitations. Journalled merge attempts survive uncertain API responses. A main
@@ -68,10 +75,13 @@ is required in the default mode. GitHub cannot prevent writers from bypassing
 the controller with direct pushes, manual merges, force pushes/deletion or
 concurrent main changes; the protocol prohibits those actions.
 
-Activation still requires non-author human review, Project authorization and the
-two-host pilot. The implementation account has write rather than admin access
-and its current credentials lack Project scope. No Project, subscription or
-protection change is claimed. GitHub Actions and artifact/storage quotas and
-local Codex usage limits apply; paid overage remains disabled. Follow
-[owner setup](OWNER_SETUP.md), then the human-reviewed two-host pilot, before enabling active integration. Until then,
-no automatic production deployment or application/model upgrade occurs.
+The following bootstrap snapshot records October 18 prerequisites, not current
+operating instructions; current code-review policy is described above.
+
+> Activation still requires non-author human review, Project authorization and the
+> two-host pilot. The implementation account has write rather than admin access
+> and its current credentials lack Project scope. No Project, subscription or
+> protection change is claimed. GitHub Actions and artifact/storage quotas and
+> local Codex usage limits apply; paid overage remains disabled. Follow
+> [owner setup](OWNER_SETUP.md), then the human-reviewed two-host pilot, before enabling active integration. Until then,
+> no automatic production deployment or application/model upgrade occurs.

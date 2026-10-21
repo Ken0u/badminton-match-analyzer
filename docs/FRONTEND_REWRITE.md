@@ -115,12 +115,14 @@ built assets, Docker and CI wiring; [deployment documentation](DEPLOYMENT.md)
 describes the reversible code-release rollback without changing annotations.
 Future sensitive workflow/deployment scope requires explicit configured-owner
 authorization of the frozen task, as specified by [AGENTS.md](../AGENTS.md) and
-the [collaboration protocol](COLLABORATION.md). Fresh independent agent review
-and exact CI remain required; final non-author human PR review is optional.
+the [collaboration protocol](COLLABORATION.md). Exact CI remains required; agent
+and non-author human code reviews are optional when `require_agent_review` is
+explicitly false in trusted configuration.
 Original issue specifications and historical reviews remain audit evidence.
 
-Each implementation requires an isolated granted worktree, independent review,
-current CI and controller integration/main verification. Completion also requires
+Each implementation requires an isolated granted worktree, current CI and
+controller integration/main verification. Requested code reviews use genuine
+fresh sessions and exact-revision grants. Completion also requires
 successful package and both image receipts matching the approved candidate
 visibility policy, currently public. Deployment to a running instance
 remains explicit; no automatic application upgrade, data migration, model change,

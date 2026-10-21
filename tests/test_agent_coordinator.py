@@ -403,8 +403,9 @@ def policy_fixture():
         "status": "review",
         "spec": spec(),
         "spec_hash": "spec",
-        "claim": {"session_id": "author"},
-        "submission": {"head_sha": HEAD, "base_sha": BASE},
+        "epoch": 1,
+        "claim": {"session_id": "author", "spec_hash": "spec", "epoch": 1},
+        "submission": {"head_sha": HEAD, "base_sha": BASE, "spec_hash": "spec"},
         "review": {
             "head_sha": HEAD,
             "base_sha": BASE,
@@ -644,6 +645,119 @@ def merge_setup():
     store = StateStore(gh, config["coordination_branch"])
     store.write(None, h.state)
     return gh, store, config
+
+
+def optional_merge_setup():
+    gh, store, config = merge_setup()
+    config.update(require_agent_review=False, candidate_visibility="public")
+    tip, state = store.read()
+    state["tasks"]["1"].pop("review")
+    store.write(tip, state)
+    return gh, store, config
+
+
+@pytest.mark.parametrize("reviewed", [False, True])
+def test_optional_review_controller_merges_verifies_main_and_completes_public_delivery(
+    reviewed,
+):
+    gh, store, config = optional_merge_setup()
+    if reviewed:
+        # Use an actual distinct-session queue review; never manufacture approval.
+        h = approved_state()
+        store.write(store.read()[0], h.state)
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["status"] == "integrating" and gh.pr["merged"] is True
+    assert ("review" in task) is reviewed
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "verifying_main"
+    gh.ci = [
+        {
+            "id": 10,
+            "event": "push",
+            "head_branch": "main",
+            "head_sha": gh.merge_sha,
+            "status": "completed",
+            "conclusion": "success",
+        }
+    ]
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "done"
+    assert state["tasks"]["1"]["delivery_pending"] is True
+    assert config["candidate_visibility"] == "public"
+    assert any(
+        path == "actions/workflows/release.yml/dispatches"
+        and data["inputs"]["source_sha"] == gh.merge_sha
+        for path, data in gh.external
+    )
+    # The existing release workflow retains its historical run title in public mode.
+    gh.releases = [
+        {
+            "id": 11,
+            "display_title": f"Private candidate {gh.merge_sha}",
+            "status": "completed",
+            "conclusion": "success",
+            "html_url": "https://github.com/run/11",
+        }
+    ]
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert task["delivery_pending"] is False
+    assert task["candidate_run"] == "https://github.com/run/11"
+    assert ("review" in task) is reviewed
+    assert integrate(gh, config, store.read()[1]) == state
+
+
+@pytest.mark.parametrize("setting", [None, True, 0, "false", [], {}])
+def test_controller_missing_review_is_blocked_for_default_and_invalid_config(setting):
+    gh, store, config = optional_merge_setup()
+    config["require_agent_review"] = setting
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "review"
+    assert gh.pr["merged"] is False
+
+
+@pytest.mark.parametrize(
+    "defect", ["conversation", "ancestry", "owner", "native", "changes", "reservation"]
+)
+def test_optional_controller_retains_nonapproval_vetoes(defect):
+    gh, store, config = optional_merge_setup()
+    if defect == "conversation":
+        gh.graphql = lambda *_args, **_kwargs: {
+            "repository": {
+                "pullRequest": {
+                    "reviewThreads": {
+                        "nodes": [{"isResolved": False}],
+                        "pageInfo": {"hasNextPage": False, "endCursor": None},
+                    }
+                }
+            }
+        }
+    elif defect == "ancestry":
+        original_repo = gh.repo
+        gh.repo = lambda path, **kwargs: (
+            {"status": "diverged", "merge_base_commit": {"sha": "f" * 40}}
+            if path.startswith("compare/")
+            else original_repo(path, **kwargs)
+        )
+    elif defect == "native":
+        config["native_evidence_paths"] = ["backend/clock.py"]
+    else:
+        tip, state = store.read()
+        task = state["tasks"]["1"]
+        if defect == "owner":
+            task["spec"]["risk"] = "human"
+        elif defect == "changes":
+            task["review"] = {**task["submission"], "verdict": "changes"}
+        else:
+            task["review_claim"] = {
+                "session_id": "actual-fresh-review",
+                "expires_at": 9999999999,
+            }
+        store.write(tip, state)
+    state = integrate(gh, config, store.read()[1])
+    assert gh.pr["merged"] is False
+    assert state["tasks"]["1"]["status"] == "review"
 
 
 def test_external_review_merge_is_fenced_without_adoption_or_duplicate_incidents():
@@ -1377,10 +1491,18 @@ class RecoveryGitHub(MergeGitHub):
         return super().repo(path, method=method, data=data, **kwargs)
 
 
-def external_recovery_setup(archived=False, resources=False, attested=True):
+def external_recovery_setup(
+    archived=False, resources=False, attested=True, review_defect=None
+):
     from devops.queue import apply_request, spec_hash
 
     h, gh = approved_state(), RecoveryGitHub()
+    if review_defect == "missing":
+        h.state["tasks"]["1"].pop("review")
+    elif review_defect == "self":
+        h.state["tasks"]["1"]["review"]["session_id"] = "mac1"
+    elif review_defect:
+        h.state["tasks"]["1"]["review"][review_defect] = "stale"
     if resources:
         source = h.state["tasks"]["1"]
         source["spec"]["resources"] = ["gpu:windows"]
@@ -1498,11 +1620,32 @@ def test_explicit_recovery_uses_immutable_accepted_history_and_existing_delivery
     assert gh.external == [
         ("issues/1", {"state": "closed", "state_reason": "completed"})
     ]
+
     again = integrate(gh, config, store.read()[1])
     assert again == state and len(gh.issues) == 1 + archived
     assert gh.external == [
         ("issues/1", {"state": "closed", "state_reason": "completed"})
     ]
+
+
+@pytest.mark.parametrize(
+    "defect", [None, "missing", "self", "head_sha", "base_sha", "spec_hash"]
+)
+def test_optional_config_does_not_waive_original_external_recovery_review(defect):
+    gh, store, config, original = external_recovery_setup(
+        attested=False, review_defect=defect
+    )
+    config["require_agent_review"] = False
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    if defect is None:
+        assert task["status"] == "done"
+        assert task["review"] == original["review"]
+        assert task["delivery_pending"] is False
+    else:
+        assert task["status"] == "recovery_required"
+        assert task["external_recovery_error"]
+        assert "external_recovery" not in task
 
 
 @pytest.mark.parametrize(
@@ -1794,3 +1937,49 @@ def test_external_adoption_delivers_once_then_reuses_visible_candidate(candidate
     assert state["tasks"]["1"]["candidate_run"] == visible["html_url"]
     assert release_actions() == expected
     assert state["tasks"]["1"].get("delivery_attempts", 0) == len(expected)
+
+
+@pytest.mark.parametrize("new_head", [False, True])
+def test_optional_controller_does_not_launder_genuine_changes_verdict(new_head):
+    h = Harness()
+    h.reviewing()
+    h.config["require_agent_review"] = False
+    task = h.state["tasks"]["1"]
+    h.send(
+        "review-result",
+        "dootz1",
+        task_id="1",
+        host_id="windows",
+        session_id="win1",
+        epoch=task["epoch"],
+        review_epoch=task["review_epoch"],
+        verdict="changes",
+        findings=["Fix the source clock defect before integration"],
+        reviewed_files=["backend/clock.py"],
+        limitations=[],
+        evidence=["Native clock regression"],
+        **task["submission"],
+    )
+    h.owned(
+        "submit",
+        pr_number=42,
+        head_sha=("f" * 40 if new_head else HEAD),
+        base_sha=BASE,
+        spec_hash=task["spec_hash"],
+    )
+    gh, store, config = merge_setup()
+    config["require_agent_review"] = False
+    if new_head:
+        gh.pr["head"]["sha"] = "f" * 40
+    store.write(store.read()[0], h.state)
+    state = integrate(gh, config, store.read()[1])
+    assert gh.pr["merged"] is new_head
+    task = state["tasks"]["1"]
+    if new_head:
+        assert "review" not in task and task["status"] == "integrating"
+    else:
+        assert task["review"]["verdict"] == "changes"
+        assert task["review"]["findings"] == [
+            "Fix the source clock defect before integration"
+        ]
+        assert task["status"] == "review"
