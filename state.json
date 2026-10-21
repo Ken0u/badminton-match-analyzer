@@ -813,6 +813,15 @@
       "task_id": "70",
       "verb": "extend-scope"
     },
+    "mac-01a15493-70-grant-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792549309,
+      "epoch": 1,
+      "fingerprint": "f456e09f09c1dfa5ace32b68003eead40f291748429f9e9fff5f66a3d584da27",
+      "status": "running",
+      "task_id": "70",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-94-browser-midrun-v1": {
       "actor": "dootz1",
       "at": 1792455124,
@@ -3461,6 +3470,14 @@
       "fingerprint": "be7b47b8d56d604e7bb69b1ca6b2bf29ca982d8339c5ef57567047ba43962046",
       "status": "ready",
       "task_id": "158",
+      "verb": "plan"
+    },
+    "spec-160-75e217ce5958f73420b315f9b41fd1eab4ee573477a2f1addd144fbfad52eac4": {
+      "actor": "Ken0u",
+      "at": 1792549388,
+      "fingerprint": "d5d98f3d395855e4ed2d36eeb843b39e872f587a3b21889893a118a3c1a69b32",
+      "status": "ready",
+      "task_id": "160",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -6201,6 +6218,14 @@
       "status": "review",
       "task_id": "149",
       "verb": "submit"
+    },
+    "windows-shuttle160-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792549388,
+      "fingerprint": "132a7cb9886b7faf954e8c649e1aa2071ffe0c17437dae28c65bc51d45630526",
+      "status": "ready",
+      "task_id": "160",
+      "verb": "plan"
     }
   },
   "tasks": {
@@ -9776,6 +9801,59 @@
         "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
       }
     },
+    "160": {
+      "epoch": 0,
+      "planned_at": 1792549388,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Under parent65 and completed139/143/145/149/158, inspect all issue/PR/history/grants for duplicates before implementation. Pin exactly official BWF TV singles go2uajSiBnE (4320s metadata) and doubles H1setLK1tig (3950s metadata), channel UChh-akEbUM8_6ghGVnJd6cQ, video-only AVC format137 at1920x1080/30fps. Anonymous metadata preflight succeeded but no source bytes were downloaded during planning. Reject the483s kEQBaobDUFY highlights candidate; preserve all source-selection/access evidence. Actual decoded duration/frame count and full-match semantic completeness remain unverified until source inspection; metadata is not ground truth.",
+          "Commit a portable source declaration and fixed protocol before acquisition. Acquire both complete chosen video streams through normal public access using existing declared dependencies only, with no accounts/cookies, access-control bypass, format/source substitution or silent truncation. Seal actual raw source SHA256, canonical IDs, returned format/channel metadata and downloader/runtime/code provenance. Video-only selection deliberately has no audio; do not describe it as an original all-stream archive. Bound downloads to3GiB combined/2GiB per source, total new output to6GiB and cumulative data-worker wall time to7200s within the4h task. Preserve every original dataset/cache/file and all pending/failed attempts; fail clearly rather than exceed bounds or replace evidence.",
+          "Use the actual original Windows shared Store admission via run_local_job for acquisition/native preparation and data:windows-primary reservation; a research-input cache or isolated Store cannot admit competing work. Record actual PID/creation/cwd/command and matching Store job before long work, with durable external observation and terminal evidence. Clear GitHub/Project/OpenAI credentials and pin original BADMINTON_ROOT/DATA plus own frozen backend before imports. Preserve torchvision-before-threaded-PyAV and native FFmpeg logging restoration. Never restart from timeout or a missing handle, and do not edit frozen executed consumers during live work. Interrupted artifacts remain explicitly incomplete, with process/Store lifetime proof required before any retry.",
+          "Fully decode both downloaded streams to an immutable native ordinal/PTS/time-base/origin/orientation/geometry census, retaining unavailable/corrupt/nonmonotonic cases explicitly without nominal-FPS reconstruction or repaired frames. Freeze and verify code/protocol/raw-source/clock hashes before packet extraction. For each source with at least64 native frames, choose exactly64 centers floor(j*(N-1)/63), j0..63, including endpoints, then export oriented native PNG context at offsets[-2,-1,0,1,2] with clamped edge identities recorded. Retain128 case rows and all requested context memberships, even duplicates at endpoints; deduplicate image storage only, never denominators. No model, detections, heatmaps, calibration, scene/difficulty/visibility labels, interpolation or scores are used to select or decorate inputs.",
+          "Emit a separate editable source-only review template with every visibility/difficulty/scene/coordinate initially unknown or null and separate packet/source provenance. Record all four training/independent-test/model-deployment/dataset-redistribution eligibility flags false. Audit canonical source/original-match identity and overlap using permitted public source descriptors only; keep uncertain identity, semantic completeness, camera context, rights and upstream checkpoint membership unresolved. Do not read consumed holdout63 inputs/predictions/protocols/private-membership/artifacts, or infer new independent-test eligibility from a2026 title or upload date. Public availability and dataset preparation do not confer training/redistribution rights. Do not install/register research sources or templates into application truth, edit existing labels/predictions or promote a model/default.",
+          "Run meaningful generated-media regressions for real VFR/native orientation/edge sampling, explicit unknown/unavailable support, input/context tamper, exclusive outputs/budget failure and actual shared Store/process/terminal guards; exercise actual source preparation after genuine grant and hash freeze. Publish only code/public source declarations/aggregate report and reproducible commands, excluding raw media/frames/templates/private runtime receipts. Required checks, fresh independent exact-head review/CI, controller integration, exact main and full public candidate verification must pass. The aggregate report must distinguish complete stream/clock/packet coverage from unreviewed match completeness, category support, label quality and badminton accuracy. Parent65 and the full goal remain open; source-only independent labeling and a separately frozen improvement experiment are subsequent tasks. PROGRESS.md remains deprecated and untouched."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "149",
+          "158"
+        ],
+        "exclusions": [
+          "No model/GPU inference, training, threshold/resolution sweeps, model/default/annotation promotion, predictions, labelled accuracy metrics, research source registration into the running app, changes to other datasets/environments/processes, new dependencies, paid services, account/cookie use, authentication/security/workflow/publishing changes or raw-data redistribution. No consumed holdout63 artifacts."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Prepare reproducible native source-only review packets from two broader singles/doubles broadcasts, without model predictions or inferred ground truth.",
+        "paths": [
+          "backend/badminton/shuttle_sources.py",
+          "scripts/prepare_shuttle_sources.py",
+          "tests/test_shuttle_sources.py",
+          "data/manifests/shuttle_review_sources_v1.json",
+          "data/manifests/shuttle_review_packet_protocol_v1.json",
+          "docs/SHUTTLE_SOURCE_PACKET_REPORT.md"
+        ],
+        "priority": 20,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Actual two-source stream/native-clock/128-case/640 requested context membership seals with unknown labels, all four flags false and genuine Store/process/terminal proof. No automatic-label accuracy claim.",
+          "Focused generated-media tests, required checks, independent exact-head review/CI, controller/main/full public delivery; preserve all original and failed evidence."
+        ]
+      },
+      "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -10711,12 +10789,21 @@
       }
     },
     "70": {
+      "checkpoint": {
+        "branch": "codex/issue-70-export-reviewed-rally-clips-and-annotate",
+        "head_sha": "6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565",
+        "next": "Await additive documentation scope request mac-01a15493-70-documentation-scope-v1; audit frozen parent criteria against children/current implementation, run existing focused export checks and correct stale docs only after committed extension. Preserve predictions and environments; no app upgrade or model inference.",
+        "phase": "Committed parent70 grant inspected; existing export implementations preserved",
+        "spec_hash": "c7ce1f9b88b68400116605cfc4e6ac7ad089dfed177a4b2ea4ceb979a6327d4e",
+        "verification": "Current merged-main browser18/library8/export13 source fingerprints and installed-package auth/assets/routes/ownedcleanup independently audited. Delivered child work already provides reviewed source-clock clip/overlay generation, API/download integrity and React controls. docs/REVIEWED_EXPORTS.md still claims UI/export roadmap incomplete. No implementation edits begun."
+      },
+      "checkpoint_at": 1792549309,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565",
         "branch": "codex/issue-70-export-reviewed-rally-clips-and-annotate",
         "epoch": 1,
-        "expires_at": 1792559920,
+        "expires_at": 1792560109,
         "granted_at": 1792549120,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
