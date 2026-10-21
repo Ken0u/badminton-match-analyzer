@@ -81,7 +81,7 @@ def _snapshot(root, data, weights, manifest):
         checkpoints[model["variant"]] = digest(path)
     runs = data / video["id"] / "runs"
     original_predictions = {
-        str(path.relative_to(data)): digest(path)
+        path.relative_to(data).as_posix(): digest(path)
         for path in sorted(runs.rglob("*"))
         if path.is_file()
     }
@@ -307,7 +307,7 @@ def run_probe(
         "shared_store": str(store.db_path),
         "output": str(output),
         "application_source_hashes": {
-            str(p.relative_to(Path(__file__).parent)): digest(p)
+            p.relative_to(Path(__file__).parent).as_posix(): digest(p)
             for p in sorted(Path(__file__).parent.rglob("*.py"))
         },
         "runtime": {
@@ -375,7 +375,7 @@ def run_probe(
                 result,
                 manifest["sample_frames"],
                 directory,
-                progress,
+                lambda _value: progress((position + 1) / 2),
             )
             write_json(output / "receipt.json", receipt)
         progress(1)
@@ -408,7 +408,7 @@ def run_probe(
             receipt["shared_job"] = store.job(receipt["job_id"])
         receipt["wall_seconds"] = round(time.monotonic() - began, 3)
         receipt["artifacts"] = {
-            str(p.relative_to(output)): digest(p)
+            p.relative_to(output).as_posix(): digest(p)
             for p in sorted(output.rglob("*"))
             if p.is_file() and p.name != "receipt.json"
         }

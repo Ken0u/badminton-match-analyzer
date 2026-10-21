@@ -50,8 +50,12 @@ sequentially on CPU. Torch 2.8.0, torchvision 0.23.0, Ultralytics 8.4.123 and
 PyAV 16.1.0 were already installed. Nothing was downloaded or upgraded.
 
 The executed code commit is `492489ff9e4103a43e395be54313f42ced109c9d`.
-Subsequent report edits do not change its executable application bytes. The
-local ignored directory `.cache/player-probe-176/.cache/actual-run-v1` contains
+Later receipt-only repairs normalize inventory keys to slash-separated paths
+on Windows and keep shared progress monotonic across both models and overlays.
+They do not change detector/tracker code, weights, thresholds, native inputs or
+the preserved predictions. Generated tests and fresh platform CI cover those
+repairs; the 100 frozen model-frame calls are not repeated. The local ignored
+directory `.cache/player-probe-176/.cache/actual-run-v1` contains
 both original prediction JSON files, ten native overlays, two contact sheets,
 before/after input inventories and the final receipt. Its 16 inventoried
 artifacts have SHA-256 hashes in the receipt; total retained output including
@@ -83,7 +87,7 @@ processing job. Do not rerun merely because a terminal observation times out;
 first verify the recorded process lifetime, shared job and durable artifacts.
 Its cooperative 900-second and 64 MiB limits preserve partial evidence.
 
-The 29 focused generated/injected regressions cover rotated native VFR frames,
+The 30 focused generated/injected regressions cover rotated native VFR frames,
 complete PTS denominators, frozen-input guards, real shared admission, camera/
 scene/calibration context, malformed predictions, preservation, interrupted
 variants and runtime/output budgets. They use synthetic predictions and cannot

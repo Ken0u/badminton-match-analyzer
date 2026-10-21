@@ -397,6 +397,31 @@ def test_invalid_prediction_is_retained_as_failed_evidence(probe_case, mutate):
     assert_preserved(case)
 
 
+def test_progress_never_finishes_then_moves_backwards_between_models(
+    probe_case, monkeypatch
+):
+    case = probe_case
+    tracker, calls = fake_tracker(case)
+    values = []
+    original = Store.put_job
+
+    def record(store, job):
+        values.append(job["progress"])
+        return original(store, job)
+
+    def with_initial_progress(*args, **kwargs):
+        args[7](0)
+        return tracker(*args, **kwargs)
+
+    monkeypatch.setattr(Store, "put_job", record)
+    receipt = run(case, with_initial_progress)
+    assert calls == ["nano", "small"]
+    assert values == sorted(values)
+    assert values[0] == 0 and values[-1] == 1
+    assert receipt["shared_job"]["status"] == "completed"
+    assert_preserved(case)
+
+
 def test_two_variants_preserve_truth_and_write_native_overlay_receipts(probe_case):
     case = probe_case
     tracker, calls = fake_tracker(case)
@@ -414,6 +439,8 @@ def test_two_variants_preserve_truth_and_write_native_overlay_receipts(probe_cas
     assert receipt["process"]["cwd"] and receipt["process"]["command"]
     assert receipt["inputs_preserved"] is True
     assert receipt["limitations"]
+    assert all("\\" not in key for key in receipt["artifacts"])
+    assert all("\\" not in key for key in receipt["application_source_hashes"])
     before = json.loads((case.output / "inputs-before.json").read_text())
     assert before == json.loads((case.output / "inputs-after.json").read_text())
     assert before["source_sha256"] == case.manifest["source_sha256"]
