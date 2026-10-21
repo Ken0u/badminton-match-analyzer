@@ -498,6 +498,14 @@
       "task_id": "158",
       "verb": "invalidate-review"
     },
+    "invalidate-172-87b1a2c390f917605811dad72bd4a88404b914f6-f45eeeabc3cee4ad692cfbc8648d119cccf0b730": {
+      "actor": "github-actions[bot]",
+      "at": 1792612315,
+      "fingerprint": "8011fb155d55c8c98637f27dee59ff0c558833eb6450a0164b68f9bd208aa476",
+      "status": "running",
+      "task_id": "172",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -11434,6 +11442,7 @@
       "planned_at": 1792610218,
       "planned_by": "Ken0u",
       "pr_number": 175,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Routine remaining phase under approved parent65 and completed160, successor to incomplete164 after an offline interruption exceeded its original four-hour calendar window and lease. Search issues/PRs/grants/history for duplicates. Preserve164 branch/head150097e9f328b179d416abe0a30a6489c3a2c61d, unmerged draftPR165, its all-green exact-head CI, original protocols/validator/tests, both complete immutable source streams and all failed/private execution evidence. Do not mark164 delivered. Original-host audit must prove recorded CLI/coordinator exits and no Store job before release; retain interruption snapshot receipt342aedebf1b1c7c48092c426cff5f5b8a4f4a079be87587a23d8249e8e2534f5. Do not reset or claim compliance with164 elapsed deadline. This successor bounds only the remaining adjudication/freezing/integration phase; disclose the split and interruption.",
@@ -11488,7 +11497,7 @@
         ]
       },
       "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "e504535a05f83b35e6c02ee2f5f815921782ac11",
         "head_sha": "d06a79be5048fe28e0d31cac4f27f5a1bc272405",
