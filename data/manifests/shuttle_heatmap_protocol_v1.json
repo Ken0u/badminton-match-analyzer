@@ -1,0 +1,67 @@
+{
+  "background": "Original complete unique core-owner camera view; same at-most48 native-resolution median samples before resize",
+  "baseline_sha256": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+  "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+  "control_gate": {
+    "confidence_absolute_tolerance": 1e-05,
+    "confidence_relative_tolerance": 0.0,
+    "exact": [
+      "frame",
+      "time_s",
+      "camera_segment_start_frame",
+      "all shuttle fields except confidence",
+      "component order and all component fields except confidence"
+    ],
+    "mismatch": "Preserve all output and diagnostics; block candidate inference and comparable scoring; never substitute the new control for the baseline",
+    "source_frames": "Compare every native row in every complete original target view before any candidate inference or scoring"
+  },
+  "device": "cuda:0",
+  "eligibility": {
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "training_allowed": false
+  },
+  "expected": {
+    "cases": 60,
+    "native_view_rows": 13499,
+    "states": {
+      "not_visible": 7,
+      "unknown": 28,
+      "visible": 25,
+      "visible_unlocalizable": 0
+    },
+    "views": 50
+  },
+  "heatmap_threshold": 0.5,
+  "input_size": [
+    512,
+    288
+  ],
+  "inventory_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+  "labels_sha256": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+  "limitations": [
+    "Familiar two-source development agent assessments, not expert or independent truth",
+    "No established occlusion, camera-transition or visible-unlocalizable support; all unknowns remain",
+    "Descriptive pre-threshold responses are not calibrated probabilities or alternate predictions",
+    "No threshold search, training, inpainting, label changes, model/default promotion or full-match accuracy claim",
+    "No consumed holdout63 inputs, predictions, protocols, private membership metadata or artifacts"
+  ],
+  "max_native_seconds": 3600,
+  "metrics": {
+    "argmax_ties": "First maximum in row-major order",
+    "case_count": 60,
+    "cell_geometry": "Cell center ((column+0.5)*source_width/heat_width,(row+0.5)*source_height/heat_height) in display pixels",
+    "diagonal_tolerance": 0.005,
+    "local_support": "Closed disk radius0.005*source diagonal around frozen visible label; no coordinate metric for other states",
+    "no_selected_response": "Missing/unavailable heatmap remains case; never reinterpret as a negative or drop denominator",
+    "ratio": "local_max/global_max when global_max>0, otherwise null with explicit zero support",
+    "uncertainty_support": "Separate disk radii max(0,tolerance-uncertainty) and tolerance+uncertainty; never tune uncertainty"
+  },
+  "name": "frozen-development-prethreshold-heatmaps-v1",
+  "packet_sha256": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+  "precision": "float16",
+  "schema_version": 1,
+  "sequence_length": 8,
+  "temporal_ensemble": "Every original native source frame in the complete target view; unchanged weighted overlapping windows and scene resets"
+}
