@@ -5864,6 +5864,12 @@
       "task_id": "149",
       "verb": "review-result"
     },
+    "windows-shuttle149-merged-checkpoint-v1": {
+      "actor": "Ken0u",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "windows-shuttle149-next-v1": {
       "actor": "Ken0u",
       "at": 1792514851,
