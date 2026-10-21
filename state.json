@@ -2965,6 +2965,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review176-bc2861c-result": {
+      "actor": "dootz1",
+      "at": 1792616447,
+      "epoch": 2,
+      "fingerprint": "f4a9d2be83572ddf458e6e08a810ec9720005eaeceab144cf64f151cf2f684b8",
+      "status": "running",
+      "task_id": "176",
+      "verb": "review-result"
+    },
     "mac-review177-efed31d-next": {
       "actor": "dootz1",
       "at": 1792614692,
@@ -12103,18 +12112,43 @@
       "planned_by": "dootz1",
       "pr_number": 182,
       "reason": "released after terminal proof",
-      "review_claim": {
+      "repair_rounds": 1,
+      "review": {
         "actor": "dootz1",
+        "at": 1792616447,
         "base_sha": "22f99a84fb71bf9c1704e1b488b2e2cfdebeca08",
-        "epoch": 2,
-        "expires_at": 1792627001,
-        "granted_at": 1792616201,
+        "evidence": [
+          "Genuine fresh read-only session mac-review176-bc2861c on Stanleys-Laptop.local cpu/darwin/arm64; committed grant mac-review176-bc2861c-grant binds epoch2/review_epoch1 and exact head/base/spec.",
+          "Clean worktree HEADbc2861c2eb4893391a22bb5b6237b07d6748ea34; all five changed paths and relevant tracker/jobs/camera/calibration context inspected without implementation edits.",
+          "Independent PYTHONPATH=backend:tests generated focused suite passed30 tests in1.43s with disposable BADMINTON_ROOT/DATA_DIR and fresh .cache test directory. Initial invocation used the root editable package and failed imports; corrected source-path invocation is the reported result.",
+          "Independent generated late-input-mutation reproduction: both fake variants called, ValueError preservation failure, receipt failed/inputs_preservedfalse, real disposable sharedjob completed. No actual media/model inference.",
+          "Exact-head hosted Windows job119478662346 downloaded to /tmp/review176-windows-bc2861c.log; line492 artifact assertion confirms slash/backslash mismatch and1failed1822passed15skipped.",
+          "Retained native receipt SHA256 independently verified f53efb9b366c18c3471132e153dbcee5c0bdf2223381cce4ce766c4cb106d871; all16 inventoried artifact hashes match; before/after inventories equal and current named development inputs still match via read-only _snapshot.",
+          "All application_source_hashes in native receipt match git492489f bytes; current candidate backend differs onlyplayer_probe.py, whose post-run diff changes three path serializations and overlay progress forwarding. Actual executed commit is retained ancestor. Read-only actual Store confirmsjob378897f9c15d4fcca3e61ad8af8a8a83 completed ownerPID51612/start1792613473.916743; PID no longer exists.",
+          "Both retained five-panel nano/small contact sheets inspected: two players overlaid in all sampled development views; no independent accuracy claim. No consumed holdout63/MSI172 artifacts, downloads or application truth writes."
+        ],
+        "findings": [
+          "[P1] tests/test_player_runtime_probe.py:488: Normalize expected_artifacts keys with .as_posix() as well. Production receipts now use slash-separated paths, while this final assertion builds Windows backslash keys using str(relative_path). Exact-head native Windows job119478662346 in run39673891045 confirms this sole failure at line492 (1 failed,1822 passed,15 skipped), blocking required CI. Preserve the portable receipt contract and fix the test expectation.",
+          "[P2] backend/badminton/player_probe.py:385-390: Validate final input preservation before the admitted task returns. run_local_job marks the shared Store job completed before this snapshot can reject changed inputs. A generated independent reproduction that edits only the disposable original prediction during the small variant raises ValueError and writes receipt.status=failed/inputs_preserved=false, yet shared_job.status remains completed with a success summary. Move the authoritative final preservation check into task before return so failure is recorded in the real shared Store; add a second-variant mutation regression. Preserve the final evidence inventory on failure."
+        ],
         "head_sha": "bc2861c2eb4893391a22bb5b6237b07d6748ea34",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "No native inference was repeated; actual inference evidence is the retained author's run at492489ff9e4103a43e395be54313f42ced109c9d, not an independent rerun on the PR head.",
+          "Independent generated/injected checks use disposable root/data and synthetic predictions; they do not measure player, pose or identity accuracy.",
+          "Reviewed all ten contact-sheet panels but did not adjudicate keypoints, identities or every native frame. Development counts do not establish accuracy.",
+          "Required exact CI is not green: native Windows failed; main integration and full public package/image delivery remain outstanding. Author full-suite/static logs were inspected as retained evidence, not independently rerun."
+        ],
         "pr_number": 182,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/player_probe.py",
+          "scripts/probe_player_runtime.py",
+          "tests/test_player_runtime_probe.py",
+          "data/manifests/mac_player_runtime_v1.json",
+          "docs/MAC_PLAYER_RUNTIME_REPORT.md"
+        ],
         "session_id": "mac-review176-bc2861c",
-        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
+        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a",
+        "verdict": "changes"
       },
       "review_epoch": 1,
       "spec": {
@@ -12172,7 +12206,7 @@
         ]
       },
       "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "22f99a84fb71bf9c1704e1b488b2e2cfdebeca08",
         "head_sha": "bc2861c2eb4893391a22bb5b6237b07d6748ea34",
