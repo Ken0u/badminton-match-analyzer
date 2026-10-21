@@ -7163,6 +7163,15 @@
       "status": "review",
       "task_id": "172",
       "verb": "submit"
+    },
+    "windows-shuttle172-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792612395,
+      "epoch": 1,
+      "fingerprint": "7e8a57960405c35d3049b46b03d9be5f3cc08f51706a951702b6766dbae9b447",
+      "status": "review",
+      "task_id": "172",
+      "verb": "submit"
     }
   },
   "tasks": {
@@ -11497,10 +11506,10 @@
         ]
       },
       "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "e504535a05f83b35e6c02ee2f5f815921782ac11",
-        "head_sha": "d06a79be5048fe28e0d31cac4f27f5a1bc272405",
+        "base_sha": "f45eeeabc3cee4ad692cfbc8648d119cccf0b730",
+        "head_sha": "87b1a2c390f917605811dad72bd4a88404b914f6",
         "pr_number": 175,
         "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422"
       }
