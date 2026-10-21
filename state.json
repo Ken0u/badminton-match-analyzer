@@ -10728,6 +10728,7 @@
       "status": "recovery_required"
     },
     "166": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39612726305",
       "checkpoint": {
         "branch": "codex/issue-166-make-independent-code-review-optional-fo",
         "head_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
@@ -10749,7 +10750,7 @@
         "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "dootz1",
