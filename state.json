@@ -7125,6 +7125,21 @@
       "fingerprint": "eaef93f83652cb1538d02fdc81ebcda3d62c85a88a643020ced3e2d15a3c6241",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-shuttle172-review-register-v1": {
+      "actor": "Ken0u",
+      "reason": "invalid session_id",
+      "status": "rejected",
+      "verb": "register"
+    },
+    "windows-shuttle172-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792612021,
+      "epoch": 1,
+      "fingerprint": "a2c474ca5c4cb18b97d19b8211055153b0e4c4cfad1f83999280ebe4acc806f7",
+      "status": "review",
+      "task_id": "172",
+      "verb": "submit"
     }
   },
   "tasks": {
@@ -11403,6 +11418,7 @@
       "epoch": 1,
       "planned_at": 1792610218,
       "planned_by": "Ken0u",
+      "pr_number": 175,
       "spec": {
         "acceptance": [
           "Routine remaining phase under approved parent65 and completed160, successor to incomplete164 after an offline interruption exceeded its original four-hour calendar window and lease. Search issues/PRs/grants/history for duplicates. Preserve164 branch/head150097e9f328b179d416abe0a30a6489c3a2c61d, unmerged draftPR165, its all-green exact-head CI, original protocols/validator/tests, both complete immutable source streams and all failed/private execution evidence. Do not mark164 delivered. Original-host audit must prove recorded CLI/coordinator exits and no Store job before release; retain interruption snapshot receipt342aedebf1b1c7c48092c426cff5f5b8a4f4a079be87587a23d8249e8e2534f5. Do not reset or claim compliance with164 elapsed deadline. This successor bounds only the remaining adjudication/freezing/integration phase; disclose the split and interruption.",
@@ -11457,7 +11473,13 @@
         ]
       },
       "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e504535a05f83b35e6c02ee2f5f815921782ac11",
+        "head_sha": "d06a79be5048fe28e0d31cac4f27f5a1bc272405",
+        "pr_number": 175,
+        "spec_hash": "abb252497366e45235debd27a904e850bc7e0319269a8bac0c8d427d19ca8422"
+      }
     },
     "173": {
       "checkpoint": {
