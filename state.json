@@ -3565,6 +3565,14 @@
       "task_id": "163",
       "verb": "plan"
     },
+    "spec-164-2f24759f842b67e0364805dd0b4279fa99f9bc0ea999b085a9bb7aff9c8ef39b": {
+      "actor": "Ken0u",
+      "at": 1792563156,
+      "fingerprint": "4b10bd7f5f534f80c65e80fe74e05a746b68be09879e3c0b5839b1d68b49bee5",
+      "status": "ready",
+      "task_id": "164",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -10292,6 +10300,61 @@
       },
       "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c",
       "status": "running"
+    },
+    "164": {
+      "epoch": 0,
+      "planned_at": 1792563156,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Successor to incomplete163 under parent65 and completed160. Search all issues, PRs, grants and history for duplicates. Preserve163 protocol139701d, tested validator commit8e28052, all branches and both context-failure partial streams without treating them as complete labels. Preserve snapshot receipt2b50fd6ff0881be2245a913469128a96778b214f77fc799cefae780aa5dbef6d. Use only unchanged160 packets singles31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b and doubles73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056:128 fixed centers,640 memberships,632 original oriented native PNGs. Reverify original source/declaration/protocol/context/clock/PNG seals; no resampling.",
+          "Commit a new public v2 protocol before any new visual inspection; preserve v1 unchanged. Retain four visibility states, native coordinates with uncertainty, scenes,difficulty,reasons,unknown/unavailable cases and affirmative-negative rules. Unknown is never negative; a neighboring frame cannot supply a hidden center coordinate. The changed procedure is prospective and motivated only by verified upstream context transport failures, before comparison or adjudication. Redo all128 cases in each stream; do not transplant incomplete163 partial labels into new assessments.",
+          "Use two disjoint independent source-only streams, each covering every one of128 cases exactly once. Each stream consists of genuinely fresh bounded sessions, each inspecting at most4 centers at original native resolution and only declared context as needed, keeping total image transport below6MiB raw per session. Every segment binds actual session identity, stream, protocol/input hashes, case membership, actual inspected frame/hash identities and concrete labels/reasons. No session may serve both streams or adjudication. Seal and preserve original segment bytes and their exact inventories. Assessors receive only v2 protocol, blind inputs and their assigned source cases; no other labels,prior163/139 assessments,research code,models,predictions,heatmaps or application truth. Do not claim a single session viewed the whole sample. Root may mechanically assemble sealed segments without comparing or disclosing values until both full streams are sealed.",
+          "After both complete stream indexes/original segment inventories are sealed, compare raw visibility,coordinate,uncertainty,scene and difficulty-tag-set differences. The owner coordinates a distinct source-only adjudication stream of genuine bounded sessions if needed; every disagreement and every agreed negative requires actual original-source inspection, explicit decision and per-case actual session provenance binding both full stream hashes. Preserve raw disagreements and originals,never average or silently overwrite points. Other matching cases retain two-stream agreement without claiming a third inspection. Freeze exclusive ignored lineage with all segment/index/protocol/input/consumer/assessment/adjudication hashes and exact original case membership.",
+          "Keep all four training_allowed,independent_test_allowed,model_deployment_allowed,dataset_redistribution_allowed flags false. Rights,original-match overlap,upstream checkpoint membership,category balance and semantic full-match completeness remain unresolved. Do not read consumed holdout63 inputs,predictions,protocols,private membership or artifacts. No source registration into app truth,existing-label edits,new downloads/decode,model/inference/training/prediction access,threshold search or promotion. New code validates/freezes this research lineage only. Existing environments,datasets,processes and deprecated PROGRESS.md remain untouched.",
+          "Adapt preserved163 validator/CLI with meaningful generated tests for complete/duplicate/missing cases across segments,missing/extra/changed original segment bytes,foreign/out-of-context inspections,per-stream session independence,reused session across streams/adjudication,finite/in-bounds coordinates and uncertainty,all visibility states,unknown/negative separation,raw difference retention,required adjudication,exclusive immutable output and exact output inventory/budgets. Public output includes only reproducible code,v1/v2 public protocols and aggregate support/agreement/limitations; raw labels,PNG/session/inspection receipts stay ignored. Count preserved failures and new test/research output within256MiB, and wall time within4h. No acquisition/decode/inference worker. Required checks,fresh independent exact-head PR review/CI,controller/main/full public delivery; parent65/full accuracy remain open and no model experiment is authorized."
+        ],
+        "artifacts": {
+          "shuttle160-doubles-packet": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+          "shuttle160-singles-packet": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b"
+        },
+        "capabilities": [
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "160"
+        ],
+        "exclusions": [
+          "No model/prediction/heatmap/GPU access,training,accuracy comparison,threshold/resolution sweep,app/source/model/default promotion,source substitution,new downloads/native decode,existing-label edits,rights/independence eligibility change,raw data/label redistribution,new dependencies,paid services,security/workflow/deployment/publishing changes,consumed holdout63 access or PROGRESS.md changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Complete two independent source-only assessment streams for all128 unchanged broadcast shuttle cases using bounded genuine session segments, with immutable originals and explicit source adjudication.",
+        "paths": [
+          "backend/badminton/shuttle_source_assessments.py",
+          "scripts/freeze_shuttle_source_assessments.py",
+          "tests/test_shuttle_source_assessments.py",
+          "data/manifests/shuttle_source_assessment_protocol_v1.json",
+          "docs/SHUTTLE_SOURCE_ASSESSMENT_REPORT.md",
+          "data/manifests/shuttle_source_assessment_protocol_v2.json"
+        ],
+        "priority": 19,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Two independent complete128-case source-only streams assembled from real bounded sessions; sealed originals,per-case actual session provenance and explicit source-based adjudication;128 cases/640 memberships preserved. Agreement is not accuracy.",
+          "Generated validation/provenance/adjudication regressions,required checks,fresh independent PR review,controller/main/full public delivery; no consumed holdout63 access."
+        ]
+      },
+      "spec_hash": "7ab1b287ebe380945b014d0c29fc29356025a64b8ec1f1555062a784c0bcb0df",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
