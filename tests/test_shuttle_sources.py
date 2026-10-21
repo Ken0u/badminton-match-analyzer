@@ -865,6 +865,9 @@ def fake_youtube(monkeypatch, metadata, *, fetch):
         ("channel_id", "other"),
         ("acodec", "aac"),
         ("availability", "private"),
+        ("live_status", "is_live"),
+        ("live_status", "post_live"),
+        ("live_status", "is_upcoming"),
     ],
 )
 def test_changed_source_metadata_never_requests_media(
@@ -886,10 +889,12 @@ def test_changed_source_metadata_never_requests_media(
     assert list(output.rglob("returned-metadata.json"))
 
 
+@pytest.mark.parametrize("live_status", ["not_live", "was_live"])
 def test_successful_acquisition_retains_safe_metadata_and_complete_selected_bytes(
-    tmp_path, monkeypatch
+    tmp_path, monkeypatch, live_status
 ):
     metadata = metadata_for_source()
+    metadata["live_status"] = live_status
     response = FakeResponse(b"12345", 200, {"Content-Length": "5"})
     requests = []
 
@@ -956,3 +961,87 @@ def test_unsupported_orientation_is_retained_as_unavailable_without_dropping_row
     assert packet["images"]["18"]["available"] is False
     assert packet["images"]["18"]["image"] is None
     assert packet["requested_context_memberships"] == 320
+
+
+def test_prior_budget_costs_are_not_reset_for_a_new_lineage(tmp_path):
+    limits = dict(sources.LIMITS, output_bytes=20, worker_seconds=50)
+    prior = {"worker_seconds": 12, "output_bytes": 11, "download_bytes": 7}
+    active = sources.Budget(tmp_path / "out", limits, prior=prior)
+    assert active.elapsed_s() >= 12 and active.downloaded_bytes == 7
+    active.publish(tmp_path / "out/file", b"123456789")
+    with pytest.raises(ValueError, match="Output byte budget"):
+        active.publish(tmp_path / "out/overflow", b"x")
+    with pytest.raises(ValueError, match="wall budget"):
+        sources.Budget(tmp_path / "other", limits, prior={"worker_seconds": 50})
+
+
+def test_prior_attempt_requires_matching_exit_store_context_and_dead_lifetime(
+    tmp_path, monkeypatch
+):
+    import os
+    from types import SimpleNamespace
+
+    import psutil
+    from badminton.storage import Store
+
+    root = tmp_path
+    output = root / ".cache/previous"
+    output.mkdir(parents=True)
+    source = root / "sources.json"
+    protocol = root / "protocol.json"
+    source.write_text("{}")
+    protocol.write_text("{}")
+    context = {
+        "consumers": {
+            "data/manifests/shuttle_review_sources_v1.json": sha(source),
+            "data/manifests/shuttle_review_packet_protocol_v1.json": sha(protocol),
+        }
+    }
+    (output / "context.json").write_text(json.dumps(context))
+    store = Store(root / "data/processed")
+    job = {"id": "prior", "kind": "research", "status": "running", "video_id": None}
+    store.claim_job(job)
+    creation = psutil.Process().create_time()
+    job["status"] = "failed"
+    store.put_job(job)
+    admission = {
+        "job_id": "prior",
+        "process": {"pid": os.getpid(), "creation_time": creation},
+    }
+    (output / "admission.json").write_text(json.dumps(admission))
+    terminal = {
+        "job_id": "prior",
+        "status": "failed",
+        "elapsed_s": 3,
+        "context_sha256": sha(output / "context.json"),
+        "completed_sources": [],
+    }
+    (output / "terminal.json").write_text(json.dumps(terminal))
+    started = {"worker": admission["process"], "output": str(output)}
+    (root / ".cache/observer.started.json").write_text(json.dumps(started))
+    external = {
+        "worker_pid": os.getpid(),
+        "worker_creation_time": creation,
+        "exit_code": 1,
+        "elapsed_s": 4,
+        "terminal_sha256": sha(output / "terminal.json"),
+    }
+    exit_path = root / ".cache/observer.exit.json"
+    exit_path.write_text(json.dumps(external))
+    with pytest.raises(ValueError, match="still alive"):
+        sources.prior_attempt(root, exit_path, sha(exit_path), source, protocol)
+    monkeypatch.setattr(
+        sources.psutil,
+        "Process",
+        lambda _pid: SimpleNamespace(create_time=lambda: creation + 100),
+    )
+    prior = sources.prior_attempt(root, exit_path, sha(exit_path), source, protocol)
+    assert prior["worker_seconds"] == 4 and prior["download_bytes"] == 0
+    assert prior["output_bytes"] == sum(
+        p.stat().st_size for p in output.rglob("*") if p.is_file()
+    )
+    with pytest.raises(ValueError, match="exit receipt changed"):
+        sources.prior_attempt(root, exit_path, "0" * 64, source, protocol)
+    source.write_text('{"changed":true}')
+    with pytest.raises(ValueError, match="declaration or protocol changed"):
+        sources.prior_attempt(root, exit_path, sha(exit_path), source, protocol)

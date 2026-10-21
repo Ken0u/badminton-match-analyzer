@@ -2,9 +2,9 @@
 
 Owning task: [issue 160](https://github.com/Ken0u/badminton-match-analyzer/issues/160),
 under [localization milestone 65](https://github.com/Ken0u/badminton-match-analyzer/issues/65).
-Status: preparation protocol declared; actual acquisition and native preparation
-have **not yet run**. This report records the fixed intended denominators and
-permission boundaries, not completed coverage or improved annotation accuracy.
+Status: the first attempt failed metadata validation before transferring video
+bytes. Native census and extraction remain pending. This report records fixed
+intended denominators and boundaries, not completed coverage or improved accuracy.
 
 The [source declaration](../data/manifests/shuttle_review_sources_v1.json) selects
 two official BWF TV broadcasts through normal public access. The
@@ -101,6 +101,22 @@ evidence. A timeout or missing observation handle does not establish process exi
 or authorize restart. Frozen executed consumers cannot change while work is live.
 
 ## Evidence pending actual execution
+
+The first admitted worker exited with code 1 after 4.625 seconds observed wall
+time. Its matching Store job is failed; the original worker and observer
+lifetimes have exited. Returned singles metadata still matches the selected
+canonical ID, channel, format 137, size and geometry. The code incorrectly
+rejected `was_live`, an ended livestream archive. The repair accepts `not_live`
+and `was_live` while rejecting live, upcoming and unfinished streams. No media
+bytes or packet rows were produced by that attempt; its metadata, frozen context,
+admission and terminal receipts remain intact.
+
+A retry must use a new output lineage with `--prior-exit` and its SHA-256 through
+`--prior-exit-sha256`. The observer's sibling `.started.json` must identify the
+same worker and original output. The runner verifies the external exit, worker
+terminal, exited process lifetime, failed/interrupted shared Store job and
+unchanged source declaration/protocol before carrying prior wall, download and
+output costs into the new budget. A timeout alone cannot authorize this path.
 
 | Evidence | Current status |
 | --- | --- |

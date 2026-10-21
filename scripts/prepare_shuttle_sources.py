@@ -14,6 +14,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--prior-exit", type=Path)
+    parser.add_argument("--prior-exit-sha256")
     parser.add_argument(
         "--sources",
         type=Path,
@@ -38,6 +40,10 @@ def main() -> int:
             args.output.resolve(),
             sources_path=args.sources.resolve(strict=True),
             protocol_path=args.protocol.resolve(strict=True),
+            prior_exit=args.prior_exit.resolve(strict=True)
+            if args.prior_exit
+            else None,
+            prior_exit_sha256=args.prior_exit_sha256,
         )
     except Exception as error:
         # Detailed local evidence belongs in the ignored lineage, never console URLs

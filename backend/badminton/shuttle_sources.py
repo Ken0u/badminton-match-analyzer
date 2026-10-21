@@ -9,6 +9,7 @@ import io
 import math
 import os
 import platform
+import sqlite3
 import sys
 import time
 from pathlib import Path
@@ -41,17 +42,20 @@ CHANNEL = "UChh-akEbUM8_6ghGVnJd6cQ"
 class Budget:
     """Exclusive bounded writes retain partial evidence on every failure."""
 
-    def __init__(self, output, limits, *, reserve_bytes=0):
+    def __init__(self, output, limits, *, reserve_bytes=0, prior=None):
         self.output = Path(output).resolve()
         self.limits = limits
         self.started = time.monotonic()
-        self.downloaded_bytes = 0
+        prior = prior or {}
+        self.prior_worker_seconds = prior.get("worker_seconds", 0)
+        self.prior_output_bytes = prior.get("output_bytes", 0)
+        self.downloaded_bytes = prior.get("download_bytes", 0)
         self.reserve_bytes = reserve_bytes
         self.used = self._disk_bytes()
         self.check()
 
     def _disk_bytes(self):
-        total = 0
+        total = self.prior_output_bytes
         for path in self.output.rglob("*"):
             if path.is_symlink():
                 raise ValueError("Output lineage contains a symbolic link")
@@ -61,7 +65,7 @@ class Budget:
         return total
 
     def elapsed_s(self):
-        return time.monotonic() - self.started
+        return time.monotonic() - self.started + self.prior_worker_seconds
 
     def check(self, additional=0):
         if self.elapsed_s() >= self.limits["worker_seconds"]:
@@ -446,7 +450,7 @@ def acquire_source(declaration, output, budget):
             or info.get("acodec") != "none"
             or not str(info.get("vcodec", "")).startswith("avc1")
             or info.get("availability") != "public"
-            or info.get("live_status") != "not_live"
+            or info.get("live_status") not in {"not_live", "was_live"}
             or info.get("protocol") != "https"
             or info.get("fragments")
             or type(size) is not int
@@ -556,7 +560,113 @@ def review_template(packet):
     }
 
 
-def run_preparation(root, output, *, sources_path, protocol_path):
+def prior_attempt(root, exit_path, exit_sha256, sources_path, protocol_path):
+    """Require actual terminal/Store/lifetime proof and carry all prior costs."""
+    exit_path = contained(root / ".cache", exit_path)
+    if file_hash(exit_path) != exit_sha256:
+        raise ValueError("Prior external exit receipt changed")
+    external = read_json(exit_path)
+    started_path = exit_path.with_name(
+        exit_path.name.replace(".exit.json", ".started.json")
+    )
+    started = read_json(started_path)
+    if (
+        started["worker"]["pid"] != external["worker_pid"]
+        or started["worker"]["creation_time"] != external["worker_creation_time"]
+    ):
+        raise ValueError("Prior observer lifetime records disagree")
+    output = contained(root / ".cache", Path(started["output"]))
+    terminal_path = output / "terminal.json"
+    if file_hash(terminal_path) != external["terminal_sha256"]:
+        raise ValueError("Prior worker terminal receipt changed")
+    terminal, admission = read_json(terminal_path), read_json(output / "admission.json")
+    process = admission["process"]
+    if (
+        external["worker_pid"] != process["pid"]
+        or external["worker_creation_time"] != process["creation_time"]
+        or external.get("exit_code") is None
+        or terminal["job_id"] != admission["job_id"]
+        or terminal["status"] not in {"failed", "interrupted"}
+    ):
+        raise ValueError("Prior attempt lacks matching terminal lifetime proof")
+    try:
+        alive = (
+            abs(psutil.Process(process["pid"]).create_time() - process["creation_time"])
+            < 0.01
+        )
+    except psutil.NoSuchProcess:
+        alive = False
+    if alive:
+        raise ValueError("Prior source worker is still alive")
+    with sqlite3.connect(
+        (root / "data/processed/catalog.sqlite3").as_uri() + "?mode=ro", uri=True
+    ) as db:
+        row = db.execute(
+            "select document from jobs where id=?", (admission["job_id"],)
+        ).fetchone()
+    if row is None:
+        raise ValueError("Prior shared Store job is missing")
+    import json
+
+    job = json.loads(row[0])
+    if (
+        job["owner_pid"] != process["pid"]
+        or job["owner_started"] != process["creation_time"]
+        or job["status"] not in {"failed", "interrupted"}
+    ):
+        raise ValueError("Prior shared Store lifetime is not terminal")
+    if file_hash(output / "context.json") != terminal["context_sha256"]:
+        raise ValueError("Prior frozen context changed")
+    context = read_json(output / "context.json")
+    for name, path in (
+        ("shuttle_review_sources_v1.json", sources_path),
+        ("shuttle_review_packet_protocol_v1.json", protocol_path),
+    ):
+        if context["consumers"]["data/manifests/" + name] != file_hash(path):
+            raise ValueError("Prior source declaration or protocol changed")
+    downloaded = terminal.get("downloaded_bytes")
+    if downloaded is None:
+        # Legacy first attempt failed at metadata validation before any transfer.
+        if (
+            any((output / "sources").rglob("source.mp4*"))
+            or terminal["completed_sources"]
+        ):
+            raise ValueError("Prior transfer accounting unavailable")
+        downloaded = 0
+    used = terminal.get("prior_output_bytes", 0)
+    for path in output.rglob("*"):
+        contained(output, path)
+        if path.is_symlink():
+            raise ValueError("Prior output contains symbolic links")
+        if path.is_file():
+            used += path.stat().st_size
+    elapsed = max(
+        terminal["elapsed_s"],
+        external["elapsed_s"] + terminal.get("prior_worker_seconds", 0),
+    )
+    if any(
+        type(x) not in (int, float) or not math.isfinite(x) or x < 0
+        for x in (used, downloaded, elapsed)
+    ):
+        raise ValueError("Prior budget accounting invalid")
+    return {
+        "worker_seconds": elapsed,
+        "output_bytes": used,
+        "download_bytes": downloaded,
+        "exit_sha256": exit_sha256,
+        "job_id": admission["job_id"],
+    }
+
+
+def run_preparation(
+    root,
+    output,
+    *,
+    sources_path,
+    protocol_path,
+    prior_exit=None,
+    prior_exit_sha256=None,
+):
     from . import config
     from .jobs import run_local_job
     from .storage import Store
@@ -581,7 +691,14 @@ def run_preparation(root, output, *, sources_path, protocol_path):
         if os.environ.get(name):
             raise ValueError("Clear external credentials before source preparation")
     manifest, protocol = load_inputs(sources_path, protocol_path)
-    budget = Budget(output, protocol["limits"], reserve_bytes=65536)
+    if (prior_exit is None) != (prior_exit_sha256 is None):
+        raise ValueError("Prior exit path and hash must be supplied together")
+    prior = (
+        prior_attempt(root, prior_exit, prior_exit_sha256, sources_path, protocol_path)
+        if prior_exit
+        else None
+    )
+    budget = Budget(output, protocol["limits"], reserve_bytes=65536, prior=prior)
     files, hashes, context_sha = _freeze(output, budget, sources_path, protocol_path)
     process = psutil.Process()
     store = Store(shared)
@@ -596,6 +713,7 @@ def run_preparation(root, output, *, sources_path, protocol_path):
             {
                 "job_id": identifier,
                 "context_sha256": context_sha,
+                "prior_attempt": prior,
                 "process": {
                     "pid": process.pid,
                     "creation_time": process.create_time(),
@@ -693,6 +811,9 @@ def run_preparation(root, output, *, sources_path, protocol_path):
                     "job_id": job_id,
                     "context_sha256": context_sha,
                     "elapsed_s": budget.elapsed_s(),
+                    "prior_worker_seconds": budget.prior_worker_seconds,
+                    "prior_output_bytes": budget.prior_output_bytes,
+                    "downloaded_bytes": budget.downloaded_bytes,
                     "completed_sources": completed,
                 },
             )
