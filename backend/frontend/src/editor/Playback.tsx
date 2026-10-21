@@ -70,7 +70,9 @@ export const Playback = memo(function Playback({
     }
     function exact() {
       const s = controller.snapshot();
-      if (!s.video || !v.paused || switching.current) return;
+      // Source frames are decoded by the server, independently of whether the
+      // browser has loaded metadata or supports the native playback format.
+      if (!s.video || !v.paused) return;
       const f = current(),
         id = s.video.id,
         sequence = ++exactSequence.current;
@@ -323,6 +325,7 @@ export const Playback = memo(function Playback({
           true,
         );
       switching.current = false;
+      exact();
     }
     function changed() {
       const s = controller.snapshot();
