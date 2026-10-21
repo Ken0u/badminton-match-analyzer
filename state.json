@@ -3106,6 +3106,14 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "repair-494160da064db2924ce70a49d717d57630ccf4ca": {
+      "actor": "github-actions[bot]",
+      "at": 1792613559,
+      "fingerprint": "11befd5742caefa73bf531ef00c17e6a528a829a0dd880f1192f59174d139712",
+      "status": "ready",
+      "task_id": "177",
+      "verb": "repair"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -11826,6 +11834,56 @@
       },
       "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a",
       "status": "running"
+    },
+    "177": {
+      "epoch": 0,
+      "planned_at": 1792613559,
+      "planned_by": "github-actions[bot]",
+      "repair_for": "172",
+      "spec": {
+        "acceptance": [
+          "Routine remaining phase under approved parent65 and completed160, successor to incomplete164 after an offline interruption exceeded its original four-hour calendar window and lease. Search issues/PRs/grants/history for duplicates. Preserve164 branch/head150097e9f328b179d416abe0a30a6489c3a2c61d, unmerged draftPR165, its all-green exact-head CI, original protocols/validator/tests, both complete immutable source streams and all failed/private execution evidence. Do not mark164 delivered. Original-host audit must prove recorded CLI/coordinator exits and no Store job before release; retain interruption snapshot receipt342aedebf1b1c7c48092c426cff5f5b8a4f4a079be87587a23d8249e8e2534f5. Do not reset or claim compliance with164 elapsed deadline. This successor bounds only the remaining adjudication/freezing/integration phase; disclose the split and interruption.",
+          "Use exactly unchanged160 source packets singles31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b and doubles73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056; prospective v2 protocol79653290b0dd8c1d09c244fce14019447cc6c1bf5402e27aa08bd498133a3a42 and blind inputs603b62afeea3f1fc2ab3f88d0337b65fb69eba72d02cb0ebb029261464f2000c. Preserve v1 unchanged. Retain both complete128-case/32-segment164 indexes, A1ad0eda8ae5ac29c49d8c8148e846dbfb160da15236852ea9454054b29764787 and B0a1aa0ca24167d076115100fbf894c3eef53b66a033d0c3529e8775f2e77800e, and all64 exact original segments with genuine global session separation. Carry these complete originals as named predecessor inputs; do not create or claim fresh whole streams, relabel them, transplant incomplete163 labels or change the protocol/input hashes. Reverify all native source/clock/context/PNG/consumer seals before freeze.",
+          "Both164 complete streams and every original were sealed before comparison. The fixed raw comparison found74 disagreements and6 agreednegatives, yielding80 required cases in20 four-center blind source-only adjudication plans. Preserve the exact required set, raw differences, index hashes and originals. No thresholds, selection changes or point averaging. Every required case must receive actual original-resolution source inspection by a genuinely fresh distinct adjudication session, never any source assessor. At most4 centers and6MiB total unique inspected raw PNGs per session including only declared context. Each immutable original records authentic session identity, inspected frame/hash membership, visibility, finite native coordinates/uncertainty or nulls, scene, difficulty, source reason and affirmative-negative evidence. Bind both exact full assessor-index hashes. Parent coordinates; do not claim root personally inspected delegated cases. Unknown/unavailable is retained and never negative; nonplay alone is not absence and neighbors cannot supply hidden center points.",
+          "Existing owner authorization covers the SAME remaining source images/minimal protocol-frame-hash context to the existing ChatGPT-authenticated Codex CLI; no expanded payload, new destination, API key or paid service. Sessions receive only frozen protocol/blind inputs/assigned native cases and index hashes, no prior labels,163/139 observations,research code,models,predictions,heatmaps or app truth. Preserve all failures and genuine process/thread receipts. Use bounded fresh retries only after verified exit without an original; never overwrite partials. Exclusive ignored freeze retains all original index/segment/protocol/input/consumer and raw-difference/adjudication hashes; separately seal private execution provenance. Original632PNGs626613685bytes remain in place, never copied. All128 cases/640 memberships/632 unique image identities remain in denominators.",
+          "All four training_allowed,independent_test_allowed,model_deployment_allowed,dataset_redistribution_allowed remain false. Rights, original-match overlap,upstream checkpoint membership,balanced difficult support and semantic full-match completeness remain unresolved. Do not read consumed holdout63 inputs,predictions,protocols,private membership or artifacts. No acquisition,new decode,inference,training,prediction comparison,existing-label edits,truth/source/model installation,promotion,eligibility changes,new dependencies or PROGRESS.md edits. Preserve original environments,datasets,processes,weights and old snapshots. Source agreement/adjudicated support are development agent observations, not human/expert truth, statistical independence or localization/full-match accuracy.",
+          "Carry tested164 validator/CLI/protocols into the freshly granted branch without raw data. Meaningful generated validation/provenance/adjudication regressions,focused and required checks remain required; prior exact-source tests/CI can be cited accurately, changed code needs new relevant checks. Bound this remaining phase to4h from its committed grant, max3review rounds and no paid services. Keep a single cumulative256MiB new-output accounting ledger including ALL retained163/164/this-phase failures/tests that were newly charged to164, interruption snapshot and new review/freeze output; do not reset the prior measured201087520bytes+8MiBreserve. Publish only reproducible code, unchanged public v1/v2 protocols and aggregate support/agreement/limitations including the interrupted predecessor. Fresh independent exact-head PR review, exact-head CI, controller integration, merged-main verification and complete public candidate/archive/OCI delivery required. Parent65/full deployable correct annotation goal remains active; no model experiment authorized."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No model/prediction/heatmap/GPU access,training,accuracy comparison,threshold/resolution sweep,app/source/model/default promotion,source substitution,new downloads/native decode,existing-label edits,rights/independence eligibility change,raw data/label redistribution,new dependencies,paid services,security/workflow/deployment/publishing changes,consumed holdout63 access or PROGRESS.md changes."
+        ],
+        "limits": {
+          "max_output_bytes": 268435456,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Repair main verification for 494160da064d",
+        "paths": [
+          "backend/badminton/shuttle_source_assessments.py",
+          "scripts/freeze_shuttle_source_assessments.py",
+          "tests/test_shuttle_source_assessments.py",
+          "data/manifests/shuttle_source_assessment_protocol_v1.json",
+          "docs/SHUTTLE_SOURCE_ASSESSMENT_REPORT.md",
+          "data/manifests/shuttle_source_assessment_protocol_v2.json",
+          "tests/"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "64 unchanged sealed genuine predecessor source sessions/128cases perstream;80 distinct actual blind source adjudications binding both indexes; exclusive private freeze and execution seals, unchanged all128cases/640memberships. Agreement is not accuracy.",
+          "Generated structural/provenance/adjudication checks, cumulative256MiB output audit, remaining-phase4h budget, exact-head independent review/CI,controller/main/fullpublic delivery; no consumed63 access."
+        ]
+      },
+      "spec_hash": "950de5225fc970a4f8994e886eb06f786b949519e21bab5b274105621d6923ca",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
