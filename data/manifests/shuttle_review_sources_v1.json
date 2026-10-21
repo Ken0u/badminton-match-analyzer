@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "go2uajSiBnE",
+      "category": "singles",
+      "url": "https://www.youtube.com/watch?v=go2uajSiBnE",
+      "channel_id": "UChh-akEbUM8_6ghGVnJd6cQ",
+      "format_id": "137",
+      "metadata_duration_s": 4320,
+      "metadata_selected_bytes": 1135039222,
+      "title_hint": "BWF World Championships 2026 | Kodai Naraoka (JPN) [10] vs Alex Lanier (FRA) [9] | F",
+      "eligibility": {
+        "training_allowed": false,
+        "independent_test_allowed": false,
+        "model_deployment_allowed": false,
+        "dataset_redistribution_allowed": false
+      }
+    },
+    {
+      "id": "H1setLK1tig",
+      "category": "doubles",
+      "url": "https://www.youtube.com/watch?v=H1setLK1tig",
+      "channel_id": "UChh-akEbUM8_6ghGVnJd6cQ",
+      "format_id": "137",
+      "metadata_duration_s": 3950,
+      "metadata_selected_bytes": 1137172263,
+      "title_hint": "DAIHATSU Japan Open 2026 | Kim/Seo (KOR) [1] vs Alfian/Fikri (INA) [2] | F",
+      "eligibility": {
+        "training_allowed": false,
+        "independent_test_allowed": false,
+        "model_deployment_allowed": false,
+        "dataset_redistribution_allowed": false
+      }
+    }
+  ],
+  "limitations": [
+    "Anonymous public metadata preflight only; actual bytes, native clocks and semantic match completeness remain unverified before acquisition.",
+    "Select exactly video-only AVC format 137 at metadata 1920x1080 and 30 fps. No audio or alternate format/source is included or substituted.",
+    "Metadata duration, titles, category and estimated byte counts are source assertions, not decoded timing, verified original-match identity or ground truth.",
+    "Public access confers no training, independent-test, model-deployment or dataset-redistribution permission.",
+    "Original-match identity, cross-corpus overlap, camera context, rights and upstream checkpoint membership remain unresolved; title/upload year proves no independence.",
+    "Audit permitted public source descriptors only. Do not inspect consumed holdout63 inputs, predictions, protocols, private membership or artifacts.",
+    "The 483-second kEQBaobDUFY highlights candidate is rejected. Do not replace the two selected sources with highlights or other broadcasts."
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "centers_per_source": 64,
+  "context_offsets": [
+    -2,
+    -1,
+    0,
+    1,
+    2
+  ],
+  "limits": {
+    "source_bytes": 2147483648,
+    "download_bytes": 3221225472,
+    "output_bytes": 6442450944,
+    "worker_seconds": 7200,
+    "max_frames_per_source": 300000
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  },
+  "limitations": [
+    "Freeze this protocol and source declaration before acquisition; no data-informed changes to sampling or denominators.",
+    "Fully decode complete selected streams and retain native ordinal, PTS, time base, origin, orientation, geometry and explicit unavailable/corrupt/nonmonotonic cases. Never reconstruct timing from nominal fps or repair frames.",
+    "For N >= 64 native frames choose floor(j*(N-1)/63) for j=0..63, including endpoints. Retain every requested clamped offset membership, including duplicate endpoint identities; deduplicate image storage only.",
+    "Retain 128 case rows and 640 requested context memberships across two sources. Inputs are oriented native PNGs with hashes and exact native identities.",
+    "Seal and verify code, protocol, raw-source and complete native-clock hashes before packet extraction.",
+    "Selection and packet inputs contain no model, detections, heatmaps, calibration, interpolation, scores or inferred scene, difficulty or visibility labels.",
+    "Keep a separate editable source-only review template with all visibility, difficulty and scene fields unknown and all coordinates null. Unknown is not absent or negative.",
+    "Acquire through normal public access without accounts, cookies, access-control bypass, substitution or truncation. Preserve all failed/pending attempts and refuse output replacement or budget overrun.",
+    "Cumulative worker wall time includes failed acquisition/preparation attempts. A timeout or lost handle does not prove process exit or authorize retry.",
+    "Real shared Store admission and the genuine data resource grant are required. Retain actual process lifetime, frozen consumer/runtime context, Store job and terminal evidence.",
+    "Do not register research inputs or templates into application truth or change existing datasets, labels, predictions, environments, weights or defaults.",
+    "Complete stream/clock/packet coverage establishes no category support, independent labels, match completeness or badminton annotation accuracy. Parent65 and the full goal remain open."
+  ]
+}
