@@ -3557,6 +3557,14 @@
       "task_id": "160",
       "verb": "plan"
     },
+    "spec-163-c778865ff712b97202e145ab78f5ace41303715faec9ee093f2b5a77e87ed9cb": {
+      "actor": "Ken0u",
+      "at": 1792559307,
+      "fingerprint": "5d4dba1405ae2d30345e188e1093f59edd8091e8465f9a08d5097fddad1b87b9",
+      "status": "ready",
+      "task_id": "163",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -10163,6 +10171,60 @@
         "pr_number": 162,
         "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
       }
+    },
+    "163": {
+      "epoch": 0,
+      "planned_at": 1792559307,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Under parent65 and completed160/139/143/149/158, search all issue/PR/history/grants for duplicates before implementation. Consume only the two unchanged160 native packets: singles go2uajSiBnE packet31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b and doubles H1setLK1tig packet73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056. Retain all128 fixed center cases,640 requested clamped memberships and632 unique oriented native PNGs; no replacement sampling. Verify source/declaration/protocol/context/clock/PNG seals before assessment. Original media, packets, unknown templates and failed execution lineages remain immutable.",
+          "Commit a public portable assessment protocol before any image inspection. Freeze the four visibility states visible_localizable,visible_unlocalizable,not_visible,unknown; oriented native pixel-center coordinates and explicit uncertainty; scene/difficulty/reason conventions; all128 exact case identities; and original-assessment/adjudication validation. Unknown is not a negative. A hidden center cannot acquire a coordinate from a neighboring frame. Confirmed not_visible requires affirmative source/scene evidence, not inability to find a tiny shuttle. Case-level scene observations cannot certify whole-match live/replay segmentation or semantic completeness.",
+          "Use two genuinely fresh source-only assessor sessions. Each must actually inspect every center at original oriented native resolution and may inspect only the existing declared five-frame context as needed. Neither may access the other assessment, models,predictions,heatmaps,application truth,research code or old139 assessments. Give only new160 packet/PNG identities and the frozen assessment protocol. Record actual inspected center/context identities, session provenance,reasons,unknowns,unavailable cases,coordinate uncertainty and difficulty support. Preserve independent original assessment bytes and raw differences. Label these as agent assessments, never human/expert-certified truth; software cannot certify that inspection occurred.",
+          "After both originals are sealed, the owning adjudicator must actually inspect original native centers/context for all disagreements and all agreed negatives. Record explicit source-based decisions, retained unknowns and which other matching cases have only two assessments; do not claim a third inspection where none occurred. Never silently overwrite or average coordinates, erase raw differences, transfer a neighbor label, shrink denominators or turn unsupported/unavailable cases into absence. Freeze copies in a new exclusive ignored lineage with all input/consumer/protocol/assessment/adjudication hashes and immutable case membership.",
+          "Keep all four training_allowed,independent_test_allowed,model_deployment_allowed,dataset_redistribution_allowed flags false. Rights,original-match overlap,upstream checkpoint membership,category balance and semantic full-match completeness remain unresolved. Do not read consumed holdout63 inputs,predictions,protocols,private membership or artifacts. No source registration into app truth,existing-label edits,new downloads/decode,model/inference/training/prediction access,threshold search or promotion. New code validates/freezes this research lineage only. Existing environments,datasets,processes and deprecated PROGRESS.md remain untouched.",
+          "Implement meaningful generated regressions for complete/duplicate/missing case membership,source/context/PNG tamper,exclusive immutable publication,all four visibility states,finite/in-bounds coordinates and uncertainty,unknown/negative separation,raw-disagreement retention,required explicit adjudication and original assessment provenance. Publish only reproducible code,public protocol and aggregate counts/agreement/support/limitations report; keep PNGs,per-case labels,inspection/session details and raw local receipts ignored. Bound new output to256MiB and task wall time to4h, with no inference or acquisition worker. Run required checks,fresh independent exact-head PR review/CI,controller integration,exact merged main and full public package/image delivery verification. Parent65/full accuracy goal remain open; source-only labels do not establish localization accuracy or authorize a model improvement experiment."
+        ],
+        "artifacts": {
+          "shuttle160-doubles-packet": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+          "shuttle160-singles-packet": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b"
+        },
+        "capabilities": [
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "160"
+        ],
+        "exclusions": [
+          "No model/prediction/heatmap/GPU access,training,accuracy comparison,threshold/resolution sweep,app/source/model/default promotion,source substitution,new downloads/native decode,existing-label edits,rights/independence eligibility change,raw data/label redistribution,new dependencies,paid services,security/workflow/deployment/publishing changes,consumed holdout63 access or PROGRESS.md changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Freeze independent source-only assessments of all128 new broadcast shuttle cases, retaining unknowns, original disagreements and explicit source-based adjudication without predictions.",
+        "paths": [
+          "backend/badminton/shuttle_source_assessments.py",
+          "scripts/freeze_shuttle_source_assessments.py",
+          "tests/test_shuttle_source_assessments.py",
+          "data/manifests/shuttle_source_assessment_protocol_v1.json",
+          "docs/SHUTTLE_SOURCE_ASSESSMENT_REPORT.md"
+        ],
+        "priority": 20,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Two genuinely independent complete source-only assessments plus actual explicit adjudication,all128 cases/640 memberships retained,original seals/unknowns/false eligibility flags preserved; aggregate support/agreement is not accuracy.",
+          "Generated validation/provenance/adjudication regressions,required checks,fresh independent PR review,controller/main/full public delivery; no consumed holdout63 access."
+        ]
+      },
+      "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
