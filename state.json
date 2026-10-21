@@ -9003,6 +9003,7 @@
       }
     },
     "149": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39526329964",
       "checkpoint": {
         "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
         "completed_views": 25,
@@ -9029,7 +9030,7 @@
         "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 2,
       "history": [
         {
