@@ -3320,6 +3320,14 @@
       "task_id": "153",
       "verb": "plan"
     },
+    "spec-158-565b97550c34270043bcd2ede784629a2545096329848169a8bc8d9041382982": {
+      "actor": "Ken0u",
+      "at": 1792544025,
+      "fingerprint": "ba07bf2f68ecb0b93cd8b622bfc3d36671ad763ed8a5dde527ac94ce18f9f3b4",
+      "status": "ready",
+      "task_id": "158",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -9340,6 +9348,51 @@
         "pr_number": 154,
         "spec_hash": "2af05da9de1c13f43a02fab9971e056687b4b1fc4cfcef3d1495c5d175280a77"
       }
+    },
+    "158": {
+      "epoch": 0,
+      "planned_at": 1792544025,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Reproduce the actual production browser failure from CI39522977490 browser-import at tested source headf6a0e5d068c634ffc714aedf6a59d54903a2ed1b/base9d7ee10b6bf474993b4781abdc533ebfdca751e8. All UI source is unchanged in shuttle PR157. Generated long-gap-vfr.mkv has PTS0/0.04/0.08/0.68; selected frame3/currentTime0.68 ends with unsupported-stream error, empty/hidden exact image and no source-frame request. Preserve the failed evidence and link issue149/PR157 and completed frontend98/PR148; search history/grants before implementation.",
+          "Add a deterministic generated-media browser regression that controls unsupported-media/error ordering so the user seeks before the media error/metadata resolves. Demonstrate failure on unchanged base before the fix. Verify exact native frame3 becomes visible with correct source identity and source PTS even when browser-native playback remains unsupported. Cover both seek-before-error and seek-after-error without artificial success, skipped coverage, fixed sleeps or a larger timeout.",
+          "Repair the narrow Playback lifecycle/request race. Manual exact-frame review must not be permanently gated on browser media metadata or error-event order. Preserve correct frame index/source PTS, loading and genuine unavailable-frame errors, video/source-switch and stale image-request guards, existing proxy replacement/play/pause behavior, and all reviewed annotations/drafts. Delayed events or images for a previous video/frame must not overwrite the current review image or selection.",
+          "Run the meaningful focused regression plus the full existing production default/library/exports generated-media browser matrix, frontend contract/types/tests/production build and staged-asset provenance checks with pinned Node24 and locked dependencies. Run required project checks, fresh independent exact-head review and CI, controller-only integration, exact merged-main and complete public delivery verification. Preserve failed and successful evidence; a passing retry alone does not prove the race fixed.",
+          "Publish a focused aggregate repair report with exact trigger/before/after, deterministic failing-base and passing-fix evidence, source-clock/stale-state checks and any remaining limitations. This is media-review correctness, not badminton annotation accuracy or improved model performance. Keep generated fixtures and detailed process evidence ignored and preserve original local changes/environments/datasets/processes. PROGRESS.md remains deprecated and untouched."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "browser"
+        ],
+        "dependencies": [
+          "98"
+        ],
+        "exclusions": [
+          "No API/backend/model/dataset/weight/training/threshold/annotation-schema or authentication/security/workflow/deployment/publishing-policy changes, no global environment upgrades, no committed generated asset bundles or new dependencies, no paid services, no raw research data or credentials, no unrelated process stops, no weakening/skipping browser checks or merely increasing timeouts. No consumed holdout63 artifacts."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Keep exact native source-frame review usable when a newly selected unsupported video fails to load after the user has already sought a frame, preserving source identity and reviewed annotations.",
+        "paths": [
+          "backend/frontend/src/editor/Playback.tsx",
+          "tests/frontend-delivery.mjs",
+          "docs/EXACT_FRAME_RECOVERY_REPORT.md"
+        ],
+        "priority": 5,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Deterministic failing unchanged-base reproduction and passing production exact-frame recovery for seek-before/after unsupported-media error, retaining native PTS and stale-selection guards.",
+          "Full production default/library/exports browser matrix, frontend and required project checks, independent review/CI/controller/main/public delivery; no annotation-accuracy claim."
+        ]
+      },
+      "spec_hash": "99a6d3117df44047dfa00d82e20fe57a203382ff5b7f94de5909ae80db3e1b76",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
