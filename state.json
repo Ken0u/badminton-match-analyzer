@@ -2452,6 +2452,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review70-b12e9de-result-v1": {
+      "actor": "dootz1",
+      "at": 1792549963,
+      "epoch": 1,
+      "fingerprint": "2de7dddc95bc71126f98b4e4dd3706f04e5e5e63bae4d4fb8200ae3497b55b14",
+      "status": "review",
+      "task_id": "70",
+      "verb": "review-result"
+    },
     "mac-review70-b12e9de-review-next-v1": {
       "actor": "dootz1",
       "at": 1792549679,
@@ -10873,18 +10882,46 @@
       "planned_at": 1792393957,
       "planned_by": "dootz1",
       "pr_number": 161,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792549963,
         "base_sha": "6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565",
-        "epoch": 1,
-        "expires_at": 1792560479,
-        "granted_at": 1792549679,
+        "evidence": [
+          "Fresh actual independent session mac-review70-b12e9de-independent on Stanleys-Laptop.local; committed review-next grant task70 epoch1/review_epoch1; exact head/base/spec revalidated before verdict. Detached isolated checkout .cache/review70-b12e9de, implementation unmodified.",
+          "Diff contains only docs/REVIEWED_EXPORTS.md, within committed additive scope. Current frozen parent70 acceptance preserved. Editor instructions match ExportPanel/controller/model: explicit saved revision/mode, dirty/saving/start guards, source generation fencing, active read polling, no automatic POST retries and verified completed downloads.",
+          "Independent credential-free native suite on candidate checkout with explicit PYTHONPATH/BADMINTON_ROOT/BADMINTON_DATA_DIR and disposable test storage: 139 passed, 2 Windows-only skips in 17.69s. Tests exercise original source/snapshot byte preservation, native VFR/rotation/audio, unknown/ineligible contexts, all three HTTP modes, admission/recovery, tampering and download snapshot races/failures.",
+          "Verified GitHub child PR112/115/118/121/128/147/148 are merged and independently checked every merge is an ancestor of frozen base6a9e478. Their linked titles/implementation match the documented parent acceptance mapping.",
+          "GitHub exact-base CI39531731982 and complete candidate39532206195 both completed successfully at source6a9e478. Independently inspected existing source-bound browser receipts:18 default,8 library,13 export groups; recomputed all14/13 hashes available in default/export receipts against Git. Inspected installed-package receipt:5 assets,3 SPA routes,authentication=true and owned process cleanup.",
+          "Independently recomputed candidate wheel0a812f10b14895b00cbd1013ec309d3076efc326631d84192bd0e41314f23467 and sdist495658b9fe45ad2796cff902e730181a50821450b03f8a4bd3ae2e577aca6317 hashes, all76 backend/badminton application files in both archives byte-equal frozen Git base, and lockfe4deca37e729cfe4bdf26c125e2d184659ecd1982ea9d8bf12e177e382de54d.",
+          "Fresh credential-free anonymous GHCR token/immutable-manifest GETs over validated TLS independently verify CPUsha256:f63b43847624ea3dff9207f87015d99e6e8f8f579b2e7de61d36bf1fc3151637 and reviewsha256:d4be41834a9728d142700c6f5d0b05717ef364b353b68a3e591643bb3e1c07ad against their complete response SHA256.",
+          "Exact-head CI39532936570 completed successfully on b12e9de with all12 required verification jobs including ci/gate, Windows/macOS native, Python3.10/3.12, browser, package and both containers. automation/policy previously reported missing gate/independent approval while they were pending; this is controller gating, no document defect.",
+          "git diff --check, UTF8/LF decode and relative Markdown link checks pass; reviewed scope preserves accuracy disclaimers and excludes model/data/application upgrades."
+        ],
+        "findings": [],
         "head_sha": "b12e9de912d2db12bcb3618fa7a590612968b5a9",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Read-only documentation review; full1490-test suite, fresh browser matrix and installed-wheel HTTP were not rerun locally. Hosted exact-head full CI and previously generated source-bound artifacts were inspected; local native export/API checks were rerun independently.",
+          "Two Windows junction tests skip on this Mac; exact-head hosted Windows native job succeeded. No GPU/model inference, private source evaluation, heldout access, deployment or running app upgrade performed.",
+          "Generated media/fixture and software/provenance checks do not establish automatic badminton annotation accuracy, independently adjudicated contacts or persistent identities.",
+          "Initial local test collection used the shared environment older package path and was corrected with explicit candidate backend PYTHONPATH before the139-pass run. Initial anonymous Python TLS lookup lacked its CA bundle; the successful repeat used certifi with certificate validation enabled.",
+          "Controller policy re-evaluation, integration, exact merged-main checks and this PR complete candidate delivery remain required after acceptance; approval applies only to the frozen head/base/spec."
+        ],
         "pr_number": 161,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "docs/REVIEWED_EXPORTS.md",
+          "backend/frontend/src/editor/exports/ExportPanel.tsx",
+          "backend/frontend/src/editor/exports/controller.ts",
+          "backend/frontend/src/editor/exports/model.ts",
+          "backend/badminton/rally_export.py",
+          "backend/badminton/export_service.py",
+          "tests/test_rally_export.py",
+          "tests/test_rally_overlay.py",
+          "tests/test_media_export_api.py",
+          "tests/frontend-exports.mjs"
+        ],
         "session_id": "mac-review70-b12e9de-independent",
-        "spec_hash": "963e4a6e8d830aa2f3a73863bb47e7294669bf6b81da98b2f9c5d94cbe62277d"
+        "spec_hash": "963e4a6e8d830aa2f3a73863bb47e7294669bf6b81da98b2f9c5d94cbe62277d",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
