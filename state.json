@@ -1969,6 +1969,15 @@
       "task_id": "183",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player183-ci-green-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792620184,
+      "epoch": 1,
+      "fingerprint": "0be46fd9a4e1fdc4e6b82600778d5dd4ae9f0137b7955c87e4598b3a370844c7",
+      "status": "running",
+      "task_id": "183",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player183-ci-repair-v1": {
       "actor": "dootz1",
       "at": 1792619827,
@@ -12605,24 +12614,24 @@
       "checkpoint": {
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "evidence": [
-          "OriginalCI39681738846 terminalfailed, all4Python/nativejobs had21setup errors from unconditional optionaltorchvision import. Exact raw logs retained under.cache/evidence/head-ci-39681738846; minimal3.12focused reproduction99pass21errors.",
-          "Repair within3granted paths makes model extras optional for decoding while ensuring installed vision initializes before threadeddecode and broken installedvision stillraises. No dependencies upgraded, tests skipped or native images/inference repeated.",
-          "Three meaningful regressions plus prior120pass in installedvision environment; complete minimal3.12actualsession9593exit0 with1946pass17existing optional skips includingall123audit tests. Static project checks pass.",
-          "Original11framepacket/realStorejob/process terminalproof retained. No external assessment process started, no rawstreams/adjudication/scores, predictions unopened. Auto-review image-export rejection remains unresolved and is not bypassed."
+          "CI39682709322success on exacthead/base dd59a5f; all requiredjobs including native Windows/macOS pass. Audited revision testedtreeeb7d549d, source-hashed browser18/13/8groups and installedwheel authenticated HTTP assets/routes/ownedexit receipts under.cache/evidence/head-ci-39682709322/audit.json.",
+          "123focused tests with installedvision pass; minimal3.12full1946pass17existing optional skips with all123audit tests included. Newoptionalvision repair avoids modeldependency for decoding and preserves installedruntime initialization/error behavior. OriginalfailedCI/logs preserved.",
+          "All15prepared nativepacket files still match original hashes. No external assessment process, rawassessmentstream, adjudication or score exists; actualpredictions remain unopened. Sourcejobterminalproof retained; no newinference or appupgrade.",
+          "Automatic approval review rejected sending11privateframes to freshCodex sessions because explicit export permission was absent. Userpermission question remains pending; no indirect export bypass attempted."
         ],
         "head_sha": "a2c85fcf28a8362244687ddb93bdf1726d56c64c",
-        "next": "Audit freshCI39682709322. Await explicit authorization for these11privateframes to existingCodex independent source assessment/adjudication sessions; complete frozen scientific protocol, fresh finalreview, controller/main/publicdelivery before completion.",
-        "phase": "Repaired actual draft CI optional-dependency failure; pushed exact a2c85fc.123focused installed-vision tests and complete minimal3.12suite1946pass17optional skips. Fresh exact-head CI39682709322 live; scientific assessment remains awaiting explicit private-image export approval.",
+        "next": "Await explicit permission for11frozen frames from supplied singles video17.36\u201327.36s to existingCodex sourceassessment/adjudication sessions. Then complete frozen blind streams/seals/adjudication/scoring, report, genuine fresh finalreview, controller integration/exactmain/publicdelivery. CurrentotherReady tasks179/181 require Windows/CUDA and are not Maceligible; no requestedcodeReview or repair currently available.",
+        "phase": "Exact repaired-head CI39682709322 fully passed and receipts audited. DraftPR184 remains incomplete solely pending authorization for private-image independent assessment and its downstream scientific/final-review/integration/delivery steps.",
         "pr_number": 184,
         "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
       },
-      "checkpoint_at": 1792619827,
+      "checkpoint_at": 1792620184,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "epoch": 1,
-        "expires_at": 1792630627,
+        "expires_at": 1792630984,
         "granted_at": 1792618168,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
