@@ -12138,6 +12138,7 @@
       }
     },
     "176": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39679019417",
       "checkpoint": {
         "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal-e2",
         "evidence": [
@@ -12164,7 +12165,7 @@
         "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 2,
       "history": [
         {
