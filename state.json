@@ -1765,6 +1765,15 @@
       "task_id": "176",
       "verb": "plan"
     },
+    "mac-01a15493-player176-pre-inference-v1": {
+      "actor": "dootz1",
+      "at": 1792613456,
+      "epoch": 1,
+      "fingerprint": "319724ea2fc59d968ca390b3d2efbedcc32c33d9229e2250ea7204b5dbd98ef8",
+      "status": "running",
+      "task_id": "176",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player176-register-v1": {
       "actor": "dootz1",
       "at": 1792613023,
@@ -11733,12 +11742,25 @@
       }
     },
     "176": {
+      "checkpoint": {
+        "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal",
+        "evidence": [
+          "Real shared Mac Store has no queued/running jobs; source and both models hash-verified. No actual inference started yet.",
+          "Ruff/format/pip/diff checks pass. Fixed nano then small,50 source frames each, under one real run_local_job admission.",
+          "Output .cache/player-probe-176/.cache/actual-run-v1; receipt records real PID/create/cwd/command/sharedjob/code hashes. Cooperative15-minute and64MiB caps; preserve partial output on failure."
+        ],
+        "head_sha": "2e5ee08",
+        "next": "Run frozen CPU inference once, observe original process to terminal state, inspect ten overlay panels; fullverification/controller/publicdelivery remain.",
+        "phase": "Bounded player/pose probe and fixed input manifest committed before inference;22 focused tests pass.",
+        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
+      },
+      "checkpoint_at": 1792613456,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "f45eeeabc3cee4ad692cfbc8648d119cccf0b730",
         "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal",
         "epoch": 1,
-        "expires_at": 1792623933,
+        "expires_at": 1792624256,
         "granted_at": 1792613133,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
