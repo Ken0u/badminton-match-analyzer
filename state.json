@@ -2315,6 +2315,28 @@
       "task_id": "153",
       "verb": "review-result"
     },
+    "mac-review158-1857ef9-grant": {
+      "actor": "dootz1",
+      "at": 1792548005,
+      "claim": {
+        "actor": "dootz1",
+        "base_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
+        "epoch": 1,
+        "expires_at": 1792558805,
+        "granted_at": 1792548005,
+        "head_sha": "1857ef97e47e3fd1b492222edccd22f44ad369c6",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 159,
+        "review_epoch": 1,
+        "session_id": "mac-review158-1857ef9-independent",
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
+      },
+      "epoch": 1,
+      "fingerprint": "c1fd798b00b15725d8fec4d92ab5681838604a9bf2589193544608f06c0057d9",
+      "status": "granted",
+      "task_id": "158",
+      "verb": "review-next"
+    },
     "mac-review158-1857ef9-register": {
       "actor": "dootz1",
       "at": 1792547913,
@@ -4113,6 +4135,12 @@
       "fingerprint": "d3aee8c892240cd20f01fd2cd10c9f3b8f1c82ad0f3536db5361791d9821da83",
       "status": "review",
       "task_id": "158",
+      "verb": "submit"
+    },
+    "windows-exact158-submit-v2": {
+      "actor": "Ken0u",
+      "reason": "submit requires running work",
+      "status": "rejected",
       "verb": "submit"
     },
     "windows-export-stream124-plan-v1": {
@@ -9540,6 +9568,20 @@
       "planned_at": 1792546298,
       "planned_by": "Ken0u",
       "pr_number": 159,
+      "review_claim": {
+        "actor": "dootz1",
+        "base_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
+        "epoch": 1,
+        "expires_at": 1792558805,
+        "granted_at": 1792548005,
+        "head_sha": "1857ef97e47e3fd1b492222edccd22f44ad369c6",
+        "host_id": "Stanleys-Laptop.local",
+        "pr_number": 159,
+        "review_epoch": 1,
+        "session_id": "mac-review158-1857ef9-independent",
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Reproduce the actual production browser failure from CI39522977490 browser-import at tested source headf6a0e5d068c634ffc714aedf6a59d54903a2ed1b/base9d7ee10b6bf474993b4781abdc533ebfdca751e8. All UI source is unchanged in shuttle PR157. Generated long-gap-vfr.mkv has PTS0/0.04/0.08/0.68; selected frame3/currentTime0.68 ends with unsupported-stream error, empty/hidden exact image and no source-frame request. Preserve the failed evidence and link issue149/PR157 and completed frontend98/PR148; search history/grants before implementation.",
