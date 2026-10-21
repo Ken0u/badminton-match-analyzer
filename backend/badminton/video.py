@@ -4,6 +4,7 @@ import bisect
 import hashlib
 import json
 import math
+import operator
 from functools import lru_cache
 
 from .av_runtime import open_media
@@ -73,6 +74,19 @@ def seconds_to_frames(video, times, start, duration):
 
 
 def iter_frames(video, root, times, start, end):
+    """Yield an exact native range, rejecting incomplete decoder output.
+
+    Completeness is checked on normal iteration, never in a finalizer: a caller
+    can intentionally close a partial read without turning cancellation into an
+    input failure. The existing media context still owns decoder teardown.
+    """
+    try:
+        start, end = operator.index(start), operator.index(end)
+    except TypeError as error:
+        raise ValueError("Choose integer bounds for the native frame range") from error
+    if not 0 <= start < end <= len(times):
+        raise ValueError("Choose a non-empty frame range within the video")
+    expected = start
     with open_media(str(resolve_source(video, root))) as container:
         stream = container.streams.video[0]
         stream.thread_type = "AUTO"
@@ -80,14 +94,21 @@ def iter_frames(video, root, times, start, end):
         container.seek(int(target / stream.time_base), stream=stream, backward=True)
         for frame in container.decode(stream):
             if frame.pts is None:
-                continue
+                raise SourceChangedError(
+                    "Decoded source frame has no presentation timestamp"
+                )
             t = float(frame.pts * stream.time_base) - video["source_start_s"]
             index = bisect.bisect_left(times, t - 0.00001)
-            if index < start:
+            if index < start and expected == start:
                 continue
             if index >= end:
                 break
-            if abs(times[index] - t) > 0.00002:
+            if index != expected:
+                raise SourceChangedError(
+                    f"Decoded native frame sequence is incomplete or out of order: "
+                    f"expected frame {expected}, received {index}. Retry processing or reimport the source."
+                )
+            if not math.isfinite(times[index]) or abs(times[index] - t) > 0.00002:
                 raise SourceChangedError(
                     "Decoded timestamps do not match the imported source"
                 )
@@ -101,7 +122,15 @@ def iter_frames(video, root, times, start, end):
                 raise SourceChangedError(
                     "Decoded display dimensions do not match the imported source. Reimport the video."
                 )
+            expected += 1
             yield index, times[index], display_frame
+            if expected == end:
+                break
+        if expected != end:
+            raise SourceChangedError(
+                f"Could not decode the complete native frame range: expected frame "
+                f"{expected} before {end}. Retry processing or reimport the source."
+            )
 
 
 def write_json(path, document):
