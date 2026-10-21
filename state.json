@@ -1405,6 +1405,15 @@
       "task_id": "177",
       "verb": "extend-scope"
     },
+    "mac-01a15493-main177-staged-assets-v1": {
+      "actor": "dootz1",
+      "at": 1792614332,
+      "epoch": 1,
+      "fingerprint": "b693df73ba13089d83412cba458bdefc151cda12c44fa75439d5991546eb7258",
+      "status": "running",
+      "task_id": "177",
+      "verb": "extend-scope"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -11984,7 +11993,7 @@
         "granted_at": 1792613915,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
-        "spec_hash": "e0c0de4c84dfa5a1ab157aef5ab512e95f9eddce3d73f6ab0da6011704f158bc"
+        "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4"
       },
       "epoch": 1,
       "planned_at": 1792613559,
@@ -12023,7 +12032,9 @@
           "docs/SHUTTLE_SOURCE_ASSESSMENT_REPORT.md",
           "data/manifests/shuttle_source_assessment_protocol_v2.json",
           "tests/",
-          "backend/frontend/src/editor/Playback.tsx"
+          "backend/frontend/src/editor/Playback.tsx",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json"
         ],
         "priority": 0,
         "resources": [],
@@ -12033,7 +12044,7 @@
           "Generated structural/provenance/adjudication checks, cumulative256MiB output audit, remaining-phase4h budget, exact-head independent review/CI,controller/main/fullpublic delivery; no consumed63 access."
         ]
       },
-      "spec_hash": "e0c0de4c84dfa5a1ab157aef5ab512e95f9eddce3d73f6ab0da6011704f158bc",
+      "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4",
       "status": "running"
     },
     "62": {
