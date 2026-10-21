@@ -1482,6 +1482,13 @@
       "status": "idle",
       "verb": "next"
     },
+    "mac-01a15493-next-vision-inventory-v1": {
+      "actor": "dootz1",
+      "at": 1792613023,
+      "fingerprint": "e73a0d0a15c2fd474d6318fe3ac12345e5660cea82b2eff0ca93e3a3ed15bcf8",
+      "status": "idle",
+      "verb": "next"
+    },
     "mac-01a15493-next101-v1": {
       "actor": "dootz1",
       "at": 1792535968,
@@ -1721,6 +1728,21 @@
       "status": "ready",
       "task_id": "173",
       "verb": "plan"
+    },
+    "mac-01a15493-player176-plan-v1": {
+      "actor": "dootz1",
+      "at": 1792613023,
+      "fingerprint": "ae0da12213004afdc8a134db84f5bace59fa17095328b32e0cabe21fb2f6c9b7",
+      "status": "ready",
+      "task_id": "176",
+      "verb": "plan"
+    },
+    "mac-01a15493-player176-register-v1": {
+      "actor": "dootz1",
+      "at": 1792613023,
+      "fingerprint": "45652c0be27fffb7d91eeb8f9b081612c1cb451acd06fbedeb0761edb2da3961",
+      "status": "ok",
+      "verb": "register"
     },
     "mac-01a15493-post101-next-v1": {
       "actor": "dootz1",
@@ -3969,6 +3991,14 @@
       "fingerprint": "9a1bb1914ba122763ec1fd1a5d1d32ed4eab8b7c57e0d5edbc67eb3cb8ba2f62",
       "status": "ready",
       "task_id": "173",
+      "verb": "plan"
+    },
+    "spec-176-aa40b335990eeaeab2e0a82682ee219d779cca6ad5041ae704bdf85037be3f8f": {
+      "actor": "dootz1",
+      "at": 1792613023,
+      "fingerprint": "a8ad71686742f5e950ce9e9cffd44fc40a5feb04735b4f89b726c9fe147f09a1",
+      "status": "ready",
+      "task_id": "176",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -11660,6 +11690,67 @@
         "spec_hash": "19e9f5b688c032159ee6054403f2e2b9418573784ff4ce1bf61e10f5a889bf44"
       }
     },
+    "176": {
+      "epoch": 0,
+      "planned_at": 1792613023,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Continue the approved Perception roadmap toward player identity evaluation #66, preserving active MSI172 source assessment/reviewer resources. Freeze the existing original singles source970dbd8adfe548d8 SHA970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f, original timestamp map SHA78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b, current revision1 annotation raw document SHA537318fc735c392f8ca402c0d273205b28e29a5661738e491c84e79518780688 and frames[2000,2050) PTS80.0 through81.96 before inference. This is a reused development source, never a held-out accuracy test.",
+          "Add a reproducible bounded CPU diagnostic using existing track_players unchanged, sequential nano then small with manifest-pinned checkpoints, stride1, auto_calibrate=false and existing reviewed camera/scene/calibration context. Fixed100 total model-frame calls, no threshold/recipe/weights changes or model-selection sweep. Record both variants even when detections are missing; retain source frame/time, unknown identities, camera resets and scene exclusions.",
+          "Use run_local_job with the real root data/processed Store admission, root/data/weights pinned before imports, no isolated research Store. Refuse missing/conflicting source/clock/annotation/model/config inputs and occupied output; record owner PID/creation/cwd/command, durable paths, code revision and shared job state. Verify active jobs before starting and preserve partial output/process evidence on interruption; do not restart merely on observation timeout.",
+          "Write raw predictions and deterministic sampled native-frame overlays/contact sheets only to a new ignored task cache. Hash predictions/overlays and source/clock/annotation history/original prediction files before and after. Commit only reproducible code, frozen public hash manifest and aggregate report; preserve original video, weights, reviewed annotations and existing predictions byte-for-byte.",
+          "Inspect all fixed sampled overlays for both models and report actual runtime, complete50-frame coverage per variant, model detection/keypoint counts, unassigned IDs, provisional track fragments, scene/camera context and limitations. Counts and inspection are development diagnostics, not accuracy scores, persistent identities or complete player/shuttle/shot/rally correctness. Missing doubles/TrackNet/BST inputs remain explicitly unavailable; no downloads.",
+          "Test injected inference and generated media with wrong-input/occupied-output/shared-admission/partial-result/source-clock/context/preservation failures and meaningful receipts. Run required project checks, exact-head/main CI and controller/full public package/both-image delivery before completion. If actual run exposes a model/tracker defect outside scope, preserve evidence and propose a separate bounded repair before editing tracker math."
+        ],
+        "artifacts": {
+          "mac-singles-development-clock": "78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b",
+          "mac-singles-development-source": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+          "player-pose-nano": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+          "player-pose-small": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba"
+        },
+        "capabilities": [
+          "cpu",
+          "darwin",
+          "arm64"
+        ],
+        "dependencies": [
+          "173"
+        ],
+        "exclusions": [
+          "No consumed63 held-out inputs, MSI172 artifacts or reservations, new video/data/model downloads, training, model/threshold/recipe tuning, model promotion, application annotation/prediction overwrites, dependency/workflow/auth/policy/storage changes, PROGRESS.md, running-app upgrade or deployment."
+        ],
+        "limits": {
+          "inference_runtime_minutes": 15,
+          "max_inference_frames": 100,
+          "max_output_bytes": 67108864,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Exercise actual Mac CPU player/pose analysis on a frozen development excerpt with pinned nano/small models and inspect native-source overlays without changing application truth.",
+        "paths": [
+          "backend/badminton/player_probe.py",
+          "scripts/probe_player_runtime.py",
+          "tests/test_player_runtime_probe.py",
+          "data/manifests/mac_player_runtime_v1.json",
+          "docs/MAC_PLAYER_RUNTIME_REPORT.md"
+        ],
+        "priority": 100,
+        "resources": [
+          "cpu:mac-player-probe",
+          "data:mac-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Actual pinned source/model CPU inference and native-source overlays; complete denominators, immutable input/output hashes, shared Store/process receipt and explicit accuracy limitations.",
+          "Focused meaningful regressions plus full pytest/Ruff/format/pip/diff, exact CI/controller integration and public delivery verification."
+        ]
+      },
+      "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -15361,14 +15452,19 @@
     },
     "Stanleys-Laptop.local/roadmap-20261019-01a15493": {
       "actor": "dootz1",
-      "artifacts": {},
+      "artifacts": {
+        "mac-singles-development-clock": "78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b",
+        "mac-singles-development-source": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
+        "player-pose-nano": "869e83fcdffdc7371fa4e34cd8e51c838cc729571d1635e5141e3075e9319dc0",
+        "player-pose-small": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba"
+      },
       "capabilities": [
         "cpu",
         "darwin",
         "arm64"
       ],
       "host_id": "Stanleys-Laptop.local",
-      "registered_at": 1792439782,
+      "registered_at": 1792613023,
       "session_id": "roadmap-20261019-01a15493"
     }
   }
