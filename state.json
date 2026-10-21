@@ -6530,6 +6530,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle163-release-v1": {
+      "actor": "Ken0u",
+      "at": 1792563375,
+      "epoch": 1,
+      "fingerprint": "721b500c234c3777c1b6f2ef6ac31e78de1f73d668c76c9895a723564b5fdb16",
+      "status": "ready",
+      "task_id": "163",
+      "verb": "release"
+    },
     "windows-shuttle164-plan-v1": {
       "actor": "Ken0u",
       "at": 1792563278,
@@ -10254,20 +10263,65 @@
         "verification": "77 generated validator tests pass; Ruff clean; original source packets and all partial snapshots reverified in a credential-free audit whose actual recorded PID/lifetime is now externally confirmed exited. No acquisition/decode/inference/training/Store workload launched. Original A96/B68 recorded cases remain immutable and incomplete. No existing process/environment/data/PROGRESS.md changed."
       },
       "checkpoint_at": 1792563255,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
-        "branch": "codex/issue-163-freeze-independent-source-only-assessmen",
-        "epoch": 1,
-        "expires_at": 1792574055,
-        "granted_at": 1792559730,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1792563375,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
+            "branch": "codex/issue-163-freeze-independent-source-only-assessmen",
+            "epoch": 1,
+            "expires_at": 1792574055,
+            "granted_at": 1792559730,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "adjudication_started": false,
+              "assessment_complete": false,
+              "comparison_started": false,
+              "head_sha": "2f2af2ce288394cd52cf93f7f4c49caf3bc2dd83",
+              "originals_and_snapshots_reverified": true,
+              "packet_identity_verification": {
+                "case_count": 128,
+                "eligibility": {
+                  "dataset_redistribution_allowed": false,
+                  "independent_test_allowed": false,
+                  "model_deployment_allowed": false,
+                  "training_allowed": false
+                },
+                "protocol_sha256": "f7a985e162e7d48f2c8cff8ee9f8d9c718a4acfa07239c6dfbb84c0f5466b95b",
+                "requested_context_memberships": 640,
+                "unique_images": 632
+              },
+              "preserved_branch": "codex/issue-163-freeze-independent-source-only-assessmen",
+              "snapshot_receipt_sha256": "2b50fd6ff0881be2245a913469128a96778b214f77fc799cefae780aa5dbef6d"
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "\"C:\\Program Files\\Python310\\python.exe\" .cache/audit-shuttle163-terminal-v1.py",
+              "creation_time": 1792563179.4657247,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer",
+              "exit_verification": "psutil.NoSuchProcess for the recorded actual audit PID",
+              "exited": true,
+              "kind": "credential-free source-only preservation/identity audit; not an inference/acquisition/training worker",
+              "pid": 17044
+            },
+            "store": {
+              "reason": "Task163 launched no acquisition,decode,inference or training job and did not enter a shared Store. Both source-only assessor sessions terminated with explicit context-payload errors; collaboration listing confirms neither is running.",
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1792559307,
       "planned_by": "Ken0u",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Under parent65 and completed160/139/143/149/158, search all issue/PR/history/grants for duplicates before implementation. Consume only the two unchanged160 native packets: singles go2uajSiBnE packet31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b and doubles H1setLK1tig packet73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056. Retain all128 fixed center cases,640 requested clamped memberships and632 unique oriented native PNGs; no replacement sampling. Verify source/declaration/protocol/context/clock/PNG seals before assessment. Original media, packets, unknown templates and failed execution lineages remain immutable.",
@@ -10316,7 +10370,7 @@
         ]
       },
       "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c",
-      "status": "running"
+      "status": "ready"
     },
     "164": {
       "epoch": 0,
