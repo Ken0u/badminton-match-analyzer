@@ -4085,6 +4085,13 @@
       "task_id": "158",
       "verb": "next"
     },
+    "windows-exact158-review-07727-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792547823,
+      "fingerprint": "05600e9112eaea1e5057613d7c730b1a9bc6df9e3988360534a4525a021d3e19",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-exact158-submit-v1": {
       "actor": "Ken0u",
       "at": 1792547708,
@@ -12441,6 +12448,20 @@
   },
   "version": 1,
   "workers": {
+    "MSI/07727ebc-b884-496e-87ba-23c262d285a3": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "browser",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792547823,
+      "session_id": "07727ebc-b884-496e-87ba-23c262d285a3"
+    },
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
