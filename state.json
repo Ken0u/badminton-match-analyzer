@@ -10341,7 +10341,7 @@
       ],
       "planned_at": 1792559307,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "Under parent65 and completed160/139/143/149/158, search all issue/PR/history/grants for duplicates before implementation. Consume only the two unchanged160 native packets: singles go2uajSiBnE packet31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b and doubles H1setLK1tig packet73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056. Retain all128 fixed center cases,640 requested clamped memberships and632 unique oriented native PNGs; no replacement sampling. Verify source/declaration/protocol/context/clock/PNG seals before assessment. Original media, packets, unknown templates and failed execution lineages remain immutable.",
@@ -10390,7 +10390,7 @@
         ]
       },
       "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c",
-      "status": "ready"
+      "status": "blocked"
     },
     "164": {
       "claim": {
