@@ -6557,6 +6557,15 @@
       "task_id": "164",
       "verb": "checkpoint"
     },
+    "windows-shuttle164-checkpoint-v4": {
+      "actor": "Ken0u",
+      "at": 1792568067,
+      "epoch": 1,
+      "fingerprint": "4dd2d71b89c41c699f1d10bfcd87a236083549fe3a696a98335e7dd7586d4b1e",
+      "status": "running",
+      "task_id": "164",
+      "verb": "checkpoint"
+    },
     "windows-shuttle164-initial-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792563978,
@@ -10423,18 +10432,18 @@
       "checkpoint": {
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
         "head_sha": "150097e9f328b179d416abe0a30a6489c3a2c61d",
-        "next": "Owner decision pending: authorize remaining task164 original broadcast PNGs and minimal frame/hash/protocol context to existing ChatGPT-authenticated Codex CLI for bounded genuine assessment/adjudication sessions (four centers,6MiB unique inspected images each),or keep transmission stopped. Automatic approval rejected the launch for missing explicit payload/destination authorization; do not retry or route around rejection. After authorization complete120 remaining cases per stream,seal both complete indexes and originals before comparison,then distinct required source adjudication,exclusive private freeze,aggregate report,fresh independent exact-head PR review/CI,controller integration,merged-main and full delivery. Task is not complete; parent65/full accuracy remain open. No consumed63 access,163-label reuse,eligibility changes,inference/training/model promotion or PROGRESS.md edits. Private receipts:.cache/shuttle164-source-checkpoint-v2.json and .cache/shuttle164-output-audit-v1.json.",
-        "phase": "Verification complete; original assessment streams remain incomplete (8/128 each); awaiting explicit image-transmission authorization after automatic review rejection.",
+        "next": "Continue existing manager (tool session66750),do not duplicate active assignments. Preserve failure/partial originals and audit real process exit before recovery. Both complete128-case streams and all originals must be sealed before raw label comparison; preparation helper enforces both full inventories and global session independence. Then distinct blind bounded source adjudication,exclusive private freeze,final aggregate report,new independent exact-head PR reviewer/CI,controller integration,merged-main/full delivery. Four-hour task runtime remains bounded from original grant; manager stops new launches30minutes before deadline. No APIkeys,new paid services,raw data publication,consumed63 access,163label reuse,inference/training/eligibility changes/model promotion or PROGRESS.md updates. Parent65 and full accuracy remain open.",
+        "phase": "Owner explicitly authorized remaining164 original source-image and minimal protocol/frame/hash transmission to existing ChatGPT-authenticated Codex CLI; bounded actual sessions are running.",
         "spec_hash": "7ab1b287ebe380945b014d0c29fc29356025a64b8ec1f1555062a784c0bcb0df",
-        "verification": "Final full suite at150097e:1521 passed,162 skipped,one Starlette deprecation warning,310.96s. Focused validator:131 passed,136.71s. Ruff check/format172 files,pip check,diff check pass. Fixed overlap validation before Git ignore checks. Earlier failed runs and all generated output preserved. Audit measured199988472 bytes plus8388608 accounting reserve,below268435456. Four original segments retain four distinct actual session locators and immutable byte hashes; no label comparison,stream sealing or adjudication. No CLI assessor launched. Root checkout retains only its pre-existing PROGRESS.md modification; task worktree clean."
+        "verification": "Both streams20/128 cases in5 genuine segments each at07:33UTC. First CLI attempts exited0 with real distinct thread.started IDs, immutable four-case originals and affirmative native viewing reports. Parent has not compared labels. At most3 CLI sessions active; each<=4 centers and6MiB unique raw PNGs. Manager durable process metadata:.cache/shuttle164-manager-process-v1.json; execution start/finish/event hashes and prompts under .cache/shuttle164-source-only-v2/execution. Source-only index helper prints counts only. Full suite1521passed/162skipped;131focusedtests and Ruff/format/pip/diff pass at150097e. Prior output audit199988472bytes+8388608reserve below268435456; new session receipts remain small."
       },
-      "checkpoint_at": 1792565816,
+      "checkpoint_at": 1792568067,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
         "branch": "codex/issue-164-complete-two-independent-source-only-ass",
         "epoch": 1,
-        "expires_at": 1792576616,
+        "expires_at": 1792578867,
         "granted_at": 1792563485,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
