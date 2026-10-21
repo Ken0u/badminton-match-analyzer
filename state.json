@@ -2802,6 +2802,13 @@
       "task_id": "120",
       "verb": "review-result"
     },
+    "review70-01a15c4a-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792549876,
+      "fingerprint": "e043eedd2e2e8392b8d0b18e93133338908a428be4956f3ba83914a14e28dfba",
+      "status": "ok",
+      "verb": "register"
+    },
     "review97-next-v1": {
       "actor": "dootz1",
       "at": 1792465401,
@@ -12821,6 +12828,18 @@
   },
   "version": 1,
   "workers": {
+    "MSI/01a15c4a-b79d-7ef1-aa5a-dedbddff5ae0": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792549876,
+      "session_id": "01a15c4a-b79d-7ef1-aa5a-dedbddff5ae0"
+    },
     "MSI/07727ebc-b884-496e-87ba-23c262d285a3": {
       "actor": "Ken0u",
       "artifacts": {},
