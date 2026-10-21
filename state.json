@@ -6321,6 +6321,15 @@
       "task_id": "160",
       "verb": "checkpoint"
     },
+    "windows-shuttle160-checkpoint-before-data-v2": {
+      "actor": "Ken0u",
+      "at": 1792557430,
+      "epoch": 1,
+      "fingerprint": "f730980c5efeb07208da5020a6ded790646c0c35c382c7384e999f3467f1ed76",
+      "status": "running",
+      "task_id": "160",
+      "verb": "checkpoint"
+    },
     "windows-shuttle160-checkpoint-implementation-v1": {
       "actor": "Ken0u",
       "at": 1792551131,
@@ -9951,19 +9960,19 @@
     "160": {
       "checkpoint": {
         "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
-        "head_sha": "cc0e2c050b2f6005d2d3ac482c3e303e1994e785",
-        "next": "Durablehiddenobserved firstdataattempt .cache/shuttle-source-packets160-v1 using frozencc0e2c0, actualoriginalStore and datagrant. Max2GiB/source3GiBcombined6GiBoutput7200scumulativeworker within4htask. No retries/substitutions/sourceeditswhilelive. CheckPIDcreation/cwd/command/admission/Store/terminal. Then aggregate report/freshreview/CI/controller/main/publicdelivery.",
-        "phase": "Pre-acquisition code and protocol committed; all required local checks pass",
+        "head_sha": "a4598f403fd19a8a34cc96043cd49e0dbf87d26d",
+        "next": "Afterfullv4passandcheckpointacceptance, secondboundedattempt v2 using same source/protocol and prior external exitSHA22697d1a16e6dadc654c718b814be6370a7b1b9ab5fceb9adcbf3729b9026209. Worker validates prior terminal/Store/process/context, carries4.625s/871620bytes/0download into limits. No retryfromtimeout orsourcechangeswhilelive. Thenaggregate/freshreview/CI/controller/main/publicdelivery.",
+        "phase": "Ended-livestream metadata repair and explicit cumulative retry evidence frozen",
         "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a",
-        "verification": "Full1542passed4existingGPUskip177.37s actualexit0; 50 newsource-onlytests nowincluded. Ruffcheck/format169/pip/diff/UTF8LF/JSON/docslinks pass. Failedfullv1 andincompletev2preserved. No actualdataattemptyet. Runtimecore/declarations remaincacbfba bytes; finaltestfixturecommitcc0e2c0. Localreceipt .cache/shuttle160-pre-acquisition-verification-v1.json."
+        "verification": "Firstactualattempt exited1 after4.625observedseconds, StorefailedwithmatchingPIDcreation; originalworker17028andobserver1660lifetimesexited. 0mediabytes/871620outputbytes, allfrozenmetadata/admission/terminal/exitevidencepreserved. Failurewasoverstrictlive_status==not_live; actualendedbroadcastwas_live. Repairedacceptsonlynot_live/was_live; preservesexactIDs/channel/137/geometry/protocol/sampling. 56focusedtestspass13.95s, lintformatdependencydiffpass. Newfullv4inprogress. Actualread-onlyprior_attemptproofpasses unchangedpriorrecords. DraftPR162."
       },
-      "checkpoint_at": 1792557017,
+      "checkpoint_at": 1792557430,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
         "branch": "codex/issue-160-prepare-reproducible-native-source-only-",
         "epoch": 1,
-        "expires_at": 1792567817,
+        "expires_at": 1792568230,
         "granted_at": 1792550468,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
