@@ -822,6 +822,15 @@
       "task_id": "70",
       "verb": "checkpoint"
     },
+    "mac-01a15493-70-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792549595,
+      "epoch": 1,
+      "fingerprint": "29ba80ff1d416f4877eb5eaa2508e5afa94ed1b70881637c7103930a105a4e0e",
+      "status": "review",
+      "task_id": "70",
+      "verb": "submit"
+    },
     "mac-01a15493-94-browser-midrun-v1": {
       "actor": "dootz1",
       "at": 1792455124,
@@ -2433,6 +2442,13 @@
       "actor": "dootz1",
       "at": 1792548202,
       "fingerprint": "2365f7637ee691f4ef00a159a4cc16db3b97cdaf356bc825edf6c31ba5f3db1d",
+      "status": "ok",
+      "verb": "register"
+    },
+    "mac-review70-b12e9de-register-v1": {
+      "actor": "dootz1",
+      "at": 1792549595,
+      "fingerprint": "600fc984e24045faac9376911adf489f553f746e7e7cb09ff5dba08c8abcb04a",
       "status": "ok",
       "verb": "register"
     },
@@ -6226,6 +6242,13 @@
       "status": "review",
       "task_id": "149",
       "verb": "submit"
+    },
+    "windows-shuttle160-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792549595,
+      "fingerprint": "e1982cb9397646834f3868f56ef1dee1dfe0e8a6882b92b998bde3831af1e1d3",
+      "status": "idle",
+      "verb": "next"
     },
     "windows-shuttle160-plan-v1": {
       "actor": "Ken0u",
@@ -10820,6 +10843,7 @@
       "epoch": 1,
       "planned_at": 1792393957,
       "planned_by": "dootz1",
+      "pr_number": 161,
       "spec": {
         "acceptance": [
           "Derive overlays and clip boundaries from reviewed annotations and source time.",
@@ -10855,7 +10879,13 @@
         ]
       },
       "spec_hash": "963e4a6e8d830aa2f3a73863bb47e7294669bf6b81da98b2f9c5d94cbe62277d",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "6a9e478fb1e8b1018a02b3c9ca2cafa5bdb92565",
+        "head_sha": "b12e9de912d2db12bcb3618fa7a590612968b5a9",
+        "pr_number": 161,
+        "spec_hash": "963e4a6e8d830aa2f3a73863bb47e7294669bf6b81da98b2f9c5d94cbe62277d"
+      }
     },
     "71": {
       "epoch": 0,
@@ -13317,6 +13347,18 @@
       "host_id": "Stanleys-Laptop.local",
       "registered_at": 1792548202,
       "session_id": "mac-review158-6270fe0-independent"
+    },
+    "Stanleys-Laptop.local/mac-review70-b12e9de-independent": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "darwin",
+        "arm64"
+      ],
+      "host_id": "Stanleys-Laptop.local",
+      "registered_at": 1792549595,
+      "session_id": "mac-review70-b12e9de-independent"
     },
     "Stanleys-Laptop.local/mac-review84-3bc49ab-independent": {
       "actor": "dootz1",
