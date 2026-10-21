@@ -24,9 +24,15 @@ def main(argv=None):
     parser.add_argument("--protocol", type=Path)
     parser.add_argument("--protocol-sha256", required=True)
     parser.add_argument("--inputs", type=Path)
-    parser.add_argument("--assessor-a", type=Path)
-    parser.add_argument("--assessor-b", type=Path)
-    parser.add_argument("--adjudication", type=Path)
+    parser.add_argument(
+        "--assessor-a", type=Path, help="V1 original or V2 stream a index"
+    )
+    parser.add_argument(
+        "--assessor-b", type=Path, help="V1 original or V2 stream b index"
+    )
+    parser.add_argument(
+        "--adjudication", type=Path, help="V1 original or V2 adjudication index"
+    )
     parser.add_argument("--output", type=Path)
     args = parser.parse_args(argv)
     try:

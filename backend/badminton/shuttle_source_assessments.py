@@ -58,6 +58,8 @@ CASE_FIELDS = {
 LABEL_FIELDS = ("visibility", "x", "y", "uncertainty_radius", "scene", "difficulty")
 MAX_OUTPUT = 256 * 1024**2
 MAX_DOCUMENT = 4 * 1024**2
+MAX_SESSION_IMAGES = 6 * 1024**2
+ORIGINAL_NAMES = ("assessor-a.json", "assessor-b.json", "adjudication.json")
 LIMITATIONS = [
     "Source-only agent assessments are not expert-certified truth or annotation accuracy.",
     "Hashes and validation cannot prove actual visual inspection or session independence.",
@@ -227,6 +229,15 @@ def _protocol(path, sha):
         and 0 < protocol["limits"]["assessment_document_bytes"] <= MAX_DOCUMENT,
         "Protocol exceeds byte budget",
     )
+    version = protocol.get("procedure_version", 1)
+    _require(type(version) is int and version in (1, 2), "Unknown procedure version")
+    if version == 2:
+        streams = protocol["assessment_streams"]
+        _require(
+            streams["max_cases_per_session"] == 4
+            and streams["max_inspected_image_bytes_per_session"] == MAX_SESSION_IMAGES,
+            "Session budgets changed",
+        )
     return protocol
 
 
@@ -427,7 +438,7 @@ def load_inputs(packet_root, protocol_path, protocol_sha256):
 
 
 def validate_assessment(
-    document, inputs, protocol, inputs_sha256, *, adjudication=False
+    document, inputs, protocol, inputs_sha256, *, adjudication=False, partial=False
 ):
     """Validate claimed inspection identities, without certifying inspection occurred."""
     id_field = "adjudicator_id" if adjudication else "assessor_id"
@@ -564,7 +575,7 @@ def validate_assessment(
                 "Unknown/nonnegative case carries negative evidence",
             )
         rows[key] = row
-    if not adjudication:
+    if not adjudication and not partial:
         _require(rows.keys() == index.keys(), "Incomplete assessor case membership")
     return rows
 
@@ -581,6 +592,148 @@ def _differences(a, b):
     ]
 
 
+def _stream(
+    path, document, inputs, protocol, inputs_sha, stream_id, sessions, originals
+):
+    """Validate bounded originals; never attribute a whole stream to one session."""
+    adjudication = stream_id == "adjudication"
+    fields = {
+        "schema_version",
+        "role",
+        "stream_id",
+        "protocol_sha256",
+        "inputs_sha256",
+        "eligibility",
+        "segments",
+    }
+    if adjudication:
+        fields.add("assessment_sha256")
+    _require(
+        isinstance(document, dict) and document.keys() == fields,
+        "Stream index fields changed",
+    )
+    _require(
+        type(document["schema_version"]) is int
+        and document["schema_version"] == 2
+        and document["role"]
+        == (
+            "source_only_adjudication_stream"
+            if adjudication
+            else "source_only_assessment_stream"
+        )
+        and document["stream_id"] == stream_id,
+        "Invalid stream role/identity",
+    )
+    _require(
+        document["protocol_sha256"] == inputs["protocol_sha256"]
+        and document["inputs_sha256"] == inputs_sha,
+        "Stream input provenance changed",
+    )
+    _eligibility(document["eligibility"])
+    entries = document["segments"]
+    _require(
+        isinstance(entries, list) and len(entries) <= len(inputs["cases"]),
+        "Invalid segment inventory",
+    )
+    rows, provenance, paths = {}, {}, set()
+    case_index = {c["key"]: c for c in inputs["cases"]}
+    prefix = f"segments/{stream_id}/"
+    for entry in entries:
+        _require(
+            isinstance(entry, dict)
+            and entry.keys()
+            == {
+                "path",
+                "sha256",
+                "bytes",
+                "session_id",
+                "case_keys",
+            },
+            "Segment inventory fields changed",
+        )
+        name = entry["path"]
+        target = _relative(path.parent, name)
+        _require(
+            name == PurePosixPath(name).as_posix()
+            and name.startswith(prefix)
+            and name not in paths,
+            "Invalid or duplicate segment path",
+        )
+        paths.add(name)
+        _require(
+            _integer(entry["bytes"], 1)
+            and entry["bytes"] <= protocol["limits"]["assessment_document_bytes"],
+            "Segment document byte limit exceeded",
+        )
+        _require(
+            sum(len(raw) for raw in originals.values()) + entry["bytes"]
+            <= min(MAX_OUTPUT, protocol["limits"]["output_bytes"]),
+            "Assessment originals exceed byte budget",
+        )
+        _sealed(target, entry["sha256"], entry["bytes"])
+        raw = _read_bytes(target, entry["bytes"])
+        _require(
+            len(raw) == entry["bytes"] and digest(raw) == entry["sha256"],
+            "Segment changed while reading",
+        )
+        segment = _decode_json(raw)
+        segment_rows = validate_assessment(
+            segment,
+            inputs,
+            protocol,
+            inputs_sha,
+            adjudication=adjudication,
+            partial=True,
+        )
+        _require(1 <= len(segment_rows) <= 4, "Segment session case budget exceeded")
+        _require(
+            entry["case_keys"] == list(segment_rows),
+            "Segment ordered case inventory changed",
+        )
+        id_field = "adjudicator_id" if adjudication else "assessor_id"
+        _require(segment[id_field] == stream_id, "Segment assessor identity changed")
+        session = segment["session_id"]
+        _require(
+            entry["session_id"] == session and session.strip() not in sessions,
+            "Segment sessions must be globally distinct",
+        )
+        sessions.add(session.strip())
+        if adjudication:
+            _require(
+                segment["assessment_sha256"] == document["assessment_sha256"],
+                "Adjudication segment assessment provenance changed",
+            )
+        inspected = {}
+        for key, row in segment_rows.items():
+            _require(key not in rows, "Duplicate stream case membership")
+            context = {m["frame"]: m["identity"] for m in case_index[key]["context"]}
+            for record in row["inspected_frames"]:
+                image = context[record["frame"]]["image"]
+                inspected[image["path"]] = image["bytes"]
+            rows[key] = row
+            provenance[key] = session
+        _require(
+            sum(inspected.values()) <= MAX_SESSION_IMAGES,
+            "Session inspected PNG byte budget exceeded",
+        )
+        originals[name] = raw
+    directory = _relative(path.parent, prefix.rstrip("/"))
+    actual = set()
+    if directory.exists():
+        _require(directory.is_dir(), "Invalid segment inventory directory")
+        for candidate in directory.rglob("*"):
+            relative = candidate.relative_to(path.parent).as_posix()
+            _relative(path.parent, relative)
+            if candidate.is_file():
+                actual.add(relative)
+            else:
+                _require(candidate.is_dir(), "Unexpected segment filesystem entry")
+    _require(actual == paths, "Unindexed or missing segment original")
+    if not adjudication:
+        _require(rows.keys() == case_index.keys(), "Incomplete stream case membership")
+    return rows, provenance
+
+
 def _validated_documents(
     inputs, protocol, inputs_path, a_path, b_path, adjudication_path
 ):
@@ -590,33 +743,42 @@ def _validated_documents(
         "Blind input receipt bytes changed",
     )
     inputs_sha = digest(expected)
-    paths = [Path(p) for p in (a_path, b_path, adjudication_path)]
+    paths = [Path(p).resolve() for p in (a_path, b_path, adjudication_path)]
     _require(
         len({p.resolve() for p in paths}) == 3,
         "Assessment originals must be distinct files",
     )
-    originals = [
-        _read_bytes(p, protocol["limits"]["assessment_document_bytes"])
-        for p in paths
-        if p.stat().st_size <= protocol["limits"]["assessment_document_bytes"]
-    ]
-    _require(len(originals) == 3, "Assessment document byte limit exceeded")
-    documents = [_decode_json(raw) for raw in originals]
+    originals = {
+        name: _read_bytes(p, protocol["limits"]["assessment_document_bytes"])
+        for name, p in zip(ORIGINAL_NAMES, paths)
+    }
+    documents = [_decode_json(raw) for raw in originals.values()]
     a, b, adjudication = documents
-    rows_a = validate_assessment(a, inputs, protocol, inputs_sha)
-    rows_b = validate_assessment(b, inputs, protocol, inputs_sha)
-    rows_j = validate_assessment(
-        adjudication, inputs, protocol, inputs_sha, adjudication=True
-    )
-    _require(
-        a["assessor_id"].strip() != b["assessor_id"].strip(),
-        "Assessors must be distinct",
-    )
-    _require(
-        len({d["session_id"].strip() for d in documents}) == 3,
-        "Assessment/adjudication sessions must be distinct",
-    )
-    shas = [digest(raw) for raw in originals]
+    shas = [digest(raw) for raw in originals.values()]
+    streams = protocol.get("procedure_version", 1) == 2
+    provenance = []
+    if streams:
+        sessions = set()
+        validated = [
+            _stream(path, doc, inputs, protocol, inputs_sha, sid, sessions, originals)
+            for path, doc, sid in zip(paths, documents, ("a", "b", "adjudication"))
+        ]
+        rows_a, rows_b, rows_j = [item[0] for item in validated]
+        provenance = [item[1] for item in validated]
+    else:
+        rows_a = validate_assessment(a, inputs, protocol, inputs_sha)
+        rows_b = validate_assessment(b, inputs, protocol, inputs_sha)
+        rows_j = validate_assessment(
+            adjudication, inputs, protocol, inputs_sha, adjudication=True
+        )
+        _require(
+            a["assessor_id"].strip() != b["assessor_id"].strip(),
+            "Assessors must be distinct",
+        )
+        _require(
+            len({d["session_id"].strip() for d in documents}) == 3,
+            "Assessment/adjudication sessions must be distinct",
+        )
     _require(
         shas[0] != shas[1] and adjudication["assessment_sha256"] == shas[:2],
         "Adjudication original assessment provenance changed",
@@ -649,6 +811,16 @@ def _validated_documents(
                 "assessment": chosen,
             }
         )
+        if streams:
+            inspection_sessions = {
+                "assessor_a": provenance[0][key],
+                "assessor_b": provenance[1][key],
+            }
+            if key in rows_j:
+                inspection_sessions["adjudication"] = provenance[2][key]
+            resolved[-1]["inspection_sessions"] = inspection_sessions
+            if fields:
+                differences[-1]["inspection_sessions"] = dict(inspection_sessions)
     _require(
         required <= rows_j.keys(),
         "Explicit adjudication required for every disagreement and agreed negative",
@@ -678,6 +850,11 @@ def _validated_documents(
         "eligibility": ELIGIBILITY,
         "limitations": LIMITATIONS,
     }
+    if streams:
+        aggregate["limitations"] = [
+            *LIMITATIONS,
+            "Each stream comprises bounded sessions with preserved case-level provenance; no single session inspected the whole stream.",
+        ]
     return originals, shas, differences, resolved, aggregate
 
 
@@ -701,10 +878,7 @@ def _copy_plan(packet_root, protocol_path, inputs_path, originals):
         "scripts/freeze_shuttle_source_assessments.py",
     ):
         plan["consumer/" + name] = project / name
-    for name, raw in zip(
-        ("assessor-a.json", "assessor-b.json", "adjudication.json"), originals
-    ):
-        plan[name] = raw
+    plan.update(originals)
     return plan
 
 
@@ -799,8 +973,8 @@ def freeze(
     _require(
         _validated_documents(
             inputs, protocol, inputs_path, a_path, b_path, adjudication_path
-        )[1]
-        == shas,
+        )[:2]
+        == (originals, shas),
         "Assessments changed during freeze",
     )
     output.mkdir(parents=True, exist_ok=False)
@@ -877,7 +1051,7 @@ def verify_freeze(output, packet_root, protocol_sha256):
         total <= protocol["limits"]["output_bytes"],
         "Frozen output exceeds protocol byte budget",
     )
-    _, shas, differences, resolved, aggregate = _validated_documents(
+    originals, shas, differences, resolved, aggregate = _validated_documents(
         inputs,
         protocol,
         output / "inputs.json",
@@ -885,10 +1059,6 @@ def verify_freeze(output, packet_root, protocol_sha256):
         output / "assessor-b.json",
         output / "adjudication.json",
     )
-    originals = [
-        (output / name).read_bytes()
-        for name in ("assessor-a.json", "assessor-b.json", "adjudication.json")
-    ]
     expected_plan = _copy_plan(
         packet_root, output / "protocol.json", output / "inputs.json", originals
     )
