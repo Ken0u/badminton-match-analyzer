@@ -1367,6 +1367,26 @@
       "task_id": "170",
       "verb": "human-approved"
     },
+    "mac-01a15493-main177-next-v1": {
+      "actor": "dootz1",
+      "at": 1792613915,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "494160da064db2924ce70a49d717d57630ccf4ca",
+        "branch": "codex/issue-177-repair-main-verification-for-494160da064",
+        "epoch": 1,
+        "expires_at": 1792624715,
+        "granted_at": 1792613915,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-20261019-01a15493",
+        "spec_hash": "950de5225fc970a4f8994e886eb06f786b949519e21bab5b274105621d6923ca"
+      },
+      "epoch": 1,
+      "fingerprint": "7bc14da8dbaa0176b1a09dbe42732d9558da4abd8f7e373874708637b96a49c4",
+      "status": "granted",
+      "task_id": "177",
+      "verb": "next"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -1774,12 +1794,30 @@
       "task_id": "176",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player176-preserve-v1": {
+      "actor": "dootz1",
+      "at": 1792613866,
+      "epoch": 1,
+      "fingerprint": "0f35b370da6cce35da99cda49cb1d5f2fe49ecb4b6397f2d0b1f78936d5a6b3a",
+      "status": "running",
+      "task_id": "176",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player176-register-v1": {
       "actor": "dootz1",
       "at": 1792613023,
       "fingerprint": "45652c0be27fffb7d91eeb8f9b081612c1cb451acd06fbedeb0761edb2da3961",
       "status": "ok",
       "verb": "register"
+    },
+    "mac-01a15493-player176-release-main-repair-v1": {
+      "actor": "dootz1",
+      "at": 1792613915,
+      "epoch": 1,
+      "fingerprint": "4cb1b74ee517a18db8a6678382d97ea36eb6603dd7b61a45da93bf3de489cb36",
+      "status": "ready",
+      "task_id": "176",
+      "verb": "release"
     },
     "mac-01a15493-post101-next-v1": {
       "actor": "dootz1",
@@ -5324,6 +5362,13 @@
       "status": "needs_human",
       "task_id": "123",
       "verb": "plan"
+    },
+    "windows-main177-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792613915,
+      "fingerprint": "6e12a9a1cfe465d903889bc3b7b6e03ea0e9df33687a1ff664d96829279b2707",
+      "status": "idle",
+      "verb": "next"
     },
     "windows-owner-setup-register-v1": {
       "actor": "Ken0u",
@@ -11761,30 +11806,80 @@
       "checkpoint": {
         "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal",
         "evidence": [
-          "Real shared Mac Store has no queued/running jobs; source and both models hash-verified. No actual inference started yet.",
-          "Ruff/format/pip/diff checks pass. Fixed nano then small,50 source frames each, under one real run_local_job admission.",
-          "Output .cache/player-probe-176/.cache/actual-run-v1; receipt records real PID/create/cwd/command/sharedjob/code hashes. Cooperative15-minute and64MiB caps; preserve partial output on failure."
+          "Both nano/small50/50frames,100 observations each, no missing output; ten sampled overlays inspected. No accuracy/identity claim.",
+          "Original process51612 lifetime1792613473.916743 exited0; real shared Store job378897f9c15d4fcca3e61ad8af8a8a83 completed; all inputs/annotations/original predictions preserved.",
+          "29 focused tests, full current-base1834 passed/6skips, Ruff/format176files/pip/repository/diff/UTF8LF checks pass.",
+          "Native receipt .cache/player-probe-176/.cache/actual-run-v1/receipt.json; codehashes unchanged after rebase. Native inference must not rerun on timeout."
         ],
-        "head_sha": "2e5ee08",
-        "next": "Run frozen CPU inference once, observe original process to terminal state, inspect ten overlay panels; fullverification/controller/publicdelivery remain.",
-        "phase": "Bounded player/pose probe and fixed input manifest committed before inference;22 focused tests pass.",
+        "head_sha": "9cabcc8093c47cff9e8b4755ef9a28b237a1b454",
+        "next": "Release original-host terminal resources for priority main repair177; preserve remote draft/branch and exact implementation. After repair obtain new grant/branch and carry existing code/artifacts without repeating100 native calls; exacthead/mainCI/fullpublicdelivery still pending.",
+        "phase": "Actual CPU player/pose run complete and inspected; code tested, preserving draft pending main repair177.",
         "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
       },
-      "checkpoint_at": 1792613456,
-      "claim": {
-        "actor": "dootz1",
-        "baseline_sha": "f45eeeabc3cee4ad692cfbc8648d119cccf0b730",
-        "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal",
-        "epoch": 1,
-        "expires_at": 1792624256,
-        "granted_at": 1792613133,
-        "host_id": "Stanleys-Laptop.local",
-        "session_id": "roadmap-20261019-01a15493",
-        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
-      },
+      "checkpoint_at": 1792613866,
       "epoch": 1,
+      "history": [
+        {
+          "at": 1792613915,
+          "claim": {
+            "actor": "dootz1",
+            "baseline_sha": "f45eeeabc3cee4ad692cfbc8648d119cccf0b730",
+            "branch": "codex/issue-176-exercise-actual-mac-cpu-player-pose-anal",
+            "epoch": 1,
+            "expires_at": 1792624666,
+            "granted_at": 1792613133,
+            "host_id": "Stanleys-Laptop.local",
+            "session_id": "roadmap-20261019-01a15493",
+            "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "directory": "/Users/stanleygu/Stanley/Programming/badminton-match-analyzer/.cache/player-probe-176/.cache/actual-run-v1",
+              "files": {
+                "inputs-after.json": "4ea0311874946ba07fc730bec958ff7eb039b17624ea55f19e5ffddb17909db0",
+                "inputs-before.json": "4ea0311874946ba07fc730bec958ff7eb039b17624ea55f19e5ffddb17909db0",
+                "nano/contact-sheet.jpg": "012fb919e3a83f2871d0b7b6ccdae31cf565e7a5eadbac8f227f22b03837602c",
+                "nano/frame-2000.jpg": "2b54770c0a087111a6309d3c57ffeb7a6266922faf409a79bd4cdb557247985f",
+                "nano/frame-2010.jpg": "cfdd0c4eb7ec88fcb13bda08a08c5c3a994999f2165134ee71590ead0d6f4e66",
+                "nano/frame-2020.jpg": "a772e2ad178c84d16ad5a92e902c3be3c7e1b29e53f02d9dd42eda4ef8645229",
+                "nano/frame-2030.jpg": "01589300e57c6193248ca4acd51b0cdb1504c9ab43f0199e217abeae260d5f45",
+                "nano/frame-2049.jpg": "00823e888a5e9407873f6c24530eeba754b7231d232266689d85d078afe4075c",
+                "nano/predictions.json": "1144b30330ecb0ed849db3155d57643b2e27829ce7065d045dac40a824c1c8e1",
+                "small/contact-sheet.jpg": "f1e53cee3e778cf55646e22e7f7c006ef26e24befc644e3fb18e37210176ddc5",
+                "small/frame-2000.jpg": "1bf83ed7d70ba5d2e9c7d5d576f81a90a18a33d6a27ebd51c412ab74c43b3356",
+                "small/frame-2010.jpg": "69f7b52e1d68add8b6e1488377b396ed6c53b8e09c126ad45a32cb604d5fa079",
+                "small/frame-2020.jpg": "b99d248fff1822d626d8882d6b4ad1004cd3cbc4606ef53f54712520275c914b",
+                "small/frame-2030.jpg": "cc7b788bc116c9eb62bafb8ceaea67de7c45089852d1c596d479275b122535d9",
+                "small/frame-2049.jpg": "792a7df9de51ec9669c2b14cd7446f564950a51f0d752ea599e5f10374564cfe",
+                "small/predictions.json": "b95e9d61c21077a47619b1a0ee355eac54e8bc6d0c4fda30721b59807c358d4b"
+              },
+              "inputs_preserved": true,
+              "receipt_sha256": "f53efb9b366c18c3471132e153dbcee5c0bdf2223381cce4ce766c4cb106d871"
+            },
+            "host_id": "Stanleys-Laptop.local",
+            "process": {
+              "command": "scripts/probe_player_runtime.py --root /Users/stanleygu/Stanley/Programming/badminton-match-analyzer --data /Users/stanleygu/Stanley/Programming/badminton-match-analyzer/data/processed --weights /Users/stanleygu/Stanley/Programming/badminton-match-analyzer/models/weights --manifest data/manifests/mac_player_runtime_v1.json --output /Users/stanleygu/Stanley/Programming/badminton-match-analyzer/.cache/player-probe-176/.cache/actual-run-v1",
+              "creation_time": 1792613473.916743,
+              "cwd": "/Users/stanleygu/Stanley/Programming/badminton-match-analyzer/.cache/player-probe-176",
+              "exit_code": 0,
+              "exited": true,
+              "observation": "Original exec session10138 returned actual exit0; matching PID no longer exists.",
+              "pid": 51612
+            },
+            "store": {
+              "active_jobs": 0,
+              "database": "/Users/stanleygu/Stanley/Programming/badminton-match-analyzer/data/processed/catalog.sqlite3",
+              "job_id": "378897f9c15d4fcca3e61ad8af8a8a83",
+              "status": "completed"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1792613023,
       "planned_by": "dootz1",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Continue the approved Perception roadmap toward player identity evaluation #66, preserving active MSI172 source assessment/reviewer resources. Freeze the existing original singles source970dbd8adfe548d8 SHA970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f, original timestamp map SHA78628a0a6b8f5dd9d04ee99f51867f022fe0128334a72991415bc88af367e99b, current revision1 annotation raw document SHA537318fc735c392f8ca402c0d273205b28e29a5661738e491c84e79518780688 and frames[2000,2050) PTS80.0 through81.96 before inference. This is a reused development source, never a held-out accuracy test.",
@@ -11840,10 +11935,21 @@
         ]
       },
       "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a",
-      "status": "running"
+      "status": "ready"
     },
     "177": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "494160da064db2924ce70a49d717d57630ccf4ca",
+        "branch": "codex/issue-177-repair-main-verification-for-494160da064",
+        "epoch": 1,
+        "expires_at": 1792624715,
+        "granted_at": 1792613915,
+        "host_id": "Stanleys-Laptop.local",
+        "session_id": "roadmap-20261019-01a15493",
+        "spec_hash": "950de5225fc970a4f8994e886eb06f786b949519e21bab5b274105621d6923ca"
+      },
+      "epoch": 1,
       "planned_at": 1792613559,
       "planned_by": "github-actions[bot]",
       "repair_for": "172",
@@ -11890,7 +11996,7 @@
         ]
       },
       "spec_hash": "950de5225fc970a4f8994e886eb06f786b949519e21bab5b274105621d6923ca",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "epoch": 0,
