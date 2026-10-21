@@ -5786,6 +5786,44 @@
       "task_id": "149",
       "verb": "checkpoint"
     },
+    "windows-shuttle149-independent-next-f17becf5": {
+      "actor": "Ken0u",
+      "at": 1792543876,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
+        "epoch": 2,
+        "expires_at": 1792554676,
+        "granted_at": 1792543876,
+        "head_sha": "f6a0e5d068c634ffc714aedf6a59d54903a2ed1b",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "f6a0e5d068c634ffc714aedf6a59d54903a2ed1b",
+          "limitations": [
+            "Familiar two-source development agent assessments, not expert or independent truth",
+            "No established occlusion, camera-transition or visible-unlocalizable support; all unknowns remain",
+            "Descriptive pre-threshold responses are not calibrated probabilities or alternate predictions",
+            "No threshold search, training, inpainting, label changes, model/default promotion or full-match accuracy claim",
+            "No consumed holdout63 inputs, predictions, protocols, private membership metadata or artifacts",
+            "Original abrupt capture had no worker terminal or known exit code; authenticated original-host operational recovery uses an explicit external interrupted receipt and a conservative 2902s charge. One abandoned partial array remains preserved and uninterpreted.",
+            "All 60 executed consumers equal final committed Git bytes; final change after execution is the aggregate Markdown report only.",
+            "Generated recovery tests cover cooperative and early/partial/refused attempts; abrupt exit recovery is separately audited original-host operational evidence, not an automatically supported general SIGKILL command."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "72c29d059e0f67c54a36ee474e71a38f9fc0c4bf4abe42170b32ecedceada48d",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 157,
+        "review_epoch": 1,
+        "session_id": "f17becf5129f4035af82b3cbb973914f",
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
+      },
+      "epoch": 2,
+      "fingerprint": "3edd00a63255717e495aba151e5b2a8bed2bcf45a73d6bbc73dd32ecad7c9e11",
+      "status": "granted",
+      "task_id": "149",
+      "verb": "review-next"
+    },
     "windows-shuttle149-independent-register-f17becf5": {
       "actor": "Ken0u",
       "at": 1792543788,
@@ -8966,6 +9004,36 @@
       "planned_by": "Ken0u",
       "pr_number": 157,
       "reason": "released after terminal proof",
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
+        "epoch": 2,
+        "expires_at": 1792554676,
+        "granted_at": 1792543876,
+        "head_sha": "f6a0e5d068c634ffc714aedf6a59d54903a2ed1b",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "f6a0e5d068c634ffc714aedf6a59d54903a2ed1b",
+          "limitations": [
+            "Familiar two-source development agent assessments, not expert or independent truth",
+            "No established occlusion, camera-transition or visible-unlocalizable support; all unknowns remain",
+            "Descriptive pre-threshold responses are not calibrated probabilities or alternate predictions",
+            "No threshold search, training, inpainting, label changes, model/default promotion or full-match accuracy claim",
+            "No consumed holdout63 inputs, predictions, protocols, private membership metadata or artifacts",
+            "Original abrupt capture had no worker terminal or known exit code; authenticated original-host operational recovery uses an explicit external interrupted receipt and a conservative 2902s charge. One abandoned partial array remains preserved and uninterpreted.",
+            "All 60 executed consumers equal final committed Git bytes; final change after execution is the aggregate Markdown report only.",
+            "Generated recovery tests cover cooperative and early/partial/refused attempts; abrupt exit recovery is separately audited original-host operational evidence, not an automatically supported general SIGKILL command."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "72c29d059e0f67c54a36ee474e71a38f9fc0c4bf4abe42170b32ecedceada48d",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 157,
+        "review_epoch": 1,
+        "session_id": "f17becf5129f4035af82b3cbb973914f",
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Pin merged main e4805cc7959f446b3dca3f7988522bba54a20c8b, original packet3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d, frozen labelsfd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158, baseline915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64 and original checkpointdf867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Search history/reservations and verify local inputs and original shared Store before grant/native work; a clone supplies none of the ignored data. Freeze and timestamp committed code, protocol, all recursive consumers, input hashes and runtime before new heatmaps.",
