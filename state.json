@@ -2352,6 +2352,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "mac-review158-6270fe0-approve-20261020": {
+      "actor": "dootz1",
+      "at": 1792548605,
+      "epoch": 1,
+      "fingerprint": "bd8e887a89b39f31ab5c7477670b725bd7860d9c5c1d0fcc58e23083bd99329d",
+      "status": "review",
+      "task_id": "158",
+      "verb": "review-result"
+    },
     "mac-review158-6270fe0-grant-20261020": {
       "actor": "dootz1",
       "at": 1792548285,
@@ -9622,18 +9631,37 @@
       "planned_by": "Ken0u",
       "pr_number": 159,
       "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792548605,
         "base_sha": "be7e98e1c2a1badec189c5575cf899c01bb98f5e",
-        "epoch": 1,
-        "expires_at": 1792559085,
-        "granted_at": 1792548285,
+        "evidence": [
+          "Fresh independent read-only session mac-review158-6270fe0-independent obtained committed review_epoch2 grant before candidate inspection; inspected frozen task158 acceptance and all five changed paths plus relevant controller/fixture/build surroundings. Current task submission and PR head/base revalidated immediately before verdict.",
+          "Independent reviewer ordering probe used baseline app.js bytes read from immutable be7e98e Git object and candidate tracked production app.js against the same generated real backend/long-gap source. Held native HTTP media until manual frame3 selection, released HTTP415 and observed real Chromium MediaError4. Unchanged baseline failed original15000ms image wait: frame3 clock0:00.68 readyState0 srcnull hidden. Candidate displayed image with matching video/frame3 at same native error/PTS. App SHA256 baseline d9ee80dcb142c06c203abb7d5d3754009328e444eed0d0137ac4d050ab8bdcd0; candidate d12a8094bdac9dcf698a28840c3cbf4cc6eae88a680910cc7a6641c0ef64a53b. Evidence .cache/review158-6270fe0/.cache/evidence/reviewer-ordering-AbOUs3/result.json.",
+          "Independently ran full candidate production browser matrices with real generated media: default18/18 blocks, library8/8 groups, exports13/13 groups. Source-clock block verifies seek-before/after error, native timestamps0/0.04/0.08/0.68, exact image/source identity, stale previous-frame/video requests, genuine404/loading/same-frame retry, failedPlay exact restoration, unsaved draft and saved annotation preservation, prepared proxy playback/final frame. Existing proxy readyState/nonseeking condition and15000ms timeouts preserved, readiness now correctly precedes dimensions/pixel assertion. Evidence default frontend-delivery-BvgrRL, library frontend-delivery-library-MoM7jA, exports frontend-delivery-exports-PZ0emm under review worktree .cache/evidence.",
+          "Pinned Node24.22.0 production rebuild/typecheck and frontend:stage:check pass, proving tracked app.js and manifest exactly match source build/input fingerprints. Contract check,89 frontend unit tests and3 staging tests pass. Locked node_modules copied into isolated worktree from existing environment with identical package-lock SHA256 ba4dd50ee484f7ffce751ce0594bdec96d9bf19ad6266c719d8d3c44a302903e; no install or upgrade. Verified index.html/style.css/THIRD_PARTY_NOTICES.txt byte-identical to base, all five changed files UTF-8/LF, git diff --check and clean tracked worktree.",
+          "Independently observed exact-head CI39530544161 success at6270fe0: all12 jobs including browser-import, frontend, Python3.10/3.12, macOS/Windows native, package, CPU/review containers and ci/gate. PR159 head6270fe0/basebe7e98e remains open and unchanged at final verification.",
+          "Candidate execution cleared GH_TOKEN/GITHUB_TOKEN/AGENT_PROJECT_TOKEN/OPENAI_API_KEY and pinned own BADMINTON_ROOT/DATA before imports. Generated fixture process identities/lifetimes verified before owned cleanup; cleanup receipts retained. No implementation edits, inference, weights, data modifications or unrelated process stops. Initial sandbox listener-bind denial retained separately and not counted as success."
+        ],
+        "findings": [],
         "head_sha": "6270fe0f2378177ff09cf7b5529f5a40f2f4e95a",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "Local browser validation covers cached Chromium on macOS and generated fixtures; it does not prove universal codec/browser support or badminton annotation accuracy. Native model inference and external YouTube download remain explicit fixture stubs.",
+          "Full backend pytest/Ruff/pip checks were observed through successful exact-head CI rather than repeated locally; local verification focused on changed behavior, frontend provenance, all browser matrices and UTF-8/LF/diff integrity.",
+          "Independent baseline ordering diagnostic substitutes only immutable baseline app.js through a browser route against unchanged candidate backend/helpers, rather than executing the whole baseline checkout. Its hash and failure state match the documented baseline, and the production candidate regression ran unmodified separately.",
+          "Controller integration, merged-main verification and complete public delivery remain subsequent workflow responsibilities; this verdict approves only the exact granted PR revision."
+        ],
         "pr_number": 159,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/frontend/src/editor/Playback.tsx",
+          "tests/frontend-delivery.mjs",
+          "docs/EXACT_FRAME_RECOVERY_REPORT.md",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json"
+        ],
         "session_id": "mac-review158-6270fe0-independent",
-        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d"
+        "spec_hash": "456c9897e53a2695d30ee583ff1012f5ff1b15be4bda77f8927fcb444b6ad77d",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
