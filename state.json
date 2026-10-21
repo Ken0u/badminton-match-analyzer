@@ -1414,6 +1414,15 @@
       "task_id": "177",
       "verb": "extend-scope"
     },
+    "mac-01a15493-main177-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792614591,
+      "epoch": 1,
+      "fingerprint": "df1dd0c3be33aa145659d4c1f0a2996f0a72d36c8ee3ca74d46845c87b635347",
+      "status": "review",
+      "task_id": "177",
+      "verb": "submit"
+    },
     "mac-01a15493-next": {
       "actor": "dootz1",
       "at": 1792420473,
@@ -12014,6 +12023,7 @@
       "epoch": 1,
       "planned_at": 1792613559,
       "planned_by": "github-actions[bot]",
+      "pr_number": 180,
       "repair_for": "172",
       "spec": {
         "acceptance": [
@@ -12061,7 +12071,13 @@
         ]
       },
       "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "494160da064db2924ce70a49d717d57630ccf4ca",
+        "head_sha": "efed31dc2e046d9c087d244a741161e54bc25176",
+        "pr_number": 180,
+        "spec_hash": "14b70c4ce46789cbaa8f1ed437ba2d4fa445fc9f6c9c0892e031268e718c1ea4"
+      }
     },
     "179": {
       "epoch": 0,
