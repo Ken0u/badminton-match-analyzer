@@ -811,6 +811,14 @@
       "task_id": "138",
       "verb": "next"
     },
+    "mac-01a15493-166-plan-v1": {
+      "actor": "dootz1",
+      "at": 1792587862,
+      "fingerprint": "e3602ce5de7c8a351f66cf514bb1cbe7eb1d352fec58052e1227e848dd283c96",
+      "status": "needs_human",
+      "task_id": "166",
+      "verb": "plan"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -3578,6 +3586,14 @@
       "fingerprint": "4b10bd7f5f534f80c65e80fe74e05a746b68be09879e3c0b5839b1d68b49bee5",
       "status": "ready",
       "task_id": "164",
+      "verb": "plan"
+    },
+    "spec-166-6b9a340fa29dcc40f898ee5a40cb64ced4126b5250aeef01ad3341cae3a105e0": {
+      "actor": "dootz1",
+      "at": 1792587862,
+      "fingerprint": "30b712843fa2774aca3fad6aa5650b3275d686554e9e19b555ec8d16b083e73d",
+      "status": "needs_human",
+      "task_id": "166",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -10519,6 +10535,62 @@
       },
       "spec_hash": "7ab1b287ebe380945b014d0c29fc29356025a64b8ec1f1555062a784c0bcb0df",
       "status": "recovery_required"
+    },
+    "166": {
+      "epoch": 0,
+      "planned_at": 1792587862,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "The configured owner explicitly requested in this session: make development autonomous and do not require mandatory reviews. Add an explicit boolean policy setting, with absent/invalid configuration retaining the existing required-review behavior; set the repository to optional independent code review. This change itself follows the current trusted-main grant, exact CI, independent review and controller integration process.",
+          "Remove mandatory independent-agent approval from both normal integration policy and the queue integration transition when explicitly optional. Keep exact head/base/spec binding, grants/epochs/leases, required CI and native evidence, owner authorization of sensitive frozen scope, same-repository/branch/current-main, serial integration, unresolved trusted requested changes, merged-main checks and complete public delivery. Do not fabricate approval or reviewer identity when no review occurs.",
+          "Retain optional review-next/review-result and their genuine fresh-session and exact-revision checks. Respect active review reservations and actual current changes-requested findings instead of racing or discarding them. Historical external-merge recovery must continue validating its original mandatory review evidence; the new setting must not retroactively authorize missing/stale/rejected historical approval or bypass manual-merge fencing.",
+          "Update current repository/worker/reviewer/deployment/frontend guidance to describe optional code review and automatic integration after exact CI. Preserve historical evidence as historical, original frozen task issues, scientific independent source assessments/adjudication, model accuracy limits, spending/data/model/deployment scope authorization and no running-app upgrades.",
+          "Add meaningful tests for complete no-review controller integration through main/public delivery under explicit optional setting, required/default/malformed config refusal, unchanged stale-binding/CI/scope/owner/conversation/native-evidence gates, optional fresh review and actual changes-requested handling, existing review reservation behavior, and strict historical external recovery under optional current policy. Required focused/full checks, fresh transition review, CI, controller merge, exact merged main and public package/both-image receipts must pass."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No direct main pushes/manual merges/raw coordination edits, no removal of tests or scope/CI/source/delivery checks, no model/research truth or independent label-assessment changes, no running-app/environment upgrades, new dependencies, paid services, credentials or raw artifacts, no PROGRESS.md changes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Make independent code review optional for autonomous controller integration while preserving required tests, scope authorization, ownership and exact source/delivery checks.",
+        "paths": [
+          ".github/automation.json",
+          "scripts/devops/policy.py",
+          "scripts/devops/queue.py",
+          "scripts/devops/coordinator.py",
+          "tests/test_agent_policy.py",
+          "tests/test_agent_queue.py",
+          "tests/test_agent_coordinator.py",
+          "AGENTS.md",
+          "PROJECT_PLAN.md",
+          "docs/COLLABORATION.md",
+          "docs/automation/worker.md",
+          "docs/automation/reviewer.md",
+          "docs/OWNER_SETUP.md",
+          "docs/AUTONOMOUS_DEVOPS_REPORT.md",
+          "docs/DEPLOYMENT.md",
+          "docs/FRONTEND_REWRITE.md"
+        ],
+        "priority": 5,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Focused positive/negative integration and recovery regressions plus full project checks on exact head.",
+          "One final old-policy independent review/CI/controller/main/full public delivery; future tasks need no mandatory code review when explicit optional policy is active."
+        ]
+      },
+      "spec_hash": "2bda16ead59a03b651c223f7b19962429534e87b1d38be2d9cc5ad02a9a1ee4f",
+      "status": "needs_human"
     },
     "62": {
       "epoch": 0,
