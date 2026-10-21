@@ -5451,6 +5451,13 @@
       "status": "idle",
       "verb": "next"
     },
+    "windows-main177-fresh-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792614796,
+      "fingerprint": "3e9d9ba6f10dbdec5bb9914670e80efe5901031fbf604571bdcb389091b8f384",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-main177-next-v2": {
       "actor": "Ken0u",
       "at": 1792613915,
@@ -15290,6 +15297,18 @@
       "host_id": "MSI",
       "registered_at": 1792543788,
       "session_id": "f17becf5129f4035af82b3cbb973914f"
+    },
+    "MSI/main177_review": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792614796,
+      "session_id": "main177_review"
     },
     "MSI/root_shuttle172_review": {
       "actor": "Ken0u",
