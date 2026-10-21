@@ -316,11 +316,34 @@ def finish(command, root, data, manifest, manifest_sha256, output, assessments):
         exclusive_json(adjudication_seal_path, adjudication_seal)
     if (output / "score.json").exists():
         raise ValueError("Preserve existing score output")
+    frozen_names = [
+        "packet.json",
+        "inputs-before.json",
+        "inputs-after.json",
+        "prepare-receipt.json",
+        "streams-seal.json",
+        "adjudication-seal.json",
+        *[sample["image"] for sample in packet["samples"]],
+        *[stream["path"] for stream in seal["streams"]],
+        path.relative_to(output).as_posix(),
+    ]
+    frozen_files = {name: digest(inside(output, name)) for name in frozen_names}
+
+    def verify_frozen_files():
+        if any(
+            digest(inside(output, name)) != expected
+            for name, expected in frozen_files.items()
+        ):
+            raise ValueError(
+                "Sealed source packet or assessment changed during scoring"
+            )
+
     from badminton.jobs import run_local_job
     from badminton.scene_review import reviewed_run
     from badminton.storage import Store
 
     def task(job_id, progress):
+        verify_frozen_files()
         if snapshot(root, data, manifest)[2] != before:
             raise ValueError("Frozen inputs changed before scoring admission")
         # This is the first prediction-content read: both streams and source-only
@@ -349,6 +372,7 @@ def finish(command, root, data, manifest, manifest_sha256, output, assessments):
             manifest_sha256=manifest_sha256,
             packet_sha256=packet_sha256,
         )
+        verify_frozen_files()
         if snapshot(root, data, manifest)[2] != before:
             raise ValueError("Frozen inputs changed inside scoring admission")
         for stream in seal["streams"]:
@@ -365,6 +389,7 @@ def finish(command, root, data, manifest, manifest_sha256, output, assessments):
             adjudication_seal_sha256=digest(output / "adjudication-seal.json"),
             inputs_preserved=True,
             inference_calls=0,
+            frozen_file_sha256=frozen_files,
         )
         exclusive_json(output / "score.json", result)
         progress(1)
@@ -387,6 +412,7 @@ def finish(command, root, data, manifest, manifest_sha256, output, assessments):
         },
         "shared_store": str(data / "catalog.sqlite3"),
         "launcher_sha256": digest(__file__),
+        "frozen_file_sha256": frozen_files,
     }
     # Preserve every scoring attempt, including a failed provenance check.
     attempt = 1
