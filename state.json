@@ -5849,6 +5849,15 @@
       "fingerprint": "efe5f37172f67411fc202a281aec8d134212f3e6037f5f61165e8e9504b4d38d",
       "status": "ok",
       "verb": "register"
+    },
+    "windows-shuttle149-resume-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792542175,
+      "epoch": 2,
+      "fingerprint": "514cdf98c84e304d0509f85dca0f8532f61317d936003fd8bec695400e4c69c6",
+      "status": "running",
+      "task_id": "149",
+      "verb": "checkpoint"
     }
   },
   "tasks": {
@@ -8863,24 +8872,29 @@
     "149": {
       "checkpoint": {
         "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
+        "charged_elapsed_upper_bound_s": 2902,
         "completed_views": 22,
         "experiment_sha256": "8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68",
+        "external_recovery_sha256": "f87ccfe88c26108d3f16bae118faf1ae2f4d12f5f6baec471fcd055f96417e89",
         "head_sha": "4f81bf587dd2353ce705ea61cbbb4d95029c57e0",
-        "next": "After acknowledgement, use existing Store.recover_jobs API to mark only the proven dead original registration interrupted; preserve its pre/post documents privately. Emit an explicitly external original-host recovery receipt, never a worker-success receipt, recording conservative elapsed upper bound and 22 existing complete seals. Externally timestamp its hash before exact committed CLI resume; retain unchanged 3600-second cumulative budget and never repeat a completed view. Fresh final review must inspect recovery provenance.",
-        "observation_sha256": "3a946ace7adeb25de33d8f0f8d5044add83707f0e1288ac7558f7407559cf3ad",
-        "phase": "Original-host abrupt-exit recovery before any resume",
+        "launcher_sha256": "c29849a89dd6e67e4425131144fd7c75fc79fb78329daecb5adc9a19a7d91d77",
+        "next": "After acknowledgement, launch detached exact committed CLI resume with credentials cleared and real original Store. Preserve 22 completed views and original 3600s cumulative budget. Seal all final outputs before unchanged control gate and fixed interpretation.",
+        "phase": "Original-host interrupted recovery sealed before exact-CLI resume",
         "pr_number": 157,
+        "recovered_terminal_sha256": "fb9f0612ea95f5098d63ae821a8c9b6aeca2b1db4461bc51e8d2984893171605",
+        "recovery_result_sha256": "594fc41c1449b3c6192b8ae8d96b7b93fe3c1c64a0da4247dd322eba8af87166",
+        "remaining_budget_s": 698,
         "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
         "total_views": 50,
-        "verification": "Original recorded lifetime is absent, not merely a lost observation handle; all 22 immutable complete views and every partial artifact are sealed. Frozen source remains unchanged. No terminal receipt was emitted and no outputs have been interpreted."
+        "verification": "Original lifetime absent, official Store API interrupted only original dead row, all original artifacts unchanged, all 22 complete views validated and reusable through committed prior_proofs/resume_plan. Explicit external recovery, not worker-success evidence. No source or protocol changes and no interpretation."
       },
-      "checkpoint_at": 1792541987,
+      "checkpoint_at": 1792542175,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
         "branch": "codex/issue-149-diagnose-pre-threshold-tracknet-response-e2",
         "epoch": 2,
-        "expires_at": 1792552787,
+        "expires_at": 1792552975,
         "granted_at": 1792538291,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
