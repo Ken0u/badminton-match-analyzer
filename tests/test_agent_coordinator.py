@@ -1937,3 +1937,49 @@ def test_external_adoption_delivers_once_then_reuses_visible_candidate(candidate
     assert state["tasks"]["1"]["candidate_run"] == visible["html_url"]
     assert release_actions() == expected
     assert state["tasks"]["1"].get("delivery_attempts", 0) == len(expected)
+
+
+@pytest.mark.parametrize("new_head", [False, True])
+def test_optional_controller_does_not_launder_genuine_changes_verdict(new_head):
+    h = Harness()
+    h.reviewing()
+    h.config["require_agent_review"] = False
+    task = h.state["tasks"]["1"]
+    h.send(
+        "review-result",
+        "dootz1",
+        task_id="1",
+        host_id="windows",
+        session_id="win1",
+        epoch=task["epoch"],
+        review_epoch=task["review_epoch"],
+        verdict="changes",
+        findings=["Fix the source clock defect before integration"],
+        reviewed_files=["backend/clock.py"],
+        limitations=[],
+        evidence=["Native clock regression"],
+        **task["submission"],
+    )
+    h.owned(
+        "submit",
+        pr_number=42,
+        head_sha=("f" * 40 if new_head else HEAD),
+        base_sha=BASE,
+        spec_hash=task["spec_hash"],
+    )
+    gh, store, config = merge_setup()
+    config["require_agent_review"] = False
+    if new_head:
+        gh.pr["head"]["sha"] = "f" * 40
+    store.write(store.read()[0], h.state)
+    state = integrate(gh, config, store.read()[1])
+    assert gh.pr["merged"] is new_head
+    task = state["tasks"]["1"]
+    if new_head:
+        assert "review" not in task and task["status"] == "integrating"
+    else:
+        assert task["review"]["verdict"] == "changes"
+        assert task["review"]["findings"] == [
+            "Fix the source clock defect before integration"
+        ]
+        assert task["status"] == "review"

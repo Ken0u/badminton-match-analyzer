@@ -228,6 +228,13 @@ def spec_hash(spec: dict) -> str:
     return hashlib.sha256(_json(spec).encode("utf-8")).hexdigest()
 
 
+def _clear_review_preserving_changes(task: dict) -> None:
+    """Ownership and reservation changes cannot discard a source-bound veto."""
+    review = task.get("review")
+    if not isinstance(review, dict) or review.get("verdict") != "changes":
+        task.pop("review", None)
+
+
 def _clock(now: int) -> None:
     if type(now) is not int or now < 0:
         raise QueueError("now must be a nonnegative integer epoch")
@@ -834,7 +841,7 @@ def apply_request(
             if task["status"] not in {"review", "integrating"}:
                 raise QueueError("task is not under review/integration")
             task.pop("review_claim", None)
-            task.pop("review", None)
+            _clear_review_preserving_changes(task)
             task["status"] = (
                 "running" if task["claim"]["expires_at"] > now else "recovery_required"
             )
@@ -902,6 +909,10 @@ def apply_request(
         if not task:
             raise QueueError("unknown task")
         _worker(result, request, actor)
+        if verb in {"release", "recover"} and task.get("review_claim"):
+            raise QueueError(
+                "active independent review must finish or expire before handoff"
+            )
         if (
             verb == "recover"
             and task["status"] == "recovery_required"
@@ -929,7 +940,7 @@ def apply_request(
                 }
             )
             task.pop("review_claim", None)
-            task.pop("review", None)
+            _clear_review_preserving_changes(task)
             task["epoch"] += 1
             task["status"] = "ready"
             task["checkpoint"] = copy.deepcopy(checkpoint)
@@ -1005,7 +1016,15 @@ def apply_request(
                     request["native_evidence"]
                 )
             task["pr_number"] = request["pr_number"]
-            task.pop("review", None)
+            review = task.get("review")
+            same_rejected_source = (
+                isinstance(review, dict)
+                and review.get("verdict") == "changes"
+                # PR/base/scope metadata changes do not repair the rejected source.
+                and review.get("head_sha") == task["submission"]["head_sha"]
+            )
+            if not same_rejected_source:
+                task.pop("review", None)
             task.pop("review_claim", None)
             task["status"] = "review"
         elif verb == "review-result":
@@ -1072,7 +1091,7 @@ def apply_request(
             )
             task.pop("claim")
             task.pop("review_claim", None)
-            task.pop("review", None)
+            _clear_review_preserving_changes(task)
             task["status"] = (
                 "needs_human" if task.get("repair_rounds", 0) >= 3 else "ready"
             )

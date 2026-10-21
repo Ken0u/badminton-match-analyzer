@@ -191,8 +191,11 @@ existing Review queue state means submitted work awaiting controller evaluation
 or an optional reviewer; it does not itself require a review. No approval or
 reviewer identity is fabricated for unreviewed integration. Active review
 reservations block integration until completed or expired; actual blocking
-findings and trusted requested changes remain actionable. Scientific independent
-source assessment/adjudication requirements are unchanged. Automation/security
+findings and trusted requested changes remain actionable. Resubmitting the same
+head, changing PR/base/scope metadata or recovering ownership cannot erase its
+source-bound changes verdict. A new submitted source revision invalidates the
+old binding; a genuine optional reviewer may also supersede its verdict.
+Scientific independent source assessment/adjudication requirements are unchanged. Automation/security
 policy,
 credentials/authentication, destructive migrations, deployment and model-promotion
 scope requires explicit configured-owner authorization of the frozen task via

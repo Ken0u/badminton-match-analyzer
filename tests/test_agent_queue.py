@@ -803,12 +803,18 @@ def test_expired_review_can_be_reassigned_without_freeing_implementation():
         )
 
 
-def test_review_changes_returns_to_owner_and_submit_invalidates_old_review():
+def test_review_changes_returns_to_owner_and_changed_source_invalidates_old_review():
     h = Harness()
     h.reviewing()
     h.review_result("changes")
     assert h.state["tasks"]["1"]["status"] == "running"
-    h.submit()
+    h.owned(
+        "submit",
+        pr_number=10,
+        head_sha=MERGE,
+        base_sha=BASE,
+        spec_hash=h.state["tasks"]["1"]["spec_hash"],
+    )
     assert "review" not in h.state["tasks"]["1"]
 
 
@@ -1036,3 +1042,123 @@ def test_unknown_command_and_invalid_clock_fail():
         h.owned("teleport")
     with pytest.raises(QueueError, match="now"):
         expire_leases(h.state, True)
+
+
+@pytest.mark.parametrize(
+    "handoff", ["none", "release", "code-recovery", "terminal-recovery"]
+)
+@pytest.mark.parametrize("pr_number", [10, 11])
+def test_optional_changes_survive_identical_submission_and_ownership_handoffs(
+    handoff, pr_number
+):
+    h = Harness()
+    h.reviewing()
+    h.config["require_agent_review"] = False
+    h.review_result("changes")
+    original = copy.deepcopy(h.state["tasks"]["1"]["review"])
+    if handoff == "release":
+        h.owned("release", terminal_proof=terminal_proof())
+    elif handoff.endswith("recovery"):
+        claim = h.state["tasks"]["1"]["claim"]
+        h.now = claim["expires_at"] + 1
+        h.state = expire_leases(h.state, h.now)
+        if handoff == "code-recovery":
+            h.owned("recover", checkpoint={"branch": claim["branch"], "head_sha": HEAD})
+        else:
+            h.owned("recover", terminal_proof=terminal_proof())
+    if handoff != "none":
+        assert h.state["tasks"]["1"]["review"] == original
+        h.next()
+    task = h.state["tasks"]["1"]
+    h.send(
+        "submit",
+        task_id="1",
+        host_id="mac",
+        session_id="mac1",
+        epoch=task["epoch"],
+        pr_number=pr_number,
+        head_sha=HEAD,
+        base_sha=BASE,
+        spec_hash=task["spec_hash"],
+    )
+    task = h.state["tasks"]["1"]
+    assert task["review"] == original
+    with pytest.raises(QueueError, match="review required"):
+        h.send(
+            "integrate",
+            "github-actions[bot]",
+            task_id="1",
+            checks_passed=True,
+            **task["submission"],
+        )
+
+
+def test_optional_changes_clear_only_for_a_new_submitted_revision():
+    h = Harness()
+    h.reviewing()
+    h.config["require_agent_review"] = False
+    h.review_result("changes")
+    task = h.state["tasks"]["1"]
+    h.owned(
+        "submit",
+        pr_number=10,
+        head_sha=MERGE,
+        base_sha=BASE,
+        spec_hash=task["spec_hash"],
+    )
+    task = h.state["tasks"]["1"]
+    assert "review" not in task
+    h.send(
+        "integrate",
+        "github-actions[bot]",
+        task_id="1",
+        checks_passed=True,
+        **task["submission"],
+    )
+    assert h.state["tasks"]["1"]["status"] == "integrating"
+
+
+@pytest.mark.parametrize("optional", [False, True])
+def test_ownership_handoff_cannot_discard_an_active_review(optional):
+    h = Harness()
+    h.reviewing()
+    h.config["require_agent_review"] = not optional
+    before = copy.deepcopy(h.state)
+    with pytest.raises(QueueError, match="review must finish or expire"):
+        h.owned("release", terminal_proof=terminal_proof())
+    assert h.state == before
+    h.review_result("changes")
+    h.owned("release", terminal_proof=terminal_proof())
+    assert h.state["tasks"]["1"]["status"] == "ready"
+    assert h.state["tasks"]["1"]["review"]["verdict"] == "changes"
+
+
+@pytest.mark.parametrize("metadata", ["base", "scope"])
+def test_optional_review_blocker_cannot_be_cleared_by_metadata_only_change(metadata):
+    h = Harness()
+    h.reviewing()
+    h.config["require_agent_review"] = False
+    h.review_result("changes")
+    original = copy.deepcopy(h.state["tasks"]["1"]["review"])
+    if metadata == "scope":
+        expanded = copy.deepcopy(h.state["tasks"]["1"]["spec"])
+        expanded["paths"].append("tests/test_clock.py")
+        h.owned("extend-scope", spec=expanded)
+    task = h.state["tasks"]["1"]
+    h.owned(
+        "submit",
+        pr_number=11,
+        head_sha=HEAD,
+        base_sha=MERGE if metadata == "base" else BASE,
+        spec_hash=task["spec_hash"],
+    )
+    task = h.state["tasks"]["1"]
+    assert task["review"] == original
+    with pytest.raises(QueueError, match="review required"):
+        h.send(
+            "integrate",
+            "github-actions[bot]",
+            task_id="1",
+            checks_passed=True,
+            **task["submission"],
+        )
