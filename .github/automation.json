@@ -61,5 +61,6 @@
     "backend/badminton/track_consensus.py",
     "backend/badminton/actor_linking.py",
     "backend/badminton/court_detection.py"
-  ]
+  ],
+  "require_agent_review": false
 }

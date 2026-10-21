@@ -230,8 +230,9 @@ new backend or rewrite annotations. Stop and verify ownership of the deployed
 instance before replacing it. This development task does not perform that upgrade
 or rollback. Under [repository guidance](../AGENTS.md) and the
 [collaboration protocol](COLLABORATION.md), sensitive frozen task scope requires
-explicit configured-owner authorization, fresh independent agent approval and
-exact CI. Final non-author human PR review is optional. The
+explicit configured-owner authorization and exact CI. Agent and non-author human
+code reviews are optional when trusted configuration explicitly disables required
+agent review; running-instance deployment/upgrade authorization remains separate. The
 [phase 5 checkpoint](https://github.com/Ken0u/badminton-match-analyzer/issues/98#issuecomment-6293143852)
 records controller recovery, exact merged-main checks and complete public
 candidate delivery; original specifications and reviews remain preserved as

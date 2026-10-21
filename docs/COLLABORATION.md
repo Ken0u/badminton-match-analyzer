@@ -49,7 +49,7 @@ prepare the precise configuration and report these missing prerequisites togethe
 they must not silently claim enforcement is active. Existing Codex access and
 GitHub Actions/artifact quotas still apply; keep paid overage disabled.
 
-The controller checks ownership/scope, CI, independent review, resolved review
+The controller checks ownership/scope, exact CI, configured review policy and resolved review
 conversations, and configured-owner authorization of sensitive frozen task scope
 before serial merging and merged-main verification. GitHub Free does not itself
 block direct pushes, manual
@@ -68,14 +68,16 @@ routine automatic integration in the default controller mode.
 Start or resume Codex with this goal:
 
 > Continue the approved project roadmap using the repository coordination
-> protocol. Prioritize outstanding reviews and repairs, then claim eligible
-> tasks for this machine. Implement, test, obtain independent agent review, and
-> submit for automatic integration. Keep working while eligible tasks remain.
+> protocol. Prioritize repairs and requested reviews, then claim eligible
+> tasks for this machine. Implement, test and submit for automatic integration.
+> Independent code review is optional under trusted configuration. Keep working
+> while eligible tasks remain.
 > Escalate only according to the autonomy policy.
 
 The worker reads [its operating prompt](automation/worker.md), registers its
 host/capabilities, obtains one confirmed grant, and uses a dedicated task
-worktree. A separate fresh session follows [the reviewer prompt](automation/reviewer.md).
+worktree. When review is requested, a separate genuine fresh session follows
+[the reviewer prompt](automation/reviewer.md).
 Each host defaults to one implementation task plus an independent review slot.
 Task-owned subagents can explore or implement disjoint granted files; the task
 owner publishes their combined result and remains accountable for scope.
@@ -129,7 +131,8 @@ verified head SHA. The old epoch is fenced. Resource/input-bearing work retains
 the original-host process/Store/artifact proof requirement; an offline host is
 never assumed stopped.
 Before yielding, record the branch/PR, exact revision, tests, remaining work and
-artifact references. Review needs a fresh session, frozen spec, PR head and base;
+artifact references. Optional review needs a fresh session, frozen spec, PR head
+and base;
 a self-declared second verdict in the implementation session is insufficient.
 Review responses echo the grant's `review_epoch` separately from task `epoch`,
 with `verdict` set to `approve` or `changes` in the `--payload` JSON.
@@ -182,7 +185,15 @@ active work and retains reservations for recovery.
 
 Code and base changes invalidate review evidence. Three failed repair rounds
 escalate once with a clear blocker. Routine work can merge automatically after
-CI and fresh independent agent review. Automation/security policy,
+exact CI when trusted configuration explicitly sets `require_agent_review: false`.
+Missing or malformed values retain mandatory independent agent approval. The
+existing Review queue state means submitted work awaiting controller evaluation
+or an optional reviewer; it does not itself require a review. No approval or
+reviewer identity is fabricated for unreviewed integration. Active review
+reservations block integration until completed or expired; actual blocking
+findings and trusted requested changes remain actionable. Scientific independent
+source assessment/adjudication requirements are unchanged. Automation/security
+policy,
 credentials/authentication, destructive migrations, deployment and model-promotion
 scope requires explicit configured-owner authorization of the frozen task via
 `human-approved`. Freeze such work as risk-human before claiming it. The scope
@@ -222,8 +233,15 @@ recovery or completed milestones.
 
 ### Externally merged task PRs
 
-Routine PRs receive independent agent approval on their final head and then let
-the controller perform serial integration. A writer merging around that sequence is an incident,
+External recovery remains stricter than normal optional-review integration: it
+requires the original independent approval evidence. Changing today's policy
+does not waive missing, stale or rejected historical review or authorize a manual
+merge. Preserve old frozen specifications and recovery receipts.
+
+Routine PRs pass current exact-head CI and let the controller perform serial
+integration under the configured optional code-review policy. Requested reviews
+still bind their final head/base/specification. A writer merging around that
+sequence is an incident,
 even when the resulting source is correct. A merged PR without its matching
 integration journal is fenced into Recovery required. Its original grant,
 submission, specification, independent review and observed merger/source remain
@@ -358,7 +376,8 @@ Sensitive or risk-human repairs enter Needs human with their own frozen scope.
 An authenticated configured owner authorizes that exact repair hash using
 `human-approved` before claiming; the parent's authorization is not reused.
 The repair retains its paused-queue priority and `repair_for` linkage through
-authorization, independent review and verified integration. Nonsensitive routine
+authorization, configured code-review policy and verified integration.
+Nonsensitive routine
 repairs remain automatic. No non-author human PR approval is required.
 
 Candidate publishing stays pending until the complete candidate workflow succeeds,

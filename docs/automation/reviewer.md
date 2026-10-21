@@ -1,6 +1,8 @@
 # Independent read-only reviewer prompt
 
-Start a fresh session independent from the implementation session and obtain a
+Code review is optional when trusted configuration explicitly sets
+`require_agent_review: false`; do not create a reviewer just to satisfy a gate.
+When review is requested, start a fresh session independent from the implementation session and obtain a
 review grant with `review-next`. Read the frozen task specification, granted
 paths/resources, exact PR head/base, diff and relevant surrounding code.
 
@@ -18,6 +20,8 @@ limitations. Echo the review grant's `review_epoch` in the JSON supplied with
 An author session cannot provide its own review. Any changed head or base makes
 this verdict stale. Policy, authentication, destructive migration, deployment or
 model-promotion scope still needs explicit configured-owner authorization of the
-frozen task. A non-author human PR review is optional; fresh independent agent
-review and exact CI remain required. Review only observed evidence; report
+frozen task. Exact CI remains required; agent and non-author human code review
+are optional under the configured policy. An active review reservation blocks
+integration until the review completes or expires; reported blocking findings
+remain actionable. Independent source assessment/adjudication is unaffected. Review only observed evidence; report
 unavailable checks rather than imply they passed.

@@ -5,6 +5,30 @@ import re
 SHA = re.compile(r"^[0-9a-f]{40}$")
 
 
+def require_agent_review(config):
+    """Only an explicit JSON false opts out of mandatory agent approval."""
+    return config.get("require_agent_review") is not False
+
+
+def agent_review_errors(task, head, base, *, required):
+    """Optional review remains real evidence and can still veto integration."""
+    if task.get("review_claim"):
+        return ["Active independent agent review reservation must finish or expire"]
+    if "review" not in task and not required:
+        return []
+    verdict = task.get("review", {})
+    if (
+        not isinstance(verdict, dict)
+        or verdict.get("verdict") != "approve"
+        or verdict.get("head_sha") != head
+        or verdict.get("base_sha") != base
+        or verdict.get("spec_hash") != task.get("spec_hash")
+        or verdict.get("session_id") == (task.get("claim") or {}).get("session_id")
+    ):
+        return ["Fresh independent agent review required"]
+    return []
+
+
 def in_scope(path, prefixes):
     return any(
         path == p.rstrip("/") or path.startswith(p.rstrip("/") + "/") for p in prefixes
@@ -90,7 +114,7 @@ def rollout_errors(pr, changed, proposed, checks, reviews, config, main_sha):
     return errors
 
 
-def _source_errors(task, pr, files, checks, reviews, config):
+def _source_errors(task, pr, files, checks, reviews, config, *, require_review=None):
     """Evidence that remains necessary for both normal and external integration."""
     errors = review_errors(reviews, config)
     head, base = pr["head"]["sha"], pr["base"]["sha"]
@@ -103,6 +127,14 @@ def _source_errors(task, pr, files, checks, reviews, config):
         errors.append("Submission does not match PR base")
     if task.get("submission", {}).get("head_sha") != head:
         errors.append("Submission does not match PR head")
+    if task.get("submission", {}).get("spec_hash") != task.get("spec_hash"):
+        errors.append("Submission does not match frozen task specification")
+    if (
+        not task.get("claim")
+        or task["claim"].get("spec_hash") != task.get("spec_hash")
+        or task["claim"].get("epoch") != task.get("epoch")
+    ):
+        errors.append("Current task ownership grant required")
     if (
         pr["base"]["ref"] != "main"
         or pr["head"].get("repo", {}).get("full_name") != config["repository"]
@@ -137,15 +169,14 @@ def _source_errors(task, pr, files, checks, reviews, config):
             errors.append(
                 "Inference changes require source/model/code-bound native evidence and limitations"
             )
-    verdict = task.get("review", {})
-    if (
-        verdict.get("verdict") != "approve"
-        or verdict.get("head_sha") != head
-        or verdict.get("base_sha") != base
-        or verdict.get("spec_hash") != task.get("spec_hash")
-        or verdict.get("session_id") == task.get("claim", {}).get("session_id")
-    ):
-        errors.append("Fresh independent agent review required")
+    errors += agent_review_errors(
+        task,
+        head,
+        base,
+        required=(
+            require_agent_review(config) if require_review is None else require_review
+        ),
+    )
     return errors
 
 
@@ -191,7 +222,9 @@ def external_recovery_errors(task, pr, files, checks, reviews, config, request):
     coordination history, source/merge trees, ancestry and exact-main CI.
     An owner attestation is recorded separately from GitHub approval reviews.
     """
-    errors = _source_errors(task, pr, files, checks, reviews, config)
+    errors = _source_errors(
+        task, pr, files, checks, reviews, config, require_review=True
+    )
     if pr.get("merged") is not True or pr.get("state") != "closed" or pr.get("draft"):
         errors.append("External recovery requires an actually merged PR")
     if pr["head"]["ref"] != task.get("claim", {}).get("branch"):

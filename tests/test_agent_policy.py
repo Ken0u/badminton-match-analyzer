@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
-from devops.policy import external_recovery_errors, policy_errors
+from devops.policy import external_recovery_errors, policy_errors, require_agent_review
 from test_agent_coordinator import HEAD, policy_fixture
 
 
@@ -175,3 +175,129 @@ def test_without_human_review_all_independent_and_ci_gates_remain(recovery, defe
     else:
         errors = policy_errors(task, pr, files, checks, reviews, config, base)
     assert errors
+
+
+@pytest.mark.parametrize("setting", [None, True, 0, 1, "false", "true", [], {}])
+def test_agent_review_defaults_required_and_rejects_malformed_opt_out(setting):
+    args = list(policy_fixture())
+    args[0].pop("review")
+    args[5] = {**args[5], "require_agent_review": setting}
+    assert require_agent_review(args[5]) is True
+    assert "Fresh independent agent review required" in policy_errors(*args)
+    args[5].pop("require_agent_review")
+    assert "Fresh independent agent review required" in policy_errors(*args)
+
+
+def test_only_explicit_false_allows_missing_agent_review_without_fabrication():
+    args = list(policy_fixture())
+    args[0].pop("review")
+    args[5] = {**args[5], "require_agent_review": False}
+    before = copy.deepcopy(args)
+    assert require_agent_review(args[5]) is False
+    assert policy_errors(*args) == []
+    assert args == before and "review" not in args[0]
+
+
+@pytest.mark.parametrize(
+    "defect",
+    ["changes", "head_sha", "base_sha", "spec_hash", "self", "malformed", "active"],
+)
+def test_optional_review_preserves_real_review_vetoes(defect):
+    args = list(policy_fixture())
+    args[5] = {**args[5], "require_agent_review": False}
+    assert policy_errors(*args) == []
+    if defect == "changes":
+        args[0]["review"]["verdict"] = "changes"
+    elif defect == "self":
+        args[0]["review"]["session_id"] = args[0]["claim"]["session_id"]
+    elif defect == "malformed":
+        args[0]["review"] = None
+    elif defect == "active":
+        args[0].pop("review")
+        args[0]["review_claim"] = {"session_id": "fresh-review"}
+    else:
+        args[0]["review"][defect] = "stale"
+    assert policy_errors(*args)
+
+
+@pytest.mark.parametrize(
+    "defect",
+    [
+        "submission_head",
+        "submission_base",
+        "submission_spec",
+        "claim_epoch",
+        "claim_spec",
+        "missing_claim",
+        "wrong_branch",
+        "foreign_repo",
+        "scope",
+        "ci_head",
+        "ci_app",
+        "ci_failed",
+        "ci_running",
+        "main",
+        "owner",
+        "native",
+        "requested_changes",
+    ],
+)
+def test_optional_no_review_retains_other_source_and_owner_gates(defect):
+    args = list(policy_fixture())
+    task, pr, files, checks, reviews, config, _ = args
+    args[5] = config = {**config, "require_agent_review": False}
+    task.pop("review")
+    if defect.startswith("submission_"):
+        key = {"head": "head_sha", "base": "base_sha", "spec": "spec_hash"}[
+            defect.removeprefix("submission_")
+        ]
+        task["submission"][key] = "stale"
+    elif defect == "claim_epoch":
+        task["epoch"] += 1
+    elif defect == "claim_spec":
+        task["claim"]["spec_hash"] = "stale"
+    elif defect == "missing_claim":
+        task.pop("claim")
+    elif defect == "wrong_branch":
+        pr["head"]["ref"] = "codex/issue-99-other"
+    elif defect == "foreign_repo":
+        pr["head"]["repo"]["full_name"] = "outsider/fork"
+    elif defect == "scope":
+        files.append("backend/unreserved.py")
+    elif defect == "ci_head":
+        checks[0]["head_sha"] = "f" * 40
+    elif defect == "ci_app":
+        checks[0]["app"]["slug"] = "untrusted"
+    elif defect == "ci_failed":
+        checks[0]["conclusion"] = "failure"
+    elif defect == "ci_running":
+        checks[0]["status"] = "in_progress"
+    elif defect == "main":
+        args[-1] = "f" * 40
+    elif defect == "owner":
+        task["spec"]["risk"] = "human"
+    elif defect == "native":
+        config["native_evidence_paths"] = files[:]
+    else:
+        reviews.append(
+            {"id": 1, "user": {"login": "dootz1"}, "state": "CHANGES_REQUESTED"}
+        )
+    assert policy_errors(*args)
+
+
+@pytest.mark.parametrize(
+    "defect", ["missing", "self", "head_sha", "base_sha", "spec_hash"]
+)
+def test_external_recovery_requires_original_review_despite_current_optional_config(
+    defect,
+):
+    args = list(recovery_policy_fixture())
+    args[5] = {**args[5], "require_agent_review": False}
+    assert external_recovery_errors(*args) == []
+    if defect == "missing":
+        args[0].pop("review")
+    elif defect == "self":
+        args[0]["review"]["session_id"] = args[0]["claim"]["session_id"]
+    else:
+        args[0]["review"][defect] = "stale"
+    assert "Fresh independent agent review required" in external_recovery_errors(*args)

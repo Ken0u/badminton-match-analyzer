@@ -13,7 +13,12 @@ import math
 import re
 from typing import Any
 
-from .policy import scope_authorized, sensitive_scope
+from .policy import (
+    agent_review_errors,
+    require_agent_review,
+    scope_authorized,
+    sensitive_scope,
+)
 
 LEASE_SECONDS = 3 * 60 * 60
 RESERVED = {
@@ -835,16 +840,30 @@ def apply_request(
             )
             task["reason"] = "PR binding changed; submit and review the new head"
         elif verb == "integrate":
+            if task["status"] != "review":
+                raise QueueError("current submitted task required")
+            submission = task.get("submission", {})
+            claim = task.get("claim", {})
             if (
-                task["status"] != "review"
-                or task.get("review", {}).get("verdict") != "approve"
+                not claim
+                or claim.get("spec_hash") != task.get("spec_hash")
+                or claim.get("epoch") != task.get("epoch")
+                or submission.get("spec_hash") != task.get("spec_hash")
             ):
-                raise QueueError("current approving review required")
+                raise QueueError("current task ownership and specification required")
             if any(
-                request.get(k) != task["submission"][k]
+                request.get(k) != submission.get(k)
                 for k in ("head_sha", "base_sha", "spec_hash")
             ):
                 raise QueueError("integration binding changed")
+            errors = agent_review_errors(
+                task,
+                submission.get("head_sha"),
+                submission.get("base_sha"),
+                required=require_agent_review(config),
+            )
+            if errors:
+                raise QueueError("; ".join(errors))
             if request.get("checks_passed") is not True:
                 raise QueueError("exact-head checks required")
             if any(

@@ -30,7 +30,7 @@ from the private Project, as described below.
    environments and Windows research jobs are not migrated or restarted.
 6. Select two small nonconflicting issues, one per host. In an owner-authorized
    configuration PR set `mode` to `pilot` and `pilot_tasks` to their issue numbers.
-   Verify committed grants, independent reviews, sequential merges, merged-main
+   Verify committed grants, any requested independent reviews, sequential merges, merged-main
    checks, board updates and candidate artifacts matching the declared visibility.
 7. After both pilots pass, use an owner-authorized configuration PR to change mode
    to `active`. GitHub Actions and artifact/storage quotas still apply; keep
@@ -52,6 +52,18 @@ accepts durable requests after the trusted controller is merged. Project creatio
 requires a Project-capable credential; ordinary repository authentication alone
 may not provide that scope. The board stays private even when source and build
 artifacts are public. Project authorization does not require buying GitHub Pro.
+
+## Code review policy
+
+Trusted configuration sets `require_agent_review: false` for autonomous integration
+after required exact CI. Missing or malformed values retain mandatory agent
+review. Optional reviews still use genuine fresh sessions and committed grants;
+active review reservations and reported blocking findings remain binding. Sensitive
+frozen scope still requires configured-owner authorization. Tests, source/scope
+checks, controller-only serial merges, exact merged-main checks and complete
+public delivery remain required. Historical external-merge recovery retains its
+original independent approval evidence; this setting does not retroactively
+legitimize a bypass. Independent scientific source assessments are unaffected.
 
 ## Candidate visibility and public builds
 
