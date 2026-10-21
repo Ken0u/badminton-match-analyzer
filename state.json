@@ -1960,6 +1960,15 @@
       "task_id": "176",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player183-approved-assessments-v1": {
+      "actor": "dootz1",
+      "at": 1792620830,
+      "epoch": 1,
+      "fingerprint": "e7c71eec1a771fba27fe69583360a99cb5b9e0d96f218e793fd1d1bd08ec7ed7",
+      "status": "running",
+      "task_id": "183",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-player183-authorization-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792619355,
@@ -12614,24 +12623,24 @@
       "checkpoint": {
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "evidence": [
-          "CI39682709322success on exacthead/base dd59a5f; all requiredjobs including native Windows/macOS pass. Audited revision testedtreeeb7d549d, source-hashed browser18/13/8groups and installedwheel authenticated HTTP assets/routes/ownedexit receipts under.cache/evidence/head-ci-39682709322/audit.json.",
-          "123focused tests with installedvision pass; minimal3.12full1946pass17existing optional skips with all123audit tests included. Newoptionalvision repair avoids modeldependency for decoding and preserves installedruntime initialization/error behavior. OriginalfailedCI/logs preserved.",
-          "All15prepared nativepacket files still match original hashes. No external assessment process, rawassessmentstream, adjudication or score exists; actualpredictions remain unopened. Sourcejobterminalproof retained; no newinference or appupgrade.",
-          "Automatic approval review rejected sending11privateframes to freshCodex sessions because explicit export permission was absent. Userpermission question remains pending; no indirect export bypass attempted."
+          "UserYes explicitly authorizes11frameexport to existingCodex for sourceassessment/adjudication; approval provenance retained.cache/evidence/assessment-authorization-approved.json. No broader data/model/app permission inferred.",
+          "First CLI invocations terminatedexit1 before session/image analysis due configparsing. Retained initial stderr/exits. Standard --ignore-user-config retry preserves read-onlysandbox/existingauth; no app/config upgrades or edits.",
+          "Actual independent CLIthreads01a16086-bb4b-7283-8275-5fc72522f7c7 and01a16086-c06b-77a3-99e1-b7972ed6adb9, PIDs72032/72033, observed exec46764 live. Each receives same source-only11images and schema; no otherassessment/prediction access allowed.",
+          "ExactheadCI39682709322 remainsgreen; no newmodelinference or nativedecoding. Predictions remainunopened until originalstreams and separate sourceadjudication sealed."
         ],
         "head_sha": "a2c85fcf28a8362244687ddb93bdf1726d56c64c",
-        "next": "Await explicit permission for11frozen frames from supplied singles video17.36\u201327.36s to existingCodex sourceassessment/adjudication sessions. Then complete frozen blind streams/seals/adjudication/scoring, report, genuine fresh finalreview, controller integration/exactmain/publicdelivery. CurrentotherReady tasks179/181 require Windows/CUDA and are not Maceligible; no requestedcodeReview or repair currently available.",
-        "phase": "Exact repaired-head CI39682709322 fully passed and receipts audited. DraftPR184 remains incomplete solely pending authorization for private-image independent assessment and its downstream scientific/final-review/integration/delivery steps.",
+        "next": "Wait original live sessions; validate without editing their originals, seal rawhashes, then separate blind-to-predictions sourceadjudication. Score fixedcachedrun only after seals; finalreport/tests/freshreview/controller/main/fullpublicdelivery.",
+        "phase": "Owner explicitly approved sending only11frozen privateframes to Codex independent source assessment/adjudication; original grant epoch1/spec revalidated and frozenfiles unchanged. Two genuine fresh read-only CLI source sessions now active.",
         "pr_number": 184,
         "spec_hash": "b71cb5f5886e208d034edfb7a54c0ff719d8790860e0bdb5654f63d8d682dfe3"
       },
-      "checkpoint_at": 1792620184,
+      "checkpoint_at": 1792620830,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "dd59a5f10a0a2c75f0b16c4715cd506ded36842d",
         "branch": "codex/issue-183-measure-sampled-mac-player-localization-",
         "epoch": 1,
-        "expires_at": 1792630984,
+        "expires_at": 1792631630,
         "granted_at": 1792618168,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
