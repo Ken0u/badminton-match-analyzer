@@ -6477,6 +6477,15 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "windows-shuttle163-initial-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792560294,
+      "epoch": 1,
+      "fingerprint": "8c1ef9ec7a19945a69ee35cb6b2ff611af37dc5d58e204f537a3e455fcb38026",
+      "status": "running",
+      "task_id": "163",
+      "verb": "checkpoint"
+    },
     "windows-shuttle163-next-v1": {
       "actor": "Ken0u",
       "at": 1792559730,
@@ -10211,12 +10220,21 @@
       }
     },
     "163": {
+      "checkpoint": {
+        "branch": "codex/issue-163-freeze-independent-source-only-assessmen",
+        "head_sha": "139701d",
+        "next": "Complete both actual128-center source-only assessments; preserve original bytes. After both sealed, owning actual session01a1487b-8328-7960-a200-c26703ad12cc adjudicates disagreements/agreed negatives through original source inspection. Parent owns protocol/report, integrates delegate3files, validates/freezes exclusive lineage,required checks/fresh separate PR review/controller/main/full public delivery. No model/prediction/holdout63 access or data-rights/eligibility/accuracy promotion. PROGRESS.md deprecated and untouched.",
+        "phase": "Protocol committed/published before visual inspection; source inputs reverified; two fresh source-only assessors active",
+        "spec_hash": "fb340a13646d2220fd5682d5b747268a956fb14e3a45c6f2adfc73fed038e42c",
+        "verification": "Protocol SHA256 f7a985e162e7d48f2c8cff8ee9f8d9c718a4acfa07239c6dfbb84c0f5466b95b. Blind input SHA256 c86dbd69b2e3c02ee355cb32c538cc37bcb8a270848f9e630aea55e0ebcc351c. Separate credential-free input audit reverified both raw hashes,all248100 native clock identities,56 frozen consumer hashes,all632 PNG hashes/bytes/geometry,128 cases/640 memberships and preserved unknown templates/false flags; no native decode or inference. Protocol139701d published before either actual source-only session began inspecting images. Assessor A actual01a15cea-5ca8-7d90-a604-cdc67c70a06b; B actual01a15cea-a37f-7f13-8062-92ded534685e. Their original labels remain separate and unshared. Validation delegate owns only module,launcher,tests in isolated shuttle163-validation worktree,not an independent reviewer."
+      },
+      "checkpoint_at": 1792560294,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6acf4b1750c64cd79d7a829e1c3fe4287f5f9569",
         "branch": "codex/issue-163-freeze-independent-source-only-assessmen",
         "epoch": 1,
-        "expires_at": 1792570530,
+        "expires_at": 1792571094,
         "granted_at": 1792559730,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
