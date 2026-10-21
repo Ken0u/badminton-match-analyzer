@@ -5847,6 +5847,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-shuttle149-independent-result-f17becf5": {
+      "actor": "Ken0u",
+      "at": 1792544554,
+      "epoch": 2,
+      "fingerprint": "e5fb30f1f1235ce5ce266d4af13fd63be2ad1a62438e60f23bced46f1e428bf1",
+      "status": "review",
+      "task_id": "149",
+      "verb": "review-result"
+    },
     "windows-shuttle149-next-v1": {
       "actor": "Ken0u",
       "at": 1792514851,
@@ -9020,14 +9029,33 @@
       "planned_by": "Ken0u",
       "pr_number": 157,
       "reason": "released after terminal proof",
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792544554,
         "base_sha": "9d7ee10b6bf474993b4781abdc533ebfdca751e8",
-        "epoch": 2,
-        "expires_at": 1792554676,
-        "granted_at": 1792543876,
+        "evidence": [
+          "Fresh independent reviewer MSI/session f17becf5129f4035af82b3cbb973914f is distinct from the implementation session. Actual review grant windows-shuttle149-independent-next-f17becf5 binds implementation epoch 2, review_epoch 1, exact head/base/spec; authoritative state revalidated before verdict.",
+          "Independent isolated-checkout pytest: 1492 passed and 4 existing optional GPU skips in 161.92 seconds, including all 23 focused heatmap cases. JUnit SHA256 b5d6ad7d1f40968c5d64edefffd2f6756ceb48b87913989a2624b2722efba262. Ruff lint and format, pip check, changed-file UTF-8/LF/strict-JSON/local-link checks, CLI help and base-to-head diff check pass; checkout remains clean.",
+          "Independent read-only audit verifies all 249 indexed artifact hashes and all 60 recursive frozen consumer/config/script bytes against final committed Git. Evidence-index SHA256 54b3f027494efb8810ee1e1336419af08e5ef3b0f0eb4e6fc977bba9c4b7ce2e and submitted native receipt SHA256 72c29d059e0f67c54a36ee474e71a38f9fc0c4bf4abe42170b32ecedceada48d match.",
+          "Independent standard-library comparison verifies all 50 complete views and 13499 native rows against the original baseline with zero differences under absolute confidence tolerance 0.00001 and relative tolerance 0; other structure is exact. All 60 finite float32 heatmaps, global maxima, deterministic row-major argmax, mapped distances and nominal/inner/outer disk responses independently equal the fixed report. All 20 group aggregates and complete summary independently recompute exactly.",
+          "Independent SQLite mode=ro checks verify original video/catalog snapshots, annotation revisions/documents and registered predictions remain unchanged. Three recorded scientific lifetimes have exited and their original shared Store rows match interrupted/completed/completed. All 22 original sealed views remain in the final 50-view index; only 28 new views were inferred. Charged cumulative duration is 3520.517 seconds within 3600; unique native-view sum is 1148.052 seconds.",
+          "Independent audit receipt SHA256 6136b7206c4c50055cf93ad234608c685e713097a789c736e53fce2b3edfa020; independent group recomputation receipt SHA256 10f2a0d0cbb04525e2289aaeaa50beb20297bb924b047d67b74eaa7da5641547. Detailed process, Store, runtime and raw data evidence remain private local artifacts.",
+          "Authenticated GitHub comments 6304085710, 6304851314 and 6305027849 independently verified as published before initial capture, resumed capture and interpretation respectively, with matching frozen experiment/protocol, explicit recovery, index and terminal hashes. The final fixed report SHA256 is 3e4489e694ac5d0433a1664db9d266cb4c979e5498fa551d3695133ee2cc85ba.",
+          "GitHub PR 157 independently reports unchanged head f6a0e5d068c634ffc714aedf6a59d54903a2ed1b, base 9d7ee10b6bf474993b4781abdc533ebfdca751e8 and exactly the six granted changed paths. Exact-head workflow 39522977490 attempt 2 is completed success with all 12 jobs including browser-import and ci/gate successful. Initial failure artifact and separate repair 158 remain preserved."
+        ],
+        "findings": [
+          "No blocking defects found in the six granted paths. The opt-in observer receives a separate read-only post-ensemble array, cannot change output by reenabling writes, and propagates failures. Default inference and persisted row schema are preserved.",
+          "A real pre-existing exact-frame race remains in unchanged Playback.tsx: a seek during unsupported-media switching can lose its exact-image request because mediaError only clears switching. Failed CI attempt 1 is preserved; separate Ready repair issue 158 tracks this outside the heatmap scope. The unchanged exact-head failed-job retry passed without source, timeout or check modifications."
+        ],
         "head_sha": "f6a0e5d068c634ffc714aedf6a59d54903a2ed1b",
-        "host_id": "MSI",
+        "limitations": [
+          "These familiar two-source development agent assessments are not expert or independent truth, calibrated probabilities, complete detection, or full-match annotation accuracy. All 25 visible, 7 absent, 28 unknown and 0 visible-unlocalizable cases remain explicit; no established occlusion or transition support is invented.",
+          "The first native worker exited abruptly without a worker terminal or known exit code. The independently audited original-host operational recovery uses existing Store.recover_jobs and an explicitly external interrupted receipt, not fabricated worker success. Its 2902-second conservative charge is not measured native inference time. Generated recovery tests do not establish general SIGKILL recovery support.",
+          "One abandoned partial array remains preserved and uninterpreted: 61 physical arrays versus 60 indexed case heatmaps. Resumed success, Store completion and immutable history establish this bounded recovery only.",
+          "No native inference was rerun by this reviewer; native scientific evidence was audited read-only, with standard-library response recomputation and read-only SQLite checks. Four existing optional GPU tests were skipped in the independent software suite.",
+          "No consumed holdout 63 inputs, predictions, protocols, private membership or artifacts were accessed. No installs, model or threshold selection, training, annotation changes, raw redistribution or promotion occurred. All four usage eligibility flags remain false.",
+          "The separate frontend race in issue 158 remains unresolved despite successful exact-head CI attempt 2. Controller integration, merged-main verification and candidate delivery remain separate required steps; this review does not certify them or close parent 65."
+        ],
         "native_evidence": {
           "code_sha": "f6a0e5d068c634ffc714aedf6a59d54903a2ed1b",
           "limitations": [
@@ -9045,9 +9073,17 @@
           "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
         },
         "pr_number": 157,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/shuttle.py",
+          "backend/badminton/shuttle_heatmaps.py",
+          "scripts/diagnose_shuttle_heatmaps.py",
+          "tests/test_shuttle_heatmaps.py",
+          "data/manifests/shuttle_heatmap_protocol_v1.json",
+          "docs/SHUTTLE_HEATMAP_REPORT.md"
+        ],
         "session_id": "f17becf5129f4035af82b3cbb973914f",
-        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d"
+        "spec_hash": "d17b79fb03b457a6bdf496d1ac574c6330ceb1d7ce5443de07d05517c6355b1d",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
