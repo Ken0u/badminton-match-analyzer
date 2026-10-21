@@ -1,0 +1,163 @@
+{
+  "adjudication_document": {
+    "assessment_sha256": "Ordered list [SHA256 of immutable assessor A bytes, SHA256 of immutable assessor B bytes]. Both originals must be sealed before adjudication.",
+    "cases": "Same exact case fields as an assessment, for every required adjudication and optionally other actually inspected cases. The adjudicator must be a distinct actual session and inspect each listed native center/context.",
+    "required_fields": [
+      "schema_version",
+      "role",
+      "adjudicator_id",
+      "session_id",
+      "protocol_sha256",
+      "inputs_sha256",
+      "assessment_sha256",
+      "eligibility",
+      "cases"
+    ],
+    "required_set": "All raw label disagreements across visibility,x,y,uncertainty_radius,scene,difficulty tag sets, plus all agreed not_visible cases. Differences in reasons or inspected context do not erase their originals but are not label disagreements.",
+    "resolution": "Explicit source-based decision and inspection record, preserving unknowns and raw differences. Never average points or silently replace originals. Matching nonnegative cases without adjudication retain two-assessor agreement and do not claim third inspection.",
+    "role": "source_only_adjudication"
+  },
+  "assessment_document": {
+    "all_cases": "Exactly the fixed128 original cases, once each. Each assessor independently views all available centers at original oriented native resolution; context is optional as needed.",
+    "case_key": "<canonical source_id>:<two-digit case_id>, e.g. go2uajSiBnE:00",
+    "case_required_fields": [
+      "key",
+      "source_id",
+      "case_id",
+      "center_frame",
+      "visibility",
+      "x",
+      "y",
+      "uncertainty_radius",
+      "scene",
+      "difficulty",
+      "reason",
+      "negative_evidence",
+      "inspected_frames"
+    ],
+    "difficulty": "Nonempty unique tag list. ordinary cannot coexist with other tags. unresolved may coexist with observed difficulty. Tags describe observed support, not a forced balanced category.",
+    "inspected_frames": "Unique entries {frame: native integer ordinal, image_sha256: actual sealed PNG SHA256}. Include the center when available and only actually viewed declared context frames. For unavailable centers retain unknown with an explicit reason; never invent an inspection.",
+    "negative_evidence": "Nonempty affirmative evidence explanation of at least10 characters for not_visible; null otherwise. A non-play scene may contain a grounded shuttle and is not automatically negative. Inability to find a tiny object is unknown.",
+    "reason": "A nonempty concrete source observation for every case, including uncertainty. Do not claim a session inspected an image unless the view tool was actually used.",
+    "required_fields": [
+      "schema_version",
+      "role",
+      "assessor_id",
+      "session_id",
+      "protocol_sha256",
+      "inputs_sha256",
+      "eligibility",
+      "cases"
+    ],
+    "role": "source_only_assessment"
+  },
+  "coordinates": {
+    "nullable": "x,y,uncertainty_radius must all be null outside visible_localizable.",
+    "space": "Original oriented native image; zero-based pixel centers. No resizing, interpolation or neighboring-frame transfer.",
+    "uncertainty": "Finite uncertainty_radius in native pixels, at least1 and at most hypot(width,height). Estimate a source-supported disk; it is not a confidence score.",
+    "visible_unlocalizable": "Affirmatively visible at the center, but no defensible point can be placed. Explain the observation.",
+    "x_bounds": "0 <= x <= width-1",
+    "y_bounds": "0 <= y <= height-1"
+  },
+  "difficulty_tags": [
+    "ordinary",
+    "fast_flight",
+    "blur",
+    "small_far",
+    "occlusion",
+    "distractor",
+    "camera_transition",
+    "non_play",
+    "unresolved"
+  ],
+  "eligibility": {
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "training_allowed": false
+  },
+  "limits": {
+    "assessment_document_bytes": 4194304,
+    "max_runtime_hours": 4,
+    "output_bytes": 268435456
+  },
+  "packet_context_sha256": "94f24bbc864f054283e9d7a8e2eb393191ebfa9ea4c508e86cbabae82c949669",
+  "producer_commit": "a4598f403fd19a8a34cc96043cd49e0dbf87d26d",
+  "purpose": "Source-only development agent assessments; not expert-certified truth, an independent test, permission to train, or annotation accuracy.",
+  "rules": [
+    "Commit this exact protocol before either assessor visually inspects any selected image. Revalidate all source/declaration/protocol/context/clock/PNG seals before assessment and again before freeze.",
+    "Two genuinely fresh source-only assessor sessions must not access each other labels, old139 assessments, research code, trained detector/model outputs, predictions, heatmaps, application truth or consumed holdout63 inputs/predictions/protocols/private membership/artifacts.",
+    "Assessor inputs contain only this protocol and existing160 packet/PNG identities. View every center at original oriented native resolution using the image tool; bounded declared neighbors may clarify appearance but cannot supply an unobserved center location.",
+    "A source-only assessment may remain unknown. Neither image hashes nor software can prove actual visual inspection; preserve actual distinct sessions and inspection evidence and state this limitation.",
+    "Preserve original packets, unknown templates, independent assessment bytes, disagreements, reasons and explicit adjudications in separate exclusive ignored output. No writes to existing data or application truth.",
+    "Keep all128 cases and640 requested memberships; unknown/unavailable support is never silently dropped or treated as absent. Deduplicated632 PNGs do not change denominators.",
+    "No new download/native decode, trained detector/inference/training/prediction comparison, threshold search, source/model/default registration, promotion, new dependencies, paid services or eligibility change.",
+    "Publish reproducible validation/freezing code, public protocol and aggregate support/agreement/limitations only. Raw PNGs, per-case labels and private inspection/session provenance remain ignored. Public availability does not establish media rights.",
+    "Case-level play/non-play/replay observations do not certify semantic full-match completeness, camera segmentation, original-match identity, upstream membership, independence or balanced difficult-case support.",
+    "Agent source assessments are not human/expert-certified truth or measured localization accuracy. Parent65 and the full product goal remain open; another separately frozen grant is required for a model improvement experiment."
+  ],
+  "scenes": [
+    "unknown",
+    "play_view",
+    "non_play",
+    "replay"
+  ],
+  "schema_version": 1,
+  "selection": {
+    "case_count": 128,
+    "center_formula": "floor(j*(N-1)/63), j=0..63",
+    "centers_per_source": 64,
+    "clamped_edges": "Retain every requested membership; deduplicate PNG storage only.",
+    "context_offsets": [
+      -2,
+      -1,
+      0,
+      1,
+      2
+    ],
+    "requested_context_memberships": 640,
+    "unique_images": 632
+  },
+  "source_declaration_sha256": "0267138a519668369f5a2b0054822456c51257b244989c71c131c7f6cbd0ead7",
+  "source_packet_protocol_sha256": "76ba01d7e13b5cf5e050c4a0ae5c243066cc88307b8debf05eaeeb98f27487a3",
+  "sources": [
+    {
+      "case_count": 64,
+      "category_metadata_assertion": "singles",
+      "clock_sha256": "f1cf689916f85716fddb692f5bb9118812a4f4c66f211ed4b9de7e7c6fb3965f",
+      "display_size": [
+        1920,
+        1080
+      ],
+      "native_frame_count": 129600,
+      "packet_sha256": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b",
+      "requested_context_memberships": 320,
+      "source_id": "go2uajSiBnE",
+      "source_sha256": "708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9",
+      "unique_images": 316,
+      "unknown_template_sha256": "219af22f346f7e1a618a5b979ecbb009ac9efcd5a100591e05bbca4d21d858b9"
+    },
+    {
+      "case_count": 64,
+      "category_metadata_assertion": "doubles",
+      "clock_sha256": "867467f96a9bedecff035053d765e368d70abcde13d79dc4830b4c24fe87d5b0",
+      "display_size": [
+        1920,
+        1080
+      ],
+      "native_frame_count": 118500,
+      "packet_sha256": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+      "requested_context_memberships": 320,
+      "source_id": "H1setLK1tig",
+      "source_sha256": "49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623",
+      "unique_images": 316,
+      "unknown_template_sha256": "1410a06144a1d70fe84ba43d16d1232e723dd4df48a15ad781400e235e216a7f"
+    }
+  ],
+  "visibility_states": [
+    "visible_localizable",
+    "visible_unlocalizable",
+    "not_visible",
+    "unknown"
+  ]
+}
