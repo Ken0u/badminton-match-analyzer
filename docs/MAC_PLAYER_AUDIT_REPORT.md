@@ -51,13 +51,66 @@ The preparation executed commit `c745204047cdadd844db65b70e1aeea6c301131c`;
 its receipt records exact launcher/core source hashes. No model ran.
 
 The local ignored packet is
-`.cache/player-audit-183/.cache/source-packet-v1`. Independent image assessment
-is **not yet complete**: automatic approval review rejected sending these
-private frames to fresh Codex sessions without explicit image-export
-authorization. No external assessment process started, no assessment documents
-or scores exist, and cached prediction contents remain unopened. The prepared
-packet and its hashes are preserved while that authorization is pending.
-This checkpoint contains no observed localization or identity result.
+`.cache/player-audit-183/.cache/source-packet-v1`. After the owner explicitly
+approved sending only these eleven private frames to Codex, two genuine fresh
+read-only source sessions completed independently. Their actual thread IDs are
+`01a16086-bb4b-7283-8275-5fc72522f7c7` and
+`01a16086-c06b-77a3-99e1-b7972ed6adb9`. Each received the same eleven source
+images, read packet/hash evidence only, and had no predictions or other
+assessment supplied. Both original JSON documents remain unchanged. Their raw
+SHA-256 values are:
+
+- Stream A: `2e71d3327200a93c3a74d7df3aca7801febbb5f88f69d36d53c5c06285c5db03`.
+- Stream B: `d6393b9c9316c7de818b65be22b85f1639393c7d9c98b723eb362bfca574ce57`.
+
+A third fresh source-only session,
+`01a16089-8171-7b51-a749-6bd991d7a44a`, compared the originals against the
+same images. It retained 24 disagreement records covering box boundaries,
+occlusion, actor descriptors and continuity across views. All eleven frames and
+22 person observations remain present; both source streams enumerate two
+people in each frame. The adjudication does not bridge the changed close-up at
+659 or the return to a wide view at 684. These are automated assessments, not
+independent human gold labels. Adjudication raw SHA-256:
+`c5c096f6913d44fd826be2635992e3d6216956c1ef5fd09dca45a8ef362a25ab`.
+
+Both original streams were sealed before adjudication; the adjudication was
+sealed before the first cached-prediction content read. The shared Store then
+completed scoring job `2edb315aa48b41b0a41c61d7d2420bd8`. Actual scoring process
+75256 (creation time 1792621124.269885) exited 0; all source inputs, original
+prediction files, images and seals remained unchanged. No inference or source
+decoding was repeated. Scoring executed code
+`a2c85fcf28a8362244687ddb93bdf1726d56c64c`. Score SHA-256:
+`fb519bede2d29f9fef3c08c1b99c4e506df7fca352b6690e0323bbf7153eb202`.
+
+| Frozen sampled result | Count |
+| --- | ---: |
+| Sampled/scored native frames | 11 / 11 |
+| Source person observations / localizable | 22 / 22 |
+| Raw/scored predictions | 23 / 23 |
+| One-to-one matches at IoU ≥0.5 | 20 |
+| Unmatched eligible source people | 2 |
+| Unmatched predictions | 3 |
+| Unknown actors / unlocalizable people | 0 / 0 |
+| Identity-ineligible observations after matching | 2 |
+| Sampled transition candidates / eligible | 24 / 14 |
+| Ineligible transitions retained | 10 |
+| Same-ID / changed-ID eligible transitions | 14 / 0 |
+
+Matched IoU ranges from 0.602 to 0.985, mean 0.864, conditional on the twenty
+matches. The far player has no matched prediction at frame 584 during motion;
+the partly occluded person has none at close-up frame 659. Three extra
+predictions at 684 remain unmatched source observations, without turning that
+count into a calibrated false-positive rate. Parent inspection of native source
+images 584 and 659 corroborates motion/occlusion context after all labels were
+sealed; it did not change any labels or thresholds. The original cached cuts
+639 and 683 block cross-view transitions. Ten transition candidates remain
+ineligible because an endpoint lacks a match or the view/camera changes; zero
+eligible sampled ID changes cannot rule out switches between the samples.
+Five view-scoped source-actor groups each use one matched local track ID, with
+no sampled ID reuse across source actors in a view. They are not named players,
+roster counts or complete identities. No tracker change or promotion follows
+from these results. Motion, occlusion and extras are concrete development
+failure cases for a separately frozen follow-up.
 
 Generated tests reproduce and prevent four scoring races involving changed
 packet, image, stream-seal and adjudication-seal bytes. Scoring rechecks every
@@ -72,10 +125,12 @@ All 123 focused generated tests pass with installed vision; the complete minimal
 Python 3.12 suite passes 1,946 tests with 17 existing optional skips, including
 every audit test. Ruff, formatting of 179 files, dependency consistency,
 repository validation, local document links and UTF-8/LF checks also pass.
-The independent scientific assessments, final fresh code review, exact-head/main
-CI and full public delivery are still required before this task is complete.
-Exact verification receipts and scientific results will be added after the
-frozen assessment protocol is complete. Shuttle, contact, shot-family/side, serve and
+Exact scoring-head CI 39682709322 passes, including Windows/macOS. Revision,
+browser groups 18/13/8 and installed-package HTTP receipts were audited against
+the exact source. This aggregate report changes afterward; fresh final-head
+code review, exact-head/main CI and full public delivery are still required
+before this task is complete. Verification receipts belong on the owning issue.
+Shuttle, contact, shot-family/side, serve and
 rally-end correctness are outside this player-only increment. The MSI shuttle
 task [#179](https://github.com/Ken0u/badminton-match-analyzer/issues/179)
 has separate Windows/CUDA input requirements. Doubles, unseen-source generalization,
