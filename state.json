@@ -6392,6 +6392,28 @@
       "task_id": "160",
       "verb": "plan"
     },
+    "windows-shuttle160-review-next-01a15ccf-v1": {
+      "actor": "Ken0u",
+      "at": 1792558660,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
+        "epoch": 1,
+        "expires_at": 1792569460,
+        "granted_at": 1792558660,
+        "head_sha": "6dd4bd53f93be85ded110004649b999c5432fa37",
+        "host_id": "MSI",
+        "pr_number": 162,
+        "review_epoch": 1,
+        "session_id": "01a15ccf-b26b-7b13-8474-cc8619291089",
+        "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
+      },
+      "epoch": 1,
+      "fingerprint": "23fb17791a730603debf5a079183e257b4e306a5e17b0e6696a8faa036a81017",
+      "status": "granted",
+      "task_id": "160",
+      "verb": "review-next"
+    },
     "windows-shuttle160-review-register-01a15ccf-v1": {
       "actor": "Ken0u",
       "at": 1792558563,
@@ -10007,6 +10029,20 @@
       "planned_at": 1792549388,
       "planned_by": "Ken0u",
       "pr_number": 162,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "5256b3bf4d9ab05b323777d79adff45274720bdb",
+        "epoch": 1,
+        "expires_at": 1792569460,
+        "granted_at": 1792558660,
+        "head_sha": "6dd4bd53f93be85ded110004649b999c5432fa37",
+        "host_id": "MSI",
+        "pr_number": 162,
+        "review_epoch": 1,
+        "session_id": "01a15ccf-b26b-7b13-8474-cc8619291089",
+        "spec_hash": "614d247163abc1148da60cf80e824de05b7b529b25b0fe69fdce42f82c32a00a"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Under parent65 and completed139/143/145/149/158, inspect all issue/PR/history/grants for duplicates before implementation. Pin exactly official BWF TV singles go2uajSiBnE (4320s metadata) and doubles H1setLK1tig (3950s metadata), channel UChh-akEbUM8_6ghGVnJd6cQ, video-only AVC format137 at1920x1080/30fps. Anonymous metadata preflight succeeded but no source bytes were downloaded during planning. Reject the483s kEQBaobDUFY highlights candidate; preserve all source-selection/access evidence. Actual decoded duration/frame count and full-match semantic completeness remain unverified until source inspection; metadata is not ground truth.",
