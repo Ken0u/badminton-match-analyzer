@@ -110,9 +110,19 @@ def verify_packet(directory, manifest, manifest_sha256):
     return packet, digest(packet_path)
 
 
+def initialize_vision():
+    """Initialize installed vision hooks before decoding; decoding needs no model extra."""
+    from importlib import import_module
+    from importlib.util import find_spec
+
+    if find_spec("torchvision") is not None:
+        import_module("torchvision")
+
+
 def prepare(root, data, manifest, manifest_sha256, output):
     import psutil
-    import torchvision  # noqa: F401 -- initialize before threaded PyAV decoding
+
+    initialize_vision()
     from badminton.jobs import run_local_job
     from badminton.storage import Store
     from badminton.video import iter_frames

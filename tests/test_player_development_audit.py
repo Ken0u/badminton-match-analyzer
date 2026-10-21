@@ -465,17 +465,46 @@ def launcher():
     return module
 
 
+def test_launcher_decoding_does_not_require_optional_vision(launcher, monkeypatch):
+    import importlib
+    import importlib.util
+
+    monkeypatch.setattr(importlib.util, "find_spec", lambda _name: None)
+
+    def unavailable(_name):
+        raise AssertionError(
+            "A decoding-only audit must not import absent model extras"
+        )
+
+    monkeypatch.setattr(importlib, "import_module", unavailable)
+    launcher.initialize_vision()
+
+
+def test_launcher_does_not_hide_broken_installed_vision(launcher, monkeypatch):
+    import importlib
+    import importlib.util
+
+    monkeypatch.setattr(importlib.util, "find_spec", lambda _name: object())
+
+    def broken(_name):
+        raise RuntimeError("installed vision runtime is broken")
+
+    monkeypatch.setattr(importlib, "import_module", broken)
+    with pytest.raises(RuntimeError, match="installed vision runtime is broken"):
+        launcher.initialize_vision()
+
+
 @pytest.fixture
 def source_case(tmp_path, launcher):
     import hashlib
     import json
     from types import SimpleNamespace
 
-    import torchvision  # noqa: F401 -- initialize before generated PyAV decoding
     from badminton.ingest import inspect_video
     from badminton.storage import Store
     from media_fixtures import write_rotated_video
 
+    launcher.initialize_vision()
     root = tmp_path.resolve()
     data = root / "data/processed"
     store = Store(data)
@@ -676,6 +705,41 @@ def test_launcher_prepares_exact_native_images_under_real_shared_admission(
         (source_case.output / "inputs-after.json").read_text(encoding="utf-8")
     )
     assert all(p.read_bytes() == raw for p, raw in source_case.protected.items())
+
+
+def test_launcher_initializes_installed_vision_before_native_decode(
+    launcher, source_case, monkeypatch
+):
+    import importlib
+    import importlib.util
+
+    import badminton.video
+
+    events = []
+    find_spec = importlib.util.find_spec
+    import_module = importlib.import_module
+    iter_frames = badminton.video.iter_frames
+
+    def installed(name):
+        return object() if name == "torchvision" else find_spec(name)
+
+    def initialize(name):
+        if name == "torchvision":
+            events.append("vision")
+            return object()
+        return import_module(name)
+
+    def decode(*args, **kwargs):
+        assert events and events[0] == "vision"
+        events.append("decode")
+        return iter_frames(*args, **kwargs)
+
+    monkeypatch.setattr(importlib.util, "find_spec", installed)
+    monkeypatch.setattr(importlib, "import_module", initialize)
+    monkeypatch.setattr(badminton.video, "iter_frames", decode)
+    receipt = prepare_case(launcher, source_case)
+    assert receipt["status"] == "completed"
+    assert events[0] == "vision" and events.count("decode") == 3
 
 
 def test_launcher_shared_store_conflict_refuses_decoding(

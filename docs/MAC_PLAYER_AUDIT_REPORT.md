@@ -63,8 +63,14 @@ Generated tests reproduce and prevent four scoring races involving changed
 packet, image, stream-seal and adjudication-seal bytes. Scoring rechecks every
 sealed source artifact inside shared admission before writing a score; failure
 retains a failed Store job and attempt receipt without a successful score.
-All 120 focused generated tests and the complete local suite pass (1,957 passed,
-six existing skips). Ruff, formatting of 179 files, dependency consistency,
+The initial complete local suite passed (1,957 passed, six existing skips).
+Hosted CI then exposed an unconditional optional `torchvision` import in the
+decoder-only launcher and generated fixture. The repair initializes vision
+before decoding when installed, permits a runtime without model extras, and
+propagates broken installed-runtime errors. No images or inference were repeated.
+All 123 focused generated tests pass with installed vision; the complete minimal
+Python 3.12 suite passes 1,946 tests with 17 existing optional skips, including
+every audit test. Ruff, formatting of 179 files, dependency consistency,
 repository validation, local document links and UTF-8/LF checks also pass.
 The independent scientific assessments, final fresh code review, exact-head/main
 CI and full public delivery are still required before this task is complete.
