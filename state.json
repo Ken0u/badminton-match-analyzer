@@ -953,6 +953,15 @@
       "task_id": "170",
       "verb": "submit"
     },
+    "mac-01a15493-173-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792611368,
+      "epoch": 1,
+      "fingerprint": "4e3c92190015d8d112c583563c1521abc4e5d8a5d685eb30830c97cc06201fa3",
+      "status": "running",
+      "task_id": "173",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-69-external-recovery-v1": {
       "actor": "dootz1",
       "at": 1792454126,
@@ -11426,12 +11435,24 @@
       "status": "running"
     },
     "173": {
+      "checkpoint": {
+        "branch": "codex/issue-173-reject-incomplete-or-nonconsecutive-nati",
+        "evidence": [
+          "Seven missing/order/PTS regressions fail against baseline; new reader rejects omitted first/middle/tail, duplicate/backward and untimestamped frames.",
+          "Real VFR/cardinal orientation/subranges/preroll/end stop/early close/full-range-over120s/source guards and unchanged source/annotation/clock tests pass.",
+          "Ruff, format170files, pip and diff checks pass. Full-suite process21644 live, output.cache/evidence/full.log; do not restart on observation timeout."
+        ],
+        "next": "Wait full-suite actual exit; revalidate epoch; publish focused PR, exact CI/controller/main/full public delivery. Code review optional; no MSI172 resource, label, model or app change.",
+        "phase": "Native-frame repair implemented in the two granted paths;65 focused tests pass, full suite live.",
+        "spec_hash": "19e9f5b688c032159ee6054403f2e2b9418573784ff4ce1bf61e10f5a889bf44"
+      },
+      "checkpoint_at": 1792611368,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "e504535a05f83b35e6c02ee2f5f815921782ac11",
         "branch": "codex/issue-173-reject-incomplete-or-nonconsecutive-nati",
         "epoch": 1,
-        "expires_at": 1792621942,
+        "expires_at": 1792622168,
         "granted_at": 1792611142,
         "host_id": "Stanleys-Laptop.local",
         "session_id": "roadmap-20261019-01a15493",
