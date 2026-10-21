@@ -5786,6 +5786,13 @@
       "task_id": "149",
       "verb": "checkpoint"
     },
+    "windows-shuttle149-independent-register-f17becf5": {
+      "actor": "Ken0u",
+      "at": 1792543788,
+      "fingerprint": "39da1400fb3981e5f6f2240c1a287e995c61983068f6c05b475dbb84da93ae17",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-shuttle149-next-v1": {
       "actor": "Ken0u",
       "at": 1792514851,
@@ -12229,6 +12236,22 @@
       "host_id": "MSI",
       "registered_at": 1792512779,
       "session_id": "db19e4c4f5434842914ececf7c903274"
+    },
+    "MSI/f17becf5129f4035af82b3cbb973914f": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "shuttle-visibility-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158"
+      },
+      "capabilities": [
+        "cuda",
+        "windows",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792543788,
+      "session_id": "f17becf5129f4035af82b3cbb973914f"
     },
     "MSI/shuttle139-review-v1-86e97a1294324bdcabcbc0a4b1f300c6": {
       "actor": "Ken0u",
