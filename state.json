@@ -6936,6 +6936,12 @@
       "task_id": "164",
       "verb": "checkpoint"
     },
+    "windows-shuttle164-checkpoint-v6": {
+      "actor": "Ken0u",
+      "reason": "claim lease expired",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "windows-shuttle164-initial-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792563978,
