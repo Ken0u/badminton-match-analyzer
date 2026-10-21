@@ -1007,6 +1007,19 @@ if (requestedModes.includes("--exports")) {
         savedAnnotationsUnchangedByRecovery: true,
       });
       await page.unroute(mediaRoute);
+      // Hold the prepared source before metadata. Exact-frame review must
+      // remain usable, and an explicit Play must survive metadata arriving
+      // afterwards rather than being cancelled by the source-time restore.
+      const preparedMedia = `**/api/videos/${gap.id}/playback/media`;
+      let releasePrepared;
+      const heldPrepared = new Promise((resolve) => {
+        releasePrepared = resolve;
+      });
+      releases.push(releasePrepared);
+      await page.route(preparedMedia, async (route) => {
+        await heldPrepared;
+        await route.continue();
+      });
       await page.locator("#prepare-playback").click();
       await page.waitForFunction(() =>
         document
@@ -1023,9 +1036,32 @@ if (requestedModes.includes("--exports")) {
       assert.equal(gapProxy.context.duration_s, gap.duration_s);
       await write("gap-proxy-receipt.json", gapProxy);
       await exact(2);
+      const pendingMetadata = await page
+        .locator("#video")
+        .evaluate((video) => ({
+          readyState: video.readyState,
+          source: video.src,
+          frame: document.querySelector("#frame-number").value,
+        }));
+      assert.equal(pendingMetadata.readyState, 0);
+      assert.ok(
+        pendingMetadata.source.endsWith(`/videos/${gap.id}/playback/media`),
+      );
+      assert.equal(pendingMetadata.frame, "2");
       await page.locator("#play").click();
+      await page.waitForFunction(
+        () => !document.querySelector("#video").paused,
+      );
+      releasePrepared();
       await page.waitForFunction(() => document.querySelector("#video").ended);
       assert.equal(await page.locator("#frame-number").inputValue(), "3");
+      await page.unroute(preparedMedia);
+      await write("play-before-metadata.json", {
+        pendingMetadata,
+        playRequestedBeforeMetadata: true,
+        playedThroughNativeGap: true,
+        endedAtFrame: 3,
+      });
       assert.deepEqual(
         await api(gapRoot + "/annotations"),
         savedGapAnnotations,

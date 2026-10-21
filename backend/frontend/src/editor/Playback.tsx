@@ -362,7 +362,17 @@ export const Playback = memo(function Playback({
     }
     function onMetadata() {
       switching.current = false;
-      seek(current());
+      const s = controller.snapshot();
+      if (!s.video) return;
+      // Restoring source time after metadata must preserve an explicit Play
+      // requested while the source was loading. seek() intentionally pauses
+      // for manual frame review and would abort that pending play request.
+      try {
+        v.currentTime = s.times[current()] ?? 0;
+      } catch {
+        /* Exact source review remains available if media seeking fails. */
+      }
+      if (v.paused) exact();
     }
     function onReady() {
       if (
