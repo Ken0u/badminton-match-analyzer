@@ -259,11 +259,19 @@ These checks exercise playback, exact-frame images, event correction/export, rev
 
 Start with [the Mac/Windows collaboration workflow](docs/COLLABORATION.md) and
 [one-time owner activation](docs/OWNER_SETUP.md). GitHub Issues track historical
-deliverables and the approved backlog; local Codex sessions claim work, implement
-in isolated worktrees, obtain independent review and submit for verified serial
-integration. The default controller mode works with a private repository on
-GitHub Free; GitHub Pro is optional. Both collaborators must use the controller
-because GitHub Free does not prevent direct pushes or manual bypass. Existing
-Codex access and GitHub Actions/storage quotas apply. The queue starts in
-observation mode. Private candidates never automatically replace your running
+deliverables and the approved backlog; local Codex sessions obtain committed
+grants, implement in isolated worktrees, test and submit for automatic serial
+controller integration. Code review is optional: trusted configuration explicitly
+sets `require_agent_review: false`. Required CI, granted scope, sensitive-scope
+owner authorization, exact merged-main checks and complete delivery receipts
+remain mandatory. Requested reviews retain genuine fresh sessions and binding
+findings; research protocols retain their independent source assessments and
+adjudication requirements.
+
+The default controller mode works with a private repository on GitHub Free;
+GitHub Pro is optional. Both collaborators must use the controller because GitHub
+Free does not prevent direct pushes or manual bypass. Existing Codex access and
+GitHub Actions/storage quotas apply. This repository is active and publishes
+public candidates. New installations begin in observation mode until owner
+activation is verified. Candidates never automatically replace your running
 application or install research weights.
