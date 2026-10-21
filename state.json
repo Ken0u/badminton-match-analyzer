@@ -11087,6 +11087,7 @@
       }
     },
     "170": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39650686389",
       "checkpoint": {
         "branch": "codex/issue-170-retry-transient-github-project-dashboard",
         "evidence": [
@@ -11111,7 +11112,7 @@
         "spec_hash": "c8874546f5ff99d3321eb1f350a4dacc3b5779bef886ccd28f7ae791f131fcf0"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "dootz1",
