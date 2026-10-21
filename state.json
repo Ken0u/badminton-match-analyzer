@@ -1810,6 +1810,15 @@
       "task_id": "176",
       "verb": "checkpoint"
     },
+    "mac-01a15493-player176-e2-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792615926,
+      "epoch": 2,
+      "fingerprint": "20ea4e3c688b254158e96d278fd63414ea7a3f75d161c3c4d9485a5c4ad4c7a8",
+      "status": "review",
+      "task_id": "176",
+      "verb": "submit"
+    },
     "mac-01a15493-player176-next-v1": {
       "actor": "dootz1",
       "at": 1792613133,
@@ -12063,6 +12072,7 @@
       ],
       "planned_at": 1792613023,
       "planned_by": "dootz1",
+      "pr_number": 182,
       "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
@@ -12119,7 +12129,13 @@
         ]
       },
       "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "22f99a84fb71bf9c1704e1b488b2e2cfdebeca08",
+        "head_sha": "bc2861c2eb4893391a22bb5b6237b07d6748ea34",
+        "pr_number": 182,
+        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
+      }
     },
     "177": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39672929664",
