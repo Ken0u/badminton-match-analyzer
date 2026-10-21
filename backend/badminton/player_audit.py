@@ -169,7 +169,8 @@ def validate_assessment(packet, assessment, *, packet_sha256):
             "Assessment frames must match packet in order",
         )
         _require(
-            row.get("scene") in {"court_view", "replay", "non_play", "unknown"},
+            isinstance(row.get("scene"), str)
+            and row["scene"] in {"court_view", "replay", "non_play", "unknown"},
             "Invalid assessed scene",
         )
         _label(row.get("view_id"), "source view", nullable=True)

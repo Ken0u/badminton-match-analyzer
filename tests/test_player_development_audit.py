@@ -449,3 +449,462 @@ def test_single_sample_and_empty_source_scene_remain_reportable(documents):
     assert result["totals"]["unmatched_predictions"] == 1
     assert result["transitions"] == []
     assert result["iou_summary"]["mean"] is None
+
+
+@pytest.fixture
+def launcher():
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).resolve().parents[1] / "scripts/audit_player_development.py"
+    spec = importlib.util.spec_from_file_location(
+        "player_audit_launcher_generated", path
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+@pytest.fixture
+def source_case(tmp_path, launcher):
+    import hashlib
+    import json
+    from types import SimpleNamespace
+
+    import torchvision  # noqa: F401 -- initialize before generated PyAV decoding
+    from badminton.ingest import inspect_video
+    from badminton.storage import Store
+    from media_fixtures import write_rotated_video
+
+    root = tmp_path.resolve()
+    data = root / "data/processed"
+    store = Store(data)
+    source = write_rotated_video(root / "generated.mp4", 90)
+    video = inspect_video(source, "singles", store, root)
+    with store.connect() as db:
+        revision, annotation = db.execute(
+            "SELECT revision,document FROM annotations WHERE video_id=? ORDER BY revision DESC",
+            (video["id"],),
+        ).fetchone()
+    clock = data / video["id"] / "timestamps.json"
+    times = json.loads(clock.read_text(encoding="utf-8"))
+    run = {
+        "schema_version": 1,
+        "video_id": video["id"],
+        "video_sha256": video["sha256"],
+        "stage": "players",
+        "start_frame": 0,
+        "end_frame": 4,
+        "stride": 1,
+        "processed_frames": 4,
+        "annotation_revision": revision,
+        "checkpoint_sha256": "1" * 64,
+        "cut_frames": [],
+        "camera_ranges": [{"start_frame": 0, "end_frame": 4, "scene": "unknown"}],
+        "frames": [
+            {
+                "frame": f,
+                "time_s": times[f],
+                "camera_segment_start_frame": 0,
+                "players": [predicted(box=[5, 10, 25, 60])],
+            }
+            for f in range(4)
+        ],
+    }
+    run_path = data / video["id"] / "runs/generated-existing.json"
+    run_path.parent.mkdir()
+    launcher.write(run_path, run)
+    manifest = {
+        "schema_version": 1,
+        "video_id": video["id"],
+        "source_sha256": launcher.digest(source),
+        "clock_sha256": launcher.digest(clock),
+        "annotation_revision": revision,
+        "annotation_sha256": hashlib.sha256(annotation.encode()).hexdigest(),
+        "run_path": run_path.relative_to(data).as_posix(),
+        "run_sha256": launcher.digest(run_path),
+        "start_frame": 0,
+        "end_frame": 4,
+        "sample_frames": [0, 2, 3],
+        "iou_threshold": 0.5,
+        "max_runtime_seconds": 900,
+        "max_output_bytes": 67108864,
+    }
+    output = root / ".cache/audit"
+    output.parent.mkdir()
+    manifest_path = output.parent / "protocol.json"
+    launcher.write(manifest_path, manifest)
+    return SimpleNamespace(
+        root=root,
+        data=data,
+        store=store,
+        source=source,
+        clock=clock,
+        run=run_path,
+        manifest=manifest,
+        manifest_path=manifest_path,
+        manifest_sha=launcher.digest(manifest_path),
+        output=output,
+        protected={p: p.read_bytes() for p in (source, clock, run_path)},
+    )
+
+
+def prepare_case(launcher, case):
+    return launcher.prepare(
+        case.root, case.data, case.manifest, case.manifest_sha, case.output
+    )
+
+
+def source_assessments(launcher, case):
+    import json
+
+    packet = json.loads((case.output / "packet.json").read_text(encoding="utf-8"))
+    packet_hash = launcher.digest(case.output / "packet.json")
+    paths = []
+    for session in ("generated-source-a", "generated-source-b"):
+        document = {
+            "schema_version": 1,
+            "packet_sha256": packet_hash,
+            "prediction_blind": True,
+            "session_id": session,
+            "frames": [
+                {
+                    "frame": s["frame"],
+                    "scene": "court_view",
+                    "view_id": "view-a",
+                    "complete": True,
+                    "persons": [person(box=[5, 10, 25, 60])],
+                    "note": "Generated native source evidence",
+                }
+                for s in packet["samples"]
+            ],
+        }
+        path = case.output / f"{session}.json"
+        launcher.write(path, document)
+        paths.append(path)
+    return paths
+
+
+def seal_case(launcher, case):
+    paths = source_assessments(launcher, case)
+    seal = launcher.finish(
+        "seal",
+        case.root,
+        case.data,
+        case.manifest,
+        case.manifest_sha,
+        case.output,
+        paths,
+    )
+    import json
+
+    adjudication = json.loads(paths[0].read_text(encoding="utf-8"))
+    adjudication.update(
+        session_id="generated-source-adjudication",
+        adjudication={
+            "source_only": True,
+            "stream_sha256": [s["sha256"] for s in seal["streams"]],
+            "disagreements": [],
+            "evidence": ["Generated independent streams agree"],
+        },
+    )
+    path = case.output / "adjudication.json"
+    launcher.write(path, adjudication)
+    return paths, path
+
+
+@pytest.mark.parametrize(
+    "key",
+    [
+        "source_sha256",
+        "clock_sha256",
+        "annotation_sha256",
+        "run_sha256",
+        "annotation_revision",
+    ],
+)
+def test_launcher_snapshot_refuses_frozen_provenance_conflict(
+    launcher, source_case, key
+):
+    source_case.manifest[key] = 7 if key == "annotation_revision" else "0" * 64
+    with pytest.raises(ValueError, match="conflict"):
+        launcher.snapshot(source_case.root, source_case.data, source_case.manifest)
+    assert all(p.read_bytes() == raw for p, raw in source_case.protected.items())
+    assert source_case.store.jobs() == []
+
+
+def test_launcher_refuses_isolated_store_and_occupied_output(launcher, source_case):
+    with pytest.raises(ValueError, match="real shared Store"):
+        launcher.snapshot(
+            source_case.root, source_case.data.parent / "isolated", source_case.manifest
+        )
+    source_case.output.mkdir()
+    (source_case.output / "existing.txt").write_text("preserve me", encoding="utf-8")
+    with pytest.raises(ValueError, match="new ignored"):
+        prepare_case(launcher, source_case)
+    assert (source_case.output / "existing.txt").read_text(
+        encoding="utf-8"
+    ) == "preserve me"
+    assert source_case.store.jobs() == []
+
+
+def test_launcher_prepares_exact_native_images_under_real_shared_admission(
+    launcher, source_case
+):
+    import json
+
+    from PIL import Image
+
+    receipt = prepare_case(launcher, source_case)
+    assert receipt["status"] == "completed"
+    assert receipt["inference_calls"] == 0
+    assert receipt["inputs_preserved"] is True
+    packet, packet_hash = launcher.verify_packet(
+        source_case.output, source_case.manifest, source_case.manifest_sha
+    )
+    assert packet_hash == receipt["packet_sha256"]
+    assert [s["frame"] for s in packet["samples"]] == [0, 2, 3]
+    assert [s["time_s"] for s in packet["samples"]] == [0, 0.12, 0.16]
+    assert packet["width"] == 64 and packet["height"] == 128
+    for sample in packet["samples"]:
+        with Image.open(source_case.output / sample["image"]) as image:
+            assert image.size == (64, 128)
+    assert source_case.store.job(receipt["job_id"])["status"] == "completed"
+    assert json.loads(
+        (source_case.output / "inputs-before.json").read_text(encoding="utf-8")
+    ) == json.loads(
+        (source_case.output / "inputs-after.json").read_text(encoding="utf-8")
+    )
+    assert all(p.read_bytes() == raw for p, raw in source_case.protected.items())
+
+
+def test_launcher_shared_store_conflict_refuses_decoding(
+    launcher, source_case, monkeypatch
+):
+    import json
+
+    import badminton.video
+    from badminton.storage import ConflictError
+
+    source_case.store.claim_job(
+        {
+            "id": "other-live-worker",
+            "kind": "analysis",
+            "video_id": source_case.manifest["video_id"],
+            "status": "running",
+        }
+    )
+    calls = []
+    monkeypatch.setattr(
+        badminton.video, "iter_frames", lambda *_a, **_k: calls.append(True)
+    )
+    with pytest.raises(ConflictError, match="Another processing"):
+        prepare_case(launcher, source_case)
+    assert calls == []
+    assert source_case.store.job("other-live-worker")["status"] == "running"
+    receipt = json.loads(
+        (source_case.output / "prepare-receipt.json").read_text(encoding="utf-8")
+    )
+    assert receipt["status"] == "failed"
+    assert "job_id" not in receipt
+
+
+def test_launcher_late_input_change_fails_receipt_and_admitted_job(
+    launcher, source_case, monkeypatch
+):
+    import json
+
+    import badminton.video
+
+    original = badminton.video.iter_frames
+
+    def mutated(*args, **kwargs):
+        yield from original(*args, **kwargs)
+        if args[-2] == source_case.manifest["sample_frames"][-1]:
+            source_case.run.write_bytes(source_case.run.read_bytes() + b" ")
+
+    monkeypatch.setattr(badminton.video, "iter_frames", mutated)
+    with pytest.raises(ValueError, match="conflict"):
+        prepare_case(launcher, source_case)
+    receipt = json.loads(
+        (source_case.output / "prepare-receipt.json").read_text(encoding="utf-8")
+    )
+    assert receipt["status"] == "failed"
+    assert source_case.store.job(receipt["job_id"])["status"] == "failed"
+    assert not receipt.get("inputs_preserved", False)
+    assert not (source_case.output / "score.json").exists()
+
+
+def test_launcher_scores_only_after_separate_streams_and_adjudication_sealed(
+    launcher, source_case
+):
+    import json
+
+    prepare_case(launcher, source_case)
+    paths, adjudication = seal_case(launcher, source_case)
+    protected = {p: p.read_bytes() for p in [*paths, adjudication]}
+    result = launcher.finish(
+        "score",
+        source_case.root,
+        source_case.data,
+        source_case.manifest,
+        source_case.manifest_sha,
+        source_case.output,
+        [adjudication],
+    )
+    assert result["totals"]["matched_persons"] == 3
+    assert result["inputs_preserved"] is True
+    assert result["inference_calls"] == 0
+    assert all(p.read_bytes() == raw for p, raw in protected.items())
+    assert all(p.read_bytes() == raw for p, raw in source_case.protected.items())
+    seal = json.loads(
+        (source_case.output / "adjudication-seal.json").read_text(encoding="utf-8")
+    )
+    assert seal["sealed_before_prediction_read"] is True
+    receipt = json.loads(
+        (source_case.output / "score-receipt-1.json").read_text(encoding="utf-8")
+    )
+    assert receipt["status"] == "completed"
+    assert source_case.store.job(receipt["job_id"])["status"] == "completed"
+    with pytest.raises(ValueError, match="Preserve existing score"):
+        launcher.finish(
+            "score",
+            source_case.root,
+            source_case.data,
+            source_case.manifest,
+            source_case.manifest_sha,
+            source_case.output,
+            [adjudication],
+        )
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "image",
+        "packet",
+        "manifest",
+        "stream",
+        "same_session",
+        "adjudication_provenance",
+    ],
+)
+def test_launcher_detects_packet_and_assessment_seal_changes(
+    launcher, source_case, mutation
+):
+    import json
+
+    prepare_case(launcher, source_case)
+    paths, adjudication = seal_case(launcher, source_case)
+    manifest_hash = source_case.manifest_sha
+    if mutation == "image":
+        image = next(source_case.output.glob("source-*.png"))
+        image.write_bytes(image.read_bytes() + b"changed")
+    elif mutation == "packet":
+        path = source_case.output / "packet.json"
+        path.write_bytes(path.read_bytes() + b" ")
+    elif mutation == "manifest":
+        manifest_hash = "0" * 64
+    elif mutation == "stream":
+        paths[0].write_bytes(paths[0].read_bytes() + b" ")
+    else:
+        doc = json.loads(adjudication.read_text(encoding="utf-8"))
+        if mutation == "same_session":
+            doc["session_id"] = "generated-source-a"
+        else:
+            doc["adjudication"]["stream_sha256"] = ["0" * 64] * 2
+        launcher.write(adjudication, doc)
+    with pytest.raises(ValueError):
+        launcher.finish(
+            "score",
+            source_case.root,
+            source_case.data,
+            source_case.manifest,
+            manifest_hash,
+            source_case.output,
+            [adjudication],
+        )
+    assert not (source_case.output / "score.json").exists()
+    assert not [
+        j for j in source_case.store.jobs() if j["kind"] == "player-source-score"
+    ]
+
+
+def test_launcher_scoring_input_mutation_fails_real_job_and_preserves_seals(
+    launcher, source_case, monkeypatch
+):
+    import json
+
+    import badminton.player_audit
+
+    prepare_case(launcher, source_case)
+    paths, adjudication = seal_case(launcher, source_case)
+    streams = {p: p.read_bytes() for p in [*paths, adjudication]}
+    original = badminton.player_audit.score_audit
+
+    def mutate(*args, **kwargs):
+        result = original(*args, **kwargs)
+        source_case.run.write_bytes(source_case.run.read_bytes() + b" ")
+        return result
+
+    monkeypatch.setattr(badminton.player_audit, "score_audit", mutate)
+    with pytest.raises(ValueError, match="conflict"):
+        launcher.finish(
+            "score",
+            source_case.root,
+            source_case.data,
+            source_case.manifest,
+            source_case.manifest_sha,
+            source_case.output,
+            [adjudication],
+        )
+    receipt = json.loads(
+        (source_case.output / "score-receipt-1.json").read_text(encoding="utf-8")
+    )
+    assert receipt["status"] == "failed"
+    assert source_case.store.job(receipt["job_id"])["status"] == "failed"
+    assert all(p.read_bytes() == raw for p, raw in streams.items())
+    assert not (source_case.output / "score.json").exists()
+
+
+@pytest.mark.parametrize("scene", [[], {}, 0, True])
+def test_malformed_scene_types_fail_as_validation_errors(documents, scene):
+    documents[2]["frames"][0]["scene"] = scene
+    with pytest.raises(ValueError, match="scene"):
+        score(documents)
+    documents[2]["frames"][0]["scene"] = "court_view"
+    documents[3]["frames"][0]["scene"] = scene
+    with pytest.raises(ValueError, match="scene"):
+        score(documents)
+
+
+def test_bounded_matcher_agrees_with_exhaustive_generated_assignments():
+    import itertools
+    import random
+
+    generator = random.Random(183)
+    for _ in range(25):
+        source = [
+            [generator.randint(0, 7), 0, generator.randint(10, 20), 10]
+            for _ in range(3)
+        ]
+        predictions = [
+            [generator.randint(0, 7), 0, generator.randint(10, 20), 10]
+            for _ in range(4)
+        ]
+        best = 0
+        for assignments in itertools.product([None, 0, 1, 2, 3], repeat=3):
+            used = [a for a in assignments if a is not None]
+            if len(set(used)) != len(used):
+                continue
+            overlaps = [
+                box_iou(source[i], predictions[a])
+                for i, a in enumerate(assignments)
+                if a is not None
+            ]
+            if any(iou < 0.5 for iou in overlaps):
+                continue
+            best = max(best, sum(overlaps))
+        matches = maximum_iou_matching(source, predictions)
+        assert sum(m["iou"] for m in matches) == pytest.approx(best)
+        assert len({m["prediction_index"] for m in matches}) == len(matches)
