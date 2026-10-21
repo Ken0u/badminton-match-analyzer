@@ -2976,6 +2976,15 @@
       "task_id": "176",
       "verb": "review-next"
     },
+    "mac-review176-79a0d77-result": {
+      "actor": "dootz1",
+      "at": 1792617157,
+      "epoch": 2,
+      "fingerprint": "30ef3c98cb69458f0a10263db5b57d271ee6a99b87f4e9eb88868356c7ea18ee",
+      "status": "review",
+      "task_id": "176",
+      "verb": "review-result"
+    },
     "mac-review176-bc2861c-grant": {
       "actor": "dootz1",
       "at": 1792616201,
@@ -12153,18 +12162,39 @@
       "pr_number": 182,
       "reason": "released after terminal proof",
       "repair_rounds": 1,
-      "review_claim": {
+      "review": {
         "actor": "dootz1",
+        "at": 1792617157,
         "base_sha": "22f99a84fb71bf9c1704e1b488b2e2cfdebeca08",
-        "epoch": 2,
-        "expires_at": 1792627698,
-        "granted_at": 1792616898,
+        "evidence": [
+          "Existing genuine independent reviewer session mac-review176-bc2861c obtained committed follow-up grant mac-review176-79a0d77-grant, owning epoch2/review_epoch2, bound to exact head79a0d7707dfe9f860c87700852d0fb4e8a75a2bb/base22f99a84/specf615f1cf.",
+          "Read-only repair diff compared with prior reviewedbc2861c; all five originally granted paths remain the entire PR scope. Only player_probe.py, its test and report changed in this repair. No tracked edits made by reviewer; git diff--check passes and original executed492489f remains an ancestor.",
+          "P1 resolved: expected_artifacts now uses relative_path.as_posix(), matching production inventories without weakening strict digest/equality checks. Prior exact-head Windows failure log remains /tmp/review176-windows-bc2861c.log and epoch1 changes verdict is preserved.",
+          "P2 resolved: final preservation snapshot and equality check now run within task before run_local_job releases shared admission; completed receipts reuse that admitted snapshot. Failure evidence/inventory remains in finally. Added both small-variant prediction and raw-annotation mutation cases assert failed shared Store/receipt status.",
+          "Independent PYTHONPATH=backend:tests focused generated suite with disposable BADMINTON_ROOT/DATA_DIR and fresh .cache/review176-79a0d77-tests passed32tests in1.59s.",
+          "Independent generated reproduction of original P2 now raises preservation ValueError with receipt_statusfailed, shared_job_statusfailed, inputs_preservedfalse and both fake variants called. No native inference or application truth touched.",
+          "Original native receipt SHA256 independently reverified f53efb9b366c18c3471132e153dbcee5c0bdf2223381cce4ce766c4cb106d871 and all16 retained artifact hashes still match. Initial review also verified named actual inputs and all original executed application-source hashes; subsequent changes are receipt validation/tests/report only.",
+          "Read retained .cache/evidence/full-review-fix.log showing1837passed6skipped. Hosted run39676056844 verified exact repaired head: revision/frontend/repository/package/both container jobs successful at observation, remaining jobs pending/in progress. Original100modelcalls were never repeated; no downloads, holdout63/MSI172 artifacts or running-app changes."
+        ],
+        "findings": [],
         "head_sha": "79a0d7707dfe9f860c87700852d0fb4e8a75a2bb",
-        "host_id": "Stanleys-Laptop.local",
+        "limitations": [
+          "This approves code review only; exact-head CI39676056844 was still running at review time, including native Windows, with macOS queued. Controller integration, exact-main verification and complete public package/both-image delivery remain required.",
+          "Actual native inference remains the retained author run at492489ff9e4103a43e395be54313f42ced109c9d; no inference was rerun on the repaired head. Receipt-only path/progress/final-preservation changes are disclosed in the report and covered by generated tests.",
+          "Independent generated tests use disposable data and synthetic predictions. Prior inspection of ten development contact-sheet panels is not adjudicated localization, pose or persistent identity accuracy; no full-match correctness claim is supported.",
+          "Author full-suite evidence1837passed/6existing skips was inspected as a retained log, not independently rerun. Independent verification reran the32 focused tests and late-mutation reproduction."
+        ],
         "pr_number": 182,
-        "review_epoch": 2,
+        "reviewed_files": [
+          "backend/badminton/player_probe.py",
+          "scripts/probe_player_runtime.py",
+          "tests/test_player_runtime_probe.py",
+          "data/manifests/mac_player_runtime_v1.json",
+          "docs/MAC_PLAYER_RUNTIME_REPORT.md"
+        ],
         "session_id": "mac-review176-bc2861c",
-        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a"
+        "spec_hash": "f615f1cfba6e1383c8c2588e8f6b629ab90064aca476196a26466a811adb0a1a",
+        "verdict": "approve"
       },
       "review_epoch": 2,
       "spec": {
