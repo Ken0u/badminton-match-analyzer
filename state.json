@@ -13799,6 +13799,7 @@
       }
     },
     "192": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39871730864",
       "checkpoint": {
         "branch": "codex/issue-192-diagnose-recurring-generated-browser-fix",
         "evidence": [
@@ -13828,7 +13829,7 @@
         "spec_hash": "c780e85459bd99af1a4ad0de9bf95ecf4c4bedca920b0de0b4c271e7597e088e"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792708402,
