@@ -73,6 +73,15 @@
       "task_id": "179",
       "verb": "review-next"
     },
+    "broadcast179-review-result-6f42d839a2": {
+      "actor": "Ken0u",
+      "at": 1792633626,
+      "epoch": 1,
+      "fingerprint": "275ce80d4538d26039162be77a63dbc00dc07f2b7976a4ae211997db1d634ebb",
+      "status": "review",
+      "task_id": "179",
+      "verb": "review-result"
+    },
     "cli-review97-next-v1": {
       "actor": "dootz1",
       "at": 1792469150,
@@ -12735,14 +12744,28 @@
       "planned_at": 1792614469,
       "planned_by": "Ken0u",
       "pr_number": 185,
-      "review_claim": {
+      "review": {
         "actor": "Ken0u",
+        "at": 1792633626,
         "base_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
-        "epoch": 1,
-        "expires_at": 1792643910,
-        "granted_at": 1792633110,
+        "evidence": [
+          "Read all five granted changed files and relevant existing tracker, source-freeze, Store admission, process proof, resume, media accounting and scoring consumers. Owning issue179 JSON equals frozen specification; exact remote PR185 is open draft at reviewed head/base. Only aggregate documentation differs from prospectively frozen native commit ddb6025f5dcdb9ff53524bb560d43202b2e39368. All84 recursive consumer hashes match both the frozen native commit and final head.",
+          "Independent stdlib arithmetic/byte audit .cache/broadcast179-review-v1/audit.py -> independent-audit.json SHA2560bf427cf627ae68bd1a0437535d619ea18868b7eea994a5ec1e83352cc897037. Verified103 frozen assessment files, original632 PNG hashes, exactly128 cases/640 context memberships, two original source/clock/packet seals, checkpoint, all terminal inventory and raw record seals; no images were displayed or copied.",
+          "Independently recomputed all128 per-case metrics and every source/scene/visibility/overlapping-difficulty stratum directly from frozen172 resolved references and sealed179 raw outputs without importing application scoring helpers. Results match:16/37 within fixed0.005 display-diagonal radius,6 displaced,15 missing,0 unavailable;5/5 supported negatives absent;85 unknown and1 unlocalizable retained;17 any observed-component agreements and1 alternate-component-only agreement. All report case fields and strata match.",
+          "All128 native windows have successful output and8192 exact requested native-frame/PTS rows. Independently checked camera partitions and source identities, including18 windows containing detected cuts; selection context stays within each detected camera range. No repaired output. All12 actual accounting totals match the report, including63357 decoder frames,7175 model calls and57400 sequence slots. One preserved attempt elapsed1310.374526seconds, below1800; no resume or additional inference occurred.",
+          "Independent preservation/runtime audit .cache/broadcast179-review-v1/preservation-audit.json SHA25652a150e9d79b9e3f59d4ed0120f4edbfe88fa2f4a8432902c1fb1f95d7d5f649. Scoped application truth/prediction seals match (these two sources have0 catalog videos/0 processed prediction files). Python/package/platform/GPU identities match. Exact live shared Store job940de93ca16848df99308fd0e65feebf is completed, its PID/create-time lifetime matches durable admission/proof, and that original process lifetime is independently exited.",
+          "GitHub comments6330193993 and6330501523 fetched read-only: unchanged prospective freeze created2026-10-22T01:08:38Z precedes native process creation01:09:59.700114Z; unchanged terminal seal created01:32:07Z follows native completion and precedes interpretation file creation. Prospective context ee87921d645d245548ea3f778c052892faa84f8a538f4fcb782d7068b6407014, terminal b40bd382d11f0abe02802146248ec15f44cdade340f824d1f7e8642e58ef1e91, original-host proof93167208e587a89eff0ce51a4bbc3851fca7f4b1ebaccabb4f1c641c8db68c0c and interpretation60bb3f2b9b88ccf82ba41b86bd36462d8001917fedd06066bb76086a5cbe30cd all hash-verified.",
+          "Focused generated tests passed62/62 in pytest2.log and unwrapped pytest3.log with all five account credential variables cleared and root/data/weights/PYTHONPATH pinned before imports. They cover bounds/VFR/orientation, strict unknown/unavailable denominators, component attribution, cut isolation, recursive/input seals, real generated Store contention, partial refusal/resume and process lifetime. git diff --check passed; all five changed texts decode UTF8 without BOM/CR, public JSON parses, and changed paths exactly match grant. Implementation checkout remains clean."
+        ],
+        "findings": [],
         "head_sha": "a293fa28198f2acc777294c5f3d649d97ced76fb",
-        "host_id": "MSI",
+        "limitations": [
+          "Fresh read-only reviewer session broadcast179-review-6f42d839a2 obtained committed review-next grant at1792633110. Implementation task epoch1 and review_epoch1 are separately bound. No implementation files modified; no inference, source acquisition, tuning, model promotion, consumed63 access or PROGRESS access occurred.",
+          "This is agent-labeled development agreement, not expert annotation accuracy, independent unseen evaluation, persistent trajectories or complete match correctness. Review reverified permitted frozen references and bytes; it did not perform new visual source adjudication. All four eligibility flags remain false.",
+          "Initial focused invocation produced53 passes and9 failures at the generated-output Git-ignore guard. That failed log and artifacts are retained. Two subsequent fresh runs passed62/62, including an unwrapped pytest invocation; no implementation changes occurred between runs. The first guard failure was not reproduced or conclusively diagnosed.",
+          "Author-reported full suite1866 passed/162 optional skips and full Ruff/pip checks were inspected as evidence, not independently rerun. Reviewer independently ran focused generated tests, arithmetic/byte/process/Store/runtime/preservation/timestamp audits and diff/text/JSON/binding checks. Required exact-head CI, controller merge, merged-main CI and complete public package/both-image verification remain integration-owner/controller work; this approval does not assert their completion.",
+          "Output accounting independently walked49 explicitly enumerated task roots without following515 generated links. It measured90331735 bytes plus8MiB reserve before the final small review receipts/third focused test; reviewer outputs were about1.4MiB and remain below32MiB. The reserve covers these small later receipts; no unrelated cache roots were enumerated."
+        ],
         "native_evidence": {
           "code_sha": "a293fa28198f2acc777294c5f3d649d97ced76fb",
           "limitations": [
@@ -12755,9 +12778,16 @@
           "source_sha256": "ee87921d645d245548ea3f778c052892faa84f8a538f4fcb782d7068b6407014"
         },
         "pr_number": 185,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/shuttle_broadcast_baseline.py",
+          "scripts/diagnose_shuttle_broadcasts.py",
+          "tests/test_shuttle_broadcast_baseline.py",
+          "data/manifests/shuttle_broadcast_baseline_protocol_v1.json",
+          "docs/SHUTTLE_BROADCAST_BASELINE_REPORT.md"
+        ],
         "session_id": "broadcast179-review-6f42d839a2",
-        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
+        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23",
+        "verdict": "approve"
       },
       "review_epoch": 1,
       "spec": {
