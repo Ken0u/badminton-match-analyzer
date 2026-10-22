@@ -5364,6 +5364,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-broadcast179-start-v1": {
+      "actor": "Ken0u",
+      "at": 1792630397,
+      "epoch": 1,
+      "fingerprint": "83eb595e05ba1498a16de89c058135aa04bb8d02594c7025d71c27e7d7e46493",
+      "status": "running",
+      "task_id": "179",
+      "verb": "checkpoint"
+    },
     "windows-browser-capability-register-v1": {
       "actor": "Ken0u",
       "at": 1792545324,
@@ -12611,12 +12620,25 @@
       }
     },
     "179": {
+      "checkpoint": {
+        "baseline_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
+        "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
+        "delegation": "broadcast179_core owns module; broadcast179_tests owns tests; parent owns CLI/protocol/report and publishes one combined branch. Neither child may claim or run native inference.",
+        "host": "Original Python3.10.5 torch2.8.0+cu126 torchvision0.23.0+cu126 RTX3050Ti CUDA available; shared catalog has no running/queued jobs at preflight",
+        "input_verification": "Original freeze/source media/clock/632 PNGs/assessment consumers reverified using verify_freeze; all128 cases,640 memberships,80 adjudications retained, all eligibility false",
+        "phase": "implementing prospective diagnostic; no native execution",
+        "predecessors": "172 and177 Done; repaired candidate39672929664 verified against Git/package/frontend/lock and both anonymous OCI manifests, receipt4617998134ce6bdc612eeb9d395f269ef1e035ef46090b8f991b13ff8b91bcd6",
+        "preservation": "No downloads, installs, source sessions, inference or application truth writes. Preserve consumed63 exclusion, original environments/artifacts and existing PROGRESS.md edits.",
+        "remaining": "Finish code/protocol/generated tests, commit and timestamp full consumer/input/runtime freeze BEFORE native capture. Native1800seconds cumulative,8192 rows,256MiB cumulative output,4h grantdeadline1792644560; independent exact-head review/full CI/controller/main/public delivery required.",
+        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
+      },
+      "checkpoint_at": 1792630397,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
         "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
         "epoch": 1,
-        "expires_at": 1792640960,
+        "expires_at": 1792641197,
         "granted_at": 1792630160,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
