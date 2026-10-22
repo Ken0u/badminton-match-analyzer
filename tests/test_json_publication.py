@@ -7,7 +7,7 @@ import os
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from pathlib import Path
 
 import pytest
@@ -52,6 +52,10 @@ def test_simultaneous_writers_own_distinct_closed_same_directory_files(
     reader_saw_new = threading.Event()
     staged = set()
     stage_lock = threading.Lock()
+    # Ordinary Windows reads can deny replacement beyond the retry budget.
+    # Keep snapshot reads closed during native replacement, while writers still
+    # stage concurrently. POSIX readers continue to overlap native replacement.
+    snapshot_guard = threading.Lock() if os.name == "nt" else nullcontext()
 
     def publish(source, target):
         if target == path:
@@ -64,11 +68,13 @@ def test_simultaneous_writers_own_distinct_closed_same_directory_files(
                 assert source != target
                 assert _read(source) in documents
                 barrier.wait()
-        return replace(source, target)
+        with snapshot_guard:
+            return replace(source, target)
 
     def read_until_stopped():
         while not stop.is_set():
-            document = _read(path)
+            with snapshot_guard:
+                document = _read(path)
             observed.append(document)
             reader_started.set()
             if document != original:
@@ -372,6 +378,40 @@ def _deny_windows_delete(path):
         yield release
     finally:
         release()
+
+
+@pytest.mark.skipif(os.name != "nt", reason="actual Windows sharing handles")
+def test_windows_writer_stages_while_reader_holds_old_document(tmp_path, monkeypatch):
+    path = tmp_path / "result.json"
+    path.write_bytes(b'{"old":true}')
+    staged = threading.Event()
+    released = threading.Event()
+    replace = Path.replace
+    temporaries = []
+
+    def publish(source, target):
+        temporaries.append(source)
+        assert _read(source) == {"new": True}
+        staged.set()
+        assert released.wait(5)
+        return replace(source, target)
+
+    monkeypatch.setattr(Path, "replace", publish)
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        with _deny_windows_delete(path) as release:
+            writer = pool.submit(video.write_json, path, {"new": True})
+            try:
+                assert staged.wait(5)
+                assert _read(path) == {"old": True}
+                assert _read(temporaries[0]) == {"new": True}
+                release()
+            finally:
+                release()
+                released.set()
+        writer.result(timeout=5)
+    assert len(temporaries) == 1
+    assert _read(path) == {"new": True}
+    assert list(tmp_path.iterdir()) == [path]
 
 
 @pytest.mark.skipif(os.name != "nt", reason="actual Windows sharing handles")
