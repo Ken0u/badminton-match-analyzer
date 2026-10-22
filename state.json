@@ -191,6 +191,15 @@
       "task_id": "192",
       "verb": "plan"
     },
+    "fixture192-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792707509,
+      "epoch": 1,
+      "fingerprint": "376125794cd8b55761b64485a6e6e72ff7cff5b4397a89ea5955c5bd9d109f18",
+      "status": "review",
+      "task_id": "192",
+      "verb": "submit"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
@@ -13789,6 +13798,7 @@
       "epoch": 1,
       "planned_at": 1792706096,
       "planned_by": "Ken0u",
+      "pr_number": 194,
       "spec": {
         "acceptance": [
           "Search issues, PRs and coordination for duplicates; preserve original #190 main run39719248778 attempt1 and #189 PR193 CI39722230314 failures and artifacts. Their original CI process terminal states remain unknown. No failed CI rerun is authorized by this task; new source gets ordinary new CI only.",
@@ -13832,7 +13842,13 @@
         ]
       },
       "spec_hash": "c780e85459bd99af1a4ad0de9bf95ecf4c4bedca920b0de0b4c271e7597e088e",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4246ec524fbece6361898e562698f30410de5a66",
+        "head_sha": "5a27db22cf749b499a622bdce7dbf06a6785133c",
+        "pr_number": 194,
+        "spec_hash": "c780e85459bd99af1a4ad0de9bf95ecf4c4bedca920b0de0b4c271e7597e088e"
+      }
     },
     "62": {
       "epoch": 0,
