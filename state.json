@@ -127,6 +127,15 @@
       "task_id": "98",
       "verb": "fence-external-merge"
     },
+    "fixture181-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792635128,
+      "epoch": 1,
+      "fingerprint": "ccc089050ac5a92ba70565b218565f19498a734648e2ada77488d016c36d30df",
+      "status": "running",
+      "task_id": "181",
+      "verb": "checkpoint"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
@@ -12930,12 +12939,27 @@
       }
     },
     "181": {
+      "checkpoint": {
+        "branch": "codex/issue-181-make-generated-browser-fixture-startup-a",
+        "evidence": [
+          ".cache/fixture181-checks-v1",
+          ".cache/worktrees/fixture181/.cache/evidence"
+        ],
+        "head_sha": "766806c54c8d1e71c40ddc007c92478c0aa31a1d",
+        "remaining": [
+          "finish final ownership regressions and actual browser matrix",
+          "required checks and aggregate report",
+          "exact CI, controller merge, main and public delivery verification"
+        ],
+        "summary": "Committed epoch1 grant verified. Isolated fixture181 worktree contains only granted harness/test edits, not yet committed. First21 injected ownership tests pass. Real original Windows Python310 venv launch confirms distinct spawn10052/listener11220 and verifies both terminal. Deliberate authenticated-response assertion failure separately verifies child2240/wrapper1968 terminal; original artifacts retained. Existing pinned Node24.22/FFmpeg8.1/Chromium1248 reused; no installs. Production browser matrix and full software regression currently running. Initial pytest collection imported original editable checkout and failed15 imports; retained logs; corrected test-only backend path invocation is running. Browser uses original venv directly with no PYTHONPATH/base-interpreter workaround. Source179 completed through main and independently verified public delivery, handoff comment6330961225. No inference/data/model/source-image sessions or PROGRESS edits."
+      },
+      "checkpoint_at": 1792635128,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "766806c54c8d1e71c40ddc007c92478c0aa31a1d",
         "branch": "codex/issue-181-make-generated-browser-fixture-startup-a",
         "epoch": 1,
-        "expires_at": 1792645458,
+        "expires_at": 1792645928,
         "granted_at": 1792634658,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
