@@ -1,6 +1,7 @@
 # Windows JSON publication repair
 
-Issue [#186](https://github.com/Ken0u/badminton-match-analyzer/issues/186),
+Issues [#186](https://github.com/Ken0u/badminton-match-analyzer/issues/186) and
+[main-verification repair #190](https://github.com/Ken0u/badminton-match-analyzer/issues/190),
 October 22, 2026. This is generated software evidence, not badminton annotation
 accuracy or a change to application predictions, annotations or models.
 
@@ -63,12 +64,58 @@ CI and delivery receipts, rather than replacing the initial comparison receipt.
 
 ## Verification and reproduction
 
-Final local verification passes 23 dedicated tests, the complete Python suite
+Initial #186 local verification passes 23 dedicated tests, the complete Python suite
 (2,047 passed, four optional skips), Ruff check/format across 183 files, dependency
 and Git whitespace checks. Both retained production browser runs pass all 18
 groups; the final run exercises the descriptor/error cleanup revision. Independent
 PID/creation-time checks establish both listener and wrapper terminal for each
 run. Exact-head CI, merged-main checks and delivery remain separate gates.
+
+### Failed main verification and test correction
+
+PR #188 merged as `01d5e2874f8366d3e6e44edfbaef00624f1a7c7e` after all 12
+exact-head verification jobs passed. Fresh detached-main checks also passed 23
+JSON tests and all 18 browser groups. However, the
+[merged-main Windows job](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39716528536/job/119619887983)
+failed the eight-writer concurrency test with final WinError 5: 2,032 tests passed,
+15 skipped and one failed. The original log and GitHub failure artifact
+`12399676286` remain preserved. The controller paused ordinary work and created
+#190; the earlier passing runs do not establish completed main verification or
+delivery.
+
+That test repeatedly opened ordinary Windows readers, which can deny replacement,
+while requiring every writer to succeed within the fixed retry period. Bounded
+retries cannot guarantee progress under continuous sharing denial. A separately
+frozen generated experiment tried holding a read/write/delete-sharing handle as
+a positive comparison. It failed that success expectation: the destination still
+contained old JSON. Its exact publication exception was not saved, so the report
+does not assign a cause. The original experiment, files, freeze and failure record
+are retained rather than rerunning it until it passes.
+
+The repair adds a **test-only** Windows guard around each snapshot open/read/close
+and the native replacement call. Eight writers still stage complete, closed,
+distinct temporaries concurrently. POSIX native reader/replacement overlap stays
+unchanged. Windows snapshot assertions verify complete old/new JSON without
+assuming replacement succeeds while a reader is open. A new controlled actual
+Windows test verifies that a complete new temporary can stage while a reader
+holds the old destination, then publication succeeds after that reader closes.
+The original actual transient/persistent denying-reader tests are retained.
+This separates concurrency/ownership from sharing-denial behavior without
+skipping checks or extending production retry bounds.
+
+The production `video.py` bytes remain unchanged at SHA-256
+`ae89d139b480eeb56b3e5d98d5682d4c62b8f19ec66a4d2eb137d2c2f667cf4a`.
+The [original repair freeze](https://github.com/Ken0u/badminton-match-analyzer/issues/190#issuecomment-6332043509)
+and [amendment before tracked edits](https://github.com/Ken0u/badminton-match-analyzer/issues/190#issuecomment-6332062919)
+retain both the failed positive-sharing assumption and the revised protocol.
+Repair integration, main verification and public delivery are separate gates
+recorded on #190 and #186.
+
+Final local #190 checks pass all 24 dedicated cases, the full suite (2,048 passed,
+four optional skips), Ruff check/format across 183 files, dependency and whitespace
+checks, and all 18 original-venv production browser groups. The browser listener
+and wrapper are independently verified terminal. These checks do not replace the
+new exact-head and merged-main CI gates or the original failed-main evidence.
 
 The dedicated generated tests cover real Windows temporary/persistent sharing
 denial, deterministic concurrent writers/readers, serialization and path errors,
