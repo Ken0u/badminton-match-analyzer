@@ -3976,6 +3976,14 @@
       "task_id": "138",
       "verb": "checkpoint"
     },
+    "roadmap189-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792639197,
+      "fingerprint": "c47bfa640fe981d2a39f8e39ccd9aae3f1ccd7c9172dee04c2d4c25725eb2063",
+      "status": "ready",
+      "task_id": "189",
+      "verb": "plan"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -4578,6 +4586,14 @@
       "fingerprint": "17d55158a1fb1b432a59a76a3eec8372ec4701e51a6af86029c89dc419a70072",
       "status": "ready",
       "task_id": "186",
+      "verb": "plan"
+    },
+    "spec-189-df424f0c2a99ee33c892b0fe55a8dacdf125ec44d9d65430b5f40226943dd806": {
+      "actor": "Ken0u",
+      "at": 1792639197,
+      "fingerprint": "e330e7866fc90b24dbbf446d3cbc6cbbd366a46113ae4d81b85e8a108ad0a155",
+      "status": "ready",
+      "task_id": "189",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -13332,6 +13348,55 @@
         "pr_number": 188,
         "spec_hash": "6d107348e32eef52d56daf57992a19d32e91225cc26ff839be9fbf2fd7efe098"
       }
+    },
+    "189": {
+      "epoch": 0,
+      "planned_at": 1792639197,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Before a grant, search open/closed issues, active PRs, coordination grants and merged reports for duplicate documentation work. Start only after186 full merged-main/public-delivery verification. Preserve original checkout changes and deprecated PROGRESS without reading or editing it.",
+          "Read the current merged PROJECT_PLAN and BUG_REVIEW plus linked committed aggregate reports and authenticated owning-issue completion receipts. Clearly date current status and separate historical snapshots from current facts. Verify exact merged revisions and evidence for automation activation/public delivery, full-match browser/product coverage, shuttle visibility/supervision/resolution/heatmap/new-broadcast diagnostics, and Mac player runtime/localization/identity findings.",
+          "Update only PROJECT_PLAN.md and docs/BUG_REVIEW.md with concise current summaries and actionable remaining milestones. Correct stale current-tense observation/pilot/unfinished claims only when delivery evidence supports correction, while preserving historical failures and links. Explicitly distinguish source preparation, agent agreement, conditional classification, processing coverage and software checks from independent full-match accuracy.",
+          "Keep unknown/unavailable denominators, rejected experiments, no-promotion outcomes, unresolved data/model rights and overlap/pretraining limitations visible. Do not access consumed holdout63 inputs/protocol/predictions/private membership/artifacts; a public historical aggregate report may only be cited without recomputation. Do not turn this documentation task into new research, model/policy changes or claimed accuracy.",
+          "Check all new local Markdown targets, public issue/report/revision references, UTF8/LF and whitespace. Run required repository checks with existing project environment, isolated roots and cleared credential variables; do not repeat native inference or browser matrices for prose-only changes. Complete focused PR, exact-head CI/controller integration, fresh merged-main document verification and full public package/both-image delivery.",
+          "Bound all new outputs to64MiB and2h from grant, three repair rounds. No installations/downloads, real media/data/annotations/weights or research-process actions, source-image assessment, model promotion, auth/Store/API/workflow/security/deployment changes or PROGRESS access/edits. Record checkpoints and limitations on owning issue."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "179",
+          "181",
+          "183",
+          "186"
+        ],
+        "exclusions": [
+          "No production code/policy changes, scientific recomputation, real or consumed holdout data access, images, inference/training, environments replacement, research-process actions, spending or PROGRESS access/edits."
+        ],
+        "limits": {
+          "max_output_bytes": 67108864,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Synchronize the shared project plan and bug review with verified delivered research, product and automation evidence without overstating annotation accuracy.",
+        "paths": [
+          "PROJECT_PLAN.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 110,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Check current claims against merged public aggregate reports and authenticated completion receipts; retain unresolved and negative evidence.",
+          "UTF8/LF/local-link/reference validation, required project checks, exact CI/controller/main and complete public delivery."
+        ]
+      },
+      "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
