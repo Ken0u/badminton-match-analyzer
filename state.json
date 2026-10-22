@@ -4067,6 +4067,15 @@
       "task_id": "189",
       "verb": "plan"
     },
+    "roadmap189-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792643198,
+      "epoch": 1,
+      "fingerprint": "4ce36881dc833eb9865db3e10d3e52e97c7d3ad9d7ded403431e6135109816c0",
+      "status": "review",
+      "task_id": "189",
+      "verb": "submit"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -13515,6 +13524,7 @@
       "epoch": 1,
       "planned_at": 1792639197,
       "planned_by": "Ken0u",
+      "pr_number": 193,
       "spec": {
         "acceptance": [
           "Before a grant, search open/closed issues, active PRs, coordination grants and merged reports for duplicate documentation work. Start only after186 full merged-main/public-delivery verification. Preserve original checkout changes and deprecated PROGRESS without reading or editing it.",
@@ -13558,7 +13568,13 @@
         ]
       },
       "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4246ec524fbece6361898e562698f30410de5a66",
+        "head_sha": "97aa76e607412660218d796df5faa51cab4707d3",
+        "pr_number": 193,
+        "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
+      }
     },
     "190": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39720613365",
