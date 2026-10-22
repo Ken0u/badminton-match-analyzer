@@ -5382,6 +5382,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "windows-broadcast179-results-v1": {
+      "actor": "Ken0u",
+      "at": 1792632864,
+      "epoch": 1,
+      "fingerprint": "b11c73c5165a9cb661d7c10da794bbfe38c1b632ba518fa91f86db1eea035894",
+      "status": "running",
+      "task_id": "179",
+      "verb": "checkpoint"
+    },
     "windows-broadcast179-start-v1": {
       "actor": "Ken0u",
       "at": 1792630397,
@@ -12639,25 +12648,35 @@
     },
     "179": {
       "checkpoint": {
+        "base_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
         "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
-        "context_sha256": "ee87921d645d245548ea3f778c052892faa84f8a538f4fcb782d7068b6407014",
-        "freeze_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/179#issuecomment-6330193993",
-        "head_sha": "ddb6025f5dcdb9ff53524bb560d43202b2e39368",
-        "job_id": "940de93ca16848df99308fd0e65feebf",
-        "limits": "Original4h deadline1792644560; cumulative native1800s;256MiB total new outputs;8192 requested rows. No resets.",
-        "phase": "Bounded unchanged native capture running; first64 of128 windows successful; predictions not interpreted",
-        "preservation": "All128 planned cases remain; no consumed63 access, downloads, tuning/promotion, app truth changes or PROGRESS edits.",
-        "process_observation": "Original-host admission lifetime remains live; original shared Store reports running. Native exec handle92317; no restart or competing job.",
-        "remaining": "Finish bounded capture, prove original lifetime exited and Store terminal, externally timestamp raw inventory BEFORE fixed interpretation; aggregate report, fresh independent exact-head review, CI/controller/main/full public delivery.",
-        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
+        "checks": "62 focused;1866 passed/162 optional skips;Ruff182 files,format,pip check,text/JSON/links,diff passed.",
+        "head_sha": "a293fa28198f2acc777294c5f3d649d97ced76fb",
+        "native_evidence": {
+          "code_sha": "a293fa28198f2acc777294c5f3d649d97ced76fb",
+          "limitations": [
+            "Final revision differs from native ddb6025f5dcdb9ff53524bb560d43202b2e39368 only in aggregate report; all recursive native consumer bytes reverified unchanged.",
+            "Agent-labeled fixed development agreement only; all128 cases retained, not expert or unseen annotation accuracy.",
+            "No training/tuning/default/model/prediction/truth changes; unresolved rights, overlap and upstream membership; all eligibility false."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "60bb3f2b9b88ccf82ba41b86bd36462d8001917fedd06066bb76086a5cbe30cd",
+          "source_sha256": "ee87921d645d245548ea3f778c052892faa84f8a538f4fcb782d7068b6407014"
+        },
+        "phase": "Native and fixed interpretation complete; final aggregate report committed; preparing draft PR and genuine independent review",
+        "preservation": "No consumed63 access,downloads,tuning/promotion,app truth writes or PROGRESS edits.",
+        "remaining": "Fresh independent exact-head review,exact CI,controller integration,merged-main/full public delivery. Deadline1792644560 unchanged; output under256MiB;no further inference.",
+        "results": "All128 windows successful;8192 requested rows;1310.375s. Fixed16/37 within,6 displaced,15 missing;5/5 negatives absent;1 alternate-only component. Unknown85 and unlocalizable1 retained.",
+        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23",
+        "terminal_seal_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/179#issuecomment-6330501523"
       },
-      "checkpoint_at": 1792631957,
+      "checkpoint_at": 1792632864,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
         "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
         "epoch": 1,
-        "expires_at": 1792642757,
+        "expires_at": 1792643664,
         "granted_at": 1792630160,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
