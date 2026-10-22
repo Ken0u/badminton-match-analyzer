@@ -5329,6 +5329,15 @@
       "task_id": "69",
       "verb": "next"
     },
+    "windows-broadcast179-freeze-v1": {
+      "actor": "Ken0u",
+      "at": 1792631321,
+      "epoch": 1,
+      "fingerprint": "7993163ad4fbc9f6e9db6d388be2574c95226e9cf8ce0884133bcea7f153c05f",
+      "status": "running",
+      "task_id": "179",
+      "verb": "checkpoint"
+    },
     "windows-broadcast179-next-v1": {
       "actor": "Ken0u",
       "at": 1792630160,
@@ -12621,24 +12630,33 @@
     },
     "179": {
       "checkpoint": {
-        "baseline_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
         "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
-        "delegation": "broadcast179_core owns module; broadcast179_tests owns tests; parent owns CLI/protocol/report and publishes one combined branch. Neither child may claim or run native inference.",
-        "host": "Original Python3.10.5 torch2.8.0+cu126 torchvision0.23.0+cu126 RTX3050Ti CUDA available; shared catalog has no running/queued jobs at preflight",
-        "input_verification": "Original freeze/source media/clock/632 PNGs/assessment consumers reverified using verify_freeze; all128 cases,640 memberships,80 adjudications retained, all eligibility false",
-        "phase": "implementing prospective diagnostic; no native execution",
-        "predecessors": "172 and177 Done; repaired candidate39672929664 verified against Git/package/frontend/lock and both anonymous OCI manifests, receipt4617998134ce6bdc612eeb9d395f269ef1e035ef46090b8f991b13ff8b91bcd6",
-        "preservation": "No downloads, installs, source sessions, inference or application truth writes. Preserve consumed63 exclusion, original environments/artifacts and existing PROGRESS.md edits.",
-        "remaining": "Finish code/protocol/generated tests, commit and timestamp full consumer/input/runtime freeze BEFORE native capture. Native1800seconds cumulative,8192 rows,256MiB cumulative output,4h grantdeadline1792644560; independent exact-head review/full CI/controller/main/public delivery required.",
-        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
+        "deadline_utc_epoch": 1792644560,
+        "freeze": {
+          "application_before_sha256": "021ad0666eca828953b52cc3caa51bfb0a293723b47a121e59fa1307a46702ec",
+          "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "context_sha256": "ee87921d645d245548ea3f778c052892faa84f8a538f4fcb782d7068b6407014",
+          "exact_windows_sha256": "681f1f586a472caadf3fbe41d9a98906ac8a1b8fe2ccb4dcbfbc48ac4d9ee34a",
+          "original_source_inputs_sha256": "a1ce8bd266bf828f0da96efad625606fd0e20d22632b250b73c844b1a7012593",
+          "protocol_sha256": "3df7ae9ddd7e94b57b48ad82420ab3b008d3fbb90614bb94e69c1e7700914ebe",
+          "recursive_consumers_sha256": "2eb1e2f495e926f52b47233b8cf350687f0a32ba7b59f3e39e246220619de957",
+          "runtime_sha256": "c2d207174ab14f53fa00b99080432b5545a0a58932bf698029aacc24ee26ee6f"
+        },
+        "head_sha": "ddb6025f5dcdb9ff53524bb560d43202b2e39368",
+        "phase": "Committed prospective freeze; native inference and interpretation have NOT started",
+        "preservation": "No consumed63 access, source/model downloads, tuning/promotion, app truth changes or PROGRESS edits.",
+        "remaining": "Original shared Store bounded1800s native capture, terminal/raw seal BEFORE fixed interpretation, aggregate report, independent final exact-head review, exact CI/controller/main/full public delivery.",
+        "scope": "All128 original centers,8192 fixed requested rows,37/1/5/85 visibility support; unchanged TrackNet512x288 CUDA float16 sequence8/default0.5. No reviewed continuous scene/calibration context; all eligibility false.",
+        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23",
+        "tests": "62 focused passed; full1866 passed/162 optional skips; Ruff182 files, pip check, UTF8/LF/JSON/links passed."
       },
-      "checkpoint_at": 1792630397,
+      "checkpoint_at": 1792631321,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
         "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
         "epoch": 1,
-        "expires_at": 1792641197,
+        "expires_at": 1792642121,
         "granted_at": 1792630160,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
