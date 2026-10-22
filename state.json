@@ -685,6 +685,15 @@
       "task_id": "98",
       "verb": "invalidate-review"
     },
+    "json186-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792638071,
+      "epoch": 1,
+      "fingerprint": "a9430733b1576268e2d9e3ff05ca4c36214cef2496d03870e0d6e0b1d666050a",
+      "status": "running",
+      "task_id": "186",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -13234,12 +13243,28 @@
       }
     },
     "186": {
+      "checkpoint": {
+        "branch": "codex/issue-186-diagnose-and-repair-generated-source-win",
+        "evidence": [
+          ".cache/json186-freeze-v1.json",
+          ".cache/json186-experiment-baseline-v1/receipt.json",
+          ".cache/json186-experiment-fixed-v1/receipt.json"
+        ],
+        "head_sha": "e96be80a8edd7b58d63a9291523dd5ba7f7e2880",
+        "remaining": [
+          "focused failure/ownership tests",
+          "full project/browser checks and aggregate report",
+          "exact CI/controller/main/full public delivery"
+        ],
+        "summary": "Epoch1 grant and prior181 delivery verified. Prospective protocol/script/source freeze published6331604470 before generated baseline. Actual Windows no-delete-sharing destination handle reproduces original WinError5 with stale shared.tmp. Fixed candidate unique same-directory temp plus Windows-only6attempt/250ms-total-sleep replace retries succeeds after50ms release(~78ms); persistent denial propagates same5(~312ms), oldJSON preserved and own temp cleaned. Frozen concurrent experiment happened to succeed for both versions, so no collision or historical-cause claim. Raw receipts preserved unchanged. Worker instructions authorize bounded subagent json186_tests owning only dedicated tests; parent ownsvideo.py/report. No installs/downloads/realdata/models/research/consumed63/PROGRESS access or changes. Candidate not yet committed. Preparing focused/full/generated-browser validation."
+      },
+      "checkpoint_at": 1792638071,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e96be80a8edd7b58d63a9291523dd5ba7f7e2880",
         "branch": "codex/issue-186-diagnose-and-repair-generated-source-win",
         "epoch": 1,
-        "expires_at": 1792648611,
+        "expires_at": 1792648871,
         "granted_at": 1792637811,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
