@@ -4030,6 +4030,15 @@
       "task_id": "138",
       "verb": "checkpoint"
     },
+    "roadmap189-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792642737,
+      "epoch": 1,
+      "fingerprint": "78eb2dab5dec1b59d00bd0596a36e58b124cdc5e902fac446ee067e41c9e7d9c",
+      "status": "running",
+      "task_id": "189",
+      "verb": "checkpoint"
+    },
     "roadmap189-next-v1": {
       "actor": "Ken0u",
       "at": 1792642377,
@@ -13476,12 +13485,28 @@
       "verified_by_repair": "4246ec524fbece6361898e562698f30410de5a66"
     },
     "189": {
+      "checkpoint": {
+        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and-",
+        "evidence": [
+          ".cache/roadmap189-evidence-v1.json",
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/190#issuecomment-6332507417",
+          ".cache/roadmap189-checks-v1"
+        ],
+        "head_sha": "4246ec524fbece6361898e562698f30410de5a66",
+        "remaining": [
+          "Finish document/reference and required project checks.",
+          "Publish focused PR and submit exact revision for controller integration.",
+          "Verify merged-main documents/CI and complete normal public delivery."
+        ],
+        "summary": "Confirmed #186/#190 repair linkage, unpaused queue and complete independently verified public delivery before starting. Committed #189 epoch 1 grant received for only PROJECT_PLAN.md and docs/BUG_REVIEW.md. Duplicate open/closed issue and PR searches found no other consolidation. Read merged public aggregate reports and authenticated completion records for pilots, visibility/resolution/corpus/heatmaps, source assessment, broadcast diagnostic, Mac runtime/audit and reliability repairs. Draft adds a dated current snapshot and priorities while preserving historical/negative evidence and unknown denominators; corrects stale bootstrap observation claim. No consumed holdout artifacts, imagery, scientific recomputation, model/policy/production code changes or PROGRESS access/edits. Starting required isolated project checks using original venv; no installs or native inference/browser matrix repetition. Bound output 64 MiB and 2 hours from original grant."
+      },
+      "checkpoint_at": 1792642737,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4246ec524fbece6361898e562698f30410de5a66",
         "branch": "codex/issue-189-synchronize-the-shared-project-plan-and-",
         "epoch": 1,
-        "expires_at": 1792653177,
+        "expires_at": 1792653537,
         "granted_at": 1792642377,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
