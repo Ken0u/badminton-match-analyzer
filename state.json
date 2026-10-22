@@ -13505,6 +13505,7 @@
       "status": "ready"
     },
     "190": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39720613365",
       "checkpoint": {
         "branch": "codex/issue-190-repair-main-verification-for-01d5e2874f8",
         "evidence": [
@@ -13535,7 +13536,7 @@
         "spec_hash": "cf65975e9e0558e4c1f729658dfc98d6f034bda12a2a6f6710ff8a7d24dd664f"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792640965,
