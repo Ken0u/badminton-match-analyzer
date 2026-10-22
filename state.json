@@ -5329,6 +5329,26 @@
       "task_id": "69",
       "verb": "next"
     },
+    "windows-broadcast179-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792630160,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
+        "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
+        "epoch": 1,
+        "expires_at": 1792640960,
+        "granted_at": 1792630160,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
+      },
+      "epoch": 1,
+      "fingerprint": "378475c3d14761befaf9b85e201abd281fa4926cc561c6604efd178271817eb3",
+      "status": "granted",
+      "task_id": "179",
+      "verb": "next"
+    },
     "windows-broadcast179-plan-v1": {
       "actor": "Ken0u",
       "at": 1792614469,
@@ -12591,7 +12611,18 @@
       }
     },
     "179": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
+        "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
+        "epoch": 1,
+        "expires_at": 1792640960,
+        "granted_at": 1792630160,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
+      },
+      "epoch": 1,
       "planned_at": 1792614469,
       "planned_by": "Ken0u",
       "spec": {
@@ -12654,7 +12685,7 @@
         ]
       },
       "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23",
-      "status": "ready"
+      "status": "running"
     },
     "181": {
       "epoch": 0,
