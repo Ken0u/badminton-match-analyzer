@@ -4030,6 +4030,26 @@
       "task_id": "138",
       "verb": "checkpoint"
     },
+    "roadmap189-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792642377,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4246ec524fbece6361898e562698f30410de5a66",
+        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and-",
+        "epoch": 1,
+        "expires_at": 1792653177,
+        "granted_at": 1792642377,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
+      },
+      "epoch": 1,
+      "fingerprint": "757cc4f45d6cc3a2133fe03e5dc86cde8a527ace6ac71a55c938dcc5e5548d7a",
+      "status": "granted",
+      "task_id": "189",
+      "verb": "next"
+    },
     "roadmap189-plan-v1": {
       "actor": "Ken0u",
       "at": 1792639197,
@@ -13456,7 +13476,18 @@
       "verified_by_repair": "4246ec524fbece6361898e562698f30410de5a66"
     },
     "189": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4246ec524fbece6361898e562698f30410de5a66",
+        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and-",
+        "epoch": 1,
+        "expires_at": 1792653177,
+        "granted_at": 1792642377,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
+      },
+      "epoch": 1,
       "planned_at": 1792639197,
       "planned_by": "Ken0u",
       "spec": {
@@ -13502,7 +13533,7 @@
         ]
       },
       "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67",
-      "status": "ready"
+      "status": "running"
     },
     "190": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39720613365",
