@@ -1,5 +1,5 @@
 {
-  "paused": false,
+  "paused": true,
   "receipts": {
     "adopt-003628c8dcaecb68b1f14319cad228db61bf5c092e5028caeb9297739a68b42e": {
       "actor": "github-actions[bot]",
@@ -13317,6 +13317,7 @@
         "base_sha": "e96be80a8edd7b58d63a9291523dd5ba7f7e2880",
         "head_sha": "0ab61db6f5edbe898b50f7b85dc0adadcbe8a7ff"
       },
+      "integration_error": "Merged main verification failed; repair required",
       "merge_sha": "01d5e2874f8366d3e6e44edfbaef00624f1a7c7e",
       "planned_at": 1792635859,
       "planned_by": "Ken0u",
