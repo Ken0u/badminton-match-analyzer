@@ -154,6 +154,15 @@
       "task_id": "192",
       "verb": "checkpoint"
     },
+    "fixture192-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792706959,
+      "epoch": 1,
+      "fingerprint": "6fdf6322f90007cf1d60750eb0367f46496081532ce63af8b345a3165631ca33",
+      "status": "running",
+      "task_id": "192",
+      "verb": "checkpoint"
+    },
     "fixture192-next-v1": {
       "actor": "Ken0u",
       "at": 1792706236,
@@ -13752,27 +13761,26 @@
       "checkpoint": {
         "branch": "codex/issue-192-diagnose-recurring-generated-browser-fix",
         "evidence": [
-          "https://github.com/Ken0u/badminton-match-analyzer/issues/192#issuecomment-6352236982",
-          ".cache/fixture192-freeze-v1.json",
-          ".cache/fixture192-baseline-result-v1.json",
-          ".cache/roadmap189-ci-browser-evidence-v1",
-          ".cache/roadmap189-interrupted-handoff-v1.md"
+          ".cache/fixture192-checks-v1/live-0.json",
+          ".cache/fixture192-checks-v2/browser-0.json",
+          ".cache/fixture192-checks-v3/live-0.json",
+          ".cache/fixture192-repaired-result-v1.json"
         ],
         "head_sha": "4246ec524fbece6361898e562698f30410de5a66",
         "remaining": [
-          "Implement bounded structured observations and fail-closed identity authority with truthful signal outcomes.",
-          "Focused injected/actual generated checks and required project/browser validation.",
-          "Exact-head CI/controller/main and complete public delivery; #189 requires separately bounded continuation."
+          "Finish final-source browser matrix, full required checks and aggregate report.",
+          "Commit/push granted branch, exact-head CI/controller integration, fresh merged-main checks and full public delivery.",
+          "#189 remains preserved and incomplete; needs separately bounded continuation."
         ],
-        "summary": "Granted #192 epoch1 c780e85459bd99af1a4ad0de9bf95ecf4c4bedca920b0de0b4c271e7597e088e, base4246ec5. #189 released code-only after interruption exceeded original two-hour runtime; PR193/head97aa preserved, not complete. Preserved terminal failed CI39722230314 browser log and artifact12401323875 sha de84b10affc2a14464eb8f2b16442852adc2389f5ff3219af6c5d01b7a9298fc. Same cleanup symptom after all18 main/eight library checks; original CI lifetime5127 terminalunknown. Before tracked edits froze generated diagnostic/source bytes: freeze7c5c810bfbacf53256a32a2d3c9692104157e0b3c347c888074c6f7df37def63. Generated-record baseline reproduces metadata-loss-before-reaping error with one simulated SIGTERM and no OS PID action. This proves observation gap, not historical cause. Bounded subagent owns only two granted test harness files; parent owns aggregate report, validation, publication. No production/controller/policy/workflow/research/data/model/PROGRESS changes or historical CI retries. Max128MiB/3h from grant1792706236; runtime not renewed on checkpoints."
+        "summary": "Implementation confined to three granted paths. Final harness now retains structured status/per-field errors and bounded timestamped shutdown observations, yields after signals and polls only matching immutable lifetimes, never signals changed/unreadable/zombie identities, and freshly distinguishes psutil PID-reuse NoSuchProcess from absence. New generated Python-probe exception regression exercises absent/reused/zombie outcomes without OS PID signals. Final Windows live check:47 passed,1 explicit POSIX skip. Earlier18-group browser matrix passed and preserved; code review then tightened exception handling, so final-source browser matrix is running separately. Preserved original baseline hashes and original historical CI uncertainty. First helper console rendering failed after its underlying live test passed (UTF8 printing repaired only in new helper lineage); no product failure hidden. Original128MiB/3h budget from1792706236 remains; no historical CI retry, production/controller/policy/research/data/model/PROGRESS changes."
       },
-      "checkpoint_at": 1792706407,
+      "checkpoint_at": 1792706959,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4246ec524fbece6361898e562698f30410de5a66",
         "branch": "codex/issue-192-diagnose-recurring-generated-browser-fix",
         "epoch": 1,
-        "expires_at": 1792717207,
+        "expires_at": 1792717759,
         "granted_at": 1792706236,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
