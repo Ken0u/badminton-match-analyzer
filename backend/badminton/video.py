@@ -5,10 +5,17 @@ import hashlib
 import json
 import math
 import operator
+import os
+import tempfile
+import time
+from contextlib import suppress
 from functools import lru_cache
+from pathlib import Path
 
 from .av_runtime import open_media
 from .orientation import orient_frame
+
+_WINDOWS = os.name == "nt"
 
 
 class SourceChangedError(ValueError):
@@ -133,8 +140,44 @@ def iter_frames(video, root, times, start, end):
             )
 
 
+def _replace_json(temporary, path):
+    # Windows readers may briefly hold the destination without delete sharing.
+    # Access denied (5) is also used for persistent ACL failures: never hide it.
+    delays = (0.01, 0.02, 0.04, 0.08, 0.1)
+    for attempt in range(len(delays) + 1):
+        try:
+            temporary.replace(path)
+            return
+        except OSError as error:
+            if (
+                not _WINDOWS
+                or getattr(error, "winerror", None) not in (5, 32, 33)
+                or attempt == len(delays)
+            ):
+                raise
+            time.sleep(delays[attempt])
+
+
 def write_json(path, document):
+    serialized = json.dumps(document)
     path.parent.mkdir(parents=True, exist_ok=True)
-    temporary = path.with_suffix(".tmp")
-    temporary.write_text(json.dumps(document), encoding="utf-8")
-    temporary.replace(path)
+    descriptor, name = tempfile.mkstemp(
+        dir=path.parent, prefix=f".{path.name}.", suffix=".tmp"
+    )
+    temporary = Path(name)
+    try:
+        try:
+            output = os.fdopen(descriptor, "w", encoding="utf-8")
+        except BaseException:
+            with suppress(OSError):
+                os.close(descriptor)
+            raise
+        with output:
+            output.write(serialized)
+        _replace_json(temporary, path)
+    except BaseException:
+        # Preserve the publication error even if an external handle prevents
+        # removal of our file. A successful replace already consumed it.
+        with suppress(OSError):
+            temporary.unlink(missing_ok=True)
+        raise
