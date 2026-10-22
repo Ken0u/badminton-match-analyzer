@@ -12756,6 +12756,7 @@
       }
     },
     "179": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39708866440",
       "checkpoint": {
         "base_sha": "aaa77547decc4997aa77d1a5e4e9e3d97eb71556",
         "branch": "codex/issue-179-diagnose-unchanged-tracknet-localization",
@@ -12792,7 +12793,7 @@
         "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792633795,
