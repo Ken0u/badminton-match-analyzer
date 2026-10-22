@@ -136,6 +136,15 @@
       "task_id": "181",
       "verb": "checkpoint"
     },
+    "fixture181-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792635633,
+      "epoch": 1,
+      "fingerprint": "3722558f770a479621eb9596cef2583853401d471e4b40dfed66ae0f988b666c",
+      "status": "review",
+      "task_id": "181",
+      "verb": "submit"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
@@ -12968,6 +12977,7 @@
       "epoch": 1,
       "planned_at": 1792614932,
       "planned_by": "Ken0u",
+      "pr_number": 187,
       "spec": {
         "acceptance": [
           "Routine Infrastructure follow-up discovered during172/177 browser diagnosis. Search history/PRs/grants; begin only after177 repaired-main/public delivery and a committed Windows grant. Preserve active Mac176/PR178 and broadcast179. Original Windows failure evidence is private at .cache/worktrees/shuttle172/.cache/evidence/frontend-delivery-jN1sEv and frontend-delivery-7szQyK; startup expected spawn PID6920/5184 but actual listener reported15340/18764. All four recorded fixture attempts have verified terminal lifetimes, seal6455f2f8b494ae21e4619cdbbd5dc16adb2ac4ad6cfff3d56014044aaa6c6b1f. Do not claim those PID values are current workers.",
@@ -13010,7 +13020,13 @@
         ]
       },
       "spec_hash": "2b2f35d036d4238b207985e55cc295dc970cc20fadb9e7ffdf5d5253d9f3f4dc",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "766806c54c8d1e71c40ddc007c92478c0aa31a1d",
+        "head_sha": "632d966e6a122aed0381c4654f38d3c72de4f092",
+        "pr_number": 187,
+        "spec_hash": "2b2f35d036d4238b207985e55cc295dc970cc20fadb9e7ffdf5d5253d9f3f4dc"
+      }
     },
     "183": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39687422495",
