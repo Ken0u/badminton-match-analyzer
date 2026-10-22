@@ -711,6 +711,15 @@
       "task_id": "186",
       "verb": "submit"
     },
+    "json190-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792640387,
+      "epoch": 1,
+      "fingerprint": "25f7964c380b73cb55470994a64c2ecab02da6dc4ebebe3854a8e31fe6275bf0",
+      "status": "running",
+      "task_id": "190",
+      "verb": "checkpoint"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -13450,12 +13459,30 @@
       "status": "ready"
     },
     "190": {
+      "checkpoint": {
+        "branch": "codex/issue-190-repair-main-verification-for-01d5e2874f8",
+        "evidence": [
+          ".cache/json186-main-windows-failure-v1.log",
+          ".cache/json190-sharing-freeze-v1.json",
+          ".cache/json190-sharing-experiment-v1-failure.json",
+          ".cache/json190-revised-freeze-v1.md",
+          ".cache/json190-checks-v1"
+        ],
+        "head_sha": "01d5e2874f8366d3e6e44edfbaef00624f1a7c7e",
+        "remaining": [
+          "full project checks and report results",
+          "exact headCI/controller/mergedmain",
+          "single repaired-source public delivery and186 repaired linkage"
+        ],
+        "summary": "Granted190 epoch1. Preserve failed186 main39716528536 Windows concurrency test and original log. Prospective share3/share7 experiment failed its share7 publication success expectation; exact7 error not saved, old JSON retained, frozen script/files/failure record unchanged. Amendment timestamped before tracked edits. Test-only Windows guard now closes snapshot reads before actual replacement;8 writers still stage concurrently, POSIX actual read/replace overlap unchanged. Added actual held-reader staging then release case; original temporary/persistent denial tests retained. Production source hash unchanged ae89d139b480eeb56b3e5d98d5682d4c62b8f19ec66a4d2eb137d2c2f667cf4a.24 focused tests and all18 original-venv production browser groups pass. Full suite running; only tests/report edited. No research/images/inference/data/model/environment/PROGRESS changes."
+      },
+      "checkpoint_at": 1792640387,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "01d5e2874f8366d3e6e44edfbaef00624f1a7c7e",
         "branch": "codex/issue-190-repair-main-verification-for-01d5e2874f8",
         "epoch": 1,
-        "expires_at": 1792650751,
+        "expires_at": 1792651187,
         "granted_at": 1792639951,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
