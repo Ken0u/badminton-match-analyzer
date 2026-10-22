@@ -3616,6 +3616,14 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "repair-01d5e2874f8366d3e6e44edfbaef00624f1a7c7e": {
+      "actor": "github-actions[bot]",
+      "at": 1792639868,
+      "fingerprint": "65ce34758794b062ef0b03a96947ed46f407cf504ad33596a366cc937eb27cdf",
+      "status": "ready",
+      "task_id": "190",
+      "verb": "repair"
+    },
     "repair-494160da064db2924ce70a49d717d57630ccf4ca": {
       "actor": "github-actions[bot]",
       "at": 1792613559,
@@ -13419,6 +13427,53 @@
         ]
       },
       "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67",
+      "status": "ready"
+    },
+    "190": {
+      "epoch": 0,
+      "planned_at": 1792639868,
+      "planned_by": "github-actions[bot]",
+      "repair_for": "186",
+      "spec": {
+        "acceptance": [
+          "Routine Infrastructure repair discovered during181. History search and active PR/grant checks must find no duplicate; begin only after181 merged-main/public delivery and a committed Windows grant. Preserve all181 artifacts, including frontend-delivery-noLYtK failure and frontend-delivery-siE1qE passing run. The first observed WinError5 manifest replacement failure is not a proven concurrent-writer diagnosis.",
+          "Reproduce using generated JSON and actual Windows handles/processes in this task checkout, including a reader holding the destination open and simultaneous expected writers. Distinguish Windows sharing/replace errors from writer-temp collisions, ACL/path/serialization errors and external interference. Freeze the generated protocol and source bytes before comparing the narrow change; retain each original failure and comparison. If no supported defect is established, publish that limitation instead of speculative production changes.",
+          "Change only the common video.write_json publisher when a generated reproduction supports it, plus dedicated generated tests and aggregate report. Preserve JSON serialization and same-directory atomic publication, previous valid destination on failure, and explicit original/final errors. Every temporary file must be uniquely owned and cleaned without deleting another writer data. Any Windows sharing retry must be narrowly classified and bounded in attempts and elapsed time; do not swallow persistent permissions, invalid paths, unsupported platform errors or serialization failures. Readers must observe complete old/new JSON and no temporary content.",
+          "Meaningful injected and actual Windows tests cover temporary sharing release, persistent denial, simultaneous writers/readers, unrelated permission/path errors, serialization failure, previous-content preservation and owned-temp cleanup. Verify the original project Python310 venv directly through the generated production browser matrix with existing pinned Node/FFmpeg/Chromium; preserve source clocks, orientation, metadata/early-Play, annotation and error/selection invariants. Do not alter the frozen browser thresholds or suppress failures.",
+          "Use original environments, no installs/downloads. Pin test roots/data before app imports and clear GH_TOKEN,GITHUB_TOKEN,AGENT_PROJECT_TOKEN,OPENAI_API_KEY,CODEX_API_KEY. No real media/annotations/datasets/weights/model outputs/research processes, source-image assessment, CV inference/training, consumed63 materials or PROGRESS access/edits. No job/Store/API/auth/policy/workflow/deployment or model-promotion changes.",
+          "Run focused and required project checks, exact-head CI/controller integration, fresh merged-main verification and full public package/both-image delivery verification. Publish concise reproducible aggregate evidence and unresolved limitations. Bound all new output including failures/tests/review to256MiB,2h from grant and3 repair rounds. Inspect original lifetimes before any task-owned process action; no unverified recursive termination or restart on observation timeout. Software correctness does not certify badminton annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No API/auth/Store/job/policy/workflow/deployment changes, real data/model/source imagery/consumed63 or PROGRESS access, inference/training, environment replacement, downloads/installations, spending, unverified/unrelated process termination, or retries hiding unsupported errors."
+        ],
+        "limits": {
+          "max_output_bytes": 268435456,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Repair main verification for 01d5e2874f83",
+        "paths": [
+          "backend/badminton/video.py",
+          "tests/test_json_publication.py",
+          "docs/WINDOWS_JSON_PUBLICATION_REPORT.md",
+          "tests/"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual generated Windows sharing/writer reproductions and meaningful failures preserve valid JSON, original evidence and only owned temporaries.",
+          "Focused/full project checks, actual project-venv browser matrix, exact CI/controller/main and public package/both-image verification."
+        ]
+      },
+      "spec_hash": "cf65975e9e0558e4c1f729658dfc98d6f034bda12a2a6f6710ff8a7d24dd664f",
       "status": "ready"
     },
     "62": {
