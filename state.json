@@ -5337,6 +5337,13 @@
       "task_id": "179",
       "verb": "plan"
     },
+    "windows-broadcast179-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792630049,
+      "fingerprint": "7f700dcc0e0e952abc24aeb4946f60b3d659429eb9b6632bf30a3e9bf17fa2a4",
+      "status": "ok",
+      "verb": "register"
+    },
     "windows-browser-capability-register-v1": {
       "actor": "Ken0u",
       "at": 1792545324,
@@ -15826,12 +15833,15 @@
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
         "shuttle160-doubles-packet": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
         "shuttle160-singles-packet": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b",
         "shuttle164-assessor-a": "1ad0eda8ae5ac29c49d8c8148e846dbfb160da15236852ea9454054b29764787",
         "shuttle164-assessor-b": "0a1aa0ca24167d076115100fbf894c3eef53b66a033d0c3529e8775f2e77800e",
         "shuttle164-inputs": "603b62afeea3f1fc2ab3f88d0337b65fb69eba72d02cb0ebb029261464f2000c",
-        "shuttle164-protocol": "79653290b0dd8c1d09c244fce14019447cc6c1bf5402e27aa08bd498133a3a42"
+        "shuttle164-protocol": "79653290b0dd8c1d09c244fce14019447cc6c1bf5402e27aa08bd498133a3a42",
+        "shuttle172-aggregate": "e361f43a8f3122b449cc357a78bcc8890ed5d67a42133f28cba80f3ccfa722de",
+        "shuttle172-freeze": "f0193b4c0ae3bf98c0592c82c9e252ead94b4cf3286e642e4bfadd3791a3db62"
       },
       "capabilities": [
         "cpu",
@@ -15841,7 +15851,7 @@
         "cuda"
       ],
       "host_id": "MSI",
-      "registered_at": 1792610565,
+      "registered_at": 1792630049,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
