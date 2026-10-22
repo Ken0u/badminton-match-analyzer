@@ -728,6 +728,12 @@
       "task_id": "190",
       "verb": "checkpoint"
     },
+    "json190-checkpoint-v2": {
+      "actor": "Ken0u",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "json190-submit-v1": {
       "actor": "Ken0u",
       "at": 1792640783,
