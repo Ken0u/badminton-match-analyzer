@@ -3733,6 +3733,14 @@
       "task_id": "177",
       "verb": "repair"
     },
+    "repair-db140236b0d6d2e3cb2055db83fa676cbc3ff326": {
+      "actor": "github-actions[bot]",
+      "at": 1792709994,
+      "fingerprint": "9132dcc4be8345c0d0c220b8f8b7273bc9271378d1fd340646498a5fdb189847",
+      "status": "ready",
+      "task_id": "195",
+      "verb": "repair"
+    },
     "review120-next-01a15493": {
       "actor": "dootz1",
       "at": 1792444150,
@@ -13872,6 +13880,54 @@
         "pr_number": 194,
         "spec_hash": "c780e85459bd99af1a4ad0de9bf95ecf4c4bedca920b0de0b4c271e7597e088e"
       }
+    },
+    "195": {
+      "epoch": 0,
+      "planned_at": 1792709994,
+      "planned_by": "github-actions[bot]",
+      "repair_for": "192",
+      "spec": {
+        "acceptance": [
+          "Search issues, PRs and coordination for duplicates; preserve original #190 main run39719248778 attempt1 and #189 PR193 CI39722230314 failures and artifacts. Their original CI process terminal states remain unknown. No failed CI rerun is authorized by this task; new source gets ordinary new CI only.",
+          "Before tracked edits prospectively freeze a generated process-lifetime diagnostic and source bytes. Inspect the actual process probe, child handle/reaping and cleanup. Record observations sufficient to distinguish missing PID, identical verified live lifetime, creation-time mismatch/PID reuse, changed cwd/exe/command, inaccessible metadata and POSIX shutdown/zombie/reaping transitions. Do not assign a historical root cause without evidence. Keep original failed experiments immutable.",
+          "Change only the generated fixture harness and its tests plus aggregate fixture report. Preserve nonce/root/interpreter/parent identity admission and immediate identity validation before each signal. Refuse signals to changed or unverifiable identities; never treat a generic mismatch or inaccessible metadata as terminal proof. A verified original-lifetime exit/reaped child may complete cleanup without further signals. Preserve partial/failed observation receipts and meaningful errors; no blanket ignored errors, recursive process termination, looser deadlines or increased retries.",
+          "Use meaningful injected regressions for all ownership/observation states, including an exiting process whose mutable metadata disappears, unknown state and reused PID. On an available actual platform exercise only task-generated fixtures; use hosted Linux and native Windows/macOS checks for platform behavior. Freeze protocol before generated diagnosis; preserve every attempt and inspect PID/creation/cwd/command/artifacts before any task-owned signal. No unrelated or research process action.",
+          "Use existing original Python310 venv and pinned Node/FFmpeg/Chromium, no installs or downloads. Pin isolated generated roots/data before imports and clear GH_TOKEN,GITHUB_TOKEN,AGENT_PROJECT_TOKEN,OPENAI_API_KEY,CODEX_API_KEY from test environments. No source media/images, datasets, weights, annotations, predictions, consumed63 inputs/protocol/private membership/artifacts, inference/training, research jobs or PROGRESS access/edits.",
+          "Run focused harness tests, required project checks, one new-source production browser matrix, exact-head CI/controller integration, fresh merged-main checks and complete public package/both-image delivery verification. Publish reproducible aggregate results and unresolved historical uncertainty. Do not merge PR193 or claim #189 complete as part of this scope; its expired budget and failed evidence remain preserved for separately bounded continuation.",
+          "Bound all output including failures/tests/review to128MiB and3 hours from original grant, three repair rounds. Checkpoint before long work and preserve evidence at interruption. Software/browser correctness does not establish full badminton annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No product inference/API/auth/Store/job/controller/policy/workflow/deployment/model changes, real or consumed holdout data, research processes, new installations/downloads, spending, deprecated PROGRESS access/edits or retrying failed historical CI."
+        ],
+        "limits": {
+          "max_output_bytes": 134217728,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Repair main verification for db140236b0d6",
+        "paths": [
+          "tests/frontend-fixtures.mjs",
+          "tests/frontend-fixture-process.test.mjs",
+          "docs/FRONTEND_FIXTURE_PROCESS_REPORT.md",
+          "tests/"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Prospectively frozen generated process observations and meaningful ownership/exit/unknown-state regressions, retaining all failures.",
+          "Required project checks and actual task-generated browser matrix; exact CI/controller/main and full public package/both-image verification."
+        ]
+      },
+      "spec_hash": "da496dacec95810ff86cf6ae27d41054686ae0f56a672f92cc8aa73fabbc698c",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
