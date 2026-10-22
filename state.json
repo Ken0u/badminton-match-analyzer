@@ -6028,6 +6028,26 @@
       "task_id": "123",
       "verb": "plan"
     },
+    "windows-json186-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792637811,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e96be80a8edd7b58d63a9291523dd5ba7f7e2880",
+        "branch": "codex/issue-186-diagnose-and-repair-generated-source-win",
+        "epoch": 1,
+        "expires_at": 1792648611,
+        "granted_at": 1792637811,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "6d107348e32eef52d56daf57992a19d32e91225cc26ff839be9fbf2fd7efe098"
+      },
+      "epoch": 1,
+      "fingerprint": "bb80a8981546d95703028d270787aae140236a1b531696b3d13adc1fe12a2ef1",
+      "status": "granted",
+      "task_id": "186",
+      "verb": "next"
+    },
     "windows-json186-plan-v1": {
       "actor": "Ken0u",
       "at": 1792635859,
@@ -13214,7 +13234,18 @@
       }
     },
     "186": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e96be80a8edd7b58d63a9291523dd5ba7f7e2880",
+        "branch": "codex/issue-186-diagnose-and-repair-generated-source-win",
+        "epoch": 1,
+        "expires_at": 1792648611,
+        "granted_at": 1792637811,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "6d107348e32eef52d56daf57992a19d32e91225cc26ff839be9fbf2fd7efe098"
+      },
+      "epoch": 1,
       "planned_at": 1792635859,
       "planned_by": "Ken0u",
       "spec": {
@@ -13259,7 +13290,7 @@
         ]
       },
       "spec_hash": "6d107348e32eef52d56daf57992a19d32e91225cc26ff839be9fbf2fd7efe098",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "epoch": 0,
