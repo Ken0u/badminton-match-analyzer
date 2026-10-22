@@ -145,6 +145,15 @@
       "task_id": "181",
       "verb": "submit"
     },
+    "fixture192-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792706407,
+      "epoch": 1,
+      "fingerprint": "80cff6b6f79042f35a4b58a77a0cbf3ab1f6828cb068efb90a9e3f37e4e98586",
+      "status": "running",
+      "task_id": "192",
+      "verb": "checkpoint"
+    },
     "fixture192-next-v1": {
       "actor": "Ken0u",
       "at": 1792706236,
@@ -13740,12 +13749,30 @@
       }
     },
     "192": {
+      "checkpoint": {
+        "branch": "codex/issue-192-diagnose-recurring-generated-browser-fix",
+        "evidence": [
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/192#issuecomment-6352236982",
+          ".cache/fixture192-freeze-v1.json",
+          ".cache/fixture192-baseline-result-v1.json",
+          ".cache/roadmap189-ci-browser-evidence-v1",
+          ".cache/roadmap189-interrupted-handoff-v1.md"
+        ],
+        "head_sha": "4246ec524fbece6361898e562698f30410de5a66",
+        "remaining": [
+          "Implement bounded structured observations and fail-closed identity authority with truthful signal outcomes.",
+          "Focused injected/actual generated checks and required project/browser validation.",
+          "Exact-head CI/controller/main and complete public delivery; #189 requires separately bounded continuation."
+        ],
+        "summary": "Granted #192 epoch1 c780e85459bd99af1a4ad0de9bf95ecf4c4bedca920b0de0b4c271e7597e088e, base4246ec5. #189 released code-only after interruption exceeded original two-hour runtime; PR193/head97aa preserved, not complete. Preserved terminal failed CI39722230314 browser log and artifact12401323875 sha de84b10affc2a14464eb8f2b16442852adc2389f5ff3219af6c5d01b7a9298fc. Same cleanup symptom after all18 main/eight library checks; original CI lifetime5127 terminalunknown. Before tracked edits froze generated diagnostic/source bytes: freeze7c5c810bfbacf53256a32a2d3c9692104157e0b3c347c888074c6f7df37def63. Generated-record baseline reproduces metadata-loss-before-reaping error with one simulated SIGTERM and no OS PID action. This proves observation gap, not historical cause. Bounded subagent owns only two granted test harness files; parent owns aggregate report, validation, publication. No production/controller/policy/workflow/research/data/model/PROGRESS changes or historical CI retries. Max128MiB/3h from grant1792706236; runtime not renewed on checkpoints."
+      },
+      "checkpoint_at": 1792706407,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4246ec524fbece6361898e562698f30410de5a66",
         "branch": "codex/issue-192-diagnose-recurring-generated-browser-fix",
         "epoch": 1,
-        "expires_at": 1792717036,
+        "expires_at": 1792717207,
         "granted_at": 1792706236,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
