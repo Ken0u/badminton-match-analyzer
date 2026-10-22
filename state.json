@@ -7068,6 +7068,26 @@
       "task_id": "108",
       "verb": "recover"
     },
+    "windows-repair190-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792639951,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "01d5e2874f8366d3e6e44edfbaef00624f1a7c7e",
+        "branch": "codex/issue-190-repair-main-verification-for-01d5e2874f8",
+        "epoch": 1,
+        "expires_at": 1792650751,
+        "granted_at": 1792639951,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "cf65975e9e0558e4c1f729658dfc98d6f034bda12a2a6f6710ff8a7d24dd664f"
+      },
+      "epoch": 1,
+      "fingerprint": "6a5f5c1e753afa0840e53e56e32e012e3fafa770343b5de7995c87e8759acbda",
+      "status": "granted",
+      "task_id": "190",
+      "verb": "next"
+    },
     "windows-research-register-20261019-v1": {
       "actor": "Ken0u",
       "at": 1792420694,
@@ -13430,7 +13450,18 @@
       "status": "ready"
     },
     "190": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "01d5e2874f8366d3e6e44edfbaef00624f1a7c7e",
+        "branch": "codex/issue-190-repair-main-verification-for-01d5e2874f8",
+        "epoch": 1,
+        "expires_at": 1792650751,
+        "granted_at": 1792639951,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "cf65975e9e0558e4c1f729658dfc98d6f034bda12a2a6f6710ff8a7d24dd664f"
+      },
+      "epoch": 1,
       "planned_at": 1792639868,
       "planned_by": "github-actions[bot]",
       "repair_for": "186",
@@ -13474,7 +13505,7 @@
         ]
       },
       "spec_hash": "cf65975e9e0558e4c1f729658dfc98d6f034bda12a2a6f6710ff8a7d24dd664f",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "epoch": 0,
