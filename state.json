@@ -734,6 +734,12 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "json190-checkpoint-v3": {
+      "actor": "Ken0u",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "json190-submit-v1": {
       "actor": "Ken0u",
       "at": 1792640783,
