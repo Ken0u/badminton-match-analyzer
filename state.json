@@ -694,6 +694,15 @@
       "task_id": "186",
       "verb": "checkpoint"
     },
+    "json186-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792638845,
+      "epoch": 1,
+      "fingerprint": "aacf2834c51eb52ed841ded5f10715c1d500fab7ac7f9ffd6601b461044f6cd7",
+      "status": "review",
+      "task_id": "186",
+      "verb": "submit"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -13273,6 +13282,7 @@
       "epoch": 1,
       "planned_at": 1792635859,
       "planned_by": "Ken0u",
+      "pr_number": 188,
       "spec": {
         "acceptance": [
           "Routine Infrastructure repair discovered during181. History search and active PR/grant checks must find no duplicate; begin only after181 merged-main/public delivery and a committed Windows grant. Preserve all181 artifacts, including frontend-delivery-noLYtK failure and frontend-delivery-siE1qE passing run. The first observed WinError5 manifest replacement failure is not a proven concurrent-writer diagnosis.",
@@ -13315,7 +13325,13 @@
         ]
       },
       "spec_hash": "6d107348e32eef52d56daf57992a19d32e91225cc26ff839be9fbf2fd7efe098",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e96be80a8edd7b58d63a9291523dd5ba7f7e2880",
+        "head_sha": "0ab61db6f5edbe898b50f7b85dc0adadcbe8a7ff",
+        "pr_number": 188,
+        "spec_hash": "6d107348e32eef52d56daf57992a19d32e91225cc26ff839be9fbf2fd7efe098"
+      }
     },
     "62": {
       "epoch": 0,
