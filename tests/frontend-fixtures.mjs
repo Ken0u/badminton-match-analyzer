@@ -254,6 +254,240 @@ receipt["base"] = f"http://127.0.0.1:{sock.getsockname()[1]}"
 uvicorn.Server(uvicorn.Config(app, log_level="warning")).run(sockets=[sock])
 `;
 
+// Every signal rechecks the recorded lifetime inside psutil, whose signal methods
+// also guard PID reuse. Never use taskkill /T or kill an unverified process tree.
+const processProbe = String.raw`
+import json, os, psutil, sys
+def snapshot(p):
+    with p.oneshot():
+        return {"pid":p.pid,"started":p.create_time(),"ppid":p.ppid(),
+                "cwd":p.cwd(),"command":p.cmdline(),"exe":p.exe()}
+request=json.loads(sys.argv[1]); action=request["action"]
+try:
+    if action == "runtime":
+        result={"base":os.path.realpath(sys._base_executable)}
+    else:
+        p=psutil.Process(request["pid"])
+        if action == "children":
+            result=[]
+            for child in p.children():
+                try: result.append(snapshot(child))
+                except psutil.NoSuchProcess: pass
+        elif action == "inspect": result=snapshot(p)
+        else:
+            expected=request["identity"]; actual=snapshot(p)
+            assert all(actual[k] == expected[k] for k in ("pid","started","cwd","command","exe")), "Process lifetime changed; no signal sent"
+            if request["signal"] == "SIGTERM": p.terminate()
+            else:
+                assert request["signal"] == "SIGKILL"
+                p.kill()
+            result={"signalled":True}
+except psutil.NoSuchProcess:
+    result=[] if action == "children" else None
+print(json.dumps(result))
+`;
+
+function probe(request) {
+  return JSON.parse(
+    execFileSync(python, ["-c", processProbe, JSON.stringify(request)], {
+      encoding: "utf8",
+      timeout: 15000,
+    }),
+  );
+}
+
+const samePath = (a, b) => {
+  if (typeof a !== "string" || typeof b !== "string") return false;
+  const normalized = (value) => path.resolve(value);
+  return process.platform === "win32"
+    ? normalized(a).toLowerCase() === normalized(b).toLowerCase()
+    : normalized(a) === normalized(b);
+};
+const sameLifetime = (a, b) =>
+  a &&
+  b &&
+  a.pid === b.pid &&
+  a.started === b.started &&
+  samePath(a.cwd, b.cwd) &&
+  samePath(a.exe, b.exe) &&
+  JSON.stringify(a.command) === JSON.stringify(b.command);
+
+// Dependency injection exercises ownership decisions without touching OS PIDs.
+export function fixtureOwnership({
+  pid,
+  expected,
+  adapter,
+  persist,
+  waitMs = 10000,
+}) {
+  const owned = new Map();
+  const evidence = { root: expected.root, processes: [], attempts: [] };
+  let identity,
+    listener,
+    complete = false,
+    stopping;
+  function expectedProcess(row, spawn = false) {
+    assert.ok(row && Number.isInteger(row.pid) && row.pid > 0);
+    assert.ok(Number.isFinite(row.started) && row.started > 0);
+    assert.ok(samePath(row.cwd, expected.cwd), "Fixture cwd mismatch");
+    assert.deepEqual(
+      row.command.slice(1),
+      expected.args,
+      "Fixture command mismatch",
+    );
+    // POSIX venv python may be a symlink to the base executable. Its argv[0]
+    // must still be the exact interpreter we spawned; descendants may use base.
+    const executables = expected.executables;
+    assert.ok(
+      executables.some((exe) => samePath(exe, row.exe)),
+      "Unexpected executable",
+    );
+    assert.ok(
+      (spawn ? [expected.python] : executables).some((exe) =>
+        samePath(exe, row.command[0]),
+      ),
+      "Unexpected command executable",
+    );
+    return row;
+  }
+  function initialize() {
+    identity = expectedProcess(adapter.inspect(pid), true);
+    assert.equal(identity.pid, pid);
+    owned.set(pid, identity);
+    evidence.spawn = identity;
+    return identity;
+  }
+  function discover() {
+    assert.ok(identity, "No verified spawned lifetime");
+    // Walk only verified expected-launcher descendants. An unrelated child can
+    // never confer ownership on itself or on any of its descendants.
+    for (const parent of owned.values()) {
+      const current = adapter.inspect(parent.pid);
+      if (!current) continue;
+      assert.ok(
+        sameLifetime(parent, current),
+        "Owned process lifetime changed",
+      );
+      for (const row of adapter.children(parent.pid)) {
+        if (owned.has(row.pid)) continue;
+        try {
+          expectedProcess(row);
+          assert.equal(row.ppid, parent.pid, "Unexpected process parent");
+          assert.ok(row.started >= parent.started, "Child predates launcher");
+        } catch {
+          continue;
+        }
+        assert.ok(owned.size < 8, "Unexpected launcher descendant depth");
+        owned.set(row.pid, row);
+      }
+    }
+  }
+  function bind(receipt) {
+    assert.equal(receipt.token, expected.token, "Fixture nonce mismatch");
+    assert.ok(samePath(receipt.root, expected.root), "Fixture root mismatch");
+    assert.ok(
+      samePath(receipt.cwd, expected.cwd),
+      "Fixture receipt cwd mismatch",
+    );
+    discover();
+    const row = owned.get(receipt.pid);
+    assert.ok(row, "Receipt is not an owned listener");
+    assert.equal(receipt.started, row.started, "Listener lifetime mismatch");
+    assert.deepEqual(receipt.command, row.command, "Listener command mismatch");
+    assert.ok(
+      sameLifetime(row, adapter.inspect(row.pid)),
+      "Listener exited or changed",
+    );
+    listener = row;
+    evidence.listener = row;
+    return row;
+  }
+  async function terminal(row) {
+    const until = Date.now() + waitMs;
+    while (true) {
+      const current = adapter.inspect(row.pid);
+      if (!current) return true;
+      assert.ok(
+        sameLifetime(row, current),
+        "PID reused; no further signal authorized",
+      );
+      if (Date.now() >= until) return false;
+      await adapter.delay(50);
+    }
+  }
+  async function cleanup() {
+    if (complete) return;
+    const attempt = { processes: [], errors: [] };
+    evidence.attempts.push(attempt);
+    try {
+      discover();
+    } catch (error) {
+      attempt.errors.push(error.message);
+    }
+    // Snapshot independently verified descendants before touching the wrapper.
+    // Even partial startup with a missing/bad receipt can then clean its server.
+    const order = [...owned.values()].reverse();
+    for (const row of order) {
+      const result = { identity: row, stopped: false, signals: [] };
+      attempt.processes.push(result);
+      try {
+        let current = adapter.inspect(row.pid);
+        if (current) {
+          assert.ok(
+            sameLifetime(row, current),
+            "PID reused; refuse termination",
+          );
+          for (const signal of ["SIGTERM", "SIGKILL"]) {
+            current = adapter.inspect(row.pid);
+            if (!current) break;
+            assert.ok(
+              sameLifetime(row, current),
+              "Lifetime changed; refuse termination",
+            );
+            adapter.signal(row, signal);
+            result.signals.push(signal);
+            if (await terminal(row)) break;
+          }
+        }
+        result.stopped = await terminal(row);
+        assert.ok(
+          result.stopped,
+          "Owned process failed to stop before deadline",
+        );
+      } catch (error) {
+        result.error = error.message;
+        attempt.errors.push(error.message);
+      }
+    }
+    evidence.processes = attempt.processes;
+    const terminalComplete =
+      Boolean(identity) &&
+      !attempt.errors.length &&
+      attempt.processes.every((row) => row.stopped) &&
+      (!listener ||
+        attempt.processes.some(
+          (row) => row.identity.pid === listener.pid && row.stopped,
+        ));
+    evidence.complete = terminalComplete;
+    evidence.retained = terminalComplete
+      ? "Generated artifacts retained; every owned lifetime verified terminal"
+      : "Partial cleanup evidence retained; terminal state not established";
+    await persist(evidence);
+    complete = terminalComplete;
+    assert.ok(
+      complete,
+      `Fixture cleanup incomplete: ${attempt.errors.join("; ")}`,
+    );
+  }
+  function stop() {
+    stopping ??= cleanup().finally(() => {
+      stopping = undefined;
+    });
+    return stopping;
+  }
+  return { initialize, discover, bind, stop };
+}
+
 export async function startFixture(evidence) {
   assert.equal(
     process.env.BASE_URL,
@@ -267,6 +501,7 @@ export async function startFixture(evidence) {
   const script = path.join(root, "launcher.py");
   await fs.writeFile(script, launcher);
   const token = randomUUID();
+  const runtime = probe({ action: "runtime" });
   const log = await fs.open(path.join(evidence, "fixture-server.log"), "w");
   const child = spawn(python, ["-u", script, repository, root, token], {
     cwd: repository,
@@ -277,85 +512,68 @@ export async function startFixture(evidence) {
     },
     stdio: ["ignore", log.fd, log.fd],
   });
+  let spawnError;
+  child.once("error", (error) => {
+    spawnError = error;
+  });
   await log.close();
-  let receipt, identity;
-  const identify = String.raw`import json,psutil,sys
-p=psutil.Process(int(sys.argv[1])); expected=json.loads(sys.argv[2])
-assert p.cwd() == expected["cwd"] and p.cmdline()[1:] == expected["args"]
-print(json.dumps({"pid":p.pid,"started":p.create_time(),"cwd":p.cwd(),"command":p.cmdline()}))`;
-  const verify = String.raw`import json,psutil,sys
-r=json.loads(sys.argv[1]);p=psutil.Process(r["pid"])
-assert abs(p.create_time()-r["started"]) < .01
-assert p.cwd() == r["cwd"] and p.cmdline() == r["command"]
-print("verified")`;
-  async function stop() {
-    if (child.exitCode === null && child.signalCode === null) {
-      assert.ok(identity, "Refuse to stop an unverified process");
-      const validate = () =>
-        assert.equal(
-          execFileSync(python, ["-c", verify, JSON.stringify(identity)], {
-            encoding: "utf8",
-          }).trim(),
-          "verified",
-        );
-      validate();
-      child.kill("SIGTERM");
-      await Promise.race([
-        new Promise((resolve) => child.once("exit", resolve)),
-        new Promise((resolve) => setTimeout(resolve, 10000)),
-      ]);
-      if (child.exitCode === null && child.signalCode === null) {
-        validate();
-        child.kill("SIGKILL");
-        await new Promise((resolve) => child.once("exit", resolve));
-      }
-    }
-    await fs.writeFile(
-      path.join(evidence, "cleanup.json"),
-      JSON.stringify(
-        {
-          pid: child.pid,
-          exitCode: child.exitCode,
-          signal: child.signalCode,
-          root,
-          identity,
-          retained: "Generated artifacts retained; owned listener stopped",
-        },
-        null,
-        2,
+  let receipt;
+  const ownership = fixtureOwnership({
+    pid: child.pid,
+    expected: {
+      cwd: repository,
+      root,
+      token,
+      python,
+      args: ["-u", script, repository, root, token],
+      executables: [python, runtime.base],
+    },
+    adapter: {
+      inspect: (pid) => probe({ action: "inspect", pid }),
+      children: (pid) => probe({ action: "children", pid }),
+      signal: (identity, signal) =>
+        probe({ action: "signal", pid: identity.pid, identity, signal }),
+      delay: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+    },
+    persist: (value) =>
+      fs.writeFile(
+        path.join(evidence, "cleanup.json"),
+        JSON.stringify(value, null, 2),
       ),
-    );
-  }
+  });
+  const stop = () => ownership.stop();
   try {
-    identity = JSON.parse(
-      execFileSync(
-        python,
-        [
-          "-c",
-          identify,
-          String(child.pid),
-          JSON.stringify({
-            cwd: repository,
-            args: ["-u", script, repository, root, token],
-          }),
-        ],
-        { encoding: "utf8" },
-      ),
-    );
+    if (spawnError) throw spawnError;
+    const identity = ownership.initialize();
     await fs.writeFile(
       path.join(evidence, "spawn-identity.json"),
       JSON.stringify(identity, null, 2),
     );
     const deadline = Date.now() + 60000;
     while (Date.now() < deadline) {
-      if (child.exitCode !== null)
-        throw Error(`Fixture exited: ${child.exitCode}`);
+      ownership.discover();
+      if (child.exitCode !== null || child.signalCode !== null)
+        throw Error(`Fixture exited: ${child.exitCode ?? child.signalCode}`);
       try {
         receipt = JSON.parse(
           await fs.readFile(path.join(root, "receipt.json"), "utf8"),
         );
+        // Validate ownership and loopback address before contacting a receipt's URL.
+        ownership.bind(receipt);
+        const url = new URL(receipt.base);
+        assert.equal(url.protocol, "http:");
+        assert.equal(url.hostname, "127.0.0.1");
+        assert.ok(
+          url.port &&
+            !url.username &&
+            !url.password &&
+            url.pathname === "/" &&
+            !url.search &&
+            !url.hash,
+        );
         const response = await fetch(receipt.base + "/__fixture/receipt", {
           headers: { "x-fixture-token": token },
+          signal: AbortSignal.timeout(2000),
         });
         if (response.ok) {
           assert.deepEqual(await response.json(), receipt);
@@ -368,16 +586,18 @@ print("verified")`;
       await new Promise((resolve) => setTimeout(resolve, 100));
     }
     assert.ok(receipt, "Fixture startup timed out; inspect owned server log");
-    assert.equal(receipt.pid, child.pid);
-    assert.equal(receipt.token, token);
-    assert.equal(receipt.cwd, repository);
+    ownership.bind(receipt);
     await fs.writeFile(
       path.join(evidence, "process-receipt.json"),
       JSON.stringify(receipt, null, 2),
     );
     await fs.writeFile(path.join(evidence, "launcher.py"), launcher);
   } catch (error) {
-    await stop();
+    try {
+      await stop();
+    } catch (cleanup) {
+      error.message += `; cleanup failed: ${cleanup.message}`;
+    }
     error.message += `; preserved fixture ${root}, pid ${child.pid}`;
     throw error;
   }
