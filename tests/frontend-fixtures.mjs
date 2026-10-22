@@ -259,9 +259,16 @@ uvicorn.Server(uvicorn.Config(app, log_level="warning")).run(sockets=[sock])
 const processProbe = String.raw`
 import json, os, psutil, sys
 def snapshot(p):
+    result={"pid":p.pid,"metadata_errors":[]}
     with p.oneshot():
-        return {"pid":p.pid,"started":p.create_time(),"ppid":p.ppid(),
-                "cwd":p.cwd(),"command":p.cmdline(),"exe":p.exe()}
+        for field, read in [("started",p.create_time),("status",p.status),
+                            ("ppid",p.ppid),("cwd",p.cwd),
+                            ("command",p.cmdline),("exe",p.exe)]:
+            try: result[field]=read()
+            except (psutil.Error, OSError) as error:
+                result["metadata_errors"].append({"field":field,
+                    "kind":type(error).__name__,"message":str(error)[:512]})
+    return result
 request=json.loads(sys.argv[1]); action=request["action"]
 try:
     if action == "runtime":
@@ -276,18 +283,40 @@ try:
         elif action == "inspect": result=snapshot(p)
         else:
             expected=request["identity"]; actual=snapshot(p)
-            assert all(actual[k] == expected[k] for k in ("pid","started","cwd","command","exe")), "Process lifetime changed; no signal sent"
-            if request["signal"] == "SIGTERM": p.terminate()
+            valid=(not actual["metadata_errors"] and
+                   actual["status"] not in (psutil.STATUS_ZOMBIE,psutil.STATUS_DEAD) and
+                   all(actual.get(k) == expected[k] for k in ("pid","started","cwd","command","exe")))
+            result={"signalled":False,"observation":actual}
+            if not valid:
+                result["error"]="Process lifetime changed or unreadable; no signal sent"
             else:
-                assert request["signal"] == "SIGKILL"
-                p.kill()
-            result={"signalled":True}
+                try:
+                    if request["signal"] == "SIGTERM": p.terminate()
+                    else:
+                        assert request["signal"] == "SIGKILL"
+                        p.kill()
+                    result["signalled"]=True
+                except psutil.ZombieProcess as error:
+                    result["error"]=str(error)[:512]
+                    result["error_kind"]=type(error).__name__
+                except psutil.NoSuchProcess as error:
+                    # psutil also raises this for PID reuse. Only a fresh
+                    # absent-PID observation (outer handler) proves absence.
+                    result["observation"]=snapshot(psutil.Process(request["pid"]))
+                    result["error"]=str(error)[:512]
+                    result["error_kind"]=type(error).__name__
+                except (psutil.Error, OSError) as error:
+                    result["error"]=str(error)[:512]
+                    result["error_kind"]=type(error).__name__
+except psutil.ZombieProcess:
+    # ZombieProcess subclasses NoSuchProcess but is not proof of absence.
+    raise
 except psutil.NoSuchProcess:
     result=[] if action == "children" else None
 print(json.dumps(result))
 `;
 
-function probe(request) {
+export function fixtureProcessProbe(request) {
   return JSON.parse(
     execFileSync(python, ["-c", processProbe, JSON.stringify(request)], {
       encoding: "utf8",
@@ -295,6 +324,7 @@ function probe(request) {
     }),
   );
 }
+const probe = fixtureProcessProbe;
 
 const samePath = (a, b) => {
   if (typeof a !== "string" || typeof b !== "string") return false;
@@ -311,6 +341,78 @@ const sameLifetime = (a, b) =>
   samePath(a.cwd, b.cwd) &&
   samePath(a.exe, b.exe) &&
   JSON.stringify(a.command) === JSON.stringify(b.command);
+
+const metadataErrors = (row) => row.metadata_errors || [];
+const canSignal = (a, b) =>
+  sameLifetime(a, b) &&
+  !metadataErrors(b).length &&
+  typeof b.status === "string" &&
+  !["zombie", "dead"].includes(b.status);
+
+// This grants observation only. A zombie or disappearing field is never proof
+// of exit and never authority to signal an incompletely identified lifetime.
+function shutdownObservation(expected, current) {
+  assert.equal(current.pid, expected.pid, "Observed PID changed");
+  assert.equal(current.started, expected.started, "PID lifetime changed");
+  const errors = metadataErrors(current);
+  assert.ok(
+    errors.every((error) =>
+      ["ZombieProcess", "NoSuchProcess"].includes(error.kind),
+    ),
+    "Process metadata unreadable; no further signal authorized",
+  );
+  const teardown =
+    ["zombie", "dead"].includes(current.status) || errors.length > 0;
+  for (const field of ["cwd", "exe", "command"]) {
+    const value = current[field];
+    const missing =
+      value === undefined ||
+      value === "" ||
+      (Array.isArray(value) && value.length === 0);
+    assert.ok(
+      missing
+        ? teardown
+        : field === "command"
+          ? JSON.stringify(value) === JSON.stringify(expected[field])
+          : samePath(value, expected[field]),
+      `Process ${field} changed or unreadable; no further signal authorized`,
+    );
+  }
+  assert.ok(
+    typeof current.status === "string" || teardown,
+    "Process status unreadable; no further signal authorized",
+  );
+}
+
+// Keep initial observations plus the latest one, with an explicit omission
+// count. Limits affect receipts only, never the full identity used for a signal.
+function recordObservation(result, phase, value) {
+  const clip = (text) =>
+    typeof text === "string" ? text.slice(0, 1024) : text;
+  let observation = value;
+  if (value) {
+    observation = {
+      ...value,
+      cwd: clip(value.cwd),
+      exe: clip(value.exe),
+      command: value.command?.slice(0, 16).map(clip),
+      metadata_errors: metadataErrors(value)
+        .slice(0, 8)
+        .map((error) => ({
+          field: clip(error.field),
+          kind: clip(error.kind),
+          message: clip(error.message),
+        })),
+    };
+    if (JSON.stringify(observation) !== JSON.stringify(value))
+      observation.receipt_truncated = true;
+  }
+  const entry = { phase, at: new Date().toISOString(), observation };
+  result.observations ??= [];
+  if (result.observations.length < 256) result.observations.push(entry);
+  else result.omitted_observations = (result.omitted_observations || 0) + 1;
+  result.last_observation = entry;
+}
 
 // Dependency injection exercises ownership decisions without touching OS PIDs.
 export function fixtureOwnership({
@@ -329,6 +431,10 @@ export function fixtureOwnership({
   function expectedProcess(row, spawn = false) {
     assert.ok(row && Number.isInteger(row.pid) && row.pid > 0);
     assert.ok(Number.isFinite(row.started) && row.started > 0);
+    assert.ok(
+      canSignal(row, row),
+      "Fixture identity incomplete or shutting down",
+    );
     assert.ok(samePath(row.cwd, expected.cwd), "Fixture cwd mismatch");
     assert.deepEqual(
       row.command.slice(1),
@@ -357,17 +463,18 @@ export function fixtureOwnership({
     evidence.spawn = identity;
     return identity;
   }
-  function discover() {
+  function discover({ cleanup = false, observe } = {}) {
     assert.ok(identity, "No verified spawned lifetime");
     // Walk only verified expected-launcher descendants. An unrelated child can
     // never confer ownership on itself or on any of its descendants.
     for (const parent of owned.values()) {
-      const current = adapter.inspect(parent.pid);
+      const current = observe ? observe(parent) : adapter.inspect(parent.pid);
       if (!current) continue;
-      assert.ok(
-        sameLifetime(parent, current),
-        "Owned process lifetime changed",
-      );
+      if (!canSignal(parent, current)) {
+        assert.ok(cleanup, "Owned process lifetime changed or unreadable");
+        shutdownObservation(parent, current);
+        continue;
+      }
       for (const row of adapter.children(parent.pid)) {
         if (owned.has(row.pid)) continue;
         try {
@@ -395,32 +502,49 @@ export function fixtureOwnership({
     assert.equal(receipt.started, row.started, "Listener lifetime mismatch");
     assert.deepEqual(receipt.command, row.command, "Listener command mismatch");
     assert.ok(
-      sameLifetime(row, adapter.inspect(row.pid)),
+      canSignal(row, adapter.inspect(row.pid)),
       "Listener exited or changed",
     );
     listener = row;
     evidence.listener = row;
     return row;
   }
-  async function terminal(row) {
+  function observe(row, result, phase) {
+    try {
+      const current = adapter.inspect(row.pid);
+      recordObservation(result, phase, current);
+      return current;
+    } catch (error) {
+      recordObservation(result, phase, {
+        pid: row.pid,
+        probe_error: {
+          name: error.name,
+          message: error.message.slice(0, 1024),
+        },
+      });
+      throw error;
+    }
+  }
+  async function terminal(row, result) {
     const until = Date.now() + waitMs;
     while (true) {
-      const current = adapter.inspect(row.pid);
+      const current = observe(row, result, "await-terminal");
       if (!current) return true;
-      assert.ok(
-        sameLifetime(row, current),
-        "PID reused; no further signal authorized",
-      );
+      shutdownObservation(row, current);
       if (Date.now() >= until) return false;
       await adapter.delay(50);
     }
   }
   async function cleanup() {
     if (complete) return;
-    const attempt = { processes: [], errors: [] };
+    const attempt = { processes: [], errors: [], discovery: {} };
     evidence.attempts.push(attempt);
     try {
-      discover();
+      discover({
+        cleanup: true,
+        observe: (row) =>
+          observe(row, attempt.discovery, `discover-${row.pid}`),
+      });
     } catch (error) {
       attempt.errors.push(error.message);
     }
@@ -431,25 +555,49 @@ export function fixtureOwnership({
       const result = { identity: row, stopped: false, signals: [] };
       attempt.processes.push(result);
       try {
-        let current = adapter.inspect(row.pid);
-        if (current) {
-          assert.ok(
-            sameLifetime(row, current),
-            "PID reused; refuse termination",
-          );
-          for (const signal of ["SIGTERM", "SIGKILL"]) {
-            current = adapter.inspect(row.pid);
-            if (!current) break;
-            assert.ok(
-              sameLifetime(row, current),
-              "Lifetime changed; refuse termination",
+        for (const signal of ["SIGTERM", "SIGKILL"]) {
+          const current = observe(row, result, `before-${signal}`);
+          if (!current) {
+            result.stopped = true;
+            break;
+          }
+          shutdownObservation(row, current);
+          if (canSignal(row, current)) {
+            // The real adapter performs its own fresh, full identity check
+            // inside the same Python process that sends the signal.
+            const outcome = adapter.signal(row, signal);
+            recordObservation(
+              result,
+              `signal-${signal}`,
+              outcome?.observation ?? null,
             );
-            adapter.signal(row, signal);
+            result.signal_outcomes ??= [];
+            result.signal_outcomes.push({
+              signal,
+              signalled: outcome?.signalled === true,
+              absent: outcome === null,
+              error: outcome?.error,
+              error_kind: outcome?.error_kind,
+            });
+            if (outcome === null) {
+              result.stopped = true;
+              break;
+            }
+            assert.ok(
+              outcome?.signalled === true,
+              outcome?.error || "Signal not confirmed",
+            );
             result.signals.push(signal);
-            if (await terminal(row)) break;
+            // Synchronous probes must not starve Node's child exit/reaping
+            // callbacks. Yield before the first shutdown observation.
+            await adapter.delay(0);
+          }
+          if (await terminal(row, result)) {
+            result.stopped = true;
+            break;
           }
         }
-        result.stopped = await terminal(row);
+        if (!result.stopped) result.stopped = await terminal(row, result);
         assert.ok(
           result.stopped,
           "Owned process failed to stop before deadline",

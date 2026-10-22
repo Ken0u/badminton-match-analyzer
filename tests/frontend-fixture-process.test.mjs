@@ -1,10 +1,14 @@
-/** Generated process records: these tests never signal an operating-system PID. */
+/** Injected records plus a POSIX-only, task-generated child regression. */
 import assert from "node:assert/strict";
 import test from "node:test";
 import path from "node:path";
 import fs from "node:fs/promises";
+import { spawn } from "node:child_process";
+import { once } from "node:events";
 import {
   fixtureOwnership,
+  fixtureProcessProbe,
+  python as fixturePython,
   repository,
   startFixture,
 } from "./frontend-fixtures.mjs";
@@ -18,6 +22,8 @@ const row = (pid = 10, extra = {}) => ({
   pid,
   started: 100 + pid,
   ppid: 1,
+  status: "sleeping",
+  metadata_errors: [],
   cwd,
   exe: python,
   command: [python, ...args],
@@ -39,7 +45,7 @@ function harness(records = [row()], options = {}) {
       args,
       executables: [python, base],
     },
-    waitMs: 0,
+    waitMs: options.waitMs ?? 0,
     adapter: {
       inspect: (pid) => {
         options.beforeInspect?.(pid, processes);
@@ -52,15 +58,20 @@ function harness(records = [row()], options = {}) {
       signal: (identity, signal) => {
         // Real adapter must check again at signal time, independently of JS.
         options.beforeSignal?.(identity.pid, processes);
+        if (!processes.has(identity.pid)) return null;
+        if (options.signalOutcome) return options.signalOutcome(identity);
         assert.deepEqual(
           processes.get(identity.pid),
           identity,
           "Signal-time lifetime mismatch",
         );
+        const observation = structuredClone(processes.get(identity.pid));
         signals.push({ pid: identity.pid, signal });
-        if (!options.refuseExit) processes.delete(identity.pid);
+        if (options.afterSignal) options.afterSignal(identity.pid, processes);
+        else if (!options.refuseExit) processes.delete(identity.pid);
+        return { signalled: true, observation };
       },
-      delay: async () => {},
+      delay: async (ms) => options.onDelay?.(ms, processes),
     },
     persist: async (value) => {
       if (options.failPersistOnce) {
@@ -324,6 +335,407 @@ test("failed initial identity never authorizes even the spawned PID", async () =
   assert.deepEqual(h.signals, []);
   assert.equal(h.receipts[0].complete, false);
 });
+
+const zombie = (record) => ({
+  ...record,
+  status: "zombie",
+  cwd: "",
+  command: [],
+  exe: "",
+});
+
+test("shutdown metadata loss is observed through a yield to actual absence", async () => {
+  const delays = [];
+  const h = harness([row()], {
+    waitMs: 1000,
+    afterSignal: (pid, map) => map.set(pid, zombie(map.get(pid))),
+    onDelay: (ms, map) => {
+      delays.push(ms);
+      if (ms === 50) map.delete(10);
+    },
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  await h.owner.stop();
+  assert.deepEqual(delays, [0, 50]);
+  assert.deepEqual(h.signals, [{ pid: 10, signal: "SIGTERM" }]);
+  const result = h.receipts[0].processes[0];
+  assert.ok(
+    result.observations.some((entry) => entry.observation?.status === "zombie"),
+  );
+  assert.equal(result.last_observation.observation, null);
+  assert.equal(h.receipts[0].complete, true);
+});
+
+test("persistent zombie is unknown, not terminal, and receives no second signal", async () => {
+  const h = harness([row()], {
+    afterSignal: (pid, map) => map.set(pid, zombie(map.get(pid))),
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  await assert.rejects(h.owner.stop(), /failed to stop before deadline/);
+  assert.deepEqual(h.signals, [{ pid: 10, signal: "SIGTERM" }]);
+  assert.equal(h.receipts[0].complete, false);
+  assert.equal(h.receipts[0].processes[0].stopped, false);
+  assert.equal(
+    h.receipts[0].processes[0].last_observation.observation.status,
+    "zombie",
+  );
+});
+
+test("known teardown field errors permit observation but never another signal", async () => {
+  const h = harness([row()], {
+    waitMs: 1000,
+    afterSignal: (pid, map) => {
+      const record = map.get(pid);
+      delete record.command;
+      record.metadata_errors = [
+        {
+          field: "command",
+          kind: "ZombieProcess",
+          message: "generated teardown",
+        },
+      ];
+    },
+    onDelay: (ms, map) => {
+      if (ms === 50) map.delete(10);
+    },
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  await h.owner.stop();
+  assert.equal(h.signals.length, 1);
+  const result = h.receipts[0].processes[0];
+  assert.ok(
+    result.observations.some(
+      (entry) =>
+        entry.observation?.metadata_errors?.[0]?.kind === "ZombieProcess",
+    ),
+  );
+  assert.equal(result.last_observation.observation, null);
+});
+
+for (const [name, fields] of [
+  ["live command", { command: [python, "changed.py"] }],
+  ["live cwd", { cwd: path.join(cwd, "changed") }],
+  ["live executable", { exe: path.join(cwd, "changed.exe") }],
+  ["zombie command", { status: "zombie", command: [python, "changed.py"] }],
+  ["zombie cwd", { status: "zombie", cwd: path.join(cwd, "changed") }],
+  [
+    "zombie executable",
+    { status: "zombie", exe: path.join(cwd, "changed.exe") },
+  ],
+  ["creation time", { started: 999 }],
+  ["missing creation time", { started: undefined, status: "zombie" }],
+  ["empty live command", { command: [] }],
+  [
+    "permission denied",
+    {
+      status: "zombie",
+      metadata_errors: [
+        { field: "cwd", kind: "AccessDenied", message: "generated denial" },
+      ],
+    },
+  ],
+]) {
+  test(`after first signal ${name} preserves evidence and fails closed`, async () => {
+    const h = harness([row()], {
+      afterSignal: (pid, map) => Object.assign(map.get(pid), fields),
+    });
+    h.owner.initialize();
+    h.owner.bind(h.receipt());
+    await assert.rejects(h.owner.stop(), /incomplete/);
+    assert.deepEqual(h.signals, [{ pid: 10, signal: "SIGTERM" }]);
+    const receipt = h.receipts[0];
+    assert.equal(receipt.complete, false);
+    assert.equal(receipt.processes[0].stopped, false);
+    for (const [field, value] of Object.entries(fields))
+      assert.deepEqual(
+        receipt.processes[0].last_observation.observation[field],
+        value,
+      );
+  });
+}
+
+test("signal-time disappearance is terminal evidence and never recorded as a signal", async () => {
+  const h = harness([row()], {
+    beforeSignal: (pid, map) => map.delete(pid),
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  await h.owner.stop();
+  assert.deepEqual(h.signals, []);
+  assert.deepEqual(h.receipts[0].processes[0].signals, []);
+  assert.deepEqual(h.receipts[0].processes[0].signal_outcomes, [
+    {
+      signal: "SIGTERM",
+      signalled: false,
+      absent: true,
+      error: undefined,
+      error_kind: undefined,
+    },
+  ]);
+  assert.equal(h.receipts[0].complete, true);
+});
+
+test("signal-time zombie error is not absence or a confirmed signal", async () => {
+  const h = harness([row()], {
+    signalOutcome: (identity) => ({
+      signalled: false,
+      observation: { ...identity, status: "zombie" },
+      error: "Generated process became a zombie at signal boundary",
+      error_kind: "ZombieProcess",
+    }),
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  await assert.rejects(h.owner.stop(), /became a zombie/);
+  assert.deepEqual(h.signals, []);
+  const receipt = h.receipts[0];
+  assert.equal(receipt.complete, false);
+  assert.equal(receipt.processes[0].stopped, false);
+  assert.equal(receipt.processes[0].signal_outcomes[0].absent, false);
+  assert.equal(
+    receipt.processes[0].signal_outcomes[0].error_kind,
+    "ZombieProcess",
+  );
+  assert.equal(
+    receipt.processes[0].last_observation.observation.status,
+    "zombie",
+  );
+});
+
+test("production probe distinguishes signal exceptions from freshly verified absence", async () => {
+  const parent = path.join(repository, ".cache/evidence");
+  await fs.mkdir(parent, { recursive: true });
+  const evidence = await fs.mkdtemp(
+    path.join(parent, "fixture-probe-outcomes-"),
+  );
+  // A generated psutil double exercises the actual Python exception handlers.
+  // PID zero makes an accidentally loaded real psutil refuse any signal.
+  await fs.writeFile(
+    path.join(evidence, "psutil.py"),
+    String.raw`
+import contextlib, json, os, sys
+class Error(Exception): pass
+class NoSuchProcess(Error): pass
+class ZombieProcess(NoSuchProcess): pass
+STATUS_ZOMBIE="zombie"
+STATUS_DEAD="dead"
+identity=json.loads(sys.argv[1])["identity"]
+scenario=os.environ["FRONTEND_PROBE_SCENARIO"]
+class Process:
+    count=0
+    def __init__(self,pid):
+        Process.count+=1
+        self.ordinal=Process.count
+        self.pid=pid
+        if self.ordinal>1 and scenario=="absent": raise NoSuchProcess("generated absent")
+    def oneshot(self): return contextlib.nullcontext()
+    def create_time(self): return identity["started"]+(1 if self.ordinal>1 else 0)
+    def status(self): return "sleeping"
+    def ppid(self): return 1
+    def cwd(self): return identity["cwd"]
+    def cmdline(self): return identity["command"]
+    def exe(self): return identity["exe"]
+    def terminate(self):
+        if scenario=="zombie": raise ZombieProcess("generated zombie")
+        raise NoSuchProcess("generated absent or reused")
+    def kill(self): raise AssertionError("No escalation expected")
+`,
+  );
+  const originalPath = process.env.PYTHONPATH;
+  const originalScenario = process.env.FRONTEND_PROBE_SCENARIO;
+  const results = {};
+  try {
+    process.env.PYTHONPATH = evidence;
+    for (const scenario of ["absent", "reused", "zombie"]) {
+      process.env.FRONTEND_PROBE_SCENARIO = scenario;
+      results[scenario] = fixtureProcessProbe({
+        action: "signal",
+        pid: 0,
+        identity: row(0),
+        signal: "SIGTERM",
+      });
+    }
+  } finally {
+    if (originalPath === undefined) delete process.env.PYTHONPATH;
+    else process.env.PYTHONPATH = originalPath;
+    if (originalScenario === undefined)
+      delete process.env.FRONTEND_PROBE_SCENARIO;
+    else process.env.FRONTEND_PROBE_SCENARIO = originalScenario;
+  }
+  await fs.writeFile(
+    path.join(evidence, "outcomes.json"),
+    JSON.stringify(results, null, 2),
+  );
+  assert.equal(results.absent, null);
+  assert.equal(results.reused.signalled, false);
+  assert.equal(results.reused.observation.started, row(0).started + 1);
+  assert.equal(results.reused.error_kind, "NoSuchProcess");
+  assert.equal(results.zombie.signalled, false);
+  assert.equal(results.zombie.error_kind, "ZombieProcess");
+});
+
+test("shutdown probe failure is retained without authorizing another signal", async () => {
+  let inaccessible = false;
+  const h = harness([row()], {
+    afterSignal: () => {
+      inaccessible = true;
+    },
+    beforeInspect: () => {
+      if (inaccessible) throw Error("generated probe inaccessible");
+    },
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  await assert.rejects(h.owner.stop(), /generated probe inaccessible/);
+  const receipt = h.receipts[0];
+  assert.equal(receipt.complete, false);
+  assert.equal(h.signals.length, 1);
+  assert.equal(
+    receipt.processes[0].last_observation.observation.probe_error.message,
+    "generated probe inaccessible",
+  );
+});
+
+test("discovery probe error is retained as structured partial evidence", async () => {
+  let inaccessible = false;
+  const h = harness([row()], {
+    beforeInspect: () => {
+      if (inaccessible) throw Error("generated discovery denied");
+    },
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  inaccessible = true;
+  await assert.rejects(h.owner.stop(), /generated discovery denied/);
+  assert.deepEqual(h.signals, []);
+  assert.equal(h.receipts[0].complete, false);
+  assert.equal(
+    h.receipts[0].attempts[0].discovery.last_observation.observation.probe_error
+      .message,
+    "generated discovery denied",
+  );
+});
+
+test("observation receipt is capped, counts omissions and retains latest absence", async () => {
+  let polls = 0;
+  const h = harness([row()], {
+    waitMs: 1000,
+    afterSignal: (pid, map) => map.set(pid, zombie(map.get(pid))),
+    onDelay: (ms, map) => {
+      if (ms === 50 && ++polls === 400) map.delete(10);
+    },
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  await h.owner.stop();
+  const result = h.receipts[0].processes[0];
+  assert.equal(result.observations.length, 256);
+  assert.ok(result.omitted_observations > 0);
+  assert.equal(result.last_observation.observation, null);
+  assert.equal(result.stopped, true);
+  assert.equal(h.signals.length, 1);
+});
+
+test(
+  "actual POSIX generated child exits and is reaped before cleanup completes",
+  {
+    skip:
+      process.platform === "win32"
+        ? "POSIX exit/reaping regression; Windows uses generated fixture coverage"
+        : false,
+  },
+  async () => {
+    const parent = path.join(repository, ".cache/evidence");
+    await fs.mkdir(parent, { recursive: true });
+    const evidence = await fs.mkdtemp(path.join(parent, "fixture-posix-exit-"));
+    const token = "generated-posix-exit";
+    const childArgs = [
+      "-u",
+      "-c",
+      "import time; time.sleep(10)",
+      evidence,
+      token,
+    ];
+    const child = spawn(fixturePython, childArgs, {
+      cwd: repository,
+      stdio: "ignore",
+      env: {
+        ...process.env,
+        BADMINTON_ROOT: repository,
+        BADMINTON_DATA_DIR: path.join(evidence, "processed"),
+      },
+    });
+    await once(child, "spawn");
+    const runtime = fixtureProcessProbe({ action: "runtime" });
+    const owner = fixtureOwnership({
+      pid: child.pid,
+      expected: {
+        cwd: repository,
+        root: evidence,
+        token,
+        python: fixturePython,
+        args: childArgs,
+        executables: [fixturePython, runtime.base],
+      },
+      adapter: {
+        inspect: (pid) => fixtureProcessProbe({ action: "inspect", pid }),
+        children: (pid) => fixtureProcessProbe({ action: "children", pid }),
+        signal: (identity, signal) =>
+          fixtureProcessProbe({
+            action: "signal",
+            pid: identity.pid,
+            identity,
+            signal,
+          }),
+        delay: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+      },
+      persist: (value) =>
+        fs.writeFile(
+          path.join(evidence, "cleanup.json"),
+          JSON.stringify(value, null, 2),
+        ),
+    });
+    let identity;
+    try {
+      identity = owner.initialize();
+      await fs.writeFile(
+        path.join(evidence, "spawn-identity.json"),
+        JSON.stringify(identity, null, 2),
+      );
+      await owner.stop();
+      const cleanup = JSON.parse(
+        await fs.readFile(path.join(evidence, "cleanup.json"), "utf8"),
+      );
+      assert.equal(cleanup.complete, true);
+      assert.equal(cleanup.processes[0].last_observation.observation, null);
+      assert.ok(
+        child.exitCode !== null || child.signalCode !== null,
+        "Original child must be reaped",
+      );
+    } finally {
+      // The pure generated child self-expires after ten seconds. Even a failed
+      // identity check never permits an unverified fallback kill.
+      if (child.exitCode === null && child.signalCode === null)
+        await once(child, "exit");
+      await fs.writeFile(
+        path.join(evidence, "child-exit.json"),
+        JSON.stringify(
+          {
+            pid: child.pid,
+            started: identity?.started,
+            code: child.exitCode,
+            signal: child.signalCode,
+          },
+          null,
+          2,
+        ),
+      );
+    }
+  },
+);
 
 test(
   "actual generated listener cleans up after normal and failed startup",
