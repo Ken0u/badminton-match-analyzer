@@ -84,11 +84,12 @@ override.
 The first browser run passed 13 groups, then its generated analysis job failed with
 Windows `PermissionError` / `WinError 5` while replacing `manifest.tmp` with
 `manifest.json`. Both fixture lifetimes were nevertheless cleaned up and verified.
-The final serial browser run passed all 18 groups. The earlier failure remains
-unresolved and preserved in
-[#186](https://github.com/Ken0u/badminton-match-analyzer/issues/186); its cause is
-not established. No production writer or error handling was changed for this
-harness repair.
+The final serial browser run passed all 18 groups. At that checkpoint the earlier
+failure remained unresolved and was preserved in
+[#186](https://github.com/Ken0u/badminton-match-analyzer/issues/186). Its later
+writer repair and Windows test correction were delivered separately through
+[#190](https://github.com/Ken0u/badminton-match-analyzer/issues/190). No production
+writer or error handling was changed for this harness repair.
 
 Before submission, cumulative local output was below 10 MiB plus a 16 MiB reserve,
 within the 256 MiB / two-hour task limits. Exact-head CI, controller integration,
@@ -97,3 +98,80 @@ merged-main checks and public delivery are recorded on the owning issue and PR.
 These generated process and software checks do not improve or certify badminton
 annotation accuracy. Actual media, annotations, datasets, weights, predictions,
 research processes and deprecated `PROGRESS.md` remain untouched.
+
+## Subsequent shutdown-observation repair (#192)
+
+Issue [#192](https://github.com/Ken0u/badminton-match-analyzer/issues/192)
+investigates two later hosted Linux cleanup failures against baseline
+`4246ec524fbece6361898e562698f30410de5a66`. Main CI
+[39719248778, attempt 1](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39719248778)
+and documentation PR CI
+[39722230314](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39722230314)
+passed their browser assertions before reporting a process identity mismatch.
+Each original receipt records one SIGTERM without the new structured signal
+outcomes. Their original process terminal states remain unknown. The
+original logs, artifacts and failed checks are preserved; this task does not
+retry either historical run. A separately authorized retry of the former run
+already passed and remains separate evidence.
+
+Before tracked edits, the task froze a generated-record shutdown diagnostic and
+the three granted source files. Freeze SHA256 is
+`7c5c810bfbacf53256a32a2d3c9692104157e0b3c347c888074c6f7df37def63`;
+the preserved baseline result SHA256 is
+`97435ebe08d6698d578e469bc866fd20e02e71fe1a64d514256d54a636ddf318`.
+The baseline fails when a simulated process retains its PID/creation time but
+loses mutable command/executable metadata before reaping. Yielding would allow
+its disappearance, but the original synchronous check fails first. This
+generated example establishes an observation gap, not either historical cause.
+The prospective record is linked from the
+[owning issue checkpoint](https://github.com/Ken0u/badminton-match-analyzer/issues/192#issuecomment-6352236982).
+
+The repair separates permission to observe shutdown from permission to signal.
+Initial ownership, descendant discovery and every actual signal still require
+the complete expected identity. Structured snapshots retain process status,
+available fields, per-field errors and observation timestamps. A teardown
+observation may continue only for the original PID/creation time and compatible
+remaining metadata; it never authorizes another signal. Changed nonempty
+metadata, inaccessible fields and changed lifetimes remain failures. A zombie
+status alone does not establish exit: cleanup must independently observe the
+original lifetime absent. Successful signals yield to Node before bounded
+shutdown polling, allowing child exit/reaping callbacks to run.
+
+Signal receipts record only confirmed signals. A process already absent at the
+signal boundary does not invent a signal, and denied/changed identities retain
+the failed observation. `ZombieProcess` is handled before its `NoSuchProcess`
+parent exception. Since psutil can also raise `NoSuchProcess` for PID reuse,
+that signal exception requires a fresh PID inspection before reporting absence.
+A generated Python module double exercises these actual exception handlers
+without signalling any OS process. Each lifetime retains at most 256 initial
+observations plus the latest observation and an explicit omitted count; clipped
+fields are marked. Receipt bounds do not change the full identity used to authorize a
+signal. Existing deadlines, signal escalation limits and ownership checks are
+unchanged. No recursive termination is introduced.
+
+The final local process suite passes 47 tests, including normal and intentionally
+failed generated app startup; its POSIX-only child/reaping case is explicitly
+skipped on Windows. That standalone case is available on POSIX, but current CI
+does not invoke this test module. Hosted browser CI exercises the actual Linux
+app lifecycle through the same repaired harness. Native macOS/Windows CI retains
+its existing generated-media and frontend checks.
+
+The full local Python suite passes 2,048 tests with four optional skips. Ruff
+check/format (183 files), dependency consistency, Prettier, granted-file UTF-8/LF
+and local links, and Git whitespace checks pass. The one Python warning is the
+environment's Starlette/httpx deprecation; no dependency is installed or changed.
+
+The final-source Windows production matrix passes all 18 groups. Its
+seek/timeline/playback-start/RAF p95 values are 65.2/31.7/73.0/16.8 ms, within the
+unchanged ceilings; no comparative performance gain is established. All eight
+retained local app fixture attempts have complete cleanup receipts. Independent
+read-only checks find all 16 original wrapper/listener lifetimes absent or their
+PIDs occupied by a different creation time; no replacement receives a signal.
+
+An earlier matrix also passed all 18 groups before the final signal-exception
+correction; it is preserved separately rather than used as final-source proof.
+The first local live suite passed, then its wrapper failed while printing Unicode
+under a Windows legacy console encoding. The original result/logs remain intact;
+new helper lineages use UTF-8 output. Validation and delivery for this subsequent
+repair are recorded on #192. These generated-only software checks do not certify
+badminton annotation accuracy.
