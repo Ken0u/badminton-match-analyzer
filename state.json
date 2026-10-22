@@ -5771,6 +5771,26 @@
       "task_id": "119",
       "verb": "recover"
     },
+    "windows-fixture181-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792634658,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "766806c54c8d1e71c40ddc007c92478c0aa31a1d",
+        "branch": "codex/issue-181-make-generated-browser-fixture-startup-a",
+        "epoch": 1,
+        "expires_at": 1792645458,
+        "granted_at": 1792634658,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "2b2f35d036d4238b207985e55cc295dc970cc20fadb9e7ffdf5d5253d9f3f4dc"
+      },
+      "epoch": 1,
+      "fingerprint": "4313d6ad37f82172a49af3a3d2d66e13487675b94aae4d05db92fd1025205133",
+      "status": "granted",
+      "task_id": "181",
+      "verb": "next"
+    },
     "windows-fixture181-register-v1": {
       "actor": "Ken0u",
       "at": 1792634455,
@@ -12909,7 +12929,18 @@
       }
     },
     "181": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "766806c54c8d1e71c40ddc007c92478c0aa31a1d",
+        "branch": "codex/issue-181-make-generated-browser-fixture-startup-a",
+        "epoch": 1,
+        "expires_at": 1792645458,
+        "granted_at": 1792634658,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "2b2f35d036d4238b207985e55cc295dc970cc20fadb9e7ffdf5d5253d9f3f4dc"
+      },
+      "epoch": 1,
       "planned_at": 1792614932,
       "planned_by": "Ken0u",
       "spec": {
@@ -12954,7 +12985,7 @@
         ]
       },
       "spec_hash": "2b2f35d036d4238b207985e55cc295dc970cc20fadb9e7ffdf5d5253d9f3f4dc",
-      "status": "ready"
+      "status": "running"
     },
     "183": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39687422495",
