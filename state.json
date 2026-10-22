@@ -13519,6 +13519,7 @@
         "base_sha": "01d5e2874f8366d3e6e44edfbaef00624f1a7c7e",
         "head_sha": "649252a1ecd2572b2b24827ed6b709b2425eff6a"
       },
+      "integration_error": "Merged main verification failed; repair required",
       "merge_sha": "4246ec524fbece6361898e562698f30410de5a66",
       "planned_at": 1792639868,
       "planned_by": "github-actions[bot]",
