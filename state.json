@@ -720,6 +720,15 @@
       "task_id": "190",
       "verb": "checkpoint"
     },
+    "json190-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792640783,
+      "epoch": 1,
+      "fingerprint": "dc9007db337e41cfeb5446ed495af4146d61bae724421b652a81ab3b86058746",
+      "status": "review",
+      "task_id": "190",
+      "verb": "submit"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -13491,6 +13500,7 @@
       "epoch": 1,
       "planned_at": 1792639868,
       "planned_by": "github-actions[bot]",
+      "pr_number": 191,
       "repair_for": "186",
       "spec": {
         "acceptance": [
@@ -13532,7 +13542,13 @@
         ]
       },
       "spec_hash": "cf65975e9e0558e4c1f729658dfc98d6f034bda12a2a6f6710ff8a7d24dd664f",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "01d5e2874f8366d3e6e44edfbaef00624f1a7c7e",
+        "head_sha": "649252a1ecd2572b2b24827ed6b709b2425eff6a",
+        "pr_number": 191,
+        "spec_hash": "cf65975e9e0558e4c1f729658dfc98d6f034bda12a2a6f6710ff8a7d24dd664f"
+      }
     },
     "62": {
       "epoch": 0,
