@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "task": 179,
+  "purpose": "Fixed unchanged-tracker development diagnostic on all source-assessed broadcast centers",
+  "source_assessment": {
+    "manifest_sha256": "f0193b4c0ae3bf98c0592c82c9e252ead94b4cf3286e642e4bfadd3791a3db62",
+    "aggregate_sha256": "e361f43a8f3122b449cc357a78bcc8890ed5d67a42133f28cba80f3ccfa722de",
+    "protocol_sha256": "79653290b0dd8c1d09c244fce14019447cc6c1bf5402e27aa08bd498133a3a42"
+  },
+  "sources": [
+    {
+      "source_id": "go2uajSiBnE",
+      "category_metadata_assertion": "singles",
+      "packet_sha256": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b",
+      "source_sha256": "708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9",
+      "clock_sha256": "f1cf689916f85716fddb692f5bb9118812a4f4c66f211ed4b9de7e7c6fb3965f",
+      "native_frame_count": 129600
+    },
+    {
+      "source_id": "H1setLK1tig",
+      "category_metadata_assertion": "doubles",
+      "packet_sha256": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+      "source_sha256": "49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623",
+      "clock_sha256": "867467f96a9bedecff035053d765e368d70abcde13d79dc4830b4c24fe87d5b0",
+      "native_frame_count": 118500
+    }
+  ],
+  "checkpoint_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+  "recipe": {
+    "input_size": [512, 288],
+    "sequence_length": 8,
+    "precision": "float16",
+    "device": "cuda",
+    "threshold": 0.5,
+    "radius_diagonal": 0.005,
+    "background": "Unchanged tracker source-resolution median, separately within each detected camera range",
+    "ensemble": "Unchanged weighted overlapping windows, with short-segment padding only",
+    "selection": "Unchanged default thresholded components and bounded source-motion selection",
+    "camera": "Existing native boundary scan and cut resets; no supplied or invented reviewed scene/calibration intervals"
+  },
+  "windows": {
+    "before": 32,
+    "after_inclusive": 32,
+    "interval": "[max(0,center-32),min(native_frame_count,center+33))",
+    "membership": "Exactly the original 128 uniformly sampled centers; labels and predictions never choose windows"
+  },
+  "expected": {
+    "cases": 128,
+    "requested_rows": 8192,
+    "requested_context_memberships": 640,
+    "unique_source_images": 632,
+    "visibility": {
+      "visible_localizable": 37,
+      "visible_unlocalizable": 1,
+      "not_visible": 5,
+      "unknown": 85
+    }
+  },
+  "interpretation": {
+    "localizable": "Within fixed radius 0.005 times source-display diagonal, displaced, missing, or input/output unavailable; denominator always 37",
+    "uncertainty_sensitivity": "Separately report agreement inside each original source-only uncertainty radius; never replace the primary fixed disk",
+    "supported_negative": "Default false observation, absence, or unavailable; denominator always 5",
+    "unlocalizable_and_unknown": "Keep availability, selected observations and component counts without coordinate errors or invented negative truth",
+    "component_attribution": "Descriptive selected point versus any already observed component in the same fixed disk; never substitute an oracle point",
+    "strata": ["source_id", "scene", "visibility", "difficulty"],
+    "overlapping_difficulty": "A case may contribute to several difficulty strata; report each support and do not sum them as disjoint cases",
+    "unavailable": "Every planned case remains in the totals; retain partial execution and input/output refusal causes"
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  },
+  "limits": {
+    "native_worker_seconds": 1800,
+    "max_output_bytes": 268435456,
+    "max_requested_output_frames": 8192,
+    "max_cases": 128
+  },
+  "limitations": [
+    "Source-only agent assessments are development references, not expert-certified ground truth or independent unseen evaluation.",
+    "Center-only scene observations do not certify surrounding live/replay or calibration context.",
+    "Requested output rows differ from decoder yields, median-background samples and overlapping model-frame calls; account for these separately.",
+    "Original-match overlap, upstream pretraining membership and data/model rights remain unresolved; all eligibility flags stay false.",
+    "No training, tuning, alternate preprocessing, heatmap capture, app truth changes, trajectory filling, model promotion or full-match accuracy claim."
+  ]
+}
