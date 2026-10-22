@@ -12764,6 +12764,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "5344a9469779c6ea39268bd27c0fc683a96add286b6eb76d62f8c6ec7d168a23"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
