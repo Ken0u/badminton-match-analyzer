@@ -337,6 +337,199 @@ def test_complete_reference_is_separate_from_unknown_requested_labels():
     assert not any(result["eligibility"].values())
 
 
+def joined_streams(change=None):
+    p = packet()
+    chunks = [
+        {
+            "start_index": 0,
+            "end_index": 5,
+            "frames": list(range(5)),
+            "image_bytes": 500,
+        },
+        {
+            "start_index": 3,
+            "end_index": 8,
+            "frames": list(range(3, 8)),
+            "image_bytes": 500,
+        },
+    ]
+    result = {}
+    for lane in r.STREAMS:
+        previous = None
+        result[lane] = []
+        for index, chunk in enumerate(chunks):
+            doc = assessment(
+                p,
+                chunk,
+                lane=lane,
+                session=f"{lane}-{index}",
+                previous=None if previous is None else previous["sha256"],
+            )
+            doc["events"] = [
+                e
+                for e in doc["events"]
+                if chunk["frames"][0]
+                <= e["interval"][0]
+                <= e["interval"][1]
+                <= chunk["frames"][-1]
+            ]
+            if index == 1:
+                row = doc["frame_states"][0]
+                if change == "camera":
+                    row["camera_view"] = "conflicting-view"
+                if change == "contact":
+                    row["contact_state"] = "none_observed"
+                if change == "duplicate":
+                    doc["events"].insert(0, copy.deepcopy(doc["events"][0]))
+            q = receipt(doc, chunk, thread=f"thread-{lane}-{index}")
+            r.validate_assessment(
+                doc, p, chunk, q, stage="dense", stream=lane, previous=previous
+            )
+            result[lane].append((doc, q))
+            previous = {
+                "sha256": q["segment_sha256"],
+                "stream": lane,
+                "source_id": p["source_id"],
+                "stage": "dense",
+                "last_frames": chunk["frames"][-2:],
+            }
+    return result
+
+
+@pytest.mark.parametrize("change", ["camera", "contact"])
+def test_contradictory_native_overlap_is_not_complete(change):
+    assert r.reference_status(
+        joined_streams(),
+        native_frames=range(8),
+        bounds={"start_frame": 0, "end_frame": 7},
+    )["complete_reference"]
+    result = r.reference_status(
+        joined_streams(change),
+        native_frames=range(8),
+        bounds={"start_frame": 0, "end_frame": 7},
+    )
+    assert not result["complete_reference"]
+    assert "conflicting_native_frame_chunk_join" in result["reasons"]
+
+
+def test_duplicate_within_chunk_contact_is_not_an_overlap_copy():
+    with pytest.raises(ValueError, match="Duplicate within-chunk"):
+        joined_streams("duplicate")
+
+
+def targeted_resolution(s, frames):
+    p = packet()
+    chunk = {
+        "start_index": frames[0],
+        "end_index": frames[-1] + 1,
+        "frames": frames,
+        "image_bytes": len(frames) * 100,
+    }
+    d = assessment(p, chunk, lane="adjudication", session="fresh-resolution")
+    d["events"] = [
+        e
+        for e in d["events"]
+        if frames[0] <= e["interval"][0] <= e["interval"][1] <= frames[-1]
+    ]
+    q = receipt(d, chunk, thread="fresh-resolution-thread")
+    r.validate_assessment(d, p, chunk, q, stage="dense", stream="adjudication")
+    s["adjudication"] = [(d, q)]
+    return s
+
+
+def test_two_exhaustive_agreeing_streams_do_not_require_third_exhaustive():
+    s = streams()
+    del s["adjudication"]
+    assert r.adjudication_targets(s, native_frames=range(8)) == []
+    assert r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )["complete_reference"]
+
+
+@pytest.mark.parametrize("change", ["camera", "contact", "actor", "event", "unknown"])
+def test_targeted_source_adjudication_covers_only_required_region(change):
+    s = streams()
+    del s["adjudication"]
+    doc = s["independent_b"][0][0]
+    if change == "camera":
+        doc["frame_states"][3]["camera_view"] = "another-view"
+    elif change == "contact":
+        doc["frame_states"][3]["contact_state"] = "none_observed"
+    elif change == "actor":
+        doc["actors"][0]["identity_supported"] = False
+    elif change == "event":
+        doc["events"][1]["side"] = "backhand"
+    else:
+        doc["frame_states"][3]["contact_state"] = "unknown"
+    targets = r.adjudication_targets(s, native_frames=range(8))
+    assert targets and len(targets) < 8
+    assert not r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )["complete_reference"]
+    s = targeted_resolution(s, list(range(min(targets), max(targets) + 1)))
+    result = r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )
+    assert result["complete_reference"]
+    assert not result["all_requested_labels_supported"]
+    assert not any(result["eligibility"].values())
+
+
+def test_targeted_unknown_and_impersonation_stay_incomplete():
+    s = streams()
+    s["independent_b"][0][0]["frame_states"][3]["contact_state"] = "unknown"
+    s = targeted_resolution(s, [3])
+    s["adjudication"][0][0]["frame_states"][0]["contact_state"] = "unknown"
+    assert not r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )["complete_reference"]
+    s["adjudication"][0][1]["thread_id"] = s["independent_a"][0][1]["thread_id"]
+    with pytest.raises(ValueError, match="distinct"):
+        r.targeted_reference_status(
+            s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+        )
+
+
+def test_targeted_original_coverage_cannot_shrink():
+    s = streams()
+    s["independent_b"][0][0]["frame_states"].pop()
+    with pytest.raises(ValueError, match="every native frame"):
+        r.adjudication_targets(s, native_frames=range(8))
+
+
+def test_targeted_identity_definitions_and_interval_closure():
+    s = streams()
+    s["independent_b"][0][0]["actors"][0]["description"] = "a different source person"
+    assert set(r.adjudication_targets(s, native_frames=range(8))) == {1, 3}
+    s = streams()
+    for lane in r.STREAMS[:2]:
+        s[lane][0][0]["events"][1]["interval"] = [2, 4]
+    s["independent_b"][0][0]["frame_states"][3]["contact_state"] = "unknown"
+    assert r.adjudication_targets(s, native_frames=range(8)) == [2, 3, 4]
+    s = targeted_resolution(s, [3])
+    result = r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )
+    assert not result["complete_reference"]
+    assert "partial_targeted_event_interval" in result["reasons"]
+
+
+def test_extended_protocol_keeps_v1_and_full_grid():
+    folder = Path(r.__file__).resolve().parents[2] / "data/manifests"
+    v1 = r.load_protocol(folder / "rally_reference_protocol_v1.json")
+    v2 = r.load_protocol(folder / "rally_reference_protocol_v2.json")
+    c = clock(2001)
+    assert len(r.overview_memberships(c, v1)) == 61
+    assert len(r.overview_memberships(c, v2)) == 181
+    assert r.overview_memberships(c, v2)[-1] == {
+        "grid_second": 900,
+        "frame": 1800,
+        "clamped": False,
+    }
+    assert v2["payload"]["max_total_image_bytes"] == 4 * 1024**3
+    assert v2["predecessor"]["image_bytes"] == 340760009
+
+
 @pytest.mark.parametrize(
     "change",
     [
@@ -664,7 +857,7 @@ def test_generated_preparation_entry_admission_and_exclusive_output(
                 "native_frame_count": 12,
             }
         )
-    protocol = {"sources": sources}
+    protocol = {"sources": sources, "selection": {"overview_seconds": 300}}
     context = {
         "input_root": str(inputs),
         "inputs": sources,

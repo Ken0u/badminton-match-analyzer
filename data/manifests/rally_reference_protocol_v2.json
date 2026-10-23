@@ -1,0 +1,110 @@
+{
+  "schema_version": 2,
+  "task": 208,
+  "purpose": "Prospectively extended source-only development pilot; original failed first300-second pilot preserved; not an independent test",
+  "sources": [
+    {
+      "source_id": "go2uajSiBnE",
+      "category": "singles",
+      "source_sha256": "708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9",
+      "clock_sha256": "f1cf689916f85716fddb692f5bb9118812a4f4c66f211ed4b9de7e7c6fb3965f",
+      "packet_sha256": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b",
+      "native_frame_count": 129600
+    },
+    {
+      "source_id": "H1setLK1tig",
+      "category": "doubles",
+      "source_sha256": "49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623",
+      "clock_sha256": "867467f96a9bedecff035053d765e368d70abcde13d79dc4830b4c24fe87d5b0",
+      "packet_sha256": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+      "native_frame_count": 118500
+    }
+  ],
+  "selection": {
+    "overview_seconds": 900,
+    "overview_step_seconds": 5,
+    "grid_endpoint_included": true,
+    "rule": "First native frame at or after each source-PTS grid point relative to original origin; clamp to final ordinal only when needed, retaining duplicate memberships",
+    "candidate_rule": "Earliest service-preparation overview followed by exchange and stopped-play within40 source seconds, separately independently assessed and source-adjudicated before dense preparation",
+    "max_rally_seconds": 40,
+    "context_seconds_each_side": 4,
+    "failed_slot": "Retain unresolved/unavailable slot; never replace an invalidated or unsupported candidate with an easier rally",
+    "screening_limit": "Sparse overviews propose bounds; they do not certify complete rallies or exact events"
+  },
+  "assessment": {
+    "streams": [
+      "independent_a",
+      "independent_b",
+      "adjudication"
+    ],
+    "overview_states": [
+      "service_preparation",
+      "exchange",
+      "stopped_play",
+      "replay",
+      "non_play",
+      "unknown"
+    ],
+    "scene_states": [
+      "live",
+      "replay",
+      "non_play",
+      "unknown"
+    ],
+    "families": [
+      "clear",
+      "lift",
+      "net",
+      "drop",
+      "smash",
+      "drive",
+      "other",
+      "unknown"
+    ],
+    "sides": [
+      "forehand",
+      "backhand",
+      "unknown"
+    ],
+    "chunk_overlap_frames": 2,
+    "coverage": "Two actual independent exhaustive native streams; separate fresh targeted source-only adjudication of all disagreements, unknowns, contact/actor/scene/boundary/completeness cases and chunk joins. Screening uses separate fresh blind source adjudication.",
+    "contacts": "Inclusive uncertainty intervals for observed or unresolved racket contacts; opening serve occurs once, with no shot family; terminal evidence has its own interval and is not the last stroke",
+    "actors": "Source actors with descriptions and unknown identity links, independently of tracker IDs, court end or screen position",
+    "unknowns": "Keep missing, corrupt, censored, uncertain, unreviewed and unknown cases. Unknown is not a negative and agreement is not expert gold truth",
+    "complete_reference": "Supported exhaustive contact enumeration, known source hitters, live camera context and observed service/terminal boundaries; no unresolved contact, identity or boundary gap inside the provisional rally",
+    "label_support": "Family/side remain unknown unless source mechanics and outgoing flight warrant them; half smash excluded; unknown labels do not establish strict full annotation accuracy",
+    "adjudication": "targeted_source_only",
+    "targeted_resolution": "Derive required frame regions from both sealed exhaustive streams including interval closure and disputed joins. Separate validated fresh source-only targeted chunks must cover every required frame; unknowns remain incomplete. No third exhaustive stream is required."
+  },
+  "payload": {
+    "destination": "Existing ChatGPT-authenticated Codex CLI only",
+    "images": "Unmodified oriented original source-frame PNGs only",
+    "context": "Minimal public protocol/frame/hash context and the same stream's own continuity notes; no predictions, model outputs, other-stream assessments or account secrets",
+    "max_images_per_session": 20,
+    "max_image_bytes_per_session": 6291456,
+    "max_total_image_bytes": 4294967296
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  },
+  "limits": {
+    "max_output_bytes": 8589934592,
+    "task_seconds_from_grant": 14400,
+    "max_repair_rounds": 3,
+    "paid_services": false
+  },
+  "predecessor": {
+    "task": 62,
+    "pr": 207,
+    "head_sha": "39bbb9db15b96d258de4da4d17573a35c658f530",
+    "screening_sha256": "77696108428995481ad6163a4ef1c3901938a04a4e0c9fc51db9b6b62ea00239",
+    "image_bytes": 340760009,
+    "image_memberships": 385,
+    "complete_references": 0,
+    "retained_slots": 2,
+    "output_accounting": "Count all original/new worktree, helpers, receipts, successful/failed artifacts and downloaded checks without following generated test links; never delete failures to reclaim budget"
+  }
+}

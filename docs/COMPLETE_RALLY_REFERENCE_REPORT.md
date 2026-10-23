@@ -1,5 +1,32 @@
 # Complete-rally source reference pilot
 
+## Authorized follow-up in preparation
+
+Issue #208 separately authorizes the [v2 protocol](../data/manifests/rally_reference_protocol_v2.json):
+first 900 source seconds on the same five-second native grid and original two
+BWF sources. The first-300-second pilot below, v1 bytes, raw evidence and
+[draft PR #207](https://github.com/Ken0u/badminton-match-analyzer/pull/207) are
+preserved. Its exact head is `39bbb9db15b96d258de4da4d17573a35c658f530`;
+all 12 exact-head CI jobs passed in run 39920183626.
+
+The follow-up repairs two generated-data validator defects: contradictory
+camera/contact states at overlaps were lost when frame coverage was unioned,
+and duplicate contacts inside one chunk were silently collapsed. Neither path
+was exercised by the original real pilot: it had no dense assessment or positive
+reference. New checks reject these failures and derive targeted source
+adjudication regions from two exhaustive original streams, closing intervals
+before resolution rather than requiring a third exhaustive pass.
+
+The authorized cumulative ceilings are 4 GiB image payload and 8 GiB persisted
+outputs across both pilots, retaining the original 340,760,009 charged bytes,
+failures and repetitions. Four additional hours run from the genuine successor
+grant; no original deadline is reset. This section records prospective software
+work, not a new scientific result. No new frame inspection has yet been reported.
+Parent #62 and downstream #66/#67/#71 remain incomplete. A bounded incomplete
+follow-up can finish its own software deliverable without completing them.
+
+## Original pilot — preserved result
+
 The October 23 two-source pilot is **incomplete: zero complete references from
 two retained source slots**. Neither source's frozen five-second overview
 warrants a provisional rally. No dense packet or native contact reference was

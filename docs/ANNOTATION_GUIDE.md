@@ -93,3 +93,18 @@ Public labels in `data/datasets/` are separate source references. Their frame
 numbers must be aligned to the actual downloaded video's timestamps and frame
 origin before use in this editor or in model training. A terminal-stroke marker
 does not establish the moment the rally ended.
+
+For the separately authorized source-only follow-up #208, retain the original
+failed first-300-second pilot and protocol v1 unchanged. Protocol v2 extends
+the deterministic five-second native-PTS screening grid through 900 seconds
+on the same originals. This is development informed by that pilot, not an
+independent test. Sparse screening can propose bounds but cannot certify a rally.
+
+Two actual independent dense streams must inspect every selected native frame.
+Separately adjudicate all disagreements and unresolved contact, identity,
+scene, boundary and chunk-join regions from original images. Resolve entire
+inclusive contact intervals, not fragments. Consistent original regions do not
+require a third exhaustive stream. Preserve both originals and fresh targeted
+resolutions, including unknowns. Conflicting overlap states and duplicate events
+within a chunk cannot disappear through set union or event deduplication.
+Agent agreement is not expert gold truth; eligibility flags remain false.

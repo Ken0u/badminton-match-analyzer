@@ -67,22 +67,34 @@ def _eligibility(value):
 def load_protocol(path):
     protocol = read_json(path)
     _eligibility(protocol.get("eligibility", {}))
+    extended = protocol.get("schema_version") == 2
     if (
-        protocol.get("schema_version") != 1
-        or protocol.get("task") != 62
+        protocol.get("schema_version") not in (1, 2)
+        or protocol.get("task") != (208 if extended else 62)
         or [s.get("source_id") for s in protocol.get("sources", [])] != list(SOURCE_IDS)
-        or protocol["selection"]["overview_seconds"] != 300
+        or protocol["selection"]["overview_seconds"] != (900 if extended else 300)
         or protocol["selection"]["overview_step_seconds"] != 5
         or protocol["selection"]["max_rally_seconds"] != 40
         or protocol["selection"]["context_seconds_each_side"] != 4
         or protocol["assessment"]["chunk_overlap_frames"] != 2
         or protocol["payload"]["max_images_per_session"] != MAX_IMAGES
         or protocol["payload"]["max_image_bytes_per_session"] != MAX_SESSION_BYTES
-        or protocol["payload"]["max_total_image_bytes"] != MAX_PAYLOAD_BYTES
-        or protocol["limits"]["max_output_bytes"] != MAX_OUTPUT_BYTES
+        or protocol["payload"]["max_total_image_bytes"]
+        != (2 * MAX_PAYLOAD_BYTES if extended else MAX_PAYLOAD_BYTES)
+        or protocol["limits"]["max_output_bytes"]
+        != (2 * MAX_OUTPUT_BYTES if extended else MAX_OUTPUT_BYTES)
         or protocol["limits"]["task_seconds_from_grant"] != TASK_SECONDS
     ):
         raise ValueError("Unsupported source-only protocol")
+    if extended and (
+        protocol.get("predecessor", {}).get("image_bytes") != 340760009
+        or protocol["predecessor"].get("screening_sha256")
+        != "77696108428995481ad6163a4ef1c3901938a04a4e0c9fc51db9b6b62ea00239"
+        or protocol["predecessor"].get("head_sha")
+        != "39bbb9db15b96d258de4da4d17573a35c658f530"
+        or protocol["assessment"].get("adjudication") != "targeted_source_only"
+    ):
+        raise ValueError("Original failed pilot and targeted adjudication required")
     return protocol
 
 
@@ -135,10 +147,11 @@ def validate_clock(clock):
     return times
 
 
-def overview_memberships(clock):
+def overview_memberships(clock, protocol=None):
     times = validate_clock(clock)
     result = []
-    for second in range(0, 301, 5):
+    horizon = protocol["selection"]["overview_seconds"] if protocol else 300
+    for second in range(0, horizon + 1, 5):
         index = bisect.bisect_left(times, times[0] + second)
         result.append(
             {
@@ -163,9 +176,9 @@ def dense_memberships(clock, bounds):
     ]
 
 
-def earliest_candidate(clock, assessment):
+def earliest_candidate(clock, assessment, protocol=None):
     """Sparse evidence proposes a slot, never a complete reference."""
-    members = overview_memberships(clock)
+    members = overview_memberships(clock, protocol)
     rows = assessment.get("frames", [])
     if [r.get("frame") for r in rows] != [m["frame"] for m in members]:
         raise ValueError("Screening must retain all ordered grid memberships")
@@ -224,15 +237,23 @@ def consumer_context(checkout, protocol_path, input_root, granted_at):
             "requirements.lock",
         )
     ]
-    if (
-        Path(protocol_path).resolve()
-        != (checkout / "data/manifests/rally_reference_protocol_v1.json").resolve()
-    ):
+    protocol_path = Path(protocol_path).resolve()
+    if protocol_path not in {
+        (checkout / f"data/manifests/rally_reference_protocol_v{n}.json").resolve()
+        for n in (1, 2)
+    }:
         raise ValueError("Use committed protocol")
     protocol = load_protocol(protocol_path)
+    if protocol["schema_version"] == 2:
+        files.append(protocol_path)
     return {
         "schema_version": 1,
-        "task": 62,
+        "task": protocol["task"],
+        **(
+            {"protocol_path": protocol_path.relative_to(checkout).as_posix()}
+            if protocol["schema_version"] == 2
+            else {}
+        ),
         "commit": commit,
         "granted_at": _integer(granted_at),
         "deadline": granted_at + TASK_SECONDS,
@@ -254,7 +275,10 @@ def consumer_context(checkout, protocol_path, input_root, granted_at):
 def verify_context(checkout, context):
     actual = consumer_context(
         checkout,
-        Path(checkout) / "data/manifests/rally_reference_protocol_v1.json",
+        Path(checkout)
+        / context.get(
+            "protocol_path", "data/manifests/rally_reference_protocol_v1.json"
+        ),
         context["input_root"],
         context["granted_at"],
     )
@@ -294,7 +318,7 @@ def verify_originals(input_root, protocol):
     return result
 
 
-def persisted_bytes(root):
+def persisted_bytes(root, *, limit=MAX_OUTPUT_BYTES):
     total = 0
     for path in Path(root).rglob("*"):
         contained(root, path)
@@ -302,8 +326,23 @@ def persisted_bytes(root):
             raise ValueError("Output lineage contains symbolic links")
         if path.is_file():
             total += path.stat().st_size
-    if total > MAX_OUTPUT_BYTES:
+    if total > limit:
         raise ValueError("Cumulative persisted output ceiling exceeded")
+    return total
+
+
+def predecessor_output_bytes(root):
+    """Count retained task62 artifacts without following generated test links."""
+    cache = Path(root) / ".cache"
+    paths = [p for p in cache.iterdir() if p.name.lower().startswith("rally62")]
+    paths.append(cache / "worktrees/rally62-e1")
+    total = 0
+    for parent in paths:
+        for path in [parent] if parent.is_file() else parent.rglob("*"):
+            if path.is_symlink():
+                total += path.lstat().st_size
+            elif path.is_file():
+                total += path.stat().st_size
     return total
 
 
@@ -630,8 +669,13 @@ def validate_assessment(
                 "Every native frame needs explicit source/camera/contact coverage"
             )
         last = -1
+        seen_events = set()
         for event in events:
             interval = _interval(event.get("interval"), selected)
+            key = (event.get("kind"), tuple(interval))
+            if key in seen_events:
+                raise ValueError("Duplicate within-chunk event enumeration")
+            seen_events.add(key)
             if (
                 interval[0] < last
                 or event.get("kind")
@@ -673,6 +717,189 @@ def validate_assessment(
     return document
 
 
+def _event_signature(event):
+    return {
+        k: event.get(k)
+        for k in ("kind", "interval", "actor_id", "family", "side", "evidence")
+    }
+
+
+def _dense_lane(documents):
+    """Normalize a validated lane while retaining every contradictory region."""
+    frames, events, actors, disputed = {}, {}, {}, set()
+    for doc, _ in documents:
+        selected = {row["frame"] for row in doc["inspected_frames"]}
+        if (
+            doc.get("scene") != "live"
+            or doc.get("coverage_complete") is not True
+            or doc.get("start_censored")
+            or doc.get("end_censored")
+        ):
+            disputed.update(selected)
+        for gap in doc.get("unresolved_gaps", []):
+            disputed.update(range(gap["interval"][0], gap["interval"][1] + 1))
+        rows = doc.get("frame_states", [])
+        if [row["frame"] for row in rows] != [
+            row["frame"] for row in doc["inspected_frames"]
+        ]:
+            disputed.update(selected)
+        for row in rows:
+            n = row["frame"]
+            if (n in frames and frames[n] != row) or (
+                row.get("scene") != "live"
+                or row.get("camera_view") in (None, "", "unknown", "unreviewed")
+                or row.get("contact_state") in ("unknown", "possible")
+            ):
+                disputed.add(n)
+            frames[n] = row
+        local_actors = {a["actor_id"]: a for a in doc.get("actors", [])}
+        for identity, actor in local_actors.items():
+            if identity in actors and actors[identity] != actor:
+                disputed.update(selected)
+            actors[identity] = actor
+        local_keys = set()
+        for event in doc.get("events", []):
+            key = (event["kind"], tuple(event["interval"]))
+            signature = _event_signature(event)
+            interval = set(range(event["interval"][0], event["interval"][1] + 1))
+            if (
+                key in local_keys
+                or (key in events and events[key] != signature)
+                or event["kind"] == "unresolved_contact"
+                or (
+                    event["kind"] in {"serve", "shot"}
+                    and not local_actors.get(event.get("actor_id"), {}).get(
+                        "identity_supported"
+                    )
+                )
+                or (
+                    event["kind"] == "rally_end"
+                    and event.get("evidence") in {"unknown", "stopped_play"}
+                )
+            ):
+                disputed.update(interval)
+            local_keys.add(key)
+            events[key] = signature
+    return frames, events, actors, disputed
+
+
+def adjudication_targets(streams, *, native_frames):
+    """Derive source regions needing a fresh verdict, never a third full stream."""
+    if not all(lane in streams for lane in STREAMS[:2]):
+        raise ValueError("Two exhaustive original streams required")
+    allowed = set(native_frames)
+    lanes = [_dense_lane(streams[lane]) for lane in STREAMS[:2]]
+    if any(set(lane[0]) != allowed for lane in lanes):
+        raise ValueError("Both originals must inspect every native frame")
+    a, b = lanes
+    targets = a[3] | b[3] | {n for n in allowed if a[0][n] != b[0][n]}
+    for key in set(a[1]) | set(b[1]):
+        if a[1].get(key) != b[1].get(key):
+            targets.update(range(key[1][0], key[1][1] + 1))
+        elif key[0] in {"serve", "shot"}:
+            actor = a[1][key].get("actor_id")
+            if a[2].get(actor) != b[2].get(actor):
+                targets.update(range(key[1][0], key[1][1] + 1))
+    # An uncertain contact interval cannot be resolved using only a fragment.
+    intervals = [key[1] for lane in lanes for key in lane[1]]
+    while True:
+        before = set(targets)
+        for first, last in intervals:
+            region = set(range(first, last + 1))
+            if targets & region:
+                targets.update(region)
+        if targets == before:
+            break
+    if not targets <= allowed:
+        raise ValueError("Adjudication interval escapes original native membership")
+    return sorted(targets)
+
+
+def targeted_reference_status(streams, *, native_frames, bounds):
+    """Combine agreed original regions with separately inspected resolutions.
+
+    Inputs are original documents already bound by validate_assessment. The
+    composite below is a calculation, not a new scientific session or verdict.
+    """
+    allowed = set(native_frames)
+    targets = set(adjudication_targets(streams, native_frames=allowed))
+    documents = [item for lane in STREAMS for item in streams.get(lane, [])]
+    threads = [receipt.get("thread_id") for _, receipt in documents]
+    sessions = [doc.get("session_id") for doc, _ in documents]
+    if (
+        not all(threads)
+        or not all(sessions)
+        or len(set(threads)) != len(threads)
+        or len(set(sessions)) != len(sessions)
+    ):
+        raise ValueError("Actual distinct original and adjudication sessions required")
+    a = _dense_lane(streams[STREAMS[0]])
+    resolved = _dense_lane(streams.get("adjudication", []))
+    covered = set(resolved[0])
+    reasons = []
+    if not targets <= covered or not covered <= allowed:
+        reasons.append("missing_targeted_source_adjudication")
+    if resolved[3]:
+        reasons.append("unresolved_targeted_source_evidence")
+    # Additional context may be inspected, but all intersecting events must be
+    # completely covered; do not truncate events at an adjudication edge.
+    for lane in STREAMS[:2]:
+        for key in _dense_lane(streams[lane])[1]:
+            region = set(range(key[1][0], key[1][1] + 1))
+            if region & covered and not region <= covered:
+                reasons.append("partial_targeted_event_interval")
+    final_frames = {n: row for n, row in a[0].items() if n not in covered}
+    final_frames.update(resolved[0])
+    final_events = {
+        key: event
+        for key, event in a[1].items()
+        if not set(range(key[1][0], key[1][1] + 1)) & covered
+    }
+    final_events.update(resolved[1])
+    events = sorted(final_events.values(), key=lambda e: (e["interval"], e["kind"]))
+    for frame, row in final_frames.items():
+        if row["contact_state"] == "observed" and not any(
+            e["kind"] in {"serve", "shot"}
+            and e["interval"][0] <= frame <= e["interval"][1]
+            for e in events
+        ):
+            reasons.append("observed_contact_missing_from_resolution")
+    contacts = [e for e in events if e["kind"] in {"serve", "shot"}]
+    serves = [e for e in contacts if e["kind"] == "serve"]
+    endings = [e for e in events if e["kind"] == "rally_end"]
+    if (
+        len(serves) != 1
+        or len(endings) != 1
+        or not contacts
+        or contacts[0]["kind"] != "serve"
+        or not bounds["start_frame"]
+        <= serves[0]["interval"][0]
+        <= serves[0]["interval"][1]
+        < endings[0]["interval"][0]
+        <= endings[0]["interval"][1]
+        <= bounds["end_frame"]
+        or contacts[-1]["interval"][1] >= endings[0]["interval"][0]
+    ):
+        reasons.append("unsupported_opening_or_terminal_boundary")
+    if any(
+        left["interval"][1] >= right["interval"][0]
+        for left, right in itertools.pairwise(contacts)
+    ):
+        reasons.append("overlapping_contact_intervals")
+    return {
+        "complete_reference": not reasons,
+        "reasons": sorted(set(reasons)),
+        "required_adjudication_frames": len(targets),
+        "inspected_adjudication_frames": len(covered),
+        "all_requested_labels_supported": not reasons
+        and all(
+            e.get("side") != "unknown" and e.get("family") not in {"unknown", "other"}
+            for e in contacts
+        ),
+        "eligibility": dict(ELIGIBILITY),
+    }
+
+
 def reference_status(streams, *, native_frames, bounds):
     """Fail closed on disagreements, gaps or unobserved start/end/identity."""
     if set(streams) != set(STREAMS):
@@ -690,6 +917,8 @@ def reference_status(streams, *, native_frames, bounds):
     reasons = []
     for lane, documents in streams.items():
         coverage = set()
+        native_states = {}
+        actor_definitions = {}
         events = {}
         for doc, _receipt in documents:
             coverage.update(row["frame"] for row in doc["inspected_frames"])
@@ -715,6 +944,20 @@ def reference_status(streams, *, native_frames, bounds):
             actors = {
                 a["actor_id"] for a in doc.get("actors", []) if a["identity_supported"]
             }
+            for actor in doc.get("actors", []):
+                identity = actor["actor_id"]
+                if (
+                    identity in actor_definitions
+                    and actor_definitions[identity] != actor
+                ):
+                    reasons.append("conflicting_source_actor_definition")
+                actor_definitions[identity] = actor
+            for row in doc.get("frame_states", []):
+                frame = row["frame"]
+                if frame in native_states and native_states[frame] != row:
+                    reasons.append("conflicting_native_frame_chunk_join")
+                native_states[frame] = row
+            local_events = set()
             for event in doc.get("events", []):
                 if event["kind"] == "unresolved_contact" or (
                     event["kind"] in {"serve", "shot"}
@@ -722,6 +965,9 @@ def reference_status(streams, *, native_frames, bounds):
                 ):
                     reasons.append("unresolved_contact_or_actor")
                 key = (event["kind"], tuple(event["interval"]))
+                if key in local_events:
+                    reasons.append("duplicate_within_chunk_event")
+                local_events.add(key)
                 signature = {
                     k: event.get(k)
                     for k in (
@@ -783,9 +1029,10 @@ def reference_status(streams, *, native_frames, bounds):
     }
 
 
-def verify_selection(selection, selection_path, timestamp, root):
+def verify_selection(selection, selection_path, timestamp, root, protocol=None):
     """Bind the exact prospectively timestamped screening decision and originals."""
-    base = Path(root) / ".cache/rally62-source-only-v1"
+    task = protocol["task"] if protocol else 62
+    base = Path(root) / f".cache/rally{task}-source-only-v1"
     contained(base, selection_path)
     if timestamp.get("selection_sha256") != file_hash(selection_path):
         raise ValueError(
@@ -843,7 +1090,7 @@ def verify_selection(selection, selection_path, timestamp, root):
             raise ValueError("Original screening census changed")
         clock = read_json(clock_path)
         packet = read_json(base / "overview-v1" / f"{source_id}.packet.json")
-        members = overview_memberships(clock)
+        members = overview_memberships(clock, protocol)
         verify_packet(packet, base / "overview-v1", clock, members)
         chunks = plan_chunks(packet, dense=False, overlap=0)
         for lane in STREAMS:
@@ -886,7 +1133,7 @@ def verify_selection(selection, selection_path, timestamp, root):
                     "last_frames": chunk["frames"][-2:],
                 }
             candidate = earliest_candidate(
-                clock, {"frames": [states[m["frame"]] for m in members]}
+                clock, {"frames": [states[m["frame"]] for m in members]}, protocol
             )
             if selection["sources"][source_id]["original_candidates"][
                 lane
@@ -939,17 +1186,21 @@ def run_preparation(
         raise ValueError("Prospective context seal changed")
     context = read_json(context_path)
     verify_context(checkout, context)
+    task_number = context.get("task", 62)
     timestamp = read_json(timestamp_path)
     if (
         timestamp.get("context_sha256") != context_sha256
         or not str(timestamp.get("url", "")).startswith(
-            "https://github.com/Ken0u/badminton-match-analyzer/issues/62#issuecomment-"
+            f"https://github.com/Ken0u/badminton-match-analyzer/issues/{task_number}#issuecomment-"
         )
         or timestamp.get("published_at", time.time() + 1) > time.time()
     ):
         raise ValueError("Public prospective timestamp receipt required")
     protocol = load_protocol(
-        checkout / "data/manifests/rally_reference_protocol_v1.json"
+        checkout
+        / context.get(
+            "protocol_path", "data/manifests/rally_reference_protocol_v1.json"
+        )
     )
     if context["inputs"] != protocol["sources"]:
         raise ValueError("Frozen original source declarations changed")
@@ -963,16 +1214,24 @@ def run_preparation(
             "Freeze independently screened bounds before dense preparation"
         )
     if stage == "dense":
-        verify_selection(selection, selection_path, timestamp, root)
-    lineage = contained(root / ".cache", root / ".cache/rally62-source-only-v1")
+        verify_selection(selection, selection_path, timestamp, root, protocol)
+    lineage = contained(
+        root / ".cache", root / f".cache/rally{task_number}-source-only-v1"
+    )
     if output.parent != lineage:
         raise ValueError("All stages must share the fixed bounded task output lineage")
-    prior_bytes = persisted_bytes(lineage)
+    maximum = protocol.get("limits", {}).get("max_output_bytes", MAX_OUTPUT_BYTES)
+    prior_bytes = persisted_bytes(lineage, limit=maximum)
+    if task_number == 208:
+        original = root / ".cache/rally62-source-only-v1/screening-sealed-v1.json"
+        if file_hash(original) != protocol["predecessor"]["screening_sha256"]:
+            raise ValueError("Original failed pilot seal changed")
+        prior_bytes += predecessor_output_bytes(root)
     output.mkdir(parents=True, exist_ok=False)
     budget = Budget(
         output,
         {
-            "output_bytes": MAX_OUTPUT_BYTES,
+            "output_bytes": maximum,
             "worker_seconds": max(0, context["deadline"] - time.time()),
         },
         reserve_bytes=65536,
@@ -1017,7 +1276,7 @@ def run_preparation(
             verify_context(checkout, context)
             clock = clocks[source_id]
             members = (
-                overview_memberships(clock)
+                overview_memberships(clock, protocol)
                 if stage == "overview"
                 else dense_memberships(clock, selection["sources"][source_id]["bounds"])
             )
@@ -1053,7 +1312,10 @@ def run_preparation(
 
     try:
         run_local_job(
-            Store(config.DATA), "rally_source_reference", "source-only-rally62", task
+            Store(config.DATA),
+            "rally_source_reference",
+            f"source-only-rally{task_number}",
+            task,
         )
     except BaseException:
         if job_id:
