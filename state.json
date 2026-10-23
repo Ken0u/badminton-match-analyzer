@@ -4198,6 +4198,14 @@
       "task_id": "210",
       "verb": "submit"
     },
+    "rally212-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792788556,
+      "fingerprint": "c9e3d8dab5e525646e26d0f6d7340d7582746ff257b99ecb730b7440c46b78d0",
+      "status": "needs_human",
+      "task_id": "212",
+      "verb": "plan"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -5498,6 +5506,14 @@
       "fingerprint": "fe229af353095489e278fe46f802e9892c8ecba1973f8646e93e75a9327d8fd3",
       "status": "needs_human",
       "task_id": "210",
+      "verb": "plan"
+    },
+    "spec-212-773d22068e443b56cafd38a6243c504c48cc13c7d334fe23303789303d3e6195": {
+      "actor": "Ken0u",
+      "at": 1792788556,
+      "fingerprint": "c3a46ab16bee5fdc959fa2dd6035ae1a6ddca5ed3bf9c87eb20e827faed2ba3f",
+      "status": "needs_human",
+      "task_id": "212",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -15518,6 +15534,82 @@
         "pr_number": 211,
         "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60"
       }
+    },
+    "212": {
+      "epoch": 0,
+      "planned_at": 1792788556,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Obtain configured-owner authorization of this exact risk-human successor before implementation or image dispatch. Use at most 20 original PNGs / 9 MiB raw bytes per genuine fresh existing ChatGPT-authenticated Codex CLI session, two simultaneous assessors, cumulative 8 GiB attempted image payload and 8 GiB retained outputs including all 62/208/210 failures, and eight additional hours from a fresh grant. This explicitly authorizes a new greedy packing plan and fresh deadline, not replay of any predecessor grant. No paid service, API key, alternate destination/provider/model, public image upload or manual merge.",
+          "Before claiming, search open/closed issues, PRs and authoritative coordination for duplicates and current reservations. Preserve merged209/main3d2d39e76b334584d725177f3dfb950d8fa84da6, all completed208 evidence and original62 first300-second0/2 pilot, released62 grant,207 branch/source/CI and all failures. Do not reclaim62 or208. Keep deprecated PROGRESS unchanged and do not access it. Never access consumed holdout63 inputs, protocols, predictions, private membership or artifacts. Preserve other environments, datasets, weights, predictions, reviewed annotations and research processes. Preserve completed #210 software/report/PR #211 and its two transport failures, zero complete streams, final incomplete aggregate SHA256 4e839ba32c3171937e5ebb8824c05b8daf1cacb69a055caf28fa2685d4b2f865, and all 1,400,881,755 prior charged bytes. Do not reclaim #210. Its failure is transport evidence, not a contact-accuracy result.",
+          "Reuse exactly the SAME two208 source candidates and all1532 original oriented native PNGs in place, singles991 and doubles541; do not reselect bounds, shorten windows, omit frames, replace sources, rerun overview or native decoding, resize, crop, composite, overlay or reencode. Originals are official BWF sourcego2uajSiBnE SHA708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9 andH1setLK1tig SHA49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623 with existing source clocks/packets. Dense packet SHA256s26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6 and8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a remain fixed. Missing/incompatible predecessor inputs stop real assessment with both slots retained; no replacement data acquisition.",
+          "Reverify existing whole-source/census/clock/packet/native membership/orientation/geometry/PNG hashes and original completed Store/terminal/artifact seals before consumption and at freeze. Revalidate original process lifetime absence using actual recorded PID/creation metadata without signaling or restarting any research worker. Existing208 live owner/launcher ancestry observations remain predecessor evidence; do not claim a new native job. All raw images, labels, per-contact records and scientific process/session identities stay private. Retain source PTS/VFR/time-base/frame identity, camera/scene context and original false eligibility flags.",
+          "Preserve public protocols v1/v2/v3 byte-for-byte. Commit a separate v4 protocol, explicit current consumer/runtime/execution bindings and exclusive successor lineage before image inspection. Retain original 208 screening, candidate, dense-context and packet seals from the unchanged predecessor protocols; bind #210 final incomplete aggregate SHA256 4e839ba32c3171937e5ebb8824c05b8daf1cacb69a055caf28fa2685d4b2f865 and all its attempt reservations. Timestamp successor protocol, consumer/execution hashes, exact packet/chunk plan, estimated transport envelope and immutable grant deadline on its owning issue before dispatch.",
+          "Use fixed contiguous greedy packing with at most 20 original native PNGs / 9 MiB raw bytes and exactly two native overlap frames for each exhaustive stream. Metadata-only costing gives 172 singles and 84 doubles chunks per original stream: 512 original sessions, 4,489,176,948 new bytes and 5,890,058,703 cumulative bytes including prior 1,400,881,755. Maximum base64 image content is 12,579,152 bytes. Reserve 2 MiB for text/schema/CLI envelope; prospectively bound locally controlled encoded request content to 14 MiB, below observed 15 MiB WebSocket refusal. Treat this as a conservative estimate, not proof of server feasibility. Do not send a separate test/probe payload; the first actual segment is the first genuine assessment and remains charged if it fails. A one-full-equivalent targeted-adjudication budget reference totals 8,134,647,177 bytes, leaving 455,287,415 bytes under 8 GiB for actual differing target/context costs and failures. Freeze actual target/context plan separately; no third exhaustive stream or guaranteed final cost is implied. Recompute exact plan from unchanged packet metadata before dispatch, preserving all 1,532 native frames.",
+          "Run two genuinely independent exhaustive source-only streams on ALL1532 selected native frames with disjoint authentic fresh Codex CLI sessions, preserving each stream own stable actor/camera definitions and source-only continuity notes across joins. At most two simultaneous CLI assessors; five-second pacing after each success. Send only assigned original source PNGs, minimal frozen protocol/frame/hash/native-timing context and the same stream own continuity notes to the existing ChatGPT-authenticated Codex CLI. No repository/account access, tools, shell, network, delegation, other stream labels, predictions, models, heatmaps or application truth inside assessors. Clear unrelated API/GitHub/Project credentials before launch. Actual thread/process/image/output/coverage receipts must substantiate inspection; no copied/fabricated verdicts or self-authored independent stream.",
+          "Reserve/charge every attempted original-image byte before dispatch including prior 1,400,881,755 bytes, overlaps, failures, partials, repeats and later adjudication; never reset counts. Retain all immutable originals and failed/partial outputs. Stop new dispatch at immutable deadline or budget bound. Do not restart on observation timeout. If a session fails without a valid original, allow at most one fresh replacement for that segment and at most three replacement launches across this successor, only after independent original lifetime exit verification and a prospectively timestamped replacement plan; all bytes and failures remain charged. No automatic unbounded retries, alternate model or smaller/easier source substitution. A failed transport must not silently lower required source coverage. A repeated oversized/transport error stops dispatch for diagnosis; do not use remaining replacements blindly or alter frozen packing in flight. Replacement plans retain the same assigned originals and provider/model/destination.",
+          "Seal both COMPLETE original streams and globally unique genuine sessions before comparing them. Derive targeted regions deterministically from all original contact/hitter/identity/scene/boundary/completeness uncertainties, contradictions and overlapping chunk joins. Every intersecting inclusive event interval must be covered wholly; deterministic native context may be added only within the same frozen windows and is fully charged. Freeze exact target/context/chunk plans and cost before fresh blind source adjudication, supplying no previous labels. Preserve unknowns and source-based reasons; never accept an event interval truncated by a transport boundary, force a label or reconcile contradictory joins silently. If target/context cannot be covered within authorized bounds, preserve both slots as incomplete.",
+          "Record source actors separately from tracker IDs, screen position and court end, keeping unresolved cross-fragment/camera identity explicit. Enumerate all supported or possible contacts, serves, separate rally-end evidence, inclusive timing uncertainty, camera/scene changes, censoring and unresolved gaps. Recognize only clear/lift/net/drop/smash/drive and forehand/backhand when supported; preserve other/unknown and exclude half smash. Native frame coverage is not exhaustive supported contacts. A complete-reference flag needs source-supported service, every contact/hitter and actual ending without unresolved scene/identity/event gaps. Score six-family/side completeness separately; do not assume two selected rallies represent all twelve combinations. Agent agreement is development evidence, not expert gold truth, statistical independence or established full-match correctness.",
+          "Strengthen generated regressions for9 MiB/20-image protocol-bound packing/receipt validation, exclusive outputs, cumulative prior/attempted/repeated bytes, immutable deadlines and unchanged v1/v2/v3 behavior; preserve all earlier tamper/missing/duplicate/VFR/orientation/native/camera/overlap/actor/event/terminal checks. Exercise targeted interval/context closure, join uncertainty, distinct authentic session provenance, and conservative unknown/unsupported results before accepting any real positive reference. Investigate reproducible defects within these reserved files and document genuine findings; do not weaken checks to make real assessments pass. Test exact base64-size rounding, encoded-envelope guards, carried 210 failures and complete native coverage under smaller packing using generated inputs only. Unknown joins/contacts must remain conservative.",
+          "Seal exclusive private original streams, actual execution lineage, targeted resolutions and final full-denominator aggregate; independently recheck native image/source identity, complete inspected membership, original lifetime exits and global separation from all prior sessions. Do not modify application truth, predictions or original labels; preserve current app-truth/prediction seals without inspecting prediction contents. All four training_allowed,independent_test_allowed,model_deployment_allowed,dataset_redistribution_allowed remain false. No rights, overlap, deployment or model-promotion eligibility is inferred from this development assessment.",
+          "Deliver reproducible code, unchanged predecessor public protocols, separate public v4 protocol and aggregate report/guide only, with no raw images/labels/individual contacts or credentials in source/builds. Run meaningful focused tests and required Python suite/Ruff check/format/pip/diff/repository checks, exact PR CI, normal controller integration, exact merged-main verification and independent full public wheel/source/both-image delivery. Use a fresh read-only independent code reviewer if requested; do not manufacture approval. Never manually merge or alter auth/controller/workflow/deployment/publishing policy.",
+          "The operational deadline is the original fresh grant time plus8hours, unchanged by lease renewal, context refresh, test failure or interruption; at most3code-repair rounds and no paid services. Revalidate ownership and checkpoint on this issue before long operations and yielding. Retained-output accounting includes prior 62/208/210 artifacts, worktrees, helpers and verification evidence (currently below2.2GB) plus all successor outputs/failures; no original PNG copies. An honest incomplete result keeps62/66/67/71 and the full deployable correct-annotation objective open; a delivered increment alone never satisfies those gates. Future model evaluation, further images beyond bounds or different sources need separate scope."
+        ],
+        "artifacts": {
+          "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+          "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+          "rally210-incomplete-aggregate": "4e839ba32c3171937e5ebb8824c05b8daf1cacb69a055caf28fa2685d4b2f865"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "210"
+        ],
+        "exclusions": [
+          "No new source/media/dataset/weight/dependency acquisition, image transformation/reencoding, native preparation/decode, inference/training, model/prediction/heatmap/app-truth access or edits, existing-label overwrite, eligibility change, public raw-data redistribution, research-process control, paid service or alternate API credential.",
+          "No consumed holdout63 or deprecated PROGRESS access/edits; no 62/208/210 grant/context/deadline replay; no source/bounds/denominator replacement; no security/auth/controller/workflow/deployment/publishing change, raw coordination edit, fabricated review or manual merge."
+        ],
+        "limits": {
+          "max_image_payload_bytes": 8589934592,
+          "max_images_per_session": 20,
+          "max_locally_controlled_encoded_request_bytes": 14680064,
+          "max_output_bytes": 8589934592,
+          "max_parallel_assessors": 2,
+          "max_replacement_launches": 3,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 8,
+          "max_session_image_bytes": 9437184,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Complete two unchanged native rally windows with a prospectively frozen transport-feasible 9 MiB packing plan, two independent exhaustive source-only streams and targeted blind adjudication, retaining incomplete cases.",
+        "paths": [
+          "backend/badminton/rally_source_reference.py",
+          "scripts/prepare_rally_references.py",
+          "tests/test_rally_source_reference.py",
+          "data/manifests/rally_reference_protocol_v1.json",
+          "data/manifests/rally_reference_protocol_v2.json",
+          "data/manifests/rally_reference_protocol_v3.json",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md",
+          "docs/ANNOTATION_GUIDE.md",
+          "data/manifests/rally_reference_protocol_v4.json"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Prospectively frozen successor protocol/consumer/execution/packet/chunk/deadline seals; both genuine exhaustive original streams, separately frozen targeted source adjudication, global authentic session/image/coverage/lifetime verification and full two-slot unknown-preserving aggregate.",
+          "Generated provenance/budget/interval/join/actor/unknown regressions and required checks, exact PR/main CI, normal controller integration and independent complete public package/both-image verification; no full-accuracy or eligibility claim from software delivery."
+        ]
+      },
+      "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
