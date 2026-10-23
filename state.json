@@ -480,6 +480,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "guidance213-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792790260,
+      "epoch": 1,
+      "fingerprint": "f3d718cf39fa68c81fb121abb7b762d83fcb16f1e8b17c56bd9fcf7c5979bf1d",
+      "status": "review",
+      "task_id": "213",
+      "verb": "submit"
+    },
     "identity66-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730626,
@@ -15747,6 +15756,7 @@
       },
       "planned_at": 1792789645,
       "planned_by": "Ken0u",
+      "pr_number": 214,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -15783,7 +15793,13 @@
         ]
       },
       "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "2b005aecef275909bcf1d2745f98d9b7e491e2a0",
+        "head_sha": "6ab9418800a2c85d6437dedf82ddf77efe8c47b7",
+        "pr_number": 214,
+        "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd"
+      }
     },
     "62": {
       "checkpoint": {
