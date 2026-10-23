@@ -453,6 +453,26 @@
       "task_id": "213",
       "verb": "plan"
     },
+    "guidance213-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792790093,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "2b005aecef275909bcf1d2745f98d9b7e491e2a0",
+        "branch": "codex/issue-213-remove-only-the-unresolved-requirements-",
+        "epoch": 1,
+        "expires_at": 1792800893,
+        "granted_at": 1792790093,
+        "host_id": "MSI",
+        "session_id": "guidance213-msi-20261023-v1",
+        "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd"
+      },
+      "epoch": 1,
+      "fingerprint": "404aaffcc6fe108202d7d48700ce6972861c83af8302d1c278e050849a7ad97a",
+      "status": "granted",
+      "task_id": "213",
+      "verb": "next"
+    },
     "guidance213-register-v1": {
       "actor": "Ken0u",
       "at": 1792789943,
@@ -15708,7 +15728,18 @@
       "status": "ready"
     },
     "213": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "2b005aecef275909bcf1d2745f98d9b7e491e2a0",
+        "branch": "codex/issue-213-remove-only-the-unresolved-requirements-",
+        "epoch": 1,
+        "expires_at": 1792800893,
+        "granted_at": 1792790093,
+        "host_id": "MSI",
+        "session_id": "guidance213-msi-20261023-v1",
+        "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792789817,
@@ -15752,7 +15783,7 @@
         ]
       },
       "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
