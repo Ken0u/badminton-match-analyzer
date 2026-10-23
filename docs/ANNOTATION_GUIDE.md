@@ -1,5 +1,20 @@
 # Annotation guide, version 1
 
+For the source-only complete-rally pilot, follow the prospective
+[rally protocol](../data/manifests/rally_reference_protocol_v1.json).
+Five-second overview frames propose the earliest warranted provisional slot;
+they cannot certify its completeness. Review every native frame of that slot,
+including four-second context on each side, in two independent source streams
+with separate fresh source adjudication. Retain the original streams and their
+own continuity notes across overlapping chunks. Record source actors independently
+of tracker IDs, unknown identity links, camera transitions, replay/unknown context,
+unresolved contacts and start/end censoring. Use inclusive native contact and
+terminal uncertainty intervals separately. Stopped play alone does not establish
+the exact terminal moment. A failed slot stays failed; do not select an easier
+replacement. Unknown family/side stays unknown even when contact enumeration is
+complete. Agent agreement does not establish expert gold truth or eligibility
+for training, independent testing, deployment or redistribution.
+
 Target families: **clear, lift, net, drop, smash, drive**, each with a separate forehand/backhand label. Other visible actions use `other`; unresolvable actions use `unknown`. Half smash is outside the target taxonomy.
 
 ## Source time and event boundaries
