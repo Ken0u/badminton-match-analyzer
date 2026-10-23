@@ -4298,6 +4298,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-running-v1": {
+      "actor": "Ken0u",
+      "at": 1792792435,
+      "epoch": 1,
+      "fingerprint": "3f6fada94136569739195a6a7e54f6b180380c54a8e5aba6e06fe8fc430d8dcb",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-next-v1": {
       "actor": "Ken0u",
       "at": 1792791609,
@@ -15723,16 +15732,16 @@
     "212": {
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
-        "head_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
-        "summary": "Fresh epoch1 #212 grant verified after complete #210/#213 delivery. Immutable granted_at 1792791609, deadline 1792820409. Isolated .cache/worktrees/rally212-e1. Separate v4 code/protocol being tested; exact metadata-only recomputation matches 512 original sessions / 5,890,058,703 cumulative attempted image bytes; no source pixels read or image dispatch. Parent owns core, task child owns only tests in isolated worktree. Previous protocols, data, environments and processes preserved."
+        "head_sha": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
+        "summary": "Frozen producer eebbe210c83aefb9d467e3740dbf1a39f161ac2a in .cache/worktrees/rally212-producer-v1; context c244dd047bfb8fdafa5d17601db8313912bee05b031d187971a3cc0e0af5d71e, v4 protocol 35cbf2d61a9b86e2e9b365353e1b49492529a0e6a10ea87b8941ee8693217779, final execution helper db068efd8202d272e1148c3d693637f9dad4de808a81444b3cd6d57ecef7bf1c, plans 771ab5a3fa7c2ac59025264239b37455670e25ed729cf1acdb1d6d5c7543f9f1. Prospective records issue comments6375437367/6375455077/6375461977. All224 focused generated tests pass; full suite running with isolated real-root test settings. All sources/clocks/packets/1532PNGs/Store reverified without decode/copy;245 prior CLI lifetimes absent. Two authentic original source-only lanes have started and each completed first2segments successfully under transport guard. No source-label comparison/adjudication yet. Keep exactly2assessors and frozen packing, immutable deadline 1792820409,8GiB cumulative payload/output. All four eligibility flags false. Existing #210/#213 delivered. Do not restart on missing handles; observe original launcher/CLI PID+creation identities and immutable outputs first. Root PROGRESS and datasets/processes preserved."
       },
-      "checkpoint_at": 1792791902,
+      "checkpoint_at": 1792792435,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792802702,
+        "expires_at": 1792803235,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
