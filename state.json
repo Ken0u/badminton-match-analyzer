@@ -4128,6 +4128,15 @@
       "task_id": "208",
       "verb": "checkpoint"
     },
+    "rally210-checkpoint-initial-v1": {
+      "actor": "Ken0u",
+      "at": 1792787279,
+      "epoch": 1,
+      "fingerprint": "493f4c416fdf15d73092fddb3ebb5c38d520d1e4b9849dea6504f735603ff4fa",
+      "status": "running",
+      "task_id": "210",
+      "verb": "checkpoint"
+    },
     "rally210-claim-v1": {
       "actor": "Ken0u",
       "at": 1792786932,
@@ -15390,12 +15399,18 @@
       }
     },
     "210": {
+      "checkpoint": {
+        "branch": "codex/issue-210-assess-both-unchanged-prepared-complete-",
+        "head_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
+        "summary": "Owner explicitly authorized exact frozen210spec3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60. Controller accepted authorization/registration and genuineMSI epoch1 grant1792786932; immutable deadline1792815732. Isolated worktree created. Existing pinned local tools resolve doctor checks without installation. Implementing strict separate v3 protocol,32MiB20-image packing and receipt validation, cumulative predecessor1347060833bytes, current8h context and existing-packet reuse without native decode/admission. Original v1/v2 bytes and all1532 source frames unchanged; no new source inspection, image dispatch, inference/training, model/prediction/app-truth or consumed-holdout access. Bounded isolated test subagent owns test file only. Initial focused run75pass/2generated fixture guard failures identified and fixed; expanded provenance/budget regressions pending. Public coordination contains aggregate progress only; raw scientific identities/labels/images remain private. Preserve62/66/67/71 gates and deprecated PROGRESS."
+      },
+      "checkpoint_at": 1792787279,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
         "branch": "codex/issue-210-assess-both-unchanged-prepared-complete-",
         "epoch": 1,
-        "expires_at": 1792797732,
+        "expires_at": 1792798079,
         "granted_at": 1792786932,
         "host_id": "MSI",
         "session_id": "rally210-msi-20261023-v1",
