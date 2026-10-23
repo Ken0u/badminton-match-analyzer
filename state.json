@@ -5255,6 +5255,14 @@
       "task_id": "66",
       "verb": "plan"
     },
+    "spec-66-8b8f1cff9fe4b2956e2c7f5ce80240045839a404bc126cecdf509a0ce139a8f4": {
+      "actor": "dootz1",
+      "at": 1792730746,
+      "fingerprint": "3ba059930c131545241cc9b8201a83ec5ede233ce61553e214b769981132e9fb",
+      "status": "ready",
+      "task_id": "66",
+      "verb": "plan"
+    },
     "spec-67-ee28a5eddbc46c21b4e78690c1b17570e3eaaf3fde3b5f8dc0501589f3e872a1": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -15344,55 +15352,9 @@
       "status": "proposed"
     },
     "66": {
-      "checkpoint": {
-        "branch": "codex/issue-66-evaluate-persistent-player-identity-acro",
-        "head_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
-        "reason": "Readiness inspection only; no implementation, real-data access, assessment, inference or research job. Preserve branch and old grant. Replan identity66 to depend on existing independently adjudicated source-reference task62; do not duplicate62 or claim it complete."
-      },
-      "checkpoint_at": 1792730626,
       "epoch": 1,
-      "history": [
-        {
-          "at": 1792730635,
-          "claim": {
-            "actor": "Ken0u",
-            "baseline_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
-            "branch": "codex/issue-66-evaluate-persistent-player-identity-acro",
-            "epoch": 1,
-            "expires_at": 1792741426,
-            "granted_at": 1792730436,
-            "host_id": "MSI",
-            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-            "spec_hash": "7077102fbd2296d68bd2b8ec84c3b523379a27df84b994e1639982b2cc32906d"
-          },
-          "terminal_proof": {
-            "artifacts": {
-              "branch": "codex/issue-66-evaluate-persistent-player-identity-acro",
-              "head_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
-              "original_full_process_identity_retained_locally": true,
-              "readiness_receipt_sha256": "81a03885c7e662901878bc430c835aefb771b351d57fd40cd4164e4c4d456710",
-              "worktree_clean": true
-            },
-            "host_id": "MSI",
-            "process": {
-              "command": "Python .cache/identity66-readiness-child-v1.py (exact command retained locally)",
-              "creation_time": 1792730610.0139968,
-              "cwd": ". (verified repository root; exact absolute identity retained locally)",
-              "exited": true,
-              "pid": 17740
-            },
-            "store": {
-              "status": "no_job",
-              "task_research_jobs_started": 0
-            },
-            "terminal": true
-          },
-          "verb": "release"
-        }
-      ],
-      "planned_at": 1792393957,
+      "planned_at": 1792730746,
       "planned_by": "dootz1",
-      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Measure source-reviewed identity switches and unknown cases for singles and doubles.",
@@ -15402,7 +15364,9 @@
         "capabilities": [
           "review-inputs"
         ],
-        "dependencies": [],
+        "dependencies": [
+          "62"
+        ],
         "exclusions": [
           "No claim of full automatic annotation accuracy.",
           "No production/model promotion or destructive storage changes."
@@ -15426,7 +15390,7 @@
           "Record source/input/protocol hashes and material limitations for research."
         ]
       },
-      "spec_hash": "7077102fbd2296d68bd2b8ec84c3b523379a27df84b994e1639982b2cc32906d",
+      "spec_hash": "3b1186e19344dfb319ca480e6d18865bf0e5ff68f47b92c48a384ba5c9535e83",
       "status": "ready"
     },
     "67": {
