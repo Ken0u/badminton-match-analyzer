@@ -602,6 +602,29 @@ def test_extended_protocol_keeps_v1_and_full_grid():
     assert v2["predecessor"]["image_bytes"] == 340760009
 
 
+def test_unresolved_source_slot_is_retained_without_blocking_other_slot():
+    bounds = {"start_frame": 2, "end_frame": 6}
+    assert (
+        r.screened_bounds(
+            {"status": "provisional", "bounds": bounds, "complete_reference": False}
+        )
+        == bounds
+    )
+    assert (
+        r.screened_bounds(
+            {"status": "unresolved", "bounds": None, "complete_reference": False}
+        )
+        is None
+    )
+    for row in (
+        {"status": "unresolved", "bounds": bounds, "complete_reference": False},
+        {"status": "provisional", "bounds": None, "complete_reference": False},
+        {"status": "provisional", "bounds": bounds, "complete_reference": True},
+    ):
+        with pytest.raises(ValueError):
+            r.screened_bounds(row)
+
+
 @pytest.mark.parametrize(
     "change",
     [
@@ -874,8 +897,9 @@ def test_dense_selection_requires_timestamp_and_both_slots(tmp_path):
         r.verify_selection(selection, path, stamp, tmp_path)
 
 
+@pytest.mark.parametrize("stage", ["overview", "dense_one_unresolved"])
 def test_generated_preparation_entry_admission_and_exclusive_output(
-    tmp_path, monkeypatch
+    tmp_path, monkeypatch, stage
 ):
     import shutil
     import sqlite3
@@ -937,6 +961,24 @@ def test_generated_preparation_entry_admission_and_exclusive_output(
     }
     context_path = root / ".cache/context.json"
     context_path.write_bytes(encoded(context))
+    if stage == "dense_one_unresolved":
+        selection = {
+            "screening_sealed": True,
+            "context_sha256": file_hash(context_path),
+            "sources": {
+                ids[0]: {
+                    "status": "provisional",
+                    "bounds": {"start_frame": 2, "end_frame": 6},
+                    "complete_reference": False,
+                },
+                ids[1]: {
+                    "status": "unresolved",
+                    "bounds": None,
+                    "complete_reference": False,
+                },
+            },
+        }
+        (root / ".cache/selection.json").write_bytes(encoded(selection))
     protocol_path = root / ".cache/generated-protocol.json"
     protocol_path.write_bytes(encoded(protocol))
     stamp = root / ".cache/timestamp.json"
@@ -963,7 +1005,9 @@ r.SOURCE_IDS=("generated-a","generated-b")
 # admission, output bounds, exclusive publication and exit proofs are actual.
 r.load_protocol=lambda path:read_json(root/".cache/generated-protocol.json")
 r.verify_context=lambda checkout,context:None
-r.run_preparation(root,root,out,root/".cache/context.json",file_hash(root/".cache/context.json"),root/".cache/timestamp.json",stage="overview")
+r.verify_selection=lambda *args:None
+stage=sys.argv[3]
+r.run_preparation(root,root,out,root/".cache/context.json",file_hash(root/".cache/context.json"),root/".cache/timestamp.json",stage="dense" if stage=="dense_one_unresolved" else "overview",selection_path=root/".cache/selection.json" if stage=="dense_one_unresolved" else None)
 """,
         encoding="utf-8",
     )
@@ -976,14 +1020,26 @@ r.run_preparation(root,root,out,root/".cache/context.json",file_hash(root/".cach
     )
     for key in r.CREDENTIALS:
         env.pop(key, None)
-    command = [sys.executable, str(script), str(root), str(output)]
+    command = [sys.executable, str(script), str(root), str(output), stage]
     child = subprocess.run(command, env=env, capture_output=True, timeout=60)
     assert child.returncode == 0, child.stderr.decode()
     assert r.verify_worker(output, root)["original_lifetime_absent"]
-    for sid in ids:
+    prepared_ids = ids[:1] if stage == "dense_one_unresolved" else ids
+    for sid in prepared_ids:
         p = json.loads((output / f"{sid}.packet.json").read_bytes())
-        r.verify_packet(p, output, census, r.overview_memberships(census))
-        assert len(p["memberships"]) == 61 and len(p["frames"]) == 2
+        expected = (
+            r.dense_memberships(census, {"start_frame": 2, "end_frame": 6})
+            if stage == "dense_one_unresolved"
+            else r.overview_memberships(census)
+        )
+        r.verify_packet(p, output, census, expected)
+        if stage == "overview":
+            assert len(p["memberships"]) == 61 and len(p["frames"]) == 2
+    if stage == "dense_one_unresolved":
+        assert not (output / f"{ids[1]}.packet.json").exists()
+        terminal = json.loads((output / "terminal.json").read_bytes())
+        assert terminal["summary"]["sources"] == 2
+        assert terminal["summary"]["unresolved_sources"] == [ids[1]]
     repeated = subprocess.run(command, env=env, capture_output=True, timeout=30)
     assert repeated.returncode != 0 and b"exclusive" in repeated.stderr
     with sqlite3.connect(data / "catalog.sqlite3") as db:

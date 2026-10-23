@@ -1071,6 +1071,17 @@ def reference_status(streams, *, native_frames, bounds):
     }
 
 
+def screened_bounds(row):
+    """Keep unsupported slots explicit while preparing a warranted other slot."""
+    if row.get("complete_reference") is not False:
+        raise ValueError("Screening never certifies a complete reference")
+    if row.get("status") == "unresolved" and row.get("bounds") is None:
+        return None
+    if row.get("status") != "provisional" or not isinstance(row.get("bounds"), dict):
+        raise ValueError("Retain an explicit unresolved or provisional source slot")
+    return row["bounds"]
+
+
 def verify_selection(selection, selection_path, timestamp, root, protocol=None):
     """Bind the exact prospectively timestamped screening decision and originals."""
     task = protocol["task"] if protocol else 62
@@ -1105,13 +1116,9 @@ def verify_selection(selection, selection_path, timestamp, root, protocol=None):
             raise ValueError(
                 "A new producer context cannot change screened source decisions"
             )
-    if any(
-        row.get("status") != "provisional"
-        or not row.get("bounds")
-        or row.get("complete_reference") is not False
-        for row in selection["sources"].values()
-    ):
-        raise ValueError("Unresolved slots cannot become dense provisional rallies")
+    chosen = [screened_bounds(row) for row in selection["sources"].values()]
+    if not any(chosen):
+        raise ValueError("No warranted provisional source slot for dense preparation")
     finals = [
         (base / name, read_json(base / name))
         for name in seals
@@ -1314,13 +1321,23 @@ def run_preparation(
             {name: file_hash(output / name) for name in ("context.json", "slots.json")}
         )
         clocks = verify_originals(context["input_root"], protocol)
+        prepared, unresolved = [], []
         for index, source_id in enumerate(SOURCE_IDS):
             verify_context(checkout, context)
             clock = clocks[source_id]
+            bounds = (
+                screened_bounds(selection["sources"][source_id])
+                if stage == "dense"
+                else None
+            )
+            if stage == "dense" and bounds is None:
+                unresolved.append(source_id)
+                progress((index + 1) / len(SOURCE_IDS))
+                continue
             members = (
                 overview_memberships(clock, protocol)
                 if stage == "overview"
-                else dense_memberships(clock, selection["sources"][source_id]["bounds"])
+                else dense_memberships(clock, bounds)
             )
             packet = extract_frames(
                 Path(context["input_root"]) / source_id / "source.mp4",
@@ -1341,11 +1358,14 @@ def run_preparation(
             for row in packet["frames"]:
                 if row["image"]:
                     artifacts[row["image"]["path"]] = row["image"]["sha256"]
+            prepared.append(source_id)
             progress((index + 1) / len(SOURCE_IDS))
         verify_originals(context["input_root"], protocol)
         verify_context(checkout, context)
         summary = {
             "sources": len(SOURCE_IDS),
+            "prepared_sources": prepared,
+            "unresolved_sources": unresolved,
             "stage": stage,
             "context_sha256": context_sha256,
             "annotation_accuracy_established": False,

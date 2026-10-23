@@ -24,6 +24,13 @@ The original preparation was completed and sealed before this additional
 summary validation changed; its exact producer context remains preserved.
 Any later preparation must use a fresh prospective consumer context.
 
+Preparation also retains an unresolved source slot explicitly while allowing a
+warranted candidate from the other source to proceed. Both original inputs must
+still pass integrity checks. The terminal summary retains the two-source
+denominator and separately lists prepared and unresolved sources; a missing
+candidate never becomes a negative or an easier replacement. A generated native
+worker regression exercises this case through actual Store admission and exit.
+
 The authorized cumulative ceilings are 4 GiB image payload and 8 GiB persisted
 outputs across both pilots, retaining the original 340,760,009 charged bytes,
 failures and repetitions. Four additional hours run from the genuine successor
