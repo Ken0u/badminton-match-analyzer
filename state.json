@@ -4298,6 +4298,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-accounting-v2": {
+      "actor": "Ken0u",
+      "at": 1792798993,
+      "epoch": 1,
+      "fingerprint": "77f3c162243572fa53548b38d02c326c846c71d813c5f6c80531824fee0086e7",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-composite-defect-v1": {
       "actor": "Ken0u",
       "at": 1792794110,
@@ -15876,15 +15885,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "Metadata-only output-accounting audit found a genuine frozen-counter omission: later guidance213 and separate acceptance worktrees plus task Git administration add14584902bytes beyond the unchanged producer/targeted retained_bytes functions. At1792798763.600936,base2230313790 + supplement14584902 = 2244898692retained bytes <8589934592 cap. Supplement is also below the existing67108864-byte dispatch headroom at this observation; no cap breach, payload reset,scientific relaunch,source change or relaxed threshold. Six generated metadata-counter cases pass,including missing/disappearing entries and Windows reparse/symlink non-traversal. Supplement helper SHAa04ee6fe571888c9da0bdd5151881fb691c675a9434f83397132752d7baa1fc0,receipt SHA4535a83d7cbee7e69643f815c401f4949a9b0e479238b25b886df8f897a1369f. It reads metadata only and does not follow directory links,open source images/labels/predictions,or change the frozen scientific producer/acceptance contexts. Frozen counters remain preserved as historical evidence,not silently rewritten. REQUIRED before targeted dispatch and final reporting: rerun this supplement,verify actual full retained bytes under8GiB and disclose the corrected count separately from the immutable scientific audit; do not present the old base as all outputs. Reassess the original headroom if any extra worktree is created/grows. Latest live original metadata observation: {\"all_original_lifetimes_absent\": false, \"at\": 1792798822.7509005, \"attempted_image_bytes\": 3559033040, \"both_original_indexes_complete\": false, \"coordination\": \"65c1b8ff968785c2ac45829ad308c0c4d845c3fa\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 122, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 123}, \"independent_b\": {\"complete_index\": false, \"finished\": 123, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 124}}, \"lease_expiry\": 1792809528} Same live handles65809/23768/41462/26828 preserved. All12 exact CI jobs pass for unchanged current draft216 head1b285c0;unsubmitted. Producer eebbe21,strict acceptance6cb7e4f,all original contexts/protocols/packing/results/deadline 1792820409 unchanged. No parent scientific originals opened/compared or target dispatch. Next both original indexes/global genuine lifetime audit and watcher exact target plan; then prospective cost freeze and bounded blind adjudication. Final full two-slot aggregate/report,controller integration,main checks and public delivery remain open. Eligibilityflagsfalse,accuracyunproven. Preserve root branch,existing deprecated PROGRESS edit and all private artifacts/processes."
+        "summary": "Expanded the scoped-root inventory after accounting-v1: six helper files outside the frozen prefix list add23537bytes beyond its worktree/Git supplement. V1 remains preserved as a WORKTREE/GIT-only supplement,not the complete output count. At1792798924.9012363,base2230438288 + full known scoped supplement14608439 =2245046727retained bytes <8589934592cap. The full supplement remains below original67108864dispatch headroom at this snapshot. Use .cache/rally212-retained-output-audit-v2.py henceforth before targeted dispatch and final completion/reporting. It composes the unchanged v1 metadata counter,adds task-named root artifacts,all relevant task worktrees and Git administration,and never follows directory links or opens source images/labels/predictions. Six generated metadata cases pass; no scientific process or consumer/context/packing/protocol/result changed. V2 counter SHA97c8049d667aee9e15e9fb9ee72dec2d274a61d8b1afdbcaf702897701959e09,receipt SHAaa28ad9e4fd40e83ae110259a809aad171749a988064ddd19d9f962d1a73aca5. These are live metadata snapshots,not atomic filesystem transactions. Reassess any new worktree against headroom; enforce actual full8GiB count. Final frozen planner/auditor retained-byte fields remain their historical base counters; preserve those immutable originals and attach the corrected full accounting sidecar instead of overwriting them or claiming those bases cover all outputs. A final report must cite both scientific aggregate and full accounting receipts. Original source sessions and all strict scientific gates remain unchanged. PR216 stays draft/unsubmitted at1b285c0 with all12 CI jobs passing. Both original indexes/global authentic session/native/lifetime audit remain required before any label comparison; same live handles65809/23768/41462/26828 preserved. Original deadline1792820409,all cumulative image caps and four false eligibility flags unchanged; no accuracy claim. Preserve root branch, existing deprecated PROGRESS edit and all private artifacts/processes."
       },
-      "checkpoint_at": 1792798834,
+      "checkpoint_at": 1792798993,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792809634,
+        "expires_at": 1792809793,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
