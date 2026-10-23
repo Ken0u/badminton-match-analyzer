@@ -4029,6 +4029,26 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "rally208-claim-v1": {
+      "actor": "Ken0u",
+      "at": 1792746046,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
+        "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
+        "epoch": 1,
+        "expires_at": 1792756846,
+        "granted_at": 1792746046,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "c92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3"
+      },
+      "epoch": 1,
+      "fingerprint": "39ace615d41877bf1836b1cd80e99a331f9b364df03ec54b2dce5cc9bfc033f6",
+      "status": "granted",
+      "task_id": "208",
+      "verb": "next"
+    },
     "rally208-owner-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792745771,
@@ -15134,7 +15154,18 @@
       }
     },
     "208": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
+        "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
+        "epoch": 1,
+        "expires_at": 1792756846,
+        "granted_at": 1792746046,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "c92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792745771,
@@ -15205,7 +15236,7 @@
         ]
       },
       "spec_hash": "c92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
