@@ -4066,6 +4066,15 @@
       "task_id": "62",
       "verb": "release"
     },
+    "rally208-start-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792746854,
+      "epoch": 1,
+      "fingerprint": "6b7606adf40dbc15bb79d503a218c5fed2b8b7c600ed6134105191c534ee8248",
+      "status": "running",
+      "task_id": "208",
+      "verb": "checkpoint"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -15154,12 +15163,18 @@
       }
     },
     "208": {
+      "checkpoint": {
+        "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
+        "head_sha": "cf1015eee2d58c4c8a2f78dbf20a72e91b630a19",
+        "summary": "Owner authorization accepted; original62 terminal release committed and all original evidence/draft207 preserved. Genuine successor208 epoch1 grant1792746046; immutable new deadline1792760446. Adopted207 source and committed prospectively frozen v2 first900-second grid, cumulative original/new budgets and targeted adjudication;65 focused tests pass. Generated-data overlap camera/contact and duplicate-enumeration bugs repaired, with meaningful regressions. Recursive71-file consumer/runtime/input seal901f097b53b0c01f3295939294bf3b60418a84480e27938cdcd823f88d586546 publicly timestamped on208 before native preparation. Real shared-Store preparation is running; live actual Store owner and ancestry to launcher observed privately, output not yet consumed. Full isolated project checks running. Exact CLI execution/schema helperfe791d6a82f19eb79d1b16f5918505c1b8bace8a1046035b88dfc422258ce3f9 timestamped before new dispatch; no new assessor session started yet. Original340760009 image bytes carried forward;4GiB cumulative image/8GiB output limits. All eligibility flags remain false; no weights/models/predictions/inference/training/app-truth/consumed-holdout access. Keep62/66/67/71 incomplete. Private receipts under ignored rally208 prefixes; no research-process control or PROGRESS edits."
+      },
+      "checkpoint_at": 1792746854,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
         "epoch": 1,
-        "expires_at": 1792756846,
+        "expires_at": 1792757654,
         "granted_at": 1792746046,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
