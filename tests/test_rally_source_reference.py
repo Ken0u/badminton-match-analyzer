@@ -2,6 +2,7 @@
 
 import copy
 import hashlib
+import itertools
 import json
 import os
 import subprocess
@@ -731,6 +732,7 @@ def generated_consumer_checkout(tmp_path, monkeypatch):
         "data/manifests/rally_reference_protocol_v1.json",
         "data/manifests/rally_reference_protocol_v2.json",
         "data/manifests/rally_reference_protocol_v3.json",
+        "data/manifests/rally_reference_protocol_v4.json",
         "data/manifests/shuttle_review_sources_v1.json",
         "pyproject.toml",
         "uv.lock",
@@ -964,8 +966,9 @@ def test_expanded_assessment_receipt_requires_explicit_protocol_and_keeps_unknow
 
 
 @pytest.mark.parametrize("stage", ["overview", "dense"])
+@pytest.mark.parametrize("version", [3, 4])
 def test_dense_reuse_protocol_refuses_new_preparation_before_admission_or_decode(
-    tmp_path, monkeypatch, stage
+    tmp_path, monkeypatch, stage, version
 ):
     import time
 
@@ -980,16 +983,18 @@ def test_dense_reuse_protocol_refuses_new_preparation_before_admission_or_decode
     monkeypatch.setattr(config, "WEIGHTS", root / "models/weights")
     for name in r.CREDENTIALS:
         monkeypatch.delenv(name, raising=False)
-    protocol = assessment_protocol()
+    protocol = assessment_protocol() if version == 3 else transport_protocol()
     context_path = root / ".cache/context.json"
     context_path.parent.mkdir()
-    context_path.write_bytes(encoded({"task": 210, "inputs": protocol["sources"]}))
+    context_path.write_bytes(
+        encoded({"task": protocol["task"], "inputs": protocol["sources"]})
+    )
     stamp = root / ".cache/timestamp.json"
     stamp.write_bytes(
         encoded(
             {
                 "context_sha256": file_hash(context_path),
-                "url": "https://github.com/Ken0u/badminton-match-analyzer/issues/210#issuecomment-0",
+                "url": f"https://github.com/Ken0u/badminton-match-analyzer/issues/{protocol['task']}#issuecomment-0",
                 "published_at": time.time(),
             }
         )
@@ -1264,6 +1269,473 @@ def test_reuse_rejects_tampered_archived_inputs_without_decode(
     )
     with pytest.raises(ValueError):
         r.reuse_dense_packets(root, root, context, original)
+
+
+def transport_protocol():
+    """The separately authorized transport plan, without opening real inputs."""
+    return r.load_protocol(
+        Path(r.__file__).resolve().parents[2]
+        / "data/manifests/rally_reference_protocol_v4.json"
+    )
+
+
+def test_transport_protocol_retains_sources_and_prior_failed_dispatches():
+    protocol = transport_protocol()
+    previous = assessment_protocol()
+    assert (protocol["schema_version"], protocol["task"]) == (4, 212)
+    assert protocol["sources"] == previous["sources"]
+    assert protocol["selection"] == previous["selection"]
+    assert protocol["assessment"] == previous["assessment"]
+    assert protocol["payload"]["max_images_per_session"] == 20
+    assert protocol["payload"]["max_image_bytes_per_session"] == 9 * 1024**2
+    assert protocol["payload"]["max_total_image_bytes"] == 8 * 1024**3
+    assert protocol["limits"]["max_output_bytes"] == 8 * 1024**3
+    assert protocol["limits"]["task_seconds_from_grant"] == 8 * 3600
+    assert protocol["limits"]["max_parallel_assessors"] == 2
+    assert protocol["predecessor"]["image_bytes"] == 1400881755
+    assert protocol["predecessor"]["complete_references"] == 0
+    assert protocol["eligibility"] == r.ELIGIBILITY
+    assert not any(protocol["eligibility"].values())
+    assert assessment_protocol() == previous
+    assert previous["payload"]["max_image_bytes_per_session"] == 32 * 1024**2
+
+
+@pytest.mark.parametrize(
+    ("section", "key", "value"),
+    [
+        (None, "schema_version", 3),
+        (None, "schema_version", True),
+        (None, "task", 210),
+        ("payload", "max_images_per_session", 21),
+        ("payload", "max_image_bytes_per_session", 32 * 1024**2),
+        ("payload", "max_image_bytes_per_session", float(9 * 1024**2)),
+        ("payload", "max_total_image_bytes", 8 * 1024**3 + 1),
+        ("payload", "max_locally_controlled_encoded_request_bytes", 15 * 1024**2),
+        ("payload", "encoded_envelope_reserve_bytes", 1024**2),
+        ("limits", "max_output_bytes", 8 * 1024**3 + 1),
+        ("limits", "task_seconds_from_grant", 8 * 3600 + 1),
+        ("limits", "max_parallel_assessors", 3),
+        ("limits", "paid_services", True),
+        ("assessment", "chunk_overlap_frames", 1),
+        ("assessment", "adjudication", "third_exhaustive_pass"),
+        ("predecessor", "image_bytes", 1347060833),
+        ("predecessor", "image_bytes", 1400881754),
+        ("predecessor", "complete_references", 1),
+        ("eligibility", "training_allowed", True),
+    ],
+)
+def test_transport_protocol_rejects_scope_changes_and_downgrade(
+    tmp_path, section, key, value
+):
+    protocol = transport_protocol()
+    (protocol if section is None else protocol[section])[key] = value
+    path = tmp_path / "changed-v4.json"
+    path.write_bytes(encoded(protocol))
+    with pytest.raises(ValueError):
+        r.load_protocol(path)
+    # Bypassing the JSON reader must not weaken the selected protocol either.
+    with pytest.raises(ValueError):
+        r.plan_chunks(packet(8), dense=True, protocol=protocol)
+
+
+def test_transport_packing_keeps_every_frame_and_charges_overlap_and_retries():
+    protocol = transport_protocol()
+    p = packet(26, 1024**2)
+    before = copy.deepcopy(p)
+    chunks = r.plan_chunks(p, dense=True, protocol=protocol)
+    assert [c["frames"] for c in chunks] == [
+        list(range(8)),
+        list(range(6, 14)),
+        list(range(12, 20)),
+        list(range(18, 26)),
+    ]
+    assert {n for c in chunks for n in c["frames"]} == set(range(26))
+    assert all(
+        left["frames"][-2:] == right["frames"][:2]
+        for left, right in itertools.pairwise(chunks)
+    )
+    assert p == before
+    prior = protocol["predecessor"]["image_bytes"]
+    assert r.payload_cost(chunks, streams=2, prior_bytes=prior, protocol=protocol) == (
+        prior + 64 * 1024**2
+    )
+    # Charge a failed or replacement dispatch too, even with identical membership.
+    assert (
+        r.payload_cost(
+            [*chunks, chunks[0]], streams=2, prior_bytes=prior, protocol=protocol
+        )
+        == prior + 80 * 1024**2
+    )
+    with pytest.raises(ValueError):
+        r.payload_cost(chunks, streams=2, prior_bytes=prior - 1, protocol=protocol)
+    limit = protocol["payload"]["max_total_image_bytes"]
+    assert (
+        r.payload_cost(
+            chunks, streams=2, prior_bytes=limit - 64 * 1024**2, protocol=protocol
+        )
+        == limit
+    )
+    with pytest.raises(ValueError):
+        r.payload_cost(
+            chunks,
+            streams=2,
+            prior_bytes=limit - 64 * 1024**2 + 1,
+            protocol=protocol,
+        )
+
+
+@pytest.mark.parametrize("size", [0, -1, True, 1.5, "100", None])
+def test_transport_packing_rejects_invalid_raw_sizes(size):
+    with pytest.raises(ValueError):
+        r.plan_chunks(packet(8, size), dense=True, protocol=transport_protocol())
+
+
+def test_transport_packing_session_boundaries_and_overlap_capacity():
+    protocol = transport_protocol()
+    assert [
+        len(c["frames"])
+        for c in r.plan_chunks(packet(21), dense=True, protocol=protocol)
+    ] == [20, 3]
+    assert (
+        r.plan_chunks(packet(1, 9 * 1024**2), dense=True, protocol=protocol)[0][
+            "image_bytes"
+        ]
+        == 9 * 1024**2
+    )
+    for p in (packet(1, 9 * 1024**2 + 1), packet(4, 4 * 1024**2)):
+        with pytest.raises(ValueError):
+            r.plan_chunks(p, dense=True, protocol=protocol)
+    with pytest.raises(ValueError):
+        r.plan_chunks(packet(), dense=True, overlap=1, protocol=protocol)
+
+
+@pytest.mark.parametrize("sizes", [[1], [1, 2, 3, 4], [1] * 20, [9 * 1024**2]])
+def test_transport_cost_rounds_each_original_separately(sizes):
+    original = list(sizes)
+    cost = r.transport_cost(sizes, protocol=transport_protocol())
+    assert cost["base64_image_bytes"] == sum(4 * ((size + 2) // 3) for size in sizes)
+    assert cost["reserved_envelope_bytes"] == 2 * 1024**2
+    assert cost["estimated_encoded_bytes"] == (cost["base64_image_bytes"] + 2 * 1024**2)
+    assert cost["estimated_encoded_bytes"] <= 14 * 1024**2
+    assert sizes == original
+
+
+@pytest.mark.parametrize(
+    "sizes",
+    [
+        [],
+        [0],
+        [-1],
+        [True],
+        [1.5],
+        ["2"],
+        [None],
+        [1] * 21,
+        [9 * 1024**2 + 1],
+        [5 * 1024**2, 5 * 1024**2],
+    ],
+)
+def test_transport_cost_rejects_unapproved_image_payload(sizes):
+    with pytest.raises(ValueError):
+        r.transport_cost(sizes, protocol=transport_protocol())
+
+
+@pytest.mark.parametrize("context_bytes", [-1, True, 1.5, "1", None, 2 * 1024**2])
+def test_transport_cost_rejects_invalid_or_excessive_context(context_bytes):
+    with pytest.raises(ValueError):
+        r.transport_cost(
+            [1], context_bytes=context_bytes, protocol=transport_protocol()
+        )
+
+
+def test_transport_cost_context_is_inside_reserved_envelope():
+    protocol = transport_protocol()
+    header = len("data:image/png;base64,".encode("ascii"))
+    maximum = 2 * 1024**2 - 20 * header
+    empty = r.transport_cost([1] * 20, protocol=protocol)
+    full = r.transport_cost([1] * 20, context_bytes=maximum, protocol=protocol)
+    assert full["estimated_encoded_bytes"] == empty["estimated_encoded_bytes"]
+    with pytest.raises(ValueError):
+        r.transport_cost([1] * 20, context_bytes=maximum + 1, protocol=protocol)
+
+
+@pytest.mark.parametrize("version", [1, 2, 3])
+def test_transport_cost_requires_separate_v4_authorization(version):
+    protocol = r.load_protocol(
+        Path(r.__file__).resolve().parents[2]
+        / f"data/manifests/rally_reference_protocol_v{version}.json"
+    )
+    with pytest.raises(ValueError):
+        r.transport_cost([100], protocol=protocol)
+
+
+def test_transport_cost_rejects_padding_overflow_below_raw_budget():
+    # Separate base64 encodings add padding even when raw bytes total exactly 9 MiB.
+    with pytest.raises(ValueError, match="transport guard"):
+        r.transport_cost([1, 9 * 1024**2 - 1], protocol=transport_protocol())
+
+
+def test_transport_assessment_requires_exact_cost_and_preserves_unknowns():
+    protocol = transport_protocol()
+    p = packet()
+    chunk = r.plan_chunks(p, dense=True, protocol=protocol)[0]
+    document = assessment(p, chunk)
+    document["scene"] = "unknown"
+    document["events"][1]["family"] = "unknown"
+    document["unresolved_gaps"] = [{"interval": [2, 2], "reason": "occlusion"}]
+    execution = receipt(document, chunk)
+    execution["transport_cost"] = r.transport_cost(
+        [100] * 8, context_bytes=301, protocol=protocol
+    )
+    before = copy.deepcopy(document)
+    r.validate_assessment(
+        document,
+        p,
+        chunk,
+        execution,
+        stage="dense",
+        stream="independent_a",
+        protocol=protocol,
+    )
+    assert document == before
+    assert not any(document["eligibility"].values())
+    for field in execution["transport_cost"]:
+        # An otherwise valid receipt cannot understate any encoded payload field.
+        changed = copy.deepcopy(execution)
+        changed["transport_cost"][field] -= 1
+        if field == "context_bytes":
+            changed["transport_cost"][field] = -1
+        with pytest.raises(ValueError):
+            r.validate_assessment(
+                document,
+                p,
+                chunk,
+                changed,
+                stage="dense",
+                stream="independent_a",
+                protocol=protocol,
+            )
+    changed = copy.deepcopy(execution)
+    del changed["transport_cost"]
+    with pytest.raises(ValueError):
+        r.validate_assessment(
+            document,
+            p,
+            chunk,
+            changed,
+            stage="dense",
+            stream="independent_a",
+            protocol=protocol,
+        )
+    changed_chunk = {**chunk, "base64_bytes": chunk["base64_bytes"] - 1}
+    with pytest.raises(ValueError):
+        r.validate_assessment(
+            document,
+            p,
+            changed_chunk,
+            execution,
+            stage="dense",
+            stream="independent_a",
+            protocol=protocol,
+        )
+
+
+def test_transport_context_seals_all_versions_and_immutable_eight_hour_clock(
+    tmp_path, monkeypatch
+):
+    checkout = generated_consumer_checkout(tmp_path, monkeypatch)
+    path = checkout / "data/manifests/rally_reference_protocol_v4.json"
+    context = r.consumer_context(checkout, path, tmp_path / "inputs", 1700000000)
+    assert context["task"] == 212
+    assert context["granted_at"] == 1700000000
+    assert context["deadline"] == 1700000000 + 8 * 3600
+    for n in (1, 2, 3, 4):
+        name = f"data/manifests/rally_reference_protocol_v{n}.json"
+        assert context["consumers"][name] == file_hash(checkout / name)
+    monkeypatch.setattr(r.time, "time", lambda: context["deadline"] - 1)
+    r.verify_context(checkout, context)
+    extended = copy.deepcopy(context)
+    extended["deadline"] += 1
+    with pytest.raises(ValueError):
+        r.verify_context(checkout, extended)
+    monkeypatch.setattr(r.time, "time", lambda: context["deadline"])
+    with pytest.raises(ValueError, match="deadline"):
+        r.verify_context(checkout, context)
+
+
+@pytest.mark.parametrize("version", [1, 2, 3, 4])
+def test_transport_context_detects_changed_earlier_or_selected_protocol(
+    tmp_path, monkeypatch, version
+):
+    checkout = generated_consumer_checkout(tmp_path, monkeypatch)
+    context = r.consumer_context(
+        checkout,
+        checkout / "data/manifests/rally_reference_protocol_v4.json",
+        tmp_path / "inputs",
+        1700000000,
+    )
+    monkeypatch.setattr(r.time, "time", lambda: context["deadline"] - 1)
+    path = checkout / f"data/manifests/rally_reference_protocol_v{version}.json"
+    path.write_bytes(path.read_bytes() + b"\n")
+    with pytest.raises(ValueError):
+        r.verify_context(checkout, context)
+
+
+@pytest.fixture
+def generated_failed_successor(tmp_path, monkeypatch):
+    """Synthetic sealed failure evidence; no private attempts or images are read."""
+    root = tmp_path / "generated"
+    base = root / ".cache/rally210-source-only-v1"
+    failures = []
+    folders = []
+    for ordinal, stream in enumerate(r.STREAMS[:2]):
+        folder = base / "dense-assessment-v1" / stream / f"{r.SOURCE_IDS[0]}-000"
+        folder.mkdir(parents=True)
+        images = [{"frame": n, "sha256": "a" * 64} for n in range(20)]
+        (folder / "payload-reservation.json").write_bytes(
+            encoded({"images": images, "image_bytes": 26910461})
+        )
+        (folder / "finish.json").write_bytes(
+            encoded(
+                {
+                    "images": images,
+                    "image_bytes": 26910461,
+                    "exited": True,
+                    "exit_code": 1,
+                    "pid": 12345 + ordinal,
+                    "creation_time": 1700000000.0,
+                    "thread_id": f"generated-{stream}",
+                }
+            )
+        )
+        (folder / "start.json").write_bytes(
+            encoded({"pid": 12345 + ordinal, "creation_time": 1700000000.0})
+        )
+        (folder / "events.jsonl").write_bytes(
+            b'{"error":"generated oversized request"}\n'
+        )
+        failures.append(
+            {
+                "stream": stream,
+                "source_id": r.SOURCE_IDS[0],
+                "chunk": 0,
+                "reservation_sha256": file_hash(folder / "payload-reservation.json"),
+                "receipt_sha256": file_hash(folder / "finish.json"),
+                "events_sha256": file_hash(folder / "events.jsonl"),
+            }
+        )
+        folders.append(folder)
+    aggregate = {
+        "task": 210,
+        "completed_original_streams": 0,
+        "complete_references": 0,
+        "successful_assessment_sessions": 0,
+        "failures": failures,
+        "eligibility": dict(r.ELIGIBILITY),
+        "new_attempted_image_bytes": 53820922,
+        "prior_charged_image_bytes": 1347060833,
+        "cumulative_image_bytes": 1400881755,
+    }
+    path = base / "final-incomplete-v1.json"
+    path.write_bytes(encoded(aggregate))
+    predecessor = transport_protocol()["predecessor"]
+    predecessor["failed_successor"]["aggregate_sha256"] = file_hash(path)
+
+    def absent(pid):
+        raise r.psutil.NoSuchProcess(pid)
+
+    monkeypatch.setattr(r.psutil, "Process", absent)
+    return root, predecessor, path, aggregate, folders
+
+
+def test_transport_predecessor_charges_both_failed_original_dispatches(
+    generated_failed_successor,
+):
+    root, predecessor, _, _, _ = generated_failed_successor
+    assert r._failed_successor_bytes(root, predecessor) == 53820922
+    assert (
+        predecessor["image_bytes_before_failed_successor"] + 53820922
+        == (predecessor["image_bytes"])
+    )
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        "aggregate",
+        "reservation",
+        "receipt",
+        "events",
+        "unexpected_final",
+        "start_identity",
+        "uncharged_attempt",
+        "old_charge",
+        "total_charge",
+        "failed_charge",
+        "success",
+        "missing_lane",
+    ],
+)
+def test_transport_predecessor_rejects_changed_or_incomplete_failure_evidence(
+    generated_failed_successor, change
+):
+    root, predecessor, path, aggregate, folders = generated_failed_successor
+    if change == "aggregate":
+        path.write_bytes(path.read_bytes() + b"\n")
+    elif change in ("reservation", "receipt", "events"):
+        name = {
+            "reservation": "payload-reservation.json",
+            "receipt": "finish.json",
+            "events": "events.jsonl",
+        }[change]
+        target = folders[0] / name
+        target.write_bytes(target.read_bytes() + b"\n")
+    elif change == "unexpected_final":
+        (folders[0] / "original-final.json").write_bytes(b"{}\n")
+    elif change == "start_identity":
+        (folders[0] / "start.json").write_bytes(encoded({"pid": 54321}))
+    elif change == "uncharged_attempt":
+        extra = path.parent / "uncharged/payload-reservation.json"
+        extra.parent.mkdir()
+        extra.write_bytes(encoded({"image_bytes": 26910461}))
+    else:
+        if change == "old_charge":
+            aggregate["prior_charged_image_bytes"] -= 1
+        elif change == "total_charge":
+            aggregate["cumulative_image_bytes"] -= 1
+        elif change == "failed_charge":
+            aggregate["new_attempted_image_bytes"] -= 1
+        elif change == "success":
+            aggregate["successful_assessment_sessions"] = 1
+        elif change == "missing_lane":
+            aggregate["failures"] = aggregate["failures"][:1]
+        path.write_bytes(encoded(aggregate))
+        # Keep the seal consistent so semantic accounting checks are exercised.
+        predecessor["failed_successor"]["aggregate_sha256"] = file_hash(path)
+    with pytest.raises(ValueError):
+        r._failed_successor_bytes(root, predecessor)
+
+
+@pytest.mark.parametrize("state", ["same_lifetime", "different_lifetime", "denied"])
+def test_transport_predecessor_independently_checks_original_process_lifetime(
+    generated_failed_successor, monkeypatch, state
+):
+    root, predecessor, _, _, _ = generated_failed_successor
+
+    class Process:
+        def __init__(self, pid):
+            if state == "denied":
+                raise r.psutil.AccessDenied(pid)
+
+        def create_time(self):
+            return 1700000000.0 if state == "same_lifetime" else 1700000001.0
+
+    monkeypatch.setattr(r.psutil, "Process", Process)
+    if state == "different_lifetime":
+        assert r._failed_successor_bytes(root, predecessor) == 53820922
+    else:
+        with pytest.raises(ValueError, match="lifetime"):
+            r._failed_successor_bytes(root, predecessor)
 
 
 def test_unresolved_source_slot_is_retained_without_blocking_other_slot():
