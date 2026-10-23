@@ -780,13 +780,39 @@ def _dense_lane(documents):
                 disputed.update(interval)
             local_keys.add(key)
             events[key] = signature
+    for event in events.values():
+        if event["kind"] in {"serve", "shot"} and not any(
+            event["interval"][0] <= n <= event["interval"][1]
+            and row.get("contact_state") in {"observed", "possible"}
+            for n, row in frames.items()
+        ):
+            disputed.update(range(event["interval"][0], event["interval"][1] + 1))
     return frames, events, actors, disputed
+
+
+def _matching_dense_sources(streams):
+    sources, images = set(), {}
+    for lane, documents in streams.items():
+        for doc, _ in documents:
+            if doc.get("stage") != "dense" or doc.get("stream") != lane:
+                return False
+            sources.add(doc.get("source_id"))
+            for row in doc["inspected_frames"]:
+                n, sha = row["frame"], row["sha256"]
+                if n in images and images[n] != sha:
+                    return False
+                images[n] = sha
+    return len(sources) == 1 and bool(next(iter(sources)))
 
 
 def adjudication_targets(streams, *, native_frames):
     """Derive source regions needing a fresh verdict, never a third full stream."""
     if not all(lane in streams for lane in STREAMS[:2]):
         raise ValueError("Two exhaustive original streams required")
+    if not _matching_dense_sources(streams):
+        raise ValueError(
+            "All lanes must bind the same dense source and original images"
+        )
     allowed = set(native_frames)
     lanes = [_dense_lane(streams[lane]) for lane in STREAMS[:2]]
     if any(set(lane[0]) != allowed for lane in lanes):
@@ -915,6 +941,8 @@ def reference_status(streams, *, native_frames, bounds):
         )
     records = {}
     reasons = []
+    if not _matching_dense_sources(streams):
+        reasons.append("source_or_image_membership_mismatch")
     for lane, documents in streams.items():
         coverage = set()
         native_states = {}
@@ -987,6 +1015,13 @@ def reference_status(streams, *, native_frames, bounds):
         records[lane] = sorted(
             events.values(), key=lambda e: (e["interval"], e["kind"])
         )
+    normalized = [_dense_lane(streams[lane]) for lane in STREAMS]
+    if any(lane[3] for lane in normalized):
+        reasons.append("unresolved_native_source_evidence")
+    if any(lane[0] != normalized[0][0] for lane in normalized[1:]):
+        reasons.append("source_native_frame_disagreement")
+    if any(lane[2] != normalized[0][2] for lane in normalized[1:]):
+        reasons.append("source_actor_definition_disagreement")
     # Agreement never erases an unresolved case. Explicit source adjudication is
     # preserved separately; disagreements stay incomplete in this conservative v1.
     if (

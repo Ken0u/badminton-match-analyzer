@@ -337,6 +337,24 @@ def test_complete_reference_is_separate_from_unknown_requested_labels():
     assert not any(result["eligibility"].values())
 
 
+@pytest.mark.parametrize("change", ["camera", "contact", "unsupported_event", "source"])
+def test_complete_reference_checks_cross_stream_source_and_frame_evidence(change):
+    s = streams()
+    if change == "camera":
+        s["independent_b"][0][0]["frame_states"][3]["camera_view"] = "conflicting-view"
+    elif change == "contact":
+        s["independent_b"][0][0]["frame_states"][3]["contact_state"] = "none_observed"
+    elif change == "unsupported_event":
+        for lane in r.STREAMS:
+            s[lane][0][0]["frame_states"][3]["contact_state"] = "none_observed"
+    else:
+        s["independent_b"][0][0]["source_id"] = "another-source"
+    result = r.reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )
+    assert not result["complete_reference"]
+
+
 def joined_streams(change=None):
     p = packet()
     chunks = [
@@ -495,6 +513,29 @@ def test_targeted_original_coverage_cannot_shrink():
     s["independent_b"][0][0]["frame_states"].pop()
     with pytest.raises(ValueError, match="every native frame"):
         r.adjudication_targets(s, native_frames=range(8))
+
+
+@pytest.mark.parametrize("change", ["source", "image"])
+def test_targeted_adjudication_cannot_mix_original_sources(change):
+    s = streams()
+    if change == "source":
+        s["independent_b"][0][0]["source_id"] = "another-source"
+    else:
+        s["independent_b"][0][0]["inspected_frames"][3]["sha256"] = "f" * 64
+    with pytest.raises(ValueError, match="same dense source"):
+        r.targeted_reference_status(
+            s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+        )
+
+
+def test_targeted_event_without_observed_native_contact_requires_resolution():
+    s = streams()
+    for lane in r.STREAMS:
+        s[lane][0][0]["frame_states"][3]["contact_state"] = "none_observed"
+    assert r.adjudication_targets(s, native_frames=range(8)) == [3]
+    assert not r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )["complete_reference"]
 
 
 def test_targeted_identity_definitions_and_interval_closure():

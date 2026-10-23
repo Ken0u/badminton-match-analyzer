@@ -17,6 +17,13 @@ reference. New checks reject these failures and derive targeted source
 adjudication regions from two exhaustive original streams, closing intervals
 before resolution rather than requiring a third exhaustive pass.
 
+Further generated review also rejects cross-stream native-frame disagreement,
+mixed source IDs/image memberships and contacts unsupported by the reviewed
+frame states. These repairs do not change the screening rubric or selection.
+The original preparation was completed and sealed before this additional
+summary validation changed; its exact producer context remains preserved.
+Any later preparation must use a fresh prospective consumer context.
+
 The authorized cumulative ceilings are 4 GiB image payload and 8 GiB persisted
 outputs across both pilots, retaining the original 340,760,009 charged bytes,
 failures and repetitions. Four additional hours run from the genuine successor
