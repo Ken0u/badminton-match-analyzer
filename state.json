@@ -4029,6 +4029,15 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "rally62-overview-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792739336,
+      "epoch": 1,
+      "fingerprint": "4bb25f7396438cf01034cb0abbb1be05e8919b890eb5ef265455390a5189a8fb",
+      "status": "running",
+      "task_id": "62",
+      "verb": "checkpoint"
+    },
     "rally62-start-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792736946,
@@ -15093,16 +15102,16 @@
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
-        "head_sha": "38af56364dace02b0762a325bd71dee376b27c78",
-        "summary": "Configured-owner approval accepted for exact frozen spec a5449ddc93b21763457148a3d85decc1d62f3ec4bc60dd83098a3b095d992e21 including bounded source-image transfer to existing ChatGPT-authenticated Codex CLI. Committed epoch1 grant at1792736662; immutable four-hour deadline1792751062. Dedicated clean worktree created; six exact paths and data:windows-primary reservation. No images, predictions, models or real source data accessed/prepared yet. Freeze/test prospective source-only protocol and consumers before preparation. #202 merged with all exact PR/main checks and public build jobs passed; independent delivery audit remains observational."
+        "head_sha": "4d8d24ff9b7c0e6b4f81dd72f14f685162e975a5",
+        "summary": "Prospective source-only producer/protocol committed and publicly timestamped before preparation. Context seal17bb0e88c8e4bb78b6d9745ff465d9479651c17887ece7fcda7a5730ab508b9f; exact schema/CLI execution subsequently timestamped before source-image assessment. All2204 tests pass/four optional skips plus required checks;170 recorded verification lifetimes independently absent. Both whole original sources/censuses/packets retained and rehashed. All122 planned native overview PNGs verified against native identities and sealed artifacts. Original shared Store job completed; actual original Store owner and separate Windows venv wrapper independently absent. Live wrapper-child ancestry was not observed for this first preparation and is not asserted. Two actual independent CLI source streams are partial: initial capacity failures are preserved, stream B's separately sealed recovery1 progresses from its immutable successful prefix, and stream A will resume after B. Failed/repeated payloads remain fully charged. No model, protocol, selection, source, limits or eligibility changes; no predictions, learning weights, consumed holdout or app truth accessed. Both source slots remain incomplete; dense stage and downstream66/67/71 are not unlocked. Immutable original task deadline remains1792751062; checkpoint renewal does not extend it."
       },
-      "checkpoint_at": 1792736946,
+      "checkpoint_at": 1792739336,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
         "epoch": 1,
-        "expires_at": 1792747746,
+        "expires_at": 1792750136,
         "granted_at": 1792736662,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
