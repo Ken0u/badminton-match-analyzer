@@ -4189,6 +4189,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "rally210-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792788260,
+      "epoch": 1,
+      "fingerprint": "5c47bece0067624aac40edbbbabf86e763a4160ba0bb6d09441bc358c1e6990e",
+      "status": "review",
+      "task_id": "210",
+      "verb": "submit"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -15433,6 +15442,7 @@
       },
       "planned_at": 1792756420,
       "planned_by": "Ken0u",
+      "pr_number": 211,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -15501,7 +15511,13 @@
         ]
       },
       "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
+        "head_sha": "8920a8e183a1526eedc7c2ec6851e6780abac797",
+        "pr_number": 211,
+        "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60"
+      }
     },
     "62": {
       "checkpoint": {
