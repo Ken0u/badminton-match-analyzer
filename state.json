@@ -4162,6 +4162,15 @@
       "task_id": "138",
       "verb": "checkpoint"
     },
+    "roadmap189-checkpoint-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1792718171,
+      "epoch": 3,
+      "fingerprint": "a41fab210dae14db4ee459fb24461b117fc3c199f5cae8ad8080ceeff102870d",
+      "status": "running",
+      "task_id": "189",
+      "verb": "checkpoint"
+    },
     "roadmap189-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792642737,
@@ -13734,29 +13743,34 @@
     },
     "189": {
       "checkpoint": {
-        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e2",
+        "base_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
+        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e3",
+        "deadline_utc": "2026-10-23T03:11:22Z",
         "evidence": [
-          "https://github.com/Ken0u/badminton-match-analyzer/pull/196",
-          ".cache/roadmap189-checks-v2/results.json",
-          ".cache/roadmap189-references-v2.json",
-          ".cache/roadmap189-evidence-v2.json",
-          ".cache/roadmap189-reentry-v3.json"
+          ".cache/roadmap189-e3-start-v1.json",
+          ".cache/roadmap189-evidence-v3.json",
+          ".cache/roadmap189-visibility-v3.json",
+          ".cache/roadmap189-checks-v3/test-process.json"
         ],
-        "head_sha": "c6f9678b37e9dc6ad905a24f888ec4b853fa1152",
-        "remaining": [
-          "Verify exact-head CI and submit the fresh grant for normal controller integration; no retry authorized for the old PR run.",
-          "Verify fresh merged-main docs and all checks, then complete public package and both-image delivery.",
-          "Preserve old PR193/source/failed CI and original CI fixture unknown terminal states. Original new-grant2h/64MiB/3round limits remain from1792713380."
+        "limitations": [
+          "Historical pending reports retain their original measurements",
+          "No consumed holdout, research images, labels or predictions accessed",
+          "No annotation accuracy or model promotion established by software checks"
         ],
-        "summary": "Fresh epoch-2 continuation at baseline db140236 after 192 full delivery and queue resume. New PR196 carries the preserved two-file PR193 documentation forward without rewriting its old branch or failed CI. Updated current summaries retain shuttle/player failure counts, unknowns, eligibility and historical evidence, and now record 192/195 completion with prospective Linux receipt limits. Required local checks pass:2048 tests/4 optional skips, Ruff/format183files, pipcheck, whitespace and UTF8/LF/local links. Ten public snapshot references,17merged ancestors and public repository/private Project metadata verified. Fresh informal read-only factual audit found no issues; it is not a granted formal approval. No research, inference, model/policy/runtime changes or PROGRESS access."
+        "max_output_bytes": 67108864,
+        "preserved_prs": [
+          193,
+          196
+        ],
+        "stage": "Two-file documentation continuation; current delivered reports/18 task records, trusted completion references and public repo/private Project revalidated. Required isolated generated project checks running; no browser/inference rerun for prose."
       },
-      "checkpoint_at": 1792714061,
+      "checkpoint_at": 1792718171,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
         "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e3",
         "epoch": 3,
-        "expires_at": 1792728682,
+        "expires_at": 1792728971,
         "granted_at": 1792717882,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
