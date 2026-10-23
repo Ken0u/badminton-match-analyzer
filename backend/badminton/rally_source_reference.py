@@ -1052,12 +1052,19 @@ def reference_status(streams, *, native_frames, bounds):
         and contacts[-1]["interval"][1] >= endings[0]["interval"][0]
     ):
         reasons.append("contact_is_not_terminal_evidence")
+    if contacts and contacts[0]["kind"] != "serve":
+        reasons.append("contact_precedes_opening_serve")
+    if any(
+        left["interval"][1] >= right["interval"][0]
+        for left, right in itertools.pairwise(contacts)
+    ):
+        reasons.append("overlapping_contact_intervals")
     return {
         "complete_reference": not reasons,
         "reasons": sorted(set(reasons)),
         "all_requested_labels_supported": not reasons
         and all(
-            e.get("side") != "unknown" and e.get("family") != "unknown"
+            e.get("side") != "unknown" and e.get("family") not in {"unknown", "other"}
             for e in contacts
         ),
         "eligibility": dict(ELIGIBILITY),

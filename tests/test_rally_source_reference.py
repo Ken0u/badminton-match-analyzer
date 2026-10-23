@@ -355,6 +355,37 @@ def test_complete_reference_checks_cross_stream_source_and_frame_evidence(change
     assert not result["complete_reference"]
 
 
+@pytest.mark.parametrize(
+    "change", ["before_serve", "overlapping_contacts", "other_family"]
+)
+def test_reference_summary_preserves_order_and_requested_taxonomy(change):
+    s = streams()
+    for lane in r.STREAMS:
+        d = s[lane][0][0]
+        if change == "before_serve":
+            event = copy.deepcopy(d["events"][1])
+            event["interval"] = [0, 0]
+            d["events"].insert(0, event)
+            d["frame_states"][0]["contact_state"] = "observed"
+        elif change == "overlapping_contacts":
+            d["events"][1]["interval"] = [2, 3]
+            event = copy.deepcopy(d["events"][1])
+            event["interval"] = [3, 4]
+            d["events"].insert(2, event)
+        else:
+            for e in d["events"]:
+                if e["kind"] == "shot":
+                    e["family"], e["side"] = "other", "forehand"
+    result = r.reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )
+    if change == "other_family":
+        assert result["complete_reference"]
+        assert not result["all_requested_labels_supported"]
+    else:
+        assert not result["complete_reference"]
+
+
 def joined_streams(change=None):
     p = packet()
     chunks = [
