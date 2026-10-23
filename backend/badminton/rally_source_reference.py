@@ -67,6 +67,9 @@ def _eligibility(value):
 def load_protocol(path):
     protocol = read_json(path)
     _eligibility(protocol.get("eligibility", {}))
+    if protocol.get("schema_version") == 3:
+        _validate_dense_protocol(protocol)
+        return protocol
     extended = protocol.get("schema_version") == 2
     if (
         protocol.get("schema_version") not in (1, 2)
@@ -96,6 +99,78 @@ def load_protocol(path):
     ):
         raise ValueError("Original failed pilot and targeted adjudication required")
     return protocol
+
+
+def _validate_dense_protocol(protocol):
+    """Bind the separately authorized reuse scope; legacy limits stay unchanged."""
+    original = read_json(
+        Path(__file__).resolve().parents[2]
+        / "data/manifests/rally_reference_protocol_v2.json"
+    )
+    expected_packets = {
+        SOURCE_IDS[
+            0
+        ]: "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+        SOURCE_IDS[
+            1
+        ]: "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+    }
+    if (
+        protocol.get("task") != 210
+        or protocol.get("sources") != original["sources"]
+        or protocol.get("selection") != original["selection"]
+        or protocol.get("assessment") != original["assessment"]
+        or protocol.get("payload")
+        != {
+            **original["payload"],
+            "max_image_bytes_per_session": 32 * 1024**2,
+            "max_total_image_bytes": 8 * 1024**3,
+        }
+        or protocol.get("limits")
+        != {
+            **original["limits"],
+            "task_seconds_from_grant": 8 * 3600,
+            "max_parallel_assessors": 2,
+            "pacing_seconds": 5,
+            "max_replacement_launches": 3,
+        }
+        or protocol.get("predecessor")
+        != {
+            "task": 208,
+            "pr": 209,
+            "head_sha": "890995493ddcc98076bc8d771ceb400c8234d409",
+            "merged_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
+            "screening_sha256": "7c9fb68bd600f648e32c3dbdbc1b3d20b54fe6fc54b2dfa226a152d7cc960f3e",
+            "selection_sha256": "761d1da7f4b8628ebdb864ed0117d561b0db83f15258619506d7d0b7c993bebb",
+            "context_sha256": "aecd99016134cec0299406c0f82f46b433ea5faee73ac3eacd11d92a36957cde",
+            "terminal_sha256": "59c28c1bfc4233927cca38cf925067b7f04d80c743863b2ebfe471e186686f8e",
+            "dense_packets": expected_packets,
+            "image_bytes": 1347060833,
+            "native_frames": {SOURCE_IDS[0]: 991, SOURCE_IDS[1]: 541},
+            "complete_references": 0,
+            "retained_slots": 2,
+        }
+    ):
+        raise ValueError("Unsupported dense reuse protocol or predecessor bindings")
+
+
+def _session_limit(protocol):
+    if protocol is None:
+        return MAX_SESSION_BYTES
+    _eligibility(protocol.get("eligibility", {}))
+    if protocol.get("schema_version") == 3:
+        _validate_dense_protocol(protocol)
+    elif protocol.get("schema_version") not in (1, 2):
+        raise ValueError("Unsupported source-only protocol")
+    elif (
+        protocol.get("payload", {}).get("max_image_bytes_per_session")
+        != MAX_SESSION_BYTES
+        or protocol["payload"].get("max_images_per_session") != MAX_IMAGES
+        or protocol["payload"].get("max_total_image_bytes")
+        != MAX_PAYLOAD_BYTES * protocol["schema_version"]
+    ):
+        raise ValueError("Legacy source protocol limits changed")
+    return protocol["payload"]["max_image_bytes_per_session"]
 
 
 def validate_clock(clock):
@@ -240,23 +315,25 @@ def consumer_context(checkout, protocol_path, input_root, granted_at):
     protocol_path = Path(protocol_path).resolve()
     if protocol_path not in {
         (checkout / f"data/manifests/rally_reference_protocol_v{n}.json").resolve()
-        for n in (1, 2)
+        for n in (1, 2, 3)
     }:
         raise ValueError("Use committed protocol")
     protocol = load_protocol(protocol_path)
-    if protocol["schema_version"] == 2:
+    if protocol["schema_version"] >= 2:
         files.append(protocol_path)
+    if protocol["schema_version"] == 3:
+        files.append(checkout / "data/manifests/rally_reference_protocol_v2.json")
     return {
         "schema_version": 1,
         "task": protocol["task"],
         **(
             {"protocol_path": protocol_path.relative_to(checkout).as_posix()}
-            if protocol["schema_version"] == 2
+            if protocol["schema_version"] >= 2
             else {}
         ),
         "commit": commit,
         "granted_at": _integer(granted_at),
-        "deadline": granted_at + TASK_SECONDS,
+        "deadline": granted_at + protocol["limits"]["task_seconds_from_grant"],
         "input_root": str(Path(input_root).resolve()),
         "inputs": protocol["sources"],
         "consumers": {p.relative_to(checkout).as_posix(): file_hash(p) for p in files},
@@ -450,11 +527,19 @@ def verify_packet(packet, output, clock, memberships):
     return packet
 
 
-def plan_chunks(packet, *, dense, overlap=2):
+def plan_chunks(packet, *, dense, overlap=2, protocol=None):
     """Keep contiguous native membership and charge overlap/repeats explicitly."""
     frames = packet["frames"]
+    session_limit = _session_limit(protocol)
+    if (
+        protocol is not None
+        and overlap != protocol["assessment"]["chunk_overlap_frames"]
+    ):
+        raise ValueError("Protocol overlap changed")
     if not frames or any(not r.get("image") for r in frames):
         raise ValueError("Unavailable native frames cannot become exhaustive coverage")
+    for row in frames:
+        _integer(row["image"]["bytes"], 1)
     if dense and any(
         b["frame"] != a["frame"] + 1 for a, b in itertools.pairwise(frames)
     ):
@@ -465,7 +550,7 @@ def plan_chunks(packet, *, dense, overlap=2):
         while (
             end < len(frames)
             and end - start < MAX_IMAGES
-            and size + frames[end]["image"]["bytes"] <= MAX_SESSION_BYTES
+            and size + frames[end]["image"]["bytes"] <= session_limit
         ):
             size += frames[end]["image"]["bytes"]
             end += 1
@@ -492,11 +577,24 @@ def plan_chunks(packet, *, dense, overlap=2):
     return chunks
 
 
-def payload_cost(chunks, streams=3, prior_bytes=0):
+def payload_cost(chunks, streams=3, prior_bytes=0, *, protocol=None):
+    chunks = list(chunks)
     _integer(streams, 1)
     _integer(prior_bytes)
+    for chunk in chunks:
+        _integer(chunk["image_bytes"], 1)
+    _session_limit(protocol)
+    maximum = (
+        protocol["payload"]["max_total_image_bytes"] if protocol else MAX_PAYLOAD_BYTES
+    )
+    if (
+        protocol
+        and protocol["schema_version"] == 3
+        and prior_bytes < protocol["predecessor"]["image_bytes"]
+    ):
+        raise ValueError("All predecessor attempted image bytes must remain charged")
     total = prior_bytes + sum(c["image_bytes"] for c in chunks) * streams
-    if total > MAX_PAYLOAD_BYTES:
+    if total > maximum:
         raise ValueError("Cumulative image payload budget would be exceeded")
     return total
 
@@ -557,6 +655,125 @@ def verify_worker(output, root):
     }
 
 
+def reuse_dense_packets(checkout, root, context, predecessor_output):
+    """Verify existing native packets in place, without decoding or copying them.
+
+    The archived producer deadline is evidence, not permission for new work.
+    Only the current consumer context supplies the successor deadline.
+    """
+    root, checkout = Path(root).resolve(), Path(checkout).resolve()
+    verify_context(checkout, context)
+    protocol = load_protocol(checkout / context["protocol_path"])
+    if protocol["schema_version"] != 3 or context["task"] != 210:
+        raise ValueError("Separately authorized dense reuse protocol required")
+    output = contained(root / ".cache", predecessor_output)
+    if output != root / ".cache/rally208-source-only-v1/dense-v1":
+        raise ValueError("Reuse only the unchanged original dense lineage")
+    predecessor = protocol["predecessor"]
+    if file_hash(output / "context.json") != predecessor["context_sha256"]:
+        raise ValueError("Original dense consumer context changed")
+    archived = read_json(output / "context.json")
+    if archived["inputs"] != protocol["sources"] or archived["task"] != 208:
+        raise ValueError("Original source context changed")
+    worker = verify_worker(output, root)
+    if worker["terminal_sha256"] != predecessor["terminal_sha256"]:
+        raise ValueError("Original Store terminal seal changed")
+    base = output.parent
+    selection_path = base / "dense-selection-v1.json"
+    screening_path = base / "screening-sealed-v1.json"
+    if (
+        file_hash(selection_path) != predecessor["selection_sha256"]
+        or file_hash(screening_path) != predecessor["screening_sha256"]
+    ):
+        raise ValueError("Original candidate or screening seal changed")
+    selection = read_json(selection_path)
+    screening = read_json(screening_path)
+    if selection["sources"] != screening["sources"]:
+        raise ValueError("Original screened bounds changed")
+    for name, sha in selection["assessment_seals"].items():
+        if file_hash(contained(base, base / name)) != sha:
+            raise ValueError("Original source screening evidence changed")
+    clocks = verify_originals(context["input_root"], protocol)
+    plans = []
+    for source in protocol["sources"]:
+        sid = source["source_id"]
+        path = output / f"{sid}.packet.json"
+        if file_hash(path) != predecessor["dense_packets"][sid]:
+            raise ValueError("Original dense packet changed")
+        packet = read_json(path)
+        bounds = screened_bounds(selection["sources"][sid])
+        if bounds is None:
+            raise ValueError("Both unchanged candidate slots must remain available")
+        members = dense_memberships(clocks[sid], bounds)
+        verify_packet(packet, output, clocks[sid], members)
+        if (
+            len(packet["frames"]) != predecessor["native_frames"][sid]
+            or packet.get("context_sha256") != predecessor["context_sha256"]
+            or packet.get("stage") != "dense"
+        ):
+            raise ValueError("Original dense membership or producer changed")
+        plans.append(
+            {
+                "source_id": sid,
+                "packet_sha256": file_hash(path),
+                "bounds": bounds,
+                "frames": len(packet["frames"]),
+                "chunks": plan_chunks(packet, dense=True, protocol=protocol),
+            }
+        )
+    charged = 340760009 + sum(
+        read_json(path)["image_bytes"]
+        for path in base.rglob("payload-reservation.json")
+    )
+    if charged != predecessor["image_bytes"]:
+        raise ValueError("Prior attempted payload accounting changed")
+    chunks = [chunk for plan in plans for chunk in plan["chunks"]]
+    total = payload_cost(chunks, streams=2, prior_bytes=charged, protocol=protocol)
+    verify_context(checkout, context)
+    return {
+        "task": 210,
+        "sources": plans,
+        "source_slots": 2,
+        "native_frames": sum(plan["frames"] for plan in plans),
+        "prior_charged_image_bytes": charged,
+        "cumulative_after_originals": total,
+        "worker": worker,
+        "eligibility": dict(ELIGIBILITY),
+    }
+
+
+def run_reuse(root, checkout, output, context_path, context_sha256, timestamp_path):
+    """Publish exclusive verified reuse plans; never admit a new decode job."""
+    root, checkout = Path(root).resolve(), Path(checkout).resolve()
+    output = contained(root / ".cache", output)
+    if output.parent != root / ".cache/rally210-source-only-v1" or output.exists():
+        raise ValueError("Use a new exclusive successor reuse directory")
+    if any(os.environ.get(name) for name in CREDENTIALS):
+        raise ValueError("Clear account credentials before reuse")
+    if file_hash(context_path) != context_sha256:
+        raise ValueError("Successor context seal changed")
+    context, stamp = read_json(context_path), read_json(timestamp_path)
+    if (
+        stamp.get("context_sha256") != context_sha256
+        or stamp.get("commit") != context.get("commit")
+        or not str(stamp.get("url", "")).startswith(
+            "https://github.com/Ken0u/badminton-match-analyzer/issues/210#issuecomment-"
+        )
+        or type(stamp.get("published_at")) not in (int, float)
+        or not math.isfinite(stamp["published_at"])
+        or not context["granted_at"] <= stamp["published_at"] <= time.time()
+    ):
+        raise ValueError("Public prospective successor timestamp required")
+    plans = reuse_dense_packets(
+        checkout, root, context, root / ".cache/rally208-source-only-v1/dense-v1"
+    )
+    output.mkdir(parents=True, exist_ok=False)
+    for name, doc in (("context.json", context), ("plans.json", plans)):
+        with (output / name).open("xb") as stream:
+            stream.write(encoded(doc))
+    return plans
+
+
 def _interval(value, allowed):
     if (
         not isinstance(value, list)
@@ -571,7 +788,7 @@ def _interval(value, allowed):
 
 
 def validate_assessment(
-    document, packet, chunk, receipt, *, stage, stream, previous=None
+    document, packet, chunk, receipt, *, stage, stream, previous=None, protocol=None
 ):
     """Bind actual independent execution, exact inspected images and own joins."""
     if stage not in {"overview", "dense"} or stream not in STREAMS:
@@ -580,12 +797,15 @@ def validate_assessment(
     frames = {r["frame"]: r for r in packet["frames"]}
     selected = chunk["frames"]
     expected_rows = packet["frames"][chunk["start_index"] : chunk["end_index"]]
+    _integer(chunk["image_bytes"], 1)
+    for row in expected_rows:
+        _integer(row["image"]["bytes"], 1)
     if (
         selected != [row["frame"] for row in expected_rows]
         or not 1 <= len(selected) <= MAX_IMAGES
         or len(set(selected)) != len(selected)
         or chunk["image_bytes"] != sum(row["image"]["bytes"] for row in expected_rows)
-        or chunk["image_bytes"] > MAX_SESSION_BYTES
+        or chunk["image_bytes"] > _session_limit(protocol)
         or (
             stage == "dense"
             and any(b != a + 1 for a, b in itertools.pairwise(selected))
@@ -1251,6 +1471,8 @@ def run_preparation(
             "protocol_path", "data/manifests/rally_reference_protocol_v1.json"
         )
     )
+    if protocol.get("schema_version") == 3:
+        raise ValueError("Dense reuse protocol forbids new native preparation/decode")
     if context["inputs"] != protocol["sources"]:
         raise ValueError("Frozen original source declarations changed")
     selection = read_json(selection_path) if selection_path else None
