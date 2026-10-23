@@ -3992,6 +3992,15 @@
       "task_id": "202",
       "verb": "checkpoint"
     },
+    "project202-submit-head8be6027-v1": {
+      "actor": "Ken0u",
+      "at": 1792735512,
+      "epoch": 1,
+      "fingerprint": "39e6e02a4c49097c6415654385afc4cb755bd4b9069bc060078acacb08c74ba8",
+      "status": "review",
+      "task_id": "202",
+      "verb": "submit"
+    },
     "repair-01d5e2874f8366d3e6e44edfbaef00624f1a7c7e": {
       "actor": "github-actions[bot]",
       "at": 1792639868,
@@ -14862,6 +14871,7 @@
       },
       "planned_at": 1792722857,
       "planned_by": "Ken0u",
+      "pr_number": 206,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -14905,7 +14915,13 @@
         ]
       },
       "spec_hash": "af99b8517a2db1e850368b080f84f9a7a89089ce3b5137722c07fd7be31f75b7",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
+        "head_sha": "8be60274310a92213c35787ec984e550c422ef4e",
+        "pr_number": 206,
+        "spec_hash": "af99b8517a2db1e850368b080f84f9a7a89089ce3b5137722c07fd7be31f75b7"
+      }
     },
     "204": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39900132604",
