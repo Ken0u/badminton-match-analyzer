@@ -5207,6 +5207,14 @@
       "task_id": "62",
       "verb": "plan"
     },
+    "spec-62-b7111b45aa7ea0d4a21f94b8b4073c64f06893f4ec29d588a1da2dc22f245373": {
+      "actor": "dootz1",
+      "at": 1792731381,
+      "fingerprint": "e3ae59c0c4f46963695a30812b8e4b828e6fae2f55be9fd82388e7d37b9b7008",
+      "status": "needs_human",
+      "task_id": "62",
+      "verb": "plan"
+    },
     "spec-63-83167b972c9dabfa3f86ed29f81c51abe076c348356cab6a558a7ce4c20a2b7a": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -14931,42 +14939,68 @@
     },
     "62": {
       "epoch": 0,
-      "planned_at": 1792393957,
+      "planned_at": 1792731381,
       "planned_by": "dootz1",
       "spec": {
         "acceptance": [
           "Freeze original-source groups and contact/scene/identity conventions before predictions.",
-          "Record independent disagreement adjudication and preserve unknown/unavailable labels."
+          "Record independent disagreement adjudication and preserve unknown/unavailable labels.",
+          "Before claiming, obtain configured-owner authorization of this exact revised risk-human specification, including the specified source-image payload and ChatGPT-authenticated Codex CLI destination. Recheck duplicate issues, grants, source readiness and current main. Preserve original issue62 evidence, delivered160/172/179/183/204, all original annotations/predictions/environments/research processes and the separately pending202. Do not access consumed holdout63 inputs, protocols, predictions, private membership or artifacts, or deprecated PROGRESS.",
+          "Use only the two already-prepared official BWF video-only sources go2uajSiBnE and H1setLK1tig, original media SHA256 708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9 and 49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623, and their original sealed native censuses. Verify public declaration, original packets, complete source bytes and native PTS/time-base/orientation/geometry without consulting predictions. No downloads, source substitution, model/weight access or inference. Missing/incompatible inputs retain two unavailable source slots and stop the real-data stage; do not invent replacement evidence.",
+          "Commit and timestamp the new source-only protocol, exact recursive consumer/runtime/input bindings, annotation definitions and deterministic provisional selection rule before source inspection or new data preparation. Retain two source slots. Screen each first300 source seconds using the first native frame at or after each5-second source-PTS grid point, with every selection/clamped duplicate explicit. Two independent source-only streams propose service-preparation/exchange/stopped-play candidates; separate source-only screening adjudication freezes the earliest warranted putative rally bounds before dense preparation. These sparse overviews do not certify completeness or exact contacts. Provisional bounds may cover at most40 source seconds plus up to4 seconds of native context before/after within source limits. Dense full-native-frame assessment later establishes or refutes completeness. If screening cannot support a candidate or dense assessment invalidates it, retain the original slot as unresolved/unavailable; do not replace it with an easier rally. No selection by model success, shuttle visibility score or label convenience. This is a limited development pilot, not a representative or independent-test sample.",
+          "Prepare independent source-only overview and full selected-rally packets using the real original data/processed Store run_local_job admission and data:windows-primary reservation. Pin original root/data/weights before imports, clear account credential variables before preparation, initialize torchvision before threaded PyAV, preserve native FFmpeg logging restoration, and record original-host PID/creation/cwd/command, exclusive ignored output lineage, matching Store registration and terminal seals. Preserve every selected native ordinal/PTS/camera/view identity and original display pixels; overview cadence may select source frames but cannot stand in for exhaustive selected-rally coverage. No interpolation, FPS-derived clocks, overlays, detections or app-truth writes. Verify independently observed original process absence and matching completed Store status before consuming outputs; never restart because an observation timed out.",
+          "The owner-authorized assessment payload consists only of unmodified original source-frame PNGs from these two sources, minimal public protocol/frame/hash/context and each assessor stream's own source-only continuity notes. Send through the existing ChatGPT-authenticated Codex CLI only, not a new paid API/service or public upload. Limit each fresh session to6MiB of image bytes and20 distinct native images; total image bytes sent including repeated assessment/adjudication payloads may not exceed2GiB. Keep actual assessor invocation, session identities, source-image coverage, original outputs, hashes, failures and byte/time accounting private and durable. Do not print/persist account credentials, expose other local files or supply predictions/heatmaps/tracker IDs/other-stream assessments to an independent assessor. Additional payload/destination changes require a separate owner decision.",
+          "Run two genuinely independent source-only assessment streams, then a separate fresh source-only adjudication of disagreements and unresolved completeness. Freeze screening decisions before preparing selected-rally dense images; each stream must actually inspect every selected native frame through bounded contiguous chunks with explicit overlap and preserved own-stream context. Record reviewed source actors independently of tracker IDs, live/replay/non-play/unknown context, every serve/shot contact and hitter with inclusive uncertainty intervals, service/rally-start definition, terminal fault/ground-contact/stopped-play evidence and ending uncertainty. Include the six requested shot families and forehand/backhand only when source evidence supports them; retain unknowns and exclude half smash. Preserve raw streams and all disagreements before adjudication. No self-authored second stream, fabricated review or prediction-derived labels. Independent agent agreement is not expert/human gold truth.",
+          "Seal all source assessments/adjudications before any later prediction access. Independently verify source/frame/PTS membership, complete packet image coverage, assessor independence/provenance, contiguous chunk joins and unchanged original media/census/annotation/prediction seals. A complete-rally flag requires supported exhaustive contact enumeration and service/ending context; unresolved contacts, identity links, replay context, start/end censoring and unavailable frames remain explicit. If either slot lacks a defensible complete reference, checkpoint the actual incomplete result without claiming issue62's acceptance complete or unlocking downstream evaluation. Preserve all four original research eligibility flags false; no training, deployment, redistribution or independent-test eligibility is inferred.",
+          "Implement only the exact six reserved files: source packet/assessment import-validation code, a source-only preparation entry point, meaningful generated tests, the public protocol, a source-reference report and annotation-guide conventions. Generated regressions cover source/clock/camera/membership tampering, missing/duplicate/truncated frames and assessments, native VFR/orientation, live/replay/unknown/censored context, incomplete contact lists, contact versus terminal intervals, unknown actors/side/family, independent streams/adjudication conflicts, exclusive outputs, budgets and actual admitted/exited generated worker evidence. No generated test data may be described as badminton accuracy or an independent real reference.",
+          "Run focused and required project checks with the existing environment and isolated generated storage; do not repeat native model inference. Publish only reproducible code/protocol and aggregate counts/limitations, not images, raw label documents, per-contact records or process/Store identities. Complete a focused PR through normal exact-head CI, controller integration, exact-main checks and independent complete public package/both-image delivery. Record sanitized owning-issue checkpoints; keep downstream66/67/71 incomplete until actual reference prerequisites are met. Neither software delivery nor two development rallies proves full annotation accuracy.",
+          "Bound all newly generated persisted outputs and downloaded CI/build evidence to4GiB, cumulative dispatched source-image payload to2GiB, and all work including failed attempts to4h from grant, with three repair rounds and no paid services. Renew the lease before long stages without changing the immutable task deadline. Preserve failures, actual process/Store/artifact proof and original bytes before any separately recorded recovery; stop at limits and report incomplete work rather than silently rerunning, shrinking denominators, relaxing criteria or manufacturing labels."
         ],
         "artifacts": {},
         "capabilities": [
+          "cpu",
+          "windows",
           "review-inputs"
         ],
-        "dependencies": [],
+        "dependencies": [
+          "160",
+          "172",
+          "179",
+          "204"
+        ],
         "exclusions": [
           "No claim of full automatic annotation accuracy.",
-          "No production/model promotion or destructive storage changes."
+          "No production/model promotion or destructive storage changes.",
+          "No application truth, model/default/API/UI/auth/security/controller/workflow/publishing-policy changes, installations, purchases, new media/data/weights downloads, training/inference, prediction inspection before labels, raw public redistribution, source substitution, research-process control, consumed holdout access or deprecated PROGRESS access/edits."
         ],
         "limits": {
+          "max_image_payload_bytes": 2147483648,
+          "max_output_bytes": 4294967296,
           "max_review_rounds": 3,
-          "max_runtime_hours": 3,
+          "max_runtime_hours": 4,
           "paid_services": false
         },
         "milestone": "Data and evaluation",
         "outcome": "Adjudicate source-aligned complete rallies.",
         "paths": [
-          "docs/ANNOTATION_GUIDE.md",
-          "scripts/"
+          "backend/badminton/rally_source_reference.py",
+          "scripts/prepare_rally_references.py",
+          "tests/test_rally_source_reference.py",
+          "data/manifests/rally_reference_protocol_v1.json",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md",
+          "docs/ANNOTATION_GUIDE.md"
         ],
-        "priority": 100,
-        "resources": [],
+        "priority": 60,
+        "resources": [
+          "data:windows-primary"
+        ],
         "risk": "human",
         "verification": [
-          "Focused tests for changed behavior; required project checks on the exact head.",
-          "Record source/input/protocol hashes and material limitations for research."
+          "Prospectively sealed source-only protocol and genuine shared-Store/native-frame/process provenance; two actual independent exhaustive source streams and separate disagreement adjudication with unknown/unavailable support and original seals retained.",
+          "Meaningful generated regressions and all required checks; exact PR/main CI, normal controller integration and independent complete public package/both-image delivery. No image, label-quality, independence or complete-rally claim inferred from green software checks."
         ]
       },
-      "spec_hash": "be8db2fc4a6ece0a0840ae4909f776db3e565dd4750c1787118017bedca3ffe1",
+      "spec_hash": "a5449ddc93b21763457148a3d85decc1d62f3ec4bc60dd83098a3b095d992e21",
       "status": "needs_human"
     },
     "63": {
