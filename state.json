@@ -4307,6 +4307,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-draft-v1": {
+      "actor": "Ken0u",
+      "at": 1792797335,
+      "epoch": 1,
+      "fingerprint": "1e1f3bd2a9221d4c55a07c2bdfe087bf546c5691f2114c71cbc298da4de0d33d",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-import-bug-v1": {
       "actor": "Ken0u",
       "at": 1792793866,
@@ -15822,15 +15831,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
-        "summary": "Additional pre-comparison verification on the already frozen future target planner:106generated membership-mask cases pass using only unchanged packet byte/hash metadata, never images or assessor labels. Cases include empty/full/endpoints/alternating/transport-join context and seeded fragmented regions with generated inclusive-interval closure. Every case preserves exact selected native membership, whole contiguous regions, per-image base64 costing, two-frame within-region joins and explicit repeated/overlap charging. No actual target decision is derived, no original labels compared, no new CLI assessment/image payload, and no frozen planner/protocol/threshold/packing/source change.\n\nThe one-full-equivalent case exactly reproduces both original approved packings and8,134,647,177cumulative bytes. Maximum combined tested cost is also8,134,647,177, below8,589,934,592. This verifies these structural cases, not a guarantee for arbitrary future targets. Exact actual target/context plan/cost still must be derived only after both originals/global audit and frozen before blind dispatch; preserve incomplete slots if bounds are exceeded. Generated test masks are not scientific labels or future target selections.\n\nGenerated resultSHA2562da7ebde742094482bbe0475e44cd22332e3c512dc4955ef2a45243a0cd720ea. All3recorded test-process lifetimes were observed live during execution and are now independently absent, without signals. Existing implementation6cb7e4fa13ed591322e48b9de96c139d91cb41a8 remains clean/pushed; full2384passed/4optional skips and230focused plus required checks remain applicable because no tracked code changed.\n\nLatest actual metadata-only continuation status (labels unopened):\n{\"all_original_lifetimes_absent\": false, \"at\": 1792796892.2715042, \"attempted_image_bytes\": 2868992487, \"both_original_indexes_complete\": false, \"coordination\": \"0814cb6ef263b62c11bc05f59f03d84a63c51efb\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 84, \"launcher_alive\": true, \"original_cli_alive\": 0, \"started\": 84}, \"independent_b\": {\"complete_index\": false, \"finished\": 84, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 85}}, \"lease_expiry\": 1792806549}\n\nSame original epoch1grant/immutable deadline1792820409, max2assessors, all prior bytes charged and eligibility flagsfalse. Original continuation and completion watcher remain live; no restart or scientific replacement. Full-match annotation correctness and parent62/66/67/71 remain unproven. Research-process control and consumed holdout63/deprecated PROGRESS access remain excluded.\n"
+        "summary": "Draft PR216 https://github.com/Ken0u/badminton-match-analyzer/pull/216 preserves tested source6cb7e4fa13ed591322e48b9de96c139d91cb41a8, base88e0408a871b6047d1b8b9d1b2a956b15177bce9. Exact-head CI run40038444835 is running; revision/repository passed at observation. Draft is NOT submitted for controller integration and task remains Running. Both original streams, global scientific audit, separately frozen blind target execution, final aggregate/report and later exact final-head/main/public delivery remain outstanding. No full-reference or accuracy result is claimed. Local2384passed/4optional skips,230focused, required checks and106new generated packing cases pass; immutable producereebbe21 and separate acceptance6cb7e4f remain unchanged. No actual original labels read/compared or target plan dispatched. All eligibilityflagsfalse; original deadline1792820409 unchanged. Latest actual metadata-only observation: {\"all_original_lifetimes_absent\": false, \"at\": 1792797315.4319606, \"attempted_image_bytes\": 3031888511, \"both_original_indexes_complete\": false, \"coordination\": \"f2e7adc002f64c77db471d85884aab6cb3281825\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 93, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 94}, \"independent_b\": {\"complete_index\": false, \"finished\": 93, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 94}}, \"lease_expiry\": 1792807719} Preserve all original outputs, live processes, private labels, root branch and preexisting deprecated PROGRESS edit. No images/contacts/process identities/credentials published."
       },
-      "checkpoint_at": 1792796919,
+      "checkpoint_at": 1792797335,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792807719,
+        "expires_at": 1792808135,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
