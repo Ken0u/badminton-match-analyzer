@@ -453,6 +453,13 @@
       "task_id": "213",
       "verb": "plan"
     },
+    "guidance213-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792789943,
+      "fingerprint": "51a24e65cd369a1db81bf7c141961970237d4d4dce798b718579265f7e344a19",
+      "status": "ok",
+      "verb": "register"
+    },
     "identity66-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730626,
@@ -18939,6 +18946,18 @@
       "host_id": "MSI",
       "registered_at": 1792543788,
       "session_id": "f17becf5129f4035af82b3cbb973914f"
+    },
+    "MSI/guidance213-msi-20261023-v1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792789943,
+      "session_id": "guidance213-msi-20261023-v1"
     },
     "MSI/main177_review": {
       "actor": "Ken0u",
