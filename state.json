@@ -4298,6 +4298,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-original-audit-v2": {
+      "actor": "Ken0u",
+      "at": 1792793248,
+      "epoch": 1,
+      "fingerprint": "aaa38d3b49703c1209792676ce88bad903938e3593b2bd8ebf7f7e6cd4039048",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-running-v1": {
       "actor": "Ken0u",
       "at": 1792792435,
@@ -15742,15 +15751,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
-        "summary": "{\"all_original_lifetimes_absent\": false, \"at\": 1792792725.8407927, \"attempted_image_bytes\": 1571658235, \"both_original_indexes_complete\": false, \"coordination\": \"7485ca511d415dd5f1a25bf355fcb57d2ab52e86\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 9, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 10}, \"independent_b\": {\"complete_index\": false, \"finished\": 9, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 10}}, \"lease_expiry\": 1792803235}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2378passed/4optional skips,224focused, Ruff/format/pip/diff/repository pass;157check lifetimes independently absent. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
+        "summary": "Metadata-only operational audit passed at 1792793195.7919796: 19 completed segments in each original stream; both launchers/CLI workers independently observed live, no failures or dispatch stop. No original labels opened or compared. Verified unchanged frozen helper/consumer/protocol/context/packet/plan bindings, exact image membership in invocation/receipts, prompt/schema transport costing, event logs, 5-second pacing, all245 prior CLI lifetimes absent and 283 globally distinct completed threads. Cumulative attempted image bytes1747087875; retained output bytes2216877498; both below8GiB. Private receipt .cache/rally212-original-audit-v1/metadata-1792793201049846200.json SHA256 abd5db6bc99e694d53fa651e53ef1ebf8c3617b623375b0b00a4375fea8ae653. New local read-only auditor SHA256 cd32ae592f998d7c85e23e67b152f83ab0b3d2cf348ed16e659ccb56f4a47e01: full mode refuses before both complete indexes and verifies both exhaustive seals and all recorded original lifetime exits before parsing labels. Whole-source/native-PNG/Store revalidation runs only at that complete audit. No source/helper/protocol edits, dispatch/restart or process signals. Required checks unchanged:2378passed/4optional skips and224focused. Original deadline1792820409 never extends. Next: both complete originals, full audit, then separately frozen exact targeted blind adjudication plan. All four eligibility flags remain false; no complete-reference/full-match accuracy claim."
       },
-      "checkpoint_at": 1792792730,
+      "checkpoint_at": 1792793248,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792803530,
+        "expires_at": 1792804048,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
