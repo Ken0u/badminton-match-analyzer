@@ -15778,6 +15778,7 @@
         "session_id": "guidance213-msi-20261023-v1",
         "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "human_approval": {
