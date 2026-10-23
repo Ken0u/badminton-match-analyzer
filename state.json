@@ -5309,6 +5309,14 @@
       "task_id": "70",
       "verb": "plan"
     },
+    "spec-71-47674bc37c6a3f0db7e4850b4b0fd89af067d3d129316a0009c945a07713875e": {
+      "actor": "dootz1",
+      "at": 1792730688,
+      "fingerprint": "e452191137c1f11b51be209fb04ccfc04bee4626cb645d04aafa8128d8680b83",
+      "status": "ready",
+      "task_id": "71",
+      "verb": "plan"
+    },
     "spec-71-964bec0487bbce5c8a5605e30f72be3866788ce019649b46412ab7db148b10b5": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -16016,7 +16024,7 @@
     },
     "71": {
       "epoch": 0,
-      "planned_at": 1792393957,
+      "planned_at": 1792730688,
       "planned_by": "dootz1",
       "spec": {
         "acceptance": [
@@ -16027,7 +16035,9 @@
         "capabilities": [
           "review-inputs"
         ],
-        "dependencies": [],
+        "dependencies": [
+          "62"
+        ],
         "exclusions": [
           "No claim of full automatic annotation accuracy.",
           "No production/model promotion or destructive storage changes."
@@ -16051,8 +16061,8 @@
           "Record source/input/protocol hashes and material limitations for research."
         ]
       },
-      "spec_hash": "6d5977064ba77bf5e322eb1547d53402ac3a9efe61534b791340a45df2c29a68",
-      "status": "proposed"
+      "spec_hash": "aaba3c694845b6a88cb5001a5f78f391dff1c0360bcf7ff7582e522d592c2269",
+      "status": "ready"
     },
     "72": {
       "epoch": 0,
