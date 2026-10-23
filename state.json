@@ -4289,6 +4289,15 @@
       "task_id": "210",
       "verb": "submit"
     },
+    "rally212-checkpoint-composite-defect-v1": {
+      "actor": "Ken0u",
+      "at": 1792794110,
+      "epoch": 1,
+      "fingerprint": "e4c756ab7aa814d4c1f8b804f9dcf33cea97a559edfc3abc38e5e13ea65af726",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-import-bug-v1": {
       "actor": "Ken0u",
       "at": 1792793866,
@@ -15768,15 +15777,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
-        "summary": "Both original source-only passes remain live. At1792793808 A32/B33 successful segments, one CLI each active, cumulative attempted image bytes1991658003, no failure/stop/replacement. Latest metadata-only audit receipt .cache/rally212-original-audit-v1/metadata-1792793757329101500.json SHA256 c3f43e3448818cbbf889dff3c6da18069ad25b0a677908d9d2ac2e13a5afbdfb verifies63completed segments,308globally distinct completed threads including245predecessors, immutable consumer/helper/context/packet/plan bindings, receipt/image membership and transport/pacing/event metadata. No original labels parsed or compared; both complete indexes absent. Immutable deadline1792820409 and all four false eligibility flags unchanged. Separate generated-data-only read-only library inspection reproduced a transient import-list refresh failure without media/native decode, Store/app-truth access or network. Routine code-only follow-up #215 is controller-accepted Ready with frozen spec586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca, two nonoverlapping frontend paths, no resource reservation and no implementation begun on this occupied host. Public issue includes reproducible generated fixture; private result SHA256 aa5c99e4f9cec172ed3ada4477870d9b85c66459badfe30bcc33221082a195c0. No source, scientific helper/protocol, real data or research process changed. Existing2378tests/4optional skips and224focused remain applicable to unchanged source. Next #212 step remains both complete original seals, full native/source/session/lifetime audit, then separately frozen targeted blind adjudication. Full annotation objective remains incomplete."
+        "summary": "Generated-only pre-comparison audit found a genuine targeted-composite identity false positive in frozen consumer eebbe21: both exhaustive synthetic originals define actorA as blue-shirt; a validated blind target resolving frame3 defines the same actorA as a different/unlinked red-shirt player. Original serve remains outside the target. Current targeted_reference_status returns complete_reference=true and all_requested_labels_supported=true despite the unresolved cross-region identity. Identical-definition control also passes. No real assessment outputs/labels/images, prediction or app truth were opened. Reproduction .cache/rally212-generated-composite-audit-v1.py/result.json retained privately; synthetic process/session locators are explicitly NOT real scientific evidence. This is within212 reserved code/tests and its authorized generated-regression/defect-repair scope. Plan: add failing generated seam-identity regressions, repair only implementation-branch composite acceptance conservatively, test and commit, then timestamp a distinct stricter acceptance consumer/context with original grant/deadline before opening/comparing real originals. Immutable original producer/helper/protocol/context, live assessors, images, packing, own-stream continuity, eligibility, budgets and deadline remain unchanged; original outputs will still validate against their exact original context. Preserve both contexts and explain the generated-only reason; do not retroactively rewrite labels or accept a positive on the old calculation. Both original passes remain live; no implicit restart or adjudication. No manual merge, scope expansion, paid service or policy change."
       },
-      "checkpoint_at": 1792793866,
+      "checkpoint_at": 1792794110,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792804666,
+        "expires_at": 1792804910,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
