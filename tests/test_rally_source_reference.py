@@ -473,7 +473,11 @@ def test_real_generated_native_extraction_and_tamper(tmp_path):
     members = [{"frame": n} for n in range(2, 9)]
     p = r.extract_frames(path, c, members, out / "images", "generated", b)
     r.verify_packet(p, out, c, members)
-    for kind in ("pts", "camera", "member", "image", "missing"):
+    changed_clock = copy.deepcopy(c)
+    changed_clock["frames"][0]["corrupt"] = True
+    with pytest.raises(ValueError, match="membership/source"):
+        r.verify_packet(p, out, changed_clock, members)
+    for kind in ("pts", "camera", "member", "image", "missing", "alias"):
         changed = copy.deepcopy(p)
         if kind == "pts":
             changed["frames"][0]["pts"] += 1
@@ -485,6 +489,10 @@ def test_real_generated_native_extraction_and_tamper(tmp_path):
             changed["frames"][0]["image"]["sha256"] = "f" * 64
         if kind == "missing":
             changed["frames"].pop()
+        if kind == "alias":
+            changed["frames"][0]["image"]["path"] = changed["frames"][1]["image"][
+                "path"
+            ]
         with pytest.raises(ValueError):
             r.verify_packet(changed, out, c, members)
     with pytest.raises(FileExistsError):
@@ -497,6 +505,15 @@ def test_actual_generated_store_worker_exit_required(tmp_path):
     data.mkdir(parents=True)
     output = root / ".cache/generated"
     output.mkdir(parents=True)
+    (output / "context.json").write_bytes(encoded({"generated": True}))
+    slots = {
+        "sources": [
+            {"source_id": sid, "status": "unavailable", "complete_reference": False}
+            for sid in r.SOURCE_IDS
+        ],
+        "eligibility": dict(r.ELIGIBILITY),
+    }
+    (output / "slots.json").write_bytes(encoded(slots))
     script = tmp_path / "worker.py"
     script.write_text(
         """import json,os,sys
@@ -507,7 +524,7 @@ from badminton.jobs import run_local_job
 from badminton.shuttle_supervision import encoded,file_hash
 root,out=map(Path,sys.argv[1:]);p=psutil.Process()
 def task(identifier,progress):
-    a={"job_id":identifier,"process":{"pid":p.pid,"creation_time":p.create_time(),"cwd":p.cwd(),"command":p.cmdline()}}
+    a={"job_id":identifier,"context_sha256":file_hash(out/"context.json"),"process":{"pid":p.pid,"creation_time":p.create_time(),"cwd":p.cwd(),"command":p.cmdline()}}
     (out/"admission.json").write_bytes(encoded(a));return {"generated":True}
 summary=run_local_job(Store(root/"data/processed"),"generated_reference","generated",task)
 a=json.loads((out/"admission.json").read_bytes())
@@ -530,6 +547,17 @@ a=json.loads((out/"admission.json").read_bytes())
     )
     assert completed.returncode == 0, completed.stderr.decode()
     assert r.verify_worker(output, root)["store_completed"]
+    original_context = (output / "context.json").read_bytes()
+    (output / "context.json").write_bytes(encoded({"tampered": True}))
+    with pytest.raises(ValueError, match="context seal"):
+        r.verify_worker(output, root)
+    (output / "context.json").write_bytes(original_context)
+    changed_slots = copy.deepcopy(slots)
+    changed_slots["sources"].pop()
+    (output / "slots.json").write_bytes(encoded(changed_slots))
+    with pytest.raises(ValueError, match="source slots"):
+        r.verify_worker(output, root)
+    (output / "slots.json").write_bytes(encoded(slots))
     admission = json.loads((output / "admission.json").read_bytes())
     admission["process"]["pid"] = os.getpid()
     import psutil
@@ -557,3 +585,141 @@ def test_prospective_protocol_and_budget_guards(tmp_path):
         r.load_protocol(target)
     target.write_bytes(b"123456")
     assert r.persisted_bytes(tmp_path) == 6
+
+
+def test_dense_selection_requires_timestamp_and_both_slots(tmp_path):
+    base = tmp_path / ".cache/rally62-source-only-v1"
+    base.mkdir(parents=True)
+    path = base / "selection.json"
+    selection = {
+        "screening_sealed": True,
+        "sources": {},
+        "eligibility": dict(r.ELIGIBILITY),
+    }
+    path.write_bytes(encoded(selection))
+    with pytest.raises(ValueError, match="exact screening decision"):
+        r.verify_selection(selection, path, {}, tmp_path)
+    stamp = {"selection_sha256": file_hash(path)}
+    with pytest.raises(ValueError, match="both independently screened"):
+        r.verify_selection(selection, path, stamp, tmp_path)
+    selection["sources"] = {key: {} for key in r.SOURCE_IDS}
+    path.write_bytes(encoded(selection))
+    stamp["selection_sha256"] = file_hash(path)
+    with pytest.raises(ValueError, match="Original scientific assessments"):
+        r.verify_selection(selection, path, stamp, tmp_path)
+
+
+def test_generated_preparation_entry_admission_and_exclusive_output(
+    tmp_path, monkeypatch
+):
+    import shutil
+    import sqlite3
+    import time
+
+    from badminton.storage import Store
+
+    ids = ("generated-a", "generated-b")
+    monkeypatch.setattr(r, "SOURCE_IDS", ids)
+    root = tmp_path / "original"
+    data = root / "data/processed"
+    Store(data)
+    inputs = root / ".cache/generated-inputs"
+    inputs.mkdir(parents=True)
+    media = tmp_path / "generated.mp4"
+    with av.open(str(media), "w") as container:
+        stream = container.add_stream("mpeg4", rate=10)
+        stream.width, stream.height, stream.pix_fmt = 32, 24, "yuv420p"
+        for n in range(12):
+            frame = av.VideoFrame.from_ndarray(
+                np.full((24, 32, 3), n * 10, dtype=np.uint8), format="rgb24"
+            )
+            for item in stream.encode(frame):
+                container.mux(item)
+        for item in stream.encode():
+            container.mux(item)
+    census_dir = tmp_path / "census"
+    census_dir.mkdir()
+    census = native_clock(
+        media, Budget(census_dir, {"output_bytes": 1024**2, "worker_seconds": 120})
+    )
+    sources = []
+    for sid in ids:
+        folder = inputs / sid
+        folder.mkdir()
+        shutil.copyfile(media, folder / "source.mp4")
+        (folder / "clock.json").write_bytes(encoded(census))
+        packet = {
+            "source_id": sid,
+            "source_sha256": file_hash(media),
+            "clock_sha256": file_hash(folder / "clock.json"),
+            "eligibility": dict(r.ELIGIBILITY),
+        }
+        (folder / "packet.json").write_bytes(encoded(packet))
+        sources.append(
+            {
+                "source_id": sid,
+                "source_sha256": file_hash(media),
+                "clock_sha256": file_hash(folder / "clock.json"),
+                "packet_sha256": file_hash(folder / "packet.json"),
+                "native_frame_count": 12,
+            }
+        )
+    protocol = {"sources": sources}
+    context = {
+        "input_root": str(inputs),
+        "inputs": sources,
+        "deadline": time.time() + 120,
+    }
+    context_path = root / ".cache/context.json"
+    context_path.write_bytes(encoded(context))
+    protocol_path = root / ".cache/generated-protocol.json"
+    protocol_path.write_bytes(encoded(protocol))
+    stamp = root / ".cache/timestamp.json"
+    stamp.write_bytes(
+        encoded(
+            {
+                "context_sha256": file_hash(context_path),
+                "url": "https://github.com/Ken0u/badminton-match-analyzer/issues/62#issuecomment-0",
+                "published_at": time.time(),
+            }
+        )
+    )
+    output = root / ".cache/rally62-source-only-v1/generated-overview"
+    script = tmp_path / "generated-entry.py"
+    script.write_text(
+        """import sys
+from pathlib import Path
+from badminton import rally_source_reference as r
+from badminton.shuttle_supervision import read_json,file_hash
+root=Path(sys.argv[1]);out=Path(sys.argv[2])
+r.SOURCE_IDS=("generated-a","generated-b")
+# Only repository/owner-protocol freezing is substituted for this generated
+# integration fixture. Native source/census/packet validation, real Store,
+# admission, output bounds, exclusive publication and exit proofs are actual.
+r.load_protocol=lambda path:read_json(root/".cache/generated-protocol.json")
+r.verify_context=lambda checkout,context:None
+r.run_preparation(root,root,out,root/".cache/context.json",file_hash(root/".cache/context.json"),root/".cache/timestamp.json",stage="overview")
+""",
+        encoding="utf-8",
+    )
+    env = dict(
+        os.environ,
+        PYTHONPATH=str(Path(r.__file__).resolve().parents[1]),
+        BADMINTON_ROOT=str(root),
+        BADMINTON_DATA_DIR=str(data),
+        BADMINTON_WEIGHTS_DIR=str(root / "models/weights"),
+    )
+    for key in r.CREDENTIALS:
+        env.pop(key, None)
+    command = [sys.executable, str(script), str(root), str(output)]
+    child = subprocess.run(command, env=env, capture_output=True, timeout=60)
+    assert child.returncode == 0, child.stderr.decode()
+    assert r.verify_worker(output, root)["original_lifetime_absent"]
+    for sid in ids:
+        p = json.loads((output / f"{sid}.packet.json").read_bytes())
+        r.verify_packet(p, output, census, r.overview_memberships(census))
+        assert len(p["memberships"]) == 61 and len(p["frames"]) == 2
+    repeated = subprocess.run(command, env=env, capture_output=True, timeout=30)
+    assert repeated.returncode != 0 and b"exclusive" in repeated.stderr
+    with sqlite3.connect(data / "catalog.sqlite3") as db:
+        assert db.execute("select count(*) from jobs").fetchone()[0] == 1

@@ -26,3 +26,23 @@ images must not be resized or omitted to manufacture completeness.
 
 Execution, software verification and actual source outcomes will be recorded
 here separately. No real source assessment has started at this protocol commit.
+
+The subsequent overview checkpoint verifies 122 native PNGs across both original
+sources. Two complete independent screening streams are sealed: 40 distinct
+successful sessions and 244 inspected image memberships. Three capacity-failed
+sessions are preserved and charged; the two screening streams have consumed
+232,726,455 image bytes including failures. Fresh blind screening adjudication
+is in progress. No provisional bounds or complete references are established yet.
+
+The original producer completed under real shared Store admission. The Store
+owner and separate Windows virtual-environment launcher are independently absent,
+and immutable Store/artifact seals match. Their live parent/child relationship
+was not observed during this first preparation and is not claimed. Later launchers
+must observe the actual Store-owning worker live rather than equating its PID
+with the virtual-environment launcher.
+
+The strengthened validators additionally bind the full canonical census, exact
+ordinal PNG paths, saved prospective context, retained source slots, and the
+timestamped dense-selection decision and original screening receipts. Generated
+tests exercise actual admitted/exited preparation through the reusable producer,
+including repeated clamped memberships and refusal to overwrite an output.
