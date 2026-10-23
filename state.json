@@ -4325,6 +4325,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-delivery-prep-v1": {
+      "actor": "Ken0u",
+      "at": 1792799346,
+      "epoch": 1,
+      "fingerprint": "c6ba4c0a1b2f3aef7dd61ce3892667d96c2e61883081c29fcd66363a03d5e091",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-draft-v1": {
       "actor": "Ken0u",
       "at": 1792797335,
@@ -15885,15 +15894,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "Expanded the scoped-root inventory after accounting-v1: six helper files outside the frozen prefix list add23537bytes beyond its worktree/Git supplement. V1 remains preserved as a WORKTREE/GIT-only supplement,not the complete output count. At1792798924.9012363,base2230438288 + full known scoped supplement14608439 =2245046727retained bytes <8589934592cap. The full supplement remains below original67108864dispatch headroom at this snapshot. Use .cache/rally212-retained-output-audit-v2.py henceforth before targeted dispatch and final completion/reporting. It composes the unchanged v1 metadata counter,adds task-named root artifacts,all relevant task worktrees and Git administration,and never follows directory links or opens source images/labels/predictions. Six generated metadata cases pass; no scientific process or consumer/context/packing/protocol/result changed. V2 counter SHA97c8049d667aee9e15e9fb9ee72dec2d274a61d8b1afdbcaf702897701959e09,receipt SHAaa28ad9e4fd40e83ae110259a809aad171749a988064ddd19d9f962d1a73aca5. These are live metadata snapshots,not atomic filesystem transactions. Reassess any new worktree against headroom; enforce actual full8GiB count. Final frozen planner/auditor retained-byte fields remain their historical base counters; preserve those immutable originals and attach the corrected full accounting sidecar instead of overwriting them or claiming those bases cover all outputs. A final report must cite both scientific aggregate and full accounting receipts. Original source sessions and all strict scientific gates remain unchanged. PR216 stays draft/unsubmitted at1b285c0 with all12 CI jobs passing. Both original indexes/global authentic session/native/lifetime audit remain required before any label comparison; same live handles65809/23768/41462/26828 preserved. Original deadline1792820409,all cumulative image caps and four false eligibility flags unchanged; no accuracy claim. Preserve root branch, existing deprecated PROGRESS edit and all private artifacts/processes."
+        "summary": "Prepared future independent public delivery verifier .cache/verify-rally212-delivery-v1.py SHAd5e5141db0436c6f385cc191d39153929869c255cce9680d877dd9a75d0513c6. It is NOT run against delivery and does not establish publication/completion. Adapted the previously exercised rally210 verifier for task212,current task library and nine task paths,including v4 protocol Git parity. Seven artifact/archive/registry hashing functions are AST-identical to the predecessor;compile and --help pass. No network,artifacts downloaded/installed/executed,source images/labels or predictions read in this preparation. Receipt SHAcc980d00a1f6a3d85e1becada94e854275796c970327bdfdb6aedb8c12c0a65c. Future verifier requires controller task done/delivery_pending false,exact final submitted/merged tree,successful candidate and complete public wheel/source/both-image receipts. It checks bounded archive inventory,all package and frontend/source bytes,lock/task files and anonymously fetched manifest digests in memory,without installing/running archive contents or downloading image layers. Public protocol manifests are checked in Git;the current source distribution excludes data/,so their package inclusion is not claimed. Before execution later,fetch the exact merged source/origin main and use final --submitted-head and an exclusive .cache/rally212-delivery-v1 output. Include new verifier files in supplementary retained-output accounting V2. Current draft216 remains unsubmitted at1b285c0;all12 exact CI jobs pass,science still pending. Latest live metadata observation: {\"all_original_lifetimes_absent\": false, \"at\": 1792799341.442229, \"attempted_image_bytes\": 3702722307, \"both_original_indexes_complete\": false, \"coordination\": \"2c136009af970a84398b569d0f3c3fd308589a45\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 132, \"launcher_alive\": true, \"original_cli_alive\": 0, \"started\": 132}, \"independent_b\": {\"complete_index\": false, \"finished\": 132, \"launcher_alive\": true, \"original_cli_alive\": 0, \"started\": 132}}, \"lease_expiry\": 1792809793} Both complete original indexes/global genuine session/native/lifetime audit remain required before label comparison;watcher26828 plans once. Same actual live handles65809/23768/41462/26828 preserved. Original producer eebbe21,strict acceptance6cb7e4f,all scientific contexts/protocols/packing/caps/falseeligibility and immutable deadline1792820409 unchanged. Next originals completion,frozen target plan/cost plus full output accounting,blind adjudication,final aggregate/report/checks/controller integration/main and actual delivery verification. No accuracy claim. Root branch/deprecated PROGRESS edit/private artifacts and research processes preserved."
       },
-      "checkpoint_at": 1792798993,
+      "checkpoint_at": 1792799346,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792809793,
+        "expires_at": 1792810146,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
