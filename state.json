@@ -15515,6 +15515,7 @@
         "session_id": "rally210-msi-20261023-v1",
         "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "human_approval": {
