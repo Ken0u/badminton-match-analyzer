@@ -313,6 +313,8 @@ def extract_frames(source_path, clock, memberships, output, source_id, budget):
     from .orientation import orient_frame
 
     validate_clock(clock)
+    if not source_id or any(not (c.isalnum() or c in "_-") for c in source_id):
+        raise ValueError("Invalid source identifier")
     selected = sorted({m["frame"] for m in memberships})
     if not selected or selected[-1] >= len(clock["frames"]):
         raise ValueError("Invalid selected native membership")
@@ -361,6 +363,7 @@ def extract_frames(source_path, clock, memberships, output, source_id, budget):
         "schema_version": 1,
         "source_id": source_id,
         "source_sha256": source_sha,
+        "clock_sha256": hashlib.sha256(encoded(clock)).hexdigest(),
         "memberships": memberships,
         "frames": images,
         "eligibility": dict(ELIGIBILITY),
@@ -375,6 +378,7 @@ def verify_packet(packet, output, clock, memberships):
     if (
         packet["memberships"] != memberships
         or packet["source_sha256"] != clock["source_sha256"]
+        or packet.get("clock_sha256") != hashlib.sha256(encoded(clock)).hexdigest()
         or [r["frame"] for r in packet["frames"]]
         != sorted({m["frame"] for m in memberships})
     ):
@@ -392,6 +396,8 @@ def verify_packet(packet, output, clock, memberships):
         if bool(image) != available:
             raise ValueError("Missing/hidden native image")
         if image:
+            if image["path"] != f"images/{packet['source_id']}/{row['frame']:09d}.png":
+                raise ValueError("Native ordinal image path changed")
             path = contained(output, Path(output) / image["path"])
             if (
                 file_hash(path) != image["sha256"]
@@ -463,6 +469,17 @@ def verify_worker(output, root):
         read_json(Path(output) / "terminal.json"),
     )
     process = admission["process"]
+    if file_hash(Path(output) / "context.json") != admission.get("context_sha256"):
+        raise ValueError("Saved prospective context seal changed")
+    expected_slots = {
+        "sources": [
+            {"source_id": sid, "status": "unavailable", "complete_reference": False}
+            for sid in SOURCE_IDS
+        ],
+        "eligibility": dict(ELIGIBILITY),
+    }
+    if read_json(Path(output) / "slots.json") != expected_slots:
+        raise ValueError("Original planned source slots changed")
     if (
         terminal["job_id"] != admission["job_id"]
         or terminal["status"] != "completed"
@@ -686,6 +703,7 @@ def reference_status(streams, *, native_frames, bounds):
                 reasons.append("unknown_context_gap_or_censoring")
             if any(
                 r.get("scene") != "live"
+                or r.get("camera_view") in {None, "", "unknown", "unreviewed"}
                 or r.get("contact_state") in {"unknown", "possible"}
                 for r in doc.get("frame_states", [])
             ):
@@ -765,6 +783,126 @@ def reference_status(streams, *, native_frames, bounds):
     }
 
 
+def verify_selection(selection, selection_path, timestamp, root):
+    """Bind the exact prospectively timestamped screening decision and originals."""
+    base = Path(root) / ".cache/rally62-source-only-v1"
+    contained(base, selection_path)
+    if timestamp.get("selection_sha256") != file_hash(selection_path):
+        raise ValueError(
+            "Prospective dense timestamp must bind exact screening decision"
+        )
+    if (
+        set(selection.get("sources", {})) != set(SOURCE_IDS)
+        or selection.get("screening_sealed") is not True
+    ):
+        raise ValueError("Retain both independently screened original source slots")
+    _eligibility(selection.get("eligibility", {}))
+    seals = selection.get("assessment_seals", {})
+    if not seals or not any(name.endswith("original-final.json") for name in seals):
+        raise ValueError("Original scientific assessments and receipts required")
+    for name, sha in seals.items():
+        if file_hash(contained(base, base / name)) != sha:
+            raise ValueError("Sealed original screening evidence changed")
+    if "screening_original" in selection:
+        original = selection["screening_original"]
+        path = contained(base, base / original["path"])
+        if file_hash(path) != original["sha256"]:
+            raise ValueError("Original screening handoff seal changed")
+        prior = read_json(path)
+        if (
+            prior["sources"] != selection["sources"]
+            or prior["assessment_seals"] != seals
+        ):
+            raise ValueError(
+                "A new producer context cannot change screened source decisions"
+            )
+    if any(
+        row.get("status") != "provisional"
+        or not row.get("bounds")
+        or row.get("complete_reference") is not False
+        for row in selection["sources"].values()
+    ):
+        raise ValueError("Unresolved slots cannot become dense provisional rallies")
+    finals = [
+        (base / name, read_json(base / name))
+        for name in seals
+        if name.endswith("original-final.json")
+    ]
+    verify_worker(base / "overview-v1", root)
+    original_context = read_json(base / "overview-v1/context.json")
+    threads, sessions = [], []
+    for source_id in SOURCE_IDS:
+        source = next(
+            row for row in original_context["inputs"] if row["source_id"] == source_id
+        )
+        clock_path = contained(
+            original_context["input_root"],
+            Path(original_context["input_root"]) / source_id / "clock.json",
+        )
+        if file_hash(clock_path) != source["clock_sha256"]:
+            raise ValueError("Original screening census changed")
+        clock = read_json(clock_path)
+        packet = read_json(base / "overview-v1" / f"{source_id}.packet.json")
+        members = overview_memberships(clock)
+        verify_packet(packet, base / "overview-v1", clock, members)
+        chunks = plan_chunks(packet, dense=False, overlap=0)
+        for lane in STREAMS:
+            documents = [
+                (path, doc)
+                for path, doc in finals
+                if doc.get("source_id") == source_id and doc.get("stream") == lane
+            ]
+            documents.sort(key=lambda item: item[1]["inspected_frames"][0]["frame"])
+            if len(documents) != len(chunks):
+                raise ValueError("Missing independent screening chunk")
+            previous = None
+            states = {}
+            for (path, doc), chunk in zip(documents, chunks, strict=True):
+                receipt_path = path.with_name("finish.json")
+                if receipt_path.relative_to(base).as_posix() not in seals:
+                    raise ValueError(
+                        "Actual original scientific receipt missing from seal"
+                    )
+                receipt = read_json(receipt_path)
+                if receipt.get("original_output_sha256") != file_hash(path):
+                    raise ValueError("Original scientific output changed")
+                validate_assessment(
+                    doc,
+                    packet,
+                    chunk,
+                    receipt,
+                    stage="overview",
+                    stream=lane,
+                    previous=previous,
+                )
+                threads.append(receipt["thread_id"])
+                sessions.append(receipt["session_id"])
+                states.update({row["frame"]: row for row in doc["frames"]})
+                previous = {
+                    "sha256": receipt["segment_sha256"],
+                    "stream": lane,
+                    "source_id": source_id,
+                    "stage": "overview",
+                    "last_frames": chunk["frames"][-2:],
+                }
+            candidate = earliest_candidate(
+                clock, {"frames": [states[m["frame"]] for m in members]}
+            )
+            if selection["sources"][source_id]["original_candidates"][
+                lane
+            ] != candidate or (
+                lane == "adjudication"
+                and selection["sources"][source_id]["bounds"] != candidate
+            ):
+                raise ValueError("Frozen earliest warranted screening decision changed")
+    if (
+        len(threads) != len(finals)
+        or len(set(threads)) != len(threads)
+        or len(set(sessions)) != len(sessions)
+    ):
+        raise ValueError("Scientific screening sessions are not independent")
+
+
 def run_preparation(
     root,
     checkout,
@@ -824,6 +962,8 @@ def run_preparation(
         raise ValueError(
             "Freeze independently screened bounds before dense preparation"
         )
+    if stage == "dense":
+        verify_selection(selection, selection_path, timestamp, root)
     lineage = contained(root / ".cache", root / ".cache/rally62-source-only-v1")
     if output.parent != lineage:
         raise ValueError("All stages must share the fixed bounded task output lineage")
@@ -868,6 +1008,9 @@ def run_preparation(
                     "command": process.cmdline(),
                 },
             },
+        )
+        artifacts.update(
+            {name: file_hash(output / name) for name in ("context.json", "slots.json")}
         )
         clocks = verify_originals(context["input_root"], protocol)
         for index, source_id in enumerate(SOURCE_IDS):
