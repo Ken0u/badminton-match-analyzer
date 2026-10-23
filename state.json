@@ -3856,6 +3856,26 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "post-shuttle204-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792729799,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
+        "branch": "codex/issue-67-evaluate-complete-rally-contacts-serves-",
+        "epoch": 1,
+        "expires_at": 1792740599,
+        "granted_at": 1792729799,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a3b2ad4f3fc719b28fac79e61dadc807f02761cd18e405126cc33e7fc96fdecc"
+      },
+      "epoch": 1,
+      "fingerprint": "f9d063cef367e7cff2ae5c5993abf8b12cb1116ecccee64f683381ab34d20457",
+      "status": "granted",
+      "task_id": "67",
+      "verb": "next"
+    },
     "project202-plan-v1": {
       "actor": "Ken0u",
       "at": 1792722857,
@@ -15292,7 +15312,18 @@
       "status": "proposed"
     },
     "67": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
+        "branch": "codex/issue-67-evaluate-complete-rally-contacts-serves-",
+        "epoch": 1,
+        "expires_at": 1792740599,
+        "granted_at": 1792729799,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a3b2ad4f3fc719b28fac79e61dadc807f02761cd18e405126cc33e7fc96fdecc"
+      },
+      "epoch": 1,
       "planned_at": 1792393957,
       "planned_by": "dootz1",
       "spec": {
@@ -15329,7 +15360,7 @@
         ]
       },
       "spec_hash": "a3b2ad4f3fc719b28fac79e61dadc807f02761cd18e405126cc33e7fc96fdecc",
-      "status": "proposed"
+      "status": "running"
     },
     "68": {
       "epoch": 0,
