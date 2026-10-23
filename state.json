@@ -4241,6 +4241,15 @@
       "task_id": "189",
       "verb": "checkpoint"
     },
+    "roadmap189-checkpoint-e4-v1": {
+      "actor": "Ken0u",
+      "at": 1792723883,
+      "epoch": 4,
+      "fingerprint": "262d42a2680d171ac1ef7b8d5bdbe02e9bbc3bd9acffde6d357a4d7e7b83a006",
+      "status": "running",
+      "task_id": "189",
+      "verb": "checkpoint"
+    },
     "roadmap189-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792642737,
@@ -13883,34 +13892,39 @@
     },
     "189": {
       "checkpoint": {
-        "base_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
-        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e3",
-        "deadline_utc": "2026-10-23T03:11:22Z",
+        "base_sha": "0eaad954a7d58ead646973eda02a8401c2f78351",
+        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e4",
+        "deadline_utc": "2026-10-23T04:47:02Z",
         "evidence": [
-          ".cache/roadmap189-e3-start-v1.json",
-          ".cache/roadmap189-evidence-v3.json",
-          ".cache/roadmap189-visibility-v3.json",
-          ".cache/roadmap189-checks-v3/test-process.json"
+          ".cache/roadmap189-e4-start-v1.json",
+          ".cache/roadmap189-reentry-v5.json",
+          ".cache/roadmap189-evidence-v4.json",
+          ".cache/roadmap189-references-v4.json",
+          ".cache/roadmap189-visibility-v4.json",
+          ".cache/roadmap189-checks-v4/test-process.json"
         ],
+        "immutable_grant_timestamp": 1792723622,
         "limitations": [
-          "Historical pending reports retain their original measurements",
-          "No consumed holdout, research images, labels or predictions accessed",
-          "No annotation accuracy or model promotion established by software checks"
+          "No research recomputation or consumed holdout access",
+          "Software/delivery evidence does not establish annotation accuracy",
+          "Project202 repair separately pending owner authorization; no policy/source code changes here",
+          "Both original PR199 attempts remain preserved; no historical retries"
         ],
         "max_output_bytes": 67108864,
         "preserved_prs": [
           193,
-          196
+          196,
+          199
         ],
-        "stage": "Two-file documentation continuation; current delivered reports/18 task records, trusted completion references and public repo/private Project revalidated. Required isolated generated project checks running; no browser/inference rerun for prose."
+        "stage": "Fresh two-file continuation reuses preserved PR199 prose and adds fully delivered200/current Project projection limitation.13 public references and19 merged ancestors pass; public repo/private Project metadata reverified. Required isolated project checks running; no browser/inference rerun for prose."
       },
-      "checkpoint_at": 1792718171,
+      "checkpoint_at": 1792723883,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "0eaad954a7d58ead646973eda02a8401c2f78351",
         "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e4",
         "epoch": 4,
-        "expires_at": 1792734422,
+        "expires_at": 1792734683,
         "granted_at": 1792723622,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
