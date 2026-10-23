@@ -4804,6 +4804,14 @@
       "task_id": "189",
       "verb": "plan"
     },
+    "spec-197-a27e4d6f9856b8f20c790630dc6f6431d880950b297a1ca1db4e9c16a97dd5c5": {
+      "actor": "Ken0u",
+      "at": 1792714597,
+      "fingerprint": "22b1961a87d12123749cc43273fc7d1c8f1359b76eb55de8ce8ab39ce27ec8ea",
+      "status": "ready",
+      "task_id": "197",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -13989,6 +13997,54 @@
       },
       "spec_hash": "da496dacec95810ff86cf6ae27d41054686ae0f56a672f92cc8aa73fabbc698c",
       "status": "blocked"
+    },
+    "197": {
+      "epoch": 0,
+      "planned_at": 1792714597,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Before editing, revalidate duplicate issues/PRs/reservations and committed ownership. Preserve PR196 and both prior documentation branches, all original CI logs/receipts, and 192's completed verification/delivery evidence. Main remains db140236; this new PR failure does not retroactively establish a historical process cause or main failure.",
+          "Freeze a generated-only regression/protocol and exact source hashes before changing the three granted files. Replay the precise new observation shape from PR196 CI39876122657/browser job120162078531: confirmed SIGTERM, matching PID/creation/cwd, running status, empty command/executable, no metadata errors. Preserve a baseline failure and prospective candidate comparison; never act on the historical hosted PID. Artifact12468697253 ZIP SHA2564a77611fcb812f66c1388ccd2bf6c471b87d8620e7c8e6c0609275fa8cf36682 and log SHA2562b23ce75c6e570903616a297f3edef097a247b3c3052296c1284723312e1635e remain immutable.",
+          "Separate incomplete observation from conflicting identity during bounded shutdown of a previously authenticated lifetime. Preserve PID/creation matching, rejection of conflicting nonempty identity fields, unexpected access/probe errors and unknown lifetime. Initial ownership, descendant admission and every actual signal retain complete expected identity checks and fresh Python boundary verification. Missing metadata, zombie/dead status, timeout or a missing observer never establishes exit or authority for a signal. Independently observed absence is required for success.",
+          "Add meaningful generated regressions for the receipt-shaped transition followed by absence, persistent incomplete metadata through unchanged deadlines without SIGKILL, missing command/executable/cwd separately, changed creation/PID or conflicting nonempty metadata, unexpected access/probe failures, and unchanged full-identity escalation. Exercise production probe behavior with a generated psutil double where useful. Do not rely on reordered field reads making snapshots atomic; do not weaken signal or ownership checks, fabricate signals or increase deadlines/retries.",
+          "Reuse existing original Windows venv/cached Node/FFmpeg/browser tools for focused process and actual normal/failed generated app startup checks, one final-source production browser matrix and required Python/static/dependency/document checks in isolated generated roots with credentials cleared. Confirm local process lifetimes independently. Actual exact-head/main Linux browser receipts must retain source provenance and complete cleanup; explicitly distinguish the standalone POSIX test when CI does not invoke it. No extra diagnostic workflow or retry of an old failed run is authorized; normal exact-head/main verification and controller/delivery wakes remain required.",
+          "Update only the granted aggregate report with frozen baseline/candidate results, new evidence, original unknown terminal states, limits and reproduction. Publish focused commits/PR, complete all exact-head checks and normal controller integration, fresh merged-main verification, full public wheel/sdist and both-image delivery. Preserve 189 as incomplete until a new bounded documentation continuation updates and verifies its own PR; do not merge it manually.",
+          "Bound all new generated output, logs, CI artifacts, tests and review evidence to128MiB and3h from grant, three repair rounds. No installations/dependency downloads, real media/data/annotations/weights, consumed holdout access, inference/training, model promotion, research-process actions, production/Store/auth/API/security/controller/workflow/deployment changes, purchases, protection changes or PROGRESS access/edits. Read-only bounded CI evidence preservation is allowed within the cap. Record meaningful checkpoints and final handoff on the owning issue."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "192"
+        ],
+        "exclusions": [
+          "No production model/application or controller/policy/workflow changes, historical CI reruns, manual merges, real data or consumed holdout access, experimental inference/training, environment replacement, research process control or deprecated PROGRESS access."
+        ],
+        "limits": {
+          "max_output_bytes": 134217728,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Complete bounded shutdown observation of an already owned fixture lifetime when process metadata disappears without a terminal status, preserving strict signal authorization and independent absence proof.",
+        "paths": [
+          "tests/frontend-fixtures.mjs",
+          "tests/frontend-fixture-process.test.mjs",
+          "docs/FRONTEND_FIXTURE_PROCESS_REPORT.md"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Prospectively frozen generated baseline/candidate replay and focused lifetime/probe regressions including the exact observed incomplete metadata shape; no weakened identity, signal or absence requirements.",
+          "Existing-venv actual generated startup/failed-startup and final browser matrix; required project checks; exact PR/main/controller verification and complete public package and both-image delivery."
+        ]
+      },
+      "spec_hash": "c16abd43c0a1fc88cf07fbac0f19668000ecef57e7e6fa01fd243e95286c8ab6",
+      "status": "ready"
     },
     "62": {
       "epoch": 0,
