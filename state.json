@@ -4066,6 +4066,15 @@
       "task_id": "62",
       "verb": "release"
     },
+    "rally208-research-terminal-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792753355,
+      "epoch": 1,
+      "fingerprint": "87e40683c3d8ac6ace1330d388c8e262ef0b424f8b95b706cebcfc14c08b5d5b",
+      "status": "running",
+      "task_id": "208",
+      "verb": "checkpoint"
+    },
     "rally208-start-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792746854,
@@ -15183,16 +15192,16 @@
     "208": {
       "checkpoint": {
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
-        "head_sha": "c9dc701e24cab83bb5c11ab7ffb8eba1e00ccf9b",
-        "summary": "Current software head `c9dc701e24cab83bb5c11ab7ffb8eba1e00ccf9b` passes 77 focused tests, 2,231 full tests with four optional skips, all required checks and all 12 exact-head CI jobs (39936494893) on the first attempt. Exact head/base/tree/seven-path scope and unchanged v1 protocol are independently verified; all 173 recorded verification process lifetimes are independently absent.\n\nBefore any additional native preparation, prospective consumer/runtime/input context v3 is frozen: SHA256 `aecd99016134cec0299406c0f82f46b433ea5faee73ac3eacd11d92a36957cde`. The current code preserves an unresolved source slot while permitting a warranted other source to proceed; both original sources must still pass integrity, and the denominator remains two. These generated-data fixes did not use source labels or model predictions. Original overview context 901f097b53b0c01f3295939294bf3b60418a84480e27938cdcd823f88d586546 and actual producer cf1015 remain unchanged. The unused earlier v2 context is retained. Context v3 has not yet been used for native preparation.\n\nBoth independent original screening streams are complete and sealed (120 genuine distinct sessions, no failures). Fresh blind adjudication is running separately; no final selection or dense decision has been accepted. A later selection must preserve the original sealed decision and receive its own prospective timestamp binding to this context before dense preparation.\n\nOriginal grant `1792746046` and immutable deadline `1792760446` remain unchanged, as do cumulative 4 GiB dispatched-image and 8 GiB retained-output limits. Two exhaustive dense originals plus separate targeted adjudication remain required if feasible; no third exhaustive dense pass is imposed. Unknown slots remain explicit; #62/#66/#67/#71 remain incomplete and all four eligibility flags false. No extra time, source, paid service, model, training, inference, prediction, application-truth or consumed-holdout access is authorized. Private live handoff: .cache/RALLY208_HANDOFF.md. Do not restart active assessment on timeout."
+        "head_sha": "a6eac80b831bac19bcdc9d10d43b6192e4aa146d",
+        "summary": "Research stages TERMINAL. Original first300 pilot remains0/2, PR207 superseded with branch/source/CI preserved. Extended900s screening:180 genuine new independent/adjudication sessions,1086 memberships,0new failures;26original-state disagreements,37adjudication unknowns.2provisional candidates/2slots,0complete references. Both dense windows1532original PNGs prepared through actual shared Store, live actual owner+launcher ancestry and independently absent original lifetimes/completed Store/terminal/source/census/packet/image checks. Exact TWO-exhaustive-pass preflight independently verified:5547655674 additional bytes+1347060833 prior=6894716507>4294967296 even before targeted adjudication; no third exhaustive stream imposed and NO dense assessor/image dispatch. Both candidates and denominator2 preserved, no easier/subset substitute. Owner deadline1792760446 unchanged. Actual image dispatch1347060833; full retained outputs/worktrees snapshot2149359956<8GiB. All180 recorded new CLI owners and649 actually observed owner/descendant lifetimes absent; early unobserved descendants unclaimed. Source/selection/context/helper seals retained. Report and reusable guide committed ata6eac80b831bac19bcdc9d10d43b6192e4aa146d; backend identical to77focused/2231full tested c9dc701 with4optional skips and all12 earlier exactCI39936494893 pass. Final docs/ruff/format/pip/diff/repository checks pass; new final exactCI pending. Keep62/66/67/71 incomplete and fourflagsfalse. Private handoff .cache/RALLY208_HANDOFF.md; no live research/verification job remains. No predictions/models/weights/inference/training/app-truth/consumed-holdout/PROGRESS access or new source/paid service. Native data are local, not clone artifacts. No task completion/submission/delivery claim yet."
       },
-      "checkpoint_at": 1792750519,
+      "checkpoint_at": 1792753355,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
         "epoch": 1,
-        "expires_at": 1792761319,
+        "expires_at": 1792764155,
         "granted_at": 1792746046,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
