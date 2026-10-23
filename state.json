@@ -4137,6 +4137,15 @@
       "task_id": "210",
       "verb": "checkpoint"
     },
+    "rally210-checkpoint-result-v1": {
+      "actor": "Ken0u",
+      "at": 1792788128,
+      "epoch": 1,
+      "fingerprint": "7af477a203347314e12488cb1a5eec971b29d9b116696798f1cf285d416a89a2",
+      "status": "running",
+      "task_id": "210",
+      "verb": "checkpoint"
+    },
     "rally210-claim-v1": {
       "actor": "Ken0u",
       "at": 1792786932,
@@ -15401,16 +15410,16 @@
     "210": {
       "checkpoint": {
         "branch": "codex/issue-210-assess-both-unchanged-prepared-complete-",
-        "head_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
-        "summary": "Owner explicitly authorized exact frozen210spec3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60. Controller accepted authorization/registration and genuineMSI epoch1 grant1792786932; immutable deadline1792815732. Isolated worktree created. Existing pinned local tools resolve doctor checks without installation. Implementing strict separate v3 protocol,32MiB20-image packing and receipt validation, cumulative predecessor1347060833bytes, current8h context and existing-packet reuse without native decode/admission. Original v1/v2 bytes and all1532 source frames unchanged; no new source inspection, image dispatch, inference/training, model/prediction/app-truth or consumed-holdout access. Bounded isolated test subagent owns test file only. Initial focused run75pass/2generated fixture guard failures identified and fixed; expanded provenance/budget regressions pending. Public coordination contains aggregate progress only; raw scientific identities/labels/images remain private. Preserve62/66/67/71 gates and deprecated PROGRESS."
+        "head_sha": "8920a8e183a1526eedc7c2ec6851e6780abac797",
+        "summary": "<!-- rally210-result:v1 -->\nBoth first fresh dense sessions failed without assessment output: each assigned 20 unchanged original PNGs / 26,910,461 raw bytes; CLI reported encoded request 35,981,972 bytes exceeds upstream WebSocket limit 15,728,640. Both actual original lifetimes are independently absent. No replacement or adjudication was launched, no original stream completed, and no label/contact conclusions are inferred. The fixed greedy plan was not silently repacked. Read-only configuration validation rejected a built-in-provider override; no provider/model/auth/destination or persistent configuration changed.\n\nFinal private incomplete aggregate SHA256 `4e839ba32c3171937e5ebb8824c05b8daf1cacb69a055caf28fa2685d4b2f865` retains both source slots, all 1,532 unchanged native frames and zero complete references. Original whole sources/clocks/packets/PNGs/Store and all 245 recorded authentic CLI lifetimes reverify; globally unique threads remain separated. Original native owner/launcher ancestry evidence remains preserved; no new native decode, image copy, inference or training. Actual attempted-image bytes = 1,347,060,833 predecessor + 53,820,922 new failures = 1,400,881,755. Retained lineage before final seal = 2,179,516,938 bytes, below 8 GiB. All originals/failures remain private. All four eligibility flags remain false.\n\nCommitted implementation/report head `8920a8e183a1526eedc7c2ec6851e6780abac797`: 145 focused tests and 2,299 full tests pass / four optional skips; Ruff/format/pip/diff/repository pass. Software delivery remains subject to exact PR/main CI, normal controller integration and complete independently verified public delivery. Parent #62/#66/#67/#71 and full-match accuracy remain incomplete. Frozen scientific producer and original grant deadline remain unchanged. Further assessment requires a separately authorized feasible frozen plan, not an implicit retry. PROGRESS and existing local edits are preserved.\n"
       },
-      "checkpoint_at": 1792787279,
+      "checkpoint_at": 1792788128,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
         "branch": "codex/issue-210-assess-both-unchanged-prepared-complete-",
         "epoch": 1,
-        "expires_at": 1792798079,
+        "expires_at": 1792798928,
         "granted_at": 1792786932,
         "host_id": "MSI",
         "session_id": "rally210-msi-20261023-v1",
