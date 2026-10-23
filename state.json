@@ -4029,6 +4029,15 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "rally62-start-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792736946,
+      "epoch": 1,
+      "fingerprint": "efbc6283437eb8da55a05d0d765a1d12abc7ba4ac28cd46f0618d310bd2ab836",
+      "status": "running",
+      "task_id": "62",
+      "verb": "checkpoint"
+    },
     "repair-01d5e2874f8366d3e6e44edfbaef00624f1a7c7e": {
       "actor": "github-actions[bot]",
       "at": 1792639868,
@@ -15082,12 +15091,18 @@
       }
     },
     "62": {
+      "checkpoint": {
+        "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
+        "head_sha": "38af56364dace02b0762a325bd71dee376b27c78",
+        "summary": "Configured-owner approval accepted for exact frozen spec a5449ddc93b21763457148a3d85decc1d62f3ec4bc60dd83098a3b095d992e21 including bounded source-image transfer to existing ChatGPT-authenticated Codex CLI. Committed epoch1 grant at1792736662; immutable four-hour deadline1792751062. Dedicated clean worktree created; six exact paths and data:windows-primary reservation. No images, predictions, models or real source data accessed/prepared yet. Freeze/test prospective source-only protocol and consumers before preparation. #202 merged with all exact PR/main checks and public build jobs passed; independent delivery audit remains observational."
+      },
+      "checkpoint_at": 1792736946,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
         "epoch": 1,
-        "expires_at": 1792747462,
+        "expires_at": 1792747746,
         "granted_at": 1792736662,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
