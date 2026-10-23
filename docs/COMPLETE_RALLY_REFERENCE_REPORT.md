@@ -33,6 +33,26 @@ identity, contact or boundary retains an incomplete reference. All four
 eligibility flags remain false; this protocol establishes neither full-match
 annotation accuracy nor source redistribution or model eligibility.
 
+Before opening either real original stream, generated cases exposed a
+false-positive completeness result when targeted adjudication reused an actor
+ID for a different source person, introduced an unlinked independent ID, or
+swapped player definitions while original contacts remained outside the target.
+A further generated join case exposed a later conflicting actor definition
+overwriting the identity supporting a retained earlier contact. Composite
+acceptance now requires source actor definitions from retained original-contact
+contexts to agree with the independently resolved hitters. Unsupported links
+remain incomplete. Replacing every contact uses the resolution lane's own
+source identities without inventing a cross-stream mapping.
+
+This stricter acceptance repair is based only on synthetic cases. The running
+scientific producer, original consumer context, protocol bytes, native images,
+packing, actual session outputs and original grant deadline remain unchanged.
+Its distinct acceptance consumer/context must be sealed and timestamped before
+real originals are opened or compared. Preserve both contexts and validate the
+original execution against its original producer; do not feed original actor
+labels to blind adjudicators to manufacture agreement. Generated regressions
+establish conservative software behavior, not real source completeness.
+
 ## Authorized dense assessment: transport failure, both references incomplete
 
 The separately owner-authorized [#210 follow-up](https://github.com/Ken0u/badminton-match-analyzer/issues/210)

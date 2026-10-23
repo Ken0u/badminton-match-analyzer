@@ -1299,6 +1299,34 @@ def targeted_reference_status(streams, *, native_frames, bounds):
         for key, event in a[1].items()
         if not set(range(key[1][0], key[1][1] + 1)) & covered
     }
+    if any(event["kind"] in {"serve", "shot"} for event in final_events.values()):
+        # A composite with retained original contacts needs a supported identity
+        # link into the independent resolution. Reused names, changed people or
+        # independently invented IDs cannot silently become one source roster.
+        # If all contacts are replaced, their identities come from the single
+        # resolution lane instead and no cross-lane link is inferred.
+        original_actors, ambiguous_actors = {}, set()
+        for doc, _ in streams[STREAMS[0]]:
+            if not any(
+                event["kind"] in {"serve", "shot"}
+                and (event["kind"], tuple(event["interval"])) in final_events
+                for event in doc["events"]
+            ):
+                continue
+            # Use the definitions supporting retained contacts, not a later
+            # conflicting chunk's last-write-wins actor registry.
+            for actor in doc["actors"]:
+                identity = actor["actor_id"]
+                if identity in original_actors and original_actors[identity] != actor:
+                    ambiguous_actors.add(identity)
+                original_actors[identity] = actor
+        for event in resolved[1].values():
+            actor = event.get("actor_id")
+            if event["kind"] in {"serve", "shot"} and (
+                actor in ambiguous_actors
+                or original_actors.get(actor) != resolved[2].get(actor)
+            ):
+                reasons.append("unlinked_targeted_source_actor")
     final_events.update(resolved[1])
     events = sorted(final_events.values(), key=lambda e: (e["interval"], e["kind"]))
     for frame, row in final_frames.items():

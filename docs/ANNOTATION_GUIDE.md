@@ -12,6 +12,14 @@ failed bytes and the original grant's immutable eight-hour deadline. Freeze
 targeted blind adjudication only after both complete original streams; preserve
 unknown contacts, actors, scene context and boundaries as incomplete evidence.
 
+When targeted resolutions are combined with retained original contacts, their
+source actor identities must remain linked. Reused IDs with conflicting source
+descriptions, swapped people and independent IDs without a supported link keep
+the composite incomplete. Use definitions supporting the retained contacts;
+a later conflicting chunk must not overwrite them. Do not supply earlier labels
+to a blind adjudicator to force agreement. When all contacts are replaced, use
+the resolution lane's own identities without inventing cross-stream links.
+
 For the source-only complete-rally pilot, follow the prospective
 [rally protocol](../data/manifests/rally_reference_protocol_v1.json).
 Five-second overview frames propose the earliest warranted provisional slot;

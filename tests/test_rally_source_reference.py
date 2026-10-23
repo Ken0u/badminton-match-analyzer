@@ -587,6 +587,143 @@ def test_targeted_identity_definitions_and_interval_closure():
     assert "partial_targeted_event_interval" in result["reasons"]
 
 
+@pytest.mark.parametrize("change", ["description", "unlinked_id", "swapped_person"])
+def test_targeted_composite_rejects_unlinked_source_hitters(change):
+    """A locally known hitter is not necessarily linked to retained contacts."""
+    p = packet()
+    chunk = r.plan_chunks(p, dense=True)[0]
+    s = streams()
+    del s["adjudication"]
+    for lane in r.STREAMS[:2]:
+        doc = s[lane][0][0]
+        doc["actors"][0]["description"] = "blue-shirt source player"
+        if change == "swapped_person":
+            doc["actors"].append(
+                {
+                    "actor_id": "B",
+                    "description": "red-shirt source player",
+                    "identity_supported": True,
+                }
+            )
+            doc["events"][1]["actor_id"] = "B"
+        if lane == "independent_b":
+            doc["frame_states"][3]["contact_state"] = "unknown"
+        q = receipt(doc, chunk, thread=f"generated-original-{lane}")
+        s[lane][0] = (doc, q)
+        r.validate_assessment(doc, p, chunk, q, stage="dense", stream=lane)
+    assert r.adjudication_targets(s, native_frames=range(8)) == [3]
+    s = targeted_resolution(s, [3])
+    doc = s["adjudication"][0][0]
+    if change == "description":
+        doc["actors"][0]["description"] = "a different red-shirt source player"
+    elif change == "unlinked_id":
+        doc["actors"][0].update(
+            actor_id="independent-name", description="blue-shirt source player"
+        )
+        doc["events"][0]["actor_id"] = "independent-name"
+    else:
+        doc["actors"][0].update(actor_id="B", description="blue-shirt source player")
+        doc["events"][0]["actor_id"] = "B"
+    target = {"start_index": 3, "end_index": 4, "frames": [3], "image_bytes": 100}
+    q = receipt(doc, target, thread="generated-target")
+    s["adjudication"][0] = (doc, q)
+    r.validate_assessment(doc, p, target, q, stage="dense", stream="adjudication")
+    result = r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )
+    assert not result["complete_reference"]
+    assert not result["all_requested_labels_supported"]
+    assert "unlinked_targeted_source_actor" in result["reasons"]
+
+
+@pytest.mark.parametrize("replace_all_contacts", [False, True])
+def test_targeted_composite_accepts_supported_actor_continuity(replace_all_contacts):
+    s = streams()
+    del s["adjudication"]
+    if replace_all_contacts:
+        s["independent_b"][0][0]["actors"][0]["identity_supported"] = False
+        selected = [1, 2, 3]
+    else:
+        s["independent_b"][0][0]["frame_states"][3]["contact_state"] = "unknown"
+        selected = [3]
+    s = targeted_resolution(s, selected)
+    doc = s["adjudication"][0][0]
+    if replace_all_contacts:
+        # All final contact identities now come from the one source-only lane;
+        # no cross-stream identity mapping is inferred at a retained contact.
+        doc["actors"][0].update(
+            actor_id="fresh-source-person", description="fresh source description"
+        )
+        for event in doc["events"]:
+            event["actor_id"] = "fresh-source-person"
+    target = {
+        "start_index": selected[0],
+        "end_index": selected[-1] + 1,
+        "frames": selected,
+        "image_bytes": len(selected) * 100,
+    }
+    q = receipt(doc, target, thread="generated-supported-target")
+    s["adjudication"][0] = (doc, q)
+    r.validate_assessment(
+        doc, packet(), target, q, stage="dense", stream="adjudication"
+    )
+    result = r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )
+    assert result["complete_reference"]
+    assert not any(result["eligibility"].values())
+
+
+def test_targeted_composite_keeps_retained_contact_actor_before_later_conflict():
+    p = packet()
+    s = joined_streams()
+    del s["adjudication"]
+    for lane in r.STREAMS[:2]:
+        previous = None
+        for index, (doc, _) in enumerate(s[lane]):
+            doc["actors"][0]["description"] = (
+                "blue-shirt source player" if index == 0 else "red-shirt source player"
+            )
+            selected = [row["frame"] for row in doc["inspected_frames"]]
+            chunk = {
+                "start_index": selected[0],
+                "end_index": selected[-1] + 1,
+                "frames": selected,
+                "image_bytes": len(selected) * 100,
+            }
+            doc["previous_segment_sha256"] = previous["sha256"] if previous else None
+            q = receipt(doc, chunk, thread=f"generated-{lane}-{index}")
+            s[lane][index] = (doc, q)
+            r.validate_assessment(
+                doc, p, chunk, q, stage="dense", stream=lane, previous=previous
+            )
+            previous = {
+                "sha256": q["segment_sha256"],
+                "stream": lane,
+                "source_id": p["source_id"],
+                "stage": "dense",
+                "last_frames": selected[-2:],
+            }
+    assert r.adjudication_targets(s, native_frames=range(8)) == list(range(3, 8))
+    s = targeted_resolution(s, list(range(3, 8)))
+    doc = s["adjudication"][0][0]
+    doc["actors"][0]["description"] = "red-shirt source player"
+    chunk = {
+        "start_index": 3,
+        "end_index": 8,
+        "frames": list(range(3, 8)),
+        "image_bytes": 500,
+    }
+    q = receipt(doc, chunk, thread="generated-later-target")
+    s["adjudication"][0] = (doc, q)
+    r.validate_assessment(doc, p, chunk, q, stage="dense", stream="adjudication")
+    result = r.targeted_reference_status(
+        s, native_frames=range(8), bounds={"start_frame": 0, "end_frame": 7}
+    )
+    assert not result["complete_reference"]
+    assert "unlinked_targeted_source_actor" in result["reasons"]
+
+
 def test_extended_protocol_keeps_v1_and_full_grid():
     folder = Path(r.__file__).resolve().parents[2] / "data/manifests"
     v1 = r.load_protocol(folder / "rally_reference_protocol_v1.json")
