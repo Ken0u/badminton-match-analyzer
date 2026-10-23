@@ -5686,6 +5686,14 @@
       "task_id": "213",
       "verb": "plan"
     },
+    "spec-215-577e28f6f0b2f190725f02d9f24927e8344d42a1fb28fa305ceb3e2be78332f7": {
+      "actor": "Ken0u",
+      "at": 1792793740,
+      "fingerprint": "8369ee8402ec20895363bb1661a3523f5b8d152844c8804a754b9f0af8b21951",
+      "status": "ready",
+      "task_id": "215",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -15919,6 +15927,50 @@
         "pr_number": 214,
         "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd"
       }
+    },
+    "215": {
+      "epoch": 0,
+      "planned_at": 1792793740,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Reproduce on main 88e0408a871b6047d1b8b9d1b2a956b15177bce9 using generated in-memory API responses only: initial empty library, completed import job, one failing GET /api/videos, then unchanged successful /api/jobs polls. The current controller never retries that failed library read; manual reload immediately recovers the imported video. Preserve the reproduction evidence; do not use real media, source labels, models or application data.",
+          "Keep a completed import pending library synchronization until a still-current video-list response commits successfully. Recover automatically through the existing polling schedule when that read fails or becomes stale, even when the import-job fingerprint is unchanged. Do not start another upload/import/server job or require navigation/reload to reveal an already completed import.",
+          "Preserve createLatestTask selection/sequence fencing, manual reload, disposal and draft ownership. A superseded success or late error must not acknowledge a newer pending import or clear a current error. A successful current manual reload may satisfy pending synchronization. Keep retry scheduling bounded by normal polling with no immediate recursive loop or new retry service.",
+          "Add generated frontend regressions for a transient failed automatic refresh followed by unchanged-job recovery, a superseded refresh, repeated failures preserving visible error and eventual recovery, current manual reload recovery, and disposal. Preserve successful import behavior, selected video, unsaved drafts, transfer cancellation semantics and all existing library tests.",
+          "Make the smallest coherent controller/test change within the two reserved source paths. Do not alter server APIs, authentication, dependencies, scientific consumers/protocols, actual images/labels/predictions/annotations, publishing policy or active research processes. No consumed holdout63 or deprecated PROGRESS access.",
+          "Run frontend unit/type checks using the pinned environment, meaningful focused checks, required Python/Ruff/format/pip/diff/repository checks, exact PR CI, normal controller integration, exact merged-main CI and independent public package/source/both-image delivery. This UI reliability repair establishes neither analysis accuracy nor complete-rally reference eligibility."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No second implementation on an occupied host; begin only after a genuine grant in an isolated worktree. Planning this issue is not a claim.",
+          "No backend/security/auth/workflow/deployment/publishing changes, dependency additions, research job restart, media acquisition/decode, real application-data access, scientific-label access/edits, model promotion, manual merge, paid services or raw coordination writes."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Recover automatic library synchronization after a transient video-list read failure following a completed import.",
+        "paths": [
+          "backend/frontend/src/library/controller.ts",
+          "backend/frontend/tests/library.test.mjs"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Deterministic generated API-response regressions demonstrate automatic recovery from the originally failing sequence and retain stale-response, draft, selection and disposal guarantees.",
+          "Frontend unit/type checks and required project checks; exact PR/main CI, controller merge and independent full public package/source/both-image delivery."
+        ]
+      },
+      "spec_hash": "586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
