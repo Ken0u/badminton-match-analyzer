@@ -3840,6 +3840,14 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "project202-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792722857,
+      "fingerprint": "6de791d30a085dbc276aa920c978bb5a7b789fd0dffd744d7240daa650c64287",
+      "status": "needs_human",
+      "task_id": "202",
+      "verb": "plan"
+    },
     "repair-01d5e2874f8366d3e6e44edfbaef00624f1a7c7e": {
       "actor": "github-actions[bot]",
       "at": 1792639868,
@@ -4990,6 +4998,14 @@
       "fingerprint": "e9647ca944d6890b7cabff791028e6241e79dcf981f8400e1da105423990aea2",
       "status": "needs_human",
       "task_id": "200",
+      "verb": "plan"
+    },
+    "spec-202-f22c8791fea2a681c723fc636a4b0db33439a734d832fe937d30f8cf0e4b6a5c": {
+      "actor": "Ken0u",
+      "at": 1792722857,
+      "fingerprint": "85ccce47c048da975930ad820758de3af865023313a61a70e83f80d2d2fd47b1",
+      "status": "needs_human",
+      "task_id": "202",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -14476,6 +14492,54 @@
         "pr_number": 201,
         "spec_hash": "d501450bca0d4fb12317e6a201101a19ea48e92b55e5729e481afd237e1cabde"
       }
+    },
+    "202": {
+      "epoch": 0,
+      "planned_at": 1792722857,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Before claiming, revalidate all issue history, PRs and current reservations. Preserve completed170 transient-retry behavior, pending189/PR199 and200's complete source/CI/delivery evidence. Obtain configured-owner authorization of this exact frozen risk-human scope and a separate committed grant; do not reuse200's authorization or modify its source.",
+          "Freeze a generated reproduction of the observed Contents response encoding=none/content empty for state1050479 bytes at blob469908320c4b96b420fa849c05e32cee0d4baa0f, and retain failed projection evidence from controller runs39889417252,39889447727,39889827486 and39890026611. The integration steps succeeded; Project-only projection failed. Confirm current immutable metadata without exposing credentials or publicizing private Project contents.",
+          "Repair only the Project projection reader in scripts/project_status.py to obtain complete state from the same repository and trusted coordination branch using authenticated immutable Git object/blob APIs or an equivalently bound raw response. Pin one observed branch revision and state blob; validate source identity, encoding, decoded content, supported schema and all task statuses before any Project writes. Keep malformed, absent, oversized/unsupported and mismatched data fail-closed with sanitized errors. Do not follow untrusted download URLs or weaken credentials, permissions, privacy or retry limits.",
+          "Retain existing Project-only idempotent status projection, managed-task/history boundaries and configured private Project. Never edit coordination history/state from the worker, create alternative grants, change queue/policy/auth/workflows or grant/review/merge gates, relax validation, compact/delete coordination history or change statuses to make projection pass. Reuse current secure credentials without printing or persisting them.",
+          "Add meaningful generated regressions for both small and greater-than1MiB state, immutable branch/blob binding under concurrent branch movement, malformed encodings/JSON/identity/schema/status, missing/truncated/oversized content and zero Project writes on invalid state. Preserve existing transient retry and no raw credential/error echo checks. Run focused and required project checks with existing environment, isolated generated storage and cleared account variables; no native inference/browser repetition for this reader-only repair.",
+          "Record reproduction, exact provenance, generated results and limitations in docs/PROJECT_STATUS_REPORT.md. Publish a focused tested PR through normal controller integration, exact-head/main verification and independent complete public package/both-image delivery. Verify actual configured private Project synchronization through the existing trusted controller with unchanged credentials, confirming all managed statuses match authoritative state while historical cards and private visibility remain preserved. Do not manually merge, bypass checks, alter board privacy or assume a dashboard grants ownership.",
+          "Bound generated outputs and downloaded CI/build evidence to64MiB and2h from grant, three repair rounds. No local installs, real media/data/annotations/weights, consumed holdout inputs/protocol/predictions/private membership/artifacts, source-image assessment, research-process control, model promotion, paid services, branch protection changes or deprecated PROGRESS access/edits. Preserve original checkout edits and environments; checkpoint on the owning issue."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "200"
+        ],
+        "exclusions": [
+          "No controller/queue/security/auth/workflow/deployment changes, retry relaxation, raw coordination edits or history compaction, credentials exposure, public Project, manual merges, research/data/process actions, local installations or deprecated PROGRESS access."
+        ],
+        "limits": {
+          "max_output_bytes": 67108864,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Restore private Project status projection when coordination state exceeds GitHub's inline Contents API limit, preserving read-only coordination and all controller policy.",
+        "paths": [
+          "scripts/project_status.py",
+          "tests/test_project_status.py",
+          "docs/PROJECT_STATUS_REPORT.md"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Frozen generated large-state reproduction, source-bound complete-state validation and preserved failure/retry/privacy boundaries; focused and required local project checks.",
+          "Exact PR/main CI, normal controller/full public delivery, then authenticated actual private Project parity with authoritative managed-task statuses and preserved history."
+        ]
+      },
+      "spec_hash": "af99b8517a2db1e850368b080f84f9a7a89089ce3b5137722c07fd7be31f75b7",
+      "status": "needs_human"
     },
     "62": {
       "epoch": 0,
