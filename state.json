@@ -207,6 +207,15 @@
       "status": "ok",
       "verb": "resume"
     },
+    "fixture197-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792715273,
+      "epoch": 1,
+      "fingerprint": "b1e6e0063c0ab6e869199b836c0a1d3dc1b2312d677f3da8c17a867504a60b7f",
+      "status": "running",
+      "task_id": "197",
+      "verb": "checkpoint"
+    },
     "fixture197-grant-v1": {
       "actor": "Ken0u",
       "at": 1792714837,
@@ -14070,12 +14079,27 @@
       "status": "blocked"
     },
     "197": {
+      "checkpoint": {
+        "base_sha": "db140236b0d6d2e3cb2055db83fa676cbc3ff326",
+        "baseline_sha256": "812967aade8f4fb9ebf48ccb6e5c39b1e014df417bd85bef6ded700c7a639ec6",
+        "branch": "codex/issue-197-complete-bounded-shutdown-observation-of",
+        "candidate_sha256": "d2eccb74715939a3c85a673862701923d36a09c5c5ad8a35e432d386ed47440d",
+        "deadline_utc": "2026-10-23T03:20:37Z",
+        "freeze_sha256": "6a2d59570d31d8449425e6eaae39e343270db7ef8d0eb24a4357a3380e462868",
+        "limitations": [
+          "Historical hosted process terminal state remains unknown",
+          "Initial test had an incorrect expectation of one timeout window instead of the existing three; corrected test preserves all original windows",
+          "No model/application changes or annotation-accuracy claim"
+        ],
+        "stage": "Generated replay 18/18; focused live suite 69 passed/1 POSIX skip. Full Python checks and final-source browser matrix running in isolated generated roots."
+      },
+      "checkpoint_at": 1792715273,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "db140236b0d6d2e3cb2055db83fa676cbc3ff326",
         "branch": "codex/issue-197-complete-bounded-shutdown-observation-of",
         "epoch": 1,
-        "expires_at": 1792725637,
+        "expires_at": 1792726073,
         "granted_at": 1792714837,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
