@@ -4352,6 +4352,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-resume-v1": {
+      "actor": "Ken0u",
+      "at": 1792797525,
+      "epoch": 1,
+      "fingerprint": "7b7da91493d32ff1dde990aed589687b9679e7c38d19d2de67f8d854345dea56",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-running-v1": {
       "actor": "Ken0u",
       "at": 1792792435,
@@ -15831,15 +15840,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
-        "summary": "Draft PR216 https://github.com/Ken0u/badminton-match-analyzer/pull/216 preserves tested source6cb7e4fa13ed591322e48b9de96c139d91cb41a8, base88e0408a871b6047d1b8b9d1b2a956b15177bce9. Exact-head CI run40038444835 is running; revision/repository passed at observation. Draft is NOT submitted for controller integration and task remains Running. Both original streams, global scientific audit, separately frozen blind target execution, final aggregate/report and later exact final-head/main/public delivery remain outstanding. No full-reference or accuracy result is claimed. Local2384passed/4optional skips,230focused, required checks and106new generated packing cases pass; immutable producereebbe21 and separate acceptance6cb7e4f remain unchanged. No actual original labels read/compared or target plan dispatched. All eligibilityflagsfalse; original deadline1792820409 unchanged. Latest actual metadata-only observation: {\"all_original_lifetimes_absent\": false, \"at\": 1792797315.4319606, \"attempted_image_bytes\": 3031888511, \"both_original_indexes_complete\": false, \"coordination\": \"f2e7adc002f64c77db471d85884aab6cb3281825\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 93, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 94}, \"independent_b\": {\"complete_index\": false, \"finished\": 93, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 94}}, \"lease_expiry\": 1792807719} Preserve all original outputs, live processes, private labels, root branch and preexisting deprecated PROGRESS edit. No images/contacts/process identities/credentials published."
+        "summary": "Resumed verified existing work without restarting research. Confirmed user-requested removal of unresolved-requirements approval trigger is already merged by PR214, main88e0408a871b6047d1b8b9d1b2a956b15177bce9. Draft216 remains unsubmitted at 6cb7e4fa13ed591322e48b9de96c139d91cb41a8. At observation1792797460.862003, metadata-only audit passed A96/B96 completed originals of512,245 prior lifetimes absent,437 globally unique completed threads,3085984117 charged image bytes, 2225767749 retained output bytes,max2concurrent; no complete original indexes or parent label reads. Audit SHA9e9e4b76f7b764860a1decf38e1053ca8a508e860f2a4071de85e5b8abc21e48. Same live assessor handles65809/23768,observer41462 and completion watcher26828 confirmed ongoing. Do not restart them or race watcher with manual planning. Exact CI run40038444835:10 verification jobs passed,Windows native pending at last check; gate pending. No source/protocol/packing/threshold/eligibility change. Immutable deadline1792820409. Next: both complete original indexes and global genuine lifetime audit; watcher prepares exact target plan once, then prospectively freeze its cost before any blind targeted dispatch; aggregate/report/final CI/controller merge/main verification/public delivery remain incomplete. Preserve root branch,existing deprecated PROGRESS edit,all private labels/artifacts and processes. No full-reference or accuracy claim. Detailed private operational handoff remains .cache/RALLY212_CONTINUATION_HANDOFF_20261023_V1.md; verify its dated snapshots against these newer checkpoints."
       },
-      "checkpoint_at": 1792797335,
+      "checkpoint_at": 1792797525,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792808135,
+        "expires_at": 1792808325,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
