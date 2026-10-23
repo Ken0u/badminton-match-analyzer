@@ -38,7 +38,7 @@ function harness(records = [row()], options = {}) {
   const owner = fixtureOwnership({
     pid: 10,
     expected: {
-      cwd,
+      cwd: options.cwd ?? cwd,
       root,
       token: "private-nonce",
       python,
@@ -415,6 +415,101 @@ test("known teardown field errors permit observation but never another signal", 
   assert.equal(result.last_observation.observation, null);
 });
 
+const incomplete = [
+  ["reported running status", { status: "running", command: [], exe: "" }],
+  ["empty command", { command: [] }],
+  ["empty executable", { exe: "" }],
+  ["missing cwd", { cwd: undefined }],
+  ["empty cwd", { cwd: "" }],
+  [
+    "all missing fields",
+    { cwd: undefined, command: undefined, exe: undefined },
+  ],
+];
+for (const [name, fields] of incomplete) {
+  test(`${name} remains observable until independently absent`, async () => {
+    const delays = [];
+    const h = harness([row()], {
+      waitMs: 1000,
+      afterSignal: (pid, map) => Object.assign(map.get(pid), fields),
+      onDelay: (ms, map) => {
+        delays.push(ms);
+        if (ms === 50) map.delete(10);
+      },
+    });
+    h.owner.initialize();
+    h.owner.bind(h.receipt());
+    await h.owner.stop();
+    assert.deepEqual(delays, [0, 50]);
+    assert.deepEqual(h.signals, [{ pid: 10, signal: "SIGTERM" }]);
+    const receipt = h.receipts[0];
+    assert.equal(receipt.complete, true);
+    assert.equal(receipt.processes[0].last_observation.observation, null);
+    assert.ok(
+      receipt.processes[0].observations.some(
+        (entry) =>
+          entry.observation?.status === (fields.status || "sleeping") &&
+          Object.entries(fields).every(
+            ([key, value]) =>
+              JSON.stringify(entry.observation[key]) === JSON.stringify(value),
+          ),
+      ),
+    );
+  });
+
+  test(`${name} cannot extend the deadline or authorize escalation`, async (t) => {
+    t.mock.timers.enable({ apis: ["Date"], now: 0 });
+    const h = harness([row()], {
+      waitMs: 100,
+      afterSignal: (pid, map) => Object.assign(map.get(pid), fields),
+      onDelay: (ms) => t.mock.timers.tick(Math.max(1, ms)),
+    });
+    h.owner.initialize();
+    h.owner.bind(h.receipt());
+    await assert.rejects(h.owner.stop(), /failed to stop before deadline/);
+    // Existing cleanup has TERM, KILL and final observation windows, even
+    // when incomplete identity prevents sending the escalation signal.
+    assert.equal(Date.now(), 3 * 100 + 1);
+    assert.deepEqual(h.signals, [{ pid: 10, signal: "SIGTERM" }]);
+    assert.equal(h.receipts[0].complete, false);
+    assert.equal(h.receipts[0].processes[0].stopped, false);
+    assert.notEqual(
+      h.receipts[0].processes[0].last_observation.observation,
+      null,
+    );
+  });
+}
+
+test("metadata loss before cleanup permits observation but never the first signal", async () => {
+  const h = harness([row()], {
+    waitMs: 1000,
+    onDelay: (ms, map) => {
+      if (ms === 50) map.delete(10);
+    },
+  });
+  h.owner.initialize();
+  h.owner.bind(h.receipt());
+  h.processes.get(10).command = [];
+  await h.owner.stop();
+  assert.deepEqual(h.signals, []);
+  assert.equal(h.receipts[0].complete, true);
+  assert.equal(h.receipts[0].processes[0].last_observation.observation, null);
+});
+
+test("empty cwd cannot resolve to the observer cwd to authorize escalation", async () => {
+  const h = harness([row(10, { cwd: process.cwd() })], {
+    cwd: process.cwd(),
+    afterSignal: (pid, map) => {
+      map.get(pid).cwd = "";
+    },
+  });
+  h.owner.initialize();
+  // No receipt is needed to clean a verified spawned lifetime.
+  await assert.rejects(h.owner.stop(), /failed to stop before deadline/);
+  assert.deepEqual(h.signals, [{ pid: 10, signal: "SIGTERM" }]);
+  assert.equal(h.receipts[0].complete, false);
+});
+
 for (const [name, fields] of [
   ["live command", { command: [python, "changed.py"] }],
   ["live cwd", { cwd: path.join(cwd, "changed") }],
@@ -427,7 +522,27 @@ for (const [name, fields] of [
   ],
   ["creation time", { started: 999 }],
   ["missing creation time", { started: undefined, status: "zombie" }],
-  ["empty live command", { command: [] }],
+  ["changed PID with missing metadata", { pid: 11, command: [], exe: "" }],
+  ["changed creation with missing metadata", { started: 999, command: [] }],
+  [
+    "conflicting cwd with missing metadata",
+    { cwd: path.join(cwd, "changed"), command: [] },
+  ],
+  [
+    "conflicting executable with missing metadata",
+    { exe: path.join(cwd, "changed.exe"), command: [] },
+  ],
+  [
+    "conflicting command with missing metadata",
+    { command: [python, "changed.py"], exe: "" },
+  ],
+  ["unknown status", { status: undefined, command: [] }],
+  ["empty status", { status: "", command: [] }],
+  ["malformed cwd", { cwd: [], command: [] }],
+  ["null cwd", { cwd: null, command: [] }],
+  ["malformed executable", { exe: [], command: [] }],
+  ["malformed command", { command: "", exe: "" }],
+  ["malformed command elements", { command: [42], exe: "" }],
   [
     "permission denied",
     {
@@ -533,12 +648,13 @@ class Process:
         if self.ordinal>1 and scenario=="absent": raise NoSuchProcess("generated absent")
     def oneshot(self): return contextlib.nullcontext()
     def create_time(self): return identity["started"]+(1 if self.ordinal>1 else 0)
-    def status(self): return "sleeping"
+    def status(self): return "running" if scenario=="incomplete" else "sleeping"
     def ppid(self): return 1
     def cwd(self): return identity["cwd"]
-    def cmdline(self): return identity["command"]
-    def exe(self): return identity["exe"]
+    def cmdline(self): return [] if scenario=="incomplete" else identity["command"]
+    def exe(self): return "" if scenario=="incomplete" else identity["exe"]
     def terminate(self):
+        if scenario=="incomplete": raise AssertionError("Incomplete metadata must never grant a signal")
         if scenario=="zombie": raise ZombieProcess("generated zombie")
         raise NoSuchProcess("generated absent or reused")
     def kill(self): raise AssertionError("No escalation expected")
@@ -549,7 +665,7 @@ class Process:
   const results = {};
   try {
     process.env.PYTHONPATH = evidence;
-    for (const scenario of ["absent", "reused", "zombie"]) {
+    for (const scenario of ["absent", "reused", "zombie", "incomplete"]) {
       process.env.FRONTEND_PROBE_SCENARIO = scenario;
       results[scenario] = fixtureProcessProbe({
         action: "signal",
@@ -557,6 +673,12 @@ class Process:
         identity: row(0),
         signal: "SIGTERM",
       });
+      if (scenario === "incomplete")
+        results.incompleteSnapshot = fixtureProcessProbe({
+          action: "inspect",
+          pid: 0,
+          identity: row(0),
+        });
     }
   } finally {
     if (originalPath === undefined) delete process.env.PYTHONPATH;
@@ -575,6 +697,13 @@ class Process:
   assert.equal(results.reused.error_kind, "NoSuchProcess");
   assert.equal(results.zombie.signalled, false);
   assert.equal(results.zombie.error_kind, "ZombieProcess");
+  assert.equal(results.incomplete.signalled, false);
+  assert.match(results.incomplete.error, /no signal sent/);
+  assert.deepEqual(results.incomplete.observation, results.incompleteSnapshot);
+  assert.equal(results.incompleteSnapshot.status, "running");
+  assert.deepEqual(results.incompleteSnapshot.command, []);
+  assert.equal(results.incompleteSnapshot.exe, "");
+  assert.deepEqual(results.incompleteSnapshot.metadata_errors, []);
 });
 
 test("shutdown probe failure is retained without authorizing another signal", async () => {

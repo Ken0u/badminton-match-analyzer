@@ -175,3 +175,94 @@ under a Windows legacy console encoding. The original result/logs remain intact;
 new helper lineages use UTF-8 output. Validation and delivery for this subsequent
 repair are recorded on #192. These generated-only software checks do not certify
 badminton annotation accuracy.
+
+## Incomplete live-status observations (#197)
+
+Issue [#197](https://github.com/Ken0u/badminton-match-analyzer/issues/197)
+addresses a further observation gap exposed by documentation PR #196 at
+`c6f9678b37e9dc6ad905a24f888ec4b853fa1152`. Its first
+[CI run](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39876122657)
+passed all 18 production, eight library and 13 export browser groups. Production
+and library cleanup completed; export cleanup recorded one confirmed SIGTERM,
+then the same PID/creation/cwd with `running` status, empty command/executable
+and no metadata errors. Cleanup rejected that observation before observing
+absence. The original hosted lifetime's terminal state remains unknown. No
+historical process is signalled and no old CI run is retried by this repair.
+
+The preserved artifact ZIP SHA256 is
+`4a77611fcb812f66c1388ccd2bf6c471b87d8620e7c8e6c0609275fa8cf36682`;
+browser-log SHA256 is
+`2b23ce75c6e570903616a297f3edef097a247b3c3052296c1284723312e1635e`.
+The Python probe's snapshot fields are read separately under psutil `oneshot`.
+Cached status and later metadata can disagree during exit; this is a plausible
+explanation, not a proven historical cause. Reordering reads cannot make the
+snapshot atomic.
+
+Before tracked edits, an injected-record-only protocol froze 18 prospective
+cases against delivered base `db140236b0d6d2e3cb2055db83fa676cbc3ff326`.
+No OS PID is inspected or signalled by that comparison. Freeze SHA256 is
+`6a2d59570d31d8449425e6eaae39e343270db7ef8d0eb24a4357a3380e462868`;
+protocol SHA256 is
+`70b4ff452f3c1b6bc849df39e5a69ae9501f5aae6496457382b9ab5599a52af8`.
+The [prospective issue checkpoint](https://github.com/Ken0u/badminton-match-analyzer/issues/197#issuecomment-6354366931)
+timestamps their hashes and baseline before implementation. Baseline result
+`812967aade8f4fb9ebf48ccb6e5c39b1e014df417bd85bef6ded700c7a639ec6`
+passes 12/18 cases: five incomplete-metadata-to-absence cases fail prematurely,
+and persistent incomplete metadata fails before its observation deadline.
+The unchanged runner/protocol against the final candidate passes all 18;
+result SHA256 is
+`6b92acf8a360d7c1c3757ef231d6cf504877103871d8c01736daea3289e1925a`.
+Ignored local replay artifacts are evidence references, not clone inputs.
+
+An already authenticated matching PID/creation lifetime may now remain under
+bounded observation when cwd, command or executable is missing, even with a
+live status. Nonempty conflicting fields, malformed field types, changed or
+missing lifetime identity, unexpected access/probe errors and unreadable status
+still fail closed. Initial ownership and descendant admission remain strict.
+Every signal retains the complete identity comparison and fresh Python boundary
+check; missing fields never authorize SIGTERM or SIGKILL. Only independently
+observed absence completes cleanup. The existing TERM, KILL and final observation
+windows and escalation limits are unchanged.
+
+Empty paths are explicitly rejected before path resolution. Otherwise an empty
+cwd could resolve to the observer's cwd and accidentally satisfy the complete
+signal identity comparison when those directories match. A dedicated regression
+uses that exact directory relationship and verifies no escalation is authorized.
+
+Tracked tests cover each missing field, the exact reported shape, persistent
+incompleteness through all original windows without escalation, metadata loss
+before the first signal, conflicting fields/lifetimes, malformed fields and
+unknown status. The generated psutil double exercises the production snapshot
+with `running` plus empty command/executable and proves its signal boundary
+refuses that identity. Receipts also retain malformed command values without
+throwing while serializing the observation. An initial test incorrectly expected
+one observation window; its retained failed result was corrected to assert the
+existing three windows. No implementation timeout was changed.
+
+The final Windows process suite passes 72 tests, including actual normal and
+intentionally failed generated app startup, with one explicit POSIX-only skip.
+That standalone module is still not invoked by CI; hosted browser jobs exercise
+the Linux lifecycle through this same harness. Reproduce the module with the
+existing environment's `FRONTEND_PYTHON` and `FRONTEND_FIXTURE_LIVE=1`:
+`node --test tests/frontend-fixture-process.test.mjs`. Generated checks must use
+isolated storage and omit credentials.
+
+All 2,048 Python regressions pass with four optional skips and the existing
+Starlette/httpx deprecation warning. Ruff check/format (183 files), dependency
+consistency, Prettier, granted-file UTF-8/LF, local links and Git whitespace
+checks pass. The original test wrapper and interpreter lifetimes are independently
+confirmed terminal after the successful execution session. No environment or
+dependency is replaced.
+
+The final-source local production browser matrix passes all 18 groups. Its
+seek/timeline/playback-start/RAF p95 values are 81.9/32.1/67.5/16.8 ms within
+unchanged ceilings; no performance improvement is claimed. All six actual
+local fixture attempts have complete cleanup receipts. Independent read-only
+verification finds all 12 original wrapper/listener lifetimes terminal, without
+signalling any replacement PID. The earlier passing matrix is retained but is
+not final-source evidence after the empty-path correction. At that checkpoint
+generated output is below 10 MiB plus a 16 MiB reserve, within the 128 MiB /
+three-hour grant. Exact-head
+CI, merged-main checks, controller integration and public delivery remain
+separate requirements recorded on the owning issue. These generated software
+checks do not establish badminton annotation accuracy.

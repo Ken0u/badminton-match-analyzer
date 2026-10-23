@@ -327,7 +327,7 @@ export function fixtureProcessProbe(request) {
 const probe = fixtureProcessProbe;
 
 const samePath = (a, b) => {
-  if (typeof a !== "string" || typeof b !== "string") return false;
+  if (typeof a !== "string" || typeof b !== "string" || !a || !b) return false;
   const normalized = (value) => path.resolve(value);
   return process.platform === "win32"
     ? normalized(a).toLowerCase() === normalized(b).toLowerCase()
@@ -361,25 +361,30 @@ function shutdownObservation(expected, current) {
     ),
     "Process metadata unreadable; no further signal authorized",
   );
-  const teardown =
-    ["zombie", "dead"].includes(current.status) || errors.length > 0;
+  // Snapshot fields are not atomic: status may still be live while later
+  // metadata reads are empty during exit. The authenticated lifetime can be
+  // observed until the existing deadline; incomplete fields never grant a signal.
   for (const field of ["cwd", "exe", "command"]) {
     const value = current[field];
-    const missing =
+    const validType =
       value === undefined ||
-      value === "" ||
-      (Array.isArray(value) && value.length === 0);
+      (field === "command"
+        ? Array.isArray(value) &&
+          value.every((part) => typeof part === "string")
+        : typeof value === "string");
+    const missing = validType && (value === undefined || value.length === 0);
     assert.ok(
-      missing
-        ? teardown
-        : field === "command"
-          ? JSON.stringify(value) === JSON.stringify(expected[field])
-          : samePath(value, expected[field]),
+      validType &&
+        (missing ||
+          (field === "command"
+            ? JSON.stringify(value) === JSON.stringify(expected[field])
+            : samePath(value, expected[field]))),
       `Process ${field} changed or unreadable; no further signal authorized`,
     );
   }
   assert.ok(
-    typeof current.status === "string" || teardown,
+    (typeof current.status === "string" && current.status.length > 0) ||
+      (current.status === undefined && errors.length > 0),
     "Process status unreadable; no further signal authorized",
   );
 }
@@ -395,7 +400,9 @@ function recordObservation(result, phase, value) {
       ...value,
       cwd: clip(value.cwd),
       exe: clip(value.exe),
-      command: value.command?.slice(0, 16).map(clip),
+      command: Array.isArray(value.command)
+        ? value.command.slice(0, 16).map(clip)
+        : value.command,
       metadata_errors: metadataErrors(value)
         .slice(0, 8)
         .map((error) => ({
