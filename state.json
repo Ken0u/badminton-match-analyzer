@@ -4128,6 +4128,14 @@
       "task_id": "208",
       "verb": "checkpoint"
     },
+    "rally210-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792756420,
+      "fingerprint": "0d78c1acaf87b25757f7b1d4329b357454cf213621993dec0f973929295b0508",
+      "status": "needs_human",
+      "task_id": "210",
+      "verb": "plan"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -15348,7 +15356,7 @@
     },
     "210": {
       "epoch": 0,
-      "planned_at": 1792756293,
+      "planned_at": 1792756420,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
