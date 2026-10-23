@@ -5306,6 +5306,14 @@
       "task_id": "204",
       "verb": "plan"
     },
+    "spec-208-b8374ad33a00d65d42a852508e90ea0f4bbf222a26c0baec1decb013ee940161": {
+      "actor": "Ken0u",
+      "at": 1792742407,
+      "fingerprint": "dd3a7ca2f71f8ac2df837c61a0ecdd566b736330ffd3d7e1753de2f48603e474",
+      "status": "needs_human",
+      "task_id": "208",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -15098,6 +15106,74 @@
         "pr_number": 205,
         "spec_hash": "9098a092d9487cdfe47957fdda82064f69523574654e383cd3518dfa4bca1371"
       }
+    },
+    "208": {
+      "epoch": 0,
+      "planned_at": 1792742407,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Obtain configured-owner authorization of this exact risk-human specification before any transfer, implementation or new source-image preparation/dispatch. This explicitly authorizes the extended horizon, new cumulative budgets, additional bounded runtime and minimum public controller-release metadata described below. It does not reuse task62 authorization or authorize manual merging.",
+          "Preserve the original task62 failed first300-second pilot, source groups, all private raw images/labels/receipts, original code/protocol/context seals and PR207 head39bbb9db15b96d258de4da4d17573a35c658f530. Record0/2 references,9 original-state disagreements,6 adjudication unknowns and340760009 charged image bytes. Do not reinterpret that pilot as complete or independent-test evidence. Preserve completed202,160,172,179,183,204, original predictions/annotations/environments/weights/research processes and deprecated PROGRESS without access/edits. Never access consumed holdout63 inputs/protocols/predictions/private membership/artifacts.",
+          "After owner authorization, checkpoint the exact original branch/PR/source/test/scientific evidence. Verify all actual original-host preparation/assessor/verification lifetimes absent and original completed shared Store/artifact seals before documented terminal release of task62 epoch1. Submit only the minimum required real process PID/creation/cwd/command, terminal Store metadata and artifact hashes through public GitHub coordination for this release; this narrowly authorized release record is the exception to private scientific process metadata. No images, labels, account files or credentials accompany it. Obtain a genuine new grant before implementation; no raw coordination edits, fake proof, old-epoch submission or concurrent implementation. Keep #62 open and retain its original immutable history. Preserve PR207 until a tested replacement PR durably links its source/CI evidence; only then close it as superseded without deleting its branch.",
+          "Use exactly the same two existing official BWF video-only sources and original clocks/packets, with these immutable bindings: [{\"category\": \"singles\", \"clock_sha256\": \"f1cf689916f85716fddb692f5bb9118812a4f4c66f211ed4b9de7e7c6fb3965f\", \"native_frame_count\": 129600, \"packet_sha256\": \"31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b\", \"source_id\": \"go2uajSiBnE\", \"source_sha256\": \"708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9\"}, {\"category\": \"doubles\", \"clock_sha256\": \"867467f96a9bedecff035053d765e368d70abcde13d79dc4830b4c24fe87d5b0\", \"native_frame_count\": 118500, \"packet_sha256\": \"73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056\", \"source_id\": \"H1setLK1tig\", \"source_sha256\": \"49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623\"}]. No downloads, substitutions, weights/models, training/inference, predictions or application truth access. Missing/incompatible originals retain both unavailable slots and stop real-data stages. This extension is informed by the failed opening-window development pilot and is not an independent test.",
+          "Retain protocol_v1 bytes unchanged. Commit public protocol_v2, annotation definitions, exact recursive consumer/runtime/input bindings and deterministic selection before new preparation/inspection. Screen first900 source seconds on the original5-second source-PTS grid including endpoint;181 grid memberships per source with explicit clamping/duplicates. Reuse original PNG pixels only with exact native membership/hash provenance; do not reuse prior labels as independent assessment. Two genuinely independent complete source-only screening streams and separate fresh blind source-only screening adjudication freeze the earliest warranted service-preparation/exchange/stopped-play candidate within40 source seconds plus up to4 seconds context each side. Sparse screening never certifies completeness. Retain unresolved/invalidated original slots without easier rally replacement or post-result criterion changes.",
+          "Preserve whole-source/native PTS/time-base/frame/orientation/geometry/camera/view identities, scene exclusions and uncertainty. New native preparation uses real original shared Store run_local_job admission and data:windows-primary reservation, original roots pinned before imports, credentials cleared and torchvision initialized before threaded PyAV. Preserve FFmpeg logging restoration. Use exclusive ignored stage lineage; observe actual Store-owning PID/creation/cwd/command and ancestry live, then independently prove its original lifetime absent and matching completed Store/terminal/artifact seals before consuming output. Never restart because an observation timed out; preserve all failures.",
+          "Authorized image destination remains only the existing ChatGPT-authenticated Codex CLI; payload remains unmodified original oriented source-frame PNGs plus minimal protocol/frame/hash context and each stream own continuity notes. At most20 distinct images and6MiB raw-image bytes per fresh session, all repeats charged. No new paid API/service, public image upload, resizing, crops, composites, overlays, predictions, other-stream labels or account secrets. Preserve actual original invocation/thread/process/image/output/coverage receipts privately, except minimum separately authorized controller-release metadata. Explicit transport pacing is allowed; no implicit retries or alternate model/source.",
+          "Before dense assessment, compute exact native image/chunk costs for both exhaustive original streams, including contiguous two-frame chunk overlaps and all prior/failed/repeated payloads. Do not infer impossibility from unnecessarily requiring a third exhaustive stream. Support separate fresh source-only targeted adjudication of every disagreement, unresolved contact/identity/scene/boundary/completeness case and chunk join requiring it; preserve originals, resolutions and unknowns. Both original streams must actually inspect every selected native frame with their own continuity notes. No self-authored second verdict or fabricated coverage.",
+          "Retain source actors independently of tracker IDs, all racket/serve/terminal events, inclusive native contact versus ending uncertainty, scene/camera context, censoring and unknown identity links. Six families clear/lift/net/drop/smash/drive and forehand/backhand only when warranted; other/unknown retained, half smash excluded. A complete-reference flag requires exhaustive supported contacts/hitters and service/ending context without unresolved gaps. Agent agreement is not expert gold truth. Seal all assessments/adjudications before any later prediction access; independently recheck complete membership, actual session independence, chunk joins, original inputs and original app-truth/prediction seals without inspecting prediction contents.",
+          "The bounded research increment can finish with a faithfully reported predeclared incomplete/unavailable result and verified software delivery. That does not complete parent62 or unlock66/67/71. Keep all four training/independent-test/deployment/redistribution flags false. Public output is reproducible code, original/v2 public protocols and aggregate reports only. No raw images, labels, per-contact records or actual scientific session identities in public artifacts.",
+          "Adopt the tested seven-path source from PR207 into the genuinely granted branch, preserving exact v1 evidence, then implement only the reserved extension. Test meaningful source/census/camera/membership/context/selection tampering, missing/duplicate/truncated coverage, VFR/orientation, scene/censoring/unknowns, actor/contact/terminal gaps, independent streams and targeted adjudication conflicts/joins, exclusive outputs/budgets and actual admitted/exited generated worker evidence. Run focused and required project checks, exact PR/main CI, normal controller merge, and independent complete public package/both-image delivery. Do not mark task Done on a dispatch acknowledgement.",
+          "Explicit new follow-up runtime limit: at most4 additional hours from its genuine new grant, including failures, with at most3 bounded repair rounds; this is separate owner-authorized work, not a silent extension/reset of task62 original deadline1792751062. Cumulative image dispatch across original62 plus this follow-up is at most4GiB, including original340760009 bytes, all attempted failures, repeats, overlaps and adjudication. Persisted outputs and downloaded verification/build evidence across both studies are at most8GiB, including every retained original/new/failed artifact. Account for original usage before starting; never erase original failures or counts. Stop/checkpoint honestly at bounds, without source replacement, denominator shrinkage, relaxed checks or paid overage."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "160",
+          "172",
+          "179",
+          "202",
+          "204"
+        ],
+        "exclusions": [
+          "No claim of complete automatic annotation accuracy.",
+          "No consumed holdout63 or deprecated PROGRESS access/edits.",
+          "No new sources/media/datasets/weights/downloads/installations/purchases/paid services, inference/training, prediction access, app-truth or model/default/API/UI/auth/controller/workflow/publishing-policy changes, raw public image/label redistribution, research-process control, manual merge, raw coordination edits or fabricated approval."
+        ],
+        "limits": {
+          "max_image_payload_bytes": 4294967296,
+          "max_output_bytes": 8589934592,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Deliver a prospectively frozen extended-horizon source-only development rally-reference pilot and reusable workflow, retaining unsupported slots and parent62 gates.",
+        "paths": [
+          "backend/badminton/rally_source_reference.py",
+          "scripts/prepare_rally_references.py",
+          "tests/test_rally_source_reference.py",
+          "data/manifests/rally_reference_protocol_v1.json",
+          "data/manifests/rally_reference_protocol_v2.json",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md",
+          "docs/ANNOTATION_GUIDE.md"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Prospectively timestamped v2/source/runtime/consumer/selection bindings and real shared-Store/native-frame/original-process provenance; actual independent exhaustive source coverage and separate targeted source adjudication, unknowns and original first300 pilot preserved.",
+          "Meaningful generated regression and required checks; exact PR/main CI, normal controller integration and independent complete public package/both-image verification. Bounded increment completion never falsely closes parent62 or unlocks its consumers."
+        ]
+      },
+      "spec_hash": "c92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
