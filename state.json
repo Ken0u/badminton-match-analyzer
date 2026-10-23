@@ -4289,6 +4289,15 @@
       "task_id": "210",
       "verb": "submit"
     },
+    "rally212-checkpoint-import-bug-v1": {
+      "actor": "Ken0u",
+      "at": 1792793866,
+      "epoch": 1,
+      "fingerprint": "05d2146caf0f042a20bb267ab3470c6d0bc8a3a2f1f71993993709f1e24ef16a",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-initial-v1": {
       "actor": "Ken0u",
       "at": 1792791902,
@@ -15759,15 +15768,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
-        "summary": "Metadata-only operational audit passed at 1792793195.7919796: 19 completed segments in each original stream; both launchers/CLI workers independently observed live, no failures or dispatch stop. No original labels opened or compared. Verified unchanged frozen helper/consumer/protocol/context/packet/plan bindings, exact image membership in invocation/receipts, prompt/schema transport costing, event logs, 5-second pacing, all245 prior CLI lifetimes absent and 283 globally distinct completed threads. Cumulative attempted image bytes1747087875; retained output bytes2216877498; both below8GiB. Private receipt .cache/rally212-original-audit-v1/metadata-1792793201049846200.json SHA256 abd5db6bc99e694d53fa651e53ef1ebf8c3617b623375b0b00a4375fea8ae653. New local read-only auditor SHA256 cd32ae592f998d7c85e23e67b152f83ab0b3d2cf348ed16e659ccb56f4a47e01: full mode refuses before both complete indexes and verifies both exhaustive seals and all recorded original lifetime exits before parsing labels. Whole-source/native-PNG/Store revalidation runs only at that complete audit. No source/helper/protocol edits, dispatch/restart or process signals. Required checks unchanged:2378passed/4optional skips and224focused. Original deadline1792820409 never extends. Next: both complete originals, full audit, then separately frozen exact targeted blind adjudication plan. All four eligibility flags remain false; no complete-reference/full-match accuracy claim."
+        "summary": "Both original source-only passes remain live. At1792793808 A32/B33 successful segments, one CLI each active, cumulative attempted image bytes1991658003, no failure/stop/replacement. Latest metadata-only audit receipt .cache/rally212-original-audit-v1/metadata-1792793757329101500.json SHA256 c3f43e3448818cbbf889dff3c6da18069ad25b0a677908d9d2ac2e13a5afbdfb verifies63completed segments,308globally distinct completed threads including245predecessors, immutable consumer/helper/context/packet/plan bindings, receipt/image membership and transport/pacing/event metadata. No original labels parsed or compared; both complete indexes absent. Immutable deadline1792820409 and all four false eligibility flags unchanged. Separate generated-data-only read-only library inspection reproduced a transient import-list refresh failure without media/native decode, Store/app-truth access or network. Routine code-only follow-up #215 is controller-accepted Ready with frozen spec586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca, two nonoverlapping frontend paths, no resource reservation and no implementation begun on this occupied host. Public issue includes reproducible generated fixture; private result SHA256 aa5c99e4f9cec172ed3ada4477870d9b85c66459badfe30bcc33221082a195c0. No source, scientific helper/protocol, real data or research process changed. Existing2378tests/4optional skips and224focused remain applicable to unchanged source. Next #212 step remains both complete original seals, full native/source/session/lifetime audit, then separately frozen targeted blind adjudication. Full annotation objective remains incomplete."
       },
-      "checkpoint_at": 1792793248,
+      "checkpoint_at": 1792793866,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792804048,
+        "expires_at": 1792804666,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
