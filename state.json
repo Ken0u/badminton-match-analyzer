@@ -4289,6 +4289,15 @@
       "task_id": "210",
       "verb": "submit"
     },
+    "rally212-checkpoint-initial-v1": {
+      "actor": "Ken0u",
+      "at": 1792791902,
+      "epoch": 1,
+      "fingerprint": "7aca2e393fc32c366b422598a928b970f42c7fef561a5db2657cc752483defa8",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-next-v1": {
       "actor": "Ken0u",
       "at": 1792791609,
@@ -15712,12 +15721,18 @@
       }
     },
     "212": {
+      "checkpoint": {
+        "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
+        "head_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
+        "summary": "Fresh epoch1 #212 grant verified after complete #210/#213 delivery. Immutable granted_at 1792791609, deadline 1792820409. Isolated .cache/worktrees/rally212-e1. Separate v4 code/protocol being tested; exact metadata-only recomputation matches 512 original sessions / 5,890,058,703 cumulative attempted image bytes; no source pixels read or image dispatch. Parent owns core, task child owns only tests in isolated worktree. Previous protocols, data, environments and processes preserved."
+      },
+      "checkpoint_at": 1792791902,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792802409,
+        "expires_at": 1792802702,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
