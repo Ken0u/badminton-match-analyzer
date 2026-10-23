@@ -207,6 +207,14 @@
       "status": "ok",
       "verb": "resume"
     },
+    "fixture197-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792714723,
+      "fingerprint": "81e3e5e32e444f9ff921c126174caf2f02e28a4c6b70a6d64090aca39d45a253",
+      "status": "ready",
+      "task_id": "197",
+      "verb": "plan"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
@@ -4179,6 +4187,15 @@
       "at": 1792705958,
       "epoch": 1,
       "fingerprint": "629d6bd573ea037a22a17ad7d5ce65ca534a737585403995b6f5ad1d9cc08ae5",
+      "status": "ready",
+      "task_id": "189",
+      "verb": "release"
+    },
+    "roadmap189-release-v2": {
+      "actor": "Ken0u",
+      "at": 1792714723,
+      "epoch": 2,
+      "fingerprint": "5878cd5c7130955c3b3568cbdc75c375cc01d1c53a0c72d25664969da2518099",
       "status": "ready",
       "task_id": "189",
       "verb": "release"
@@ -13652,17 +13669,6 @@
         "summary": "Fresh epoch-2 continuation at baseline db140236 after 192 full delivery and queue resume. New PR196 carries the preserved two-file PR193 documentation forward without rewriting its old branch or failed CI. Updated current summaries retain shuttle/player failure counts, unknowns, eligibility and historical evidence, and now record 192/195 completion with prospective Linux receipt limits. Required local checks pass:2048 tests/4 optional skips, Ruff/format183files, pipcheck, whitespace and UTF8/LF/local links. Ten public snapshot references,17merged ancestors and public repository/private Project metadata verified. Fresh informal read-only factual audit found no issues; it is not a granted formal approval. No research, inference, model/policy/runtime changes or PROGRESS access."
       },
       "checkpoint_at": 1792714061,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "db140236b0d6d2e3cb2055db83fa676cbc3ff326",
-        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e2",
-        "epoch": 2,
-        "expires_at": 1792724861,
-        "granted_at": 1792713380,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
-      },
       "epoch": 2,
       "history": [
         {
@@ -13700,6 +13706,51 @@
             },
             "store": {
               "scope": "Documentation and isolated generated tests only; no app/research Store work was started.",
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        },
+        {
+          "at": 1792714723,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "db140236b0d6d2e3cb2055db83fa676cbc3ff326",
+            "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e2",
+            "epoch": 2,
+            "expires_at": 1792724861,
+            "granted_at": 1792713380,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "artifact": 12468697253,
+              "artifact_sha256": "4a77611fcb812f66c1388ccd2bf6c471b87d8620e7c8e6c0609275fa8cf36682",
+              "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e2",
+              "ci_run": 39876122657,
+              "failed_browser_job": 120162078531,
+              "followup_task": 197,
+              "head_sha": "c6f9678b37e9dc6ad905a24f888ec4b853fa1152",
+              "hosted_failed_lifetime_terminal": "unknown; never signalled or treated as stopped by this release",
+              "old_preserved_pr": 193,
+              "overall_CI": "Original Python3.12 job remains live at last observation; left intact. This code-only release concerns only confirmed terminal original-host work.",
+              "pr_number": 196,
+              "remaining": "189 remains incomplete. After197 full delivery, obtain a fresh bounded grant, update documents and run normal exact-head/main/public delivery."
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe -m pytest -q --basetemp C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\roadmap189-checks-v2\\pytest -o tmp_path_retention_policy=failed",
+              "creation_time": 1792713560.2241857,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\roadmap189-e2",
+              "evidence": "Original test PID independently observed absent after execution session57678 exited0. Full local evidence .cache/roadmap189-final-local-v2.json.",
+              "exited": true,
+              "pid": 11268
+            },
+            "store": {
+              "scope": "Documentation and isolated generated tests only; no app/research Store job or physical research resource acquired.",
               "status": "no_job"
             },
             "terminal": true
@@ -13754,7 +13805,7 @@
         ]
       },
       "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67",
-      "status": "running",
+      "status": "ready",
       "submission": {
         "base_sha": "4246ec524fbece6361898e562698f30410de5a66",
         "head_sha": "97aa76e607412660218d796df5faa51cab4707d3",
@@ -14000,7 +14051,7 @@
     },
     "197": {
       "epoch": 0,
-      "planned_at": 1792714597,
+      "planned_at": 1792714723,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
