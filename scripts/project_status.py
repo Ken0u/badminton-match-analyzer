@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import hashlib
 import json
 import os
 import re
@@ -28,6 +29,8 @@ STATUSES = {
 }
 
 RETRY_DELAYS = (2, 4)
+MAX_STATE_BYTES = 16 * 1024 * 1024
+OBJECT_ID = re.compile(r"[0-9a-f]{40}")
 
 
 class ProjectionError(RuntimeError):
@@ -109,6 +112,98 @@ def sync_status_with_retries(gh: GitHub, **kwargs) -> dict:
             time.sleep(delay)
 
 
+def _object_id(value) -> str:
+    if not isinstance(value, str) or not OBJECT_ID.fullmatch(value):
+        raise ValueError("Invalid coordination Git object identity")
+    return value
+
+
+def _unique_object(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("Duplicate coordination JSON key")
+        result[key] = value
+    return result
+
+
+def _invalid_constant(_value):
+    raise ValueError("Nonfinite coordination JSON value")
+
+
+def read_state(gh: GitHub, repo: str, branch: str) -> dict:
+    """Pin one branch revision, then read and verify its immutable state blob.
+
+    No API-provided URLs are followed. Every request stays within the configured
+    repository; a later branch movement cannot mix revisions in this snapshot.
+    """
+    if not isinstance(repo, str) or not re.fullmatch(
+        r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", repo
+    ):
+        raise ValueError("Invalid projection repository")
+    if not isinstance(branch, str) or not branch or branch.startswith("/"):
+        raise ValueError("Invalid coordination branch")
+    try:
+        prefix = f"repos/{repo}/git"
+        ref = gh.api(f"{prefix}/ref/heads/{quote(branch, safe='')}")
+        if ref["ref"] != f"refs/heads/{branch}" or ref["object"]["type"] != "commit":
+            raise ValueError("Coordination branch identity mismatch")
+        revision = _object_id(ref["object"]["sha"])
+        commit = gh.api(f"{prefix}/commits/{revision}")
+        if commit["sha"] != revision:
+            raise ValueError("Coordination commit identity mismatch")
+        tree_id = _object_id(commit["tree"]["sha"])
+        tree = gh.api(f"{prefix}/trees/{tree_id}")
+        if tree["sha"] != tree_id or tree.get("truncated") is not False:
+            raise ValueError("Incomplete coordination tree")
+        entries = [entry for entry in tree["tree"] if entry["path"] == "state.json"]
+        if (
+            len(entries) != 1
+            or entries[0]["type"] != "blob"
+            or entries[0]["mode"] != "100644"
+        ):
+            raise ValueError("Coordination state must be one regular file")
+        entry = entries[0]
+        blob_id = _object_id(entry["sha"])
+        size = entry["size"]
+        if type(size) is not int or not 0 < size <= MAX_STATE_BYTES:
+            raise ValueError("Coordination state size unsupported")
+        blob = gh.api(f"{prefix}/blobs/{blob_id}")
+        if (
+            blob["sha"] != blob_id
+            or type(blob["size"]) is not int
+            or blob["size"] != size
+            or blob["encoding"] != "base64"
+            or not isinstance(blob["content"], str)
+            # GitHub wraps base64 at 60 columns with newlines. Bound encoded
+            # input as well as decoded bytes before allocating another copy.
+            or len(blob["content"]) > 2 * MAX_STATE_BYTES
+        ):
+            raise ValueError("Invalid coordination blob envelope")
+        raw = base64.b64decode("".join(blob["content"].split()), validate=True)
+        if (
+            len(raw) != size
+            or hashlib.sha1(f"blob {size}\0".encode("ascii") + raw).hexdigest()
+            != blob_id
+        ):
+            raise ValueError("Coordination blob content identity mismatch")
+        state = json.loads(
+            raw.decode("utf-8"),
+            object_pairs_hook=_unique_object,
+            parse_constant=_invalid_constant,
+        )
+    except (KeyError, TypeError, AttributeError, UnicodeError, RecursionError) as error:
+        raise ValueError("Invalid coordination Git state") from error
+    if (
+        not isinstance(state, dict)
+        or type(state.get("version")) is not int
+        or state["version"] != 1
+        or not isinstance(state.get("tasks"), dict)
+    ):
+        raise ValueError("Unsupported coordination state schema")
+    return state
+
+
 def sync_status(
     gh: GitHub,
     *,
@@ -124,21 +219,7 @@ def sync_status(
     """
     if type(number) is not int or number <= 0:
         raise ValueError("Project number must be a positive integer")
-    payload = gh.api(f"repos/{repo}/contents/state.json?ref={quote(branch, safe='')}")
-    if payload.get("encoding") != "base64":
-        raise ValueError("Coordination state must have base64 contents")
-    try:
-        state = json.loads(
-            base64.b64decode("".join(payload["content"].split()), validate=True)
-        )
-    except (ValueError, KeyError, TypeError) as error:
-        raise ValueError("Invalid coordination state contents") from error
-    if (
-        not isinstance(state, dict)
-        or state.get("version") != 1
-        or not isinstance(state.get("tasks"), dict)
-    ):
-        raise ValueError("Unsupported coordination state schema")
+    state = read_state(gh, repo, branch)
     projected = []
     # Validate every task before allowing any Project writes.
     for task_id, task in state["tasks"].items():
@@ -149,7 +230,11 @@ def sync_status(
             or int(task_id) <= 0
         ):
             raise ValueError("Coordination task IDs must be positive issue numbers")
-        if not isinstance(task, dict) or task.get("status") not in STATUSES:
+        if (
+            not isinstance(task, dict)
+            or not isinstance(task.get("status"), str)
+            or task["status"] not in STATUSES
+        ):
             raise ValueError(f"Unknown coordination status for task {task_id}")
         issue = gh.api(f"repos/{repo}/issues/{task_id}")
         if (

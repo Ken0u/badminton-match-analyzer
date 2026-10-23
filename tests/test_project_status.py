@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import base64
+import copy
+import hashlib
 import importlib.util
 import json
 import os
@@ -31,15 +33,48 @@ class FakeGitHub:
         }
         self.reads = []
         self.writes = []
+        self.revision = "a" * 40
+        self.tree_id = "b" * 40
+
+    def raw_state(self):
+        return json.dumps(self.state).encode()
 
     def api(self, path):
         self.reads.append(path)
-        if "/contents/state.json" in path:
-            assert "ref=codex%2Fcoordination" in path
+        if "/git/ref/heads/" in path:
+            assert path.endswith("/git/ref/heads/codex%2Fcoordination")
+            self.raw = self.raw_state()
+            self.blob_id = hashlib.sha1(
+                f"blob {len(self.raw)}\0".encode() + self.raw
+            ).hexdigest()
             return {
-                "encoding": "base64",
-                "content": base64.b64encode(json.dumps(self.state).encode()).decode(),
+                "ref": "refs/heads/codex/coordination",
+                "object": {"type": "commit", "sha": self.revision},
             }
+        if path.endswith("/git/commits/" + self.revision):
+            return {"sha": self.revision, "tree": {"sha": self.tree_id}}
+        if path.endswith("/git/trees/" + self.tree_id):
+            return {
+                "sha": self.tree_id,
+                "truncated": False,
+                "tree": [
+                    {
+                        "path": "state.json",
+                        "type": "blob",
+                        "mode": "100644",
+                        "size": len(self.raw),
+                        "sha": self.blob_id,
+                    }
+                ],
+            }
+        if path.endswith("/git/blobs/" + self.blob_id):
+            return {
+                "sha": self.blob_id,
+                "size": len(self.raw),
+                "encoding": "base64",
+                "content": base64.encodebytes(self.raw).decode(),
+            }
+        assert "/git/" not in path and "/contents/" not in path
         return {"number": int(path.rsplit("/", 1)[-1]), "node_id": "I_40"}
 
     def graphql(self, query, **variables):
@@ -201,7 +236,7 @@ def test_transient_failure_reloads_state_and_recovers(projection_run, capsys, er
     output = capsys.readouterr()
     assert json.loads(output.out)["status"] == "projected"
     assert gh.attempts == 2
-    assert sum("/contents/state.json" in path for path in gh.reads) == 2
+    assert sum("/git/ref/heads/" in path for path in gh.reads) == 2
     assert len(gh.writes) == 1
     assert delays == [2]
     assert "retrying" in output.err
@@ -290,15 +325,11 @@ def test_ambiguous_applied_add_is_reinventoried_before_retry(projection_run, cap
             self.inventories = 0
 
         def api(self, path):
-            result = super().api(path)
-            if "/contents/state.json" in path and self.present:
+            if "/git/ref/heads/" in path and self.present:
                 # The second attempt must project fresh state, not a stale
                 # pre-failure snapshot, while the first write's result is unknown.
                 self.state["tasks"]["40"]["status"] = "blocked"
-                result["content"] = base64.b64encode(
-                    json.dumps(self.state).encode()
-                ).decode()
-            return result
+            return super().api(path)
 
         def graphql(self, query, **variables):
             if query.startswith("query($id:ID!,$cursor"):
@@ -335,3 +366,214 @@ def test_projection_token_removed_when_previously_absent(projection_run, monkeyp
     monkeypatch.delenv("GH_TOKEN")
     run(FakeGitHub())
     assert "GH_TOKEN" not in os.environ
+
+
+@pytest.mark.parametrize("size", [100, 1050479, 1090534])
+def test_small_and_original_incident_sizes_project_complete_state(size):
+    gh = FakeGitHub()
+    # Include a status after the padding so prefix-only reads cannot pass.
+    gh.state = {"version": 1, "history": "", "tasks": {"40": {"status": "running"}}}
+    gh.state["history"] = "x" * (size - len(gh.raw_state()))
+    assert len(gh.raw_state()) == size
+    original = copy.deepcopy(gh.state)
+    status.sync_status(gh, repo="o/r", owner="o", number=1)
+    assert gh.writes[0]["value"] == "Running" and gh.state == original
+    assert gh.reads[:4] == [
+        "repos/o/r/git/ref/heads/codex%2Fcoordination",
+        "repos/o/r/git/commits/" + gh.revision,
+        "repos/o/r/git/trees/" + gh.tree_id,
+        "repos/o/r/git/blobs/" + gh.blob_id,
+    ]
+
+
+def test_observed_contents_none_is_bypassed_without_following_urls():
+    class LargeState(FakeGitHub):
+        def api(self, path):
+            if "/contents/" in path:
+                return {
+                    "size": 1050479,
+                    "encoding": "none",
+                    "content": "",
+                    "sha": "469908320c4b96b420fa849c05e32cee0d4baa0f",
+                    "download_url": "https://untrusted.invalid/credentials",
+                }
+            return super().api(path)
+
+    gh = LargeState()
+    gh.state["history"] = "x" * 1050479
+    status.sync_status(gh, repo="o/r", owner="o", number=1)
+    assert len(gh.writes) == 1
+    assert not any("contents" in path or "https:" in path for path in gh.reads)
+
+
+def test_branch_movement_does_not_mix_commit_tree_or_blob():
+    class MovingBranch(FakeGitHub):
+        def api(self, path):
+            result = super().api(path)
+            if "/git/ref/heads/" in path:
+                self.state["tasks"]["40"]["status"] = "blocked"
+                # The returned ref's commit is immutable. Simulate a new branch
+                # tip without changing that commit's captured file bytes.
+                self.new_branch_revision = "c" * 40
+            return result
+
+    gh = MovingBranch()
+    status.sync_status(gh, repo="o/r", owner="o", number=1)
+    assert gh.writes[0]["value"] == "Running"
+    assert sum("/git/ref/heads/" in path for path in gh.reads) == 1
+    assert all(gh.new_branch_revision not in path for path in gh.reads)
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        "ref_name",
+        "ref_type",
+        "revision",
+        "commit_id",
+        "tree_id",
+        "truncated",
+        "missing_file",
+        "duplicate_file",
+        "symlink",
+        "submodule",
+        "file_type",
+        "file_id",
+        "zero_size",
+        "oversized",
+        "boolean_size",
+        "blob_id",
+        "blob_size",
+        "blob_bool_size",
+        "encoding",
+        "empty",
+        "invalid_base64",
+        "nonstring",
+        "truncated_content",
+        "hash",
+        "padded_huge",
+        "missing_key",
+        "null_tree",
+        "null_blob",
+    ],
+)
+def test_invalid_object_chain_fails_closed_and_is_sanitized(
+    projection_run, capsys, monkeypatch, change
+):
+    class Corrupt(FakeGitHub):
+        def api(self, path):
+            result = super().api(path)
+            if "/git/ref/heads/" in path:
+                if change == "ref_name":
+                    result["ref"] = "refs/heads/other"
+                if change == "ref_type":
+                    result["object"]["type"] = "tag"
+                if change == "revision":
+                    result["object"]["sha"] = "../../project-secret"
+            if "/git/commits/" in path and change == "commit_id":
+                result["sha"] = "c" * 40
+            if "/git/trees/" in path:
+                if change == "null_tree":
+                    return None
+                if change == "tree_id":
+                    result["sha"] = "c" * 40
+                if change == "truncated":
+                    result["truncated"] = True
+                if change == "missing_file":
+                    result["tree"] = []
+                if change == "duplicate_file":
+                    result["tree"] *= 2
+                entry = result["tree"][0] if result["tree"] else {}
+                if change == "symlink":
+                    entry["mode"] = "120000"
+                if change == "submodule":
+                    entry["mode"] = "160000"
+                if change == "file_type":
+                    entry["type"] = "tree"
+                if change == "file_id":
+                    entry["sha"] = "not-a-git-id"
+                if change == "zero_size":
+                    entry["size"] = 0
+                if change == "oversized":
+                    entry["size"] = status.MAX_STATE_BYTES + 1
+                if change == "boolean_size":
+                    entry["size"] = True
+            if "/git/blobs/" in path:
+                if change == "null_blob":
+                    return None
+                if change == "blob_id":
+                    result["sha"] = "c" * 40
+                if change == "blob_size":
+                    result["size"] += 1
+                if change == "blob_bool_size":
+                    result["size"] = True
+                if change == "encoding":
+                    result["encoding"] = "none"
+                if change == "empty":
+                    result["content"] = ""
+                if change == "invalid_base64":
+                    result["content"] = "project-secret!"
+                if change == "nonstring":
+                    result["content"] = []
+                if change == "truncated_content":
+                    result["content"] = result["content"][:-5]
+                if change == "hash":
+                    result["content"] = base64.b64encode(b"x" * len(self.raw)).decode()
+                if change == "padded_huge":
+                    result["content"] = " " * (2 * status.MAX_STATE_BYTES + 1)
+                if change == "missing_key":
+                    del result["content"]
+            return result
+
+    monkeypatch.setattr(
+        status,
+        "sync_board",
+        lambda *_a, **_kw: pytest.fail("Project write boundary reached"),
+    )
+    run, delays = projection_run
+    gh = Corrupt()
+    with pytest.raises(SystemExit, match="1"):
+        run(gh)
+    output = capsys.readouterr()
+    assert "invalid coordination state" in output.err
+    assert "project-secret" not in output.err + output.out
+    assert not gh.writes and not delays
+    assert not any("/issues/" in path for path in gh.reads)
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [
+        b"{",
+        b"\xff",
+        b"null",
+        b"[]",
+        b'{"version":2,"tasks":{}}',
+        b'{"version":true,"tasks":{}}',
+        b'{"version":1,"tasks":[]}',
+        b'{"version":1,"version":1,"tasks":{}}',
+        b'{"version":1,"tasks":{"40":{"status":"running","status":"done"}}}',
+        b'{"version":1,"history":NaN,"tasks":{}}',
+        b'{"version":1,"tasks":{"40":{"status":[]}}}',
+        b'{"version":1,"tasks":{"40":{"status":"invented"}}}',
+        b'{"version":1,"tasks":{"0":{"status":"running"}}}',
+    ],
+)
+def test_invalid_complete_blob_json_or_schema_never_writes(
+    projection_run, capsys, monkeypatch, raw
+):
+    class InvalidState(FakeGitHub):
+        def raw_state(self):
+            return raw
+
+    monkeypatch.setattr(
+        status,
+        "sync_board",
+        lambda *_a, **_kw: pytest.fail("Project write boundary reached"),
+    )
+    run, delays = projection_run
+    gh = InvalidState()
+    with pytest.raises(SystemExit, match="1"):
+        run(gh)
+    assert "Project projection failed:" in capsys.readouterr().err
+    assert not gh.writes and not delays
