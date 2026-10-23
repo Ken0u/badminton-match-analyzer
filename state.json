@@ -4305,6 +4305,13 @@
       "task_id": "212",
       "verb": "plan"
     },
+    "rally212-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792791440,
+      "fingerprint": "986fb639d12e856ed96dd6511c157bc0eddc03909d0162215cedb18712c5e9de",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -19072,6 +19079,23 @@
       "host_id": "MSI",
       "registered_at": 1792786795,
       "session_id": "rally210-msi-20261023-v1"
+    },
+    "MSI/rally212-msi-20261023-v1": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+        "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+        "rally210-incomplete-aggregate": "4e839ba32c3171937e5ebb8824c05b8daf1cacb69a055caf28fa2685d4b2f865"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792791440,
+      "session_id": "rally212-msi-20261023-v1"
     },
     "MSI/root_shuttle172_review": {
       "actor": "Ken0u",
