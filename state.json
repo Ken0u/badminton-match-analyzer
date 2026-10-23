@@ -4128,6 +4128,14 @@
       "task_id": "208",
       "verb": "checkpoint"
     },
+    "rally210-owner-authorize-v1": {
+      "actor": "Ken0u",
+      "at": 1792786795,
+      "fingerprint": "38a022d768e77d792591eea60e0a36fb29b8f1d500a97da9f5d578def3795df5",
+      "status": "ready",
+      "task_id": "210",
+      "verb": "human-approved"
+    },
     "rally210-plan-v1": {
       "actor": "Ken0u",
       "at": 1792756420,
@@ -4135,6 +4143,13 @@
       "status": "needs_human",
       "task_id": "210",
       "verb": "plan"
+    },
+    "rally210-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792786795,
+      "fingerprint": "795a91d3a7e20f53381fa51959143afa04e3e7e86481e6d8b043b15b53906c07",
+      "status": "ok",
+      "verb": "register"
     },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
@@ -15356,8 +15371,14 @@
     },
     "210": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792786795,
+        "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60"
+      },
       "planned_at": 1792756420,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Obtain configured-owner authorization of this exact risk-human specification before implementation or any image dispatch. This successor explicitly permits at most20 original PNGs and32MiB raw image bytes per genuine fresh existing ChatGPT-authenticated Codex CLI session,8GiB cumulative attempted image bytes and8GiB cumulative retained outputs across62/208/this successor, and8additional hours from its own genuine grant. This is a new bounded authorization, not a reset of62/208 grants, contexts or original deadlines. No paid service, API key, public image upload or manual merge.",
@@ -15425,7 +15446,7 @@
         ]
       },
       "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
@@ -18632,6 +18653,22 @@
       "host_id": "MSI",
       "registered_at": 1792614796,
       "session_id": "main177_review"
+    },
+    "MSI/rally210-msi-20261023-v1": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+        "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792786795,
+      "session_id": "rally210-msi-20261023-v1"
     },
     "MSI/root_shuttle172_review": {
       "actor": "Ken0u",
