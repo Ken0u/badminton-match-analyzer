@@ -82,6 +82,14 @@
       "task_id": "179",
       "verb": "review-result"
     },
+    "ci-bootstrap200-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792720646,
+      "fingerprint": "756d545394fe37725d73588c241fb55fe1499e01e3da838c9b15da67d3001f55",
+      "status": "needs_human",
+      "task_id": "200",
+      "verb": "plan"
+    },
     "cli-review97-next-v1": {
       "actor": "dootz1",
       "at": 1792469150,
@@ -4911,6 +4919,14 @@
       "fingerprint": "22b1961a87d12123749cc43273fc7d1c8f1359b76eb55de8ce8ab39ce27ec8ea",
       "status": "ready",
       "task_id": "197",
+      "verb": "plan"
+    },
+    "spec-200-08414646d22282f6a4592a62bf92bf67ee4234960f4dd8d7373b44b481628d76": {
+      "actor": "Ken0u",
+      "at": 1792720646,
+      "fingerprint": "e9647ca944d6890b7cabff791028e6241e79dcf981f8400e1da105423990aea2",
+      "status": "needs_human",
+      "task_id": "200",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -14254,6 +14270,55 @@
         "pr_number": 198,
         "spec_hash": "c16abd43c0a1fc88cf07fbac0f19668000ecef57e7e6fa01fd243e95286c8ab6"
       }
+    },
+    "200": {
+      "epoch": 0,
+      "planned_at": 1792720646,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Revalidate all issue history, open PRs and coordination reservations before claiming. Preserve PR199, its exact source4411e581b94dd96d46149f722ae9a2ddddc7e5be, all original failed attempts and successful reused jobs, and completed192/197 delivery evidence. Obtain configured-owner authorization of this frozen risk-human specification and a separate committed grant before editing; do not reuse a prior retry or repair authorization.",
+          "Investigate existing Ubuntu24 runner evidence and dependency availability before choosing a minimal bootstrap change. The observed PR199 attempt1 requested64.7MB,87 new packages and4 upgrades from azure.archive.ubuntu.com, timing out both Python jobs before tests. A26 migration notice does not establish cause. Freeze baseline logs and intended success/failure checks before implementation; distinguish observed download slowness from unknown underlying network cause.",
+          "Change only Ubuntu system-dependency preparation in the existing Python, package and browser jobs and a narrowly scoped helper if needed. Reuse verified preinstalled native tools/libraries where available; retain installation of missing required dependencies. If an alternate Ubuntu archive is needed, restrict it to an official signed Ubuntu archive for the runner's current suite and architecture, retaining existing signature/keyring and package validation. Preserve unrelated Microsoft/third-party sources. Never disable signatures, use trusted=yes, fetch replacement signing keys or execute downloaded shell scripts. Do not add marketplace actions, external services or credentials.",
+          "Fail closed when the required ffmpeg/ffprobe or OpenCV runtime is unavailable. Preserve existing dependency lock, Python versions, generated native-media/browser/package tests, all twelve verification jobs, exact-source binding, timeout values, global retry thresholds, publishing policy and controller enforcement. Do not skip checks, broaden retries, infer success from a bootstrap probe or change production application behavior. If a minimal reliable solution cannot be verified, preserve findings and escalate rather than widening scope.",
+          "Add focused generated unit checks for actual helper branches, missing tools/libraries, rejected unsupported suites or unsafe archives if applicable, command failures and unavailable dependencies. Run required project Python/static/dependency/document checks using the existing Windows venv with isolated roots and cleared credentials. Actual Linux bootstrap/native behavior is verified by unchanged normal exact-head/main CI, not by Windows subprocess mocks. No local browser/inference repetition is required for dependency preparation alone.",
+          "Document the observed failure, exact source and baseline/candidate evidence, reproduction and limitations in the granted aggregate report. Publish a focused tested PR through normal controller integration, verify exact merged-main CI and independently verify full public wheel/sdist and both-image delivery. Never manually merge, edit coordination state or rerun historical failed runs. Preserve incomplete189 work and its own separate verification requirement.",
+          "Bound all generated outputs, logs and downloaded CI/build evidence to128MiB and3h from grant, three repair rounds. Local tools/environments/data/research processes remain unchanged; only ephemeral existing hosted CI may install the declared system dependencies. No local installations, real videos/data/labels/weights, consumed holdout inputs/protocol/predictions/private membership/artifacts, source-image assessment, model promotion, paid services, protection changes, production/deployment/auth/controller/security-policy edits or PROGRESS access/edits. Record checkpoints and final handoff on the owning issue."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "197"
+        ],
+        "exclusions": [
+          "No weakened or skipped checks, changed job timeouts or global retry policy, historical workflow reruns, unsigned/untrusted package sources, new actions/services/credentials, manual integration, production application/model/data/process changes, local dependency installations or deprecated PROGRESS access."
+        ],
+        "limits": {
+          "max_output_bytes": 134217728,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Reduce recurring Ubuntu system-dependency bootstrap failures while retaining every existing native-media verification and controller gate.",
+        "paths": [
+          ".github/workflows/ci.yml",
+          "scripts/ci_linux_dependencies.py",
+          "tests/test_ci_linux_dependencies.py",
+          "docs/CI_BOOTSTRAP_REPORT.md"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Preserved baseline download/timeout evidence and focused generated bootstrap tests; required project checks; explicit limitations of Windows mocks versus actual Linux execution.",
+          "Unchanged twelve-job exact-head CI, normal controller merge, exact merged-main CI and independent complete public package/both-image delivery."
+        ]
+      },
+      "spec_hash": "d501450bca0d4fb12317e6a201101a19ea48e92b55e5729e481afd237e1cabde",
+      "status": "needs_human"
     },
     "62": {
       "epoch": 0,
