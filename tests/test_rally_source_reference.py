@@ -722,7 +722,7 @@ def test_dense_assessment_protocol_rejects_replaced_predecessor_evidence(tmp_pat
 
 
 def generated_consumer_checkout(tmp_path, monkeypatch):
-    """Only Git cleanliness is stubbed; file/runtime/protocol seals are actual."""
+    """Seal generated files and the real core runtime without requiring ML extras."""
     checkout = tmp_path / "checkout"
     origin = Path(r.__file__).resolve().parents[2]
     for relative in (
@@ -748,6 +748,13 @@ def generated_consumer_checkout(tmp_path, monkeypatch):
         "check_output",
         lambda command, **kwargs: "c" * 40 if command[1] == "rev-parse" else "",
     )
+    version = r.importlib.metadata.version
+    optional = {"torch": "0.generated", "torchvision": "0.generated"}
+    monkeypatch.setattr(
+        r.importlib.metadata,
+        "version",
+        lambda name: optional[name] if name in optional else version(name),
+    )
     return checkout
 
 
@@ -762,6 +769,8 @@ def test_dense_consumer_context_keeps_original_grant_and_seals_all_protocol_vers
     assert context["granted_at"] == granted
     assert context["deadline"] == granted + 28800
     assert context["protocol_path"] == protocol_path.relative_to(checkout).as_posix()
+    assert context["runtime"]["torch"] == "0.generated"
+    assert context["runtime"]["torchvision"] == "0.generated"
     for n in (1, 2, 3):
         name = f"data/manifests/rally_reference_protocol_v{n}.json"
         assert context["consumers"][name] == file_hash(checkout / name)
@@ -806,6 +815,28 @@ def test_dense_consumer_context_rejects_changed_consumer_or_protocol(
     path = checkout / relative
     path.write_bytes(path.read_bytes() + b"\n")
     with pytest.raises(ValueError):
+        r.verify_context(checkout, context)
+
+
+@pytest.mark.parametrize("package", ["torch", "torchvision"])
+def test_dense_consumer_context_rejects_changed_optional_runtime(
+    tmp_path, monkeypatch, package
+):
+    checkout = generated_consumer_checkout(tmp_path, monkeypatch)
+    context = r.consumer_context(
+        checkout,
+        checkout / "data/manifests/rally_reference_protocol_v3.json",
+        tmp_path / "inputs",
+        1700000000,
+    )
+    monkeypatch.setattr(r.time, "time", lambda: context["deadline"] - 1)
+    version = r.importlib.metadata.version
+    monkeypatch.setattr(
+        r.importlib.metadata,
+        "version",
+        lambda name: "1.changed" if name == package else version(name),
+    )
+    with pytest.raises(ValueError, match="runtime changed"):
         r.verify_context(checkout, context)
 
 

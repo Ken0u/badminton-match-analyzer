@@ -54,7 +54,12 @@ retained privately. Both original failed process lifetimes are independently
 absent. The reusable implementation fixes acceptance of negative, fractional,
 boolean and zero byte/chunk charges, preserves predecessor accounting, and
 validates protocol-bound receipts and packet reuse without new native work.
-All **145 focused tests and 2,299 full tests pass, with four optional skips**;
+Initial CI exposed generated context tests assuming optional Torch metadata was
+installed in the lean verification environments. Their fixture now supplies
+explicit synthetic ML versions while retaining real core runtime/file seals;
+additional regressions reject changed Torch and torchvision versions. Actual
+scientific runtime sealing and the immutable producer are unchanged.
+All **147 focused tests and 2,301 full tests pass, with four optional skips**;
 Ruff, formatting, dependency, diff and repository checks pass. Generated checks
 establish software behavior, not successful source inspection or badminton
 annotation accuracy. Exact PR/main checks and delivery are recorded on #210.
