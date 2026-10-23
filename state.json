@@ -4343,6 +4343,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-live-maintenance-00042-v1": {
+      "actor": "Ken0u",
+      "at": 1792794701,
+      "epoch": 1,
+      "fingerprint": "b619ed277a3efddd3396697db806ac4e13bff17a4242ba20ed59ed873ed38542",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-next-v1": {
       "actor": "Ken0u",
       "at": 1792791609,
@@ -15777,15 +15786,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
-        "summary": "Generated-only pre-comparison audit found a genuine targeted-composite identity false positive in frozen consumer eebbe21: both exhaustive synthetic originals define actorA as blue-shirt; a validated blind target resolving frame3 defines the same actorA as a different/unlinked red-shirt player. Original serve remains outside the target. Current targeted_reference_status returns complete_reference=true and all_requested_labels_supported=true despite the unresolved cross-region identity. Identical-definition control also passes. No real assessment outputs/labels/images, prediction or app truth were opened. Reproduction .cache/rally212-generated-composite-audit-v1.py/result.json retained privately; synthetic process/session locators are explicitly NOT real scientific evidence. This is within212 reserved code/tests and its authorized generated-regression/defect-repair scope. Plan: add failing generated seam-identity regressions, repair only implementation-branch composite acceptance conservatively, test and commit, then timestamp a distinct stricter acceptance consumer/context with original grant/deadline before opening/comparing real originals. Immutable original producer/helper/protocol/context, live assessors, images, packing, own-stream continuity, eligibility, budgets and deadline remain unchanged; original outputs will still validate against their exact original context. Preserve both contexts and explain the generated-only reason; do not retroactively rewrite labels or accept a positive on the old calculation. Both original passes remain live; no implicit restart or adjudication. No manual merge, scope expansion, paid service or policy change."
+        "summary": "{\"all_original_lifetimes_absent\": true, \"at\": 1792794696.6420333, \"attempted_image_bytes\": 2250068989, \"both_original_indexes_complete\": false, \"coordination\": \"73a1c6651fcc8bd1520293b6f0e53bdf3d9fa589\", \"deadline\": 1792820409, \"dispatch_stop\": true, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 47, \"launcher_alive\": false, \"original_cli_alive\": 0, \"started\": 47}, \"independent_b\": {\"complete_index\": false, \"finished\": 50, \"launcher_alive\": false, \"original_cli_alive\": 0, \"started\": 50}}, \"lease_expiry\": 1792804910}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2378passed/4optional skips,224focused, Ruff/format/pip/diff/repository pass;157check lifetimes independently absent. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
       },
-      "checkpoint_at": 1792794110,
+      "checkpoint_at": 1792794701,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792804910,
+        "expires_at": 1792805501,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
