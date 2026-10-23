@@ -127,6 +127,15 @@
       "task_id": "200",
       "verb": "plan"
     },
+    "ci-bootstrap200-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792722292,
+      "epoch": 1,
+      "fingerprint": "e40be5a6ae8a4384ec1beb740e199649c612796a6def78f8c4e994eaffad5441",
+      "status": "review",
+      "task_id": "200",
+      "verb": "submit"
+    },
     "cli-review97-next-v1": {
       "actor": "dootz1",
       "at": 1792469150,
@@ -14393,6 +14402,7 @@
       },
       "planned_at": 1792720646,
       "planned_by": "Ken0u",
+      "pr_number": 201,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -14437,7 +14447,13 @@
         ]
       },
       "spec_hash": "d501450bca0d4fb12317e6a201101a19ea48e92b55e5729e481afd237e1cabde",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
+        "head_sha": "3524845187e94c3e5f006733d6d8e87ddd228f1f",
+        "pr_number": 201,
+        "spec_hash": "d501450bca0d4fb12317e6a201101a19ea48e92b55e5729e481afd237e1cabde"
+      }
     },
     "62": {
       "epoch": 0,
