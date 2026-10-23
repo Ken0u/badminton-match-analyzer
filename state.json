@@ -3912,6 +3912,13 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "msi-confirmed-cuda-capability-v1": {
+      "actor": "Ken0u",
+      "at": 1792731805,
+      "fingerprint": "712b2a7ef51e36c6508d49ae2b5d9c3172ab38c986fe2114430145e1ef9995b1",
+      "status": "ok",
+      "verb": "register"
+    },
     "post-shuttle204-next-v1": {
       "actor": "Ken0u",
       "at": 1792729799,
@@ -17969,10 +17976,11 @@
       "capabilities": [
         "cpu",
         "windows",
-        "review-inputs"
+        "review-inputs",
+        "cuda"
       ],
       "host_id": "MSI",
-      "registered_at": 1792725994,
+      "registered_at": 1792731805,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
