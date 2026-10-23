@@ -602,6 +602,639 @@ def test_extended_protocol_keeps_v1_and_full_grid():
     assert v2["predecessor"]["image_bytes"] == 340760009
 
 
+def assessment_protocol():
+    """Read the committed specification, without opening source data or labels."""
+    return r.load_protocol(
+        Path(r.__file__).resolve().parents[2]
+        / "data/manifests/rally_reference_protocol_v3.json"
+    )
+
+
+def test_dense_assessment_protocol_preserves_both_earlier_protocols():
+    folder = Path(r.__file__).resolve().parents[2] / "data/manifests"
+    earlier = {
+        n: r.load_protocol(folder / f"rally_reference_protocol_v{n}.json")
+        for n in (1, 2)
+    }
+    protocol = assessment_protocol()
+    assert (protocol["schema_version"], protocol["task"]) == (3, 210)
+    assert protocol["payload"]["max_images_per_session"] == 20
+    assert protocol["payload"]["max_image_bytes_per_session"] == 32 * 1024**2
+    assert protocol["payload"]["max_total_image_bytes"] == 8 * 1024**3
+    assert protocol["limits"]["max_output_bytes"] == 8 * 1024**3
+    assert protocol["limits"]["task_seconds_from_grant"] == 8 * 3600
+    assert protocol["predecessor"]["task"] == 208
+    assert protocol["predecessor"]["image_bytes"] == 1347060833
+    assert protocol["sources"] == earlier[2]["sources"]
+    assert protocol["eligibility"] == r.ELIGIBILITY
+    assert not any(protocol["eligibility"].values())
+    for n, before in earlier.items():
+        assert r.load_protocol(folder / f"rally_reference_protocol_v{n}.json") == before
+        assert before["payload"]["max_image_bytes_per_session"] == 6 * 1024**2
+    assert (r.MAX_IMAGES, r.MAX_SESSION_BYTES, r.MAX_PAYLOAD_BYTES) == (
+        20,
+        6 * 1024**2,
+        2 * 1024**3,
+    )
+
+
+@pytest.mark.parametrize(
+    ("section", "key", "value"),
+    [
+        (None, "schema_version", True),
+        (None, "schema_version", 4),
+        (None, "task", 208),
+        ("payload", "max_images_per_session", 21),
+        ("payload", "max_image_bytes_per_session", 32 * 1024**2 + 1),
+        ("payload", "max_total_image_bytes", 8 * 1024**3 + 1),
+        ("limits", "max_output_bytes", 8 * 1024**3 + 1),
+        ("limits", "task_seconds_from_grant", 8 * 3600 + 1),
+        ("limits", "paid_services", True),
+        ("assessment", "chunk_overlap_frames", 1),
+        ("assessment", "adjudication", "third_exhaustive_pass"),
+        ("predecessor", "task", 62),
+        ("predecessor", "image_bytes", 1347060832),
+        ("eligibility", "training_allowed", True),
+        ("eligibility", "independent_test_allowed", True),
+        ("eligibility", "model_deployment_allowed", True),
+        ("eligibility", "dataset_redistribution_allowed", True),
+    ],
+)
+def test_dense_assessment_protocol_rejects_unapproved_scope(
+    tmp_path, section, key, value
+):
+    protocol = assessment_protocol()
+    target = protocol if section is None else protocol[section]
+    target[key] = value
+    path = tmp_path / "changed-protocol.json"
+    path.write_bytes(encoded(protocol))
+    with pytest.raises(ValueError):
+        r.load_protocol(path)
+
+
+@pytest.mark.parametrize(
+    "key",
+    [
+        "source_id",
+        "source_sha256",
+        "clock_sha256",
+        "packet_sha256",
+        "native_frame_count",
+    ],
+)
+def test_dense_assessment_protocol_binds_original_sources(tmp_path, key):
+    protocol = assessment_protocol()
+    source = protocol["sources"][0]
+    source[key] = source[key] + 1 if key == "native_frame_count" else "f" * 64
+    path = tmp_path / "changed-source.json"
+    path.write_bytes(encoded(protocol))
+    with pytest.raises(ValueError):
+        r.load_protocol(path)
+
+
+@pytest.mark.parametrize(
+    "key",
+    [
+        "head_sha",
+        "merged_sha",
+        "screening_sha256",
+        "selection_sha256",
+        "context_sha256",
+        "terminal_sha256",
+        "dense_packets",
+        "native_frames",
+        "retained_slots",
+        "complete_references",
+    ],
+)
+def test_dense_assessment_protocol_rejects_replaced_predecessor_evidence(tmp_path, key):
+    protocol = assessment_protocol()
+    current = protocol["predecessor"][key]
+    if isinstance(current, dict):
+        first = next(iter(current))
+        current[first] = current[first] + 1 if type(current[first]) is int else "f" * 64
+    else:
+        protocol["predecessor"][key] = current + 1 if type(current) is int else "f" * 64
+    path = tmp_path / "changed-predecessor.json"
+    path.write_bytes(encoded(protocol))
+    with pytest.raises(ValueError):
+        r.load_protocol(path)
+
+
+def generated_consumer_checkout(tmp_path, monkeypatch):
+    """Only Git cleanliness is stubbed; file/runtime/protocol seals are actual."""
+    checkout = tmp_path / "checkout"
+    origin = Path(r.__file__).resolve().parents[2]
+    for relative in (
+        "backend/badminton/generated.py",
+        "scripts/prepare_rally_references.py",
+        "data/manifests/rally_reference_protocol_v1.json",
+        "data/manifests/rally_reference_protocol_v2.json",
+        "data/manifests/rally_reference_protocol_v3.json",
+        "data/manifests/shuttle_review_sources_v1.json",
+        "pyproject.toml",
+        "uv.lock",
+        "requirements.lock",
+    ):
+        path = checkout / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(
+            (origin / relative).read_bytes()
+            if relative.startswith("data/manifests/")
+            else b"# generated consumer fixture\n"
+        )
+    monkeypatch.setattr(
+        r.subprocess,
+        "check_output",
+        lambda command, **kwargs: "c" * 40 if command[1] == "rev-parse" else "",
+    )
+    return checkout
+
+
+def test_dense_consumer_context_keeps_original_grant_and_seals_all_protocol_versions(
+    tmp_path, monkeypatch
+):
+    checkout = generated_consumer_checkout(tmp_path, monkeypatch)
+    granted = 1700000000
+    protocol_path = checkout / "data/manifests/rally_reference_protocol_v3.json"
+    context = r.consumer_context(checkout, protocol_path, tmp_path / "inputs", granted)
+    assert context["task"] == 210
+    assert context["granted_at"] == granted
+    assert context["deadline"] == granted + 28800
+    assert context["protocol_path"] == protocol_path.relative_to(checkout).as_posix()
+    for n in (1, 2, 3):
+        name = f"data/manifests/rally_reference_protocol_v{n}.json"
+        assert context["consumers"][name] == file_hash(checkout / name)
+    monkeypatch.setattr(r.time, "time", lambda: context["deadline"] - 1)
+    r.verify_context(checkout, context)
+    monkeypatch.setattr(r.time, "time", lambda: context["deadline"])
+    with pytest.raises(ValueError, match="deadline"):
+        r.verify_context(checkout, context)
+
+
+@pytest.mark.parametrize("n", [1, 2])
+def test_earlier_consumer_contexts_keep_four_hour_deadlines(tmp_path, monkeypatch, n):
+    checkout = generated_consumer_checkout(tmp_path, monkeypatch)
+    context = r.consumer_context(
+        checkout,
+        checkout / f"data/manifests/rally_reference_protocol_v{n}.json",
+        tmp_path / "inputs",
+        1700000000,
+    )
+    assert context["deadline"] - context["granted_at"] == 14400
+
+
+@pytest.mark.parametrize(
+    "relative",
+    [
+        "backend/badminton/generated.py",
+        "data/manifests/rally_reference_protocol_v2.json",
+        "data/manifests/rally_reference_protocol_v3.json",
+    ],
+)
+def test_dense_consumer_context_rejects_changed_consumer_or_protocol(
+    tmp_path, monkeypatch, relative
+):
+    checkout = generated_consumer_checkout(tmp_path, monkeypatch)
+    context = r.consumer_context(
+        checkout,
+        checkout / "data/manifests/rally_reference_protocol_v3.json",
+        tmp_path / "inputs",
+        1700000000,
+    )
+    monkeypatch.setattr(r.time, "time", lambda: context["deadline"] - 1)
+    path = checkout / relative
+    path.write_bytes(path.read_bytes() + b"\n")
+    with pytest.raises(ValueError):
+        r.verify_context(checkout, context)
+
+
+def test_expanded_chunks_preserve_every_native_frame_and_charge_overlap():
+    protocol = assessment_protocol()
+    p = packet(26, 1024**2)
+    expanded = r.plan_chunks(p, dense=True, protocol=protocol)
+    assert [c["frames"] for c in expanded] == [list(range(20)), list(range(18, 26))]
+    assert [c["image_bytes"] for c in expanded] == [20 * 1024**2, 8 * 1024**2]
+    assert {n for c in expanded for n in c["frames"]} == set(range(26))
+    assert expanded[0]["frames"][-2:] == expanded[1]["frames"][:2]
+    prior = protocol["predecessor"]["image_bytes"]
+    assert r.payload_cost(
+        expanded, streams=2, prior_bytes=prior, protocol=protocol
+    ) == (prior + 2 * 28 * 1024**2)
+    # Calling the authorized path must not mutate the legacy default path.
+    legacy = r.plan_chunks(p, dense=True)
+    assert len(legacy) == 6
+    assert all(c["image_bytes"] <= 6 * 1024**2 for c in legacy)
+
+
+def test_expanded_chunk_limits_include_exact_session_and_image_boundaries():
+    protocol = assessment_protocol()
+    p = packet(20, 2 * 1024**2)
+    chunks = r.plan_chunks(p, dense=True, protocol=protocol)
+    assert [len(c["frames"]) for c in chunks] == [16, 6]
+    assert chunks[0]["image_bytes"] == 32 * 1024**2
+    assert [
+        len(c["frames"])
+        for c in r.plan_chunks(packet(21), dense=True, protocol=protocol)
+    ] == [
+        20,
+        3,
+    ]
+    with pytest.raises(ValueError):
+        r.plan_chunks(packet(1, 32 * 1024**2 + 1), dense=True, protocol=protocol)
+
+
+def test_expanded_cumulative_budget_counts_previous_dispatches_and_repeated_frames():
+    protocol = assessment_protocol()
+    chunks = r.plan_chunks(packet(26, 1024**2), dense=True, protocol=protocol)
+    charge = 2 * sum(c["image_bytes"] for c in chunks)
+    limit = 8 * 1024**3
+    assert charge == 56 * 1024**2  # Four repeated frame memberships across two streams.
+    assert (
+        r.payload_cost(chunks, streams=2, prior_bytes=limit - charge, protocol=protocol)
+        == limit
+    )
+    with pytest.raises(ValueError):
+        r.payload_cost(
+            chunks, streams=2, prior_bytes=limit - charge + 1, protocol=protocol
+        )
+    with pytest.raises(ValueError):
+        r.payload_cost(chunks, streams=2, prior_bytes=2 * 1024**3)
+    with pytest.raises(ValueError):
+        r.payload_cost(chunks, streams=2, protocol=protocol)
+
+
+@pytest.mark.parametrize("size", [0, -1, True, 1.5])
+@pytest.mark.parametrize("expanded", [False, True])
+def test_chunk_planning_rejects_nonpositive_or_noninteger_original_image_bytes(
+    size, expanded
+):
+    protocol = assessment_protocol() if expanded else None
+    with pytest.raises(ValueError):
+        r.plan_chunks(packet(8, size), dense=True, protocol=protocol)
+
+
+@pytest.mark.parametrize("size", [0, -1, True, 1.5])
+def test_cumulative_budget_rejects_invalid_chunk_charges(size):
+    protocol = assessment_protocol()
+    chunks = [{"image_bytes": size, "frames": [0]}]
+    with pytest.raises(ValueError):
+        r.payload_cost(
+            chunks,
+            streams=2,
+            prior_bytes=protocol["predecessor"]["image_bytes"],
+            protocol=protocol,
+        )
+
+
+def test_expanded_assessment_receipt_requires_explicit_protocol_and_keeps_unknowns():
+    protocol = assessment_protocol()
+    p = packet(20, 1024**2)
+    chunk = r.plan_chunks(p, dense=True, protocol=protocol)[0]
+    document = assessment(p, chunk)
+    document["scene"] = "unknown"
+    document["actors"][0]["identity_supported"] = False
+    document["events"][0]["actor_id"] = None
+    document["events"][0]["side"] = "unknown"
+    document["events"][1]["actor_id"] = None
+    document["events"][-1]["evidence"] = "unknown"
+    document["unresolved_gaps"] = [{"interval": [8, 9], "reason": "source occlusion"}]
+    for row in document["frame_states"]:
+        row["scene"] = "unknown"
+    original = copy.deepcopy(document)
+    execution = receipt(document, chunk)
+    r.validate_assessment(
+        document,
+        p,
+        chunk,
+        execution,
+        stage="dense",
+        stream="independent_a",
+        protocol=protocol,
+    )
+    assert document == original
+    assert not any(document["eligibility"].values())
+    with pytest.raises(ValueError):
+        r.validate_assessment(
+            document, p, chunk, execution, stage="dense", stream="independent_a"
+        )
+    changed = copy.deepcopy(execution)
+    changed["image_bytes"] -= 1
+    with pytest.raises(ValueError):
+        r.validate_assessment(
+            document,
+            p,
+            chunk,
+            changed,
+            stage="dense",
+            stream="independent_a",
+            protocol=protocol,
+        )
+
+
+@pytest.mark.parametrize("stage", ["overview", "dense"])
+def test_dense_reuse_protocol_refuses_new_preparation_before_admission_or_decode(
+    tmp_path, monkeypatch, stage
+):
+    import time
+
+    from badminton import config, jobs
+    from badminton.storage import Store
+
+    root = tmp_path / "generated"
+    data = root / "data/processed"
+    Store(data)
+    monkeypatch.setattr(config, "ROOT", root)
+    monkeypatch.setattr(config, "DATA", data)
+    monkeypatch.setattr(config, "WEIGHTS", root / "models/weights")
+    for name in r.CREDENTIALS:
+        monkeypatch.delenv(name, raising=False)
+    protocol = assessment_protocol()
+    context_path = root / ".cache/context.json"
+    context_path.parent.mkdir()
+    context_path.write_bytes(encoded({"task": 210, "inputs": protocol["sources"]}))
+    stamp = root / ".cache/timestamp.json"
+    stamp.write_bytes(
+        encoded(
+            {
+                "context_sha256": file_hash(context_path),
+                "url": "https://github.com/Ken0u/badminton-match-analyzer/issues/210#issuecomment-0",
+                "published_at": time.time(),
+            }
+        )
+    )
+    monkeypatch.setattr(r, "load_protocol", lambda path: protocol)
+    monkeypatch.setattr(r, "verify_context", lambda checkout, context: None)
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("Reuse authorization must not start native preparation")
+
+    monkeypatch.setattr(jobs, "run_local_job", forbidden)
+    monkeypatch.setattr(r, "extract_frames", forbidden)
+    output = root / f".cache/rally210-source-only-v1/{stage}-forbidden"
+    with pytest.raises(ValueError, match="forbids new native preparation"):
+        r.run_preparation(
+            root,
+            root,
+            output,
+            context_path,
+            file_hash(context_path),
+            stamp,
+            stage=stage,
+        )
+    assert not output.exists()
+    assert Store(data).jobs() == []
+
+
+@pytest.fixture
+def generated_dense_reuse(tmp_path, monkeypatch):
+    """Real generated PNG/hash/Store checks, with synthetic protocol freezing.
+
+    Only exact repository protocol constants and current consumer freezing are
+    substituted. No source media is decoded, and no labels or research inputs
+    are opened. The archived producer is deliberately expired.
+    """
+    import time
+
+    from badminton.storage import Store
+    from PIL import Image
+
+    root = tmp_path / "generated"
+    inputs = root / ".cache/inputs"
+    output = root / ".cache/rally208-source-only-v1/dense-v1"
+    output.mkdir(parents=True)
+    sources, packets = [], {}
+    bounds = {"start_frame": 5, "end_frame": 10}
+    for sid in r.SOURCE_IDS:
+        folder = inputs / sid
+        folder.mkdir(parents=True)
+        # Hash-only original-source validation does not decode this synthetic file.
+        (folder / "source.mp4").write_bytes(
+            b"generated source identity " + sid.encode()
+        )
+        census = clock(25)
+        census["source_sha256"] = file_hash(folder / "source.mp4")
+        (folder / "clock.json").write_bytes(encoded(census))
+        source_packet = {
+            "source_id": sid,
+            "source_sha256": census["source_sha256"],
+            "clock_sha256": file_hash(folder / "clock.json"),
+            "eligibility": dict(r.ELIGIBILITY),
+        }
+        (folder / "packet.json").write_bytes(encoded(source_packet))
+        sources.append(
+            {
+                **{
+                    k: source_packet[k]
+                    for k in ("source_id", "source_sha256", "clock_sha256")
+                },
+                "packet_sha256": file_hash(folder / "packet.json"),
+                "native_frame_count": 25,
+            }
+        )
+        members = r.dense_memberships(census, bounds)
+        rows = []
+        for member in members:
+            native = census["frames"][member["frame"]]
+            path = output / f"images/{sid}/{native['frame']:09d}.png"
+            path.parent.mkdir(parents=True, exist_ok=True)
+            Image.new("RGB", (32, 24), (native["frame"], 0, 0)).save(path)
+            rows.append(
+                {
+                    **native,
+                    "scene": "unknown",
+                    "camera_view": "unreviewed",
+                    "image": {
+                        "path": path.relative_to(output).as_posix(),
+                        "sha256": file_hash(path),
+                        "bytes": path.stat().st_size,
+                    },
+                }
+            )
+        packets[sid] = {
+            **source_packet,
+            "memberships": members,
+            "frames": rows,
+            "stage": "dense",
+        }
+    archived = {"task": 208, "inputs": sources, "deadline": 0}
+    (output / "context.json").write_bytes(encoded(archived))
+    archived_sha = file_hash(output / "context.json")
+    for sid, p in packets.items():
+        p["context_sha256"] = archived_sha
+        (output / f"{sid}.packet.json").write_bytes(encoded(p))
+    states = {
+        sid: {"status": "provisional", "bounds": bounds, "complete_reference": False}
+        for sid in r.SOURCE_IDS
+    }
+    base = output.parent
+    evidence = base / "generated-assessment.json"
+    evidence.write_bytes(encoded({"generated": True}))
+    (base / "dense-selection-v1.json").write_bytes(
+        encoded(
+            {
+                "sources": states,
+                "assessment_seals": {evidence.name: file_hash(evidence)},
+            }
+        )
+    )
+    (base / "screening-sealed-v1.json").write_bytes(encoded({"sources": states}))
+    slots = {
+        "sources": [
+            {"source_id": sid, "status": "unavailable", "complete_reference": False}
+            for sid in r.SOURCE_IDS
+        ],
+        "eligibility": dict(r.ELIGIBILITY),
+    }
+    (output / "slots.json").write_bytes(encoded(slots))
+    child = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import json,psutil;p=psutil.Process();print(json.dumps({'pid':p.pid,'creation_time':p.create_time()}))",
+        ],
+        capture_output=True,
+        check=True,
+        timeout=20,
+    )
+    process = json.loads(child.stdout)
+    admission = {
+        "job_id": "generated-reuse",
+        "context_sha256": archived_sha,
+        "process": process,
+    }
+    (output / "admission.json").write_bytes(encoded(admission))
+    summary = {"generated": True}
+    Store(root / "data/processed").put_job(
+        {
+            "id": admission["job_id"],
+            "status": "completed",
+            "owner_pid": process["pid"],
+            "owner_started": process["creation_time"],
+            "summary": summary,
+        }
+    )
+    (output / "terminal.json").write_bytes(
+        encoded(
+            {
+                "job_id": admission["job_id"],
+                "status": "completed",
+                "admission_sha256": file_hash(output / "admission.json"),
+                "summary": summary,
+                "artifacts": {},
+            }
+        )
+    )
+    protocol = assessment_protocol()
+    protocol["sources"] = sources
+    predecessor = protocol["predecessor"]
+    for name, path in (
+        ("context_sha256", output / "context.json"),
+        ("terminal_sha256", output / "terminal.json"),
+        ("selection_sha256", base / "dense-selection-v1.json"),
+        ("screening_sha256", base / "screening-sealed-v1.json"),
+    ):
+        predecessor[name] = file_hash(path)
+    predecessor["dense_packets"] = {
+        sid: file_hash(output / f"{sid}.packet.json") for sid in r.SOURCE_IDS
+    }
+    predecessor["native_frames"] = {sid: len(p["frames"]) for sid, p in packets.items()}
+    (base / "payload-reservation.json").write_bytes(
+        encoded({"image_bytes": predecessor["image_bytes"] - 340760009})
+    )
+    current = {
+        "task": 210,
+        "protocol_path": "data/manifests/rally_reference_protocol_v3.json",
+        "input_root": str(inputs),
+        "inputs": sources,
+        "commit": "c" * 40,
+        "granted_at": int(time.time()) - 1,
+        "deadline": int(time.time()) + 28800,
+    }
+    checked_contexts = []
+    monkeypatch.setattr(r, "load_protocol", lambda path: protocol)
+    monkeypatch.setattr(r, "_validate_dense_protocol", lambda doc: None)
+    monkeypatch.setattr(
+        r, "verify_context", lambda checkout, doc: checked_contexts.append(doc)
+    )
+    return root, output, current, protocol, checked_contexts
+
+
+def test_reuse_preserves_expired_producer_and_only_publishes_metadata(
+    generated_dense_reuse, monkeypatch
+):
+    root, original, context, protocol, checked = generated_dense_reuse
+    original_files = {
+        path.relative_to(root).as_posix(): file_hash(path)
+        for path in (root / ".cache").rglob("*")
+        if path.is_file()
+    }
+
+    def forbidden(*args, **kwargs):
+        pytest.fail("Reuse must not decode or copy native source frames")
+
+    monkeypatch.setattr(r, "extract_frames", forbidden)
+    result = r.reuse_dense_packets(root, root, context, original)
+    assert result["source_slots"] == 2
+    assert result["native_frames"] == sum(
+        protocol["predecessor"]["native_frames"].values()
+    )
+    assert result["prior_charged_image_bytes"] == 1347060833
+    assert not any(result["eligibility"].values())
+    assert checked == [context, context]
+    assert {
+        path.relative_to(root).as_posix(): file_hash(path)
+        for path in (root / ".cache").rglob("*")
+        if path.is_file()
+    } == original_files
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        "context",
+        "terminal",
+        "selection",
+        "screening",
+        "packet",
+        "native_png",
+        "source",
+        "census",
+        "evidence",
+        "prior_charge",
+    ],
+)
+def test_reuse_rejects_tampered_archived_inputs_without_decode(
+    generated_dense_reuse, monkeypatch, change
+):
+    root, original, context, protocol, _ = generated_dense_reuse
+    sid = r.SOURCE_IDS[0]
+    paths = {
+        "context": original / "context.json",
+        "terminal": original / "terminal.json",
+        "selection": original.parent / "dense-selection-v1.json",
+        "screening": original.parent / "screening-sealed-v1.json",
+        "packet": original / f"{sid}.packet.json",
+        "native_png": original / f"images/{sid}/000000000.png",
+        "source": Path(context["input_root"]) / sid / "source.mp4",
+        "census": Path(context["input_root"]) / sid / "clock.json",
+        "evidence": original.parent / "generated-assessment.json",
+        "prior_charge": original.parent / "payload-reservation.json",
+    }
+    path = paths[change]
+    if change == "prior_charge":
+        path.write_bytes(
+            encoded({"image_bytes": protocol["predecessor"]["image_bytes"]})
+        )
+    else:
+        path.write_bytes(path.read_bytes() + b"\n")
+    monkeypatch.setattr(
+        r, "extract_frames", lambda *args, **kwargs: pytest.fail("Unexpected decode")
+    )
+    with pytest.raises(ValueError):
+        r.reuse_dense_packets(root, root, context, original)
+
+
 def test_unresolved_source_slot_is_retained_without_blocking_other_slot():
     bounds = {"start_frame": 2, "end_frame": 6}
     assert (
