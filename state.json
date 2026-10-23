@@ -14402,6 +14402,7 @@
       }
     },
     "200": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39890786745",
       "checkpoint": {
         "base_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
         "branch": "codex/issue-200-reduce-recurring-ubuntu-system-dependenc",
@@ -14435,7 +14436,7 @@
         "spec_hash": "d501450bca0d4fb12317e6a201101a19ea48e92b55e5729e481afd237e1cabde"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
