@@ -4307,6 +4307,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-live-maintenance-00000-v1": {
+      "actor": "Ken0u",
+      "at": 1792792730,
+      "epoch": 1,
+      "fingerprint": "f4e8917bc63400920c1c97601bef51407a7a4455727f0d539ea0ffdf7890c923",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-next-v1": {
       "actor": "Ken0u",
       "at": 1792791609,
@@ -15733,15 +15742,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
-        "summary": "Frozen producer eebbe210c83aefb9d467e3740dbf1a39f161ac2a in .cache/worktrees/rally212-producer-v1; context c244dd047bfb8fdafa5d17601db8313912bee05b031d187971a3cc0e0af5d71e, v4 protocol 35cbf2d61a9b86e2e9b365353e1b49492529a0e6a10ea87b8941ee8693217779, final execution helper db068efd8202d272e1148c3d693637f9dad4de808a81444b3cd6d57ecef7bf1c, plans 771ab5a3fa7c2ac59025264239b37455670e25ed729cf1acdb1d6d5c7543f9f1. Prospective records issue comments6375437367/6375455077/6375461977. All224 focused generated tests pass; full suite running with isolated real-root test settings. All sources/clocks/packets/1532PNGs/Store reverified without decode/copy;245 prior CLI lifetimes absent. Two authentic original source-only lanes have started and each completed first2segments successfully under transport guard. No source-label comparison/adjudication yet. Keep exactly2assessors and frozen packing, immutable deadline 1792820409,8GiB cumulative payload/output. All four eligibility flags false. Existing #210/#213 delivered. Do not restart on missing handles; observe original launcher/CLI PID+creation identities and immutable outputs first. Root PROGRESS and datasets/processes preserved."
+        "summary": "{\"all_original_lifetimes_absent\": false, \"at\": 1792792725.8407927, \"attempted_image_bytes\": 1571658235, \"both_original_indexes_complete\": false, \"coordination\": \"7485ca511d415dd5f1a25bf355fcb57d2ab52e86\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 9, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 10}, \"independent_b\": {\"complete_index\": false, \"finished\": 9, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 10}}, \"lease_expiry\": 1792803235}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2378passed/4optional skips,224focused, Ruff/format/pip/diff/repository pass;157check lifetimes independently absent. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
       },
-      "checkpoint_at": 1792792435,
+      "checkpoint_at": 1792792730,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792803235,
+        "expires_at": 1792803530,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
