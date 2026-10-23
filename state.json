@@ -244,6 +244,15 @@
       "task_id": "197",
       "verb": "plan"
     },
+    "fixture197-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792715809,
+      "epoch": 1,
+      "fingerprint": "55a9c48bce5dcfdf5bd52b21d677a62ddae10ed742637529191cc6e66cd1364b",
+      "status": "review",
+      "task_id": "197",
+      "verb": "submit"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
@@ -14108,6 +14117,7 @@
       "epoch": 1,
       "planned_at": 1792714723,
       "planned_by": "Ken0u",
+      "pr_number": 198,
       "spec": {
         "acceptance": [
           "Before editing, revalidate duplicate issues/PRs/reservations and committed ownership. Preserve PR196 and both prior documentation branches, all original CI logs/receipts, and 192's completed verification/delivery evidence. Main remains db140236; this new PR failure does not retroactively establish a historical process cause or main failure.",
@@ -14150,7 +14160,13 @@
         ]
       },
       "spec_hash": "c16abd43c0a1fc88cf07fbac0f19668000ecef57e7e6fa01fd243e95286c8ab6",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "db140236b0d6d2e3cb2055db83fa676cbc3ff326",
+        "head_sha": "83113a0beb8aeca4717be65fcbcee49acd7ee1c3",
+        "pr_number": 198,
+        "spec_hash": "c16abd43c0a1fc88cf07fbac0f19668000ecef57e7e6fa01fd243e95286c8ab6"
+      }
     },
     "62": {
       "epoch": 0,
