@@ -437,6 +437,14 @@
       "task_id": "93",
       "verb": "review-result"
     },
+    "guidance-unresolved-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792789645,
+      "fingerprint": "c0508fb06424c865bc176db4d1bb0a16386e59dbb8fee1619e48a842a09d015b",
+      "status": "needs_human",
+      "task_id": "213",
+      "verb": "plan"
+    },
     "identity66-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730626,
@@ -5547,6 +5555,14 @@
       "fingerprint": "c3a46ab16bee5fdc959fa2dd6035ae1a6ddca5ed3bf9c87eb20e827faed2ba3f",
       "status": "needs_human",
       "task_id": "212",
+      "verb": "plan"
+    },
+    "spec-213-fb734631256a59183c46683db42ad4b021fa7498103ea2cf9544674ee3d3b6de": {
+      "actor": "Ken0u",
+      "at": 1792789645,
+      "fingerprint": "aca08b41e562e2ad77c3bf1d957f6f19cf339b345a94cc862be061ac18b5c718",
+      "status": "needs_human",
+      "task_id": "213",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -15664,6 +15680,47 @@
       },
       "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1",
       "status": "ready"
+    },
+    "213": {
+      "epoch": 0,
+      "planned_at": 1792789645,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "The configured owner explicitly requested in the active session: also remove the one concise human decision for unresolved requirements in agents.md. This frozen task implements only that exact clause removal; record this actual owner instruction through human-approved before claiming, without inventing a broader authorization.",
+          "Use a genuine isolated grant and branch after #210 main verification and complete public delivery. Preserve all existing branches, root PROGRESS edits, environments, datasets, predictions, weights and research processes. Do not access deprecated PROGRESS or consumed holdout63 artifacts.",
+          "Change only AGENTS.md. Replace the current bullet text \"roadmap changes, spending, unresolved requirements and three failed repair rounds require one concise human decision. Do not create paid services.\" with \"roadmap changes, spending and three failed repair rounds require one concise human decision. Do not create paid services.\" Preserve the surrounding bounded-follow-up instruction and all other bytes except necessary line wrapping. Original AGENTS SHA256 is 4c5643c9d12b088500c48b8fa336ea46bb91a3bf169244025ad044ece2c7c2a0. If the target clause has independently changed, diagnose rather than overwriting unrelated edits.",
+          "Do not remove owner authorization for sensitive frozen scope, spending/major-roadmap/failed-repair escalations, existing grant/CI/controller integration, image-transfer authorization, scientific independence or unknown/eligibility gates. Do not change .github configuration, controller/workflow/auth/publishing policy or #212 frozen scope. The owner has already authorized #212 separately; finish this policy task before its eight-hour grant begins.",
+          "Run UTF-8/LF/local-link and repository checks plus git diff --check; do not add tests for the prose-only edit. Publish a focused PR, pass all exact-head CI, let the controller integrate, verify exact main and independently verify full public wheel/source/both-image delivery. No manual merge, raw coordination mutation, Pro purchase or branch protections."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "210"
+        ],
+        "exclusions": [
+          "No code, workflow, credentials, model, dataset, image assessment or other documentation changes; no manual merge, spending, raw coordination edits or PROGRESS/holdout access."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Remove only the unresolved-requirements human-decision trigger from AGENTS.md as explicitly requested by the owner, preserving all other safeguards.",
+        "paths": [
+          "AGENTS.md"
+        ],
+        "priority": 5,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Exact one-clause diff, preserved safeguards, repository/diff checks, exact PR/main CI and independent complete public package/both-image delivery."
+        ]
+      },
+      "spec_hash": "f848514691500c689d0d9951183cc5a2d1f59dc0b01c168fbadf2b928d866cfd",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
