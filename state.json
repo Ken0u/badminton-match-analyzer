@@ -5225,6 +5225,14 @@
       "task_id": "67",
       "verb": "plan"
     },
+    "spec-67-f1a7b6bdb85174e8c24df9a585959cc9179ca673318f3dbe11213ebbec19d2c4": {
+      "actor": "dootz1",
+      "at": 1792730368,
+      "fingerprint": "73f779e0e4e4157cde7bff2df3fdb0bcc6e2940627e733a6a3697759617a4bcc",
+      "status": "ready",
+      "task_id": "67",
+      "verb": "plan"
+    },
     "spec-68-875a3ada88b98e0de99065cadeebf2a875c3299d758891f0c6b31914a2dffa77": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -15330,55 +15338,9 @@
       "status": "proposed"
     },
     "67": {
-      "checkpoint": {
-        "branch": "codex/issue-67-evaluate-complete-rally-contacts-serves-",
-        "head_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
-        "reason": "Readiness inspection only; no implementation, real-data access, assessment, inference or research job. Preserve branch and old grant. Replan evaluation67 to depend on existing independently adjudicated source-reference task62; do not duplicate62 or claim it complete."
-      },
-      "checkpoint_at": 1792730248,
       "epoch": 1,
-      "history": [
-        {
-          "at": 1792730258,
-          "claim": {
-            "actor": "Ken0u",
-            "baseline_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
-            "branch": "codex/issue-67-evaluate-complete-rally-contacts-serves-",
-            "epoch": 1,
-            "expires_at": 1792741048,
-            "granted_at": 1792729799,
-            "host_id": "MSI",
-            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-            "spec_hash": "a3b2ad4f3fc719b28fac79e61dadc807f02761cd18e405126cc33e7fc96fdecc"
-          },
-          "terminal_proof": {
-            "artifacts": {
-              "branch": "codex/issue-67-evaluate-complete-rally-contacts-serves-",
-              "head_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
-              "original_full_process_identity_retained_locally": true,
-              "readiness_receipt_sha256": "d834c5b2585a5ebc28d20d6d54ac92271372d735bf0059efdfebdd8db9f78acd",
-              "worktree_clean": true
-            },
-            "host_id": "MSI",
-            "process": {
-              "command": "Python .cache/events67-readiness-child-v1.py (exact command retained locally)",
-              "creation_time": 1792730233.435046,
-              "cwd": ". (verified repository root; exact absolute identity retained locally)",
-              "exited": true,
-              "pid": 12516
-            },
-            "store": {
-              "status": "no_job",
-              "task_research_jobs_started": 0
-            },
-            "terminal": true
-          },
-          "verb": "release"
-        }
-      ],
-      "planned_at": 1792393957,
+      "planned_at": 1792730368,
       "planned_by": "dootz1",
-      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Freeze independently reviewed contacts and ending uncertainty intervals.",
@@ -15388,7 +15350,9 @@
         "capabilities": [
           "review-inputs"
         ],
-        "dependencies": [],
+        "dependencies": [
+          "62"
+        ],
         "exclusions": [
           "No claim of full automatic annotation accuracy.",
           "No production/model promotion or destructive storage changes."
@@ -15412,7 +15376,7 @@
           "Record source/input/protocol hashes and material limitations for research."
         ]
       },
-      "spec_hash": "a3b2ad4f3fc719b28fac79e61dadc807f02761cd18e405126cc33e7fc96fdecc",
+      "spec_hash": "b4fcbf898dd8c67c917003d70d1f1223a1f79e3cb71b68083f291785dadc7080",
       "status": "ready"
     },
     "68": {
