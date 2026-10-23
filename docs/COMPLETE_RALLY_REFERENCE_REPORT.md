@@ -1,5 +1,70 @@
 # Complete-rally source reference pilot
 
+## Authorized dense assessment: transport failure, both references incomplete
+
+The separately owner-authorized [#210 follow-up](https://github.com/Ken0u/badminton-match-analyzer/issues/210)
+adds a strict [v3 protocol](../data/manifests/rally_reference_protocol_v3.json)
+and verifies both unchanged #208 windows in place: 991 singles and 541 doubles
+native PNGs. No decoding, image transformation, source replacement or model work
+was performed. **Neither exhaustive original stream completed; both reference
+slots remain incomplete and zero complete references are available.**
+
+The fixed 20-image / 32 MiB greedy plan requires 85 fresh sessions per original
+stream, with two-frame joins. The exact
+[prospective plan timestamp](https://github.com/Ken0u/badminton-match-analyzer/issues/210#issuecomment-6374174010)
+precedes dispatch and binds plan SHA256
+`07568e013a15f33827ed59c8b74be113315f28de86b4187da202fbb67ae157ae`.
+The [earlier execution timestamp](https://github.com/Ken0u/badminton-match-analyzer/issues/210#issuecomment-6374142778)
+binds the immutable scientific producer `72797061413786e8a7fbc16c436b23eff24a23f0`,
+v3 protocol, consumer/runtime and private execution helper. Its original fresh
+grant deadline remains unchanged by lease renewal or verification.
+
+The first genuine fresh session in each stream failed without an assessment
+output. Each carried the same assigned 20 original PNGs, totaling 26,910,461
+raw bytes. The CLI reported an encoded request of **35,981,972 bytes exceeding
+its upstream WebSocket limit of 15,728,640 bytes**. The configured raw-image cap
+therefore does not establish transport feasibility. No labels, frame states or
+contact conclusions were produced, and no targeted adjudication was derived.
+The doubles window was retained without dispatch after the first singles chunk
+stopped both streams. Its lack of assessment is not a negative contact result.
+
+Read-only CLI configuration validation rejected an invocation-local
+`model_providers.openai.supports_websockets=false` override because built-in
+provider IDs are reserved. The [official configuration reference](https://learn.chatgpt.com/docs/config-file/config-reference)
+documents both that restriction and the custom-provider WebSocket setting; it
+does not establish a working HTTP override for this built-in invocation. No
+provider, destination, authentication, model or persistent configuration was
+changed. No replacement launch was spent on an unchanged oversized request,
+and the frozen greedy plan was not silently repacked.
+
+| Evidence | Result |
+| --- | ---: |
+| Retained source slots / native originals | 2 / 1,532 |
+| Required original sessions | 170 |
+| Attempted sessions / successful assessments | 2 / 0 |
+| Completed exhaustive original streams | 0 |
+| Replacement / adjudication launches | 0 / 0 |
+| Prior charged image bytes, including predecessors | 1,347,060,833 |
+| New failed-attempt image bytes | 53,820,922 |
+| Actual cumulative attempted image bytes | 1,400,881,755 |
+| Defensible complete references | 0 |
+
+All failed attempts, reservations, event logs and actual execution receipts are
+retained privately. Both original failed process lifetimes are independently
+absent. The reusable implementation fixes acceptance of negative, fractional,
+boolean and zero byte/chunk charges, preserves predecessor accounting, and
+validates protocol-bound receipts and packet reuse without new native work.
+All **145 focused tests and 2,299 full tests pass, with four optional skips**;
+Ruff, formatting, dependency, diff and repository checks pass. Generated checks
+establish software behavior, not successful source inspection or badminton
+annotation accuracy. Exact PR/main checks and delivery are recorded on #210.
+
+The earlier v1/v2 protocol bytes, candidates, original evidence and full
+two-slot denominator remain unchanged. All four eligibility flags remain false.
+Parent #62 and downstream #66/#67/#71 remain scientifically incomplete. Further
+assessment needs a prospectively frozen, authorized transport-feasible plan;
+publishing this honest incomplete result does not satisfy those prerequisites.
+
 ## Extended pilot: candidates found, complete references remain unavailable
 
 The separately owner-authorized [#208 follow-up](https://github.com/Ken0u/badminton-match-analyzer/issues/208)

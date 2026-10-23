@@ -180,3 +180,11 @@ preparation. The archived producer deadline stays historical; the successor
 deadline is its original grant time plus eight hours. Neither lease renewal nor
 a consumer refresh extends it. Preserve incomplete references and all unknowns;
 this development work does not establish expert truth or full-match accuracy.
+
+Raw-image authorization limits do not establish CLI transport feasibility.
+The first #210 batches carried 26,910,461 raw PNG bytes each, but the CLI rejected
+their 35,981,972-byte encoded requests against a 15,728,640-byte WebSocket limit.
+Both attempts remain charged and preserved; no complete assessment was produced.
+Do not silently reduce a frozen greedy packing plan, transform original images,
+switch providers or replay a failed launch. Preserve both incomplete slots and
+obtain a prospectively authorized feasible plan before further image dispatch.
