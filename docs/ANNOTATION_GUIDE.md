@@ -162,3 +162,21 @@ or an expert gold label. Keep both source slots in the report, including slots
 that could not be prepared or completed. No positive completeness or eligibility
 flag may be inferred from software checks, dispatch acknowledgements or sparse
 screening.
+
+### Authorized reuse of prepared native packets
+
+The separately authorized #210 protocol v3 reuses both unchanged #208 candidate
+windows and original PNGs in place. It permits 20 images / 32 MiB per fresh
+session, with two-frame native joins, two exhaustive original streams and
+separate targeted source adjudication. Pass the explicitly loaded v3 protocol
+to `plan_chunks`, `payload_cost` and `validate_assessment`; omitted protocol
+arguments retain the original limits. Count all prior attempted image bytes.
+
+Create and timestamp a new committed consumer context under the fresh grant.
+The preparation CLI's `--stage reuse` verifies original source/clock/packet/PNG
+and completed Store seals, then writes exclusive successor plans without
+decoding, copying images or admitting a new native worker. V3 rejects native
+preparation. The archived producer deadline stays historical; the successor
+deadline is its original grant time plus eight hours. Neither lease renewal nor
+a consumer refresh extends it. Preserve incomplete references and all unknowns;
+this development work does not establish expert truth or full-match accuracy.
