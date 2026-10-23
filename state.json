@@ -4084,6 +4084,15 @@
       "task_id": "208",
       "verb": "checkpoint"
     },
+    "rally208-verification-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792750519,
+      "epoch": 1,
+      "fingerprint": "aaef046e6d580dd9f3c5da07adf35f468e4d6bead7873e50e157418ce1accf21",
+      "status": "running",
+      "task_id": "208",
+      "verb": "checkpoint"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -15174,16 +15183,16 @@
     "208": {
       "checkpoint": {
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
-        "head_sha": "91ea592ebe2cfd596b1e5a13f2a6564419f608d1",
-        "summary": "Draft209 supersedes closed unmerged207 with original branch/source/raw evidence/CI preserved. Initial replacementcf1015 passed2219 tests and all12 exactCI39931004007 first attempt, tree/scope/v1 verified. Additional generated bugs repaired at91ea592ebe2cfd596b1e5a13f2a6564419f608d1: mixed source/image membership, cross-stream frame contradictions and unsupported contact evidence.72 focused and2226 full tests pass/four optional skips; all required checks pass; all168 recorded final verification lifetimes independently absent. Current exactCI39932006251 pending; no submission/completion/delivery claim. New source preparation succeeded with362 original PNGs, live actual Store-owner ancestry and terminal/exit/artifact/original-source checks, producer context901f097b53b0c01f3295939294bf3b60418a84480e27938cdcd823f88d586546 preserved. Both independent source-only screening streams active in private separate lanes, no failed invocations observed yet; all bytes carry original340760009 usage. Original/extended labels remain separate; no adjudication or dense stage begun. Keep62/66/67/71 incomplete and flags false. Immutable deadline1792760446, cumulative4GiB image/8GiB outputs, no new paid service/models/predictions/inference/training/app-truth/consumed-holdout/PROGRESS access. Private current handoff .cache/RALLY208_HANDOFF.md and raw lane receipts; never restart on missing observation."
+        "head_sha": "c9dc701e24cab83bb5c11ab7ffb8eba1e00ccf9b",
+        "summary": "Current software head `c9dc701e24cab83bb5c11ab7ffb8eba1e00ccf9b` passes 77 focused tests, 2,231 full tests with four optional skips, all required checks and all 12 exact-head CI jobs (39936494893) on the first attempt. Exact head/base/tree/seven-path scope and unchanged v1 protocol are independently verified; all 173 recorded verification process lifetimes are independently absent.\n\nBefore any additional native preparation, prospective consumer/runtime/input context v3 is frozen: SHA256 `aecd99016134cec0299406c0f82f46b433ea5faee73ac3eacd11d92a36957cde`. The current code preserves an unresolved source slot while permitting a warranted other source to proceed; both original sources must still pass integrity, and the denominator remains two. These generated-data fixes did not use source labels or model predictions. Original overview context 901f097b53b0c01f3295939294bf3b60418a84480e27938cdcd823f88d586546 and actual producer cf1015 remain unchanged. The unused earlier v2 context is retained. Context v3 has not yet been used for native preparation.\n\nBoth independent original screening streams are complete and sealed (120 genuine distinct sessions, no failures). Fresh blind adjudication is running separately; no final selection or dense decision has been accepted. A later selection must preserve the original sealed decision and receive its own prospective timestamp binding to this context before dense preparation.\n\nOriginal grant `1792746046` and immutable deadline `1792760446` remain unchanged, as do cumulative 4 GiB dispatched-image and 8 GiB retained-output limits. Two exhaustive dense originals plus separate targeted adjudication remain required if feasible; no third exhaustive dense pass is imposed. Unknown slots remain explicit; #62/#66/#67/#71 remain incomplete and all four eligibility flags false. No extra time, source, paid service, model, training, inference, prediction, application-truth or consumed-holdout access is authorized. Private live handoff: .cache/RALLY208_HANDOFF.md. Do not restart active assessment on timeout."
       },
-      "checkpoint_at": 1792748083,
+      "checkpoint_at": 1792750519,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
         "epoch": 1,
-        "expires_at": 1792758883,
+        "expires_at": 1792761319,
         "granted_at": 1792746046,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
