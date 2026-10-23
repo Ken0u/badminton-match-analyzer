@@ -4762,6 +4762,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "shuttle204-submit-366f285-v1": {
+      "actor": "Ken0u",
+      "at": 1792728384,
+      "epoch": 1,
+      "fingerprint": "39e1cd3c0159b69dc6d8779eaa11094d8c683fc62f73bb5f4eb3ad36341d6a42",
+      "status": "review",
+      "task_id": "204",
+      "verb": "submit"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -14722,6 +14731,7 @@
       "epoch": 1,
       "planned_at": 1792725994,
       "planned_by": "Ken0u",
+      "pr_number": 205,
       "spec": {
         "acceptance": [
           "Search all open/closed issues, active PRs, coordination grants and aggregate reports for duplicates before a separate committed grant. Preserve delivered149/179/189/200 evidence, all existing changes/environments/research processes and the separately unauthorized202. No consumed holdout63 inputs/protocol/predictions/private membership/artifacts or deprecated PROGRESS access.",
@@ -14778,7 +14788,13 @@
         ]
       },
       "spec_hash": "9098a092d9487cdfe47957fdda82064f69523574654e383cd3518dfa4bca1371",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "5cd85946483ffe39dc238051bc06e26a9d1b264d",
+        "head_sha": "366f285de32a1bd129abef5d728f0248700030b2",
+        "pr_number": 205,
+        "spec_hash": "9098a092d9487cdfe47957fdda82064f69523574654e383cd3518dfa4bca1371"
+      }
     },
     "62": {
       "epoch": 0,
