@@ -4273,6 +4273,15 @@
       "task_id": "189",
       "verb": "plan"
     },
+    "roadmap189-release-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1792721090,
+      "epoch": 3,
+      "fingerprint": "4cd20e41b985d3d627af06b2310abce3dfa33c5e66f82faca2aa50cb43e78e65",
+      "status": "ready",
+      "task_id": "189",
+      "verb": "release"
+    },
     "roadmap189-release-v1": {
       "actor": "Ken0u",
       "at": 1792705958,
@@ -13798,17 +13807,6 @@
         "stage": "Two-file documentation continuation; current delivered reports/18 task records, trusted completion references and public repo/private Project revalidated. Required isolated generated project checks running; no browser/inference rerun for prose."
       },
       "checkpoint_at": 1792718171,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
-        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e3",
-        "epoch": 3,
-        "expires_at": 1792728971,
-        "granted_at": 1792717882,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
-      },
       "epoch": 3,
       "history": [
         {
@@ -13896,6 +13894,52 @@
             "terminal": true
           },
           "verb": "release"
+        },
+        {
+          "at": 1792721090,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
+            "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e3",
+            "epoch": 3,
+            "expires_at": 1792728971,
+            "granted_at": 1792717882,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "attempt2": "Python3.12 passed; original nine successes retained. Python3.10 still installing packages at last observation. Left intact; this release proves only original-host local test lifetimes terminal.",
+              "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e3",
+              "ci_run": 39883596637,
+              "files": {
+                "PROJECT_PLAN.md": "371c20cf2d1ea43261af2115a1fbc5f2ca3007673daaf9f5a444aedfd9ef228a",
+                "docs/BUG_REVIEW.md": "b3a74fa5ee0f006c6ffb8ee47761e1994d4b6b7c67e865bb05d957854fe05c92"
+              },
+              "followup_task": 200,
+              "head_sha": "4411e581b94dd96d46149f722ae9a2ddddc7e5be",
+              "owner_authorized_spec": "d501450bca0d4fb12317e6a201101a19ea48e92b55e5729e481afd237e1cabde",
+              "pr_number": 199,
+              "preserved_attempt1": ".cache/roadmap189-head-terminal-v3",
+              "remaining": "189 incomplete. Preserve PR199/source/CI and resume only through a fresh bounded grant after200 complete delivery, with fresh exact-head/main/public verification."
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe -m pytest -q --basetemp C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\roadmap189-checks-v3\\pytest -o tmp_path_retention_policy=failed",
+              "creation_time": 1792718122.7745488,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\roadmap189-e3",
+              "evidence": "Original local test wrapper and interpreter independently absent after execution session91840 exited0; fresh audit: [{\"pid\": 5808, \"creation_time\": 1792718122.7745488, \"terminal\": \"absent\"}, {\"pid\": 5972, \"creation_time\": 1792718122.786081, \"terminal\": \"absent\"}]",
+              "exited": true,
+              "pid": 5808
+            },
+            "store": {
+              "scope": "Documentation and isolated generated local tests only; no app/research Store job or physical research resource acquired.",
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
         }
       ],
       "planned_at": 1792639197,
@@ -13945,7 +13989,7 @@
         ]
       },
       "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67",
-      "status": "review",
+      "status": "ready",
       "submission": {
         "base_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
         "head_sha": "4411e581b94dd96d46149f722ae9a2ddddc7e5be",
