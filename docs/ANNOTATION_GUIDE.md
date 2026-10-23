@@ -208,3 +208,48 @@ Both attempts remain charged and preserved; no complete assessment was produced.
 Do not silently reduce a frozen greedy packing plan, transform original images,
 switch providers or replay a failed launch. Preserve both incomplete slots and
 obtain a prospectively authorized feasible plan before further image dispatch.
+
+### Transport-bounded reuse and separate acceptance
+
+The separately authorized #212 protocol v4 retains both unchanged #208 windows
+and all 1,532 original PNGs. Load `rally_reference_protocol_v4.json` with
+`load_protocol` and pass that protocol explicitly to `plan_chunks`,
+`payload_cost`, `transport_cost` and `validate_assessment`. The limits are
+20 originals / 9 MiB raw per session, with two native overlap frames. Protocols
+v1, v2 and v3 and their recorded results remain unchanged.
+
+Raw-byte costing is insufficient. `transport_cost` sums each image's separately
+padded base64 size and reserves 2 MiB for escaped prompt/schema, image headers
+and CLI framing, under a 14 MiB local encoded-content guard. Before dispatch,
+measure the actual escaped prompt/schema bytes and pass them as `context_bytes`;
+image headers plus context must fit the reserve. This local estimate does not
+guarantee upstream acceptance. Preserve and charge any failed attempt. Never
+change the frozen packing, transform the images or switch the destination to
+work around a failure.
+
+Both exhaustive original indexes must be complete before comparing their
+scientific content. First audit genuine session/thread separation, source and
+image identities, inspected membership, original process exits and immutable
+output/receipt hashes globally, including predecessor attempts. Until this
+audit passes, inspect execution metadata only. A completed segment or index
+does not by itself prove that its recorded process lifetime has exited.
+
+For #212, the prospectively fixed target planner includes all uncertainties,
+contradictions, original event intervals and overlapping joins, adds two native
+context frames on either side within the same frozen windows, and closes every
+intersecting inclusive event interval in full. Freeze exact regions, chunks and
+cumulative cost before blind adjudication. Do not reduce required regions to
+fit a budget. Across disconnected targeted regions, reset the previous-segment
+link and retain explicit uncertainty about the unseen intervening images.
+
+Preserve the original scientific producer and its consumer context when a
+generated regression warrants stricter acceptance. Seal and timestamp the
+separate acceptance consumer before opening real original labels. Validate
+execution against its original producer, then calculate final completeness
+against the frozen acceptance consumer. Retained original contacts require
+supported source-actor definitions consistent with resolved hitters; an actor
+ID alone cannot establish a cross-region identity. If every contact is replaced
+by source adjudication, use that lane's own supported identities. Never supply
+original actor labels to blind adjudicators to manufacture a match. Keep
+unsupported contacts, identities, families and sides explicit in the full
+two-slot aggregate. All four eligibility flags remain false.
