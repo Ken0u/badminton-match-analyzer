@@ -4334,11 +4334,29 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-continuation-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792795069,
+      "epoch": 1,
+      "fingerprint": "b4072de43d0fb94035bdfafaaa307fd79a67ab3af119c07e0f422a0e09cdae29",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-live-maintenance-00000-v1": {
       "actor": "Ken0u",
       "at": 1792792730,
       "epoch": 1,
       "fingerprint": "f4e8917bc63400920c1c97601bef51407a7a4455727f0d539ea0ffdf7890c923",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
+    "rally212-live-maintenance-00000-v2": {
+      "actor": "Ken0u",
+      "at": 1792795080,
+      "epoch": 1,
+      "fingerprint": "8f6bf0b6915822df069d8ef25dcd2b697b711bcc6b621cc25a22ebd38ae1540a",
       "status": "running",
       "task_id": "212",
       "verb": "checkpoint"
@@ -15785,16 +15803,16 @@
     "212": {
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
-        "head_sha": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
-        "summary": "{\"all_original_lifetimes_absent\": true, \"at\": 1792794696.6420333, \"attempted_image_bytes\": 2250068989, \"both_original_indexes_complete\": false, \"coordination\": \"73a1c6651fcc8bd1520293b6f0e53bdf3d9fa589\", \"deadline\": 1792820409, \"dispatch_stop\": true, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 47, \"launcher_alive\": false, \"original_cli_alive\": 0, \"started\": 47}, \"independent_b\": {\"complete_index\": false, \"finished\": 50, \"launcher_alive\": false, \"original_cli_alive\": 0, \"started\": 50}}, \"lease_expiry\": 1792804910}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2378passed/4optional skips,224focused, Ruff/format/pip/diff/repository pass;157check lifetimes independently absent. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
+        "head_sha": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
+        "summary": "{\"all_original_lifetimes_absent\": false, \"at\": 1792795087.8888495, \"attempted_image_bytes\": 2250068989, \"both_original_indexes_complete\": false, \"coordination\": \"e58be3019156df52b7a53da5bc08ebacab3f2f11\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 47, \"launcher_alive\": null, \"original_cli_alive\": 0, \"started\": 47}, \"independent_b\": {\"complete_index\": false, \"finished\": 50, \"launcher_alive\": null, \"original_cli_alive\": 0, \"started\": 50}}, \"lease_expiry\": 1792805501}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2384passed/4optional skips,230focused, Ruff/format/pip/diff/repository pass;144 full-check lifetimes independently absent. Original producer eebbe21 remains immutable; stricter acceptance6cb7e4f is separately sealed. Continuation seal4ced26323dc0ed01d00d61966a30ce498adc6a5cf498e25dd548c94c00832fc1 resumes only unstarted A47/B50 after diagnosed accounting failure;97completed originals and old stop remain unchanged. No scientific replacement sessions. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
       },
-      "checkpoint_at": 1792794701,
+      "checkpoint_at": 1792795080,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792805501,
+        "expires_at": 1792805880,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
