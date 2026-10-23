@@ -15513,6 +15513,7 @@
       }
     },
     "210": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40024579651",
       "checkpoint": {
         "branch": "codex/issue-210-assess-both-unchanged-prepared-complete-",
         "head_sha": "8920a8e183a1526eedc7c2ec6851e6780abac797",
@@ -15531,7 +15532,7 @@
         "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
