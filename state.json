@@ -4298,6 +4298,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-continuation-live-v1": {
+      "actor": "Ken0u",
+      "at": 1792795749,
+      "epoch": 1,
+      "fingerprint": "ea8184d28edef795841a6547c991b072ab8db6aafdd83efdefa129301405c59b",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-import-bug-v1": {
       "actor": "Ken0u",
       "at": 1792793866,
@@ -15804,15 +15813,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
-        "summary": "{\"all_original_lifetimes_absent\": false, \"at\": 1792795087.8888495, \"attempted_image_bytes\": 2250068989, \"both_original_indexes_complete\": false, \"coordination\": \"e58be3019156df52b7a53da5bc08ebacab3f2f11\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 47, \"launcher_alive\": null, \"original_cli_alive\": 0, \"started\": 47}, \"independent_b\": {\"complete_index\": false, \"finished\": 50, \"launcher_alive\": null, \"original_cli_alive\": 0, \"started\": 50}}, \"lease_expiry\": 1792805501}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2384passed/4optional skips,230focused, Ruff/format/pip/diff/repository pass;144 full-check lifetimes independently absent. Original producer eebbe21 remains immutable; stricter acceptance6cb7e4f is separately sealed. Continuation seal4ced26323dc0ed01d00d61966a30ce498adc6a5cf498e25dd548c94c00832fc1 resumes only unstarted A47/B50 after diagnosed accounting failure;97completed originals and old stop remain unchanged. No scientific replacement sessions. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
+        "summary": "Operational continuation remains live after the diagnosed between-session accounting race. All original successful outputs and old stop are immutable; no successful sessions are repeated. Original producer eebbe21, original context/protocol/native images/packing and immutable deadline1792820409 remain unchanged. Full implementation6cb7e4fa13ed591322e48b9de96c139d91cb41a8 is pushed on the granted branch:2384passed/4optional skips,230focused, all required Ruff/format/pip/diff/repository checks pass;144full-check lifetimes independently absent. Continuation was prospectively timestamped at https://github.com/Ken0u/badminton-match-analyzer/issues/212#issuecomment-6376124138 before A47/B50 dispatch. Zero scientific session failures/replacements; original accounting launcher error was not a scientific CLI failure.\n\nActual partial original labels remain unopened/uncompared by the parent. Latest process-only observation:\n{\"all_original_lifetimes_absent\": false, \"at\": 1792795705.1064441, \"attempted_image_bytes\": 2483177499, \"both_original_indexes_complete\": false, \"coordination\": \"5062bca0501b2182e967a35bd5094322f443dabe\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 60, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 61}, \"independent_b\": {\"complete_index\": false, \"finished\": 61, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 62}}, \"lease_expiry\": 1792805880}\n\nFuture targeted tools were prewritten and generated-tested before either exhaustive original index exists. They refuse early access. Planner retains unchanged adjudication_targets, all original event intervals and native transport joins with two-native-frame context, then fixed-point closure over every intersecting inclusive event. Exact actual targets/chunks/cost and execution seal must still be derived and publicly timestamped only AFTER BOTH originals and global genuine source/session/lifetime audit. They do not reduce targets to fit a budget. The generated driver check launches no real CLI and reads no real source images/labels; it verifies two-frame continuity, disconnected-region reset, own-stream notes, charged attempts and a targeted-only index. Synthetic fixtures/receipts are explicitly not admissible real assessment evidence.\n\nProspective downstream tools freezeSHA256: 7f09091d5bdb0fe1c546bfb89064653e6a71d2315f94a56b5d5fe652447cf259\n{\"actual_labels_opened_or_compared\": false, \"files\": {\"rally212-audit-targeted-v1.py\": \"f4fbb727752fe638099674aebef39fc3c4c10ae5adccd16437bf124542b1a5cb\", \"rally212-cli-targeted-v1.py\": \"9a2639682e9683c1668cd87135c72dfead137c15c292fd77c17cc5338e5b0393\", \"rally212-generated-targeted-driver-check-v1.py\": \"da8edc2dfd2074490e245660e20cef7e55ceb1d6729e5f5e18dd62b08f46e1fa\", \"rally212-maintain-targeted-v1.py\": \"bbc21993bc91c2cc1af63eac84964658fb6e7a7a6ae8ff077849aff30735dc2f\", \"rally212-target-planner-v1.py\": \"ad2f5555709a4f1c463323b4cb35beb59d302a4216d42c114ca56959a9a5a7ec\"}, \"generated_driver_result_sha256\": \"a56c85ec9b25f0da771df052ed7f79780d9067e23fcf99171f4a09902dc6458a\", \"new_image_dispatch\": false, \"planner_policy\": \"unchanged adjudication_targets plus all original event intervals and native transport joins, two-native-frame context, fixed-point closure over every intersecting original inclusive event; no target reductions or source replacements\"}\n\nAll four eligibility flags remain false. No model promotion, source replacement, new decode, scope/runtime/budget increase, paid service or manual merge. Claim and all evidence remain preserved; source-only agreement/software checks do not establish full-match annotation correctness. Root feature branch and preexisting PROGRESS edit are preserved; deprecated PROGRESS was not read or updated. Requested unresolved-requirements trigger removal is already delivered by PR214/main88e0408.\n"
       },
-      "checkpoint_at": 1792795080,
+      "checkpoint_at": 1792795749,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792805880,
+        "expires_at": 1792806549,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
