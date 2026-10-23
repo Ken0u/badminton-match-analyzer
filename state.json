@@ -4289,6 +4289,26 @@
       "task_id": "210",
       "verb": "submit"
     },
+    "rally212-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792791609,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
+        "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
+        "epoch": 1,
+        "expires_at": 1792802409,
+        "granted_at": 1792791609,
+        "host_id": "MSI",
+        "session_id": "rally212-msi-20261023-v1",
+        "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1"
+      },
+      "epoch": 1,
+      "fingerprint": "a06a61e120449a6d675fb7e2e563d825f328555d8affab4f4ae57ab3374537af",
+      "status": "granted",
+      "task_id": "212",
+      "verb": "next"
+    },
     "rally212-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789449,
@@ -15692,7 +15712,18 @@
       }
     },
     "212": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
+        "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
+        "epoch": 1,
+        "expires_at": 1792802409,
+        "granted_at": 1792791609,
+        "host_id": "MSI",
+        "session_id": "rally212-msi-20261023-v1",
+        "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792789449,
@@ -15771,7 +15802,7 @@
         ]
       },
       "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1",
-      "status": "ready"
+      "status": "running"
     },
     "213": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40027926387",
