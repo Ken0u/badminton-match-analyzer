@@ -1,5 +1,20 @@
 # Annotation guide, version 1
 
+For the source-only complete-rally pilot, follow the prospective
+[rally protocol](../data/manifests/rally_reference_protocol_v1.json).
+Five-second overview frames propose the earliest warranted provisional slot;
+they cannot certify its completeness. Review every native frame of that slot,
+including four-second context on each side, in two independent source streams
+with separate fresh source adjudication. Retain the original streams and their
+own continuity notes across overlapping chunks. Record source actors independently
+of tracker IDs, unknown identity links, camera transitions, replay/unknown context,
+unresolved contacts and start/end censoring. Use inclusive native contact and
+terminal uncertainty intervals separately. Stopped play alone does not establish
+the exact terminal moment. A failed slot stays failed; do not select an easier
+replacement. Unknown family/side stays unknown even when contact enumeration is
+complete. Agent agreement does not establish expert gold truth or eligibility
+for training, independent testing, deployment or redistribution.
+
 Target families: **clear, lift, net, drop, smash, drive**, each with a separate forehand/backhand label. Other visible actions use `other`; unresolvable actions use `unknown`. Half smash is outside the target taxonomy.
 
 ## Source time and event boundaries
@@ -78,3 +93,72 @@ Public labels in `data/datasets/` are separate source references. Their frame
 numbers must be aligned to the actual downloaded video's timestamps and frame
 origin before use in this editor or in model training. A terminal-stroke marker
 does not establish the moment the rally ended.
+
+For the separately authorized source-only follow-up #208, retain the original
+failed first-300-second pilot and protocol v1 unchanged. Protocol v2 extends
+the deterministic five-second native-PTS screening grid through 900 seconds
+on the same originals. This is development informed by that pilot, not an
+independent test. Sparse screening can propose bounds but cannot certify a rally.
+
+Two actual independent dense streams must inspect every selected native frame.
+Separately adjudicate all disagreements and unresolved contact, identity,
+scene, boundary and chunk-join regions from original images. Resolve entire
+inclusive contact intervals, not fragments. Consistent original regions do not
+require a third exhaustive stream. Preserve both originals and fresh targeted
+resolutions, including unknowns. Conflicting overlap states and duplicate events
+within a chunk cannot disappear through set union or event deduplication.
+Agent agreement is not expert gold truth; eligibility flags remain false.
+
+### Reusing source-only preparation and validation
+
+Use a current matching task grant, committed protocol and consumer context,
+and a public prospective timestamp before preparing images. Archived #62/#208
+contexts preserve evidence; they do not authorize another run or more time.
+Create the private context with `consumer_context(checkout, protocol_path,
+input_root, granted_at)` from `badminton.rally_source_reference`, using the
+original committed grant time, and check it with `verify_context`. Never reset
+the deadline when refreshing a context. Publish its SHA256 on the owning issue
+and retain the actual GitHub comment URL/creation time as the prospective
+timestamp; the private context itself is not a public artifact.
+
+Pin the original shared root and data directory before application imports.
+Use the fixed `.cache/rally<TASK>-source-only-v1/` lineage and a new exclusive
+stage directory. The preparation entry point clears credentials and uses the
+real existing Store:
+
+```text
+python scripts/prepare_rally_references.py --root SHARED_ROOT --output EXCLUSIVE_STAGE_DIRECTORY --context FROZEN_CONTEXT_JSON --context-sha256 CONTEXT_SHA256 --timestamp PUBLIC_TIMESTAMP_JSON --stage overview
+```
+
+After complete independent screening and fresh blind source adjudication, retain
+and seal the exact earliest-candidate decision, including unresolved source slots.
+A dense invocation uses `--stage dense --selection SEALED_SELECTION_JSON`; its
+prospective timestamp must bind both the exact selection and consumer context.
+Observe the actual Store owner and launcher ancestry while live, then independently
+verify their original lifetimes are absent and the Store/terminal/artifact seals
+match before consuming any packet. Outputs are exclusive and stay ignored.
+
+Use `plan_chunks(packet, dense=True, overlap=2)` and
+`payload_cost(chunks, streams=2, prior_bytes=ALL_PREVIOUS_IMAGE_BYTES)` from
+`badminton.rally_source_reference` before dense assessment. Count every source,
+overlap, failure and repeat; separately account for actual targeted adjudication.
+The output budget also includes prior artifacts, worktrees and verification files.
+
+Run every assessment in a genuinely fresh source-only session, preserving actual
+invocation/thread/process/image/output receipts. Validate each original document
+with `validate_assessment` against its native packet, assigned chunk, actual
+receipt and its own previous-segment seal. A hand-written receipt or copied
+assessment cannot stand in for another independent session. Supply no other
+stream's labels, model outputs, predictions or application annotations.
+
+Once both exhaustive dense originals are sealed and validated, call
+`adjudication_targets` on their document/receipt pairs to derive disputed native
+regions. Inspect every required region and whole intersecting contact interval
+in separate fresh source-only sessions; preserve unresolved cases and original
+documents. Validate those targeted chunks too, then use
+`targeted_reference_status` with the full selected native membership and frozen
+bounds. Its result is a calculation over original evidence, not a new assessor
+or an expert gold label. Keep both source slots in the report, including slots
+that could not be prepared or completed. No positive completeness or eligibility
+flag may be inferred from software checks, dispatch acknowledgements or sparse
+screening.
