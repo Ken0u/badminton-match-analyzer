@@ -4223,6 +4223,14 @@
       "task_id": "210",
       "verb": "submit"
     },
+    "rally212-owner-authorize-v1": {
+      "actor": "Ken0u",
+      "at": 1792789449,
+      "fingerprint": "730c1fc5241e1ff06034a1d70ae0f97cc2b9386d27b752f181114ab10c80e5a2",
+      "status": "ready",
+      "task_id": "212",
+      "verb": "human-approved"
+    },
     "rally212-plan-v1": {
       "actor": "Ken0u",
       "at": 1792788556,
@@ -15577,8 +15585,14 @@
     },
     "212": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792789449,
+        "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1"
+      },
       "planned_at": 1792788556,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Obtain configured-owner authorization of this exact risk-human successor before implementation or image dispatch. Use at most 20 original PNGs / 9 MiB raw bytes per genuine fresh existing ChatGPT-authenticated Codex CLI session, two simultaneous assessors, cumulative 8 GiB attempted image payload and 8 GiB retained outputs including all 62/208/210 failures, and eight additional hours from a fresh grant. This explicitly authorizes a new greedy packing plan and fresh deadline, not replay of any predecessor grant. No paid service, API key, alternate destination/provider/model, public image upload or manual merge.",
@@ -15649,7 +15663,7 @@
         ]
       },
       "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
