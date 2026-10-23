@@ -4093,6 +4093,15 @@
       "task_id": "208",
       "verb": "checkpoint"
     },
+    "rally208-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792754006,
+      "epoch": 1,
+      "fingerprint": "86c9ba0fa39978751a8ae21ef676fb0d3f72072946ccacb12f6e68f9c099ed3d",
+      "status": "review",
+      "task_id": "208",
+      "verb": "submit"
+    },
     "rally208-verification-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792748083,
@@ -15224,6 +15233,7 @@
       },
       "planned_at": 1792742407,
       "planned_by": "Ken0u",
+      "pr_number": 209,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -15287,7 +15297,13 @@
         ]
       },
       "spec_hash": "c92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "38af56364dace02b0762a325bd71dee376b27c78",
+        "head_sha": "890995493ddcc98076bc8d771ceb400c8234d409",
+        "pr_number": 209,
+        "spec_hash": "c92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3"
+      }
     },
     "62": {
       "checkpoint": {
