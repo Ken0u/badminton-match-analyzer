@@ -4289,6 +4289,15 @@
       "task_id": "210",
       "verb": "submit"
     },
+    "rally212-checkpoint-accounting-v1": {
+      "actor": "Ken0u",
+      "at": 1792798834,
+      "epoch": 1,
+      "fingerprint": "f238afdda2c8761261e9b8eb1dca2e4c1ff734dab3a1003fcec451c2a868a9ef",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-composite-defect-v1": {
       "actor": "Ken0u",
       "at": 1792794110,
@@ -15866,16 +15875,16 @@
     "212": {
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
-        "head_sha": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
-        "summary": "{\"all_original_lifetimes_absent\": false, \"at\": 1792798724.0341594, \"attempted_image_bytes\": 3525868468, \"both_original_indexes_complete\": false, \"coordination\": \"c33161bb23346d831a2cb54328421fde9377da34\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 120, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 121}, \"independent_b\": {\"complete_index\": false, \"finished\": 121, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 122}}, \"lease_expiry\": 1792808974}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2384passed/4optional skips,230focused, Ruff/format/pip/diff/repository pass;144 full-check lifetimes independently absent. Original producer eebbe21 remains immutable; stricter acceptance6cb7e4f is separately sealed. Continuation seal4ced26323dc0ed01d00d61966a30ce498adc6a5cf498e25dd548c94c00832fc1 resumes only unstarted A47/B50 after diagnosed accounting failure;97completed originals and old stop remain unchanged. No scientific replacement sessions. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
+        "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
+        "summary": "Metadata-only output-accounting audit found a genuine frozen-counter omission: later guidance213 and separate acceptance worktrees plus task Git administration add14584902bytes beyond the unchanged producer/targeted retained_bytes functions. At1792798763.600936,base2230313790 + supplement14584902 = 2244898692retained bytes <8589934592 cap. Supplement is also below the existing67108864-byte dispatch headroom at this observation; no cap breach, payload reset,scientific relaunch,source change or relaxed threshold. Six generated metadata-counter cases pass,including missing/disappearing entries and Windows reparse/symlink non-traversal. Supplement helper SHAa04ee6fe571888c9da0bdd5151881fb691c675a9434f83397132752d7baa1fc0,receipt SHA4535a83d7cbee7e69643f815c401f4949a9b0e479238b25b886df8f897a1369f. It reads metadata only and does not follow directory links,open source images/labels/predictions,or change the frozen scientific producer/acceptance contexts. Frozen counters remain preserved as historical evidence,not silently rewritten. REQUIRED before targeted dispatch and final reporting: rerun this supplement,verify actual full retained bytes under8GiB and disclose the corrected count separately from the immutable scientific audit; do not present the old base as all outputs. Reassess the original headroom if any extra worktree is created/grows. Latest live original metadata observation: {\"all_original_lifetimes_absent\": false, \"at\": 1792798822.7509005, \"attempted_image_bytes\": 3559033040, \"both_original_indexes_complete\": false, \"coordination\": \"65c1b8ff968785c2ac45829ad308c0c4d845c3fa\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 122, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 123}, \"independent_b\": {\"complete_index\": false, \"finished\": 123, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 124}}, \"lease_expiry\": 1792809528} Same live handles65809/23768/41462/26828 preserved. All12 exact CI jobs pass for unchanged current draft216 head1b285c0;unsubmitted. Producer eebbe21,strict acceptance6cb7e4f,all original contexts/protocols/packing/results/deadline 1792820409 unchanged. No parent scientific originals opened/compared or target dispatch. Next both original indexes/global genuine lifetime audit and watcher exact target plan; then prospective cost freeze and bounded blind adjudication. Final full two-slot aggregate/report,controller integration,main checks and public delivery remain open. Eligibilityflagsfalse,accuracyunproven. Preserve root branch,existing deprecated PROGRESS edit and all private artifacts/processes."
       },
-      "checkpoint_at": 1792798728,
+      "checkpoint_at": 1792798834,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792809528,
+        "expires_at": 1792809634,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
