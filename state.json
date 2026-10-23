@@ -13963,6 +13963,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "17225ddd4f420e6ebeccbf5925ac3abfd1e8be144b3f0db5ef06812283069a67"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 4,
       "history": [
