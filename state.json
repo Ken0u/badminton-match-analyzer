@@ -4117,6 +4117,15 @@
       "task_id": "189",
       "verb": "checkpoint"
     },
+    "roadmap189-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792714061,
+      "epoch": 2,
+      "fingerprint": "47ed2ff53569278ca37f555e0cf058cdf907a2c360524a49b9a6b0e0c914855a",
+      "status": "running",
+      "task_id": "189",
+      "verb": "checkpoint"
+    },
     "roadmap189-continuation-grant-v2": {
       "actor": "Ken0u",
       "at": 1792713380,
@@ -13618,27 +13627,29 @@
     },
     "189": {
       "checkpoint": {
-        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and-",
+        "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e2",
         "evidence": [
-          ".cache/roadmap189-evidence-v1.json",
-          "https://github.com/Ken0u/badminton-match-analyzer/issues/190#issuecomment-6332507417",
-          ".cache/roadmap189-checks-v1"
+          "https://github.com/Ken0u/badminton-match-analyzer/pull/196",
+          ".cache/roadmap189-checks-v2/results.json",
+          ".cache/roadmap189-references-v2.json",
+          ".cache/roadmap189-evidence-v2.json",
+          ".cache/roadmap189-reentry-v3.json"
         ],
-        "head_sha": "4246ec524fbece6361898e562698f30410de5a66",
+        "head_sha": "c6f9678b37e9dc6ad905a24f888ec4b853fa1152",
         "remaining": [
-          "Finish document/reference and required project checks.",
-          "Publish focused PR and submit exact revision for controller integration.",
-          "Verify merged-main documents/CI and complete normal public delivery."
+          "Verify exact-head CI and submit the fresh grant for normal controller integration; no retry authorized for the old PR run.",
+          "Verify fresh merged-main docs and all checks, then complete public package and both-image delivery.",
+          "Preserve old PR193/source/failed CI and original CI fixture unknown terminal states. Original new-grant2h/64MiB/3round limits remain from1792713380."
         ],
-        "summary": "Confirmed #186/#190 repair linkage, unpaused queue and complete independently verified public delivery before starting. Committed #189 epoch 1 grant received for only PROJECT_PLAN.md and docs/BUG_REVIEW.md. Duplicate open/closed issue and PR searches found no other consolidation. Read merged public aggregate reports and authenticated completion records for pilots, visibility/resolution/corpus/heatmaps, source assessment, broadcast diagnostic, Mac runtime/audit and reliability repairs. Draft adds a dated current snapshot and priorities while preserving historical/negative evidence and unknown denominators; corrects stale bootstrap observation claim. No consumed holdout artifacts, imagery, scientific recomputation, model/policy/production code changes or PROGRESS access/edits. Starting required isolated project checks using original venv; no installs or native inference/browser matrix repetition. Bound output 64 MiB and 2 hours from original grant."
+        "summary": "Fresh epoch-2 continuation at baseline db140236 after 192 full delivery and queue resume. New PR196 carries the preserved two-file PR193 documentation forward without rewriting its old branch or failed CI. Updated current summaries retain shuttle/player failure counts, unknowns, eligibility and historical evidence, and now record 192/195 completion with prospective Linux receipt limits. Required local checks pass:2048 tests/4 optional skips, Ruff/format183files, pipcheck, whitespace and UTF8/LF/local links. Ten public snapshot references,17merged ancestors and public repository/private Project metadata verified. Fresh informal read-only factual audit found no issues; it is not a granted formal approval. No research, inference, model/policy/runtime changes or PROGRESS access."
       },
-      "checkpoint_at": 1792642737,
+      "checkpoint_at": 1792714061,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "db140236b0d6d2e3cb2055db83fa676cbc3ff326",
         "branch": "codex/issue-189-synchronize-the-shared-project-plan-and--e2",
         "epoch": 2,
-        "expires_at": 1792724180,
+        "expires_at": 1792724861,
         "granted_at": 1792713380,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
