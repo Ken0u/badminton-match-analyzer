@@ -1,43 +1,151 @@
 # Complete-rally source reference pilot
 
-## Authorized follow-up in preparation
+## Extended pilot: candidates found, complete references remain unavailable
 
-Issue #208 separately authorizes the [v2 protocol](../data/manifests/rally_reference_protocol_v2.json):
-first 900 source seconds on the same five-second native grid and original two
-BWF sources. The first-300-second pilot below, v1 bytes, raw evidence and
-[draft PR #207](https://github.com/Ken0u/badminton-match-analyzer/pull/207) are
-preserved. Its exact head is `39bbb9db15b96d258de4da4d17573a35c658f530`;
-all 12 exact-head CI jobs passed in run 39920183626.
+The separately owner-authorized [#208 follow-up](https://github.com/Ken0u/badminton-match-analyzer/issues/208)
+finds **two provisional candidates from two retained source slots**, but still
+provides **zero complete references**. Both frozen dense windows were prepared
+and source-verified. Exact costing of just the two required exhaustive original
+passes already exceeds the cumulative 4 GiB image limit, before any targeted
+adjudication. No dense assessment was dispatched; both original candidates and
+the full two-source denominator remain unchanged. This is an image-budget
+limitation, not evidence of inaccurate or absent contacts.
 
-The follow-up repairs two generated-data validator defects: contradictory
-camera/contact states at overlaps were lost when frame coverage was unioned,
-and duplicate contacts inside one chunk were silently collapsed. Neither path
-was exercised by the original real pilot: it had no dense assessment or positive
-reference. New checks reject these failures and derive targeted source
-adjudication regions from two exhaustive original streams, closing intervals
-before resolution rather than requiring a third exhaustive pass.
+Parent #62 and its prerequisites for #66/#67/#71 remain incomplete. Software
+delivery of this bounded follow-up does not complete those tasks or establish
+automatic badminton annotation accuracy. Training, independent-test,
+model-deployment and dataset-redistribution eligibility all remain false.
 
-Further generated review also rejects cross-stream native-frame disagreement,
-mixed source IDs/image memberships and contacts unsupported by the reviewed
-frame states. These repairs do not change the screening rubric or selection.
-The original preparation was completed and sealed before this additional
-summary validation changed; its exact producer context remains preserved.
-Any later preparation must use a fresh prospective consumer context.
+### Prospective protocol and actual preparation
 
-Preparation also retains an unresolved source slot explicitly while allowing a
-warranted candidate from the other source to proceed. Both original inputs must
-still pass integrity checks. The terminal summary retains the two-source
-denominator and separately lists prepared and unresolved sources; a missing
-candidate never becomes a negative or an easier replacement. A generated native
-worker regression exercises this case through actual Store admission and exit.
+The [v2 protocol](../data/manifests/rally_reference_protocol_v2.json) fixes the
+same two original official BWF sources, their complete media/census/packet
+hashes, the first 900 source seconds on the five-second native-PTS grid, and
+the earliest warranted service-preparation/exchange/stopped-play rule within
+40 source seconds. It retains up to four seconds of native context on each
+side. The original failed first-300-second pilot and v1 protocol bytes below
+remain unchanged. This extension is development informed by that failed pilot,
+not an independent test.
 
-The authorized cumulative ceilings are 4 GiB image payload and 8 GiB persisted
-outputs across both pilots, retaining the original 340,760,009 charged bytes,
-failures and repetitions. Four additional hours run from the genuine successor
-grant; no original deadline is reset. This section records prospective software
-work, not a new scientific result. No new frame inspection has yet been reported.
-Parent #62 and downstream #66/#67/#71 remain incomplete. A bounded incomplete
-follow-up can finish its own software deliverable without completing them.
+Original overview producer `cf1015eee2d58c4c8a2f78dbf20a72e91b630a19` and
+its prospective 71-file consumer/runtime/input seal
+`901f097b53b0c01f3295939294bf3b60418a84480e27938cdcd823f88d586546`
+remain preserved. All 362 native overview PNGs passed source, census, packet,
+native membership, PTS/time-base, orientation, hash and geometry checks.
+
+Later generated-data fixes were committed before a new prospective dense
+consumer context at producer `c9dc701e24cab83bb5c11ab7ffb8eba1e00ccf9b`:
+`aecd99016134cec0299406c0f82f46b433ea5faee73ac3eacd11d92a36957cde`.
+Its [timestamp](https://github.com/Ken0u/badminton-match-analyzer/issues/208#issuecomment-6362615847)
+precedes dense preparation. The unchanged original screening decision is sealed
+at `7c9fb68bd600f648e32c3dbdbc1b3d20b54fe6fc54b2dfa226a152d7cc960f3e`; its separate
+[selection timestamp](https://github.com/Ken0u/badminton-match-analyzer/issues/208#issuecomment-6363055552)
+binds exact selection SHA256
+`761d1da7f4b8628ebdb864ed0117d561b0db83f15258619506d7d0b7c993bebb`
+to that context before decoding. Neither source was replaced or reselected.
+
+Both real native stages used the original shared Store's `run_local_job`
+admission with original roots pinned and credentials cleared. Their actual
+Store owners and launcher ancestry were observed while live. Original owner
+and launcher lifetimes were independently absent afterward, with matching
+completed Store/terminal/artifact seals. Both original sources, censuses and
+packets were rehashed before and after preparation. All 1,532 dense
+PNGs passed exact native membership, image hash and original geometry checks.
+No new data, weights or models were downloaded; no inference, training,
+prediction inspection or application-annotation changes were performed.
+
+### Independent screening and preserved uncertainty
+
+Two complete original source-only streams were sealed before fresh blind
+source-only adjudication. There were 180 genuine distinct fresh existing
+ChatGPT-authenticated Codex CLI sessions, 1,086 successful inspected image
+memberships and zero new failed invocations. Every supplied image was an
+unmodified original oriented PNG, with at most 20 images / 6 MiB per session.
+No other stream's labels or model outputs were supplied. Execution logs showed
+no additional tool exposure. Original outputs and actual thread/process/image/
+coverage receipts remain private. All 180 recorded CLI owner lifetimes and
+649 actually observed owner/descendant lifetimes were independently absent.
+Descendant observation began after early launches; unobserved early descendant
+lifetimes are not claimed.
+
+The original screening streams disagree on 26 native grid memberships.
+Unknowns remain explicit, including all 37 adjudication unknowns. Sparse
+screening proposes windows; it cannot enumerate contacts, confirm hitters or
+certify service/terminal timing. Agent agreement is not expert gold truth.
+
+| Stream | Non-play | Stopped play | Unknown | Service preparation | Exchange | Replay |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Independent A | 164 | 65 | 34 | 18 | 69 | 12 |
+| Independent B | 166 | 62 | 38 | 16 | 71 | 9 |
+| Fresh blind adjudication | 172 | 54 | 37 | 19 | 68 | 12 |
+
+The original 340,760,009 charged bytes, including all three old capacity
+failures and repetitions, remain counted. New screening adds 1,006,300,824 bytes,
+for **1,347,060,833 cumulative dispatched bytes**. Dense preparation writes
+private local PNGs; it does not dispatch them. The earlier overview timestamp
+described explicit 20-second pacing, but the exact sealed helper had no pacing
+sleep. That narrative error is corrected in the selection timestamp; it did not
+change the frozen helper hash, source rubric, selection or zero-failure result.
+No implicit retries or model changes occurred.
+
+### Exact two-pass preflight and bounded incomplete result
+
+The table counts actual original PNG bytes and contiguous two-frame transport
+overlaps. Both exhaustive original streams are costed, with all prior attempted
+payloads included. **A third exhaustive dense stream is not required or costed.**
+
+| Source slot | Native frames including context | Chunks per exhaustive stream | PNG bytes per exhaustive stream, including overlap |
+| --- | ---: | ---: | ---: |
+| Singles | 991 | 322 | 1,853,835,664 |
+| Doubles | 541 | 162 | 919,992,173 |
+
+| Image budget calculation | Bytes |
+| --- | ---: |
+| Already dispatched, both pilots including failures/repeats | 1,347,060,833 |
+| Two exhaustive original streams across both frozen windows | 5,547,655,674 |
+| Cumulative total before targeted adjudication | **6,894,716,507** |
+| Authorized cumulative limit | 4,294,967,296 |
+| Excess before any targeted adjudication | **2,599,749,211** |
+
+Because the two required original passes alone exceed the limit, no dense CLI
+assessor, targeted adjudication or native event/actor reference was created.
+The two provisional windows, original screening and native packets are retained
+unchanged. Neither a cheaper/easier rally nor a source subset is substituted to
+report a completed two-source pilot. This is the predeclared bounded incomplete
+outcome; further image dispatch needs a separately authorized frozen follow-up.
+The immutable four-hour research deadline remains 13:00:46 UTC on October 23;
+lease renewal does not extend it. Retained-output accounting includes original
+and new artifacts, worktrees, helpers and verification evidence without following
+generated test links. The post-preparation snapshot is 2,149,359,956 retained
+bytes, below the cumulative 8 GiB limit.
+
+### Software verification and reuse
+
+Generated regressions reject contradictory overlap camera/contact states,
+duplicate within-chunk events, mixed source IDs/image hashes, cross-stream native
+state conflicts, contacts unsupported by native frame states, contacts before
+serve, overlapping contact uncertainty and `other` as a requested-family label.
+Unresolved source slots remain explicit while a warranted other slot can be
+prepared; both original inputs still must pass integrity checks. The generated
+worker regression exercises real Store admission and original process exit.
+
+The current backend code passes **77 focused tests and 2,231 full tests, with
+four optional skips**, plus Ruff, formatting, dependencies, diff and repository
+UTF-8/LF/JSON/link checks. All 173 observed final local verification lifetimes
+are independently absent. All 12 exact-head CI jobs passed for backend producer
+`c9dc701e24cab83bb5c11ab7ffb8eba1e00ccf9b` in run 39936494893 on the first
+attempt. Final documentation/source CI and merged-main delivery are recorded
+on [PR #209](https://github.com/Ken0u/badminton-match-analyzer/pull/209).
+Software checks establish implementation behavior, not annotation accuracy.
+
+The [annotation guide](ANNOTATION_GUIDE.md#reusing-source-only-preparation-and-validation)
+documents preparation, exact two-stream costing, actual receipt validation,
+target derivation and separate source-only resolution. Raw images, labels,
+per-contact records and scientific process/Store/session identities remain
+ignored and are not supplied by a clone. Original PR #207 was closed as
+authorized superseded only after its tested replacement existed; its branch,
+exact source head `39bbb9db15b96d258de4da4d17573a35c658f530` and all 12 passing
+CI jobs from run 39920183626 remain preserved. No manual merge is authorized.
 
 ## Original pilot — preserved result
 
