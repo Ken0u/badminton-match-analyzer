@@ -4075,6 +4075,15 @@
       "task_id": "208",
       "verb": "checkpoint"
     },
+    "rally208-research-terminal-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792753659,
+      "epoch": 1,
+      "fingerprint": "0cb1d8a9f76329cf7b2b9a158aa6c4a6e235f2a96d3197229a5deead6cdf4923",
+      "status": "running",
+      "task_id": "208",
+      "verb": "checkpoint"
+    },
     "rally208-start-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792746854,
@@ -15192,16 +15201,16 @@
     "208": {
       "checkpoint": {
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
-        "head_sha": "a6eac80b831bac19bcdc9d10d43b6192e4aa146d",
-        "summary": "Research stages TERMINAL. Original first300 pilot remains0/2, PR207 superseded with branch/source/CI preserved. Extended900s screening:180 genuine new independent/adjudication sessions,1086 memberships,0new failures;26original-state disagreements,37adjudication unknowns.2provisional candidates/2slots,0complete references. Both dense windows1532original PNGs prepared through actual shared Store, live actual owner+launcher ancestry and independently absent original lifetimes/completed Store/terminal/source/census/packet/image checks. Exact TWO-exhaustive-pass preflight independently verified:5547655674 additional bytes+1347060833 prior=6894716507>4294967296 even before targeted adjudication; no third exhaustive stream imposed and NO dense assessor/image dispatch. Both candidates and denominator2 preserved, no easier/subset substitute. Owner deadline1792760446 unchanged. Actual image dispatch1347060833; full retained outputs/worktrees snapshot2149359956<8GiB. All180 recorded new CLI owners and649 actually observed owner/descendant lifetimes absent; early unobserved descendants unclaimed. Source/selection/context/helper seals retained. Report and reusable guide committed ata6eac80b831bac19bcdc9d10d43b6192e4aa146d; backend identical to77focused/2231full tested c9dc701 with4optional skips and all12 earlier exactCI39936494893 pass. Final docs/ruff/format/pip/diff/repository checks pass; new final exactCI pending. Keep62/66/67/71 incomplete and fourflagsfalse. Private handoff .cache/RALLY208_HANDOFF.md; no live research/verification job remains. No predictions/models/weights/inference/training/app-truth/consumed-holdout/PROGRESS access or new source/paid service. Native data are local, not clone artifacts. No task completion/submission/delivery claim yet."
+        "head_sha": "890995493ddcc98076bc8d771ceb400c8234d409",
+        "summary": "Research stages TERMINAL. Original first300 pilot remains0/2, PR207 superseded with branch/source/CI preserved. Extended900s screening:180 genuine new independent/adjudication sessions,1086 memberships,0new failures;26original-state disagreements,37adjudication unknowns.2provisional candidates/2slots,0complete references. Both dense windows1532original PNGs prepared through actual shared Store, live actual owner+launcher ancestry and independently absent original lifetimes/completed Store/terminal/source/census/packet/image checks. Exact TWO-exhaustive-pass preflight independently verified:5547655674 additional bytes+1347060833 prior=6894716507>4294967296 even before targeted adjudication; no third exhaustive stream imposed and NO dense assessor/image dispatch. Both candidates and denominator2 preserved, no easier/subset substitute. Owner deadline1792760446 unchanged. Actual image dispatch1347060833; full retention accounting including delivery verifier2149382881<2.2GB<8GiB. All180 recorded new CLI owners and649 actually observed owner/descendant lifetimes absent; early unobserved descendants unclaimed. Source/selection/context/helper seals retained. Report and reusable guide committed at890995493ddcc98076bc8d771ceb400c8234d409; backend identical to77focused/2231full tested c9dc701 with4optional skips and all12 earlier exactCI39936494893 pass. Final docs/ruff/format/pip/diff/repository checks pass; new final exactCI pending. Keep62/66/67/71 incomplete and fourflagsfalse. Private handoff .cache/RALLY208_HANDOFF.md; no live research/verification job remains. No predictions/models/weights/inference/training/app-truth/consumed-holdout/PROGRESS access or new source/paid service. Native data are local, not clone artifacts. No task completion/submission/delivery claim yet."
       },
-      "checkpoint_at": 1792753355,
+      "checkpoint_at": 1792753659,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "38af56364dace02b0762a325bd71dee376b27c78",
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
         "epoch": 1,
-        "expires_at": 1792764155,
+        "expires_at": 1792764459,
         "granted_at": 1792746046,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
