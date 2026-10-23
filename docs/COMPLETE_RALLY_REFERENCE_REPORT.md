@@ -116,8 +116,8 @@ outcome; further image dispatch needs a separately authorized frozen follow-up.
 The immutable four-hour research deadline remains 13:00:46 UTC on October 23;
 lease renewal does not extend it. Retained-output accounting includes original
 and new artifacts, worktrees, helpers and verification evidence without following
-generated test links. The post-preparation snapshot is 2,149,359,956 retained
-bytes, below the cumulative 8 GiB limit.
+generated test links. Full retained-output accounting, including the separate
+package/image verifier, remains below 2.2 GB and the cumulative 8 GiB limit.
 
 ### Software verification and reuse
 
