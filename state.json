@@ -4128,6 +4128,26 @@
       "task_id": "208",
       "verb": "checkpoint"
     },
+    "rally210-claim-v1": {
+      "actor": "Ken0u",
+      "at": 1792786932,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
+        "branch": "codex/issue-210-assess-both-unchanged-prepared-complete-",
+        "epoch": 1,
+        "expires_at": 1792797732,
+        "granted_at": 1792786932,
+        "host_id": "MSI",
+        "session_id": "rally210-msi-20261023-v1",
+        "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60"
+      },
+      "epoch": 1,
+      "fingerprint": "a1e9a3364c5f7017dd562ee8389457d4d57c57dec64f951eb345ed8c4c6528f6",
+      "status": "granted",
+      "task_id": "210",
+      "verb": "next"
+    },
     "rally210-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792786795,
@@ -15370,7 +15390,18 @@
       }
     },
     "210": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
+        "branch": "codex/issue-210-assess-both-unchanged-prepared-complete-",
+        "epoch": 1,
+        "expires_at": 1792797732,
+        "granted_at": 1792786932,
+        "host_id": "MSI",
+        "session_id": "rally210-msi-20261023-v1",
+        "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792786795,
@@ -15446,7 +15477,7 @@
         ]
       },
       "spec_hash": "3eb7744bf4f576f35ece239e242f102b4e433e15eca01552c8209a545275ee60",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
