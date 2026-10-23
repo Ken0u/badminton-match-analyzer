@@ -4424,6 +4424,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-live-maintenance-00077-v2": {
+      "actor": "Ken0u",
+      "at": 1792798728,
+      "epoch": 1,
+      "fingerprint": "3b3e5f16e8426ce9faa4b17331838b2a81ac7211bdc12586230c4fb802084421",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-next-v1": {
       "actor": "Ken0u",
       "at": 1792791609,
@@ -15857,16 +15866,16 @@
     "212": {
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
-        "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "Current clean pushed draft216 head1b285c017ff71ef58765c64f2989543c972c8f42 passes all12 exact-head CI jobs in40039301341. Guide checkpoint accepted; task remains Running,PR remains draft and unsubmitted. New generated-only negative exercise of unchanged targeted driver passes20 cases: missing/bad timestamp,plan/execution/original/acceptance/stop bindings,dispatch stop seals, missing original index,actual current-process lifetime still live,changed protocol,deadline,retained/planned/attempted/escaped-context budgets,raw size and source hash mismatch,and exclusive output. Every case refuses before subprocess launch or any new attempt reservation. No real CLI,source image, label,process signal or scientific replacement. Ignored result SHAc691275086be8d17f8b059e25b32cc8438f66d37fcb21c9d4a8037fa933f1cf1,checker SHA2e58e579690f43187305d77dd64275deca7e5339c5830d57926a82bdb04941b1. Generated fixtures are not real scientific evidence. Scientific driver SHA9a2639682e9683c1668cd87135c72dfead137c15c292fd77c17cc5338e5b0393 unchanged. Original producer eebbe21,strict acceptance6cb7e4f,all protocols,packing,contexts,seals and original deadline1792820409 unchanged. Latest complete metadata-only audit: {\"attempted_image_bytes\": 3321706479, \"audit_receipt\": \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\rally212-original-audit-v2\\\\metadata-1792798170811406300.json\", \"audit_sha256\": \"aeda7d4b26988913c23018f66a62708d5c8c19f136ba6084388f87f43a2a1a86\", \"both_complete_indexes\": false, \"eligibility\": {\"dataset_redistribution_allowed\": false, \"independent_test_allowed\": false, \"model_deployment_allowed\": false, \"training_allowed\": false}, \"immutable_producer_context_and_transport_verified\": true, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished_audited\": 109, \"started\": 110}, \"independent_b\": {\"complete_index\": false, \"finished_audited\": 109, \"started\": 110}}, \"max_concurrent_completed_sessions\": 2, \"metadata_only\": true, \"observed_at\": 1792798165.6091309, \"prior_lifetimes_absent\": 245, \"retained_output_bytes\": 2229740852, \"task\": 212, \"unique_completed_threads\": 463} Preserve same live assessor handles65809/23768,observer41462 and completion watcher26828; never restart on timeout or race watcher planning. Both complete original indexes and global genuine lifetime audit remain prerequisites before scientific comparison. Next fixed target/cost freeze,blind targeted assessment,full two-slot aggregate/report,final CI,controller integration, main verification and full public delivery. All four eligibilityflagsfalse; full-match accuracy unproven. Preserve root branch,existing deprecated PROGRESS edit,all private originals and research processes."
+        "head_sha": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
+        "summary": "{\"all_original_lifetimes_absent\": false, \"at\": 1792798724.0341594, \"attempted_image_bytes\": 3525868468, \"both_original_indexes_complete\": false, \"coordination\": \"c33161bb23346d831a2cb54328421fde9377da34\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 120, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 121}, \"independent_b\": {\"complete_index\": false, \"finished\": 121, \"launcher_alive\": true, \"original_cli_alive\": 1, \"started\": 122}}, \"lease_expiry\": 1792808974}\nSource-only original assessment status; no label comparison or adjudication. Full local verification:2384passed/4optional skips,230focused, Ruff/format/pip/diff/repository pass;144 full-check lifetimes independently absent. Original producer eebbe21 remains immutable; stricter acceptance6cb7e4f is separately sealed. Continuation seal4ced26323dc0ed01d00d61966a30ce498adc6a5cf498e25dd548c94c00832fc1 resumes only unstarted A47/B50 after diagnosed accounting failure;97completed originals and old stop remain unchanged. No scientific replacement sessions. Immutable original grant deadline remains unchanged. Preserve all original outputs and current process identities; no implicit restart. Both indexes and fresh global source/session audit are required before separately frozen targeted adjudication. All four eligibility flags remain false."
       },
-      "checkpoint_at": 1792798174,
+      "checkpoint_at": 1792798728,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792808974,
+        "expires_at": 1792809528,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
