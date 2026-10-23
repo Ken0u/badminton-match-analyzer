@@ -4746,6 +4746,15 @@
       "task_id": "204",
       "verb": "plan"
     },
+    "shuttle204-prefreeze-v1": {
+      "actor": "Ken0u",
+      "at": 1792727317,
+      "epoch": 1,
+      "fingerprint": "974bce19a46c8c82c607353c9a7bb87e4b74ae54b33a44e84966972122326450",
+      "status": "running",
+      "task_id": "204",
+      "verb": "checkpoint"
+    },
     "shuttle204-register-v1": {
       "actor": "Ken0u",
       "at": 1792725994,
@@ -14683,12 +14692,28 @@
       "status": "needs_human"
     },
     "204": {
+      "checkpoint": {
+        "branch": "codex/issue-204-test-one-prospectively-fixed-lower-compo",
+        "candidate": "Only fixed0.25 stateless extraction versus0.5; original motion selection separate; no sweep or app/default change",
+        "deadline_utc": "2026-10-23T06:28:33Z",
+        "experiment_sha256": "5ea1e32151c7417345cc9760ed9a68690360572077d7d828675ea5c6acd6c1ec",
+        "grant_timestamp": 1792726113,
+        "limitations": [
+          "Familiar agent-labeled development references, not expert truth or independent test",
+          "No new source images, media, inference, training or consumed holdout access",
+          "No raw labels, candidate points, arrays or private process/Store metadata in public checkpoints"
+        ],
+        "max_output_bytes": 134217728,
+        "protocol_sha256": "b9b749920189f49cc584f3111dfb6e38038e454d6785b69db2d408fccdd32b61",
+        "stage": "Scientific code committed;28 focused generated tests pass. Existing60heatmap/50view/13499row metadata and seals verified. Frozen experiment prepared before any real alternate prediction. Full required verification running; initial runner lacked FFmpeg PATH, so complete generated-media coverage will be verified with existing pinned tools before publishing or candidate execution."
+      },
+      "checkpoint_at": 1792727317,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5cd85946483ffe39dc238051bc06e26a9d1b264d",
         "branch": "codex/issue-204-test-one-prospectively-fixed-lower-compo",
         "epoch": 1,
-        "expires_at": 1792736913,
+        "expires_at": 1792738117,
         "granted_at": 1792726113,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
