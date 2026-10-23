@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "name": "single-fixed-development-component-threshold-v1",
+  "capture_experiment_sha256": "8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68",
+  "capture_index_sha256": "0bb911151ee2f85109e042cb2aa2759d7f3d7ca7e88a9552a1c6080bd1b2eeb8",
+  "capture_terminal_sha256": "14b93a05d127895ea4cff95f0fe4d23e7213d368183d749a605ebd358154f631",
+  "capture_report_sha256": "3e4489e694ac5d0433a1664db9d266cb4c979e5498fa551d3695133ee2cc85ba",
+  "labels_sha256": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+  "baseline_sha256": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+  "expected": {"cases": 60, "views": 50, "native_rows": 13499, "states": {"visible": 25, "not_visible": 7, "unknown": 28, "visible_unlocalizable": 0}},
+  "heatmap_shape": [288, 512],
+  "control_threshold": 0.5,
+  "candidate_threshold": 0.25,
+  "extraction": "Existing stateless largest strictly-above-threshold 8-connected component bounding-box center; first-largest tie; no temporal selection",
+  "confidence_absolute_tolerance": 0.00001,
+  "diagonal_tolerance": 0.005,
+  "maximum_comparison_seconds": 300,
+  "disposition": "Only strictly greater primary visible localization, no increase in false observations, no increase in displaced visible outputs, complete compatible support and unchanged availability justify a separately granted broader temporal experiment; otherwise reject. Never promote from this diagnostic.",
+  "eligibility": {"training_allowed": false, "independent_test_allowed": false, "model_deployment_allowed": false, "dataset_redistribution_allowed": false},
+  "limitations": [
+    "One hypothesis informed by published familiar-development responses; no threshold sweep, optimization or independent evaluation",
+    "Agent source assessments are not expert gold labels; unknowns never become negatives",
+    "Stateless centers do not measure trajectories, scene continuity, contacts, identities, stroke recognition or complete annotation accuracy",
+    "The seven negatives are non-play; no established occlusion or camera-transition support",
+    "Historical application motion selection is reported separately from paired stateless extraction",
+    "No app/default changes, training, inference, source media/weights downloads or consumed holdout63 access"
+  ]
+}
