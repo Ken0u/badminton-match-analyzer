@@ -4718,6 +4718,21 @@
       "task_id": "145",
       "verb": "review-result"
     },
+    "shuttle204-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792725994,
+      "fingerprint": "242e056e17361f9b895cb420694291bd96d913cfee39c2d0d215edbc78fb964e",
+      "status": "ready",
+      "task_id": "204",
+      "verb": "plan"
+    },
+    "shuttle204-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792725994,
+      "fingerprint": "d08ef1631ede3ed0d1907e122fa0157b614247636167073a0e393316619c5f69",
+      "status": "ok",
+      "verb": "register"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -5052,6 +5067,14 @@
       "fingerprint": "85ccce47c048da975930ad820758de3af865023313a61a70e83f80d2d2fd47b1",
       "status": "needs_human",
       "task_id": "202",
+      "verb": "plan"
+    },
+    "spec-204-59ec3cf213f4615fa915e6886e3e438ff5f5e61eaff14a5eaf3eb0595b308569": {
+      "actor": "Ken0u",
+      "at": 1792725994,
+      "fingerprint": "9252239ccd033403db290036b112ed86abe609771967ba16695f4337f90188b8",
+      "status": "ready",
+      "task_id": "204",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -14639,6 +14662,68 @@
       "spec_hash": "af99b8517a2db1e850368b080f84f9a7a89089ce3b5137722c07fd7be31f75b7",
       "status": "needs_human"
     },
+    "204": {
+      "epoch": 0,
+      "planned_at": 1792725994,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issues, active PRs, coordination grants and aggregate reports for duplicates before a separate committed grant. Preserve delivered149/179/189/200 evidence, all existing changes/environments/research processes and the separately unauthorized202. No consumed holdout63 inputs/protocol/predictions/private membership/artifacts or deprecated PROGRESS access.",
+          "Use only the existing149 development capture: experiment8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68, raw index0bb911151ee2f85109e042cb2aa2759d7f3d7ca7e88a9552a1c6080bd1b2eeb8, completed terminal14b93a05d127895ea4cff95f0fe4d23e7213d368183d749a605ebd358154f631, labelsfd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158 and baseline915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64. Verify complete60 indexed heatmaps/50views/13499 native rows and prior control compatibility from immutable seals; preserve the separately unindexed partial array without interpreting it. Do not decode media, rerun inference or load weights.",
+          "Before any alternate predictions, commit and timestamp a new protocol, exact recursive consumer/runtime/input hashes and frozen experiment. Candidate is exactly the existing locate_shuttle stateless largest thresholded-component bounding-box center with threshold0.25, strict greater-than mask, existing8-connectivity and first-largest tie behavior. Paired control is identical extraction with0.5. The sole threshold0.25 is a hypothesis informed by published149 development summaries, not independently selected or tested truth. No threshold sweep, optimizing, alternative candidate or best-subset selection. Existing application and historical scientific protocols/defaults remain byte-unchanged.",
+          "Reconstruct the0.5 component inventory for every60center from its saved heatmap and gate against original component identities/order/boxes/areas/coordinates/confidences with the original absolute confidence tolerance0.00001 and zero relative tolerance. Verify source ordinal/PTS/display geometry/camera/view membership and complete original control seals. Compare only stateless component extraction in the paired experiment; report original motion-selected application observations separately, never silently equate them with the stateless control. Any mismatch/unavailable input preserves the complete case/state denominator and marks comparison incompatible rather than replacing old evidence.",
+          "Run the bounded CPU-only comparison through the real original data/processed Store run_local_job admission and data:windows-primary reservation. Pin BADMINTON_ROOT and BADMINTON_DATA_DIR before imports, clear account variables, bind original-host PID/creation/cwd/command and Store receipt, exclusive fresh ignored outputs, and verify terminal lifetime/Store completion and context/output seals before interpreting. Freeze at most300seconds comparison runtime within the task limit. Never restart work on timeout or change an old Store job; interrupted work retains receipts and requires original-host terminal proof before a fresh separately recorded attempt.",
+          "Report all60 cases:25 visible/localizable,7 confirmed-not-visible,28 unknown and0visible-unlocalizable. Localization uses the original fixed0.005display-diagonal disk and separately the original uncertainty radius. Visible missing/displaced/unavailable predictions stay in25 denominator; negatives retain false-observation/absence/unavailable counts; unknowns retain availability and candidate/component counts without becoming negatives. Retain original source/state/difficulty/selection groups and paired recovered/lost/displaced transitions. Report any-observed-component agreement separately from selected localization. Complete inference/camera/trajectory/contact/rally/identity performance is not measured by center heatmaps.",
+          "Predeclared disposition: only strictly improved primary visible localization with no increase in false observations or displaced visible outputs can justify a separate future broader temporal experiment; otherwise reject this fixed stateless candidate on this development diagnostic. Neither outcome authorizes promotion, another cutoff, relabeling, training, deployment, rights changes or an independent/full-match accuracy claim. Public output is reproducible code, protocol and aggregate report only; raw labels/images/arrays/candidate point records and process/Store details remain ignored.",
+          "Add meaningful generated regressions for candidate/control threshold boundaries and connectivity/ties, unchanged0.5 component reconstruction, camera/frame/PTS/membership/control/context tampering, missing/nonfinite/truncated/extra heatmaps and complete unknown/unavailable denominators, no interpretation before sealed terminal, admission failure and generated actually exited CPU-worker lifecycle. Run focused and required project checks using existing environment and isolated generated roots. Do not rerun native inference/browser matrices locally for this offline-only module. Complete focused PR, exact-head CI/controller integration, exact-main verification and independent full public package/both-image delivery. Bound all new outputs including CI evidence to128MiB and3h from grant, three repair rounds; checkpoint with sanitized public aggregates on the owning issue."
+        ],
+        "artifacts": {
+          "shuttle-heatmap-experiment": "8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68",
+          "shuttle-heatmap-index": "0bb911151ee2f85109e042cb2aa2759d7f3d7ca7e88a9552a1c6080bd1b2eeb8",
+          "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "149",
+          "179",
+          "189",
+          "200"
+        ],
+        "exclusions": [
+          "No production shuttle/model/threshold/default/API/UI/security/auth/workflow/storage/policy changes or promotion, no weights/media/data downloads, inference/training, raw redistribution, installations/spending, research-process control, unrelated Store mutation, holdout63 or deprecated PROGRESS access. No claim that familiar agent-labeled development agreement establishes expert, unseen or complete annotation accuracy."
+        ],
+        "limits": {
+          "max_output_bytes": 134217728,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Test one prospectively fixed lower component threshold on the existing frozen development heatmaps, measuring recovered shuttle localization against added false observations before any application change.",
+        "paths": [
+          "backend/badminton/shuttle_threshold_comparison.py",
+          "scripts/compare_shuttle_threshold.py",
+          "tests/test_shuttle_threshold_comparison.py",
+          "data/manifests/shuttle_threshold_protocol_v1.json",
+          "docs/SHUTTLE_THRESHOLD_REPORT.md"
+        ],
+        "priority": 90,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Prospective single-candidate protocol and immutable complete original development heatmap/control/source binding, actual admitted CPU comparison with sealed exited-process/Store proof and complete paired support.",
+          "Meaningful generated regressions, required exact-source checks and normal controller PR/main integration with independent complete public delivery; retain no-promotion and development-only limits."
+        ]
+      },
+      "spec_hash": "9098a092d9487cdfe47957fdda82064f69523574654e383cd3518dfa4bca1371",
+      "status": "ready"
+    },
     "62": {
       "epoch": 0,
       "planned_at": 1792393957,
@@ -17631,14 +17716,18 @@
     },
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
-      "artifacts": {},
+      "artifacts": {
+        "shuttle-heatmap-experiment": "8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68",
+        "shuttle-heatmap-index": "0bb911151ee2f85109e042cb2aa2759d7f3d7ca7e88a9552a1c6080bd1b2eeb8",
+        "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158"
+      },
       "capabilities": [
         "cpu",
         "windows",
-        "amd64"
+        "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1792634455,
+      "registered_at": 1792725994,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
