@@ -3919,6 +3919,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "msi-project202-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792734689,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
+        "branch": "codex/issue-202-restore-private-project-status-projectio",
+        "epoch": 1,
+        "expires_at": 1792745489,
+        "granted_at": 1792734689,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "af99b8517a2db1e850368b080f84f9a7a89089ce3b5137722c07fd7be31f75b7"
+      },
+      "epoch": 1,
+      "fingerprint": "5446c1fa37ab8e8a789ed72611a3671b034322da9019170cbef7178fcbc14859",
+      "status": "granted",
+      "task_id": "202",
+      "verb": "next"
+    },
     "owner-project202-approval-v1": {
       "actor": "Ken0u",
       "at": 1792734634,
@@ -14808,7 +14828,18 @@
       }
     },
     "202": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b9752065bba8d8aeec19d37ee9c5203888f625b1",
+        "branch": "codex/issue-202-restore-private-project-status-projectio",
+        "epoch": 1,
+        "expires_at": 1792745489,
+        "granted_at": 1792734689,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "af99b8517a2db1e850368b080f84f9a7a89089ce3b5137722c07fd7be31f75b7"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792734634,
@@ -14859,7 +14890,7 @@
         ]
       },
       "spec_hash": "af99b8517a2db1e850368b080f84f9a7a89089ce3b5137722c07fd7be31f75b7",
-      "status": "ready"
+      "status": "running"
     },
     "204": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39900132604",
