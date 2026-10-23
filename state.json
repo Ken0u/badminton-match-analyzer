@@ -15232,6 +15232,7 @@
       }
     },
     "208": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39946509315",
       "checkpoint": {
         "branch": "codex/issue-208-deliver-a-prospectively-frozen-extended-",
         "head_sha": "890995493ddcc98076bc8d771ceb400c8234d409",
@@ -15250,7 +15251,7 @@
         "spec_hash": "c92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
