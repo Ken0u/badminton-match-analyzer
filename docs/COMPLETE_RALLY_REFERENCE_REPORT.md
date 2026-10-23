@@ -1,5 +1,38 @@
 # Complete-rally source reference pilot
 
+## Transport-bounded successor: assessment pending
+
+The owner-authorized [#212 successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)
+uses a separate [v4 protocol](../data/manifests/rally_reference_protocol_v4.json).
+It retains the exact two prepared windows and all 1,532 original native PNGs;
+v1, v2 and v3 protocol bytes and their incomplete results remain preserved.
+No successor assessment result is available at this implementation checkpoint.
+
+Sessions carry at most 20 originals / 9 MiB raw image bytes. The packer also
+checks each image's separate base64 rounding against a 14 MiB encoded-content
+guard, including a fixed 2 MiB envelope reserve. Escaped prompt/schema context
+must fit inside that reserve. These are conservative local estimates, not proof
+of upstream transport acceptance. Generated regression testing exposed the
+padding boundary where a raw-valid batch exceeds the encoded limit; packing now
+stops before that boundary while retaining native overlap and full membership.
+
+Exact metadata-only recomputation matches the prospectively approved plan:
+172 singles and 84 doubles chunks per exhaustive stream, 512 original sessions,
+4,489,176,948 new image bytes and 5,890,058,703 cumulative bytes including all
+1,400,881,755 predecessor attempted bytes. This includes #210's two failed
+dispatches; their original seals, receipts and process lifetimes are rechecked
+before reuse. Both native sources, clocks, packets, original worker terminal
+evidence and all selected PNGs must reverify without decoding or copying.
+
+The fresh grant fixes an eight-hour deadline, with at most two simultaneous
+assessors and five-second pacing after success. Every attempted byte, repeated
+overlap, failure and adjudication remains charged against cumulative 8 GiB
+payload/output limits. Both exhaustive original streams must finish before
+targeted blind source adjudication is planned and frozen. An unresolved join,
+identity, contact or boundary retains an incomplete reference. All four
+eligibility flags remain false; this protocol establishes neither full-match
+annotation accuracy nor source redistribution or model eligibility.
+
 ## Authorized dense assessment: transport failure, both references incomplete
 
 The separately owner-authorized [#210 follow-up](https://github.com/Ken0u/badminton-match-analyzer/issues/210)

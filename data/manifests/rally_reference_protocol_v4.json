@@ -1,0 +1,135 @@
+{
+  "schema_version": 4,
+  "task": 212,
+  "purpose": "Transport-bounded assessment of unchanged native packets; development only",
+  "sources": [
+    {
+      "source_id": "go2uajSiBnE",
+      "category": "singles",
+      "source_sha256": "708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9",
+      "clock_sha256": "f1cf689916f85716fddb692f5bb9118812a4f4c66f211ed4b9de7e7c6fb3965f",
+      "packet_sha256": "31ce7994f18b4f8fe79e7146e2a4d720b678c97e0485f5bc2d4efc94c452415b",
+      "native_frame_count": 129600
+    },
+    {
+      "source_id": "H1setLK1tig",
+      "category": "doubles",
+      "source_sha256": "49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623",
+      "clock_sha256": "867467f96a9bedecff035053d765e368d70abcde13d79dc4830b4c24fe87d5b0",
+      "packet_sha256": "73db8fc5da12da63fdf94820dfa2ea5ee90b765bad445c11abe06d00e69d7056",
+      "native_frame_count": 118500
+    }
+  ],
+  "selection": {
+    "overview_seconds": 900,
+    "overview_step_seconds": 5,
+    "grid_endpoint_included": true,
+    "rule": "First native frame at or after each source-PTS grid point relative to original origin; clamp to final ordinal only when needed, retaining duplicate memberships",
+    "candidate_rule": "Earliest service-preparation overview followed by exchange and stopped-play within40 source seconds, separately independently assessed and source-adjudicated before dense preparation",
+    "max_rally_seconds": 40,
+    "context_seconds_each_side": 4,
+    "failed_slot": "Retain unresolved/unavailable slot; never replace an invalidated or unsupported candidate with an easier rally",
+    "screening_limit": "Sparse overviews propose bounds; they do not certify complete rallies or exact events"
+  },
+  "assessment": {
+    "streams": [
+      "independent_a",
+      "independent_b",
+      "adjudication"
+    ],
+    "overview_states": [
+      "service_preparation",
+      "exchange",
+      "stopped_play",
+      "replay",
+      "non_play",
+      "unknown"
+    ],
+    "scene_states": [
+      "live",
+      "replay",
+      "non_play",
+      "unknown"
+    ],
+    "families": [
+      "clear",
+      "lift",
+      "net",
+      "drop",
+      "smash",
+      "drive",
+      "other",
+      "unknown"
+    ],
+    "sides": [
+      "forehand",
+      "backhand",
+      "unknown"
+    ],
+    "chunk_overlap_frames": 2,
+    "coverage": "Two actual independent exhaustive native streams; separate fresh targeted source-only adjudication of all disagreements, unknowns, contact/actor/scene/boundary/completeness cases and chunk joins. Screening uses separate fresh blind source adjudication.",
+    "contacts": "Inclusive uncertainty intervals for observed or unresolved racket contacts; opening serve occurs once, with no shot family; terminal evidence has its own interval and is not the last stroke",
+    "actors": "Source actors with descriptions and unknown identity links, independently of tracker IDs, court end or screen position",
+    "unknowns": "Keep missing, corrupt, censored, uncertain, unreviewed and unknown cases. Unknown is not a negative and agreement is not expert gold truth",
+    "complete_reference": "Supported exhaustive contact enumeration, known source hitters, live camera context and observed service/terminal boundaries; no unresolved contact, identity or boundary gap inside the provisional rally",
+    "label_support": "Family/side remain unknown unless source mechanics and outgoing flight warrant them; half smash excluded; unknown labels do not establish strict full annotation accuracy",
+    "adjudication": "targeted_source_only",
+    "targeted_resolution": "Derive required frame regions from both sealed exhaustive streams including interval closure and disputed joins. Separate validated fresh source-only targeted chunks must cover every required frame; unknowns remain incomplete. No third exhaustive stream is required."
+  },
+  "payload": {
+    "destination": "Existing ChatGPT-authenticated Codex CLI only",
+    "images": "Unmodified oriented original source-frame PNGs only",
+    "context": "Minimal public protocol/frame/hash context and the same stream's own continuity notes; no predictions, model outputs, other-stream assessments or account secrets",
+    "max_images_per_session": 20,
+    "max_image_bytes_per_session": 9437184,
+    "max_total_image_bytes": 8589934592,
+    "max_locally_controlled_encoded_request_bytes": 14680064,
+    "encoded_envelope_reserve_bytes": 2097152
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  },
+  "limits": {
+    "max_output_bytes": 8589934592,
+    "task_seconds_from_grant": 28800,
+    "max_repair_rounds": 3,
+    "paid_services": false,
+    "max_parallel_assessors": 2,
+    "pacing_seconds": 5,
+    "max_replacement_launches": 3
+  },
+  "predecessor": {
+    "task": 208,
+    "pr": 209,
+    "head_sha": "890995493ddcc98076bc8d771ceb400c8234d409",
+    "merged_sha": "3d2d39e76b334584d725177f3dfb950d8fa84da6",
+    "screening_sha256": "7c9fb68bd600f648e32c3dbdbc1b3d20b54fe6fc54b2dfa226a152d7cc960f3e",
+    "selection_sha256": "761d1da7f4b8628ebdb864ed0117d561b0db83f15258619506d7d0b7c993bebb",
+    "context_sha256": "aecd99016134cec0299406c0f82f46b433ea5faee73ac3eacd11d92a36957cde",
+    "terminal_sha256": "59c28c1bfc4233927cca38cf925067b7f04d80c743863b2ebfe471e186686f8e",
+    "dense_packets": {
+      "go2uajSiBnE": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+      "H1setLK1tig": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a"
+    },
+    "image_bytes": 1400881755,
+    "native_frames": {
+      "go2uajSiBnE": 991,
+      "H1setLK1tig": 541
+    },
+    "complete_references": 0,
+    "retained_slots": 2,
+    "image_bytes_before_failed_successor": 1347060833,
+    "failed_successor": {
+      "task": 210,
+      "pr": 211,
+      "head_sha": "4d686a72fb5bb5390b1ea2250680a3df6a2a962c",
+      "merged_sha": "2b005aecef275909bcf1d2745f98d9b7e491e2a0",
+      "aggregate_sha256": "4e839ba32c3171937e5ebb8824c05b8daf1cacb69a055caf28fa2685d4b2f865",
+      "failed_sessions": 2,
+      "image_bytes": 53820922
+    }
+  }
+}

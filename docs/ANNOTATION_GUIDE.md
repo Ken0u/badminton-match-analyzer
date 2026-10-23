@@ -1,5 +1,17 @@
 # Annotation guide, version 1
 
+The separately authorized [#212 transport successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)
+uses [v4](../data/manifests/rally_reference_protocol_v4.json) on the same prepared
+original windows. Retain earlier protocols/results. Bound every fresh session
+to 20 original PNGs / 9 MiB raw bytes and verify separate base64 padding plus
+the 2 MiB context/envelope reserve fits the 14 MiB local encoded guard. An
+oversized or failed original is preserved and charged, never silently repacked
+or retried. This local guard does not guarantee server feasibility. Keep
+two-frame native overlap, each independent stream's own continuity, all prior
+failed bytes and the original grant's immutable eight-hour deadline. Freeze
+targeted blind adjudication only after both complete original streams; preserve
+unknown contacts, actors, scene context and boundaries as incomplete evidence.
+
 For the source-only complete-rally pilot, follow the prospective
 [rally protocol](../data/manifests/rally_reference_protocol_v1.json).
 Five-second overview frames propose the earliest warranted provisional slot;
