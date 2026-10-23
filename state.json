@@ -82,6 +82,15 @@
       "task_id": "179",
       "verb": "review-result"
     },
+    "ci-bootstrap200-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792721888,
+      "epoch": 1,
+      "fingerprint": "1f5f849d4ae51c9a3a08be9632363f631a97239dd4936194f46d985b7ace1892",
+      "status": "running",
+      "task_id": "200",
+      "verb": "checkpoint"
+    },
     "ci-bootstrap200-grant-v1": {
       "actor": "Ken0u",
       "at": 1792721239,
@@ -14344,12 +14353,33 @@
       }
     },
     "200": {
+      "checkpoint": {
+        "base_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
+        "branch": "codex/issue-200-reduce-recurring-ubuntu-system-dependenc",
+        "deadline_utc": "2026-10-23T05:07:19Z",
+        "evidence": [
+          ".cache/ci-bootstrap200-protocol-v1.json",
+          ".cache/ci-bootstrap200-focused-v2",
+          ".cache/ci-bootstrap200-checks-v1/test-process.json",
+          ".cache/roadmap189-head-terminal-v4/verification.json"
+        ],
+        "immutable_grant_timestamp": 1792721239,
+        "limitations": [
+          "Original Ubuntu network cause unknown",
+          "Windows mocks do not establish Linux bootstrap speed or codec behavior",
+          "No historical CI reruns or test/timeout/retry policy changes",
+          "189 incomplete and preserved; no research data/process or deprecated PROGRESS access"
+        ],
+        "max_output_bytes": 134217728,
+        "stage": "Candidate limited to three Ubuntu dependency preparation commands, native probe/routing helper, focused tests and aggregate report.32 generated focused tests pass; required isolated full project checks running in original venv. Actual Linux evidence pending unchanged exact-head/main CI."
+      },
+      "checkpoint_at": 1792721888,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "ffb4bd1211b5344a64b5ece09de6d275ceffecc2",
         "branch": "codex/issue-200-reduce-recurring-ubuntu-system-dependenc",
         "epoch": 1,
-        "expires_at": 1792732039,
+        "expires_at": 1792732688,
         "granted_at": 1792721239,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
