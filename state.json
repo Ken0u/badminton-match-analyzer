@@ -19072,6 +19072,7 @@
       "status": "ready"
     },
     "243": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40122980304",
       "checkpoint": {
         "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
         "head_sha": "78d53578ff1c6a25dd63b91d4782640b8679e752",
@@ -19091,7 +19092,7 @@
         "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792867675,
