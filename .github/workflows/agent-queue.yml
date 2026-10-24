@@ -44,6 +44,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python scripts/agent_queue.py integrate
+      - name: Launch bounded completion observers
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/observe_completion.py launch
       - name: Update configured private Project
         if: success() && vars.AGENT_PROJECT_NUMBER != ''
         env:

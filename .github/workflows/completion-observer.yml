@@ -1,0 +1,60 @@
+name: Completion observer
+run-name: Observe ${{ inputs.task_id }}/${{ inputs.epoch }}/${{ inputs.stage }}/${{ inputs.source_sha }}/${{ inputs.attempt }}
+on:
+  workflow_dispatch:
+    inputs:
+      coordination_sha:
+        description: Immutable trusted coordination evidence
+        required: true
+        type: string
+      task_id:
+        description: Journalled task number
+        required: true
+        type: string
+      epoch:
+        description: Ownership epoch
+        required: true
+        type: string
+      stage:
+        description: Completion boundary
+        required: true
+        type: choice
+        options: [main, delivery]
+      source_sha:
+        description: Exact merged source
+        required: true
+        type: string
+      attempt:
+        description: Existing delivery counter, or zero for main
+        required: true
+        type: string
+concurrency:
+  group: completion-${{ inputs.task_id }}-${{ inputs.epoch }}-${{ inputs.stage }}-${{ inputs.source_sha }}-${{ inputs.attempt }}
+  cancel-in-progress: false
+permissions:
+  contents: read
+jobs:
+  observe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 95
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: Observe exact completion and wake the normal controller
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OBSERVE_COORDINATION_SHA: ${{ inputs.coordination_sha }}
+          OBSERVE_TASK_ID: ${{ inputs.task_id }}
+          OBSERVE_EPOCH: ${{ inputs.epoch }}
+          OBSERVE_STAGE: ${{ inputs.stage }}
+          OBSERVE_SOURCE_SHA: ${{ inputs.source_sha }}
+          OBSERVE_ATTEMPT: ${{ inputs.attempt }}
+        run: python scripts/observe_completion.py observe
