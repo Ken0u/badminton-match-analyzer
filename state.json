@@ -4496,6 +4496,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-targeted-start-v5": {
+      "actor": "Ken0u",
+      "at": 1792809591,
+      "epoch": 1,
+      "fingerprint": "02ef6db9c0d80a85a63a9452759bece617c0067f327c0e278911d9edeba177b7",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-continuation-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792795069,
@@ -16056,15 +16065,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "{\"all_targeted_lifetimes_absent\": false, \"at\": 1792809417.624864, \"attempted_image_bytes\": 5915693132, \"both_targeted_indexes_complete\": false, \"coordination\": \"c2b39f168249fd26919602302080200289522e00\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"H1setLK1tig\": {\"complete_index\": false, \"finished\": 0, \"launcher_alive\": null, \"started\": 0, \"targeted_cli_alive\": 0}, \"go2uajSiBnE\": {\"complete_index\": false, \"finished\": 0, \"launcher_alive\": null, \"started\": 0, \"targeted_cli_alive\": 0}}, \"lease_expiry\": 1792819760}\nBlind targeted adjudication status after both512original sessions and global genuine session/native/source audit. Original producer eebbe21 and separately sealed acceptance6cb7e4f remain unchanged. Full checks2384passed/4optional skips,230focused, Ruff/format/pip/diff/repository pass. Exact targeted plan/seal/timestamp are preserved. No source replacement, paid service, implicit retry or scientific label rewrite. All four eligibility flags remain false. Original grant/deadline and all cumulative budgets remain unchanged; no signal is sent to any process."
+        "summary": "Both exhaustive original streams COMPLETE and genuine source owners exited successfully via actual waits.512successes,515attempts,all3interrupted starts preserved/charged,5915693132actual original cumulative imagebytes. MetadataauditSHA0e063fa8132dd1330443712c6e887befd163fe38695cc6208cfdbde9da80fe36 verifies both256segmentindexes,757unique completed threads including245prior sessions,max2concurrent,unchanged native/source/producer/transport and no invented interrupted exits. Only AFTER both completeindexes and globalmetadata passed did originalauditorV4 validate scientific outputs and plannerV3 compare originals. Full originalauditSHAd381dd9c7d39c9fa30ea1c85088b2192d24a716a5d4bc768d7022684c23cf110. The exact unchanged V1target rules require ALL991singles/541doubles nativeframes.256targetedsessions,8160281606projected cumulative attemptedbytes<8GiB,allrequired targets/context/eventclosure preserved without reduction. PlanSHA0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b. Public predispatch executionfreeze:https://github.com/Ken0u/badminton-match-analyzer/issues/212#issuecomment-6378830481 sealSHA24ef8684f99ad547e176d11876a5a96268a66228e2d4e345dd785e9374280f07,toolsealSHA1438c2b8ce5fd771cdea99d9e48de158b79d1acad79f33ab4c1f2e9c84d12881. Full retainedoutput2303853389bytes,receiptSHA50f6905f9d10d1116f5e08d5edb1ac439eac2fb0e7535ded886169e4b8972cbb. V5monitor and both source-specific blindtargetV5owners are genuinely live via attached tool sessions and exact actual process identity checks. All3oldsource replacement allowances are consumed;any newfailedsegment fenceswithoutreplacement. Adjudicators receive no original labels/actor names/predictions/otherstream notes,only original PNGs,minimalfixedcontext,and ownsame-source continuity. No targeted scientific labels opened by parent. Fresh aggregate targetstatus:{\"H1setLK1tig\": {\"active_cli\": 0, \"complete_index\": false, \"finished\": 3, \"started\": 3, \"successful_finishes\": 3}, \"go2uajSiBnE\": {\"active_cli\": 1, \"complete_index\": false, \"finished\": 3, \"started\": 4, \"successful_finishes\": 3}},attemptedbytes=5977873096,observationSHAb8744cdc4c3d447b2454531df8168de63adabf38f13abd64b5debf4440b2a12a. Original deadline1792820409,9MiBraw/20images/14MiBencoded,2assessors,5secondpacing,8GiBcumulativepayloadANDoutput andfalseeligibility unchanged. No paidservice,newsource,decode,transform,runtimeextension,promotion,manualmerge. Taskbranch/draft216clean/unsubmitted1b285c0,12exactCIpasses/2384tests4optionalskips preserved;rootbranch/deprecatedPROGRESSedit untouched. Nextboth targetindexes and real exits,finalauditorV5unknown-preserving2slotaggregate,report/guide/checks/finalexactCI/controller/main/actualpublicdelivery. Software/nativecoverage/agentagreement do not establish fullmatchaccuracy;62/66/67/71 remain incomplete."
       },
-      "checkpoint_at": 1792809422,
+      "checkpoint_at": 1792809591,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792820222,
+        "expires_at": 1792820391,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
