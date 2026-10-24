@@ -4692,6 +4692,26 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-code-finalization-grant-v2": {
+      "actor": "Ken0u",
+      "at": 1792827030,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3662f4e42aa819358d3cd40cfb2a3b5ba7de3ae4",
+        "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind-e2",
+        "epoch": 2,
+        "expires_at": 1792837830,
+        "granted_at": 1792827030,
+        "host_id": "MSI",
+        "session_id": "rally212-msi-20261023-v1",
+        "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1"
+      },
+      "epoch": 2,
+      "fingerprint": "65e059089a21884897c6a0ec13623085f922a75bed35017044078fe6ce7b66c4",
+      "status": "granted",
+      "task_id": "212",
+      "verb": "next"
+    },
     "rally212-continuation-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792795069,
@@ -16431,7 +16451,18 @@
         "summary": "Doubles targeted adjudication genuinely completed:actual attached tool33887returned exit0,84successful sessions and complete index SHA6fd930cc66b83bbf9994cfcf52dc84e6e28ddcdddb5ad5c0f0cd40034e1a165f. Independent metadata terminal verifier confirms all84index entries match original finish receipts and fixedplan chunks,541unique originalnativeframes,recorded ownerPID12764/create1792809435.739057 absent and all84CLI lifetimes absent. Closure receipt .cache/rally212-doubles-targeted-terminal-v1/receipt.json SHA8402d2b1cd45e9c5ae14948780dda23e6e1eb3f5886dd5067814709c753bd639. No scientific documents/images/predictions opened. Do not restart doubles or split/migrate the remaining live singles lane;all3replacement launches are consumed. Metadata observation1792813743 finds singles86of172successful,originalPID17952/create1792809434.447088 live,cwd/commandmatch;monitor1995and singles85807 remainlive,no failure/dispatchstop. Cumulativeattemptedimagebytes7401193955. Latestprefixaudit170targeted+757prior/original receipts=927distinctcompletedthreads,actual completedCLIabsence,receipt/eventlog/reservation consistency,max2concurrent;SHA33fd48946ee37c60e045992d22daf8365431ac1e726b5035c7c940d1b10814d3. It does not replace frozen finalaudit. Targeted documents remain sealed until BOTHsourceindexes and genuineexits/globalmetadataaudit. Both512original successes/515attempts preserved,3interruptedstarts charged with no inventedexitcodes,allreplacementallowanceconsumed. Originalgrant1792791609/deadline1792820409,sourceinputs/targetplan/protocols/producer/acceptance and8GiBcaps/all4falseeligibilityflags unchanged. Local combined receipt/nativeordinal guards remain fourgranted uncommitted files,300focused/2454fullpassed/4optional skips,Ruff/format/pip/diff/repositorypass;all153observed verificationlifetimes absent;verificationreceiptbc49f232dc963b83caffab7a420cab54d306ea231074c74c6e5794bb59ec9937. CodeSHA065cd7548da30ddfa58e0f0094f34a1facaa9e7951049ac4c346a381f613a8c4,testSHA3ddad6c4d433d9c137f5a30125f4b49b8d26047d6115e4de3626ce8669f2c1fa. Actualnewtesthelper14214exited0. Draft216descriptionV3/readbackverified,remotehead1b285c0 unchanged/unsubmitted,prior12exactCIjobs green;newlocalchangesneedfinalheadCIafterpublication. Do not push while monitorstillhardcodeshead. Last fulloutputaccounting2312648822bytesbelow8GiB,supplement14872325within64MiBheadroom;rerunbeforefinal. Next finish singles only,verify actualexit and bothcompleteindexes,run frozenfinalauditorV5/fullaccounting,finalactualreport/checks/commitpush/exactCI/controller/main/publicdelivery. No complete reference or fullmatch correctness claimed;#62/#66/#67/#71 remain incomplete. Rootbranch/PROGRESSedit preserved,PROGRESSdeprecated,no consumedholdout63 access. Latest operationalhandoff .cache/RALLY212_FRAME_ORDINAL_GUARD_CHECKPOINT_20261024.md. No paidservice,manualmerge,rawcoordination edits or credentialdisplay."
       },
       "checkpoint_at": 1792813889,
-      "epoch": 1,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3662f4e42aa819358d3cd40cfb2a3b5ba7de3ae4",
+        "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind-e2",
+        "epoch": 2,
+        "expires_at": 1792837830,
+        "granted_at": 1792827030,
+        "host_id": "MSI",
+        "session_id": "rally212-msi-20261023-v1",
+        "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1"
+      },
+      "epoch": 2,
       "history": [
         {
           "at": 1792826904,
@@ -16559,7 +16590,7 @@
         ]
       },
       "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1",
-      "status": "ready"
+      "status": "running"
     },
     "213": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40027926387",
