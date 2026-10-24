@@ -234,6 +234,16 @@ output/receipt hashes globally, including predecessor attempts. Until this
 audit passes, inspect execution metadata only. A completed segment or index
 does not by itself prove that its recorded process lifetime has exited.
 
+Execution receipts require nonempty string thread and session identifiers and
+an integer zero exit code. Matching empty identifiers or values such as `False`
+and `0.0` cannot substitute for actual execution evidence. Retain the independent
+process, event-log and global session checks even when these fields are valid.
+
+Native frame ordinals must remain integers in assigned chunks, inspected-image
+documents and receipts, dense coverage, overview rows and previous-segment
+links. Boolean and float aliases such as `False` and `0.0` cannot substitute for
+frame 0, even though Python equality would treat them as the same value.
+
 For #212, the prospectively fixed target planner includes all uncertainties,
 contradictions, original event intervals and overlapping joins, adds two native
 context frames on either side within the same frozen windows, and closes every
@@ -253,3 +263,15 @@ by source adjudication, use that lane's own supported identities. Never supply
 original actor labels to blind adjudicators to manufacture a match. Keep
 unsupported contacts, identities, families and sides explicit in the full
 two-slot aggregate. All four eligibility flags remain false.
+
+The #212 execution ended with both original streams complete, 94/172 successful
+singles target sessions and 84/84 doubles target sessions. One additional singles
+dispatch was interrupted without an output or known exit code. Its scientific
+deadline has elapsed. Keep targeted labels sealed: the frozen final auditor
+requires both complete source indexes and global execution verification before
+opening them. A completed doubles index alone does not authorize inspection or
+certify a reference. Report zero certified references across both retained
+slots, with execution incompleteness explicit. Controller recovery, a fresh code
+grant or lease renewal does not reset the scientific deadline or permit another
+image dispatch. Preserve all original attempts and obtain a separately frozen
+scientific scope before further assessment.

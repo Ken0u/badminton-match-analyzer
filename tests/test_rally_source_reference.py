@@ -1612,6 +1612,129 @@ def test_transport_cost_rejects_padding_overflow_below_raw_budget():
         r.transport_cost([1, 9 * 1024**2 - 1], protocol=transport_protocol())
 
 
+@pytest.mark.parametrize("version", [None, 4])
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("thread_id", None),
+        ("thread_id", ""),
+        ("thread_id", "   "),
+        ("thread_id", True),
+        ("thread_id", 17),
+        ("session_id", None),
+        ("session_id", ""),
+        ("session_id", "   "),
+        ("session_id", 17),
+        ("session_id", False),
+        ("exit_code", False),
+        ("exit_code", 0.0),
+        ("exit_code", "0"),
+    ],
+)
+def test_assessment_requires_typed_actual_execution_identifiers(version, field, value):
+    protocol = transport_protocol() if version == 4 else None
+    p = packet()
+    chunk = r.plan_chunks(p, dense=True, protocol=protocol)[0]
+    document = assessment(p, chunk)
+    execution = receipt(document, chunk)
+    if protocol:
+        execution["transport_cost"] = r.transport_cost(
+            [100] * 8, context_bytes=301, protocol=protocol
+        )
+    execution[field] = value
+    if field == "session_id":
+        # Equal missing/malformed values in both records do not establish identity.
+        document[field] = value
+    execution["segment_sha256"] = hashlib.sha256(encoded(document)).hexdigest()
+    with pytest.raises(ValueError, match="fresh session"):
+        r.validate_assessment(
+            document,
+            p,
+            chunk,
+            execution,
+            stage="dense",
+            stream="independent_a",
+            protocol=protocol,
+        )
+
+
+@pytest.mark.parametrize("version", [None, 4])
+@pytest.mark.parametrize(
+    "field",
+    ["document_images", "receipt_images", "frame_states", "overview_rows", "chunk"],
+)
+@pytest.mark.parametrize(
+    ("index", "value"), [(0, False), (1, True), (0, 0.0), (1, 1.0)]
+)
+def test_assessment_rejects_boolean_and_float_native_ordinals(
+    version, field, index, value
+):
+    protocol = transport_protocol() if version == 4 else None
+    p = packet()
+    stage = "overview" if field == "overview_rows" else "dense"
+    chunk = r.plan_chunks(p, dense=stage == "dense", protocol=protocol)[0]
+    document = assessment(p, chunk, stage=stage)
+    execution = copy.deepcopy(receipt(document, chunk))
+    if protocol:
+        execution["transport_cost"] = r.transport_cost(
+            [100] * 8, context_bytes=301, protocol=protocol
+        )
+    if field == "chunk":
+        chunk["frames"][index] = value
+    elif field == "receipt_images":
+        execution["images"][index]["frame"] = value
+    else:
+        key = {
+            "document_images": "inspected_frames",
+            "frame_states": "frame_states",
+            "overview_rows": "frames",
+        }[field]
+        document[key][index]["frame"] = value
+    execution["segment_sha256"] = hashlib.sha256(encoded(document)).hexdigest()
+    with pytest.raises(ValueError):
+        r.validate_assessment(
+            document,
+            p,
+            chunk,
+            execution,
+            stage=stage,
+            stream="independent_a",
+            protocol=protocol,
+        )
+
+
+@pytest.mark.parametrize("version", [None, 4])
+@pytest.mark.parametrize("value", [False, 0.0])
+def test_assessment_rejects_untyped_previous_frame_ordinals(version, value):
+    protocol = transport_protocol() if version == 4 else None
+    p = packet()
+    chunk = r.plan_chunks(p, dense=True, protocol=protocol)[0]
+    document = assessment(p, chunk, previous="b" * 64)
+    execution = receipt(document, chunk)
+    if protocol:
+        execution["transport_cost"] = r.transport_cost(
+            [100] * 8, context_bytes=301, protocol=protocol
+        )
+    previous = {
+        "sha256": "b" * 64,
+        "stream": "independent_a",
+        "source_id": p["source_id"],
+        "stage": "dense",
+        "last_frames": [value, 1],
+    }
+    with pytest.raises(ValueError, match="continuity"):
+        r.validate_assessment(
+            document,
+            p,
+            chunk,
+            execution,
+            stage="dense",
+            stream="independent_a",
+            previous=previous,
+            protocol=protocol,
+        )
+
+
 def test_transport_assessment_requires_exact_cost_and_preserves_unknowns():
     protocol = transport_protocol()
     p = packet()

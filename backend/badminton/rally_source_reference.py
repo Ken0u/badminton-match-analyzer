@@ -956,6 +956,22 @@ def run_reuse(root, checkout, output, context_path, context_sha256, timestamp_pa
     return plans
 
 
+def _same_frames(values, expected):
+    return (
+        isinstance(values, list)
+        and all(type(n) is int for n in values)
+        and values == expected
+    )
+
+
+def _same_frame_rows(rows, expected):
+    return (
+        isinstance(rows, list)
+        and all(isinstance(row, dict) for row in rows)
+        and _same_frames([row.get("frame") for row in rows], expected)
+    )
+
+
 def _interval(value, allowed):
     if (
         not isinstance(value, list)
@@ -983,7 +999,7 @@ def validate_assessment(
     for row in expected_rows:
         _integer(row["image"]["bytes"], 1)
     if (
-        selected != [row["frame"] for row in expected_rows]
+        not _same_frames(selected, [row["frame"] for row in expected_rows])
         or not 1 <= len(selected) <= MAX_IMAGES
         or len(set(selected)) != len(selected)
         or chunk["image_bytes"] != sum(row["image"]["bytes"] for row in expected_rows)
@@ -1001,15 +1017,21 @@ def validate_assessment(
         document.get("stage") != stage
         or document.get("stream") != stream
         or document.get("source_id") != packet["source_id"]
+        or not _same_frame_rows(document.get("inspected_frames"), selected)
         or document.get("inspected_frames") != expected_images
     ):
         raise ValueError("Assessment must inspect every exact assigned source image")
     if (
-        not receipt.get("thread_id")
+        not isinstance(receipt.get("thread_id"), str)
+        or not receipt["thread_id"].strip()
+        or not isinstance(receipt.get("session_id"), str)
+        or not receipt["session_id"].strip()
+        or type(receipt.get("exit_code")) is not int
         or receipt.get("exit_code") != 0
         or receipt.get("exited") is not True
         or receipt.get("segment_sha256")
         != hashlib.sha256(encoded(document)).hexdigest()
+        or not _same_frame_rows(receipt.get("images"), selected)
         or receipt.get("images") != expected_images
         or receipt.get("image_bytes") != chunk["image_bytes"]
         or document.get("session_id") != receipt.get("session_id")
@@ -1045,12 +1067,15 @@ def validate_assessment(
         or previous.get("stream") != stream
         or previous.get("source_id") != packet["source_id"]
         or previous.get("stage") != stage
-        or (stage == "dense" and previous.get("last_frames") != selected[:2])
+        or (
+            stage == "dense"
+            and not _same_frames(previous.get("last_frames"), selected[:2])
+        )
     ):
         raise ValueError("Missing own-stream continuity at chunk join")
     if stage == "overview":
         rows = document.get("frames", [])
-        if [r.get("frame") for r in rows] != selected or any(
+        if not _same_frame_rows(rows, selected) or any(
             r.get("state") not in STATES or not r.get("reason") for r in rows
         ):
             raise ValueError("Missing/duplicate/unreviewed screening row")
@@ -1076,7 +1101,7 @@ def validate_assessment(
             raise ValueError("Distinct source actor definitions required")
         events = document.get("events", [])
         coverage = document.get("frame_states", [])
-        if [r.get("frame") for r in coverage] != selected or any(
+        if not _same_frame_rows(coverage, selected) or any(
             r.get("scene") not in SCENES
             or not r.get("camera_view")
             or r.get("contact_state")
