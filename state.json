@@ -4420,6 +4420,15 @@
       "task_id": "243",
       "verb": "checkpoint"
     },
+    "media243-checkpoint-v3": {
+      "actor": "Ken0u",
+      "at": 1792867376,
+      "epoch": 1,
+      "fingerprint": "72bbff468e7e37b73147983b81a8241cfa5e95c1674fec7cffd8702e2b2b2812",
+      "status": "running",
+      "task_id": "243",
+      "verb": "checkpoint"
+    },
     "media243-registration-v1": {
       "actor": "Ken0u",
       "at": 1792865039,
@@ -4432,6 +4441,15 @@
       "at": 1792865932,
       "epoch": 1,
       "fingerprint": "5775970ea25f69ca75e906771ce7c716607e917fcb9e6a53eb3102a926a47d65",
+      "status": "review",
+      "task_id": "243",
+      "verb": "submit"
+    },
+    "media243-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792867461,
+      "epoch": 1,
+      "fingerprint": "ff5201f7f17c77e81719de2075520941ec06b983580a8e1012a49a6ceb84dba2",
       "status": "review",
       "task_id": "243",
       "verb": "submit"
@@ -19032,17 +19050,17 @@
     "243": {
       "checkpoint": {
         "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
-        "head_sha": "3b3de2031610f32aa14e0d0cfd13a93d13d7cb1f",
+        "head_sha": "78d53578ff1c6a25dd63b91d4782640b8679e752",
         "pr_number": 244,
-        "summary": "61 focused/2802 full tests passed, four optional skips, all required checks passed. Seven-file source hashes sealed in local submitted-source record. PR244 at3b3de2031610f32aa14e0d0cfd13a93d13d7cb1f is exact tested source. Initial publication helper created commit/branch/PR successfully, then exclusive local checkpoint filename collided with preserved running-tests checkpointv1 before any controller submission; resumed with fresh checkpointv2 and unchanged submitv1, no code/test/CI retry. No research images/labels/inference/scientific sessions/image transfer. Pending242 unchanged. Remaining exact PR/main CI, normal controller integration and independent complete public delivery."
+        "summary": "2820 full tests pass with four optional skips;160 final-source focused tests pass under actual Python3.12. All required static/dependency/repository/diff checks pass. Repaired first Windows CI failure: compare opened handles to avoid3.12 path/handle ctime mismatch;require independent file-journal USN plus ChangeTime for Windows reuse;unsupported metadata disables reuse with second-byte-read verification. Original failed run40120104354/logs preserved, no historical retry. Exact seven-file bindings in submitted-source-v2;new tested head78d53578ff1c6a25dd63b91d4782640b8679e752, same PR244. No image access/transfer,scientific sessions,inference,data/policy changes.242 specifically authorized Ready but unclaimed. Remaining fresh exact PR/main CI,normal controller integration,complete public package/both-image delivery."
       },
-      "checkpoint_at": 1792865932,
+      "checkpoint_at": 1792867376,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
         "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
         "epoch": 1,
-        "expires_at": 1792876732,
+        "expires_at": 1792878176,
         "granted_at": 1792865196,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -19099,10 +19117,10 @@
         ]
       },
       "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
-        "head_sha": "3b3de2031610f32aa14e0d0cfd13a93d13d7cb1f",
+        "head_sha": "78d53578ff1c6a25dd63b91d4782640b8679e752",
         "pr_number": 244,
         "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74"
       }
