@@ -5170,6 +5170,13 @@
       "status": "idle",
       "verb": "review-next"
     },
+    "roadmap-after218-next-v1": {
+      "actor": "dootz1",
+      "at": 1792817056,
+      "fingerprint": "6ef30e9694a061e1acfc7b425431891569120c8c52cdc080423532f2b002fffc",
+      "status": "idle",
+      "verb": "next"
+    },
     "roadmap-export-ui-plan138-v1": {
       "actor": "dootz1",
       "at": 1792465571,
@@ -5428,6 +5435,13 @@
       "status": "running",
       "task_id": "218",
       "verb": "checkpoint"
+    },
+    "roadmap218-capabilities-v1": {
+      "actor": "dootz1",
+      "at": 1792817056,
+      "fingerprint": "3d4413a2acc2bfd1b9e0ad2814772089849e91528a7db99d491247982c529b3d",
+      "status": "ok",
+      "verb": "register"
     },
     "roadmap218-merged-checkpoint-v1": {
       "actor": "dootz1",
@@ -19677,10 +19691,11 @@
       "capabilities": [
         "cpu",
         "windows",
-        "amd64"
+        "amd64",
+        "cuda"
       ],
       "host_id": "LAPTOP-FVMV3PD6",
-      "registered_at": 1792815140,
+      "registered_at": 1792817056,
       "session_id": "roadmap-01a16c1a"
     },
     "MSI/01a15c4a-b79d-7ef1-aa5a-dedbddff5ae0": {
