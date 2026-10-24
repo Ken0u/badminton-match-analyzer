@@ -4359,6 +4359,14 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "media-cache-repair-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792864679,
+      "fingerprint": "bcd587faa06e301501683f0a81d08c39540403c4073d444fc27455372d66ff7a",
+      "status": "ready",
+      "task_id": "243",
+      "verb": "plan"
+    },
     "merge232-before-refreeze-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792845856,
@@ -7151,6 +7159,14 @@
       "fingerprint": "3f166c7b8a20aaed01fd3cbf800a241aa312b3bbc77629d1daef9a8125591f03",
       "status": "needs_human",
       "task_id": "242",
+      "verb": "plan"
+    },
+    "spec-243-2878b00b3bd0393da5a34b01e56eed9c9ead7a0f657d547de80d83f8da05c03d": {
+      "actor": "Ken0u",
+      "at": 1792864679,
+      "fingerprint": "5f4e42f88319a45b4a3fe86babf1c1396df8950d69cfceac8d45ea1d551df085",
+      "status": "ready",
+      "task_id": "243",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -18929,6 +18945,58 @@
       },
       "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1",
       "status": "needs_human"
+    },
+    "243": {
+      "epoch": 0,
+      "planned_at": 1792864679,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve root edits, historical tasks/branches/PRs, environments, private data, source labels/predictions and all scientific allowances. This independent generated-only application repair must not launch #240/#242 assessments, send images, claim old62 or alter research labels, protocols, deadlines or eligibility.",
+          "Reproduce the three current failures on generated temporary files: changed source accepted, stale timestamp tuple returned and stale playback digest returned after same-size/same-mtime replacement. Add regression coverage for ordinary modifications, replacement, in-place edits with restored mtime, repeated unchanged reads and mutation during reading. Recheck current main and duplicate history before obtaining a targeted committed grant.",
+          "Provide one bounded thread-safe shared read-cache helper for source SHA256, timeline JSON tuples and playback SHA256. Bind cache entries to opened-file identity and available reliable change metadata, including Windows file change time rather than assuming Python3.10 Windows ctime is write time. Platforms/filesystems without trustworthy change metadata must read bytes without reuse. Verify opened-file and pathname identity plus stable metadata before accepting newly read or cached values; a detected concurrent mutation fails clearly and never poisons the cache.",
+          "Preserve existing public APIs, cache capacity bounds, valid-source checks, source PTS/orientation semantics, native decoder logging lifecycle, saved annotation/prediction bytes and browser proxy format. Unchanged files retain bounded cache reuse to avoid hashing a multi-gigabyte source for every frame. Changed source raises SourceChangedError, changed timing is reloaded, and a changed proxy/timeline cannot be reported as a verified matching cached playback. No claim of immunity to unobservable filesystem changes or improved badminton accuracy.",
+          "Use only the seven granted paths. Generated cross-platform tests cover Windows actual change time and failure fallback plus POSIX identity/ctime behavior where available. Run focused/full Python tests, Ruff, format, pip, repository UTF8/LF/JSON/local links and diff checks. Record exact measurements and limitations in the existing bug review. Exact PR/main CI, normal controller integration and independent complete public package/both-image delivery verification remain required."
+        ],
+        "artifacts": {
+          "generated-reproduction": "a0241be5802ac7446f4cf7e5d1aa04002700cc0c813cca52869ea1ea45a74a1c"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "238"
+        ],
+        "exclusions": [
+          "No private image viewing/transfer or real inference/training; no new source or scientific assessment; no app-truth/data rewrite, credentials/auth/publishing/workflow/automation changes, dependency installs, paid service, model promotion, process signals, raw coordination write, PROGRESS edit, manual merge or broad unrelated refactor."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "paid_services": false,
+          "scientific_sessions": 0
+        },
+        "milestone": "Review and product",
+        "outcome": "Reject changed source/proxy bytes and refresh changed timestamps when file replacements or in-place edits preserve size and modification time, without rehashing unchanged large media on every frame request.",
+        "paths": [
+          "backend/badminton/file_cache.py",
+          "backend/badminton/video.py",
+          "backend/badminton/playback.py",
+          "tests/test_file_cache.py",
+          "tests/test_video.py",
+          "tests/test_playback.py",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated file replacement/in-place/concurrent-change and cache reuse tests; focused/full and required project checks.",
+          "Exact source PR/main CI, controller integration and independent complete public package/both-image delivery evidence."
+        ]
+      },
+      "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
