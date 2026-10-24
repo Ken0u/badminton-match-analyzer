@@ -4403,12 +4403,30 @@
       "task_id": "243",
       "verb": "checkpoint"
     },
+    "media243-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792865932,
+      "epoch": 1,
+      "fingerprint": "ad4fa33e2d451062c26cc38993e5dd9cf83308e74a2e568aa52f75ecee300f0f",
+      "status": "running",
+      "task_id": "243",
+      "verb": "checkpoint"
+    },
     "media243-registration-v1": {
       "actor": "Ken0u",
       "at": 1792865039,
       "fingerprint": "5ddaa2e02e90d5bb859a142b7de20e501ae7a6b0aad7784c288556e689deda93",
       "status": "ok",
       "verb": "register"
+    },
+    "media243-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792865932,
+      "epoch": 1,
+      "fingerprint": "5775970ea25f69ca75e906771ce7c716607e917fcb9e6a53eb3102a926a47d65",
+      "status": "review",
+      "task_id": "243",
+      "verb": "submit"
     },
     "merge232-before-refreeze-checkpoint-v1": {
       "actor": "Ken0u",
@@ -18992,22 +19010,17 @@
     "243": {
       "checkpoint": {
         "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
-        "evidence_paths": [
-          ".cache/media-cache-reproduction-20261024.json",
-          ".cache/media243-grant-v1.json",
-          ".cache/media243-focused-v1/pytest.log",
-          ".cache/media243-all-v1/"
-        ],
-        "head_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
-        "summary": "Implementation is uncommitted in original MSI isolated worktree .cache/worktrees/media243-e1 within seven granted paths. Generated reproduction confirms changed source accepted, stale timestamps and stale proxy digest on old main. Shared bounded file-identity/change-metadata cache and all three integrations implemented. 61 focused generated/native playback/source/clock tests pass, including real Windows handle ChangeTime and failure fallbacks. Ruff and format pass; full suite and remaining required checks are running in local exec session 83420 with isolated test roots. No research images/labels opened, no scientific sessions or image transfer, no changes to pending242, no source/prediction/app-truth writes, no publish or merge. Preserve root PROGRESS edit and all historical task branches/artifacts. Next: inspect full-suite result, review final diff, exact tested commit/PR/controller/exact CI and public delivery verification."
+        "head_sha": "3b3de2031610f32aa14e0d0cfd13a93d13d7cb1f",
+        "pr_number": 244,
+        "summary": "61 focused/2802 full tests passed, four optional skips, all required checks passed. Seven-file source hashes sealed in local submitted-source record. PR244 at3b3de2031610f32aa14e0d0cfd13a93d13d7cb1f is exact tested source. Initial publication helper created commit/branch/PR successfully, then exclusive local checkpoint filename collided with preserved running-tests checkpointv1 before any controller submission; resumed with fresh checkpointv2 and unchanged submitv1, no code/test/CI retry. No research images/labels/inference/scientific sessions/image transfer. Pending242 unchanged. Remaining exact PR/main CI, normal controller integration and independent complete public delivery."
       },
-      "checkpoint_at": 1792865506,
+      "checkpoint_at": 1792865932,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
         "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
         "epoch": 1,
-        "expires_at": 1792876306,
+        "expires_at": 1792876732,
         "granted_at": 1792865196,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -19016,6 +19029,7 @@
       "epoch": 1,
       "planned_at": 1792864679,
       "planned_by": "Ken0u",
+      "pr_number": 244,
       "spec": {
         "acceptance": [
           "Preserve root edits, historical tasks/branches/PRs, environments, private data, source labels/predictions and all scientific allowances. This independent generated-only application repair must not launch #240/#242 assessments, send images, claim old62 or alter research labels, protocols, deadlines or eligibility.",
@@ -19062,7 +19076,13 @@
         ]
       },
       "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
+        "head_sha": "3b3de2031610f32aa14e0d0cfd13a93d13d7cb1f",
+        "pr_number": 244,
+        "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74"
+      }
     },
     "62": {
       "checkpoint": {
