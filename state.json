@@ -6377,6 +6377,14 @@
       "task_id": "204",
       "verb": "submit"
     },
+    "source220-delegated-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792849356,
+      "fingerprint": "5a6d565c52e1aef68270bb4fde32ee0d633ab419f2839aa98ed915268602c5c4",
+      "status": "ready",
+      "task_id": "220",
+      "verb": "human-approved"
+    },
     "source220-plan-v1": {
       "actor": "Ken0u",
       "reason": "spec fields must match the version 1 task contract",
@@ -17461,8 +17469,14 @@
     },
     "220": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792849356,
+        "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28"
+      },
       "planned_at": 1792849215,
       "planned_by": "dootz1",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Reuse existing220 and delivered221 comparator; search all issues/PRs/grants before work. Begin only after143/145/218/221/232 are Done with delivery_pending=false, configured-owner authorization of this frozen scope and a committed original-host MSI grant. Preserve all prior code, data, jobs, unknowns, failed research, root edits and deprecated PROGRESS.md. No unfiltered next or replay of62/212/228.",
@@ -17517,7 +17531,7 @@
         ]
       },
       "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28",
-      "status": "needs_human"
+      "status": "ready"
     },
     "221": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40068974349",
