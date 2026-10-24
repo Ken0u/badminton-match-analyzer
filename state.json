@@ -4272,6 +4272,26 @@
       "task_id": "232",
       "verb": "human-approved"
     },
+    "merge232-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792844975,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c7108f599f453b091bb7fe580d52173a060345c9",
+        "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr",
+        "epoch": 1,
+        "expires_at": 1792855775,
+        "granted_at": 1792844975,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7"
+      },
+      "epoch": 1,
+      "fingerprint": "8159fa4a84d1748788767e6a67a8def8fc115f2ee46ad5dd058a815293c2c093",
+      "status": "granted",
+      "task_id": "232",
+      "verb": "next"
+    },
     "merge232-plan-v1": {
       "actor": "Ken0u",
       "at": 1792844377,
@@ -17823,7 +17843,18 @@
       }
     },
     "232": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c7108f599f453b091bb7fe580d52173a060345c9",
+        "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr",
+        "epoch": 1,
+        "expires_at": 1792855775,
+        "granted_at": 1792844975,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792844560,
@@ -17876,7 +17907,7 @@
         ]
       },
       "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
