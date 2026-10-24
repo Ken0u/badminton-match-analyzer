@@ -392,6 +392,15 @@
       "task_id": "252",
       "verb": "plan"
     },
+    "editor252-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792885647,
+      "epoch": 1,
+      "fingerprint": "b15ecb0f90638b22dd9c420dfa90a4efc2cc5a666145e4d13f483a3a5dd6fe3f",
+      "status": "running",
+      "task_id": "252",
+      "verb": "checkpoint"
+    },
     "editor252-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792885500,
@@ -19876,12 +19885,20 @@
       }
     },
     "252": {
+      "checkpoint": {
+        "branch": "codex/issue-252-keep-evaluation-displays-and-report-down",
+        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/252#issuecomment-6391047755",
+        "head_sha": "c4de47420b7899cef835fbf6a41eacc2856aef91",
+        "remaining": "Implementation, generated/full verification, normal PR/main CI/controller and independent public delivery.",
+        "summary": "Three generated baseline variants reproduced; scoped controller/test implementation in progress, no scientific input access."
+      },
+      "checkpoint_at": 1792885647,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c4de47420b7899cef835fbf6a41eacc2856aef91",
         "branch": "codex/issue-252-keep-evaluation-displays-and-report-down",
         "epoch": 1,
-        "expires_at": 1792896300,
+        "expires_at": 1792896447,
         "granted_at": 1792885500,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
