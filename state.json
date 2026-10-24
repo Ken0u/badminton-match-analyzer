@@ -4394,6 +4394,15 @@
       "task_id": "243",
       "verb": "plan"
     },
+    "media243-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792865506,
+      "epoch": 1,
+      "fingerprint": "1a2eda83b586309e6364502dfbda8f5fffd9f3921cca678353f8bd76baa450ab",
+      "status": "running",
+      "task_id": "243",
+      "verb": "checkpoint"
+    },
     "media243-registration-v1": {
       "actor": "Ken0u",
       "at": 1792865039,
@@ -18981,12 +18990,24 @@
       "status": "needs_human"
     },
     "243": {
+      "checkpoint": {
+        "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
+        "evidence_paths": [
+          ".cache/media-cache-reproduction-20261024.json",
+          ".cache/media243-grant-v1.json",
+          ".cache/media243-focused-v1/pytest.log",
+          ".cache/media243-all-v1/"
+        ],
+        "head_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
+        "summary": "Implementation is uncommitted in original MSI isolated worktree .cache/worktrees/media243-e1 within seven granted paths. Generated reproduction confirms changed source accepted, stale timestamps and stale proxy digest on old main. Shared bounded file-identity/change-metadata cache and all three integrations implemented. 61 focused generated/native playback/source/clock tests pass, including real Windows handle ChangeTime and failure fallbacks. Ruff and format pass; full suite and remaining required checks are running in local exec session 83420 with isolated test roots. No research images/labels opened, no scientific sessions or image transfer, no changes to pending242, no source/prediction/app-truth writes, no publish or merge. Preserve root PROGRESS edit and all historical task branches/artifacts. Next: inspect full-suite result, review final diff, exact tested commit/PR/controller/exact CI and public delivery verification."
+      },
+      "checkpoint_at": 1792865506,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
         "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
         "epoch": 1,
-        "expires_at": 1792875996,
+        "expires_at": 1792876306,
         "granted_at": 1792865196,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
