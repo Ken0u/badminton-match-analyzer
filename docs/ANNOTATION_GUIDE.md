@@ -1,5 +1,25 @@
 # Annotation guide, version 1
 
+The separately authorized [#212 transport successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)
+uses [v4](../data/manifests/rally_reference_protocol_v4.json) on the same prepared
+original windows. Retain earlier protocols/results. Bound every fresh session
+to 20 original PNGs / 9 MiB raw bytes and verify separate base64 padding plus
+the 2 MiB context/envelope reserve fits the 14 MiB local encoded guard. An
+oversized or failed original is preserved and charged, never silently repacked
+or retried. This local guard does not guarantee server feasibility. Keep
+two-frame native overlap, each independent stream's own continuity, all prior
+failed bytes and the original grant's immutable eight-hour deadline. Freeze
+targeted blind adjudication only after both complete original streams; preserve
+unknown contacts, actors, scene context and boundaries as incomplete evidence.
+
+When targeted resolutions are combined with retained original contacts, their
+source actor identities must remain linked. Reused IDs with conflicting source
+descriptions, swapped people and independent IDs without a supported link keep
+the composite incomplete. Use definitions supporting the retained contacts;
+a later conflicting chunk must not overwrite them. Do not supply earlier labels
+to a blind adjudicator to force agreement. When all contacts are replaced, use
+the resolution lane's own identities without inventing cross-stream links.
+
 For the source-only complete-rally pilot, follow the prospective
 [rally protocol](../data/manifests/rally_reference_protocol_v1.json).
 Five-second overview frames propose the earliest warranted provisional slot;
@@ -188,3 +208,70 @@ Both attempts remain charged and preserved; no complete assessment was produced.
 Do not silently reduce a frozen greedy packing plan, transform original images,
 switch providers or replay a failed launch. Preserve both incomplete slots and
 obtain a prospectively authorized feasible plan before further image dispatch.
+
+### Transport-bounded reuse and separate acceptance
+
+The separately authorized #212 protocol v4 retains both unchanged #208 windows
+and all 1,532 original PNGs. Load `rally_reference_protocol_v4.json` with
+`load_protocol` and pass that protocol explicitly to `plan_chunks`,
+`payload_cost`, `transport_cost` and `validate_assessment`. The limits are
+20 originals / 9 MiB raw per session, with two native overlap frames. Protocols
+v1, v2 and v3 and their recorded results remain unchanged.
+
+Raw-byte costing is insufficient. `transport_cost` sums each image's separately
+padded base64 size and reserves 2 MiB for escaped prompt/schema, image headers
+and CLI framing, under a 14 MiB local encoded-content guard. Before dispatch,
+measure the actual escaped prompt/schema bytes and pass them as `context_bytes`;
+image headers plus context must fit the reserve. This local estimate does not
+guarantee upstream acceptance. Preserve and charge any failed attempt. Never
+change the frozen packing, transform the images or switch the destination to
+work around a failure.
+
+Both exhaustive original indexes must be complete before comparing their
+scientific content. First audit genuine session/thread separation, source and
+image identities, inspected membership, original process exits and immutable
+output/receipt hashes globally, including predecessor attempts. Until this
+audit passes, inspect execution metadata only. A completed segment or index
+does not by itself prove that its recorded process lifetime has exited.
+
+Execution receipts require nonempty string thread and session identifiers and
+an integer zero exit code. Matching empty identifiers or values such as `False`
+and `0.0` cannot substitute for actual execution evidence. Retain the independent
+process, event-log and global session checks even when these fields are valid.
+
+Native frame ordinals must remain integers in assigned chunks, inspected-image
+documents and receipts, dense coverage, overview rows and previous-segment
+links. Boolean and float aliases such as `False` and `0.0` cannot substitute for
+frame 0, even though Python equality would treat them as the same value.
+
+For #212, the prospectively fixed target planner includes all uncertainties,
+contradictions, original event intervals and overlapping joins, adds two native
+context frames on either side within the same frozen windows, and closes every
+intersecting inclusive event interval in full. Freeze exact regions, chunks and
+cumulative cost before blind adjudication. Do not reduce required regions to
+fit a budget. Across disconnected targeted regions, reset the previous-segment
+link and retain explicit uncertainty about the unseen intervening images.
+
+Preserve the original scientific producer and its consumer context when a
+generated regression warrants stricter acceptance. Seal and timestamp the
+separate acceptance consumer before opening real original labels. Validate
+execution against its original producer, then calculate final completeness
+against the frozen acceptance consumer. Retained original contacts require
+supported source-actor definitions consistent with resolved hitters; an actor
+ID alone cannot establish a cross-region identity. If every contact is replaced
+by source adjudication, use that lane's own supported identities. Never supply
+original actor labels to blind adjudicators to manufacture a match. Keep
+unsupported contacts, identities, families and sides explicit in the full
+two-slot aggregate. All four eligibility flags remain false.
+
+The #212 execution ended with both original streams complete, 94/172 successful
+singles target sessions and 84/84 doubles target sessions. One additional singles
+dispatch was interrupted without an output or known exit code. Its scientific
+deadline has elapsed. Keep targeted labels sealed: the frozen final auditor
+requires both complete source indexes and global execution verification before
+opening them. A completed doubles index alone does not authorize inspection or
+certify a reference. Report zero certified references across both retained
+slots, with execution incompleteness explicit. Controller recovery, a fresh code
+grant or lease renewal does not reset the scientific deadline or permit another
+image dispatch. Preserve all original attempts and obtain a separately frozen
+scientific scope before further assessment.

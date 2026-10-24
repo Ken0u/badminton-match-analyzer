@@ -67,6 +67,9 @@ def _eligibility(value):
 def load_protocol(path):
     protocol = read_json(path)
     _eligibility(protocol.get("eligibility", {}))
+    if protocol.get("schema_version") == 4:
+        _validate_transport_protocol(protocol)
+        return protocol
     if protocol.get("schema_version") == 3:
         _validate_dense_protocol(protocol)
         return protocol
@@ -154,11 +157,82 @@ def _validate_dense_protocol(protocol):
         raise ValueError("Unsupported dense reuse protocol or predecessor bindings")
 
 
+def _validate_transport_protocol(protocol):
+    """Keep the failed v3 experiment immutable and bind its authorized successor."""
+    expected = read_json(
+        Path(__file__).resolve().parents[2]
+        / "data/manifests/rally_reference_protocol_v3.json"
+    )
+    _validate_dense_protocol(expected)
+    expected.update(
+        schema_version=4,
+        task=212,
+        purpose="Transport-bounded assessment of unchanged native packets; development only",
+    )
+    expected["payload"].update(
+        max_image_bytes_per_session=9 * 1024**2,
+        max_locally_controlled_encoded_request_bytes=14 * 1024**2,
+        encoded_envelope_reserve_bytes=2 * 1024**2,
+    )
+    expected["predecessor"].update(
+        image_bytes=1400881755,
+        image_bytes_before_failed_successor=1347060833,
+        failed_successor={
+            "task": 210,
+            "pr": 211,
+            "head_sha": "4d686a72fb5bb5390b1ea2250680a3df6a2a962c",
+            "merged_sha": "2b005aecef275909bcf1d2745f98d9b7e491e2a0",
+            "aggregate_sha256": "4e839ba32c3171937e5ebb8824c05b8daf1cacb69a055caf28fa2685d4b2f865",
+            "failed_sessions": 2,
+            "image_bytes": 53820922,
+        },
+    )
+    if encoded(protocol) != encoded(expected):
+        raise ValueError(
+            "Unsupported transport protocol or failed predecessor bindings"
+        )
+
+
+def transport_cost(image_sizes, *, context_bytes=0, protocol):
+    """Conservative encoded request estimate, not proof of server acceptance.
+
+    Each image is base64 encoded separately. The fixed envelope reserve covers
+    locally controlled JSON/text/schema plus remaining CLI framing; callers must
+    measure their actual escaped context rather than assume it fits.
+    """
+    _eligibility(protocol.get("eligibility", {}))
+    _validate_transport_protocol(protocol)
+    sizes = list(image_sizes)
+    _integer(context_bytes)
+    if not sizes or len(sizes) > MAX_IMAGES:
+        raise ValueError("Transport requires one bounded assigned image set")
+    for size in sizes:
+        _integer(size, 1)
+    if sum(sizes) > protocol["payload"]["max_image_bytes_per_session"]:
+        raise ValueError("Original image payload exceeds authorized session limit")
+    base64_bytes = sum(4 * ((size + 2) // 3) for size in sizes)
+    header_bytes = len("data:image/png;base64,") * len(sizes)
+    reserve = protocol["payload"]["encoded_envelope_reserve_bytes"]
+    if context_bytes + header_bytes > reserve:
+        raise ValueError("Escaped context exceeds reserved encoded envelope")
+    estimated = base64_bytes + reserve
+    if estimated > protocol["payload"]["max_locally_controlled_encoded_request_bytes"]:
+        raise ValueError("Locally controlled encoded request exceeds transport guard")
+    return {
+        "base64_image_bytes": base64_bytes,
+        "context_bytes": context_bytes,
+        "reserved_envelope_bytes": reserve,
+        "estimated_encoded_bytes": estimated,
+    }
+
+
 def _session_limit(protocol):
     if protocol is None:
         return MAX_SESSION_BYTES
     _eligibility(protocol.get("eligibility", {}))
-    if protocol.get("schema_version") == 3:
+    if protocol.get("schema_version") == 4:
+        _validate_transport_protocol(protocol)
+    elif protocol.get("schema_version") == 3:
         _validate_dense_protocol(protocol)
     elif protocol.get("schema_version") not in (1, 2):
         raise ValueError("Unsupported source-only protocol")
@@ -315,14 +389,16 @@ def consumer_context(checkout, protocol_path, input_root, granted_at):
     protocol_path = Path(protocol_path).resolve()
     if protocol_path not in {
         (checkout / f"data/manifests/rally_reference_protocol_v{n}.json").resolve()
-        for n in (1, 2, 3)
+        for n in (1, 2, 3, 4)
     }:
         raise ValueError("Use committed protocol")
     protocol = load_protocol(protocol_path)
     if protocol["schema_version"] >= 2:
         files.append(protocol_path)
-    if protocol["schema_version"] == 3:
+    if protocol["schema_version"] >= 3:
         files.append(checkout / "data/manifests/rally_reference_protocol_v2.json")
+    if protocol["schema_version"] == 4:
+        files.append(checkout / "data/manifests/rally_reference_protocol_v3.json")
     return {
         "schema_version": 1,
         "task": protocol["task"],
@@ -552,6 +628,14 @@ def plan_chunks(packet, *, dense, overlap=2, protocol=None):
             and end - start < MAX_IMAGES
             and size + frames[end]["image"]["bytes"] <= session_limit
         ):
+            if protocol and protocol["schema_version"] == 4:
+                try:
+                    transport_cost(
+                        [row["image"]["bytes"] for row in frames[start : end + 1]],
+                        protocol=protocol,
+                    )
+                except ValueError:
+                    break
             size += frames[end]["image"]["bytes"]
             end += 1
         if end == start or (chunks and end <= chunks[-1]["end_index"]):
@@ -567,6 +651,11 @@ def plan_chunks(packet, *, dense, overlap=2, protocol=None):
                 "image_bytes": size,
             }
         )
+        if protocol and protocol["schema_version"] == 4:
+            cost = transport_cost(
+                [row["image"]["bytes"] for row in frames[start:end]], protocol=protocol
+            )
+            chunks[-1]["base64_bytes"] = cost["base64_image_bytes"]
         if end == len(frames):
             break
         if end - start <= overlap:
@@ -589,7 +678,7 @@ def payload_cost(chunks, streams=3, prior_bytes=0, *, protocol=None):
     )
     if (
         protocol
-        and protocol["schema_version"] == 3
+        and protocol["schema_version"] >= 3
         and prior_bytes < protocol["predecessor"]["image_bytes"]
     ):
         raise ValueError("All predecessor attempted image bytes must remain charged")
@@ -655,6 +744,82 @@ def verify_worker(output, root):
     }
 
 
+def _failed_successor_bytes(root, predecessor):
+    """Recheck sealed failed dispatches and actual original process lifetimes."""
+    base = Path(root) / ".cache/rally210-source-only-v1"
+    frozen = predecessor["failed_successor"]
+    aggregate_path = base / "final-incomplete-v1.json"
+    if file_hash(aggregate_path) != frozen["aggregate_sha256"]:
+        raise ValueError("Failed successor aggregate changed")
+    aggregate = read_json(aggregate_path)
+    _eligibility(aggregate.get("eligibility", {}))
+    if (
+        aggregate.get("task") != 210
+        or aggregate.get("completed_original_streams") != 0
+        or aggregate.get("complete_references") != 0
+        or aggregate.get("successful_assessment_sessions") != 0
+        or len(aggregate.get("failures", [])) != frozen["failed_sessions"]
+        or {f.get("stream") for f in aggregate["failures"]} != set(STREAMS[:2])
+    ):
+        raise ValueError("Failed successor outcome changed")
+    charged = 0
+    reservations = set()
+    threads = set()
+    lifetimes = set()
+    for failure in aggregate["failures"]:
+        if failure.get("source_id") != SOURCE_IDS[0] or failure.get("chunk") != 0:
+            raise ValueError("Failed successor membership changed")
+        folder = (
+            base / "dense-assessment-v1" / failure["stream"] / f"{SOURCE_IDS[0]}-000"
+        )
+        for name, key in (
+            ("payload-reservation.json", "reservation_sha256"),
+            ("finish.json", "receipt_sha256"),
+            ("events.jsonl", "events_sha256"),
+        ):
+            if file_hash(folder / name) != failure[key]:
+                raise ValueError("Original failed successor execution evidence changed")
+        receipt = read_json(folder / "finish.json")
+        reservation = read_json(folder / "payload-reservation.json")
+        start = read_json(folder / "start.json")
+        if (
+            receipt.get("exited") is not True
+            or receipt.get("exit_code") != 1
+            or receipt.get("images") != reservation.get("images")
+            or receipt.get("image_bytes") != reservation.get("image_bytes")
+            or any(receipt.get(key) != value for key, value in start.items())
+            or not receipt.get("thread_id")
+            or (folder / "original-final.json").exists()
+        ):
+            raise ValueError("Original failed successor exit or membership changed")
+        reservations.add(folder / "payload-reservation.json")
+        threads.add(receipt["thread_id"])
+        lifetimes.add((receipt["pid"], receipt["creation_time"]))
+        try:
+            process = psutil.Process(_integer(receipt["pid"], 1))
+            if process.create_time() == receipt["creation_time"]:
+                raise ValueError("Original failed successor lifetime remains present")
+        except psutil.NoSuchProcess:
+            pass
+        except psutil.AccessDenied as error:
+            raise ValueError(
+                "Original successor lifetime cannot be verified"
+            ) from error
+        charged += _integer(reservation["image_bytes"], 1)
+    if (
+        charged != frozen["image_bytes"]
+        or set(base.rglob("payload-reservation.json")) != reservations
+        or len(threads) != frozen["failed_sessions"]
+        or len(lifetimes) != frozen["failed_sessions"]
+        or aggregate.get("new_attempted_image_bytes") != charged
+        or aggregate.get("cumulative_image_bytes") != predecessor["image_bytes"]
+        or aggregate.get("prior_charged_image_bytes")
+        != predecessor["image_bytes_before_failed_successor"]
+    ):
+        raise ValueError("Failed successor charged byte accounting changed")
+    return charged
+
+
 def reuse_dense_packets(checkout, root, context, predecessor_output):
     """Verify existing native packets in place, without decoding or copying them.
 
@@ -664,7 +829,7 @@ def reuse_dense_packets(checkout, root, context, predecessor_output):
     root, checkout = Path(root).resolve(), Path(checkout).resolve()
     verify_context(checkout, context)
     protocol = load_protocol(checkout / context["protocol_path"])
-    if protocol["schema_version"] != 3 or context["task"] != 210:
+    if protocol["schema_version"] not in (3, 4) or context["task"] != protocol["task"]:
         raise ValueError("Separately authorized dense reuse protocol required")
     output = contained(root / ".cache", predecessor_output)
     if output != root / ".cache/rally208-source-only-v1/dense-v1":
@@ -725,13 +890,17 @@ def reuse_dense_packets(checkout, root, context, predecessor_output):
         read_json(path)["image_bytes"]
         for path in base.rglob("payload-reservation.json")
     )
+    if protocol["schema_version"] == 4:
+        if charged != predecessor["image_bytes_before_failed_successor"]:
+            raise ValueError("Original predecessor attempted bytes changed")
+        charged += _failed_successor_bytes(root, predecessor)
     if charged != predecessor["image_bytes"]:
         raise ValueError("Prior attempted payload accounting changed")
     chunks = [chunk for plan in plans for chunk in plan["chunks"]]
     total = payload_cost(chunks, streams=2, prior_bytes=charged, protocol=protocol)
     verify_context(checkout, context)
     return {
-        "task": 210,
+        "task": protocol["task"],
         "sources": plans,
         "source_slots": 2,
         "native_frames": sum(plan["frames"] for plan in plans),
@@ -746,18 +915,31 @@ def run_reuse(root, checkout, output, context_path, context_sha256, timestamp_pa
     """Publish exclusive verified reuse plans; never admit a new decode job."""
     root, checkout = Path(root).resolve(), Path(checkout).resolve()
     output = contained(root / ".cache", output)
-    if output.parent != root / ".cache/rally210-source-only-v1" or output.exists():
+    if (
+        output.parent
+        not in {
+            root / ".cache/rally210-source-only-v1",
+            root / ".cache/rally212-source-only-v1",
+        }
+        or output.exists()
+    ):
         raise ValueError("Use a new exclusive successor reuse directory")
     if any(os.environ.get(name) for name in CREDENTIALS):
         raise ValueError("Clear account credentials before reuse")
     if file_hash(context_path) != context_sha256:
         raise ValueError("Successor context seal changed")
     context, stamp = read_json(context_path), read_json(timestamp_path)
+    task = context.get("task")
+    if (
+        task not in (210, 212)
+        or output.parent != root / f".cache/rally{task}-source-only-v1"
+    ):
+        raise ValueError("Successor output must belong to its frozen task")
     if (
         stamp.get("context_sha256") != context_sha256
         or stamp.get("commit") != context.get("commit")
         or not str(stamp.get("url", "")).startswith(
-            "https://github.com/Ken0u/badminton-match-analyzer/issues/210#issuecomment-"
+            f"https://github.com/Ken0u/badminton-match-analyzer/issues/{task}#issuecomment-"
         )
         or type(stamp.get("published_at")) not in (int, float)
         or not math.isfinite(stamp["published_at"])
@@ -772,6 +954,22 @@ def run_reuse(root, checkout, output, context_path, context_sha256, timestamp_pa
         with (output / name).open("xb") as stream:
             stream.write(encoded(doc))
     return plans
+
+
+def _same_frames(values, expected):
+    return (
+        isinstance(values, list)
+        and all(type(n) is int for n in values)
+        and values == expected
+    )
+
+
+def _same_frame_rows(rows, expected):
+    return (
+        isinstance(rows, list)
+        and all(isinstance(row, dict) for row in rows)
+        and _same_frames([row.get("frame") for row in rows], expected)
+    )
 
 
 def _interval(value, allowed):
@@ -801,7 +999,7 @@ def validate_assessment(
     for row in expected_rows:
         _integer(row["image"]["bytes"], 1)
     if (
-        selected != [row["frame"] for row in expected_rows]
+        not _same_frames(selected, [row["frame"] for row in expected_rows])
         or not 1 <= len(selected) <= MAX_IMAGES
         or len(set(selected)) != len(selected)
         or chunk["image_bytes"] != sum(row["image"]["bytes"] for row in expected_rows)
@@ -819,20 +1017,42 @@ def validate_assessment(
         document.get("stage") != stage
         or document.get("stream") != stream
         or document.get("source_id") != packet["source_id"]
+        or not _same_frame_rows(document.get("inspected_frames"), selected)
         or document.get("inspected_frames") != expected_images
     ):
         raise ValueError("Assessment must inspect every exact assigned source image")
     if (
-        not receipt.get("thread_id")
+        not isinstance(receipt.get("thread_id"), str)
+        or not receipt["thread_id"].strip()
+        or not isinstance(receipt.get("session_id"), str)
+        or not receipt["session_id"].strip()
+        or type(receipt.get("exit_code")) is not int
         or receipt.get("exit_code") != 0
         or receipt.get("exited") is not True
         or receipt.get("segment_sha256")
         != hashlib.sha256(encoded(document)).hexdigest()
+        or not _same_frame_rows(receipt.get("images"), selected)
         or receipt.get("images") != expected_images
         or receipt.get("image_bytes") != chunk["image_bytes"]
         or document.get("session_id") != receipt.get("session_id")
     ):
         raise ValueError("Actual exited fresh session/image/output receipt required")
+    if protocol and protocol["schema_version"] == 4:
+        cost = receipt.get("transport_cost")
+        if not isinstance(cost, dict):
+            raise ValueError("Encoded transport cost receipt required")
+        expected_cost = transport_cost(
+            [row["image"]["bytes"] for row in expected_rows],
+            context_bytes=cost.get("context_bytes"),
+            protocol=protocol,
+        )
+        if (
+            encoded(cost) != encoded(expected_cost)
+            or chunk.get("base64_bytes") != expected_cost["base64_image_bytes"]
+        ):
+            raise ValueError(
+                "Encoded transport cost or assigned image rounding changed"
+            )
     if (
         receipt.get("original_resolution_viewing") is not True
         or document.get("independent_source_only") is not True
@@ -847,12 +1067,15 @@ def validate_assessment(
         or previous.get("stream") != stream
         or previous.get("source_id") != packet["source_id"]
         or previous.get("stage") != stage
-        or (stage == "dense" and previous.get("last_frames") != selected[:2])
+        or (
+            stage == "dense"
+            and not _same_frames(previous.get("last_frames"), selected[:2])
+        )
     ):
         raise ValueError("Missing own-stream continuity at chunk join")
     if stage == "overview":
         rows = document.get("frames", [])
-        if [r.get("frame") for r in rows] != selected or any(
+        if not _same_frame_rows(rows, selected) or any(
             r.get("state") not in STATES or not r.get("reason") for r in rows
         ):
             raise ValueError("Missing/duplicate/unreviewed screening row")
@@ -878,7 +1101,7 @@ def validate_assessment(
             raise ValueError("Distinct source actor definitions required")
         events = document.get("events", [])
         coverage = document.get("frame_states", [])
-        if [r.get("frame") for r in coverage] != selected or any(
+        if not _same_frame_rows(coverage, selected) or any(
             r.get("scene") not in SCENES
             or not r.get("camera_view")
             or r.get("contact_state")
@@ -1101,6 +1324,34 @@ def targeted_reference_status(streams, *, native_frames, bounds):
         for key, event in a[1].items()
         if not set(range(key[1][0], key[1][1] + 1)) & covered
     }
+    if any(event["kind"] in {"serve", "shot"} for event in final_events.values()):
+        # A composite with retained original contacts needs a supported identity
+        # link into the independent resolution. Reused names, changed people or
+        # independently invented IDs cannot silently become one source roster.
+        # If all contacts are replaced, their identities come from the single
+        # resolution lane instead and no cross-lane link is inferred.
+        original_actors, ambiguous_actors = {}, set()
+        for doc, _ in streams[STREAMS[0]]:
+            if not any(
+                event["kind"] in {"serve", "shot"}
+                and (event["kind"], tuple(event["interval"])) in final_events
+                for event in doc["events"]
+            ):
+                continue
+            # Use the definitions supporting retained contacts, not a later
+            # conflicting chunk's last-write-wins actor registry.
+            for actor in doc["actors"]:
+                identity = actor["actor_id"]
+                if identity in original_actors and original_actors[identity] != actor:
+                    ambiguous_actors.add(identity)
+                original_actors[identity] = actor
+        for event in resolved[1].values():
+            actor = event.get("actor_id")
+            if event["kind"] in {"serve", "shot"} and (
+                actor in ambiguous_actors
+                or original_actors.get(actor) != resolved[2].get(actor)
+            ):
+                reasons.append("unlinked_targeted_source_actor")
     final_events.update(resolved[1])
     events = sorted(final_events.values(), key=lambda e: (e["interval"], e["kind"]))
     for frame, row in final_frames.items():
@@ -1471,7 +1722,7 @@ def run_preparation(
             "protocol_path", "data/manifests/rally_reference_protocol_v1.json"
         )
     )
-    if protocol.get("schema_version") == 3:
+    if protocol.get("schema_version") in (3, 4):
         raise ValueError("Dense reuse protocol forbids new native preparation/decode")
     if context["inputs"] != protocol["sources"]:
         raise ValueError("Frozen original source declarations changed")

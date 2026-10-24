@@ -1,5 +1,186 @@
 # Complete-rally source reference pilot
 
+## Transport-bounded successor: original passes complete, reference incomplete
+
+The owner-authorized [#212 successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)
+uses a separate [v4 protocol](../data/manifests/rally_reference_protocol_v4.json).
+It retains the exact two prepared windows and all 1,532 original native PNGs;
+v1, v2 and v3 protocol bytes and their incomplete results remain preserved.
+Both exhaustive original passes completed, but targeted adjudication stopped
+before the singles index completed. The immutable scientific deadline has passed.
+**Zero complete references are certified from the two retained source slots.**
+This is an incomplete execution outcome, not a scientific rejection of either
+source or evidence of automatic annotation accuracy. Targeted scientific labels
+remain sealed because the required two-source global audit cannot run.
+
+Sessions carry at most 20 originals / 9 MiB raw image bytes. The packer also
+checks each image's separate base64 rounding against a 14 MiB encoded-content
+guard, including a fixed 2 MiB envelope reserve. Escaped prompt/schema context
+must fit inside that reserve. These are conservative local estimates, not proof
+of upstream transport acceptance. Generated regression testing exposed the
+padding boundary where a raw-valid batch exceeds the encoded limit; packing now
+stops before that boundary while retaining native overlap and full membership.
+
+Exact metadata-only recomputation matches the prospectively approved plan:
+172 singles and 84 doubles chunks per exhaustive stream, 512 original sessions,
+4,489,176,948 new image bytes and 5,890,058,703 cumulative bytes including all
+1,400,881,755 predecessor attempted bytes. This includes #210's two failed
+dispatches; their original seals, receipts and process lifetimes are rechecked
+before reuse. Both native sources, clocks, packets, original worker terminal
+evidence and all selected PNGs must reverify without decoding or copying.
+
+The fresh grant fixes an eight-hour deadline, with at most two simultaneous
+assessors and five-second pacing after success. Every attempted byte, repeated
+overlap, failure and adjudication remains charged against cumulative 8 GiB
+payload/output limits. Both exhaustive original streams must finish before
+targeted blind source adjudication is planned and frozen. An unresolved join,
+identity, contact or boundary retains an incomplete reference. All four
+eligibility flags remain false; this protocol establishes neither full-match
+annotation accuracy nor source redistribution or model eligibility.
+
+Before opening either real original stream, generated cases exposed a
+false-positive completeness result when targeted adjudication reused an actor
+ID for a different source person, introduced an unlinked independent ID, or
+swapped player definitions while original contacts remained outside the target.
+A further generated join case exposed a later conflicting actor definition
+overwriting the identity supporting a retained earlier contact. Composite
+acceptance now requires source actor definitions from retained original-contact
+contexts to agree with the independently resolved hitters. Unsupported links
+remain incomplete. Replacing every contact uses the resolution lane's own
+source identities without inventing a cross-stream mapping.
+
+This stricter acceptance repair is based only on synthetic cases. The running
+scientific producer, original consumer context, protocol bytes, native images,
+packing, actual session outputs and original grant deadline remain unchanged.
+Its distinct acceptance consumer/context was sealed and timestamped before
+real originals were opened or compared. Preserve both contexts and validate the
+original execution against its original producer; do not feed original actor
+labels to blind adjudicators to manufacture agreement. Generated regressions
+establish conservative software behavior, not real source completeness.
+
+### Completed original execution and frozen adjudication
+
+The metadata audit verifies **512 successful original sessions**, covering both
+unchanged native windows in each independent pass. There were **515 attempted
+sessions**: three interrupted invocations remain preserved and charged without
+invented exit codes. All three permitted replacement launches are consumed.
+Actual original owners have exited; the global audit verifies native/source and
+transport identity, 757 distinct completed threads including 245 predecessor
+sessions, at most two concurrent assessors and **5,915,693,132 cumulative image
+bytes**. Scientific comparison began only after both complete original indexes
+and the global metadata audit passed.
+
+The separately frozen acceptance consumer `6cb7e4fa13ed591322e48b9de96c139d91cb41a8`
+and its prospective context were sealed before original comparison. Original
+execution remains checked against its immutable producer
+`eebbe210c83aefb9d467e3740dbf1a39f161ac2a`; neither copy has changed.
+
+The fixed target rules require all **991 singles and 541 doubles frames** in
+this case, packed into 172 singles and 84 doubles fresh blind sessions. No
+required region was removed to fit a budget. Exact target-plan SHA256
+`0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b`
+and execution-seal SHA256
+`24ef8684f99ad547e176d11876a5a96268a66228e2d4e345dd785e9374280f07`
+were [timestamped before dispatch](https://github.com/Ken0u/badminton-match-analyzer/issues/212#issuecomment-6378830481).
+The complete plan projects **8,160,281,606 cumulative image bytes**, below the
+8 GiB cap; projected totals are not evidence of completed adjudication.
+
+The blind assessors receive original images and source context, without the
+original actor labels or other assessments. While either target index is
+incomplete, inspect execution metadata only. Final acceptance waits for both
+complete target indexes and global identity, membership, receipt, event-log,
+process-lifetime, payload and retained-output checks. Preserve both slots,
+unknowns and incomplete references. Agent agreement remains development
+evidence, not expert gold or established full-match correctness.
+
+Additional generated receipt cases exposed malformed execution metadata passing
+the reusable validator: matching empty or non-string session identifiers,
+non-string thread identifiers, and `False` or `0.0` treated as a zero exit code.
+The validator now requires nonempty string identifiers and an integer zero exit
+code. These checks supplement actual process, event-log and global session
+verification; typed metadata alone does not prove inspection. The running study's
+immutable producer and separately frozen acceptance consumer remain unchanged.
+No real source labels or predictions informed this guard repair.
+
+Further generated cases reproduced boolean/float aliases for native ordinals:
+`False` or `0.0` matched frame 0 in assigned chunks, inspected-image documents,
+execution image receipts, dense frame states and overview rows. These fields
+and previous-segment frame links now require exact integer sequences. The
+44 added regressions cover both original/default and v4 validation. The
+immutable scientific producer and frozen acceptance consumer remain unchanged;
+no real source labels or predictions informed this repair.
+
+### Bounded incomplete result after interruption
+
+The October 24 original-host audit found the singles owner and its last CLI
+lifetime absent, with no terminal receipt or output for that dispatch. Its exit
+code remains unknown. The monitor observation handle was also gone; absence was
+independently checked against recorded task lifetimes. No process was signaled,
+restarted, split or replaced. All three permitted replacement launches had
+already been consumed by the original passes.
+
+| Source slot | Required target sessions | Successful target sessions | Other attempted sessions | Complete target index |
+| --- | ---: | ---: | ---: | --- |
+| Singles, 991 native frames | 172 | 94 | 1 interrupted, exit code unknown | No |
+| Doubles, 541 native frames | 84 | 84 | 0 | Yes |
+| Both original slots | **256** | **178** | **1** | **1 of 2** |
+
+The 77 remaining target sessions were never started. All 1,532 original frames
+remain required; no denominator, region, uncertainty or source was removed.
+Completed-target execution metadata and predecessor/original receipts verify
+935 distinct completed threads and at most two concurrent completed target
+sessions. The completed doubles index matches its original receipt metadata,
+but this does not replace the final global byte/content/scientific audit.
+The frozen final auditor returns `both_targeted_source_indexes_required`
+without opening targeted scientific labels. Neither source has been assigned
+a scientific completeness result by that auditor.
+
+All attempted image payloads, including the interrupted last dispatch, total
+**7,479,083,253 bytes**, below 8 GiB. The original scientific deadline was
+**05:40:09 UTC on October 24, 2026**. Controller recovery and the new grant are
+for finishing the preserved software/report; they do not renew that deadline
+or authorize more images. The original branch, draft PR #216, incomplete
+streams, seals, outputs and uncommitted patch are retained.
+
+The independent retrospective integrity check verifies both whole originals,
+source clocks, packets, all 1,532 native PNG hashes/memberships/headers, frozen
+producer/acceptance consumers and runtime, downstream tools, and the original
+completed native Store/terminal/artifact seals. It performs no new native video
+decode, source assessment or scientific acceptance. All 663 recorded task
+owner/CLI lifetimes are absent; the shared Store has no running or queued jobs.
+The interruption receipt SHA256 is
+`4022497e3c6a3c431a62f659703e39fc5d1bc7d731e174a353102514c2a9df9e`;
+retrospective integrity receipt SHA256 is
+`7752e89860f89b0cc1f742ecd22570562e3a58d97e374298288bcd68e9485d48`.
+The final supplemented output accounting is recorded with the task checkpoint;
+the last pre-finalization snapshot retained 2,313,648,849 bytes, below 8 GiB.
+
+#62, #66, #67 and #71 remain incomplete. All four eligibility flags remain false.
+Further scientific work needs a separately frozen scope and budget preserving
+this result and every prior attempt. Agent agreement is development evidence,
+not expert gold or proof of full-match correctness.
+
+### Software verification
+
+Before recovery onto current main, generated verification of the combined
+receipt and ordinal guards passed
+**300 focused tests and 2,454 full tests, with four optional skips**. Ruff,
+formatting, dependency, diff and repository UTF-8/LF/JSON/link checks pass. All
+153 observed verification process lifetimes are independently absent. Earlier
+verification receipts remain preserved. These checks establish software behavior;
+final exact-head CI, controller integration, merged-main checks and public
+delivery remain separate requirements.
+
+After audited recovery, the new granted branch incorporates main
+`3662f4e42aa819358d3cd40cfb2a3b5ba7de3ae4` and passes **300 focused tests and
+2,508 full tests, with four optional skips**. Ruff, formatting, dependencies,
+diff and repository checks pass; all 154 observed verification lifetimes are
+independently absent. Verification receipt SHA256 is
+`19526dafea0c45ab3c038dda966696951668360ba9afbd44af02e764a9350764`.
+The final documentation-only update is checked separately. Exact final-head CI,
+controller integration, merged-main verification and public candidate delivery
+are recorded on [the owning issue](https://github.com/Ken0u/badminton-match-analyzer/issues/212).
+
 ## Authorized dense assessment: transport failure, both references incomplete
 
 The separately owner-authorized [#210 follow-up](https://github.com/Ken0u/badminton-match-analyzer/issues/210)
