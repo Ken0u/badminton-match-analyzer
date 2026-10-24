@@ -6377,6 +6377,15 @@
       "task_id": "204",
       "verb": "submit"
     },
+    "source220-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792851288,
+      "epoch": 1,
+      "fingerprint": "c1bfc6e61501847cd24b980423aed0f804b49dca61773ca3775fb06471e1552d",
+      "status": "running",
+      "task_id": "220",
+      "verb": "checkpoint"
+    },
     "source220-data-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792850571,
@@ -6428,6 +6437,15 @@
       "status": "running",
       "task_id": "220",
       "verb": "checkpoint"
+    },
+    "source220-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792851296,
+      "epoch": 1,
+      "fingerprint": "cdedf2427e67c71a05b73feaf2d3f92fa77957d4e2e671d3c4d593416143d493",
+      "status": "review",
+      "task_id": "220",
+      "verb": "submit"
     },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
@@ -17508,22 +17526,19 @@
     "220": {
       "checkpoint": {
         "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
-        "evidence": {
-          "comparison_sha256": "64e0a9dbddd9151210451ea430960396933799ef427b2822cef25dc58aae655f",
-          "metadata_gate_sha256": "395ec73744be308efc20712c0eca454b3663694d89fd8ee174f5758c56315ef9",
-          "runtime_context_sha256": "9047b5b292745120bab4e17ce1da5549d8818047cebb4eae79974a9af059e660"
-        },
-        "head_sha": "ca51050",
-        "remaining": "Complete all project checks, publish only the four granted code/public-metadata/aggregate-report paths, exact PR/main CI/controller integration and independently verified package/both-image delivery. No new scientific work, CI/publishing retry or manual merge.",
-        "summary": "Actual private revision accounting complete using producer ca51050. All29 literal cases and12656 records per side retained; zero raw exclusive ordinals; all29 byte strings differ without a numeric-change/accuracy inference. All29 native comparisons withheld, bases null, quarantine preserved and all eligibility flags false.39 unique anonymous requests/303883 bytes;342498 private label-copy bytes. Source-code visibility inversion concern retained without repairing labels. First metadata inventory-selection failure preserved; one bounded code repair reused its8 complete responses without repeated requests. All three new Store jobs terminal and original lifetimes absent; original input and reviewed/prediction/weights metadata unchanged. Independent private CSV/ordinal/hash arithmetic matches every case. Full generated regression suite running after117 focused passes."
+        "evidence_sha256": "cc18d729186633360c92c70a180357bbd3fc301f734099ad8d261a8bbb765109",
+        "head_sha": "cf6d783b7b2bf53db94e3fe6420a10e558fd0bc8",
+        "pr_number": 234,
+        "remaining": "Exact PR/main CI, controller integration and independent complete public delivery verification.",
+        "summary": "Private comparison complete; all29 cases/12656 rows per side retained and all29 native comparisons withheld.117 focused/2666 full tests/four optional skips and all project checks pass. Failed metadata and first full generated run preserved."
       },
-      "checkpoint_at": 1792850571,
+      "checkpoint_at": 1792851288,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7885fb547e985514a2735ffb1ac985ce37e5443a",
         "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
         "epoch": 1,
-        "expires_at": 1792861371,
+        "expires_at": 1792862088,
         "granted_at": 1792849495,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -17537,6 +17552,7 @@
       },
       "planned_at": 1792849215,
       "planned_by": "dootz1",
+      "pr_number": 234,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -17592,7 +17608,13 @@
         ]
       },
       "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "7885fb547e985514a2735ffb1ac985ce37e5443a",
+        "head_sha": "cf6d783b7b2bf53db94e3fe6420a10e558fd0bc8",
+        "pr_number": 234,
+        "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28"
+      }
     },
     "221": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40068974349",
