@@ -1,0 +1,33 @@
+{
+  "columns": [
+    "Frame",
+    "Visibility",
+    "X",
+    "Y"
+  ],
+  "coordinates": "finite source pixels; exact numeric equality; no tolerance",
+  "correspondence": "matching declared basis only; not independent verification",
+  "eligibility": {
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "training_allowed": false
+  },
+  "limits": {
+    "cases": 512,
+    "csv_bytes": 16777216,
+    "inventory_bytes": 1048576,
+    "records_per_csv": 200000,
+    "report_bytes": 2097152,
+    "total_csv_bytes": 67108864
+  },
+  "name": "shuttle_label_comparison_v1",
+  "ordinal": "nonnegative decimal integer, at most 18 digits; no reindexing",
+  "output": "aggregate counts only; unknowns remain unscored",
+  "quarantine": "incomplete, duplicate, reversed or malformed ordinal coverage",
+  "schema_version": 1,
+  "visibility": {
+    "0": "published_not_visible",
+    "1": "published_visible"
+  }
+}
