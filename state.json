@@ -5805,6 +5805,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "rally250-targeted-claim-v1": {
+      "actor": "Ken0u",
+      "at": 1792881915,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "70588e967ad53cbfba83a4b7cea86394dd390cff",
+        "branch": "codex/issue-250-produce-a-source-bound-joined-native-coa",
+        "epoch": 1,
+        "expires_at": 1792892715,
+        "granted_at": 1792881915,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d"
+      },
+      "epoch": 1,
+      "fingerprint": "b449158be8b66445e0110d7cf575952028aee0cb7f0c0273366deaf813cca0b6",
+      "status": "granted",
+      "task_id": "250",
+      "verb": "next"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -19673,7 +19693,18 @@
       }
     },
     "250": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "70588e967ad53cbfba83a4b7cea86394dd390cff",
+        "branch": "codex/issue-250-produce-a-source-bound-joined-native-coa",
+        "epoch": 1,
+        "expires_at": 1792892715,
+        "granted_at": 1792881915,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d"
+      },
+      "epoch": 1,
       "planned_at": 1792881595,
       "planned_by": "Ken0u",
       "spec": {
@@ -19731,7 +19762,7 @@
         ]
       },
       "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
