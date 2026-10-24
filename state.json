@@ -19744,6 +19744,7 @@
       }
     },
     "250": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40143244827",
       "checkpoint": {
         "branch": "codex/issue-250-produce-a-source-bound-joined-native-coa",
         "head_sha": "b7398b37a0c0ce89c20f3a300333bc80441b31ae",
@@ -19764,7 +19765,7 @@
         "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792884345,
