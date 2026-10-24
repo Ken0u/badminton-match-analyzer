@@ -185,6 +185,14 @@
       "status": "ok",
       "verb": "register"
     },
+    "comparison221-plan-v1": {
+      "actor": "dootz1",
+      "at": 1792818944,
+      "fingerprint": "482c5e1c779106168635fccd39f1d035bf93eb1e491742df2a403064009a69ba",
+      "status": "ready",
+      "task_id": "221",
+      "verb": "plan"
+    },
     "events67-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730248,
@@ -6215,6 +6223,14 @@
       "fingerprint": "ed74f60d1cd9ced7f216b999664e78d60de18e07a71b5dc6025313b15436476a",
       "status": "ready",
       "task_id": "218",
+      "verb": "plan"
+    },
+    "spec-221-1b33b0287fe1bf49d10be6c3ce4c308f777ceb0cf4a8d8c2e3561b72f63e8d3b": {
+      "actor": "dootz1",
+      "at": 1792818944,
+      "fingerprint": "96efa08166fa40a9d5260bf8ded3932d1095de39a6ba003d4fcd97d1378182ce",
+      "status": "ready",
+      "task_id": "221",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -16652,6 +16668,59 @@
         "pr_number": 219,
         "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457"
       }
+    },
+    "221": {
+      "epoch": 0,
+      "planned_at": 1792818944,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Revalidate authoritative coordination and Issues/PRs; preserve #212/MSI and all existing work, raw inputs, reviewed annotations, original predictions and consumed holdouts. Establish a generated-case baseline before implementation: existing preparation normalizes one publication but supplies no revision comparison; freeze expected complete-denominator outcomes before running the new comparator.",
+          "Implement a standard-library-only library and standalone CLI accepting an explicit versioned local inventory of cases. Each case has a unique opaque ID, an original and revised file descriptor or explicit unavailable side, SHA256 byte pins, and a separately declared native-frame correspondence/coordinate basis. Never discover files recursively, acquire external inputs, infer filename aliases, shift/reindex ordinals, normalize coordinates, repair labels, open media or inspect predictions. The CLI reads only the explicitly pinned local inventory and files under its declared input root.",
+          "Freeze protocol v1 before experiment execution: strict CSV columns Frame,Visibility,X,Y; nonnegative decimal integer ordinals; visibility 0 and 1 only, all other flags unknown; finite source-pixel coordinates; absent/unknown coordinate basis unscored; source dimensions and zero-based native correspondence must be explicitly declared, not inferred from filenames. Visibility-0 nonzero coordinates are inconsistent. Exact numeric coordinate comparison uses no tolerance; invisible coordinate agreement never proves a visible negative or expert truth.",
+          "Keep all cases and physical CSV records in aggregate accounting, including empty or malformed records, unsupported headers, invalid/duplicate/out-of-range/reversed ordinals, unknown visibility, invalid/nonfinite/out-of-bounds coordinates, missing files, mismatched SHA256 and unavailable/ambiguous correspondence. Preserve original row counts and raw input hashes without exporting per-row values. Do not silently select one duplicate or collapse unknowns into negatives. Syntax/inventory errors fail before output; unavailable or invalid scientific cases remain explicit in reports.",
+          "Report byte equality separately from declared native-frame comparison, original/revised record totals, valid unique ordinal coverage, duplicate/missing/extra counts, native unlabelled tails when frame count is known, visibility transitions, visible coordinate differences and unavailable comparisons. Include explicit denominator accounting and reason counts. Retain quarantined/reversed/incomplete inputs as unscored comparison cases rather than certifying their alignment. Raw ordinal inventory differences are not verified source correspondence or accuracy.",
+          "Apply fixed bounded reads: at most512 cases,1MiB inventory,16MiB per CSV,64MiB total CSV bytes,200000 records per CSV and2MiB report. Validate finite strict JSON with duplicate-key and typed-field rejection, contained portable relative paths and no symlink inputs. Hash bytes actually read; report unavailable or changed inputs without reading beyond bounds. Publish aggregate JSON only to a fresh output, never overwrite an existing path or any input. Interrupted publication cannot leave a partial final report. Bind canonical protocol and exact inventory hashes; retain all four false eligibility flags in every report.",
+          "Use only generated fixtures in implementation validation. Cover unchanged/changed labels, unknowns, duplicates, malformed schemas, ordinal gaps/reversals/tails, ambiguous filenames, absent sides/files, source-basis conflicts, hash mismatch, path escape, bounds, input/output preservation, deterministic aggregation and CLI end-to-end behavior. No real label CSV contents, media, weights, source images, scientific assessments, native model inference, training, split selection or consumed holdout access.",
+          "Edit only backend/badminton/shuttle_label_comparison.py, scripts/compare_shuttle_labels.py, tests/test_shuttle_label_comparison.py, data/manifests/shuttle_label_comparison_protocol_v1.json and docs/SHUTTLE_LABEL_COMPARISON.md. Keep existing importer and eligibility policy unchanged. Document schema, runnable generated example, denominators and limits, and the remaining prerequisites for an actual #220 corpus run. Do not claim reduced model errors, verified original-source identity or improved automatic annotation.",
+          "Run focused meaningful generated regressions and the full project Python suite, Ruff check/format, pip check, repository UTF-8/LF/JSON/link verification and git diff checks. Publish a focused PR through exact-head CI/controller integration/exact merged-main CI; independently verify complete public package and both-image delivery and comparator package/source parity. Never manually merge, fabricate reviews or edit coordination state.",
+          "Checkpoint baseline, progress, long verification and final handoff on the owning implementation issue. Bound this code-only increment to8h from committed grant and256MiB newly retained work/verification evidence, excluding unchanged shared dependencies; at most three repair rounds and no paid services. Stop honestly at limits. Scheduled continuations must revalidate ownership epochs, existing test processes and artifacts before resuming; never restart a live job because of a timeout."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "218"
+        ],
+        "exclusions": [
+          "No real scientific input acquisition/access or corpus execution, GPU jobs, training, inference, model/default/policy promotion, research-resource control, public raw-label redistribution, eligibility relaxation, application storage changes, automation/security/controller/workflow source changes, deployment, PROGRESS access/edits or manual merges. A later real-corpus comparison and any training require their own input-provenance/access checks and grants."
+        ],
+        "limits": {
+          "max_output_bytes": 268435456,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 8,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Implement a bounded offline shuttle-label revision comparator, validated only on generated inputs, as the data-independent prerequisite to proposal #220 under roadmap #65.",
+        "paths": [
+          "backend/badminton/shuttle_label_comparison.py",
+          "scripts/compare_shuttle_labels.py",
+          "tests/test_shuttle_label_comparison.py",
+          "data/manifests/shuttle_label_comparison_protocol_v1.json",
+          "docs/SHUTTLE_LABEL_COMPARISON.md"
+        ],
+        "priority": 40,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Frozen generated-case baseline, meaningful focused/CLI and full Python tests; lint/format/dependency/repository/diff checks with all input/eligibility preservation assertions.",
+          "Exact PR/main CI and normal controller integration; independently verify complete public candidate delivery including packaged comparator parity. Software correctness remains separate from annotation accuracy and research eligibility."
+        ]
+      },
+      "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
