@@ -5021,6 +5021,13 @@
       "task_id": "226",
       "verb": "plan"
     },
+    "rally226-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792831397,
+      "fingerprint": "600d82e275f4c7da83324c8aa92fa4c1137114a49f575d57d958c9c1dad4a129",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -20395,18 +20402,20 @@
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
-        "shuttle-heatmap-experiment": "8892a4a7dc6d7312c82b627aefb52451f4c411ce75db45cd5a12aa9a7ee0bc68",
-        "shuttle-heatmap-index": "0bb911151ee2f85109e042cb2aa2759d7f3d7ca7e88a9552a1c6080bd1b2eeb8",
-        "shuttle-visibility-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158"
+        "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+        "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+        "rally212-final-incomplete-aggregate": "47c938ed4e217d602773398609749f2f7ccd604b1f5c36b9fdb61d450c5c6e2d",
+        "rally212-final-integrity": "7752e89860f89b0cc1f742ecd22570562e3a58d97e374298288bcd68e9485d48",
+        "rally212-frozen-target-plan": "0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b"
       },
       "capabilities": [
         "cpu",
         "windows",
-        "review-inputs",
-        "cuda"
+        "amd64",
+        "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1792731805,
+      "registered_at": 1792831397,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
