@@ -4593,6 +4593,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-verified-wait-doubles-05-v1": {
+      "actor": "Ken0u",
+      "at": 1792803515,
+      "epoch": 1,
+      "fingerprint": "e7cd0d4c85fe715bbd5fd8990a2243d8101450ba165a7051bf1565e16e7bc918",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -15984,15 +15993,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "VERIFIED WAIT during unchanged source-only originals. Same actual tool handles65809/23768/41462/26828 were polled live this goal turn;no restart or signal. Fresh metadata-only global audit at1792802775.3979068 verifies400of512 completed originals,A200/B200,245prior absent lifetimes,645unique completed threads,4935924109charged image bytes,max2concurrent. Audit receipt SHA3102ed3064e820c435ee3a7a393db060175fe2e732b95a48545f1da80346258f. Both complete original indexes absent;parent labels unopened. Watcher26828 still plans ONCE after both complete indexes,verified original exits and full genuine native/source/session audit. Do not run the planner manually. Original watcher/plannerV1 remain unchanged. Future targeted execution must use separately sealed V2driver/freezer/monitor/auditor under toolsfreeze6b6b40eb759fdf54d0608482c9bf9bf8a8797263d0a3bf1749c683f984f02d3f, following the generated-tested lifecycle correction checkpoint rally212-checkpoint-targeted-lifecycle-v2. Preserve V1tools/artifacts; do not dispatch the old targeted V1driver. No actual targeted plan or adjudication is implied by these prepared tools. Mandatory supplementary output counter is now V3 (.cache/rally212-retained-output-audit-v3.py,SHA2d14cf94979d932dfffe13e10620bea09772230a4036b28d089b774767d540d4), including task-named shared bytecode. Rerun before targeted dispatch and final;frozen scientific counters remain historical bases,attach full corrected accounting sidecar. Prepared public delivery verifier V2 remains unexecuted against real delivery. Draft216 clean/pushed/ unsubmitted1b285c0,12exact CI jobs previously passed. No new scientific result or accuracy claim. Original producer/strict acceptance/contexts/ protocols/packing/cumulative caps/fourfalseeligibility flags and immutable grant deadline1792820409 unchanged. Root branch/deprecated PROGRESS edit,all private artifacts and research processes preserved. Next originals completion,watcher exact target plan/cost,V3accounting, prospective execution freeze,blind adjudication,final aggregate/report/ checks/controller/main and actual public delivery. Goal stays active."
+        "summary": "VERIFIED WAIT during unchanged source-only originals. Same actual tool handles65809/23768/41462/26828 were polled live this goal turn;no restart or signal. Fresh metadata-only global audit at1792803504.0306215 verifies431of512 completed originals,A216/B215,245prior absent lifetimes,676unique completed threads,5212933312charged image bytes,max2concurrent. Audit receipt SHAec4920e80643522816a1a61b2c7b3e6804ce6bc9ae0c93dfe73cd2ef3eab038b. Both complete original indexes absent;parent labels unopened. Watcher26828 still plans ONCE after both complete indexes,verified original exits and full genuine native/source/session audit. Do not run the planner manually. Original watcher/plannerV1 remain unchanged. Future targeted execution must use separately sealed V2driver/freezer/monitor/auditor under toolsfreeze6b6b40eb759fdf54d0608482c9bf9bf8a8797263d0a3bf1749c683f984f02d3f, following the generated-tested lifecycle correction checkpoint rally212-checkpoint-targeted-lifecycle-v2. Preserve V1tools/artifacts; do not dispatch the old targeted V1driver. No actual targeted plan or adjudication is implied by these prepared tools. Mandatory supplementary output counter is now V3 (.cache/rally212-retained-output-audit-v3.py,SHA2d14cf94979d932dfffe13e10620bea09772230a4036b28d089b774767d540d4), including task-named shared bytecode. Rerun before targeted dispatch and final;frozen scientific counters remain historical bases,attach full corrected accounting sidecar. Prepared public delivery verifier V2 remains unexecuted against real delivery. Draft216 clean/pushed/ unsubmitted1b285c0,12exact CI jobs previously passed. No new scientific result or accuracy claim. Original producer/strict acceptance/contexts/ protocols/packing/cumulative caps/fourfalseeligibility flags and immutable grant deadline1792820409 unchanged. Root branch/deprecated PROGRESS edit,all private artifacts and research processes preserved. Next originals completion,watcher exact target plan/cost,V3accounting, prospective execution freeze,blind adjudication,final aggregate/report/ checks/controller/main and actual public delivery. Goal stays active."
       },
-      "checkpoint_at": 1792802784,
+      "checkpoint_at": 1792803515,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792813584,
+        "expires_at": 1792814315,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
