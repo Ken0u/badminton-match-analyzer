@@ -104,9 +104,10 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
 class Network:
     """Anonymous exact allowlist, no retry/cookies/auth, durable request attempts."""
 
-    def __init__(self, output, urls, opener=None):
+    def __init__(self, output, urls, opener=None, *, reuse_cached=False):
         self.output = Path(output)
         self.urls = set(urls)
+        self.reuse_cached = reuse_cached
         self.opener = opener or urllib.request.build_opener(
             urllib.request.ProxyHandler({}), NoRedirect()
         )
@@ -114,6 +115,13 @@ class Network:
         self.bytes = 0
         for path in sorted(self.output.glob("request-*.json")):
             entry = json.loads(path.read_bytes())
+            key = digest(entry["url"].encode())
+            if (
+                entry["url"] not in self.urls
+                or path.name != f"request-{key}.json"
+                or entry["response"] != f"response-{key}.bin"
+            ):
+                raise ValueError("Changed request ledger identity")
             self.requests += 1
             response = self.output / entry["response"]
             if not response.is_file():
@@ -125,6 +133,8 @@ class Network:
             raise ValueError("URL outside exact frozen allowlist")
         key = digest(url.encode())
         attempt = self.output / f"request-{key}.json"
+        if attempt.exists() and self.reuse_cached:
+            return (self.output / f"response-{key}.bin").read_bytes()
         if (
             attempt.exists()
             or self.requests >= MAX_REQUESTS
@@ -198,7 +208,7 @@ def validate_manifest(spec):
         "tree": "a428b46df8d4839dd3e20a4bbf6275efb36395c4",
         "prefix": "corrected_test_label/",
         "correction_code": "correct_label.py",
-        "drop_inventory": "drop_frame.json",
+        "drop_inventory": "corrected_test_label/drop_frame.json",
     }:
         raise ValueError("Changed upstream source identity")
     return spec
@@ -385,7 +395,9 @@ def metadata(output, spec, archive, source_manifest, network):
             "bytes": i["size"],
         }
         for p, i in sorted(lookup.items())
-        if p.startswith(up["prefix"]) and i["type"] == "blob"
+        if p.startswith(up["prefix"])
+        and p != up["drop_inventory"]
+        and i["type"] == "blob"
     ]
     if actual != spec["corrected_objects"]:
         raise ValueError("Immutable corrected inventory changed")
@@ -393,8 +405,9 @@ def metadata(output, spec, archive, source_manifest, network):
         raw = network.fetch(RAW + up["commit"] + "/" + name)
         if git_object(raw) != lookup[name]["sha"]:
             raise ValueError("Correction metadata Git object mismatch")
-        save_bytes(output / name, raw)
-        observed[name] = {
+        filename = PurePosixPath(name).name
+        save_bytes(output / filename, raw)
+        observed[filename] = {
             "sha256": digest(raw),
             "bytes": len(raw),
             "git_blob_sha": lookup[name]["sha"],
@@ -494,6 +507,73 @@ def urls(spec):
     ]
 
 
+def preserved_metadata(root, prior, output, context, spec):
+    """Explicit repair continuation reuses completed responses, never requests them again."""
+    import psutil
+
+    previous = json.loads((prior / "context.json").read_bytes())
+    for key in (
+        "inputs",
+        "protocol_sha256",
+        "python_sha256",
+        "python_version",
+        "spec_hash",
+        "packages",
+    ):
+        if previous[key] != context[key]:
+            raise ValueError("Prior metadata runtime/inputs differ")
+    for name, sha in previous["source_hashes"].items():
+        if (
+            name not in {Path(__file__).name, MANIFEST.name}
+            and context["source_hashes"].get(name) != sha
+        ):
+            raise ValueError(
+                "Existing comparator/backend changed during metadata repair"
+            )
+    if (prior / "labels").exists() or (prior / "comparison.json").exists():
+        raise ValueError("Metadata continuation cannot adopt opened label inputs")
+    terminal = json.loads((prior / "metadata-terminal.json").read_bytes())
+    admission = json.loads((prior / "metadata-admission.json").read_bytes())
+    if terminal["status"] != "failed" or terminal["job_id"] != admission["job_id"]:
+        raise ValueError("Prior metadata attempt is not a bound terminal failure")
+    owner = admission["process"]
+    try:
+        if (
+            abs(psutil.Process(owner["pid"]).create_time() - owner["creation_time"])
+            < 0.01
+        ):
+            raise ValueError("Prior metadata lifetime still present")
+    except psutil.NoSuchProcess:
+        pass
+    with sqlite3.connect(
+        (root / "data/processed/catalog.sqlite3").as_uri() + "?mode=ro", uri=True
+    ) as connection:
+        row = connection.execute(
+            "SELECT document FROM jobs WHERE id=?", (terminal["job_id"],)
+        ).fetchone()
+    job = json.loads(row[0]) if row else {}
+    if (
+        job.get("status") != "failed"
+        or job.get("owner_pid") != owner["pid"]
+        or job.get("owner_started") != owner["creation_time"]
+    ):
+        raise ValueError("Prior metadata shared Store binding changed")
+    Network(prior, urls(spec))  # Validates complete ledger; incomplete requests stop.
+    for path in sorted(prior.glob("request-*.json")):
+        request = json.loads(path.read_bytes())
+        for item in (path, prior / request["response"]):
+            if item.stat().st_size > MAX_RESPONSE:
+                raise ValueError("Prior response exceeds acquisition bound")
+            save_bytes(output / item.name, item.read_bytes())
+    return {
+        "prior_context_sha256": file_hash(prior / "context.json"),
+        "prior_terminal_sha256": file_hash(prior / "metadata-terminal.json"),
+        "prior_admission_sha256": file_hash(prior / "metadata-admission.json"),
+        "original_lifetime_absent": True,
+        "response_reuse_only": True,
+    }
+
+
 def run(args):
     root = args.root.resolve()
     os.environ.update(
@@ -547,6 +627,10 @@ def run(args):
     if args.stage == "metadata":
         output.mkdir(exist_ok=False)
         save(output / "context.json", context)
+        if getattr(args, "resume_metadata_from", None):
+            prior = local_path(root, args.resume_metadata_from)
+            continuation = preserved_metadata(root, prior, output, context, spec)
+            save(output / "metadata-continuation.json", continuation)
     else:
         if json.loads((output / "context.json").read_bytes()) != context:
             raise ValueError("Frozen consumer/runtime/input context changed")
@@ -590,7 +674,11 @@ def run(args):
                 },
             },
         )
-        network = Network(output, urls(spec))
+        network = Network(
+            output,
+            urls(spec),
+            reuse_cached=bool(getattr(args, "resume_metadata_from", None)),
+        )
         if stage == "metadata":
             result = metadata(
                 output,
@@ -658,7 +746,10 @@ def main(argv=None):
     ):
         parser.add_argument("--" + key, required=True, type=Path)
     parser.add_argument("--metadata-sha256")
+    parser.add_argument("--resume-metadata-from", type=Path)
     args = parser.parse_args(argv)
+    if args.stage != "metadata" and args.resume_metadata_from:
+        parser.error("Metadata continuation is limited to the metadata stage")
     if args.stage == "compare" and not args.metadata_sha256:
         parser.error("Compare requires --metadata-sha256 after source/usage inspection")
     print(json.dumps(run(args)))

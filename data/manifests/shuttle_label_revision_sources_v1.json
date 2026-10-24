@@ -59,7 +59,7 @@
     "tree": "a428b46df8d4839dd3e20a4bbf6275efb36395c4",
     "prefix": "corrected_test_label/",
     "correction_code": "correct_label.py",
-    "drop_inventory": "drop_frame.json"
+    "drop_inventory": "corrected_test_label/drop_frame.json"
   },
   "corrected_objects": [
     {

@@ -111,6 +111,71 @@ def test_network_fixed_request_and_total_bounds(tmp_path, monkeypatch):
     assert network.bytes == 3
 
 
+def test_explicit_cache_reuse_does_not_repeat_successful_request(tmp_path):
+    url = "https://example.invalid/pinned"
+    opener = Opener()
+    first = revision.Network(tmp_path, [url], opener)
+    first.fetch(url)
+    resumed = revision.Network(tmp_path, [url], opener, reuse_cached=True)
+    assert resumed.fetch(url) == CSV
+    assert opener.calls == resumed.requests == 1
+
+
+def test_metadata_inventory_excludes_pinned_drop_document(tmp_path, monkeypatch):
+    spec = json.loads(revision.MANIFEST.read_bytes())
+    tree = {
+        spec["upstream"]["prefix"] + o["path"]: {
+            "sha": o["git_blob_sha"],
+            "size": o["bytes"],
+            "type": "blob",
+        }
+        for o in spec["corrected_objects"]
+    }
+    for path in ("correct_label.py", "corrected_test_label/drop_frame.json"):
+        tree[path] = {
+            "type": "blob",
+            "sha": revision.git_object(b"generated metadata"),
+            "size": 18,
+        }
+    monkeypatch.setattr(revision, "verify_tree", lambda *args: tree)
+    source_manifest = json.loads(
+        (ROOT / "data/manifests/shuttle_supervision_sources_v1.json").read_bytes()
+    )
+    archive = tmp_path / "empty.zip"
+    with zipfile.ZipFile(archive, "w"):
+        pass
+    monkeypatch.setattr(revision, "census_archive", lambda *args: [])
+    monkeypatch.setattr(
+        revision,
+        "literal_inventory",
+        lambda *args: [{"original_member": {}} for _ in range(29)],
+    )
+
+    class GeneratedNetwork:
+        requests = 10
+        bytes = 123
+
+        def fetch(self, url):
+            if "/git/commits/" in url:
+                return json.dumps(
+                    {
+                        "sha": spec["upstream"]["commit"],
+                        "tree": {"sha": spec["upstream"]["tree"]},
+                    }
+                ).encode()
+            if "/git/trees/" in url:
+                return b"{}"
+            return b"generated metadata"
+
+    for item in spec["documentation"].values():
+        item["sha256"] = revision.digest(b"generated metadata")
+    receipt = revision.metadata(
+        tmp_path, spec, archive, source_manifest, GeneratedNetwork()
+    )
+    assert (tmp_path / "drop_frame.json").is_file()
+    assert receipt["label_contents_opened"] is False
+
+
 def test_git_tree_reconstructed_including_nested_identity():
     blob = revision.git_object(b"generated")
     subtree = revision.git_object(b"100644 a.csv\0" + bytes.fromhex(blob), "tree")

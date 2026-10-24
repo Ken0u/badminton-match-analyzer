@@ -34,7 +34,17 @@ outputs are never overwritten; complete files are flushed and published using
 no-replacement hard links. Use a source checkout with the original virtual
 environment and preserved local inputs. A clone alone does not supply the archive.
 
-Generated focused verification passes 72 tests, including the unchanged comparator
+The first metadata attempt verified original inputs and eight public responses,
+then stopped before label acquisition because the initial inventory selector
+counted the separate `corrected_test_label/drop_frame.json` as a CSV. Its failed
+Store record, original exited process and outputs are preserved. The bounded
+repair excludes that pinned metadata object from the CSV denominator and uses
+its actual subdirectory path. Explicit `--resume-metadata-from OLD_OUTPUT` reuses
+complete prior responses without repeating requests; it verifies old runtime/input
+bindings, original process absence, failed Store identity and preserved backend.
+Incomplete requests remain terminal and cannot be resumed by this option.
+
+Generated focused verification passes 74 tests, including the unchanged comparator
 suite. Actual acquisition/comparison and final integration/delivery are pending
 at this producer checkpoint. Software tests establish tool behavior, not expert
 label truth, native correspondence or badminton accuracy.
