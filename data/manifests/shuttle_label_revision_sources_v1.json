@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "task": 220,
+  "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28",
+  "archive": {
+    "url": "https://github.com/AnInsomniacy/tracknet-series-pytorch/releases/download/dataset-v1.0.0/Shuttlecock-Trajectory-Dataset.zip",
+    "bytes": 1731120724,
+    "sha256": "f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465",
+    "supplier": "AnInsomniacy/tracknet-series-pytorch",
+    "release": "dataset-v1.0.0",
+    "release_commit": "6d91a1bd28a9cab4b09e7d0460b2bb0a1afe6764",
+    "creator_authenticity": "unverified separate mirror"
+  },
+  "declaration_sha256": "1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b",
+  "prior_report_sha256": "d6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa",
+  "original_terminal_sha256": "4c7029762fc07e80c0b79d50981b2c02fd7cbe52f0b8159ae75290f7a60e93f6",
+  "prior_evidence_index_sha256": "df6bb9ad86ab6f09c72e2dd0f88095306c1441271fc0e24e0af10e93e7983c1f",
+  "documentation": {
+    "dataset-description.md": {
+      "bytes": 13122,
+      "content_type": "text/markdown; charset=utf-8",
+      "sha256": "faed46f2bf88ee3c8c93015107aceb62c0cf08757f2ec5dc684b84ce3d47cebd",
+      "url": "https://hackmd.io/@TUIK/rJkRW54cU/download"
+    },
+    "mirror-release.json": {
+      "bytes": 5215,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "fb7c4ceecc7614b8f3fc0655f0f89521afb065c40e2b4c31df140f9b0ecf1858",
+      "url": "https://api.github.com/repos/AnInsomniacy/tracknet-series-pytorch/releases/tags/dataset-v1.0.0"
+    },
+    "mirror-tag-commit.json": {
+      "bytes": 36360,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "9e94ea087d1f2598bb7ae4f78ec299fa4ebc9f02460eadb6d576cc3a2b541c7c",
+      "url": "https://api.github.com/repos/AnInsomniacy/tracknet-series-pytorch/commits/dataset-v1.0.0"
+    },
+    "tracknetv3-dataset.py": {
+      "bytes": 41285,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "c8cf51f8fd59e466f3a1916ba99b24ac8b487ff85f69362ee72758b6b1643f92",
+      "url": "https://raw.githubusercontent.com/qaz812345/TrackNetV3/6eda442ada1740573f200f836d93edc9a541ee86/dataset.py"
+    },
+    "tracknetv3-license.txt": {
+      "bytes": 1097,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "1eeb31683deba741bce99f5f33bb813293a23b4e6c8302d6f056a587a30cd497",
+      "url": "https://raw.githubusercontent.com/qaz812345/TrackNetV3/6eda442ada1740573f200f836d93edc9a541ee86/LICENSE"
+    },
+    "tracknetv3-readme.md": {
+      "bytes": 9325,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "cda4991691ca354c4cdda8b63f535b21e1fad7d0344fbf16ff409745fecd6691",
+      "url": "https://raw.githubusercontent.com/qaz812345/TrackNetV3/6eda442ada1740573f200f836d93edc9a541ee86/README.md"
+    }
+  },
+  "upstream": {
+    "repository": "qaz812345/TrackNetV3",
+    "commit": "6eda442ada1740573f200f836d93edc9a541ee86",
+    "tree": "a428b46df8d4839dd3e20a4bbf6275efb36395c4",
+    "prefix": "corrected_test_label/",
+    "correction_code": "correct_label.py",
+    "drop_inventory": "corrected_test_label/drop_frame.json"
+  },
+  "corrected_objects": [
+    {
+      "path": "match1/corrected_csv/1_05_02_ball.csv",
+      "git_blob_sha": "6b082e8671e500f762448f1870a3db3a15d4c194",
+      "bytes": 6973
+    },
+    {
+      "path": "match1/corrected_csv/1_05_03_ball.csv",
+      "git_blob_sha": "e7304b2a9f4ca7423420e1bb2cf58e769075b243",
+      "bytes": 5095
+    },
+    {
+      "path": "match1/corrected_csv/1_06_03_ball.csv",
+      "git_blob_sha": "9a41fa10b3d9eb6041e3230ca919ca776d7a354e",
+      "bytes": 4661
+    },
+    {
+      "path": "match1/corrected_csv/1_07_03_ball.csv",
+      "git_blob_sha": "72936a758fb043b483b678dd32d7b93d84fa4bae",
+      "bytes": 9114
+    },
+    {
+      "path": "match1/corrected_csv/1_07_04_ball.csv",
+      "git_blob_sha": "b99c59c04dfb1139c9c89ee2ba7ab0300617b1f6",
+      "bytes": 2471
+    },
+    {
+      "path": "match1/corrected_csv/1_07_06_ball.csv",
+      "git_blob_sha": "1e5695d6497f8c6dd776d78a03ee705d346d6179",
+      "bytes": 4504
+    },
+    {
+      "path": "match1/corrected_csv/1_09_06_ball.csv",
+      "git_blob_sha": "c35e61463de496c0a50f75e8567b0309bafdad5f",
+      "bytes": 1773
+    },
+    {
+      "path": "match1/corrected_csv/1_09_07_ball.csv",
+      "git_blob_sha": "70f0c9cc12aa1a7f807712331c70bd8b377c251f",
+      "bytes": 8953
+    },
+    {
+      "path": "match1/corrected_csv/2_02_07_ball.csv",
+      "git_blob_sha": "c28ef3d9fd7ad5b42100937a0573ab11a57e677d",
+      "bytes": 2056
+    },
+    {
+      "path": "match1/corrected_csv/2_03_08_ball.csv",
+      "git_blob_sha": "b6fb18c2173d1449a9de95a1be721444872b773c",
+      "bytes": 1791
+    },
+    {
+      "path": "match1/corrected_csv/2_03_10_ball.csv",
+      "git_blob_sha": "a4d53cf01c03853c6fa93f6b10bfa00bf44d199f",
+      "bytes": 7783
+    },
+    {
+      "path": "match2/corrected_csv/1_03_03_ball.csv",
+      "git_blob_sha": "859ba359540b6566040a9ccf2d7c94e11d42d7c8",
+      "bytes": 5478
+    },
+    {
+      "path": "match2/corrected_csv/1_04_04_ball.csv",
+      "git_blob_sha": "74dc0d85eced1a04be3179f3642d8da729d92ea1",
+      "bytes": 3846
+    },
+    {
+      "path": "match2/corrected_csv/1_11_11_ball.csv",
+      "git_blob_sha": "4280c50acad8afe8cc2a1d99459dbff7a806f9d1",
+      "bytes": 9236
+    },
+    {
+      "path": "match2/corrected_csv/1_13_12_ball.csv",
+      "git_blob_sha": "d5d42e7b61c4b2528df6b22f07b9624b14e45da1",
+      "bytes": 8531
+    },
+    {
+      "path": "match2/corrected_csv/1_19_15_ball.csv",
+      "git_blob_sha": "ebbe2c60c2026f58464d99f4bf28788129f0456a",
+      "bytes": 9558
+    },
+    {
+      "path": "match2/corrected_csv/2_02_05_ball.csv",
+      "git_blob_sha": "d24d6d1f3529ae8a92a7ee5771b4153bd19741c2",
+      "bytes": 10130
+    },
+    {
+      "path": "match2/corrected_csv/2_08_12_ball.csv",
+      "git_blob_sha": "cc1355c564138d03a6ea1286fdd43dd0e741a16b",
+      "bytes": 7933
+    },
+    {
+      "path": "match3/corrected_csv/1_02_00_ball.csv",
+      "git_blob_sha": "004f117698f303eb52f6ae5461429a1811f3fa34",
+      "bytes": 9549
+    },
+    {
+      "path": "match3/corrected_csv/1_03_02_ball.csv",
+      "git_blob_sha": "bf81d4175a0b922b116b3adb4aaf8d2e1ccab4c7",
+      "bytes": 6256
+    },
+    {
+      "path": "match3/corrected_csv/1_05_02_ball.csv",
+      "git_blob_sha": "7c844e8d3bf17170a8ae22c3db5fec33a871fde6",
+      "bytes": 10505
+    },
+    {
+      "path": "match3/corrected_csv/1_05_03_ball.csv",
+      "git_blob_sha": "03e4c6ac1f305ca791cde67537da50e826b1c846",
+      "bytes": 2498
+    },
+    {
+      "path": "match3/corrected_csv/1_06_05_ball.csv",
+      "git_blob_sha": "20229e21dd8e939309b811d3c6313122c478fbca",
+      "bytes": 3194
+    },
+    {
+      "path": "match3/corrected_csv/1_06_06_ball.csv",
+      "git_blob_sha": "d2f66225db48de95080344aff9018a9530878f1c",
+      "bytes": 4478
+    },
+    {
+      "path": "match3/corrected_csv/1_08_08_ball.csv",
+      "git_blob_sha": "cfc61a070ac8ce66d4d9420c72a11b99eb8320ef",
+      "bytes": 3738
+    },
+    {
+      "path": "match3/corrected_csv/1_08_09_ball.csv",
+      "git_blob_sha": "0f497b6e99cd19b77109ec4868f6596381302706",
+      "bytes": 2837
+    },
+    {
+      "path": "match3/corrected_csv/1_09_12_ball.csv",
+      "git_blob_sha": "430c04bf2ef216c4224a3f5ad091dcadef4a5c0d",
+      "bytes": 4518
+    },
+    {
+      "path": "match3/corrected_csv/1_09_15_ball.csv",
+      "git_blob_sha": "3f5225cea820d820f96eaaa4bf5e5051f6477dd3",
+      "bytes": 3201
+    },
+    {
+      "path": "match3/corrected_csv/1_10_16_ball.csv",
+      "git_blob_sha": "fbfdd61d55ff541add24846fdb0adf211da212ae",
+      "bytes": 4647
+    }
+  ],
+  "corrected_inventory_sha256": "1bb8d65a5dece7e98700dede5acf090225afbbe19da0889670f8f30b823aa4ae",
+  "original_basis": null,
+  "revised_basis": null,
+  "alias_mapping": false,
+  "eligibility": {
+    "training_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "reason": "Dataset rights, mirror authenticity, source identity/cross-corpus overlap and future source-disjoint selection are not certified by code/model MIT or published splits"
+  },
+  "limits": {
+    "requests": 48,
+    "response_bytes": 4194304,
+    "network_bytes": 8388608,
+    "label_copy_bytes": 8388608
+  },
+  "limitations": [
+    "Literal identifier union only; no 2_ to 1_ filename aliases.",
+    "Null source bases intentionally prohibit native frame-pair scoring.",
+    "Original incomplete-file quarantine and attributed native tails remain unresolved, not repaired.",
+    "Public availability, code MIT and intended research use do not certify dataset or media rights."
+  ]
+}
