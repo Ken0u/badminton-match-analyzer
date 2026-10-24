@@ -4602,6 +4602,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "rally212-targeted-maintenance-00000-v5": {
+      "actor": "Ken0u",
+      "at": 1792809422,
+      "epoch": 1,
+      "fingerprint": "7603adadc6fa2ae8be0a2d6e43f4f9686afb1ed040c26458eb3124d92b490eb2",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-verified-wait-17928002-v1": {
       "actor": "Ken0u",
       "at": 1792800318,
@@ -16047,15 +16056,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "Final bounded source recoveryV3 is genuinely running in an attached tool session; actual owner identities verified,live owners=2. All495prefix successes and3unfinished charged attempts are preserved.17required sessions(16unstarted plus the final permitted same-segment replacement)use unchanged originals,prompt,schema,packing,producer,provider/model/destination and strictacceptance. No successful output replay,no further replacement or implicit retry. Public predispatch freeze:https://github.com/Ken0u/badminton-match-analyzer/issues/212#issuecomment-6378732187 sealSHA83b2d99f4fd8e0ed9eaf006f3c7ce71fc793d6c485a66a7f7ab7a77c74c05d8a. Recovery-aware originalauditorV4/plannerV3/targetV5driver,freezer,monitor,finalaudit are prospectively sealed BEFORE original cross-stream reads. ToolfreezeSHA1438c2b8ce5fd771cdea99d9e48de158b79d1acad79f33ab4c1f2e9c84d12881. AST checks preserve exactV1target selection/nativecontext/eventclosure,original sourceprompt,atomic reservation/Popen/stop functions,output drain/actualwait and final scientific acceptance. Generated3sessioncontinuity,20preflight refusals and17recovery-parent cases pass;zero real scientific payloads/sessions/signals in tests. Fresh metadataauditorV4 safely verifies existing source metadata without original labels:receiptSHAfd1d7f3ea2f4a297910698702a72004a91e0a28d3b5b074a00fc1c8edebc7754. Final expected515attempts/512successes and5915693132original cumulative imagebytes retain all3failed starts. Full output2302800612bytes<8GiB,receiptSHAc47436dd59d90d698517f7b5f939ee118347c2b38daa06aab481f6966903e3f3. FullV3accounting must rerun before targets/final. Actual exact target plan remains absent; no scientific comparison before BOTH originalindexes plus globalgenuine metadataaudit. Current aggregate recovery progress:{\"at\": 1792808949.8435128, \"attempted_image_bytes\": 5845904931, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished\": 2, \"owner_exit_code\": null, \"started\": 3}, \"independent_b\": {\"complete_index\": false, \"finished\": 3, \"owner_exit_code\": null, \"started\": 4}}}. Originalgrant1792791609/deadline1792820409,caps9MiBraw/20images/14MiBencoded/2assessors/8GiBcumulativepayloadoutput and all falseeligibility unchanged. No source/decode/transform/paidservice/modelpromotion/manualmerge. Draft216clean/unsubmitted1b285c0,12exactCIpasses/2384tests4optionalskips preserved. Rootbranch/deprecatedPROGRESSedit preserved. Nextbothoriginals,globalaudit,exacttargets,V5publicexecutionfreeze,blindadjudication,finalaggregate/report/checks/controller/main/actualpublicdelivery. Fullgoalactive;annotationaccuracyunproven."
+        "summary": "{\"all_targeted_lifetimes_absent\": false, \"at\": 1792809417.624864, \"attempted_image_bytes\": 5915693132, \"both_targeted_indexes_complete\": false, \"coordination\": \"c2b39f168249fd26919602302080200289522e00\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"H1setLK1tig\": {\"complete_index\": false, \"finished\": 0, \"launcher_alive\": null, \"started\": 0, \"targeted_cli_alive\": 0}, \"go2uajSiBnE\": {\"complete_index\": false, \"finished\": 0, \"launcher_alive\": null, \"started\": 0, \"targeted_cli_alive\": 0}}, \"lease_expiry\": 1792819760}\nBlind targeted adjudication status after both512original sessions and global genuine session/native/source audit. Original producer eebbe21 and separately sealed acceptance6cb7e4f remain unchanged. Full checks2384passed/4optional skips,230focused, Ruff/format/pip/diff/repository pass. Exact targeted plan/seal/timestamp are preserved. No source replacement, paid service, implicit retry or scientific label rewrite. All four eligibility flags remain false. Original grant/deadline and all cumulative budgets remain unchanged; no signal is sent to any process."
       },
-      "checkpoint_at": 1792808960,
+      "checkpoint_at": 1792809422,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792819760,
+        "expires_at": 1792820222,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
