@@ -5022,6 +5022,15 @@
       "task_id": "226",
       "verb": "human-approved"
     },
+    "rally226-live-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792835182,
+      "epoch": 1,
+      "fingerprint": "4c0859f4aaf1459f5402932b5387486ee0bc933b407cafec62718b109256f176",
+      "status": "running",
+      "task_id": "226",
+      "verb": "checkpoint"
+    },
     "rally226-next-v1": {
       "actor": "Ken0u",
       "at": 1792831517,
@@ -17256,17 +17265,17 @@
         "base_sha": "3eeb4ed750dc8bfc3b58b471e172ea9b7c18839c",
         "branch": "codex/issue-226-complete-the-unchanged-frozen-two-source",
         "head_sha": "5014296edb6b87282036b79d824fb0954470141f",
+        "observation_sha256": "42f7d7b671601255ede930fa3c6f691981e639ab43e57855f15170d087dcd5a2",
         "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6",
-        "summary": "Five granted files committed/pushed at5014296. New continuation metadata gates, freeze/run/audit command, separate public v5 protocol and pending aggregate report preserve old scientific consumers and v1-v4.351focused and2566full tests pass,4optional skips; all7required checks pass and independent audit finds all164recorded verification lifetimes absent. Exclusive check receipt28b44e6e0832a029809ca7605846bbda465bd0824c382b0ed70abc1500b8fb62. Read-only frozen producer worktree created at this exact tested commit. Actual suffix metadata78sessions/690163662bytes; cumulative projected8169246915bytes below unchanged8GiB including interrupted old094 and new094 separately. No226images dispatched, no new scientific labels read, no process signaled, no predecessor changed. Next whole-original/packet/context/tool/Store/process/prefix preflight and prospective owning-issue context timestamp before launch. New scientific deadline remains1792860317 from actual grant1792831517; old212deadline1792820409 remains expired. User delegation transparently authorized this separate successor; no personal review asserted. Existing223main/public delivery verified. Full analyzer goal and62/66/67/71 remain open. No manual merge/paid service/consumed holdout/PROGRESS access.",
-        "verification_receipt_sha256": "28b44e6e0832a029809ca7605846bbda465bd0824c382b0ed70abc1500b8fb62"
+        "summary": "Existing continuation remains live under its recorded owner. Metadata-only observation verifies 28 finished receipts and 28 reserved attempts of the frozen 78-session suffix; 7,730,216,462 cumulative attempted image bytes, within the unchanged 8 GiB limit. No dispatch fence, restart, process signal or automatic retry. Final targeted scientific comparison remains sealed. Context SHA256 795b230a8b6836742c9b776edb5ac30de47307c94e4960213c07ed1f4d4c63a6, frozen consumer 5014296edb6b87282036b79d824fb0954470141f and immutable successor deadline 1792860317 remain unchanged. Existing 351 focused / 2,566 full tests pass, four optional skips; all seven local checks and independent verification-lifetime audit passed. Continue observing the same execution; after genuine exit and owner absence, run the unchanged frozen audit before reporting both source slots and all 1,532 frames. Preserve every predecessor and unknown. Full analyzer accuracy remains unproven; #62/#66/#67/#71 remain open."
       },
-      "checkpoint_at": 1792833191,
+      "checkpoint_at": 1792835182,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3eeb4ed750dc8bfc3b58b471e172ea9b7c18839c",
         "branch": "codex/issue-226-complete-the-unchanged-frozen-two-source",
         "epoch": 1,
-        "expires_at": 1792843991,
+        "expires_at": 1792845982,
         "granted_at": 1792831517,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
