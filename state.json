@@ -4730,6 +4730,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-e2-final-ci-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792827975,
+      "epoch": 2,
+      "fingerprint": "379728a52904d8bb22c089b068b8d4e0796f293e48db21081bb2ab1d1127c14f",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-interruption-recover-v1": {
       "actor": "Ken0u",
       "at": 1792826904,
@@ -16455,20 +16464,24 @@
     },
     "212": {
       "checkpoint": {
+        "aggregate_sha256": "47c938ed4e217d602773398609749f2f7ccd604b1f5c36b9fdb61d450c5c6e2d",
+        "base_sha": "3662f4e42aa819358d3cd40cfb2a3b5ba7de3ae4",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind-e2",
-        "head_sha": "86e377e4d5e316ebc005a39a7f4b1a5c3026e705",
-        "interruption_receipt_sha256": "4022497e3c6a3c431a62f659703e39fc5d1bc7d731e174a353102514c2a9df9e",
+        "head_sha": "f409a03b159726978e786facfadb2e5de50a5bec",
+        "pr_number": 224,
+        "retained_output_receipt_sha256": "457c2083c9f23eaa05307504dd0c84427661dd9b46bb936ea61c775f8592ac8a",
         "scientific_deadline": 1792820409,
         "scientific_execution_finished": true,
-        "summary": "Epoch-2 software/report finalization only. Preserved epoch-1 branch/PR216 and all four original uncommitted edits in place; exact preserved patch applied to new granted branch and committed, current main3662f4e merged without conflict. Report/guide preserve 0 certified references/2 retained slots; originals512 successes, targeted178 successes/256 required, one interrupted target with no output/unknown exitcode. All663 recorded lifetimes absent, shared Store no active jobs; original scientific deadline1792820409 remains elapsed and unchanged. No new image dispatch, replacement, scientific label read/acceptance, source or model work. Retrospective source/native/Store/consumer/tool integrity passed (receipt7752e89860f89b0cc1f742ecd22570562e3a58d97e374298288bcd68e9485d48). Next run isolated generated full/focused required checks on merged source, then publish PR/exact CI/controller/main/public delivery."
+        "summary": "Epoch-2 final source is published in PR224; old draft216 closed as superseded with original branch/head/CI/all scientific evidence preserved. Local300focused/2508full tests pass,4optional skips; Ruff/format/pip/diff/repository and final doc-only checks pass. All154 observed verification lifetimes independently absent. Full-denominator final INCOMPLETE execution aggregate47c938ed4e217d602773398609749f2f7ccd604b1f5c36b9fdb61d450c5c6e2d retains both1532-frame slots,512original successes/515attempts,178target successes/256required,179target attempts and77unstarted. Targeted labels remain sealed; frozen final auditor refuses incomplete singles index. Zero certified references is execution incompleteness, not a scientific negative source result. Original scientific deadline1792820409 remains elapsed; no more images/replacements/label reads/acceptance are authorized by code recovery. All original663 task lifetimes absent and shared Store no active jobs; retrospective whole-source/native/Store/context/tool integrity passes. Attempted image bytes7479083253; retained output snapshot2324162926bytes below8GiB, supplemental22425165within64MiB original headroom. Source/packets/predictions/labels/weights/environments/PROGRESS preserved; all4eligibilityflags false. Exact PR CI run40075227035 is currently running; submit/normal controller integration/exact merged-main/public wheel/source/both-image delivery still required. Full analyzer and parent62/66/67/71 remain incomplete. Newly reproduced protected client receipt bug recorded separately in223 without implementation/scope expansion.",
+        "verification_receipt_sha256": "19526dafea0c45ab3c038dda966696951668360ba9afbd44af02e764a9350764"
       },
-      "checkpoint_at": 1792827250,
+      "checkpoint_at": 1792827975,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3662f4e42aa819358d3cd40cfb2a3b5ba7de3ae4",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind-e2",
         "epoch": 2,
-        "expires_at": 1792838050,
+        "expires_at": 1792838775,
         "granted_at": 1792827030,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
