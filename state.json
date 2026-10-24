@@ -19580,6 +19580,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "4f0a9d2ee0ec2a1d86c1f79da1a0b5f06540b24cef3f2e98d1f71f40c282aa44"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
