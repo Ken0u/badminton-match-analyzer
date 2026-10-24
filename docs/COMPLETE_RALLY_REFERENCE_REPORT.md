@@ -27,12 +27,72 @@ combined target indexes and all 1,014 completed execution identities verify;
 the failed reference contributes only to execution history. Scientific status
 uses only the 256 validated targets and the unchanged frozen acceptance.
 
-At this preparation checkpoint no recovery image is dispatched and no complete
-reference is certified. Generated verification and prospective seals precede
-any assessment. Preserve both source slots/all 1,532 frames, unknowns and every
-earlier incomplete result. Agent judgments remain development evidence, not
-expert gold or automatic match accuracy. All four eligibility flags remain
-false, and #62, #66, #67 and #71 remain incomplete.
+### Completed execution and unchanged scientific result
+
+The [prospective owning-issue seal](https://github.com/Ken0u/badminton-match-analyzer/issues/228#issuecomment-6383452745)
+precedes every recovery dispatch. Tested consumer
+`1c8905ff40106b531c8e9f98856f79ee5105c648` ran from a separate clean snapshot;
+context SHA256 is
+`eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59`.
+The original schema, rubric, provider/model/authentication, native images and
+scientific acceptance remained unchanged.
+
+All **21 recovery sessions passed validation**, including the single planned
+replacement 151. The actual run exited successfully; its owner and all child
+lifetimes are independently absent. No further replacement, implicit retry,
+process signal or deadline extension occurred. The failed original 151 output
+and old fence remain intact. Both complete target indexes and all 1,014
+completed execution identities passed the global provenance audit before
+scientific labels were compared. The failed reference contributes only to
+execution history, never to scientific acceptance.
+
+| Completed evidence | Result |
+| --- | ---: |
+| Original exhaustive assessment successes | 512 |
+| Validated targeted references, both sources | 256 / 256 |
+| New recovery sessions | 21 / 21 |
+| Retained source slots / native frames | 2 / 1,532 |
+| Completed global execution identities, including archived failures | 1,014 |
+| Cumulative attempted original-image bytes | 8,177,560,145 |
+| Retained outputs at audit, bytes | 2,366,472,182 |
+| Scientifically complete references | 0 / 2 |
+| Slots with all requested observed-contact labels supported | 0 / 2 |
+
+| Source | Required / inspected target frames | Frozen incomplete reasons |
+| --- | ---: | --- |
+| Singles | 991 / 991 | Overlapping contact intervals; unresolved targeted source evidence; unsupported opening or terminal boundary |
+| Doubles | 541 / 541 | Unresolved targeted source evidence; unsupported opening or terminal boundary |
+
+This is now a completed source-assessment execution with **zero defensible
+complete references under the unchanged protocol**. It is distinct from #226's
+missing-session outcome. Full frame coverage and successful transport do not
+resolve contacts, source uncertainty or rally boundaries. The observed-contact
+support flag does not establish coverage of every family/side combination.
+No unknown was converted to a negative, neither source was dropped, and the
+scientific criterion was not relaxed after these results.
+
+The actual frozen audit exited successfully. Private aggregate SHA256:
+`853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126`;
+complete combined-index SHA256:
+`558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070`.
+Original labels, failed outputs and all per-frame evidence remain private and
+unchanged. Historical incomplete attempts remain preserved. The
+[#226 delivery record](https://github.com/Ken0u/badminton-match-analyzer/issues/226#issuecomment-6383257027)
+verifies that earlier software delivery separately.
+
+Software verification passes **393 focused and 2,608 full tests, with four
+optional skips**, plus Ruff, formatting, dependency, repository and diff checks.
+Independent observation verifies all 173 recorded test lifetimes absent.
+The final report is the only subsequent source change; tested code and protocol
+bytes remain unchanged. Final UTF-8/LF, JSON, local-link, credential-pattern and
+diff checks pass. Exact PR/main CI, controller integration and public delivery
+remain required.
+
+Agent judgments remain development evidence, not expert gold or automatic match
+accuracy. All four eligibility flags remain false; #62, #66, #67 and #71 remain
+incomplete. Further reference work must address unresolved evidence and
+boundaries through an independently specified source-review protocol; this
+completed recovery does not authorize another image pass or a weaker gate.
 
 ## Separately authorized targeted continuation
 
