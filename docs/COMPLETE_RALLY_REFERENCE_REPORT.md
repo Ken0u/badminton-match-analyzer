@@ -1,5 +1,52 @@
 # Complete-rally source reference pilot
 
+## Separately authorized targeted continuation
+
+[Issue #226](https://github.com/Ken0u/badminton-match-analyzer/issues/226)
+defines a separate [v5 continuation protocol](../data/manifests/rally_reference_protocol_v5.json)
+for the unchanged two source slots. It preserves #212's elapsed deadline,
+interrupted attempt, incomplete result, source windows, all original protocols
+and both frozen scientific consumers. The current configured-owner delegation
+was recorded transparently through the normal frozen-scope authorization flow;
+no personal human review is asserted.
+
+The continuation retains 512 original successes and 178 targeted successes in
+place. Only the missing 78 singles target chunks, 094 through 171, remain to be
+assessed. Exact metadata costing is **690,163,662 additional image bytes** and
+**8,169,246,915 cumulative attempted bytes**, including the predecessor's failed
+094 attempt separately from its replacement. Both cumulative image payload and
+retained-output limits remain 8 GiB. Each session retains the original 9 MiB /
+20-image limit and encoded-content guard. Its separate immutable deadline is
+eight hours from its own grant; this never restores #212's expired execution.
+
+The new [metadata gates](../backend/badminton/rally_reference_continuation.py)
+check archived execution against its original interval, new dispatch against
+the new interval, unique actual session/thread/process identities, original
+frame membership, opaque output hashes, cumulative failed/repeated payload and
+exclusive outputs. Both pipes are drained with bounded metadata retention;
+failures fence new dispatch and the actual original child is observed to exit.
+No process is signaled or implicitly retried. The scientific acceptance
+function remains the unchanged frozen #212 acceptance consumer.
+
+The [continuation command](../scripts/continue_rally_references.py) separates
+`freeze`, `run` and `audit`. It requires the original host's private evidence,
+an exclusive `rally226-*` output directory under the original cache, a clean
+committed consumer snapshot and a prospective owning-issue context timestamp.
+A clone does not supply the evidence. Completed targets are referenced in
+place; the predecessor's absent index and interrupted run are never filled or
+overwritten. Final scientific comparison waits for both complete combined
+target indexes and the global execution/native/transport/lifetime audit. The
+same stream's validated preceding continuity notes are the narrow execution
+exception; other targeted labels remain sealed until that global gate.
+
+At this preparation checkpoint, **no continuation images have been dispatched
+and no complete reference has been certified**. The initial 51 generated
+regressions pass; final required checks, prospective execution seals, actual
+assessment and full-denominator results are still pending. Agent judgments
+remain development evidence, not expert gold or established full-match
+accuracy. All four research eligibility flags remain false; #62, #66, #67 and
+#71 remain incomplete.
+
 ## Transport-bounded successor: original passes complete, reference incomplete
 
 The owner-authorized [#212 successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)
