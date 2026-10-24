@@ -16441,6 +16441,7 @@
       },
       "planned_at": 1792788556,
       "planned_by": "Ken0u",
+      "reason": "implementation lease expired; reservations retained",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -16512,7 +16513,7 @@
         ]
       },
       "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1",
-      "status": "running"
+      "status": "recovery_required"
     },
     "213": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40027926387",
