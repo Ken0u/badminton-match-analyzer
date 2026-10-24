@@ -4548,6 +4548,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-verified-wait-doubles-01-v1": {
+      "actor": "Ken0u",
+      "at": 1792801758,
+      "epoch": 1,
+      "fingerprint": "dfe1e014bc287cfd42f1fc72ac5b3f37e2208d0d687db2f8085b933684de4a67",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -15939,15 +15948,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "Reproduced a real prepared-driver defect with GENERATED data only: V1 malformed stdout raises before child.wait,finish receipt and shared dispatch stop. Reproduction SHA87f0c800e9772279a58d458eb5ec7f0116474d195a0f43f38044a187688566d0. Preserved V1 driver/tools/freeze and all running originals unchanged. Prepared separate PROSPECTIVE targeted V2 driver357db69f43a5986de00c23bd356dc64d42b6dfdf1448b02dda2991493664dbe7: immediate shared dispatch fencing on malformed/invalid/error/tool/oversized output,drain to EOF with bounded execution logs,actual child.wait, preserved finish receipt,then rejection without complete index. No signals or implicit retry. Final-JSON parse failures and stdin/read errors are preserved too. Source prompt AST/schema/retained counter/ payload reservations/packing and strict scientific acceptance unchanged. Three-session generated continuity/notes/charging/index check,all20 existing preflight refusal cases and21new full-driver output-failure cases pass (receipt2f81475df18bab9b5d05a3bebd66234223174464445d4bb251ca2133e3a4b477). Three REAL GENERATED PYTHON children also pass valid/malformed/20MiB oversized drain and independent lifetime-absence checks,with zero Codex sessions/signals/scientific images/labels;receipt 1c50a6735b7a724c9cd92965d799f0159918801e5eb6155a02e740542dc56608. V2downstream tools freeze6b6b40eb759fdf54d0608482c9bf9bf8a8797263d0a3bf1749c683f984f02d3f binds unchanged plannerV1,new driver/auditor/monitor/execution-freezerV2 and all three full-output counters. V2future auditor rejects protocol failure receipts before scientific parsing. Future execution seal execution-seal-v2.json/timestamp-v2.json and final-audit-v2 are exclusive; the freezer requires both complete globally audited originals/actual fixed targetplan,cost/deadline and fresh corrected V3full-output audit before timestamping. Do NOT run V1target dispatch/freezer going forward. Current original completion watcher26828 remains UNCHANGED and must audit/plan ONCE using unchangedV1planner;no target plan or real adjudication exists yet. Actual target execution freeze still comes AFTER originals completion,not from this prepared-tools checkpoint. At1792801217.517023 fullV3output2268403061bytes includes14796870supplement, below8GiB/64MiB headroom;receipt4670c962967d5a0732398f3482c6ab73862de5efde48c3d7f0cf7c3520327044. Rerun before targetdispatch/final and attach sidecar to scientific base counters. Fresh global metadata audit1792801217.8258317 verifies333of512 originals,A167/B166,578globally unique completed threads,245prior lifetimes absent,4335052358charged image bytes,max2concurrent,both indexes absent,parent labels unopened;receipt 1452465a7fe864295e5d065cf9d3aa3a38483d20450da3b033b356d8040fbfc4. Same actual handles65809/23768/41462/26828 revalidated live;no restart/signal/partial-original comparison. Original producer,strict acceptance,contexts/protocols/bounds/caps/falseeligibility and immutable deadline1792820409 unchanged. Draft216 clean,pushed,unsubmitted1b285c0, 12previous exact CI passes. Root branch/deprecated PROGRESS edit and all private artifacts/processes preserved. Scientific result,blind adjudication,final report,integration/main/actual212delivery remain incomplete;no full-match accuracy claim."
+        "summary": "VERIFIED WAIT during unchanged source-only originals. Same actual tool handles65809/23768/41462/26828 were polled live this goal turn;no restart or signal. Fresh metadata-only global audit at1792801746.470533 verifies356of512 completed originals,A178/B178,245prior absent lifetimes,601unique completed threads,4536263887charged image bytes,max2concurrent. Audit receipt SHA288104087ec05348cb5ceab4dc7f93f396cfed74f032b641a42996d87c1a0737. Both complete original indexes absent;parent labels unopened. Watcher26828 still plans ONCE after both complete indexes,verified original exits and full genuine native/source/session audit. Do not run the planner manually. Original watcher/plannerV1 remain unchanged. Future targeted execution must use separately sealed V2driver/freezer/monitor/auditor under toolsfreeze6b6b40eb759fdf54d0608482c9bf9bf8a8797263d0a3bf1749c683f984f02d3f, following the generated-tested lifecycle correction checkpoint rally212-checkpoint-targeted-lifecycle-v2. Preserve V1tools/artifacts; do not dispatch the old targeted V1driver. No actual targeted plan or adjudication is implied by these prepared tools. Mandatory supplementary output counter is now V3 (.cache/rally212-retained-output-audit-v3.py,SHA2d14cf94979d932dfffe13e10620bea09772230a4036b28d089b774767d540d4), including task-named shared bytecode. Rerun before targeted dispatch and final;frozen scientific counters remain historical bases,attach full corrected accounting sidecar. Prepared public delivery verifier V2 remains unexecuted against real delivery. Draft216 clean/pushed/ unsubmitted1b285c0,12exact CI jobs previously passed. No new scientific result or accuracy claim. Original producer/strict acceptance/contexts/ protocols/packing/cumulative caps/fourfalseeligibility flags and immutable grant deadline1792820409 unchanged. Root branch/deprecated PROGRESS edit,all private artifacts and research processes preserved. Next originals completion,watcher exact target plan/cost,V3accounting, prospective execution freeze,blind adjudication,final aggregate/report/ checks/controller/main and actual public delivery. Goal stays active."
       },
-      "checkpoint_at": 1792801375,
+      "checkpoint_at": 1792801758,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792812175,
+        "expires_at": 1792812558,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
