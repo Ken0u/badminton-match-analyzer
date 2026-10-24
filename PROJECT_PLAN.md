@@ -34,6 +34,12 @@ The [Ubuntu CI bootstrap repair](docs/CI_BOOTSTRAP_REPORT.md) now reuses working
 
 Next implementation priorities, each requiring its own bounded controller grant:
 
+The [#250 joined-evidence protocol](docs/RALLY_EVIDENCE_JOIN_REPORT.md) prepares
+priority 1 by retaining native and sparse-context occurrences together, with
+source-bound review questions and a prospective contiguous source-review rubric.
+It authorizes no new image assessment and preserves the historical 0/2 result.
+Consult its report for current verification and assembly status.
+
 1. Freeze a separate source-review protocol joining temporal scene context to contiguous native contact evidence, locally supported actors and opening/terminal context. Distinguish repeated mentions from distinct physical contacts and retain inclusive uncertainty intervals, unknowns and the completed 0/2 result. Sparse scene agreement and exhaustive image coverage cannot certify a complete rally. The six-session #242 allowance is completed; it authorizes no further image dispatch, replacement assessor or reuse of an expired scientific clock.
 2. Establish independent original-media/clock correspondence and applicable source usage/provenance before native label comparison or training. #220 completed byte/ordinal publication accounting; its null bases deliberately withhold native comparison. Preserve the creator filename discrepancies, quarantines, unavailable cases, false eligibility flags and zero training-ready rows.
 3. Improve shuttle component recall and distractor separation using eligible source-aligned development supervision after resolving rights, original-match overlap and checkpoint membership. Freeze detector experiments before predictions; retain both rejected resolution/threshold results. Evaluate automatic scene context separately.
