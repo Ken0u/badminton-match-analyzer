@@ -416,6 +416,24 @@
       "task_id": "252",
       "verb": "checkpoint"
     },
+    "editor252-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792886309,
+      "epoch": 1,
+      "fingerprint": "2cfa90ee09cd894b3741a6edd871a4f84e218464f466fa6c0b1598e06a24fd70",
+      "status": "running",
+      "task_id": "252",
+      "verb": "checkpoint"
+    },
+    "editor252-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792886318,
+      "epoch": 1,
+      "fingerprint": "e461ac3f9e341ca0f44d9b8d5d1d2d1026dd2e52d2f079954759d6bc29f9d14b",
+      "status": "review",
+      "task_id": "252",
+      "verb": "submit"
+    },
     "editor252-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792885500,
@@ -19902,18 +19920,19 @@
     "252": {
       "checkpoint": {
         "branch": "codex/issue-252-keep-evaluation-displays-and-report-down",
-        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/252#issuecomment-6391047755",
-        "head_sha": "c4de47420b7899cef835fbf6a41eacc2856aef91",
-        "remaining": "Implementation, generated/full verification, normal PR/main CI/controller and independent public delivery.",
-        "summary": "Three generated baseline variants reproduced; scoped controller/test implementation in progress, no scientific input access."
+        "evidence_sha256": "6daed602971c4fa1c52b142ed303c01d94eeecbd664873f3740b64dee731738a",
+        "head_sha": "16b1d6796a96b7810234347640dca1fbea4921bf",
+        "pr_number": 253,
+        "remaining": "Exact PR/main CI, controller integration and independent complete public delivery.",
+        "summary": "Implemented evaluation source/revision/view/run ownership with stale and ABA response fencing; preserved three generated baseline reproductions. All3101 Python/161 frontend/17 editor browser checks pass,4optional skips. First browser color-oracle failure preserved and independently diagnosed; final fixture lifetimes terminal. Exactly six granted paths; no science/image/policy change. Local receipt SHA256 6daed602971c4fa1c52b142ed303c01d94eeecbd664873f3740b64dee731738a."
       },
-      "checkpoint_at": 1792885647,
+      "checkpoint_at": 1792886309,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c4de47420b7899cef835fbf6a41eacc2856aef91",
         "branch": "codex/issue-252-keep-evaluation-displays-and-report-down",
         "epoch": 1,
-        "expires_at": 1792896447,
+        "expires_at": 1792897109,
         "granted_at": 1792885500,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -19922,6 +19941,7 @@
       "epoch": 1,
       "planned_at": 1792885363,
       "planned_by": "Ken0u",
+      "pr_number": 253,
       "spec": {
         "acceptance": [
           "Search all open/closed issues, PRs and authoritative grants; preserve existing root edits, environments, research processes, original labels and deprecated PROGRESS.md. Depend on fully delivered250 and use a fresh committed isolated task grant. This is a generated-input product correctness repair; no source image or scientific label is read or transmitted.",
@@ -19968,7 +19988,13 @@
         ]
       },
       "spec_hash": "63f1733c449b124bdf9612c63b1943a8a5990e661147c3e1a8175296003df1c4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c4de47420b7899cef835fbf6a41eacc2856aef91",
+        "head_sha": "16b1d6796a96b7810234347640dca1fbea4921bf",
+        "pr_number": 253,
+        "spec_hash": "63f1733c449b124bdf9612c63b1943a8a5990e661147c3e1a8175296003df1c4"
+      }
     },
     "62": {
       "checkpoint": {
