@@ -6432,6 +6432,24 @@
       "task_id": "230",
       "verb": "submit"
     },
+    "roadmap246-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792877832,
+      "epoch": 1,
+      "fingerprint": "a243d92fc72ddbe3d286312402823e514710394b03697296b3932eb44434705b",
+      "status": "running",
+      "task_id": "246",
+      "verb": "checkpoint"
+    },
+    "roadmap246-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792877920,
+      "epoch": 1,
+      "fingerprint": "d8c676f5ee3df59fd0d4d38d9aa0c9ae2bfcf1c4b441a4d757c7aac2286995ed",
+      "status": "review",
+      "task_id": "246",
+      "verb": "submit"
+    },
     "roadmap246-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792877603,
@@ -19320,12 +19338,21 @@
       }
     },
     "246": {
+      "checkpoint": {
+        "branch": "codex/issue-246-refresh-the-shared-roadmap-and-bug-revie",
+        "evidence_sha256": "f92e98e8d0934943ff428398a6ab5eea164ccebd7d701f68a2ae18a71c93ce28",
+        "head_sha": "158fd7a4ce7a618c5526851983fd6b9cb140430f",
+        "pr_number": 247,
+        "remaining": "Exact PR CI, controller integration, exact-main CI and independent complete public package/both-image delivery.",
+        "summary": "Only the two granted Markdown summaries changed; historical sections byte-identical. Source-bound prose, repository UTF8/LF/JSON/local links/credentials, pip and diff checks passed. No scientific input access or recomputation."
+      },
+      "checkpoint_at": 1792877832,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9668be831014820e0a4e620f3c277032a04a39c5",
         "branch": "codex/issue-246-refresh-the-shared-roadmap-and-bug-revie",
         "epoch": 1,
-        "expires_at": 1792888403,
+        "expires_at": 1792888632,
         "granted_at": 1792877603,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -19334,6 +19361,7 @@
       "epoch": 1,
       "planned_at": 1792877431,
       "planned_by": "Ken0u",
+      "pr_number": 247,
       "spec": {
         "acceptance": [
           "Follow delivered230 without duplicating its historical snapshot. Search all open/closed issues, PRs and current grants before planning. Require220/238/242/243 Done with delivery_pending=false and independently verified complete public delivery before implementation. Obtain a genuine documentation-only grant; preserve root checkout edits, environments, datasets, research evidence and deprecated PROGRESS.md without reading or changing it.",
@@ -19379,7 +19407,13 @@
         ]
       },
       "spec_hash": "1a5f5b014fb2292c04007ea25f6d43120969502cb01c4c05c64160cfd08596d4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "9668be831014820e0a4e620f3c277032a04a39c5",
+        "head_sha": "158fd7a4ce7a618c5526851983fd6b9cb140430f",
+        "pr_number": 247,
+        "spec_hash": "1a5f5b014fb2292c04007ea25f6d43120969502cb01c4c05c64160cfd08596d4"
+      }
     },
     "62": {
       "checkpoint": {
