@@ -5084,6 +5084,20 @@
       "task_id": "97",
       "verb": "review-result"
     },
+    "roadmap-01a16c1a-next-v1": {
+      "actor": "dootz1",
+      "at": 1792815140,
+      "fingerprint": "89a621203994571cf635fe30ddfd974c761cc3404e62baa094b266d85b9597ac",
+      "status": "idle",
+      "verb": "next"
+    },
+    "roadmap-01a16c1a-register-v1": {
+      "actor": "dootz1",
+      "at": 1792815140,
+      "fingerprint": "cbf0603414821f3ee012c6511c86c8fe077b2e54e0e6ef4f84c38a988242fa7e",
+      "status": "ok",
+      "verb": "register"
+    },
     "roadmap-20261019-01a15477-next1": {
       "actor": "dootz1",
       "at": 1792419525,
@@ -19487,6 +19501,18 @@
       "host_id": "LAPTOP-FVMV3PD6",
       "registered_at": 1792811424,
       "session_id": "cuda-ready-01a16bd6"
+    },
+    "LAPTOP-FVMV3PD6/roadmap-01a16c1a": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "LAPTOP-FVMV3PD6",
+      "registered_at": 1792815140,
+      "session_id": "roadmap-01a16c1a"
     },
     "MSI/01a15c4a-b79d-7ef1-aa5a-dedbddff5ae0": {
       "actor": "Ken0u",
