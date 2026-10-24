@@ -5853,6 +5853,14 @@
       "task_id": "218",
       "verb": "submit"
     },
+    "roadmap230-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792842449,
+      "fingerprint": "281b50c9e70004ffce000c8f0c2d445c72cb9dadd97362c14769c51f32edaee4",
+      "status": "ready",
+      "task_id": "230",
+      "verb": "plan"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -6628,6 +6636,14 @@
       "fingerprint": "f0306676385db622e2394a049a97848d0b08eeeb2cfcfa54c2dead9c07e5406e",
       "status": "needs_human",
       "task_id": "228",
+      "verb": "plan"
+    },
+    "spec-230-38ccbd51cb9b031fce5e24c0f2587623d801c57d1ef6397f3a06f110b04d674b": {
+      "actor": "Ken0u",
+      "at": 1792842449,
+      "fingerprint": "641adf0bfb733d17800e4b3de4000f10b6ec2e5d75ffb5aff0baa100c5c1f471",
+      "status": "ready",
+      "task_id": "230",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -17619,6 +17635,59 @@
         "pr_number": 229,
         "spec_hash": "3218ee8bb7fea49f3abb5b58a59ff45bc473a8e4be127310844529e9e081c90b"
       }
+    },
+    "230": {
+      "epoch": 0,
+      "planned_at": 1792842449,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search open/closed issues, PRs, coordination grants and committed reports for duplicate documentation work. This follows delivered189 and requires228,204,202,215,218 and221 Done with delivery_pending=false before implementation. Obtain a genuine isolated documentation grant; preserve original checkout changes and deprecated PROGRESS.md without opening or editing it.",
+          "Update only PROJECT_PLAN.md and docs/BUG_REVIEW.md. Date the snapshot October24,2026 UTC. Read current merged aggregate reports and authenticated completion receipts; use exact source/task links. Preserve prior dated failures, rejected experiments and their original frozen protocols. Do not infer completion from closed issues or green software tests alone.",
+          "Record completed228 scientific execution separately from its software delivery: 512 original successes,256/256 validated targeted references,21 recovery successes,2 retained sources and1532 native frames. Report0/2 scientifically complete references and0/2 fully supported observed-contact label slots; singles991/991 and doubles541/541 target-frame coverage does not resolve unknowns or opening/terminal boundaries. Preserve the singles overlapping-contact reason, both unresolved-source/boundary reasons, all four false eligibility flags and open62/66/67/71. No further source assessment, label reinterpretation or gate relaxation.",
+          "Summarize delivered204 fixed0.25 threshold rejection with selected14/25 to17/25, displaced1/25 to2/25 and false observations3/7 to4/7, retaining all60 cases/28unknowns and unchanged default. Summarize21831-unit source audit and unresolved corrected_csv provenance for all3 Test groups;221 generated-only comparator does not complete220 or grant data/model rights, original-match independence or checkpoint membership.",
+          "Correct stale current-tense202 proposed/dashboard-reader statements using its verified delivery receipt while preserving historical projection failures. Record215 completed-import refresh repair with its limited product behavior and exact delivered source; retain existing broader browser/processing limits. Separate infrastructure/product coverage from badminton annotation accuracy.",
+          "State actionable next dependencies without claiming accuracy: source-supported complete reference/boundary evidence; applicable source/corpus usage and provenance; frozen source/ordinal correspondence before220 scientific comparison; then independently evaluated event/identity/doubles and unseen complete-match correction-time work. Historical consumed holdout inputs/protocols/predictions/private membership remain unopened; aggregate reports may only be cited without recomputation.",
+          "Verify changed prose against public aggregate reports and current controller/source/delivery receipts. Run repository UTF8/LF/JSON/local-link validation, whitespace/diff checks and dependency health. No new tests or repeated inference for prose-only changes; unchanged code is covered by required exact-head/main CI. Publish a focused PR, let the controller merge after all exact checks, verify merged document/tree parity and full public package/both-image delivery independently. Record checkpoints on the owning issue.",
+          "Bound implementation to2h from grant,64MiB new retained output and3repair rounds, with no paid service. No app/code/CI/policy/credentials/Project configuration change, raw data/labels/media/weights access, inference/training, image dispatch, new dependencies, process signals, model promotion, installation/deployment or manual merge."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "228",
+          "204",
+          "202",
+          "215",
+          "218",
+          "221"
+        ],
+        "exclusions": [
+          "Documentation only; no scientific recomputation, raw/consumed-holdout input access, source-image transfer, policy/deployment/model/default changes, PROGRESS.md edits, paid services or manual merges."
+        ],
+        "limits": {
+          "max_output_bytes": 67108864,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Refresh the shared roadmap and bug review with delivered complete-rally assessment, rejected shuttle threshold, source-eligibility prerequisites and repaired product/infrastructure evidence.",
+        "paths": [
+          "PROJECT_PLAN.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 110,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Source-bound prose review and repository UTF8/LF/JSON/local-link/dependency/diff checks; no inference or raw research access.",
+          "Exact PR CI, controller integration, merged-main verification and independently checked complete public package/both-image delivery."
+        ]
+      },
+      "spec_hash": "e7374256f3d2f1cd8a83e8bf6de3a3eb1fa35358cfca5567cc3deba5ecac3102",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
