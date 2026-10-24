@@ -1,7 +1,6 @@
 """Source validation and presentation-time aligned frame access."""
 
 import bisect
-import hashlib
 import json
 import math
 import operator
@@ -9,10 +8,10 @@ import os
 import tempfile
 import time
 from contextlib import suppress
-from functools import lru_cache
 from pathlib import Path
 
 from .av_runtime import open_media
+from .file_cache import FileChangedError, file_digest, timestamp_tuple
 from .orientation import orient_frame
 
 _WINDOWS = os.name == "nt"
@@ -22,37 +21,25 @@ class SourceChangedError(ValueError):
     pass
 
 
-@lru_cache(maxsize=16)
-def _checksum(path, size, mtime_ns):
-    digest = hashlib.sha256()
-    with path.open("rb") as source:
-        for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def resolve_source(video, root):
     root = root.resolve()
     path = (root / video["path"]).resolve()
     if not path.is_relative_to(root) or not path.is_file():
         raise FileNotFoundError("Video source is unavailable")
-    stat = path.stat()
-    if _checksum(path, stat.st_size, stat.st_mtime_ns) != video["sha256"]:
+    try:
+        checksum = file_digest(path)
+    except FileChangedError as error:
+        raise SourceChangedError(str(error)) from error
+    if checksum != video["sha256"]:
         raise SourceChangedError(
             "Video source changed since import. Import the changed file before reviewing or processing it."
         )
     return path
 
 
-@lru_cache(maxsize=16)
-def _times(path, size, mtime_ns):
-    return tuple(json.loads(path.read_text(encoding="utf-8")))
-
-
 def timestamps_for(data, video_id):
     path = data / video_id / "timestamps.json"
-    stat = path.stat()
-    return _times(path, stat.st_size, stat.st_mtime_ns)
+    return timestamp_tuple(path)
 
 
 def validate_range(video, times, start, end, max_seconds=120):

@@ -17,6 +17,7 @@ from badminton.storage import Store
 from badminton.video import SourceChangedError, iter_frames, timestamps_for
 from fastapi.testclient import TestClient
 from media_fixtures import write_lossless_vfr_video, write_rotated_video
+from test_file_cache import changed
 
 pytestmark = pytest.mark.skipif(not shutil.which("ffmpeg"), reason="FFmpeg is required")
 
@@ -81,6 +82,30 @@ def test_changed_proxy_or_timeline_cannot_be_served_as_valid_cache(tmp_path):
     source.write_bytes(b"changed source")
     with pytest.raises(SourceChangedError):
         cached_playback(video, tmp_path, store.data)
+
+
+@pytest.mark.parametrize("replacement", [False, True])
+@pytest.mark.parametrize("artifact", ["source", "proxy", "timeline"])
+def test_same_size_timestamp_preserving_change_invalidates_actual_playback(
+    tmp_path, replacement, artifact
+):
+    store, video, source = context(tmp_path)
+    prepare_playback(video, tmp_path, store.data)
+    proxy, _ = cached_playback(video, tmp_path, store.data)
+    target = {
+        "source": source,
+        "proxy": proxy,
+        "timeline": store.data / video["id"] / "timestamps.json",
+    }[artifact]
+    original = target.read_bytes()
+    # Only generated media/clock bytes change; source and saved labels are local.
+    modified = bytes([original[0] ^ 1]) + original[1:]
+    changed(target, modified, replacement)
+    if artifact == "source":
+        with pytest.raises(SourceChangedError):
+            cached_playback(video, tmp_path, store.data)
+    else:
+        assert cached_playback(video, tmp_path, store.data) is None
 
 
 def test_failed_transcode_never_publishes_partial_proxy(tmp_path):

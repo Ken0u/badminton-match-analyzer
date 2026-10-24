@@ -1,16 +1,15 @@
 """Disposable browser media; source frames and annotations remain authoritative."""
 
-import hashlib
 import json
 import math
 import shutil
 import subprocess
 import tempfile
 from fractions import Fraction
-from functools import lru_cache
 from uuid import uuid4
 
 from .av_runtime import open_media
+from .file_cache import file_digest
 from .orientation import frame_rotation
 from .video import resolve_source, timestamps_for, write_json
 
@@ -19,18 +18,8 @@ TIMING_TOLERANCE_S = 0.00002
 DURATION_TOLERANCE_S = 0.0011  # MP4 movie duration is rounded to milliseconds.
 
 
-@lru_cache(maxsize=16)
-def _digest(path, size, mtime_ns):
-    digest = hashlib.sha256()
-    with path.open("rb") as source:
-        for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
 def digest(path):
-    stat = path.stat()
-    return _digest(path, stat.st_size, stat.st_mtime_ns)
+    return file_digest(path)
 
 
 def _context(video, data):
