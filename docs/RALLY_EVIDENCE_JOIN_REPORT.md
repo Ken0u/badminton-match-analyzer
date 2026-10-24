@@ -79,9 +79,55 @@ fixture failures are preserved. Final checks cover lease renewal without a
 scientific-clock extension, process identity/lineage, artifact corruption,
 exclusive failed-attempt fencing, exact denominators and retained uncertainty.
 
-The prospectively sealed original-host assembly remains pending. No actual
-joined ledger or new source-reading result is claimed at this preparation
-checkpoint. Exact PR/main CI, normal controller integration and independent
-complete public delivery also remain pending. Images, labels, descriptions,
-per-contact intervals and joined occurrence data remain private. Only
-reproducible code, this protocol and aggregate results are published.
+The tested clean consumer `001ddea7734c189049363fa33bedc88c7544705a` was
+committed before the [prospective owning-issue seal](https://github.com/Ken0u/badminton-match-analyzer/issues/250#issuecomment-6390720840).
+The single original-host assembly completed under the real shared Store in
+about 175 seconds. A separate post-exit audit reconstructed the exact ledger,
+verified unchanged sealed inputs and matching Store/terminal/artifact evidence,
+and found all 12 recorded outer/worker lifetimes absent. The historical gate
+verified 1,014 native plus six coarse unique execution identities and all 256
+targeted references before scientific JSON was opened. Original clocks,
+failures, exclusions and acceptance consumers remain unchanged.
+
+| Source | Native frames | Sparse samples | Unsampled native frames | Native frame occurrences, each lane | Native event occurrences, A / B / adjudication |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Singles | 991 | 34 | 957 | 1,333 | 43 / 40 / 47 |
+| Doubles | 541 | 19 | 522 | 707 | 6 / 9 / 8 |
+
+The ledger retains **6,120 native frame occurrences**, **153 native event
+occurrences**, **159 coarse frame occurrences** and all original document-local
+actor definitions. These are occurrences, not counts of distinct physical
+contacts or people. All 1,532 native frames remain, including the 1,479 frames
+without coarse sampling. No native image or selected sample was unavailable.
+The private index contains 1,894 prospective review questions; those questions
+are neither resolved annotations nor independent evidence.
+
+| Source | Scene occurrence-pair agreement | Conflict | Unknown | Unavailable pair support |
+| --- | ---: | ---: | ---: | ---: |
+| Singles | 0 | 14 | 373 | 11,610 |
+| Doubles | 93 | 99 | 6 | 6,165 |
+
+Each native occurrence is compared with each coarse lane only at the exact
+ordinal. Repeated native observations and the nine lane combinations can count
+an ordinal more than once. Unavailable pair support here means a required
+observation is absent, principally because coarse context was not sampled at
+that ordinal; it does not mean a missing native image. These support counts are
+not frame accuracy, expert agreement or resolved scene truth. The original
+single-lane overlaps, unsupported contact actors and opening/terminal failures
+remain intact. Nothing is voted, averaged, linked or promoted.
+
+Actual new scientific sessions and image payload are **both zero**. The private
+ledger is 55,629,024 bytes. Aggregate SHA256 is
+`f76b689df32d35d0d79c45cb13a7676c2398529d6ca988b797a0dbd5afe5fdc9`;
+ledger SHA256 is
+`cdf01c00d00134825d8dd095708dfabe1ca9aa562e34ab40b4257bfca179b40d`.
+Only hashes and aggregate counts are published; images, labels, descriptions,
+per-contact intervals, occurrence references and review questions stay private.
+
+Exact PR/main CI, normal controller integration and independent complete public
+delivery remain pending at this report checkpoint; the owning issue carries
+their eventual evidence. **Complete references remain 0/2** and all four
+eligibility flags stay false. This task does not complete #62, #66, #67 or #71,
+authorize another image pass, training or promotion, or demonstrate full-match
+badminton annotation accuracy. `PROGRESS.md` and existing environments, data,
+models, application annotations and predictions remain preserved.
