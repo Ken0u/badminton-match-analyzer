@@ -6,6 +6,39 @@ defines a separately authorized follow-up to the
 The original result remains **0/2 complete rally references**, with all 1,532
 native frames retained and all four eligibility flags false.
 
+## Specifically authorized continuation
+
+The owner explicitly authorized [#242](https://github.com/Ken0u/badminton-match-analyzer/issues/242)
+at frozen specification
+`6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1`.
+The [v2 continuation protocol](../data/manifests/rally_temporal_context_v2.json)
+reuses the same five prepared PNG galleries in place, with unchanged sampling,
+schema, rubric, sources and eligibility. It permits exactly 34,040,436 new image
+bytes through the existing ChatGPT-authenticated Codex CLI, across at most six
+fresh sessions without replacements. Images and labels stay private.
+
+The genuine epoch 1 grant starts at **19:04:53 UTC on October 24, 2026** and fixes
+a new scientific deadline of **23:04:53 UTC**. Lease renewal cannot extend this
+deadline. The original #240 deadline remains **20:59:41 UTC** that day; #240 was
+released following its blocked launch, before that deadline. Earlier statements
+calling its interval already expired were inaccurate. No original interval or
+output is renewed, edited or reclaimed.
+
+The continuation verifies original process/Store/artifact seals, the frozen
+producer, all original packet and PNG bytes, gallery manifests and payload
+counts. Its admitted metadata replay retains the 1,014 historical execution
+identities and 256 targeted references without parsing old scientific labels.
+The limits remain 9 MiB/20 images per session, a 14 MiB encoded guard, 512 MiB
+new outputs and 8 GiB cumulative outputs/payload. With historical attempted
+bytes charged, the six sessions project 8,211,600,581 cumulative image bytes.
+
+At this implementation checkpoint, **zero #242 assessors have started and zero
+new image bytes have been sent**. The consumer still needs final generated
+verification, a committed revision, prospective context/payload seals and fresh
+ownership validation before original-prefix reuse and assessment. Six successful
+sessions and a global exit/provenance audit are required before comparison.
+The following #240 preparation and blocked-dispatch evidence remains historical.
+
 The [protocol](../data/manifests/rally_temporal_context_v1.json) fixes one-second
 source-PTS sampling of the same two complete prepared windows, including both
 endpoints and duplicate grid memberships. Missing samples stay unavailable.

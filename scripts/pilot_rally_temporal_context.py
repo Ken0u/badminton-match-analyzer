@@ -23,11 +23,14 @@ import psutil
 sys.dont_write_bytecode = True
 CHECKOUT = Path(__file__).resolve().parents[1]
 PROTOCOL = "data/manifests/rally_temporal_context_v1.json"
+CONTINUATION = "data/manifests/rally_temporal_context_v2.json"
+PRIOR_PAYLOAD = 8177560145
 CONSUMERS = (
     "backend/badminton/rally_temporal_context.py",
     "scripts/pilot_rally_temporal_context.py",
     "tests/test_rally_temporal_context.py",
     PROTOCOL,
+    CONTINUATION,
 )
 CREDENTIALS = (
     "GH_TOKEN",
@@ -142,17 +145,14 @@ def binding():
     }
 
 
-def task_bytes(root):
+def task_bytes(root, task=240):
     total = 0
-    parents = [
-        p
-        for p in (root / ".cache").iterdir()
-        if p.name.startswith(("rally240", "rally-temporal"))
-    ]
+    prefixes = (f"rally{task}", "rally-temporal") if task == 240 else (f"rally{task}",)
+    parents = [p for p in (root / ".cache").iterdir() if p.name.startswith(prefixes)]
     parents.extend(
         p
         for p in (root / ".cache/worktrees").iterdir()
-        if p.name.startswith("rally240")
+        if p.name.startswith(f"rally{task}")
     )
     for parent in parents:
         require(
@@ -175,7 +175,7 @@ def task_bytes(root):
 
 
 def budget(root, protocol):
-    new = task_bytes(root)
+    new = task_bytes(root, protocol["task"])
     require(
         new < protocol["limits"]["new_output_bytes"] - 1024**2,
         "New output budget exhausted",
@@ -189,7 +189,8 @@ def budget(root, protocol):
     if gate.is_file():
         prior = max(prior, read(gate)["historical_retained_output_bytes"])
     require(
-        new + prior < protocol["limits"]["cumulative_retained_bytes"] - 1024**2,
+        task_bytes(root, 240) + task_bytes(root, 242) + prior
+        < protocol["limits"]["cumulative_retained_bytes"] - 1024**2,
         "Cumulative retained budget exhausted",
     )
     return new
@@ -198,6 +199,18 @@ def budget(root, protocol):
 def freeze(root, output, grant, protocol):
     claim = grant["task"]["claim"]
     now = time.time()
+    if protocol["task"] == 242:
+        temporal = library()
+        original = read(CHECKOUT / PROTOCOL)
+        temporal.validate_continuation(protocol, original)
+        require(
+            digest(CHECKOUT / PROTOCOL)
+            == protocol["continuation"]["original_protocol_sha256"],
+            "Original protocol bytes changed",
+        )
+        deadline = temporal.continuation_deadline(grant, protocol, now, platform.node())
+    else:
+        deadline = claim["granted_at"] + 14400
     require(
         platform.node() == "MSI"
         and grant["task"]["status"] == "running"
@@ -209,11 +222,14 @@ def freeze(root, output, grant, protocol):
         "Fresh committed original-host grant required",
     )
     context = {
-        "task": 240,
+        "task": protocol["task"],
+        "protocol_sha256": digest(
+            CHECKOUT / (CONTINUATION if protocol["task"] == 242 else PROTOCOL)
+        ),
         "consumers": binding(),
         "grant": grant,
         "frozen_at": now,
-        "deadline": claim["granted_at"] + 14400,
+        "deadline": deadline,
         "old_scientific_runtime_renewed": False,
     }
     require(now < context["deadline"], "Pilot runtime expired")
@@ -235,7 +251,7 @@ def current(output, timestamp, *, live=True):
         context["consumers"] == binding()
         and stamp["user"]["login"] == "Ken0u"
         and stamp["html_url"].startswith(
-            "https://github.com/Ken0u/badminton-match-analyzer/issues/240#issuecomment-"
+            f"https://github.com/Ken0u/badminton-match-analyzer/issues/{context['task']}#issuecomment-"
         )
         and digest(output / "context.json") in stamp["body"]
         and context["frozen_at"] <= published,
@@ -328,6 +344,7 @@ def archived_census(root):
 def metadata_gate(root, output, protocol):
     """Clean subprocess: execute frozen metadata rules, never scientific labels."""
     live_parent(root, output)
+    context_protocol(read(output / "context.json"), protocol)
     for path, checksum in protocol["sealed_inputs"].items():
         require(digest(root / path) == checksum, "Sealed pilot prerequisite changed")
     archived_census(root)
@@ -404,7 +421,10 @@ def admitted(root, output, stage, context, calculate):
 
     try:
         result = run_local_job(
-            Store(config.DATA), "rally_temporal_" + stage, "source-only-rally240", work
+            Store(config.DATA),
+            "rally_temporal_" + stage,
+            f"source-only-rally{context.get('task', 240)}",
+            work,
         )
     except BaseException as error:
         write(
@@ -461,8 +481,256 @@ def verify_stage(root, output, stage):
     return terminal["summary"]
 
 
-def prepare(root, output, stamp, protocol):
+def context_protocol(context, protocol):
+    selected = CHECKOUT / (CONTINUATION if context["task"] == 242 else PROTOCOL)
+    require(
+        context["task"] == protocol["task"]
+        and context["protocol_sha256"] == digest(selected)
+        and json.dumps(protocol, sort_keys=True, allow_nan=False)
+        == json.dumps(read(selected), sort_keys=True, allow_nan=False),
+        "Context/protocol task binding changed",
+    )
+
+
+def gallery_directory(root, output, source_id, protocol):
+    require(
+        source_id in {s["source_id"] for s in protocol["sources"]},
+        "Unknown source gallery",
+    )
+    prefix = (
+        root / protocol["continuation"]["prepared_root"]
+        if protocol["task"] == 242
+        else output
+    )
+    return prefix / "galleries" / source_id
+
+
+def original_prepared(root, protocol):
+    """Reverify the unchanged prefix, original exits and Store; never old labels."""
+    temporal = library()
+    temporal.validate_continuation(protocol, read(CHECKOUT / PROTOCOL))
+    continuation = protocol["continuation"]
+    old = root / continuation["prepared_root"]
+    producer = root / continuation["producer_checkout"]
+    receipts = root / continuation["native_receipts"]
+    for name, checksum in continuation["original_seals"].items():
+        require(
+            digest(temporal.safe_file(root, name)) == checksum,
+            "Original prepared process/artifact seal changed",
+        )
+    require(
+        digest(old / "context.json") == continuation["context_sha256"]
+        and digest(old / "pilot-plan.json") == continuation["plan_sha256"]
+        and digest(producer / PROTOCOL) == continuation["original_protocol_sha256"],
+        "Original context/plan/protocol changed",
+    )
+    original = read(old / "context.json")
+    for name, checksum in original["consumers"]["files"].items():
+        require(
+            digest(temporal.safe_file(producer, name)) == checksum,
+            "Frozen producer changed",
+        )
+    require(
+        subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=producer, text=True
+        ).strip()
+        == original["consumers"]["commit"]
+        and not subprocess.check_output(["git", "status", "--porcelain"], cwd=producer),
+        "Original producer checkout changed",
+    )
+    old_claim = original["grant"]["task"]["claim"]
+    require(
+        type(original["task"]) is int
+        and original["task"] == 240
+        and type(old_claim["granted_at"]) is int
+        and original["deadline"] == old_claim["granted_at"] + 14400
+        and old_claim["granted_at"] <= original["frozen_at"] < original["deadline"],
+        "Preserve original immutable runtime interval",
+    )
+    require(
+        not (old / "sessions").exists() and not (old / "assessment").exists(),
+        "Original blocked pilot must have no assessor attempt",
+    )
+    owner, finish = read(receipts / "owner.json"), read(receipts / "finish.json")
+    require(
+        type(finish["returncode"]) is int
+        and finish["returncode"] == 0
+        and original["frozen_at"]
+        <= finish["started_at"]
+        < finish["ended_at"]
+        <= original["deadline"]
+        and digest(receipts / "stdout.log") == finish["stdout_sha256"]
+        and digest(receipts / "stderr.log") == finish["stderr_sha256"],
+        "Original completed wrapper interval/logs required",
+    )
+    for lifetime in [owner, *finish["observed_lifetimes"]]:
+        absent(lifetime)
+    summary = verify_stage(root, old, "preparation")
+    admission = read(old / "preparation/admission.json")
+    launcher = [
+        r for r in finish["observed_lifetimes"] if r["pid"] == finish["launched_pid"]
+    ]
+    actual_owner = [
+        r
+        for r in finish["observed_lifetimes"]
+        if r["pid"] == admission["process"]["pid"]
+        and r["creation_time"] == admission["process"]["creation_time"]
+    ]
+    require(
+        len(launcher) == len(actual_owner) == 1
+        and launcher[0]["ppid"] == owner["pid"]
+        and (
+            actual_owner[0]["pid"] == launcher[0]["pid"]
+            or actual_owner[0]["ppid"] == launcher[0]["pid"]
+        )
+        and summary["pilot_plan_sha256"] == continuation["plan_sha256"]
+        and summary["metadata_gate_sha256"] == digest(old / "metadata-gate.json"),
+        "Original wrapper/launcher/Store/artifact chain required",
+    )
+    gate = read(old / "metadata-gate.json")
+    absent(gate["process"])
+    require(
+        gate["scientific_labels_read"] is False,
+        "Original label-free metadata gate required",
+    )
+    plan = read(old / "pilot-plan.json")
+    require(
+        plan["task"] == 240
+        and plan["context_sha256"] == continuation["context_sha256"]
+        and plan["scientific_sessions"] == 6
+        and plan["new_image_bytes"] == protocol["limits"]["new_image_bytes"],
+        "Original exact payload plan changed",
+    )
+    source_ids = [s["source_id"] for s in protocol["sources"]]
+    require(
+        [e["source_id"] for e in plan["galleries"]] == source_ids,
+        "Original source denominator changed",
+    )
+    images = []
+    for source, entry in zip(protocol["sources"], plan["galleries"]):
+        packet_path = temporal.safe_file(
+            root / protocol["native_root"], source["source_id"] + ".packet.json"
+        )
+        require(
+            digest(packet_path) == source["packet_sha256"],
+            "Original dense packet changed",
+        )
+        packet = read(packet_path)
+        require(
+            len(packet["frames"]) == source["native_frame_count"]
+            and packet["source_sha256"] == source["source_sha256"]
+            and packet["clock_sha256"] == source["clock_sha256"],
+            "Original source/clock/denominator changed",
+        )
+        images.append(
+            temporal.verify_original_images(packet, root / protocol["native_root"])
+        )
+        gallery = gallery_directory(root, old, source["source_id"], protocol)
+        require(
+            digest(temporal.safe_file(gallery, "gallery.json"))
+            == entry["manifest_sha256"]
+            == continuation["manifests"][source["source_id"]],
+            "Original gallery manifest changed",
+        )
+        manifest = temporal.verify_gallery(
+            read(gallery / "gallery.json"), packet, gallery
+        )
+        require(
+            temporal.payload_cost(manifest) == entry["payload"],
+            "Original payload bytes changed",
+        )
+        require(
+            digest(packet_path) == source["packet_sha256"],
+            "Original packet changed during verification",
+        )
+    for name, checksum in continuation["original_seals"].items():
+        require(
+            digest(temporal.safe_file(root, name)) == checksum,
+            "Original prefix changed during reuse",
+        )
+    return {
+        "galleries": plan["galleries"],
+        "original_context_sha256": continuation["context_sha256"],
+        "original_plan_sha256": continuation["plan_sha256"],
+        "original_deadline": original["deadline"],
+        "original_store_job": admission["job_id"],
+        "original_images": images,
+        "rerendered_images": 0,
+        "scientific_labels_read": False,
+    }
+
+
+def reuse_prepared(root, output, stamp, protocol):
     context = current(output, stamp)
+    context_protocol(context, protocol)
+
+    def calculate(progress):
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(Path(__file__).resolve()),
+                "gate",
+                "--root",
+                str(root),
+                "--output",
+                str(output),
+                "--continuation",
+            ],
+            capture_output=True,
+            check=False,
+        )
+        for name, raw in (
+            ("metadata-stdout.log", result.stdout),
+            ("metadata-stderr.log", result.stderr),
+        ):
+            with (output / name).open("xb") as handle:
+                handle.write(raw)
+        write(
+            output / "metadata-process.json",
+            {
+                "returncode": result.returncode,
+                "stdout_sha256": hashlib.sha256(result.stdout).hexdigest(),
+                "stderr_sha256": hashlib.sha256(result.stderr).hexdigest(),
+            },
+        )
+        require(result.returncode == 0, "Frozen metadata gate failed; preserve attempt")
+        gate = read(output / "metadata-gate.json")
+        absent(gate["process"])
+        reused = original_prepared(root, protocol)
+        payload = sum(e["payload"]["image_bytes"] for e in reused["galleries"]) * 3
+        require(
+            payload == protocol["limits"]["new_image_bytes"]
+            and PRIOR_PAYLOAD + payload <= protocol["limits"]["cumulative_image_bytes"],
+            "Exact authorized continuation payload required",
+        )
+        plan = {
+            **reused,
+            "task": 242,
+            "context_sha256": digest(output / "context.json"),
+            "scientific_sessions": 6,
+            "new_image_bytes": payload,
+            "cumulative_image_bytes": PRIOR_PAYLOAD + payload,
+            "exact_contact_evidence": False,
+        }
+        write(output / "pilot-plan.json", plan)
+        budget(root, protocol)
+        progress(1)
+        return {
+            "pilot_plan_sha256": digest(output / "pilot-plan.json"),
+            "metadata_gate_sha256": digest(output / "metadata-gate.json"),
+            "new_image_bytes": payload,
+            "scientific_sessions": 6,
+            "rerendered_images": 0,
+        }
+
+    return admitted(root, output, "preparation", context, calculate)
+
+
+def prepare(root, output, stamp, protocol):
+    if protocol["task"] == 242:
+        return reuse_prepared(root, output, stamp, protocol)
+    context = current(output, stamp)
+    context_protocol(context, protocol)
     temporal = library()
 
     def calculate(progress):
@@ -684,7 +952,9 @@ def execute_session(output, gallery, manifest, lane, context, protocol):
     sid = manifest["plan"]["source_id"]
     folder = output / "sessions" / lane / sid
     folder.mkdir(parents=True, exist_ok=False)
-    session = f"codex-cli:temporal240:{lane}:{sid}:{time.time_ns()}"
+    session = (
+        f"codex-cli:temporal{context.get('task', 240)}:{lane}:{sid}:{time.time_ns()}"
+    )
     message = prompt(manifest, lane, session)
     schema_path = folder / "schema.json"
     write(schema_path, schema())
@@ -696,7 +966,7 @@ def execute_session(output, gallery, manifest, lane, context, protocol):
     payload = sum(read(p)["image_bytes"] for p in existing) + transport["image_bytes"]
     require(
         len(existing) < 6
-        and payload <= 128 * 1024**2
+        and payload <= protocol.get("limits", {}).get("new_image_bytes", 128 * 1024**2)
         and 8177560145 + payload <= 8 * 1024**3,
         "Frozen pilot launch/payload budget exhausted",
     )
@@ -862,6 +1132,7 @@ def execute_session(output, gallery, manifest, lane, context, protocol):
 
 def assess(root, output, stamp, gallery_stamp, protocol):
     context = current(output, stamp)
+    context_protocol(context, protocol)
     temporal = library()
     prepared = verify_stage(root, output, "preparation")
     require(
@@ -875,13 +1146,18 @@ def assess(root, output, stamp, gallery_stamp, protocol):
     require(
         published["user"]["login"] == "Ken0u"
         and published["html_url"].startswith(
-            "https://github.com/Ken0u/badminton-match-analyzer/issues/240#issuecomment-"
+            f"https://github.com/Ken0u/badminton-match-analyzer/issues/{context['task']}#issuecomment-"
         )
         and digest(output / "pilot-plan.json") in published["body"]
         and context["frozen_at"] <= timestamp <= time.time(),
         "Prospective exact gallery/payload seal required",
     )
     plan = read(output / "pilot-plan.json")
+    require(
+        plan["task"] == protocol["task"]
+        and plan["context_sha256"] == digest(output / "context.json"),
+        "Prepared plan/context task binding changed",
+    )
 
     def calculate(progress):
         entries = []
@@ -889,7 +1165,9 @@ def assess(root, output, stamp, gallery_stamp, protocol):
             for lane in temporal.LANES:
                 for source in plan["galleries"]:
                     budget(root, protocol)
-                    gallery = output / "galleries" / source["source_id"]
+                    gallery = gallery_directory(
+                        root, output, source["source_id"], protocol
+                    )
                     require(
                         digest(gallery / "gallery.json") == source["manifest_sha256"],
                         "Sealed gallery manifest changed",
@@ -938,8 +1216,11 @@ def assess(root, output, stamp, gallery_stamp, protocol):
 
 
 def audit(root, output, stamp, protocol):
-    current(output, stamp, live=False)
+    context = current(output, stamp, live=False)
+    context_protocol(context, protocol)
     temporal = library()
+    if protocol["task"] == 242:
+        original_prepared(root, protocol)
     prepared = verify_stage(root, output, "preparation")
     result = verify_stage(root, output, "assessment")
     require(
@@ -999,7 +1280,7 @@ def audit(root, output, stamp, protocol):
     summaries = []
     for source in protocol["sources"]:
         sid = source["source_id"]
-        gallery = output / "galleries" / sid
+        gallery = gallery_directory(root, output, sid, protocol)
         manifest = read(gallery / "gallery.json")
         documents = {}
         for lane in temporal.LANES:
@@ -1009,7 +1290,7 @@ def audit(root, output, stamp, protocol):
             )
         summaries.append(temporal.summarize(manifest, documents))
     aggregate = {
-        "task": 240,
+        "task": protocol["task"],
         "sources": summaries,
         "completed_pilot_sessions": 6,
         "native_frame_denominator": 1532,
@@ -1038,13 +1319,18 @@ def main(argv=None):
     parser.add_argument("--grant", type=Path)
     parser.add_argument("--timestamp", type=Path)
     parser.add_argument("--gallery-timestamp", type=Path)
+    parser.add_argument("--continuation", action="store_true")
     args = parser.parse_args(argv)
     root, output = args.root.resolve(), args.output.resolve()
     require(
         output.is_relative_to(root / ".cache") and output != root / ".cache",
         "Private exclusive task output required",
     )
-    protocol = read(CHECKOUT / PROTOCOL)
+    protocol = read(CHECKOUT / (CONTINUATION if args.continuation else PROTOCOL))
+    # The metadata subprocess must import only the frozen acceptance package.
+    # Its protocol is checked against the already sealed context in metadata_gate.
+    if args.continuation and args.stage != "gate":
+        library().validate_continuation(protocol, read(CHECKOUT / PROTOCOL))
     if args.stage == "freeze":
         result = freeze(root, output, read(args.grant), protocol)
     elif args.stage == "gate":

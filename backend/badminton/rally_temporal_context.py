@@ -39,6 +39,141 @@ SHEET = (2560, 1536)
 PRIOR_PAYLOAD = 8177560145
 
 
+def validate_continuation(protocol, original):
+    """A continuation changes ownership/runtime, never the sampling or rubric."""
+    require(
+        type(protocol.get("schema_version")) is int
+        and protocol["schema_version"] == 2
+        and type(protocol.get("task")) is int
+        and protocol["task"] == 242
+        and original.get("schema_version") == 1
+        and original.get("task") == 240,
+        "Exact original and continuation protocol identities required",
+    )
+    sha(protocol["spec_hash"])
+    allowed = {"schema_version", "task", "spec_hash", "purpose", "limits"}
+    require(
+        set(protocol) == set(original) | {"continuation"}
+        and fingerprint({k: protocol[k] for k in original if k not in allowed})
+        == fingerprint({k: original[k] for k in original if k not in allowed}),
+        "Continuation cannot change original sources, sampling, rubric or eligibility",
+    )
+    limits = protocol["limits"]
+    expected = dict(original["limits"], new_image_bytes=34040436)
+    require(fingerprint(limits) == fingerprint(expected), "Frozen limits changed")
+    for key, value in limits.items():
+        if key == "paid_services":
+            require(value is False, "No paid service allowed")
+        else:
+            integer(value)
+    continuation = protocol["continuation"]
+    require(
+        continuation["prepared_root"] == ".cache/rally240-source-only-v1"
+        and continuation["producer_checkout"] == ".cache/worktrees/rally240-producer-v1"
+        and continuation["native_receipts"] == ".cache/rally240-native-prepare-v1",
+        "Reuse the original prefix in place",
+    )
+    require(
+        type(continuation["original_task"]) is int
+        and continuation["original_task"] == 240
+        and type(continuation["original_attempted_sessions"]) is int
+        and continuation["original_attempted_sessions"] == 0
+        and type(continuation["original_transmitted_image_bytes"]) is int
+        and continuation["original_transmitted_image_bytes"] == 0
+        and continuation["rerendering_allowed"] is False
+        and continuation["old_runtime_renewed"] is False,
+        "Original blocked attempt and immutable runtime required",
+    )
+    for key in ("original_protocol_sha256", "context_sha256", "plan_sha256"):
+        sha(continuation[key])
+    require(
+        set(continuation["manifests"]) == {s["source_id"] for s in protocol["sources"]},
+        "Both unchanged source galleries required",
+    )
+    for checksum in continuation["manifests"].values():
+        sha(checksum)
+    expected_seals = {
+        ".cache/rally240-source-only-v1/" + n
+        for n in (
+            "context.json",
+            "pilot-plan.json",
+            "metadata-gate.json",
+            "preparation/admission.json",
+            "preparation/terminal.json",
+        )
+    } | {
+        ".cache/rally240-native-prepare-v1/" + n
+        for n in (
+            "owner.json",
+            "finish.json",
+            "audit.json",
+            "stdout.log",
+            "stderr.log",
+        )
+    }
+    require(
+        set(continuation["original_seals"]) == expected_seals,
+        "Original process/artifact seals required",
+    )
+    for checksum in continuation["original_seals"].values():
+        sha(checksum)
+    return protocol
+
+
+def continuation_deadline(grant, protocol, now, host):
+    """Bind the fresh interval to its genuine committed task/owner approval."""
+    task = grant["task"]
+    claim = task["claim"]
+    epoch = integer(claim["epoch"], 1)
+    started = integer(claim["granted_at"], 1)
+    expires = integer(claim["expires_at"], 1)
+    receipt = grant["receipt"]
+    require(
+        receipt["status"] == "granted"
+        and receipt["actor"] == "Ken0u"
+        and receipt["task_id"] == "242"
+        and type(receipt["epoch"]) is int
+        and receipt["epoch"] == epoch
+        and fingerprint({k: receipt["claim"][k] for k in claim if k != "expires_at"})
+        == fingerprint({k: claim[k] for k in claim if k != "expires_at"}),
+        "Committed original grant receipt required",
+    )
+    require(
+        type(now) in (int, float)
+        and math.isfinite(now)
+        and host == claim["host_id"] == "MSI"
+        and claim["actor"] == "Ken0u"
+        and task["status"] == "running"
+        and type(task["epoch"]) is int
+        and task["epoch"] == epoch
+        and task["spec_hash"] == claim["spec_hash"] == protocol["spec_hash"]
+        and task["human_approval"]["spec_hash"] == protocol["spec_hash"]
+        and task["human_approval"]["actor"] == "Ken0u"
+        and started <= now < expires,
+        "Fresh committed original-host and explicitly authorized grant required",
+    )
+    deadline = started + integer(protocol["limits"]["runtime_seconds"], 1)
+    require(now < deadline, "Continuation runtime expired")
+    return deadline
+
+
+def verify_original_images(packet, original_root):
+    """Hash every retained original PNG without decoding or changing any image."""
+    available = 0
+    for row in packet["frames"]:
+        image = row["image"]
+        if image is None:
+            continue
+        path = safe_file(original_root, image["path"])
+        require(
+            path.stat().st_size == integer(image["bytes"], 1)
+            and file_hash(path) == sha(image["sha256"]),
+            "Original PNG changed",
+        )
+        available += 1
+    return {"native_frames": len(packet["frames"]), "original_pngs_verified": available}
+
+
 def require(condition, message):
     if not condition:
         raise ValueError(message)

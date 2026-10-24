@@ -1,6 +1,6 @@
 # Annotation guide, version 1
 
-The separate [#240 sparse temporal-context pilot](RALLY_TEMPORAL_CONTEXT_REPORT.md)
+The separate [#240/#242 sparse temporal-context pilot](RALLY_TEMPORAL_CONTEXT_REPORT.md)
 uses derived, labelled one-second thumbnail galleries of the unchanged prepared
 windows. Its six fresh source-only sessions assess coarse scenes and local actor
 continuity only. Keep native denominators, unavailable samples and unsampled
@@ -9,6 +9,11 @@ contact evidence or supply exact serve/end, family/side or complete-rally labels
 Earlier original-PNG protocols, labels and results remain unchanged. See the
 [pilot protocol](../data/manifests/rally_temporal_context_v1.json) for prospective
 seals, payload/runtime bounds, zero replacements and required execution proofs.
+The explicitly authorized [#242 continuation](../data/manifests/rally_temporal_context_v2.json)
+reuses those same five galleries in place under a fresh bounded grant; it must
+verify all original evidence without rewriting #240 or changing its deadline.
+Its 34,040,436-byte payload authorization adds no exact-contact or full-reference
+eligibility.
 
 The separately authorized [#212 transport successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)
 uses [v4](../data/manifests/rally_reference_protocol_v4.json) on the same prepared

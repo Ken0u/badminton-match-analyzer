@@ -1,0 +1,135 @@
+{
+  "schema_version": 2,
+  "task": 242,
+  "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1",
+  "purpose": "Six specifically authorized coarse readings of unchanged prepared galleries, with a fresh bounded grant and original evidence preserved",
+  "sources": [
+    {
+      "source_id": "go2uajSiBnE",
+      "category": "singles",
+      "source_sha256": "708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9",
+      "clock_sha256": "f1cf689916f85716fddb692f5bb9118812a4f4c66f211ed4b9de7e7c6fb3965f",
+      "packet_sha256": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+      "native_frame_count": 991
+    },
+    {
+      "source_id": "H1setLK1tig",
+      "category": "doubles",
+      "source_sha256": "49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623",
+      "clock_sha256": "867467f96a9bedecff035053d765e368d70abcde13d79dc4830b4c24fe87d5b0",
+      "packet_sha256": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+      "native_frame_count": 541
+    }
+  ],
+  "native_root": ".cache/rally208-source-only-v1/dense-v1",
+  "diagnostic_checkout": ".cache/worktrees/rally238-producer-v1",
+  "diagnostic_bindings": {
+    "scripts/diagnose_rally_references.py": "13392ac0f325bbaf8c032460db48bc6c93392d206446f01ab6260b01a531db80",
+    "data/manifests/rally_reference_diagnostics_v1.json": "000ed041e6e12c1a2fbec3fb295f04287a825930169bbb5519bf0f07a65d1a11"
+  },
+  "sealed_inputs": {
+    ".cache/rally238-diagnostics-v1/aggregate.json": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1",
+    ".cache/rally238-native-v1/audit-v2.json": "0d71a0301e8fd603a21d06209663c5394f5ba611218a26e8ca7ccc814509fe94",
+    ".cache/rally238-native-v1/owner.json": "1589dd2247b70bb9e079c1b78b2c37c1851d14a67892283b30c198a6bfacbc85",
+    ".cache/rally238-native-v1/finish.json": "8c7fb883a88d8ec596910ea057f057eb2d25004118ff4799e4ea040c80f3f66f",
+    ".cache/rally238-diagnostics-v1/admission.json": "fd8e009c35c9657af565650ccdc8a9a94a23bba0ebeb5583ec7ce5793226543a",
+    ".cache/rally238-diagnostics-v1/terminal.json": "08560d40a9198148a1b18d0b4f5d9bf57c746d80f1acf9951c460660f05fa4ea"
+  },
+  "sampling": {
+    "step_seconds": 1,
+    "relative_to": "first native PTS of unchanged dense window",
+    "grid_rule": "first native frame at or after each PTS point; preserve coincident memberships",
+    "endpoints": "first and last native ordinal",
+    "unavailable": "explicit unknown placeholder; no replacement",
+    "tile_size": [
+      640,
+      360
+    ],
+    "caption_height": 24,
+    "grid": [
+      4,
+      4
+    ],
+    "sheet_size": [
+      2560,
+      1536
+    ],
+    "resampling": "PIL LANCZOS RGB letterbox black",
+    "encoding": "PNG compress_level=6",
+    "evidence": "Derived sparse context only; unsampled native frames remain unreviewed"
+  },
+  "assessment": {
+    "lanes": [
+      "independent_a",
+      "independent_b",
+      "adjudication"
+    ],
+    "sessions_per_source_per_lane": 1,
+    "adjudication": "fresh blind source-only gallery reading, no previous labels",
+    "destination": "Existing ChatGPT-authenticated Codex CLI only",
+    "labels": "Sampled scene/coarse play and local visual actor continuity only",
+    "no_exact_contacts": true,
+    "actor_ids": "lane-local; never compare ID strings across streams as person identity"
+  },
+  "limits": {
+    "runtime_seconds": 14400,
+    "new_output_bytes": 536870912,
+    "cumulative_retained_bytes": 8589934592,
+    "new_image_bytes": 34040436,
+    "cumulative_image_bytes": 8589934592,
+    "prior_attempted_image_bytes": 8177560145,
+    "max_images_per_session": 20,
+    "max_raw_bytes_per_session": 9437184,
+    "max_encoded_bytes_per_session": 14680064,
+    "context_reserve_bytes": 2097152,
+    "max_sessions": 6,
+    "max_parallel_assessors": 2,
+    "replacement_launches": 0,
+    "implicit_retries": 0,
+    "max_repair_rounds": 3,
+    "paid_services": false
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  },
+  "preserved_result": {
+    "task": 238,
+    "complete_references": 0,
+    "source_slots": 2,
+    "native_frames": 1532,
+    "scientific_acceptance_changed": false
+  },
+  "continuation": {
+    "original_task": 240,
+    "original_protocol_sha256": "46fdb00ecd148afc2c107b397faaebd334d11dc55ed1534c1b055f100e2f9c90",
+    "prepared_root": ".cache/rally240-source-only-v1",
+    "producer_checkout": ".cache/worktrees/rally240-producer-v1",
+    "native_receipts": ".cache/rally240-native-prepare-v1",
+    "context_sha256": "02ebc417010c63b8bfd681c88905e51dd48907dfebb7bb11f0c2520bf2d408f0",
+    "plan_sha256": "c82d669a854448d0f31aa917c5d45161cee4ce0096381f2c3bae5519f9b03ed7",
+    "manifests": {
+      "go2uajSiBnE": "ac3c401a2a1ab4ad4b348e45e5a53f77fb6c3413ab848295c1f0e2c02e689bc0",
+      "H1setLK1tig": "f8a95b425b9604d12dcc14dabd1c4382ead327266a0e47fa5cf6ff3754116e6b"
+    },
+    "original_seals": {
+      ".cache/rally240-source-only-v1/context.json": "02ebc417010c63b8bfd681c88905e51dd48907dfebb7bb11f0c2520bf2d408f0",
+      ".cache/rally240-source-only-v1/pilot-plan.json": "c82d669a854448d0f31aa917c5d45161cee4ce0096381f2c3bae5519f9b03ed7",
+      ".cache/rally240-source-only-v1/metadata-gate.json": "387e272c0d896330458b65a8cd2156f118d29688f3122e9bc28b5cb10fcfa6c8",
+      ".cache/rally240-source-only-v1/preparation/admission.json": "04596a278afbbbbede9cb5e00593e121ad609109ceb5b542aa1788c5ab308c60",
+      ".cache/rally240-source-only-v1/preparation/terminal.json": "bb0c0d311176f2d98a600f658652d7d2a5f65621d6d12ca069c652bfe04f9b85",
+      ".cache/rally240-native-prepare-v1/owner.json": "e6ed692bd9138cf7687e1d29d21fe6107a3aa6adf637d79ddcb3b90ef0f11cb0",
+      ".cache/rally240-native-prepare-v1/finish.json": "a16e4a3aa6c7938d32ede1f445c38c0c415bce6ef474c162a1e2ac74a4ee575f",
+      ".cache/rally240-native-prepare-v1/audit.json": "eb0928300424695b2435608bb987df3b082c36d1683d8722dffcc97e1a89f44b",
+      ".cache/rally240-native-prepare-v1/stdout.log": "8c712b0e52401bb5d147f1f6a32948e1f2a687c5c5a338f9c56139a99e5aba1a",
+      ".cache/rally240-native-prepare-v1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "authorization_evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/242#issuecomment-6387854143",
+    "original_attempted_sessions": 0,
+    "original_transmitted_image_bytes": 0,
+    "rerendering_allowed": false,
+    "old_runtime_renewed": false
+  }
+}
