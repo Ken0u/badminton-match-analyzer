@@ -202,6 +202,15 @@
       "task_id": "223",
       "verb": "human-approved"
     },
+    "client223-final-local-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792830131,
+      "epoch": 1,
+      "fingerprint": "4a63275a6986b5f086811307626a4f3bcf25bac553b7e4981d83d0abf2b2e0b3",
+      "status": "running",
+      "task_id": "223",
+      "verb": "checkpoint"
+    },
     "client223-next-v1": {
       "actor": "Ken0u",
       "at": 1792829233,
@@ -229,6 +238,15 @@
       "status": "needs_human",
       "task_id": "223",
       "verb": "plan"
+    },
+    "client223-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792830220,
+      "epoch": 1,
+      "fingerprint": "5166f74e1a4031c538bded79a07f08e26cca8380bc2ab0912f310bfd437a8125",
+      "status": "review",
+      "task_id": "223",
+      "verb": "submit"
     },
     "comparison221-baseline-v1": {
       "actor": "dootz1",
@@ -17061,17 +17079,21 @@
     },
     "223": {
       "checkpoint": {
+        "base_sha": "a673aa4cd8e1b5860c801314cf4ab0202e590a5d",
         "branch": "codex/issue-223-preserve-controller-request-identity-and",
         "head_sha": "05e514c534f01470c1ec8b9f4b53c1ec2e1604b4",
-        "summary": "Granted two-path repair implemented and locally committed: prepare worktree-local receipts before remote POST/PATCH; atomic receipt replacement; safe post-success diagnostic preserves real ID/comment URL and instructs same-ID reconciliation without payload/exception-text disclosure or automatic resubmission. Original mocked repro established missing-cache failure after remote post. Initial6clientcases+existing127queuecases passed133focused checks before one additional read-only-status/payload-parity regression; full final focused/required checks next. Existing shared identity, request bodies, heartbeat PATCH reuse, auth/grants/controller/workflow/lease/scientific deadlines unchanged. Only scripts/agent_queue.py and tests/test_agent_queue_client.py modified. No scientific inputs/labels/predictions/media/weights or PROGRESS accessed. All #212 evidence and incomplete outcome preserved. Local branch not pushed until required verification passes."
+        "output_receipt_sha256": "32ef4359d53f1a9379c27f17e0dfaf4aaed2e05c51337dd6268c56c8e16f59f7",
+        "pr_number": 225,
+        "summary": "Two-file protected client receipt repair published in PR225 on exact committed source.134focused and2515full tests pass,4optional skips; Ruff/format/pip/diff/repository checks pass. Actual isolated check helper35128exited0 and all167observed verification lifetimes independently absent; exact committed source hashes bind logs/JUnit. Exit-audit90d4022628bf82ee17404b47640c99e8dafd2fec4a5812f78ed778e486d59a25. Seven new offline generated regressions verify worktree receipt setup before POST/PATCH, shared identity and posted/saved payload parity, heartbeat index/PATCH reuse, safe pre/post-submit write failure with actual ID/URL and existing-file preservation, and read-only status. Repaired client also successfully sent/saved real fresh-worktree checkpoint (accepted1792829561). Request/grant/auth/controller/workflow/check/retry/lease/scientific deadline and publishing semantics preserved; no scientific/data/model/PROGRESS/holdout access. Output10,347,815bytes below1GiB (receipt32ef4359d53f1a9379c27f17e0dfaf4aaed2e05c51337dd6268c56c8e16f59f7). Main unchangeda673aa4. Exact PR CI40077682874isrunning; submit to controller to await exact checks, then require normal integration/exactmain/publicdelivery. No manualmerge/fake review/paidservice. Task212alreadyDone+deliveryverified; scientific0/2certified references and elapsed deadline unchanged; full analyzer goal remainsactive.",
+        "verification_receipt_sha256": "90d4022628bf82ee17404b47640c99e8dafd2fec4a5812f78ed778e486d59a25"
       },
-      "checkpoint_at": 1792829561,
+      "checkpoint_at": 1792830131,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a673aa4cd8e1b5860c801314cf4ab0202e590a5d",
         "branch": "codex/issue-223-preserve-controller-request-identity-and",
         "epoch": 1,
-        "expires_at": 1792840361,
+        "expires_at": 1792840931,
         "granted_at": 1792829233,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
@@ -17085,6 +17107,7 @@
       },
       "planned_at": 1792828692,
       "planned_by": "Ken0u",
+      "pr_number": 225,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -17127,7 +17150,13 @@
         ]
       },
       "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "a673aa4cd8e1b5860c801314cf4ab0202e590a5d",
+        "head_sha": "05e514c534f01470c1ec8b9f4b53c1ec2e1604b4",
+        "pr_number": 225,
+        "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec"
+      }
     },
     "62": {
       "checkpoint": {
