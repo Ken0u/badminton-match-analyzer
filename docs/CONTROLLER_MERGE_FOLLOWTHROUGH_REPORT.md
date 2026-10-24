@@ -81,6 +81,14 @@ Python, lint, formatting, dependency, repository and whitespace checks are
 recorded on the owning issue before submission; exact PR/main CI and complete
 public delivery are required separately.
 
+The initial full local run retained one obsolete first-pass status assertion
+in the Free-mode integration test: 2,639 passed, four skipped and one failed.
+Its generated output and process receipts remain preserved. The task was
+released and refrozen with that additional test path, explicitly authorized
+under the configured owner's delegated decisions, then granted at epoch 2
+before the assertion changed. The updated test also requires the exact-main
+dispatch while continuing to deny the protection API and preserve merge gates.
+
 The implementation PR itself is merged by the previous trusted controller;
 its own verification may still need a normal wake. Generated evidence does
 not establish prospective live execution of the new follow-through. That
