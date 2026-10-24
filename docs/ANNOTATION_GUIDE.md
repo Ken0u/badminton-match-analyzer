@@ -14,6 +14,10 @@ reuses those same five galleries in place under a fresh bounded grant; it must
 verify all original evidence without rewriting #240 or changing its deadline.
 Its 34,040,436-byte payload authorization adds no exact-contact or full-reference
 eligibility.
+All six readings are now complete with verified global execution provenance.
+Keep their coarse model-generated judgments separate from reviewed event truth;
+agreement between streams and supported sampled actor links do not establish
+accuracy or continuous identity through unsampled frames.
 
 The separately authorized [#212 transport successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)
 uses [v4](../data/manifests/rally_reference_protocol_v4.json) on the same prepared

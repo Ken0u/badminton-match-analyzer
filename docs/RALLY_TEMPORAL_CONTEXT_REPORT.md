@@ -32,12 +32,89 @@ The limits remain 9 MiB/20 images per session, a 14 MiB encoded guard, 512 MiB
 new outputs and 8 GiB cumulative outputs/payload. With historical attempted
 bytes charged, the six sessions project 8,211,600,581 cumulative image bytes.
 
-At this implementation checkpoint, **zero #242 assessors have started and zero
-new image bytes have been sent**. The consumer still needs final generated
-verification, a committed revision, prospective context/payload seals and fresh
-ownership validation before original-prefix reuse and assessment. Six successful
-sessions and a global exit/provenance audit are required before comparison.
-The following #240 preparation and blocked-dispatch evidence remains historical.
+All **six #242 readings completed successfully**, without replacement or retry,
+between 20:50:41 and 21:01:44 UTC that day. They used exactly 34,040,436 new image
+bytes. The 79.6-second real shared-Store reuse stage verified every original PNG
+and the unchanged galleries with zero rerendering. Its separate audit confirms
+eight recorded lifetimes absent. The assessment audit confirms 22 recorded
+lifetimes absent, matching Store/artifact evidence and six new unique executions
+against all 1,014 historical identities. Global metadata verification preceded
+scientific comparison; no old scientific labels were parsed.
+
+Tested consumer `17c01bf63bba34cce24d57280f860bb574015248` remains frozen in a
+separate producer checkout. Its
+[prospective context seal](https://github.com/Ken0u/badminton-match-analyzer/issues/242#issuecomment-6389356223)
+binds context SHA256
+`cf39b05d1f7ef7a14245b2ebaf38cabe280c17e4948394036e653aa8a119a640`.
+The [exact reused-plan seal](https://github.com/Ken0u/badminton-match-analyzer/issues/242#issuecomment-6389376434)
+binds plan SHA256
+`896fd1124e918e2abc5d5bcbfda9c3772ec202c5b24fbada79e835eadb1fae85`.
+Private aggregate SHA256 is
+`9959e3d740d18c82e1918f1706c85d89ec7e489d00572000f7cb4cb7dbc20580`;
+the preceding global metadata audit SHA256 is
+`d1eeb44b5e39a753c8cfdb7c8bf2cf12e687d1dd1c58fd3ffa47c6a826ff4c4c`.
+
+## Aggregate coarse-context results
+
+A and B are separate independent source-only sessions; C is a third blind
+source reading, not a human or expert truth set. All use the same existing CLI
+and source galleries. Their agreement is not an accuracy estimate, and shared
+model/source errors may be correlated. Per-frame variants, images, descriptions
+and original execution outputs remain private.
+
+| Retained quantity | Singles | Doubles |
+| --- | ---: | ---: |
+| Native-frame denominator | 991 | 541 |
+| Sampled / unsampled native frames | 34 / 957 | 19 / 522 |
+| Unavailable selected samples | 0 | 0 |
+| A/B known scene equality, full sampled denominator | 32/34 | 18/19 |
+| A/B scene equality including unknown equality | 33/34 | 19/19 |
+| A/B samples with unknown scene in either stream | 2/34 | 1/19 |
+| A/C known scene equality, full sampled denominator | 30/34 | 18/19 |
+| B/C known scene equality, full sampled denominator | 31/34 | 18/19 |
+| Unresolved actor transitions A / B / C | 5 / 5 / 5 of 33 | 10 / 10 / 9 of 18 |
+| Supported local actor groups A / B / C | 2 / 2 / 2 | 4 / 4 / 4 |
+
+The scene counts for singles are live/replay/unknown 31/1/2 in A, 31/2/1 in B
+and 30/2/2 in C. Doubles A/B each retain 18 live and one unknown scene sample;
+C instead records 18 live and one non-play sample. Coarse play judgments also
+differ: singles A/B/C retain 7/5/8 stopped-play and 2/3/0 unknown-play samples;
+doubles retain 6/7/7 stopped-play and 1/0/0 unknown-play samples. These are
+recorded judgments, not independently verified source truth or precise endings.
+No uncertain sample is dropped to improve agreement.
+
+Actor groups are lane-local visual definitions, not verified roster counts or
+matched cross-stream identities. A supported sampled transition still says
+nothing about continuous identity across its unsampled interval. All 1,479
+unsampled frames remain unreviewed in this pilot. Exact contacts, stroke
+family/side, precise serve/end labels and complete references are not supplied;
+the original **0/2 result and all four false eligibility flags remain**.
+This pilot does not complete #62, #66, #67 or #71, authorize training/promotion or
+establish full-match annotation accuracy. Original-resolution temporal/contact
+and actor evidence still needs consistent independent review before those uses.
+
+## Continuation verification and publication checkpoint
+
+Final generated checks pass **459 focused and 2,941 full tests, with four optional
+skips**, plus Ruff, formatting, dependency consistency, repository JSON/local
+links, UTF-8/LF and diff checks. All independently recorded final test lifetimes
+are absent. An interrupted final-source full run remains preserved without a
+pass verdict; its actual worker was verified absent before the fresh passing
+run. Earlier passing receipts also remain unchanged.
+
+Code inspection caught boolean/integer grant-epoch equality and current package imports
+poisoning the frozen metadata subprocess. Strict JSON-type comparison and a
+clean-process CLI regression now cover both, and the actual metadata replay
+succeeded without changing the frozen historical acceptance code. Reuse tests
+verify unchanged original bytes and fail on packet, original PNG, gallery,
+producer and receipt corruption; dispatch tests stop at the first failed attempt.
+
+At this report checkpoint, normal PR submission, exact PR/main CI, controller
+integration and complete independent public delivery verification remain pending.
+No application model, annotation truth, reviewed identity, weight or deployment
+has changed. `PROGRESS.md` is deprecated and untouched.
+
+## Historical #240 preparation and blocked dispatch
 
 The [protocol](../data/manifests/rally_temporal_context_v1.json) fixes one-second
 source-PTS sampling of the same two complete prepared windows, including both
