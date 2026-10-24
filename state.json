@@ -19091,6 +19091,7 @@
       "status": "blocked"
     },
     "242": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40134088400",
       "checkpoint": {
         "branch": "codex/issue-242-complete-the-six-specifically-authorized",
         "evidence_paths": [
@@ -19114,7 +19115,7 @@
         "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
