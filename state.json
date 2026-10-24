@@ -4415,6 +4415,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-recovery-v2-prelaunch": {
+      "actor": "Ken0u",
+      "at": 1792807821,
+      "epoch": 1,
+      "fingerprint": "03db209f733e6a5caeb803a6e38619983c813205e81aad212139a5944661f62c",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-refusal-v1": {
       "actor": "Ken0u",
       "at": 1792798174,
@@ -4549,6 +4558,15 @@
       "status": "needs_human",
       "task_id": "212",
       "verb": "plan"
+    },
+    "rally212-recovery-maintenance-00000-v2": {
+      "actor": "Ken0u",
+      "at": 1792807828,
+      "epoch": 1,
+      "fingerprint": "83c6b52ab43ba74ebfe7d35664b181970d68b1bca17aa2eaf9468983d55f5f5a",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
     },
     "rally212-register-v1": {
       "actor": "Ken0u",
@@ -16002,15 +16020,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "Concrete generated-only bug repair, no scientific reads or dispatch. Preserved V2 target driver can reach reservation/Popen after another lane writes a stop; reproduced with generated fixtures only,receipt SHAd701f43313fe46afb0b932ec55c39bdba6270cdcbaea628f974a7567a3dbd3ba. Prospective V3 serializes reservation AND actual Popen with every driver/monitor stop writer using the shared payload lock. It rechecks stops/deadline under that lock, releases before output collection/wait, and preserves/charges launch failures while fencing without retry. V3 driver SHA cfca4c06aaf81845348271f2eaecc84dccc6b7235e0e530ef4a66be0fe566fc9;toolsfreeze SHA8359fd78f2ef74c9b23140d39b049c65e134ddee9d7ca64fb3cea014a5868380. Generated continuity/notes/charging passes,20preflight refusals,21output-failure cases,3real generated output-draining children,8dispatch race cases including8real generated Python children. All recorded generated child lifetimes absent;zero Codex sessions/signals/scientific images or labels in these tests. Lock receipt SHAacd4627b33dd188bfea2a59e94110fe1393d00389ec5a194fa776bb0e4e17da7. Source prompt/schema/packing/retained counter/charge formula and scientific acceptance unchanged by AST checks. All V1/V2tools/freezes/receipts preserved;original watcher26828/plannerV1 unchanged. FUTURE target execution MUST use separately frozen V3freezer/monitor/drivers/auditor,execution-seal-v3.json/timestamp-v3.json and final-audit-v3. Do not dispatch V1/V2. No actual target plan/seal/adjudication exists yet. Full V3output audit2292274913bytes<8GiB,supplement within64MiB headroom,receipt SHAbc9edc63db2c1f87c925d0dec1f85a736b062d3ee9ccf6e5394322751535fcf6. Rerun full V3accounting before targets/final;preserve frozen base counters. Same four actual original handles65809/23768/41462/26828 polled live this turn;no original restart/signal/partial-label read. Fresh metadata audit {\"attempted_image_bytes\": 5403712675, \"audit_receipt\": \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\rally212-original-audit-v2\\\\metadata-1792804055527855900.json\", \"audit_sha256\": \"64d64c8c4a090b6074532505378b0e7f479e22a714bd1927f9d2d39e7ef767bb\", \"both_complete_indexes\": false, \"eligibility\": {\"dataset_redistribution_allowed\": false, \"independent_test_allowed\": false, \"model_deployment_allowed\": false, \"training_allowed\": false}, \"immutable_producer_context_and_transport_verified\": true, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"complete_index\": false, \"finished_audited\": 227, \"started\": 227}, \"independent_b\": {\"complete_index\": false, \"finished_audited\": 226, \"started\": 227}}, \"max_concurrent_completed_sessions\": 2, \"metadata_only\": true, \"observed_at\": 1792804048.6267967, \"prior_lifetimes_absent\": 245, \"retained_output_bytes\": 2277554003, \"task\": 212, \"unique_completed_threads\": 698}. Draft216 clean/unsubmitted1b285c0,12exact CI passes and prior2384local tests/4optional skips preserved. Root branch/deprecated PROGRESS edit preserved. All contexts/producers/strict acceptance/protocol/native frames/budgets/falseeligibility and immutable deadline1792820409 unchanged. Next originals completion and watcher full audit/plan ONCE,exact cost/deadline,fresh fullV3output accounting,prospective V3execution freeze and blind sessions,final audit/aggregate/report/checks/controller/main/actual task212public delivery. Full goal remains active;no accuracy claim."
+        "summary": "{\"all_original_lifetimes_absent\": false, \"at\": 1792807823.2233717, \"attempted_image_bytes\": 5612198406, \"both_original_indexes_complete\": false, \"coordination\": \"f552cf56adc1d1b00aa0b8a08dd33681289d00f0\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"independent_a\": {\"cli_alive\": 0, \"complete_index\": false, \"launcher_alive\": true, \"new_finished\": 0, \"new_started\": 0, \"preserved_prefix\": 239, \"unknown_lifetime\": false}, \"independent_b\": {\"cli_alive\": 0, \"complete_index\": false, \"launcher_alive\": true, \"new_finished\": 0, \"new_started\": 0, \"preserved_prefix\": 237, \"unknown_lifetime\": false}}, \"lease_expiry\": 1792814858}\nBounded host-interruption recovery under original grant/deadline/caps:476successful originals preserved,36required sessions including2of3allowed replacements. All old incomplete attempts and charges preserved. Original source prompt/schema/packing/producer/strict acceptance unchanged. No label reads by observer,signals,implicit retries,new source,paid service or model change. Final scientific audit and blind adjudication remain required."
       },
-      "checkpoint_at": 1792804058,
+      "checkpoint_at": 1792807828,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792814858,
+        "expires_at": 1792818628,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
