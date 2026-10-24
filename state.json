@@ -16358,6 +16358,7 @@
       }
     },
     "215": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40060077932",
       "checkpoint": {
         "branch": "codex/issue-215-recover-automatic-library-synchronizatio",
         "head_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
@@ -16382,7 +16383,7 @@
         "spec_hash": "2e35dee5ef586317e0d5d528491c589fead9e96d314ab5dec20d9c4a4a34e197"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792813322,
