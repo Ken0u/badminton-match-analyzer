@@ -5451,6 +5451,15 @@
       "task_id": "238",
       "verb": "submit"
     },
+    "rally240-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792862027,
+      "epoch": 1,
+      "fingerprint": "61fd985000a79dab70960e7ff0e04767f7c3db1d1ab0f1a267ec3552d1ca31ca",
+      "status": "running",
+      "task_id": "240",
+      "verb": "checkpoint"
+    },
     "rally240-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792861027,
@@ -18691,12 +18700,23 @@
       }
     },
     "240": {
+      "checkpoint": {
+        "branch": "codex/issue-240-pilot-whole-window-temporal-scene-and-ac",
+        "evidence_paths": [
+          ".cache/rally240-checks-v3/focused.log",
+          ".cache/rally240-checks-v3/results.json",
+          ".cache/rally240-doctor-v1.json"
+        ],
+        "head_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
+        "status": "Seven granted paths implemented/staged in isolated rally240-e1;401focused generated tests,Ruff andformat pass. Full suite running under rally240-checks-v3 with isolated root/data/weights and recorded process lifetimes. Initial collection selected root editable package; corrected by explicit PYTHONPATH. V1 reused-stage expectation encountered credential gate; exclusivity is now checked first. V2 fake-assessor tests used a deadline inside final-minute dispatch exclusion; fixture runtime corrected without policy change. All initial outputs/failures preserved. No real images viewed/prepared/transmitted, scientific sessions or real Store jobs have started. Next:finish checks/audit,commit clean tested consumer,prospective issue seal,original-host metadata+gallery preparation,exact gallery/payload seal,six source-only sessions,actual exit/global provenance audit,aggregate report,normal PR/controller/exact main/public delivery. Original0/2,old labels/deadlines/fences,root edits and other PRs preserved."
+      },
+      "checkpoint_at": 1792862027,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
         "branch": "codex/issue-240-pilot-whole-window-temporal-scene-and-ac",
         "epoch": 1,
-        "expires_at": 1792871981,
+        "expires_at": 1792872827,
         "granted_at": 1792861181,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
