@@ -222,6 +222,15 @@
       "task_id": "221",
       "verb": "plan"
     },
+    "comparison221-progress-v1": {
+      "actor": "dootz1",
+      "at": 1792819667,
+      "epoch": 1,
+      "fingerprint": "b50562bd7467acebcf45c37adf14b93e8a06cb6d633ce15c842aea95ec3363b1",
+      "status": "running",
+      "task_id": "221",
+      "verb": "checkpoint"
+    },
     "events67-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730248,
@@ -16700,26 +16709,27 @@
     },
     "221": {
       "checkpoint": {
-        "baseline_receipt_sha256": "bcd468a04424b155370abe429b274b1cb092ee4925407fa7f6feb34fcc3e32cf",
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
         "evidence": [
-          "Existing single-CSV importer retains all three generated rows and complete coverage; no revision comparator exists.",
-          "Nine manually frozen generated-case expected outcomes saved before implementation.",
-          "Only five granted files will be edited; no scientific inputs, predictions or GPU work."
+          "All five granted files implemented; 54 generated focused tests pass.",
+          "Nine frozen baseline cases: 3 declared-frame comparisons, 6 explicitly unscored; all nine cases and known rows retained.",
+          "Ruff check/format, pip check, repository UTF-8/LF/strict-JSON/link verification and staged diff checks pass.",
+          "Exact decimal comparison preserves changes below float resolution. No real scientific inputs, GPU work, training or promotion."
         ],
         "head_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "immutable_deadline": 1792847882,
-        "preservation": "Original and #218 worktrees preserved; #212/MSI epoch1 and all research jobs/resources untouched.",
-        "remaining": "Implement comparator and CLI/protocol/docs; generated regressions and full required checks; exact CI/controller/main/public delivery.",
-        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
+        "preservation": "Original and #218 worktrees, #212/MSI epoch1 and research reservations preserved. Code-only edits confined to five granted paths; private generated evidence in ignored .cache.",
+        "remaining": "Run full Python suite once, review final diff, commit/push/PR, exact CI/controller/main/public delivery.",
+        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62",
+        "staged_diff_sha256": "084b744c35a0163b003ffb4180e33174326600b14fabe509f14ee8931ca6f354"
       },
-      "checkpoint_at": 1792819244,
+      "checkpoint_at": 1792819667,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
         "epoch": 1,
-        "expires_at": 1792830044,
+        "expires_at": 1792830467,
         "granted_at": 1792819082,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "roadmap-01a16c1a",
