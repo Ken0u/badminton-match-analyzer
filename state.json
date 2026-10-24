@@ -428,6 +428,15 @@
       "task_id": "248",
       "verb": "checkpoint"
     },
+    "export248-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792880126,
+      "epoch": 1,
+      "fingerprint": "ca983615d86e86214f75e8afe14f639e3f2fc2b26979e814217644d4bca6b887",
+      "status": "running",
+      "task_id": "248",
+      "verb": "checkpoint"
+    },
     "export248-generated-assets-scope-v1": {
       "actor": "Ken0u",
       "reason": "scope expansion cannot change task semantics",
@@ -442,6 +451,15 @@
       "status": "running",
       "task_id": "248",
       "verb": "extend-scope"
+    },
+    "export248-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792880134,
+      "epoch": 1,
+      "fingerprint": "21251e3fb98660dea10567f1c87fd0f8fbb0fc1950b0344aca010b1a2b5889ea",
+      "status": "review",
+      "task_id": "248",
+      "verb": "submit"
     },
     "export248-targeted-next-v1": {
       "actor": "Ken0u",
@@ -19519,19 +19537,20 @@
     },
     "248": {
       "checkpoint": {
-        "baseline_failure_sha256": "a4c590b7aa643322bf0d71cd5e0865d0ff8f46f5418cc5336f15364b279a6101",
         "branch": "codex/issue-248-keep-known-queued-running-media-export-c",
-        "head_sha": "9c18852f62efdbd828de74e7faa3d6fb8f21a3f1",
-        "remaining": "committed asset-path extension, stage checks, generated export browser/cleanup verification, full Python/Ruff/pip/repository checks, exact CI/controller integration and complete independent public delivery. No research access/image dispatch or PROGRESS.md edits.",
-        "summary": "Generated fake-timer baseline reproduces stopped polling after both network and503 failures (2 expected failures preserved). Bounded GET recovery and separate read/operation errors implemented; all46 focused export tests and the complete frontend unit/type/contract/production build pass. No POST retry. Existing locked tooling/browser cache reused without downloads. First asset scope request rejected for changing acceptance text; path-only replacement pending. No generated tracked asset edited before acknowledgement."
+        "evidence_sha256": "fe6172a5eb6269885b5b957c9b7db4b53c75c81d9e0117db7e28635c88c36b7e",
+        "head_sha": "4ff7a30102716a48a10aa733ac79d99154bcfdf3",
+        "pr_number": 249,
+        "remaining": "Exact PR/main CI, controller integration and independent complete public delivery.",
+        "summary": "Implemented bounded active export GET recovery and independent read/operation errors. All2941 Python/123 frontend/13 final export-browser groups pass;71 ownership checks pass with2 platform skips. First browser failure preserved and all original/final generated lifetimes independently terminal. Six reserved paths only; no research/image/policy change. Local receipt SHA256 fe6172a5eb6269885b5b957c9b7db4b53c75c81d9e0117db7e28635c88c36b7e."
       },
-      "checkpoint_at": 1792879590,
+      "checkpoint_at": 1792880126,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9c18852f62efdbd828de74e7faa3d6fb8f21a3f1",
         "branch": "codex/issue-248-keep-known-queued-running-media-export-c",
         "epoch": 1,
-        "expires_at": 1792890390,
+        "expires_at": 1792890926,
         "granted_at": 1792879244,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -19540,6 +19559,7 @@
       "epoch": 1,
       "planned_at": 1792878078,
       "planned_by": "Ken0u",
+      "pr_number": 249,
       "spec": {
         "acceptance": [
           "Follow delivered138 and246 under the approved Review and product roadmap. Search open/closed issues/PRs and current grants before claiming. Require both dependencies Done with delivery_pending=false, preserve the current root checkout and deprecated PROGRESS.md, and obtain a committed isolated task grant. No implementation while246 owns the overlapping documentation path.",
@@ -19588,7 +19608,13 @@
         ]
       },
       "spec_hash": "4f0a9d2ee0ec2a1d86c1f79da1a0b5f06540b24cef3f2e98d1f71f40c282aa44",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "9c18852f62efdbd828de74e7faa3d6fb8f21a3f1",
+        "head_sha": "4ff7a30102716a48a10aa733ac79d99154bcfdf3",
+        "pr_number": 249,
+        "spec_hash": "4f0a9d2ee0ec2a1d86c1f79da1a0b5f06540b24cef3f2e98d1f71f40c282aa44"
+      }
     },
     "62": {
       "checkpoint": {
