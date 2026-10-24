@@ -185,6 +185,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "comparison221-baseline-v1": {
+      "actor": "dootz1",
+      "at": 1792819244,
+      "epoch": 1,
+      "fingerprint": "352936d53e352a7ae3c509d5db02feef9b399f2d53401b3c25d0f474df7432f3",
+      "status": "running",
+      "task_id": "221",
+      "verb": "checkpoint"
+    },
     "comparison221-next-v1": {
       "actor": "dootz1",
       "at": 1792819082,
@@ -16690,12 +16699,27 @@
       }
     },
     "221": {
+      "checkpoint": {
+        "baseline_receipt_sha256": "bcd468a04424b155370abe429b274b1cb092ee4925407fa7f6feb34fcc3e32cf",
+        "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
+        "evidence": [
+          "Existing single-CSV importer retains all three generated rows and complete coverage; no revision comparator exists.",
+          "Nine manually frozen generated-case expected outcomes saved before implementation.",
+          "Only five granted files will be edited; no scientific inputs, predictions or GPU work."
+        ],
+        "head_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
+        "immutable_deadline": 1792847882,
+        "preservation": "Original and #218 worktrees preserved; #212/MSI epoch1 and all research jobs/resources untouched.",
+        "remaining": "Implement comparator and CLI/protocol/docs; generated regressions and full required checks; exact CI/controller/main/public delivery.",
+        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
+      },
+      "checkpoint_at": 1792819244,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
         "epoch": 1,
-        "expires_at": 1792829882,
+        "expires_at": 1792830044,
         "granted_at": 1792819082,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "roadmap-01a16c1a",
