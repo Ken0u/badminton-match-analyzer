@@ -16381,6 +16381,7 @@
         "session_id": "cuda-ready-01a16bd6",
         "spec_hash": "2e35dee5ef586317e0d5d528491c589fead9e96d314ab5dec20d9c4a4a34e197"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
