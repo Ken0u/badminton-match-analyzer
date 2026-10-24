@@ -7423,6 +7423,14 @@
       "task_id": "223",
       "verb": "verify-main"
     },
+    "verify-223-3eeb4ed750dc8bfc3b58b471e172ea9b7c18839c-True": {
+      "actor": "github-actions[bot]",
+      "at": 1792830935,
+      "fingerprint": "bf72fd5203d0b5b2fd2903a1c486e8af4c6acb1819a07c7f50b4c078982940b7",
+      "status": "done",
+      "task_id": "223",
+      "verb": "verify-main"
+    },
     "verify-63-246d14ff84424951adaf5ce10f5a27c2bda96f8a-False": {
       "actor": "github-actions[bot]",
       "at": 1792424939,
@@ -17139,6 +17147,7 @@
         "session_id": "rally212-msi-20261023-v1",
         "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec"
       },
+      "delivery_pending": true,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
@@ -17196,7 +17205,7 @@
         ]
       },
       "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec",
-      "status": "verifying_main",
+      "status": "done",
       "submission": {
         "base_sha": "a673aa4cd8e1b5860c801314cf4ab0202e590a5d",
         "head_sha": "05e514c534f01470c1ec8b9f4b53c1ec2e1604b4",
