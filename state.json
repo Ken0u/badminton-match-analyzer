@@ -5383,6 +5383,15 @@
       "task_id": "238",
       "verb": "checkpoint"
     },
+    "rally238-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792859351,
+      "epoch": 1,
+      "fingerprint": "7b5a79fb91fcae4acaa380e8bd5bb8bc7947da8ea99d54d617fa49e27a0af69c",
+      "status": "running",
+      "task_id": "238",
+      "verb": "checkpoint"
+    },
     "rally238-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792856688,
@@ -5424,6 +5433,15 @@
       "status": "granted",
       "task_id": "238",
       "verb": "next"
+    },
+    "rally238-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792859361,
+      "epoch": 1,
+      "fingerprint": "c4bffe964b6680034b7fc29df36d80b02ef3f25602c3d996936960d2000fe650",
+      "status": "review",
+      "task_id": "238",
+      "verb": "submit"
     },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
@@ -18499,20 +18517,20 @@
     "238": {
       "checkpoint": {
         "branch": "codex/issue-238-diagnose-the-sealed-two-source-rally-ref",
-        "evidence_paths": [
-          ".cache/rally238-checks-v1/focused.log",
-          ".cache/rally238-checks-v1/results.json"
-        ],
-        "head_sha": "c79025c037e5099ac8794cb830ab0b50024fff46",
-        "status": "Six granted-path implementation is uncommitted in isolated rally238-e1.426 generated focused tests pass; required full suite is running with authentic process recording under rally238-checks-v1. No private scientific labels have been parsed and no media viewed/decoded/prepared/transferred. Root edits and old scientific evidence remain unchanged. Next: finish checks,consumer commit/clean snapshot,prospective issue seal,original-host real-Store metadata census,exact scientific parity,report,normal PR/controller/main/public delivery."
+        "evidence_sha256": "9a3c950ebeb8e2b439084e4a2f9a57d065bb91dd36d3bb6b192cb488aafa443f",
+        "head_sha": "e9171a92003343db31eb22375a3134e2e4e5f3a8",
+        "native_aggregate_sha256": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1",
+        "pr_number": 239,
+        "remaining": "Exact PR/main CI,normal controller integration and independent complete public delivery.",
+        "summary": "431focused/2776full tests,all project checks and final documentation checks pass. Original-host sealed metadata job complete,all recorded processes absent,real Store/terminal/artifacts verified. Exact frozen0/2verdict retained for all1532frames,zero newscientificsessions/imagepayload."
       },
-      "checkpoint_at": 1792857563,
+      "checkpoint_at": 1792859351,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c79025c037e5099ac8794cb830ab0b50024fff46",
         "branch": "codex/issue-238-diagnose-the-sealed-two-source-rally-ref",
         "epoch": 1,
-        "expires_at": 1792868363,
+        "expires_at": 1792870151,
         "granted_at": 1792856993,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -18526,6 +18544,7 @@
       },
       "planned_at": 1792856553,
       "planned_by": "Ken0u",
+      "pr_number": 239,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -18587,7 +18606,13 @@
         ]
       },
       "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c79025c037e5099ac8794cb830ab0b50024fff46",
+        "head_sha": "e9171a92003343db31eb22375a3134e2e4e5f3a8",
+        "pr_number": 239,
+        "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c"
+      }
     },
     "62": {
       "checkpoint": {
