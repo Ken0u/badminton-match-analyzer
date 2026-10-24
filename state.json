@@ -1105,6 +1105,26 @@
       "task_id": "190",
       "verb": "submit"
     },
+    "laptop-cuda-01a16bd6-next-v1": {
+      "actor": "dootz1",
+      "at": 1792811564,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
+        "branch": "codex/issue-215-recover-automatic-library-synchronizatio",
+        "epoch": 1,
+        "expires_at": 1792822364,
+        "granted_at": 1792811564,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "cuda-ready-01a16bd6",
+        "spec_hash": "586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca"
+      },
+      "epoch": 1,
+      "fingerprint": "26f797f225dedbe550c258c706dcbbdd6bcc89349d968acd387f0affcc3cc588",
+      "status": "granted",
+      "task_id": "215",
+      "verb": "next"
+    },
     "laptop-cuda-01a16bd6-register-v1": {
       "actor": "dootz1",
       "at": 1792811424,
@@ -16260,7 +16280,18 @@
       }
     },
     "215": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
+        "branch": "codex/issue-215-recover-automatic-library-synchronizatio",
+        "epoch": 1,
+        "expires_at": 1792822364,
+        "granted_at": 1792811564,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "cuda-ready-01a16bd6",
+        "spec_hash": "586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca"
+      },
+      "epoch": 1,
       "planned_at": 1792793740,
       "planned_by": "Ken0u",
       "spec": {
@@ -16301,7 +16332,7 @@
         ]
       },
       "spec_hash": "586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
