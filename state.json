@@ -6377,6 +6377,12 @@
       "task_id": "204",
       "verb": "submit"
     },
+    "source220-plan-v1": {
+      "actor": "Ken0u",
+      "reason": "spec fields must match the version 1 task contract",
+      "status": "rejected",
+      "verb": "plan"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -6767,6 +6773,14 @@
       "fingerprint": "ed74f60d1cd9ced7f216b999664e78d60de18e07a71b5dc6025313b15436476a",
       "status": "ready",
       "task_id": "218",
+      "verb": "plan"
+    },
+    "spec-220-3fc7dc5948efb62883f54b1d7df7a82807a5602876aabf363bece0a305cad3e5": {
+      "actor": "dootz1",
+      "at": 1792849215,
+      "fingerprint": "25ebeb28948a8aa019f3dc29f6fb072a0adf3572674ae66979aa44bd64835b71",
+      "status": "needs_human",
+      "task_id": "220",
       "verb": "plan"
     },
     "spec-221-1b33b0287fe1bf49d10be6c3ce4c308f777ceb0cf4a8d8c2e3561b72f63e8d3b": {
@@ -17444,6 +17458,66 @@
         "pr_number": 219,
         "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457"
       }
+    },
+    "220": {
+      "epoch": 0,
+      "planned_at": 1792849215,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Reuse existing220 and delivered221 comparator; search all issues/PRs/grants before work. Begin only after143/145/218/221/232 are Done with delivery_pending=false, configured-owner authorization of this frozen scope and a committed original-host MSI grant. Preserve all prior code, data, jobs, unknowns, failed research, root edits and deprecated PROGRESS.md. No unfiltered next or replay of62/212/228.",
+          "Freeze before real-label retrieval the four granted paths, 29 corrected Git blob identities/lengths from trusted comment6380076254 (165307 advertised bytes; canonical inventory SHA256 1bb8d65a5dece7e98700dede5acf090225afbbe19da0889670f8f30b823aa4ae), upstream commit6eda442ada1740573f200f836d93edc9a541ee86/root-treea428b46df8d4839dd3e20a4bbf6275efb36395c4, original archive1731120724 bytes/SHA256 f87ccd54318e2e6366f2e820ba8dc1a04203c132582fc664867f0d1029bef465, source-declaration1536d95d96032414ac72a3635c9ff5a40dfbc7e8da1f513de59be7cffd0c1b9b and prior aggregate reportd6044119d4b939865dfbabc00dc94874e9a4a8da4dabfb7be391289522c0c4fa. Prior report is an immutable metadata index binding originals; do not substitute mutable normalized per-frame label caches or require new media decoding.",
+          "Preflight the actual original host: verify exact existing archive/declaration/aggregate-report bytes, original143 terminal receipt and process/Store/artifact evidence before access. Never assume a clone has inputs, restart or signal old work, reacquire the large archive or auto-recover an unrelated job. Pin real BADMINTON_ROOT/DATA/WEIGHTS before imports, use original venv and shared run_local_job admission plus data:windows-primary. Snapshot reviewed annotations/prediction seals by metadata only for preservation. Hash archive read-only; do not open media/model/prediction members. Missing/changed original inputs stop actual comparison and remain explicit, without substitute downloads.",
+          "Privately revalidate only the six already-pinned public text/metadata endpoints in shuttle_supervision_sources_v1.json, immutable upstream commit/root-tree/corrected_test_label inventory, correct_label.py and drop_frame.json. Inspect text for actual correction/ordinal/access/usage evidence BEFORE label contents; verify expected document hashes or preserve changed text separately without adopting changed semantics. Code/checkpoint MIT and intended dataset research use do not supply dataset/media rights, mirror authentication or native visual source identity. Explicit incompatible access/usage restrictions stop acquisition; unknown rights remain unknown and all four eligibility flags remain false. No sign-in, cookies, credentials, access request, linked media, third-party upload or rights-holder impersonation.",
+          "Under this explicitly authorized private research-comparison scope, fetch only the 29 exact immutable public corrected CSV blobs anonymously from raw.githubusercontent.com (or GitHub Git blob endpoint with the same immutable object), verifying length/Git-object SHA and SHA256 before parse. No automatic network retry or redirects. At most48 requests,4MiB/response,8MiB total network payload and8MiB combined private original/corrected label copies. No media, large archive, checkpoint, other new dataset, image transfer or external assessor/service. Preserve all raw responses privately; never commit labels.",
+          "Census the original pinned ZIP metadata and select all29 Test ball_trajectory CSV members across all3 groups, preserving201-clip/91214-row/91579-frame prior census as attributed historical evidence and29-Test-clip/12656-row/12658-frame prior counts separately from newly parsed bytes. Reuse existing safe archive census without extracting media or non-Test labels. Preserve original incomplete-file quarantine and unlabelled tails. Freeze exact case inventory from the literal group/clip identifier union BEFORE revised-label parse: no 2_ to1_ aliases, score-based matching, rebasing or dropped unmatched originals/corrections. Expected filename discrepancies remain explicit; any inventory change is retained rather than silently shrunk.",
+          "Use delivered shuttle_label_comparison protocol v1 unchanged for actual byte equality, records, ordinal unions/intersections/missing/excess/duplicate/reversal/unknown visibility accounting. Predeclare original and revised basis=null for every case because a filename, prior creator assertion or correction script is not an independent native source-byte/clock binding. Emit no native frame-pair visibility/coordinate accuracy or changed-coordinate score from unsupported correspondence. Retain unscored cases and unknown native denominators, and label historical native totals as attributed rather than newly verified. Raw ordinal counts and byte equality are publication accounting only, not expert truth or model accuracy. Freeze inventory hashes before executing the unchanged comparator and publish all cases/unknowns in aggregate.",
+          "Add a reproducible bounded orchestration entry point and meaningful generated safety/accounting regressions for pins/changed sources, archive member safety and non-Test/media nonaccess, immutable object/size mismatches, no-alias union/unavailable cases/quarantine/null bases, request/byte bounds, interrupted/no-overwrite output and real shared admission. Keep original comparator/backend/thresholds/models/rights/eligibility/labels unchanged. Publish only public source object inventory, protocol/source hashes and aggregate report; no raw rows, coordinates, ordinal lists, private process identities, media, weights or credentials in Git or builds.",
+          "Checkpoint and seal exact consumer/runtime/protocol/input hashes before data execution, preserve authentic PID/creation-time/cwd/command/shared Store/job/terminal receipts and every before/after input hash. Run generated focused/full Python, Ruff lint/format, pip, repository/text/link/JSON and diff checks. Exact PR/main CI, controller integration and independently verified complete public package/both-image delivery remain required; optional code review is no fabricated scientific or human approval. Do not manually merge, retry CI, alter workflow/security/configuration/policy or install models. Complete bounded revision accounting without claiming native alignment, rights, source independence, training-ready data or full-match accuracy;65/62/66/67/71 remain incomplete.",
+          "Limit runtime to3h from fresh grant and retained new outputs including worktree/generated tooling/private copies/receipts to256MiB, at most3 repair rounds, zero paid services/new dependencies. No training, inference, model promotion, app deployment/truth edits, consumed holdout63 or other private membership access, scientific source-image review, large corpus reacquisition, or unrelated roadmap work. Unavailable provenance stays an explicit outcome rather than an invented prerequisite success."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "143",
+          "145",
+          "218",
+          "221",
+          "232"
+        ],
+        "exclusions": [
+          "No media/prediction/weights/holdout access, inference/training/model promotion, image transfer or labels sent to another service, code/workflow/security/policy changes outside four paths, raw data publication, new paid service/dependency, CI/publishing retry, manual merge, coordination edits or PROGRESS.md access/change. Native correspondence and all four eligibility flags remain unresolved/false."
+        ],
+        "limits": {
+          "max_output_bytes": 268435456,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Bind the preserved original shuttle test-label archive to pinned upstream corrected-label bytes and measure complete byte/ordinal inventory differences, retaining unsupported native correspondence and all eligibility restrictions.",
+        "paths": [
+          "scripts/compare_upstream_shuttle_revision.py",
+          "tests/test_upstream_shuttle_revision.py",
+          "data/manifests/shuttle_label_revision_sources_v1.json",
+          "docs/SHUTTLE_LABEL_REVISION_REPORT.md"
+        ],
+        "priority": 30,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Actual original-host input/runtime/shared-admission and terminal integrity receipts; full literal-identifier union with unknown correspondence retained.",
+          "Focused/full generated project checks, exact PR/main CI, controller merge and independent complete public package/image delivery; no model-accuracy or rights claim."
+        ]
+      },
+      "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28",
+      "status": "needs_human"
     },
     "221": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40068974349",
