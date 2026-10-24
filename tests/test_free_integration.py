@@ -32,7 +32,11 @@ def test_free_mode_merges_then_verifies_and_delivers_without_protection_api(
     config["integration_enforcement"] = "controller"
     deny_protection_api(gh, monkeypatch)
     state = integrate(gh, config, store.read()[1])
-    assert gh.pr["merged"] and state["tasks"]["1"]["status"] == "integrating"
+    assert gh.pr["merged"] and state["tasks"]["1"]["status"] == "verifying_main"
+    assert (
+        "actions/workflows/ci.yml/dispatches",
+        {"ref": "main", "inputs": {"verify_sha": gh.merge_sha}},
+    ) in gh.external
     gh.ci = [
         {"id": 1, "event": "push", "head_sha": gh.merge_sha, "conclusion": "success"}
     ]
