@@ -17548,6 +17548,7 @@
       }
     },
     "220": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40103082482",
       "checkpoint": {
         "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
         "evidence_sha256": "cc18d729186633360c92c70a180357bbd3fc301f734099ad8d261a8bbb765109",
@@ -17569,7 +17570,7 @@
         "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
