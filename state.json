@@ -18795,7 +18795,7 @@
       },
       "planned_at": 1792860868,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -18858,7 +18858,7 @@
         ]
       },
       "spec_hash": "76384232177c0f484f4cf904c88b7c5f7dd9f968ce0c8e6ccef847a669c627f4",
-      "status": "ready"
+      "status": "blocked"
     },
     "242": {
       "epoch": 0,
