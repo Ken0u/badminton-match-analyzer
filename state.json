@@ -4374,6 +4374,13 @@
       "task_id": "243",
       "verb": "plan"
     },
+    "media243-registration-v1": {
+      "actor": "Ken0u",
+      "at": 1792865039,
+      "fingerprint": "5ddaa2e02e90d5bb859a142b7de20e501ae7a6b0aad7784c288556e689deda93",
+      "status": "ok",
+      "verb": "register"
+    },
     "merge232-before-refreeze-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792845856,
@@ -22107,6 +22114,7 @@
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
+        "generated-reproduction": "a0241be5802ac7446f4cf7e5d1aa04002700cc0c813cca52869ea1ea45a74a1c",
         "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
         "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
         "rally212-frozen-target-plan": "0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b",
@@ -22124,7 +22132,7 @@
         "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1792861027,
+      "registered_at": 1792865039,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
