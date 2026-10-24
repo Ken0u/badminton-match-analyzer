@@ -5853,6 +5853,26 @@
       "task_id": "218",
       "verb": "submit"
     },
+    "roadmap230-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792843105,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4f0a93b0a952bd0d256cb602b915d5a299cc63b0",
+        "branch": "codex/issue-230-refresh-the-shared-roadmap-and-bug-revie",
+        "epoch": 1,
+        "expires_at": 1792853905,
+        "granted_at": 1792843105,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "e7374256f3d2f1cd8a83e8bf6de3a3eb1fa35358cfca5567cc3deba5ecac3102"
+      },
+      "epoch": 1,
+      "fingerprint": "1612f40a97954b0ba834dace3260324849dd58b10e9e0ce5c8cbe2bbf271369f",
+      "status": "granted",
+      "task_id": "230",
+      "verb": "next"
+    },
     "roadmap230-plan-v1": {
       "actor": "Ken0u",
       "at": 1792842449,
@@ -17648,7 +17668,18 @@
       }
     },
     "230": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4f0a93b0a952bd0d256cb602b915d5a299cc63b0",
+        "branch": "codex/issue-230-refresh-the-shared-roadmap-and-bug-revie",
+        "epoch": 1,
+        "expires_at": 1792853905,
+        "granted_at": 1792843105,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "e7374256f3d2f1cd8a83e8bf6de3a3eb1fa35358cfca5567cc3deba5ecac3102"
+      },
+      "epoch": 1,
       "planned_at": 1792842449,
       "planned_by": "Ken0u",
       "spec": {
@@ -17698,7 +17729,7 @@
         ]
       },
       "spec_hash": "e7374256f3d2f1cd8a83e8bf6de3a3eb1fa35358cfca5567cc3deba5ecac3102",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
