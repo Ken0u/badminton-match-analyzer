@@ -96,9 +96,16 @@ export function createLibraryController({
   let importAbort: AbortController | null = null,
     importEpoch = 0;
   let importFingerprint = "";
+  const importJobsFingerprint = () =>
+    store
+      .getSnapshot()
+      .jobs.filter((j) => j.kind === "import")
+      .map((j) => `${j.id}:${j.status}`)
+      .join("|");
   const current = (owner: SelectionToken) =>
     !disposed && session.selection.isCurrent(owner);
   async function refreshLibrary() {
+    const fingerprint = importJobsFingerprint();
     patch({ libraryLoading: true });
     try {
       await libraryLane.run(
@@ -106,6 +113,8 @@ export function createLibraryController({
         async (signal) =>
           parseVideos(await api.request("get", "/api/videos", { signal })),
         (videos) => {
+          // Only this current read can acknowledge the imports it started after.
+          importFingerprint = fingerprint;
           patch({ videos, libraryLoading: false });
           error("library", null);
         },
@@ -182,12 +191,7 @@ export function createLibraryController({
         await refreshPlayback(owner);
       }
       // Refresh after imports without selecting a new video or touching any draft.
-      const fingerprint = jobs
-        .filter((j) => j.kind === "import")
-        .map((j) => `${j.id}:${j.status}`)
-        .join("|");
-      if (fingerprint !== importFingerprint) {
-        importFingerprint = fingerprint;
+      if (importJobsFingerprint() !== importFingerprint) {
         await refreshLibrary();
       }
     } catch (e) {
