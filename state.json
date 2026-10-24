@@ -18340,6 +18340,7 @@
       }
     },
     "235": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40107011654",
       "checkpoint": {
         "branch": "codex/issue-235-observe-pending-exact-source-main-ci-and",
         "evidence_sha256": "041618ca65d8dffbeea1fad0822f248b410015b345227dc86535e784924503d0",
@@ -18361,7 +18362,7 @@
         "spec_hash": "f461341382f3e570c0a5a969956ac60300f501970532b06eab3aae5cfd3afac5"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
