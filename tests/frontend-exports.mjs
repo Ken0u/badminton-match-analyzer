@@ -5,6 +5,7 @@ import path from "node:path";
 import http from "node:http";
 import os from "node:os";
 import { once } from "node:events";
+import { randomUUID } from "node:crypto";
 import { spawn, execFileSync } from "node:child_process";
 import {
   repository,
@@ -12,6 +13,8 @@ import {
   protocol,
   sha256,
   startFixture,
+  fixtureOwnership,
+  fixtureProcessProbe,
 } from "./frontend-fixtures.mjs";
 
 assert.equal(process.env.BASE_URL, undefined, "Refuse an existing application");
@@ -375,7 +378,7 @@ async function downloads(video, job, result, name) {
 const admissionProbe = String.raw`
 import json,os,sys,time
 from pathlib import Path
-repo,root,evidence=map(Path,sys.argv[1:4]);video=sys.argv[4]
+repo,root,evidence=map(Path,sys.argv[1:4]);video,token=sys.argv[4:6]
 os.environ['BADMINTON_ROOT']=str(repo);os.environ['BADMINTON_DATA_DIR']=str(root/'processed')
 sys.path.insert(0,str(repo/'backend'))
 import psutil
@@ -384,7 +387,7 @@ from badminton.jobs import run_local_job
 def work(job,progress):
  progress(.2)
  p=psutil.Process()
- (evidence/'admission-receipt.json').write_text(json.dumps({'pid':p.pid,'started':p.create_time(),'cwd':p.cwd(),'command':p.cmdline(),'job_id':job,'root':str(root)}))
+ (evidence/'admission-receipt.json').write_text(json.dumps({'pid':p.pid,'started':p.create_time(),'cwd':p.cwd(),'command':p.cmdline(),'job_id':job,'root':str(root),'token':token}))
  deadline=time.monotonic()+45
  while not (evidence/'admission-release').exists():
   if time.monotonic()>deadline: raise RuntimeError('Owned admission gate expired; do not restart')
@@ -396,53 +399,61 @@ async function admit(video) {
   const script = path.join(evidence, "admission-probe.py");
   await fs.writeFile(script, admissionProbe);
   const log = await fs.open(path.join(evidence, "admission.log"), "w");
-  const child = spawn(
-    python,
-    ["-u", script, repository, fixture.root, evidence, video.id],
-    {
-      cwd: repository,
-      env: {
-        ...process.env,
-        BADMINTON_ROOT: repository,
-        BADMINTON_DATA_DIR: path.join(fixture.root, "processed"),
-      },
-      stdio: ["ignore", log.fd, log.fd],
+  const token = randomUUID();
+  const args = [
+    "-u",
+    script,
+    repository,
+    fixture.root,
+    evidence,
+    video.id,
+    token,
+  ];
+  const runtime = fixtureProcessProbe({ action: "runtime" });
+  const child = spawn(python, args, {
+    cwd: repository,
+    env: {
+      ...process.env,
+      BADMINTON_ROOT: repository,
+      BADMINTON_DATA_DIR: path.join(fixture.root, "processed"),
     },
-  );
+    stdio: ["ignore", log.fd, log.fd],
+  });
   await log.close();
   const finished = once(child, "exit");
-  const receipt = await waitFor(async () => {
-    try {
-      return JSON.parse(
-        await fs.readFile(
-          path.join(evidence, "admission-receipt.json"),
-          "utf8",
-        ),
-      );
-    } catch {
-      assert.equal(child.exitCode, null, "Owned admission worker exited early");
-      return false;
-    }
-  }, "Owned admission startup failed; inspect durable log");
-  assert.equal(receipt.pid, child.pid);
-  const verify = String.raw`import json,psutil,sys;r=json.loads(sys.argv[1]);p=psutil.Process(r['pid']);assert abs(p.create_time()-r['started'])<.01 and p.cwd()==r['cwd'] and p.cmdline()==r['command'];print('verified')`;
-  assert.equal(
-    execFileSync(python, ["-c", verify, JSON.stringify(receipt)], {
-      encoding: "utf8",
-    }).trim(),
-    "verified",
-  );
-  admission = {
-    child,
-    receipt,
-    async stop() {
+  const ownership = fixtureOwnership({
+    pid: child.pid,
+    expected: {
+      cwd: repository,
+      root: fixture.root,
+      token,
+      python,
+      args,
+      executables: [python, runtime.base],
+    },
+    adapter: {
+      inspect: (pid) => fixtureProcessProbe({ action: "inspect", pid }),
+      children: (pid) => fixtureProcessProbe({ action: "children", pid }),
+      signal: (identity, signal) =>
+        fixtureProcessProbe({
+          action: "signal",
+          pid: identity.pid,
+          identity,
+          signal,
+        }),
+      delay: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+    },
+    persist: (value) => write("admission-ownership.json", value),
+  });
+  let receipt, stopping;
+  const stop = () => {
+    stopping ??= (async () => {
       await fs.writeFile(
         path.join(evidence, "admission-release"),
         "cooperative release\n",
       );
       const [code, signal] = await finished;
-      assert.equal(code, 0, "Owned admission worker failed; preserve log");
-      assert.equal(signal, null);
+      await ownership.stop();
       await write("admission-cleanup.json", {
         ...receipt,
         code,
@@ -450,9 +461,43 @@ async function admit(video) {
         released: true,
       });
       admission = null;
-    },
+      assert.equal(code, 0, "Owned admission worker failed; preserve log");
+      assert.equal(signal, null);
+    })();
+    return stopping;
   };
-  return admission;
+  try {
+    const identity = ownership.initialize();
+    await write("admission-spawn-identity.json", identity);
+    receipt = await waitFor(async () => {
+      ownership.discover();
+      try {
+        return JSON.parse(
+          await fs.readFile(
+            path.join(evidence, "admission-receipt.json"),
+            "utf8",
+          ),
+        );
+      } catch {
+        assert.equal(
+          child.exitCode,
+          null,
+          "Owned admission worker exited early",
+        );
+        return false;
+      }
+    }, "Owned admission startup failed; inspect durable log");
+    ownership.bind(receipt);
+    admission = { child, receipt, stop };
+    return admission;
+  } catch (error) {
+    try {
+      await stop();
+    } catch (cleanup) {
+      error.message += `; admission cleanup failed: ${cleanup.message}`;
+    }
+    throw error;
+  }
 }
 
 try {

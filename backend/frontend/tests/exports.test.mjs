@@ -7,7 +7,7 @@ import {
 } from "../.test-build/editor/exports/model.js";
 import { createExportController } from "../.test-build/editor/exports/controller.js";
 import { isMediaExportInteractive } from "../.test-build/editor/exports/ExportPanel.js";
-import { ApiError } from "../.test-build/api/client.js";
+import { ApiError, ApiProtocolError } from "../.test-build/api/client.js";
 
 const id = "a".repeat(32);
 const request = { videoId: "video-a", revision: 2, mode: "plain-rallies" };
@@ -75,6 +75,325 @@ const deferred = () => {
 };
 const settle = () => new Promise((resolve) => setImmediate(resolve));
 const current = () => ({ ...request, dirty: false, saving: false });
+
+for (const failure of [
+  new TypeError("Failed to fetch"),
+  new ApiError(503, "Temporarily unavailable", "", "/api/jobs"),
+]) {
+  test(`active export recovers after transient list failure: ${failure.name}`, async (t) => {
+    t.mock.timers.enable({ apis: ["setTimeout"] });
+    let lists = 0;
+    const controller = createExportController({
+      pollMs: 100,
+      api: {
+        request(method, path) {
+          assert.equal(method, "get", "poll recovery cannot submit a mutation");
+          if (path === "/api/jobs") {
+            if (++lists === 2) return Promise.reject(failure);
+            return Promise.resolve([job()]);
+          }
+          return Promise.resolve(
+            lists < 3
+              ? { job: job({ status: "running" }), available: false }
+              : completed(),
+          );
+        },
+      },
+    });
+    try {
+      controller.select(request.videoId);
+      await settle();
+      t.mock.timers.tick(100);
+      await settle();
+      assert.equal(lists, 2);
+      assert.equal(controller.getSnapshot().jobs[0].status, "running");
+      assert.equal(controller.getSnapshot().loading, false);
+      assert.equal(controller.getSnapshot().error, true);
+      t.mock.timers.tick(100);
+      await settle();
+      assert.equal(lists, 3, "known active export must resume its list reads");
+      assert.equal(controller.getSnapshot().jobs[0].available, true);
+      assert.equal(controller.getSnapshot().error, false);
+      t.mock.timers.tick(1000);
+      await settle();
+      assert.equal(lists, 3, "terminal exports stop polling");
+    } finally {
+      controller.dispose();
+    }
+  });
+}
+
+const pollingHarness = (t, { known = true } = {}) => {
+  t.mock.timers.enable({ apis: ["setTimeout"] });
+  let lists = 0,
+    posts = 0;
+  let list = () => Promise.reject(new TypeError("Connection lost"));
+  let post = () => Promise.reject(new ApiError(409, "Busy", "", "/exports"));
+  let status = () =>
+    Promise.resolve({ job: job({ status: "running" }), available: false });
+  const controller = createExportController({
+    pollMs: 100,
+    api: {
+      request(method, path) {
+        if (method === "post") {
+          posts++;
+          return post();
+        }
+        if (path === "/api/jobs") {
+          lists++;
+          return lists === 1 && known ? Promise.resolve([job()]) : list();
+        }
+        return status();
+      },
+    },
+  });
+  t.after(() => controller.dispose());
+  controller.select(request.videoId);
+  return {
+    controller,
+    counts: () => ({ lists, posts }),
+    setList: (callback) => {
+      list = callback;
+    },
+    setPost: (callback) => {
+      post = callback;
+    },
+    setStatus: (callback) => {
+      status = callback;
+    },
+    tick: async () => {
+      t.mock.timers.tick(100);
+      await settle();
+    },
+  };
+};
+
+test("list recovery stops after exactly three extra reads and manual refresh resets the episode", async (t) => {
+  const h = pollingHarness(t);
+  await settle();
+  for (let i = 0; i < 4; i++) await h.tick();
+  assert.deepEqual(h.counts(), { lists: 5, posts: 0 });
+  assert.match(h.controller.getSnapshot().message, /stopped.*Refresh jobs/);
+  assert.equal(h.controller.getSnapshot().jobs[0].status, "running");
+  assert.equal(h.controller.getSnapshot().loading, false);
+  for (let i = 0; i < 5; i++) await h.tick();
+  assert.equal(h.counts().lists, 5);
+  await h.controller.refresh();
+  for (let i = 0; i < 4; i++) await h.tick();
+  assert.equal(h.counts().lists, 9, "manual read plus three additional reads");
+});
+
+test("a successful current read resets the recovery budget", async (t) => {
+  const h = pollingHarness(t);
+  await settle();
+  for (let i = 0; i < 3; i++) await h.tick();
+  h.setList(() => Promise.resolve([job()]));
+  await h.tick();
+  assert.equal(h.controller.getSnapshot().error, false);
+  h.setList(() => Promise.reject(new TypeError("Offline again")));
+  for (let i = 0; i < 4; i++) await h.tick();
+  assert.equal(h.counts().lists, 9);
+  await h.tick();
+  assert.equal(h.counts().lists, 9);
+});
+
+test("an unknown active job cannot be inferred from a failed initial read", async (t) => {
+  const h = pollingHarness(t, { known: false });
+  await settle();
+  for (let i = 0; i < 5; i++) await h.tick();
+  assert.equal(h.counts().lists, 1);
+  assert.equal(h.controller.getSnapshot().loading, false);
+  assert.equal(h.controller.getSnapshot().jobs.length, 0);
+});
+
+test("cancelling a recovery read replaces its automatic-refresh notice and stops", async (t) => {
+  const h = pollingHarness(t);
+  await settle();
+  await h.tick();
+  assert.match(h.controller.getSnapshot().message, /automatically/);
+  h.setList(() => Promise.reject(new DOMException("Cancelled", "AbortError")));
+  await h.tick();
+  assert.match(h.controller.getSnapshot().message, /cancelled.*Refresh jobs/);
+  assert.doesNotMatch(h.controller.getSnapshot().message, /automatically/);
+  for (let i = 0; i < 4; i++) await h.tick();
+  assert.equal(h.counts().lists, 3);
+});
+
+test("queued exports recover from a browser NetworkError without losing a start error", async (t) => {
+  const h = pollingHarness(t);
+  await settle();
+  h.setList(() => Promise.resolve([job({ status: "queued" })]));
+  h.setStatus(() =>
+    Promise.resolve({ job: job({ status: "queued" }), available: false }),
+  );
+  await h.tick();
+  await h.controller.start(request, current);
+  h.setList(() =>
+    Promise.reject(new DOMException("Network unavailable", "NetworkError")),
+  );
+  await h.tick();
+  assert.match(h.controller.getSnapshot().message, /shared admission is busy/);
+  assert.match(h.controller.getSnapshot().message, /Network unavailable/);
+  h.setList(() => Promise.resolve([job()]));
+  h.setStatus(() => Promise.resolve(completed()));
+  await h.tick();
+  assert.equal(h.controller.getSnapshot().jobs[0].available, true);
+  assert.equal(h.controller.getSnapshot().error, true);
+  assert.match(h.controller.getSnapshot().message, /shared admission is busy/);
+  assert.doesNotMatch(
+    h.controller.getSnapshot().message,
+    /Network unavailable/,
+  );
+  assert.equal(h.counts().posts, 1);
+});
+
+for (const failure of [
+  ...[400, 401, 403, 404, 409, 429].map(
+    (code) => new ApiError(code, "Rejected", "", "/api/jobs"),
+  ),
+  new ApiProtocolError(200, "not JSON", "/api/jobs"),
+  new ExportPayloadError("Malformed list"),
+  new Error("Unexpected application error"),
+  new DOMException("Cancelled", "AbortError"),
+]) {
+  test(`nonretryable list failure stops automatic reads: ${failure.name} ${failure.status ?? failure.message}`, async (t) => {
+    const h = pollingHarness(t);
+    await settle();
+    h.setList(() => Promise.reject(failure));
+    await h.tick();
+    assert.equal(h.controller.getSnapshot().loading, false);
+    for (let i = 0; i < 5; i++) await h.tick();
+    assert.equal(h.counts().lists, 2);
+    assert.equal(h.controller.getSnapshot().jobs[0].status, "running");
+    h.setList(() => Promise.resolve([job()]));
+    h.setStatus(() => Promise.resolve(completed()));
+    await h.controller.refresh();
+    assert.equal(h.controller.getSnapshot().jobs[0].available, true);
+    assert.equal(h.controller.getSnapshot().error, false);
+  });
+}
+
+test("malformed returned lists and failures without known active jobs do not retry", async (t) => {
+  const h = pollingHarness(t);
+  await settle();
+  h.setList(() => Promise.resolve({ jobs: [] }));
+  await h.tick();
+  for (let i = 0; i < 4; i++) await h.tick();
+  assert.equal(h.counts().lists, 2);
+  h.controller.select("video-b");
+  h.setList(() => Promise.reject(new TypeError("Offline")));
+  await settle();
+  for (let i = 0; i < 4; i++) await h.tick();
+  assert.equal(h.counts().lists, 3);
+  assert.equal(h.controller.getSnapshot().jobs.length, 0);
+});
+
+for (const guard of ["post", "dirty", "saving", "revision"]) {
+  test(`successful recovery preserves independent ${guard} error and never retries POST`, async (t) => {
+    const h = pollingHarness(t);
+    await settle();
+    await h.tick();
+    const now = current();
+    if (guard === "dirty") now.dirty = true;
+    if (guard === "saving") now.saving = true;
+    if (guard === "revision") now.revision = 3;
+    await h.controller.start(request, () => now);
+    const message = h.controller.getSnapshot().message;
+    const expected =
+      guard === "post"
+        ? /Refresh or start a new export/
+        : guard === "revision"
+          ? /saved revision changed/
+          : /Save annotations/;
+    assert.match(message, expected);
+    h.setList(() => Promise.resolve([job()]));
+    h.setStatus(() => Promise.resolve(completed()));
+    await h.tick();
+    assert.equal(h.controller.getSnapshot().jobs[0].available, true);
+    assert.equal(h.controller.getSnapshot().error, true);
+    assert.match(h.controller.getSnapshot().message, expected);
+    assert.doesNotMatch(h.controller.getSnapshot().message, /Connection lost/);
+    assert.equal(h.counts().posts, guard === "post" ? 1 : 0);
+  });
+}
+
+for (const staleOutcome of ["success", "failure"]) {
+  test(`superseded ${staleOutcome} recovery cannot change current error or revive a timer`, async (t) => {
+    const h = pollingHarness(t);
+    await settle();
+    await h.tick();
+    const stale = deferred();
+    h.setList(() => stale.promise);
+    await h.tick();
+    h.setList(() => Promise.resolve([job()]));
+    h.setStatus(() => Promise.resolve(completed()));
+    await h.controller.refresh();
+    if (staleOutcome === "success") stale.resolve([job()]);
+    else stale.reject(new TypeError("Stale offline"));
+    await settle();
+    assert.equal(h.controller.getSnapshot().error, false);
+    assert.equal(h.controller.getSnapshot().jobs[0].available, true);
+    await h.tick();
+    assert.equal(h.counts().lists, 4);
+  });
+}
+
+for (const ending of ["switch", "dispose", "start"]) {
+  test(`pending recovery is fenced by ${ending}`, async (t) => {
+    const h = pollingHarness(t);
+    await settle();
+    await h.tick();
+    const pending = deferred();
+    h.setList(() => pending.promise);
+    await h.tick();
+    let started;
+    if (ending === "dispose") h.controller.dispose();
+    if (ending === "switch") {
+      h.setList(() => Promise.resolve([]));
+      h.controller.select("video-b");
+      h.controller.select(request.videoId);
+    }
+    if (ending === "start") {
+      const post = deferred();
+      h.setPost(() => post.promise);
+      started = h.controller.start(request, current);
+      await h.controller.refresh();
+      await h.tick();
+      assert.equal(h.counts().lists, 3);
+      post.reject(new ApiError(401, "Sign in", "", "/exports"));
+    }
+    pending.reject(new TypeError("Stale offline"));
+    await started;
+    await settle();
+    const state = h.controller.getSnapshot();
+    assert.doesNotMatch(state.message, /Stale offline/);
+    if (ending === "start") {
+      h.setList(() => Promise.resolve([job()]));
+      h.setStatus(() => Promise.resolve(completed()));
+    }
+    const before = h.counts().lists;
+    await h.tick();
+    assert.equal(h.counts().lists, before + (ending === "start" ? 1 : 0));
+    assert.equal(h.counts().posts, ending === "start" ? 1 : 0);
+  });
+}
+
+test("recovered list keeps per-card status failures unavailable", async (t) => {
+  const h = pollingHarness(t);
+  await settle();
+  await h.tick();
+  h.setList(() => Promise.resolve([job()]));
+  h.setStatus(() =>
+    Promise.reject(new ApiError(409, "Changed bytes", "", "/status")),
+  );
+  await h.tick();
+  assert.equal(h.controller.getSnapshot().error, false);
+  assert.equal(h.controller.getSnapshot().jobs[0].available, false);
+  assert.match(
+    h.controller.getSnapshot().jobs[0].unavailableReason,
+    /saved inputs changed/,
+  );
+});
 
 for (const outcome of [
   "401",
