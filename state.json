@@ -185,6 +185,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "comparison221-next-v1": {
+      "actor": "dootz1",
+      "at": 1792819082,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
+        "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
+        "epoch": 1,
+        "expires_at": 1792829882,
+        "granted_at": 1792819082,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "roadmap-01a16c1a",
+        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
+      },
+      "epoch": 1,
+      "fingerprint": "ee346d80e79bc36c45ff66cc304696b3cdc6af27ba42f05091af4d2ce2597cb6",
+      "status": "granted",
+      "task_id": "221",
+      "verb": "next"
+    },
     "comparison221-plan-v1": {
       "actor": "dootz1",
       "at": 1792818944,
@@ -16670,7 +16690,18 @@
       }
     },
     "221": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
+        "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
+        "epoch": 1,
+        "expires_at": 1792829882,
+        "granted_at": 1792819082,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "roadmap-01a16c1a",
+        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
+      },
+      "epoch": 1,
       "planned_at": 1792818944,
       "planned_by": "dootz1",
       "spec": {
@@ -16720,7 +16751,7 @@
         ]
       },
       "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
