@@ -5658,6 +5658,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "rally242-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792876102,
+      "epoch": 1,
+      "fingerprint": "d4e6a2697903b5686eb19f5527f4be0aa3b9b392da670e935ff42a8e0256787b",
+      "status": "review",
+      "task_id": "242",
+      "verb": "submit"
+    },
     "rally242-targeted-claim-v1": {
       "actor": "Ken0u",
       "at": 1792868693,
@@ -19080,6 +19089,7 @@
       },
       "planned_at": 1792863837,
       "planned_by": "Ken0u",
+      "pr_number": 245,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -19145,7 +19155,13 @@
         ]
       },
       "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "af061f4fcb90833acff971e733b094bde0ba80ae",
+        "head_sha": "1f96a51baf5ab71f792b0777870aca9371483296",
+        "pr_number": 245,
+        "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1"
+      }
     },
     "243": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40122980304",
