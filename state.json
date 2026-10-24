@@ -19105,6 +19105,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "human_approval": {
