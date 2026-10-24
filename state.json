@@ -5092,6 +5092,15 @@
       "task_id": "228",
       "verb": "checkpoint"
     },
+    "rally228-before-dispatch-v1": {
+      "actor": "Ken0u",
+      "at": 1792839993,
+      "epoch": 1,
+      "fingerprint": "a88d5e2e6e57044172e7050f07d3cf4aa7837876e2e6c0a3c24f9c9b3f0ba0af",
+      "status": "running",
+      "task_id": "228",
+      "verb": "checkpoint"
+    },
     "rally228-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792837650,
@@ -17471,17 +17480,17 @@
       "checkpoint": {
         "base_sha": "faf01c05746805e968ed312919576471704f319d",
         "branch": "codex/issue-228-recover-only-the-21-remaining-unchanged-",
-        "head_sha": "faf01c05746805e968ed312919576471704f319d",
+        "head_sha": "1c8905ff40106b531c8e9f98856f79ee5105c648",
         "spec_hash": "3218ee8bb7fea49f3abb5b58a59ff45bc473a8e4be127310844529e9e081c90b",
-        "summary": "Five granted recovery files implemented in isolated e1 worktree; no science dispatch or final scientific label read. New pure metadata rules and separate freeze/run/audit command preserve frozen226 and original scientific consumers. Initial40 generated tests pass, including actual generated child exit/fencing; two further opaque-inventory regressions added after code review. Separate v6 protocol seals all412 archived files (opaque inventory7640e612c4a430e1f3077396e5c69cdd1af51044eb5ddc269c87580a7ee0f2b6), inherited deadline1792860317, exact235-prefix/21-suffix and projected8177560145 bytes. No old151 output correction, old fence clearing or renewed science time. Next isolated focused/full/static/repository verification with generated data, source hashes and observed verification lifetimes; commit and separate frozen recovery snapshot before whole-original preflight and prospective issue seal. Current grant1792838855 and inherited deadline remain unchanged. #226 fully delivered and independently verified; all source eligibility flags false and full analyzer accuracy unproven."
+        "summary": "Five granted files committed/pushed and separate clean frozen recovery snapshot retained at1c8905f.393 focused/2608 full tests pass,4optional skips; all7required checks pass; independent audit finds173recorded verification lifetimes absent (receiptf4cf6197e96b4de230184727fe62c4b7d888c0d61e1f52136dc65b5611ba1925). Actual freeze preflight exited0 after whole original sources/clocks/PNGs/Store/frozen contexts/993completed identities/all412archive files reverified. Contexteab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59 binds235targetprefix and21suffix, projected8177560145bytes, originalCLI and inherited deadline1792860317. No recovery images dispatched or final scientific comparison. Next actual owning-issue prospective seal/downloaded timestamp, then unchanged frozenrun; one explicit replacement151 plus152..171 only, no further replacement/implicit retry. Old failed151 and alloldfences/contexts remain immutable. Deadline never renews; allfour flagsfalse; bothslots1532frames preserved and fullaccuracyunproven."
       },
-      "checkpoint_at": 1792839420,
+      "checkpoint_at": 1792839993,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "faf01c05746805e968ed312919576471704f319d",
         "branch": "codex/issue-228-recover-only-the-21-remaining-unchanged-",
         "epoch": 1,
-        "expires_at": 1792850220,
+        "expires_at": 1792850793,
         "granted_at": 1792838855,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
