@@ -240,6 +240,24 @@
       "task_id": "221",
       "verb": "checkpoint"
     },
+    "comparison221-submit-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792820845,
+      "epoch": 1,
+      "fingerprint": "e2c27bd0d8323e1064c3052c6a087b209bd9b923fc4e9e6f824baeb07a649bd3",
+      "status": "running",
+      "task_id": "221",
+      "verb": "checkpoint"
+    },
+    "comparison221-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792820845,
+      "epoch": 1,
+      "fingerprint": "2039fed767d45927c9a9a179bb44eb101649abdbb17b554a7d8cefc9640799ed",
+      "status": "review",
+      "task_id": "221",
+      "verb": "submit"
+    },
     "events67-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730248,
@@ -16718,28 +16736,27 @@
     },
     "221": {
       "checkpoint": {
+        "base_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
         "evidence": [
-          "54 focused regressions, nine pre-frozen generated measurements and documented example pass. Static/dependency/repository checks pass.",
-          "Full suite attempt1:2341passed,14failed,4skipped in388.50s. All14 failed on Windows-length paths; logs and actual exit1 retained.",
-          "Shorter .cache retry:6pass/8longer-path failures. Extended-prefix retry:8SQLite-URI failures. System-temp retry:5pass/3Git-ignore failures. Final3pass in fresh short ignored Git fixture container. No source/test/policy modification between these environmental retries.",
-          "Verification processes exited before retries; no research processes signalled."
+          "Full suite2355passed/4optional skips, exit0; focused54; all9frozen generated expectations; documentation example; Ruff/format/dependencies/repository/diff pass.",
+          "Initial Windows path-length failures and all environmental retry evidence preserved; final full suite uses verified short ignored fixture directory without source changes."
         ],
-        "head_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
+        "head_sha": "22344f6ee6811d686e72e8f430b2746e8bb9c639",
         "immutable_deadline": 1792847882,
-        "measurement_receipt_sha256": "7da878f6ee5ea544e8534620ff3889d1f7346f159fbbe7010811d99b3be90863",
-        "module_sha256": "ba13fd4b427297803691decb3cecb18dc42fa00cabbd6ea9026e6261331d67ee",
-        "preservation": "#212/MSI, originals/predictions/holdouts/eligibility unchanged. Fixture Git repo contains generated test outputs only; application source stays in granted w221 worktree. All prior failure logs retained.",
-        "remaining": "Full suite attempt2 in a fresh short ignored fixture directory, final diff/commit/PR, exact CI/controller/main/public delivery.",
-        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
+        "pr_number": 222,
+        "preservation": "Only five granted files changed; no real corpus, label contents, source images, weights, predictions or holdout inputs accessed. #212/MSI epoch1 and all jobs/resources unchanged.",
+        "remaining": "Exact-head CI, controller integration, exact merged-main CI and independent complete public package/both-image delivery verification.",
+        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62",
+        "verification_receipt_sha256": "f980983ffa8ca4ad03167f9d26df3de374f749c2f3f5cfb2f6c1f6b4a1ecbe45"
       },
-      "checkpoint_at": 1792820395,
+      "checkpoint_at": 1792820845,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
         "epoch": 1,
-        "expires_at": 1792831195,
+        "expires_at": 1792831645,
         "granted_at": 1792819082,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "roadmap-01a16c1a",
@@ -16748,6 +16765,7 @@
       "epoch": 1,
       "planned_at": 1792818944,
       "planned_by": "dootz1",
+      "pr_number": 222,
       "spec": {
         "acceptance": [
           "Revalidate authoritative coordination and Issues/PRs; preserve #212/MSI and all existing work, raw inputs, reviewed annotations, original predictions and consumed holdouts. Establish a generated-case baseline before implementation: existing preparation normalizes one publication but supplies no revision comparison; freeze expected complete-denominator outcomes before running the new comparator.",
@@ -16795,7 +16813,13 @@
         ]
       },
       "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
+        "head_sha": "22344f6ee6811d686e72e8f430b2746e8bb9c639",
+        "pr_number": 222,
+        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
+      }
     },
     "62": {
       "checkpoint": {
