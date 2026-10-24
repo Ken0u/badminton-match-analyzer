@@ -5091,6 +5091,34 @@
       "status": "idle",
       "verb": "next"
     },
+    "roadmap-01a16c1a-next218-v1": {
+      "actor": "dootz1",
+      "at": 1792815284,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "3fb8d80a88e016f673a688795b01c97ca1403fe3",
+        "branch": "codex/issue-218-audit-public-evidence-for-shuttle-superv",
+        "epoch": 1,
+        "expires_at": 1792826084,
+        "granted_at": 1792815284,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "roadmap-01a16c1a",
+        "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457"
+      },
+      "epoch": 1,
+      "fingerprint": "41e94b73a06809cfc281172cac363dfc39a0696f58d2657d1cc8a6b33dcc9ecf",
+      "status": "granted",
+      "task_id": "218",
+      "verb": "next"
+    },
+    "roadmap-01a16c1a-plan218-v1": {
+      "actor": "dootz1",
+      "at": 1792815284,
+      "fingerprint": "7bc04b09b0859c539a6a5ed4202eedeee1b8e4e75163a21c4e9c60c7d67f9d83",
+      "status": "ready",
+      "task_id": "218",
+      "verb": "plan"
+    },
     "roadmap-01a16c1a-register-v1": {
       "actor": "dootz1",
       "at": 1792815140,
@@ -6119,6 +6147,14 @@
       "fingerprint": "8369ee8402ec20895363bb1661a3523f5b8d152844c8804a754b9f0af8b21951",
       "status": "ready",
       "task_id": "215",
+      "verb": "plan"
+    },
+    "spec-218-26b2f8490acf4dd2a193df53a8941cc11685c5d188b1c851a99ae8493d694200": {
+      "actor": "dootz1",
+      "at": 1792815284,
+      "fingerprint": "ed74f60d1cd9ced7f216b999664e78d60de18e07a71b5dc6025313b15436476a",
+      "status": "ready",
+      "task_id": "218",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -16454,6 +16490,70 @@
         "pr_number": 217,
         "spec_hash": "2e35dee5ef586317e0d5d528491c589fead9e96d314ab5dec20d9c4a4a34e197"
       }
+    },
+    "218": {
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "3fb8d80a88e016f673a688795b01c97ca1403fe3",
+        "branch": "codex/issue-218-audit-public-evidence-for-shuttle-superv",
+        "epoch": 1,
+        "expires_at": 1792826084,
+        "granted_at": 1792815284,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "roadmap-01a16c1a",
+        "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457"
+      },
+      "epoch": 1,
+      "planned_at": 1792815284,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Revalidate current Issues, active PRs and authoritative coordination before claiming; preserve #212/MSI and all existing jobs, branches, annotations and predictions. This is a metadata/documentation audit within #65, not detector training, new source assessment or a replacement for #62.",
+          "Establish the baseline from the committed public #143/#145/#160/#172/#179/#204 reports and source manifests: 29 publication groups / 201 clips / 91214 rows / 91579 native frames in the coordinate corpus, including all 12235 quarantined rows and 365 unlabelled tails, plus both broadcast source slots. Record exact source-file Git/hash bindings and all four false eligibility flags before fresh public evidence lookup.",
+          "Read only bounded publicly accessible creator/upstream/mirror text or metadata from the already cited source URLs and immutable repository revisions. Bind retrieved bytes, URLs, retrieval time and revisions; retain unavailable, sign-in-only, changed and conflicting responses. Do not download media, dataset archives, labels, weights or private metadata, use cookies, request credentials or bypass access controls.",
+          "Create a machine-readable public manifest retaining every one of the 29 publication groups and two broadcast slots. Separate publication group names, creator match assertions, canonical public IDs and actual byte identities; unknown original-match identity stays unknown. Record dataset/media/model rights separately, mirror authenticity, upstream training/evaluation layout versus exact checkpoint membership, and potential cross-corpus overlap using existing public aggregate evidence only. String nonmatches and different encodes do not establish source independence. Never inspect consumed holdout inputs, protocols, predictions or private membership.",
+          "Report evidence coverage and unresolved prerequisites against the baseline, including explicit counts and reason-coded unavailable fields. Keep training_allowed, independent_test_allowed, model_deployment_allowed and dataset_redistribution_allowed false throughout. This audit cannot grant rights, approve research eligibility, select splits, unlock downstream tasks or promote a model. Preserve unknown labels/denominators and distinguish evidence organization from annotation accuracy.",
+          "Edit only data/manifests/shuttle_eligibility_audit_v1.json and docs/SHUTTLE_ELIGIBILITY_REPORT.md. Validate strict JSON, exact group/source/count coverage, evidence hash and link consistency, UTF-8/LF, all false gates and unchanged predecessor manifests. Run repository, Ruff check/format, dependency and diff checks; use existing project environment without installs or native inference. No implementation-mirroring tests are required for these documentation/manifest changes.",
+          "Publish one focused PR through exact-head CI, normal controller integration, exact merged-main CI and independent public package/both-image delivery verification. Record sanitized owning-issue checkpoints and any precise unresolved dependency; retain original failures and source receipts.",
+          "Limit newly retained audit and CI/build evidence to128MiB and all work to2h from committed grant, with three repair rounds and no paid services. Preserve existing work and stop with an honest checkpoint at limits."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "143",
+          "145",
+          "160",
+          "172",
+          "179",
+          "204"
+        ],
+        "exclusions": [
+          "No application/model/default/auth/security/controller/workflow/deployment or eligibility-policy changes; no local installs, media/data/label/weight acquisition, source-image assessment, training/inference, holdout access, split selection, research process control, raw redistribution, manual merges, coordination-state writes or PROGRESS access/edits."
+        ],
+        "limits": {
+          "max_output_bytes": 134217728,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Audit public evidence for shuttle supervision rights, original-source identity, cross-corpus overlap and upstream checkpoint membership, retaining unknowns and all current eligibility restrictions.",
+        "paths": [
+          "data/manifests/shuttle_eligibility_audit_v1.json",
+          "docs/SHUTTLE_ELIGIBILITY_REPORT.md"
+        ],
+        "priority": 40,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Strict metadata/count/hash/link/false-eligibility checks and unchanged predecessor hashes; required repository/static/dependency/diff checks.",
+          "Exact PR/main CI, controller integration and independently verified complete public package/both-image delivery; no accuracy or eligibility claim from software checks."
+        ]
+      },
+      "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457",
+      "status": "running"
     },
     "62": {
       "checkpoint": {
