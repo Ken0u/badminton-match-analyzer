@@ -17948,6 +17948,7 @@
       }
     },
     "232": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40097628739",
       "checkpoint": {
         "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr-e2",
         "evidence_sha256": "8328d3323287e0d67c36e27454e75211a7100eb6c4b9049700644adf08a8c144",
@@ -17969,7 +17970,7 @@
         "spec_hash": "f601c2656b03669dbcff953700c834f4e8c597c1691eb5fedcdd425c583b7884"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 2,
       "human_approval": {
         "actor": "Ken0u",
