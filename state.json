@@ -4264,6 +4264,14 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "merge232-delegated-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792844560,
+      "fingerprint": "0cd1b87f3cf9de88668e98278b8cd382b37f90b4d6fe43a3592595f6e67ca0ec",
+      "status": "ready",
+      "task_id": "232",
+      "verb": "human-approved"
+    },
     "merge232-plan-v1": {
       "actor": "Ken0u",
       "at": 1792844377,
@@ -17805,8 +17813,14 @@
     },
     "232": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792844560,
+        "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7"
+      },
       "planned_at": 1792844377,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Search all issue/PR/grant/history for duplicates, including215 completion-event observations and228/230 normal wakes. Begin only after230 is Done with delivery_pending=false, matching configured-owner authorization and a committed isolated grant. Preserve root checkout edits, environments, data, processes, historical evidence and deprecated PROGRESS.md without access or changes.",
@@ -17851,7 +17865,7 @@
         ]
       },
       "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
