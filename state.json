@@ -5412,6 +5412,15 @@
       "task_id": "189",
       "verb": "submit"
     },
+    "roadmap218-baseline-v1": {
+      "actor": "dootz1",
+      "at": 1792815436,
+      "epoch": 1,
+      "fingerprint": "6f5746b6c26f126389122b5a0f387a175f192a794bc081302a044d0de80f2dd9",
+      "status": "running",
+      "task_id": "218",
+      "verb": "checkpoint"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -16492,12 +16501,18 @@
       }
     },
     "218": {
+      "checkpoint": {
+        "branch": "codex/issue-218-audit-public-evidence-for-shuttle-superv",
+        "head_sha": "3fb8d80a88e016f673a688795b01c97ca1403fe3",
+        "summary": "Pre-lookup baseline sealed at .cache/roadmap-01a16c1a/baseline.json SHA256 08b28ce473e116fdc1d912b67dd92453658e1de8efdb3373fed3645c418f757a. Nine committed public descriptors/reports bound at granted base; all29 publication groups /201 clips /91214 rows /91579 native frames retained,12235 quarantined rows and365 tails,plus2 broadcast slots. Zero training-ready rows and all4eligibility gates false. Only public text/metadata lookup begins next; no media/labels/weights/holdout/scientific source images or process control. #212 MSI epoch1 and existing clean checkouts/resources preserved. Local pinned CUDA environment/auth/toolchain revalidated; original #215 exact merged-main12checks, candidate success and preserved log hashes verify. Isolated .cache/w218 worktree on granted branch; 2h task deadline stays grant1792815284+7200."
+      },
+      "checkpoint_at": 1792815436,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "3fb8d80a88e016f673a688795b01c97ca1403fe3",
         "branch": "codex/issue-218-audit-public-evidence-for-shuttle-superv",
         "epoch": 1,
-        "expires_at": 1792826084,
+        "expires_at": 1792826236,
         "granted_at": 1792815284,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "roadmap-01a16c1a",
