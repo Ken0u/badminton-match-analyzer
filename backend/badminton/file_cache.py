@@ -9,6 +9,7 @@ import hashlib
 import json
 import os
 import stat
+import struct
 from collections import OrderedDict
 from functools import lru_cache
 from pathlib import Path
@@ -65,7 +66,69 @@ def _windows_metadata(handle):
         ):
             return None
         # Access time may change just from reading; never include it in the key.
-        return info.creation, info.write, info.change, info.attributes
+        usn = _windows_usn(handle)
+        if usn is None:
+            return None
+        return info.creation, info.write, info.change, info.attributes, usn
+    except (AttributeError, ImportError, OSError):
+        return None
+
+
+@lru_cache(maxsize=1)
+def _windows_usn_api():
+    import ctypes
+    from ctypes import wintypes
+
+    query = ctypes.WinDLL("kernel32", use_last_error=True).DeviceIoControl
+    query.argtypes = [
+        wintypes.HANDLE,
+        wintypes.DWORD,
+        ctypes.c_void_p,
+        wintypes.DWORD,
+        ctypes.c_void_p,
+        wintypes.DWORD,
+        ctypes.POINTER(wintypes.DWORD),
+        ctypes.c_void_p,
+    ]
+    query.restype = wintypes.BOOL
+    return ctypes, wintypes.DWORD, query
+
+
+def _usn_from_record(data):
+    # FSCTL_READ_FILE_USN_DATA returns V2 or V3. Reject unknown/truncated data.
+    if len(data) < 8:
+        return None
+    length, major, minor = struct.unpack_from("<IHH", data)
+    minimum, offset = {2: (60, 24), 3: (76, 40)}.get(major, (0, 0))
+    if not minimum or minor or not minimum <= length <= len(data):
+        return None
+    usn = struct.unpack_from("<q", data, offset)[0]
+    return usn if usn > 0 else None
+
+
+def _windows_usn(handle):
+    # ChangeTime alone can remain identical across rapid closed writes. Require
+    # the independent file journal sequence as well. This only queries a file;
+    # it never creates/configures a journal or asks for elevated volume access.
+    # https://learn.microsoft.com/en-us/windows/win32/api/winioctl/ni-winioctl-fsctl_read_file_usn_data
+    try:
+        import msvcrt
+
+        ctypes, dword, query = _windows_usn_api()
+        data = ctypes.create_string_buffer(4096)
+        size = dword()
+        if not query(
+            msvcrt.get_osfhandle(handle.fileno()),
+            0x000900EB,  # FSCTL_READ_FILE_USN_DATA
+            None,
+            0,
+            data,
+            len(data),
+            ctypes.byref(size),
+            None,
+        ) or size.value > len(data):
+            return None
+        return _usn_from_record(data.raw[: size.value])
     except (AttributeError, ImportError, OSError):
         return None
 
@@ -93,7 +156,7 @@ def _observe(handle):
 
 def _read(path, kind, load):
     path = Path(path).absolute()
-    with path.open("rb") as handle:
+    with path.open("rb", buffering=0) as handle:
         before, reusable = _observe(handle)
         key = path, before
         cache = _CACHES[kind]
@@ -105,8 +168,25 @@ def _read(path, kind, load):
                     cache.move_to_end(key)
         if value is _MISSING:
             value = load(handle)
+        if not reusable:
+            # Without a reliable version, do not trust a same-size/mtime edit.
+            # A second byte read detects a changed result even on coarse clocks.
+            handle.seek(0)
+            if load(handle) != value:
+                raise FileChangedError(
+                    "Media input changed while reading; retry the request"
+                )
         after, still_reusable = _observe(handle)
-        if before != after or _stat_key(path.stat()) != after[0]:
+        # Compare observations made through the same API. On Windows 3.12,
+        # fstat ctime can be change time while path.stat ctime is creation time.
+        with path.open("rb") as named:
+            current, _ = _observe(named)
+            if not after[0][1]:
+                if load(named) != value or _observe(named)[0] != current:
+                    raise FileChangedError(
+                        "Media input changed while reading; retry the request"
+                    )
+        if before != after or current != after:
             raise FileChangedError(
                 "Media input changed while reading; retry the request"
             )
