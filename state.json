@@ -402,6 +402,14 @@
       "task_id": "67",
       "verb": "release"
     },
+    "export-poll-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792878078,
+      "fingerprint": "1bc7c15aed54764196b43ad9e5dd6e743e21ac560e3e3d76c851bcfb0aece8d7",
+      "status": "ready",
+      "task_id": "248",
+      "verb": "plan"
+    },
     "external-merge-126-f2866cae9c1b11ec14594ea8c4ff611fa751375d": {
       "actor": "github-actions[bot]",
       "at": 1792454004,
@@ -7395,6 +7403,14 @@
       "fingerprint": "147f3733097b7853d3235419f8f63bfcac05ea40831c7ca920a23859e89d15fa",
       "status": "ready",
       "task_id": "246",
+      "verb": "plan"
+    },
+    "spec-248-225c8e5b10829b4e9b65584e71170ae9a7191d7cf30dd6f1c5a636d95b127408": {
+      "actor": "Ken0u",
+      "at": 1792878078,
+      "fingerprint": "248dd74758591b950af409bba796c77967196078058989d3f729865998567ee4",
+      "status": "ready",
+      "task_id": "248",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -19414,6 +19430,57 @@
         "pr_number": 247,
         "spec_hash": "1a5f5b014fb2292c04007ea25f6d43120969502cb01c4c05c64160cfd08596d4"
       }
+    },
+    "248": {
+      "epoch": 0,
+      "planned_at": 1792878078,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Follow delivered138 and246 under the approved Review and product roadmap. Search open/closed issues/PRs and current grants before claiming. Require both dependencies Done with delivery_pending=false, preserve the current root checkout and deprecated PROGRESS.md, and obtain a committed isolated task grant. No implementation while246 owns the overlapping documentation path.",
+          "First reproduce the suspected control-flow defect with generated fake API/timer evidence: a known active export schedules a poll, its list read fails transiently, the existing implementation clears its timer and never reads again even when the transport recovers. Preserve the baseline failing regression. If no defect is reproducible, report that result without speculative production changes.",
+          "Change only the reserved export controller, its existing generated unit tests and the current bug-review summary. Preserve existing job/revision/source ownership, malformed-payload checks, generation/intent/read fencing, start-versus-read exclusion, completed/download validation, stale A-B-A reply protection and disposal behavior. Never retry a POST or change backend admission, authentication, download integrity, saved labels, API contracts or export eligibility.",
+          "For already known queued/running exports only, permit at most three additional scheduled GET list recovery reads per consecutive retryable failure episode at the existing pollMs cadence. Retry only network transport failures and HTTP5xx list failures; authentication/permission/client/conflict errors, malformed/protocol responses and cancellation require explicit recovery and must not auto-loop. Keep existing active cards on a failed read, release loading and leave manual Refresh usable. A current successful read resets the episode; explicit manual Refresh or a new selection starts a fresh episode. Stop at the bound with an actionable error; no unbounded request loop or mutation retry.",
+          "A successful current list/status refresh clears only its own list-read failure message. Preserve independently owned failed-start/dirty-or-saving/revision-guard messages until an explicit new operation resolves them. Stale successes/failures, a source switch, disposal or an in-flight new export must not revive an old timer, clear another operation error or replace the current selection. Terminal jobs stop polling normally; status/download errors remain per-card and fail closed.",
+          "Add meaningful generated fake-timer/deferred-transport regressions covering network and5xx recovery through completion, exact recovery bound, successful reset/manual reset, no repeatPOST, no retry for401/403/409/malformed/protocol/cancelled reads, selection/disposal/overlap/start fences and mutation-message preservation. Run the existing frontend unit/type/contract/build/stage checks and export-browser suite with generated fixture storage, declared locked tooling and existing browser cache; no new dependencies or external browser/data download. Scope expansion is required before modifying other paths.",
+          "Run focused relevant tests and required full Python, Ruff lint/format, pip, repositoryUTF8/LF/JSON/local-link and diff checks in isolated generated storage. Preserve every failure; independently verify actual fixture/test process lifetimes and durable cleanup before any repeat. No live application/research process control or model/data inference. The repair establishes software behavior, not badminton accuracy.",
+          "Publish a focused PR with the reproduction, final behavior and limitations; let the controller merge after exact-head CI, verify exact merged-main CI and independent complete public wheel/source/frontend/lock and both-image delivery. Keep source-reference0/2 and all research eligibility flags unchanged. Checkpoint the owning issue; no manual merge, raw coordination edit, CI/publishing retry/cancel/wake or policy/credential change.",
+          "Bound work to3h from the fresh grant,512MiB new retained generated/tooling/output bytes and3repair rounds; zero paid services or new runtime dependencies. No raw source/label/media/weights/consumed-holdout access, image transfer, external assessor, training/model promotion, live deployment, security/controller/workflow changes, destructive cleanup or PROGRESS.md changes."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "138",
+          "246"
+        ],
+        "exclusions": [
+          "Product polling repair only; no POST retries, backend/API/auth/publishing/security/policy changes, research inputs or science, image transfers, model installation, paid service or manual merge."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Keep known queued/running media-export cards recoverable after transient job-list read failures, with bounded read-only recovery and preserved mutation/selection ownership.",
+        "paths": [
+          "backend/frontend/src/editor/exports/controller.ts",
+          "backend/frontend/tests/exports.test.mjs",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 40,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Preserved generated failing baseline and passing bounded-poll/ownership regressions, existing frontend/export-browser and required repository checks.",
+          "Exact PR/main CI, controller integration and independent complete public delivery; no annotation-accuracy claim."
+        ]
+      },
+      "spec_hash": "91222ec1dabbbeca46f4e586d1ed1ecdc826d7dc9a3c11b3e6b5b88f1aeaf473",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
