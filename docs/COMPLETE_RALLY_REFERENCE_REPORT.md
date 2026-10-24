@@ -1,5 +1,10 @@
 # Complete-rally source reference pilot
 
+The separately specified [sparse temporal-context pilot](RALLY_TEMPORAL_CONTEXT_REPORT.md)
+under #240 tests whole-window scene and actor context before another full native
+contact pass. It preserves the original 0/2 result and supplies no exact contact
+or complete-reference evidence.
+
 The separate [metadata diagnostic census](RALLY_REFERENCE_DIAGNOSTICS_REPORT.md)
 under #238 preserves the sealed 0/2 result and all original uncertainties. It
 adds no image assessment, labels or relaxed scientific acceptance.
