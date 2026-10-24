@@ -321,6 +321,14 @@
       "task_id": "221",
       "verb": "submit"
     },
+    "completion235-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792853407,
+      "fingerprint": "aeb45864525dc9a659cd44af6bc7ecb17f5ca6930954f398ff55ba3d98e20a13",
+      "status": "needs_human",
+      "task_id": "235",
+      "verb": "plan"
+    },
     "events67-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730248,
@@ -6909,6 +6917,14 @@
       "fingerprint": "e967a2ceea846c97b2e67cc01800daa766fb88bba3e6d5af4d3e56f5298c62aa",
       "status": "needs_human",
       "task_id": "232",
+      "verb": "plan"
+    },
+    "spec-235-ce56f44b26570b741678d7ce71ac73c0d5a3326f24f15ac47171205fd416b1e7": {
+      "actor": "Ken0u",
+      "at": 1792853407,
+      "fingerprint": "a87da3e05fd96241e467c68239da3f3ead5bdeab54b8e25bc0f2f68cbacd9b6f",
+      "status": "needs_human",
+      "task_id": "235",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -18243,6 +18259,62 @@
         "pr_number": 233,
         "spec_hash": "f601c2656b03669dbcff953700c834f4e8c597c1691eb5fedcdd425c583b7884"
       }
+    },
+    "235": {
+      "epoch": 0,
+      "planned_at": 1792853407,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all issue/PR/grant/history for duplicates; preserve historical30 and dependency PR79 including its overlapping agent-queue path. Begin only after220/232 are fully delivered, matching configured-owner delegated frozen-scope authorization and a committed isolated MSI grant. Preserve root PROGRESS.md edits, all environments, data, processes and prior evidence.",
+          "Pin baseline6496a1a9cd48b7fa43b641c5479ceedbedd25ea0 and public220 chronology: same-invocation exact-main dispatch is proven, but successful-main reconciliation and publisher acknowledgement each required one ordinary wake. Missing completion-event cause remains unknown. Reproduce pending-to-terminal behavior with fake transport/state before credentials or live execution of new code.",
+          "Add a separate workflow_dispatch-only observer and a bounded launch step after successful ordinary controller integration. All privileged code/config comes from main, checkout persists no credentials, input values travel through environment/JSON rather than shell expressions. No PR/source checkout or execution, Project token, PAT/new secret, dependency, purchase or paid service. Observer has only contents read and actions write, the latter solely for normal-controller dispatch; it cannot merge, edit issues, upload datasets, write coordination or dispatch/rerun checks/publishing.",
+          "Select only journalled verifying_main tasks or done/delivery_pending tasks with valid immutable source, epoch, spec/submission/integration binding. Freeze a trusted coordination-history SHA and exact task/source/stage/epoch/attempt identity. Validate immutable evidence against current trusted history/state before observation and again before waking. Reject malformed, stale/cross-source/epoch/spec/status/attempt, absent journal, unsupported external recovery or wrong repository/ref/event/run identity. Preserve stricter historical external-recovery evidence; unsupported recovered cases stay with normal events/schedule.",
+          "Match main CI only by trusted ci.yml workflow identity, main branch, correct push head or exact Verify source dispatch title; publisher only by trusted release.yml main workflow-dispatch identity and exact Private candidate source title. Observe API terminal status without accepting caller-supplied success. Bind each selected run ID/attempt/source and re-read it before wake; changed/malformed/ambiguous observations are explicit unknown outcomes, never verification evidence.",
+          "Observer polls at most90 minutes at30-second intervals, outside serialized controller concurrency; workflow timeout95 minutes. This accommodates current35-minute CI and sequential5/20/45-minute publisher jobs without changing their limits. Missing runs, API errors, stale evidence and timeouts preserve explicit receipts/logs and stop without CI/publisher retry or accepted success. Respect already active controller lifetimes and revalidate after waiting; at most one ordinary controller dispatch per observer. Scheduled and existing workflow_run reconciliation remain fallback paths.",
+          "Launcher reuses known matching pending/running/terminal observers rather than repeatedly restarting them; include source/stage/epoch/attempt in deterministic run names and workflow concurrency. Bound listing and targets, fail conservatively on incomplete/malformed listings. Dispatch once per launch; preserve lost-response uncertainty and document eventual-consistency/race limits. No claim of exactly-once network effects or atomic GitHub/controller transaction. Duplicate harmless normal wakes cannot authorize an extra merge or retry outside unchanged controller policy.",
+          "Do not modify coordinator/queue/policy, CI or publisher workflows, exact checks, review vetoes/optional-review policy, retry counts, timeouts, ownership/reservations, permissions of existing workflows, credentials, scientific labels or model/deployment policy. Publisher failure wakes may exercise only its unchanged existing three-attempt delivery policy; observer adds no retries. No raw coordination edit, manual merge, direct main push or fabricated review.",
+          "Add meaningful fake-transport tests for normal pending and terminal observation, both stages, failure/cancellation, wrong source/repo/workflow/branch/event/attempt, malformed/stale/recovered task evidence, missing runs, bounded timeout, active controller wait, lost dispatch responses, duplicate launcher reuse and allowed API mutation surface. Assert trusted workflow permissions/checkouts/input handling and real Actions-only entrypoint. Run focused/full project checks with original venv, fake transport and cleared credentials, pinned isolated roots/data, authentic process lifetimes and terminal audit.",
+          "Publish code/tests and aggregate report with chronology, official GitHub references, generated before/after behavior and limitations. Normal controller integrates only after exact PR CI, then exact main CI and independently verified complete public package/both-image delivery. Its own transition uses old trusted code; allow normal wakes if needed and distinguish generated behavior from later prospective live observer evidence. No claim of fixed event cause, new scientific supervision, model accuracy, completed rally references or full application correctness.",
+          "Runtime3h from fresh grant, new retained outputs/worktree/tooling at most1GiB and3repair rounds. No research/inference/training, media/image/label/holdout access or transfer, model promotion, production deployment, source-data/annotation edits, new paid services/dependencies, package downloads outside existing checks or unrelated roadmap changes."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "220",
+          "232"
+        ],
+        "exclusions": [
+          "No changes outside six granted paths; no coordinator/queue/policy/CI/publisher behavior or retry changes, credentials/new secrets, manual merge, direct main/coordination writes, PROGRESS.md access/change, scientific data/model access, paid service or fabricated approval."
+        ],
+        "limits": {
+          "max_output_bytes": 1073741824,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Observe pending exact-source main CI and public candidate completion in a separate bounded trusted workflow, then wake only the ordinary controller without relying on missing completion events.",
+        "paths": [
+          ".github/workflows/agent-queue.yml",
+          ".github/workflows/completion-observer.yml",
+          "scripts/observe_completion.py",
+          "scripts/devops/completion_observer.py",
+          "tests/test_completion_observer.py",
+          "docs/CONTROLLER_COMPLETION_OBSERVER_REPORT.md"
+        ],
+        "priority": 10,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Fake transport safety and completion/unknown/timeout regressions; all required local project checks with credential-free isolated execution.",
+          "Exact PR/main CI, normal controller integration and independent complete public delivery; honest distinction between generated and prospective live observation."
+        ]
+      },
+      "spec_hash": "f461341382f3e570c0a5a969956ac60300f501970532b06eab3aae5cfd3afac5",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
