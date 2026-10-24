@@ -6377,6 +6377,15 @@
       "task_id": "204",
       "verb": "submit"
     },
+    "source220-data-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792850571,
+      "epoch": 1,
+      "fingerprint": "68ff4b729834393ba8869618e041a13ef9ee52d5ebaac29c6f9fd1b4303efec4",
+      "status": "running",
+      "task_id": "220",
+      "verb": "checkpoint"
+    },
     "source220-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792849356,
@@ -17499,16 +17508,22 @@
     "220": {
       "checkpoint": {
         "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
-        "remaining": "Verify original-host immutable inputs/process/Store evidence; bounded metadata stage, source/usage inspection and exact metadata hash gate; private label byte/ordinal accounting; complete project checks, exact PR/main CI/controller integration and independent public delivery. Extra plan request source220-plan-v1 was malformed/rejected without effect; ordinary trusted issue planning succeeded. No retry of data/CI, no manual merge.",
-        "summary": "Committed epoch-1 grant confirmed. Four-path two-stage orchestration and metadata-only source manifest prepared in isolated worktree; 72 generated focused tests pass. No original or revised CSV contents, media, predictions or weights opened. Runtime/inputs will be sealed before actual metadata/comparison. Native bases remain null and eligibility false."
+        "evidence": {
+          "comparison_sha256": "64e0a9dbddd9151210451ea430960396933799ef427b2822cef25dc58aae655f",
+          "metadata_gate_sha256": "395ec73744be308efc20712c0eca454b3663694d89fd8ee174f5758c56315ef9",
+          "runtime_context_sha256": "9047b5b292745120bab4e17ce1da5549d8818047cebb4eae79974a9af059e660"
+        },
+        "head_sha": "ca51050",
+        "remaining": "Complete all project checks, publish only the four granted code/public-metadata/aggregate-report paths, exact PR/main CI/controller integration and independently verified package/both-image delivery. No new scientific work, CI/publishing retry or manual merge.",
+        "summary": "Actual private revision accounting complete using producer ca51050. All29 literal cases and12656 records per side retained; zero raw exclusive ordinals; all29 byte strings differ without a numeric-change/accuracy inference. All29 native comparisons withheld, bases null, quarantine preserved and all eligibility flags false.39 unique anonymous requests/303883 bytes;342498 private label-copy bytes. Source-code visibility inversion concern retained without repairing labels. First metadata inventory-selection failure preserved; one bounded code repair reused its8 complete responses without repeated requests. All three new Store jobs terminal and original lifetimes absent; original input and reviewed/prediction/weights metadata unchanged. Independent private CSV/ordinal/hash arithmetic matches every case. Full generated regression suite running after117 focused passes."
       },
-      "checkpoint_at": 1792849967,
+      "checkpoint_at": 1792850571,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7885fb547e985514a2735ffb1ac985ce37e5443a",
         "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
         "epoch": 1,
-        "expires_at": 1792860767,
+        "expires_at": 1792861371,
         "granted_at": 1792849495,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
