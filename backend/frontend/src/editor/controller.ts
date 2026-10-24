@@ -74,22 +74,56 @@ export function createEditorController() {
     selectionBusy = false;
   let edits = 0,
     librarySequence = 0,
-    viewVersion = 0;
+    viewVersion = 0,
+    evaluationVersion = 0;
   let automaticAnalysis = true;
+  const evaluatedStages = ["contacts", "shuttle", "recognition"] as const;
+  function evaluationInputs(state: EditorSnapshot) {
+    return JSON.stringify([
+      state.video?.id ?? null,
+      state.analysisEnabled,
+      state.partIndex,
+      ...evaluatedStages.map((stage) => state.runs[stage]?.id ?? null),
+    ]);
+  }
+  function cancelEvaluation() {
+    ++evaluationVersion;
+    evaluation.cancel();
+  }
+  function invalidateEvaluation() {
+    cancelEvaluation();
+    publish({ report: null });
+  }
   // A review view owns its async reads independently of the selected video.
   // Ordinary frame ticks do not invalidate reads; only window/mode changes do.
   function invalidateView() {
     ++viewVersion;
     resource.cancel();
-    evaluation.cancel();
+    invalidateEvaluation();
   }
   const snapshot = store.getSnapshot;
   function publish(patch: Partial<EditorSnapshot>) {
     if (disposed) return;
     const previous = snapshot();
     const next = { ...previous, ...patch };
+    if (evaluationInputs(previous) !== evaluationInputs(next)) {
+      // Every accepted transition fences even A -> B -> A input replacement.
+      // Polling with identical evaluated inputs keeps a completed report valid.
+      cancelEvaluation();
+      next.report = null;
+    }
     if (JSON.stringify(previous) !== JSON.stringify(next)) store.publish(next);
   }
+  let previousDraft = drafts.getSnapshot();
+  drafts.subscribe(() => {
+    const next = drafts.getSnapshot();
+    const changed =
+      previousDraft?.owner !== next?.owner ||
+      previousDraft?.revision !== next?.revision ||
+      previousDraft?.value !== next?.value;
+    previousDraft = next;
+    if (changed) invalidateEvaluation();
+  });
   function notice(message: string, error = false) {
     publish({ notice: message, error });
   }
@@ -654,33 +688,71 @@ export function createEditorController() {
   }
   async function evaluate() {
     const owner = scope.current();
-    if (!owner) return;
+    if (!owner || disposed) return;
+    let requestVersion = evaluationVersion;
     try {
       const v = requireSaved(),
         r = snapshot().runs,
-        version = edits;
+        version = edits,
+        revision = drafts.getSnapshot()!.revision,
+        inputs = evaluationInputs(snapshot());
       if (!r.contacts && !r.shuttle && !r.recognition)
         throw Error("Run shuttle tracking and contact proposals first.");
+      const runIds = {
+        contacts: r.contacts?.id ?? null,
+        shuttle: r.shuttle?.id ?? null,
+        recognition: r.recognition?.id ?? null,
+      };
+      invalidateEvaluation();
+      requestVersion = evaluationVersion;
       await evaluation.run(
         owner,
-        async (signal) =>
-          object(
+        async (signal) => {
+          const report = object(
             await api.request("post", "/api/videos/{video_id}/evaluate", {
               path: { video_id: v.id },
               signal,
               json: {
-                contacts_run_id: r.contacts?.id ?? null,
-                shuttle_run_id: r.shuttle?.id ?? null,
-                recognition_run_id: r.recognition?.id ?? null,
+                contacts_run_id: runIds.contacts,
+                shuttle_run_id: runIds.shuttle,
+                recognition_run_id: runIds.recognition,
               },
             }),
-          ),
+          );
+          if (
+            report.video_id !== v.id ||
+            report.annotation_revision !== revision ||
+            evaluatedStages.some((stage) => {
+              const result = report[stage];
+              return runIds[stage] === null
+                ? result != null
+                : !result ||
+                    typeof result !== "object" ||
+                    Array.isArray(result) ||
+                    (result as ObjectData).run_id !== runIds[stage];
+            })
+          )
+            throw Error(
+              "Evaluation response does not match the selected source, saved revision or input runs. Reload the saved revision and measure again.",
+            );
+          return report;
+        },
         (report) => {
-          if (version === edits) publish({ report });
+          const draft = drafts.getSnapshot();
+          if (
+            requestVersion === evaluationVersion &&
+            version === edits &&
+            draft?.revision === revision &&
+            !draft.dirty &&
+            !draft.saving &&
+            inputs === evaluationInputs(snapshot())
+          )
+            publish({ report });
         },
       );
     } catch (e) {
-      if (scope.isCurrent(owner)) handle(e);
+      if (scope.isCurrent(owner) && requestVersion === evaluationVersion)
+        handle(e);
     }
   }
   function reviewPart(index: number) {
@@ -729,13 +801,13 @@ export function createEditorController() {
       void refresh();
     }, 2000);
     return () => {
+      invalidateEvaluation();
       disposed = true;
       selectionBusy = true;
       window.clearInterval(timer);
       scope.clear();
       load.cancel();
       resource.cancel();
-      evaluation.cancel();
     };
   }
   return {
