@@ -7351,6 +7351,14 @@
       "task_id": "243",
       "verb": "plan"
     },
+    "spec-246-a6e03fb5b306519bfa65751bc52a3350e3966c77e5525fe028b4069aae74f515": {
+      "actor": "Ken0u",
+      "at": 1792877431,
+      "fingerprint": "147f3733097b7853d3235419f8f63bfcac05ea40831c7ca920a23859e89d15fa",
+      "status": "ready",
+      "task_id": "246",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -19293,7 +19301,7 @@
     },
     "246": {
       "epoch": 0,
-      "planned_at": 1792877266,
+      "planned_at": 1792877431,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
