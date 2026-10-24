@@ -6385,6 +6385,26 @@
       "task_id": "220",
       "verb": "human-approved"
     },
+    "source220-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792849495,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7885fb547e985514a2735ffb1ac985ce37e5443a",
+        "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
+        "epoch": 1,
+        "expires_at": 1792860295,
+        "granted_at": 1792849495,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28"
+      },
+      "epoch": 1,
+      "fingerprint": "de467b7b6fdf49f8dbb9efdecb296956eed2ef78ff6cdeaca911421f5558b403",
+      "status": "granted",
+      "task_id": "220",
+      "verb": "next"
+    },
     "source220-plan-v1": {
       "actor": "Ken0u",
       "reason": "spec fields must match the version 1 task contract",
@@ -17468,7 +17488,18 @@
       }
     },
     "220": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7885fb547e985514a2735ffb1ac985ce37e5443a",
+        "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
+        "epoch": 1,
+        "expires_at": 1792860295,
+        "granted_at": 1792849495,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792849356,
@@ -17531,7 +17562,7 @@
         ]
       },
       "spec_hash": "e269c705d0478e7f46bb1899f277c8c9c8f73879e502f44b9268144ce4367d28",
-      "status": "ready"
+      "status": "running"
     },
     "221": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40068974349",
