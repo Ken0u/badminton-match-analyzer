@@ -410,10 +410,28 @@
       "task_id": "248",
       "verb": "plan"
     },
+    "export248-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792879590,
+      "epoch": 1,
+      "fingerprint": "a7bf73e95b04c38048d2d542a97d02a0b18914c8cbd5f532fe6584fb95971aec",
+      "status": "running",
+      "task_id": "248",
+      "verb": "checkpoint"
+    },
     "export248-generated-assets-scope-v1": {
       "actor": "Ken0u",
       "reason": "scope expansion cannot change task semantics",
       "status": "rejected",
+      "verb": "extend-scope"
+    },
+    "export248-generated-assets-scope-v2": {
+      "actor": "Ken0u",
+      "at": 1792879590,
+      "epoch": 1,
+      "fingerprint": "bb2fb935087642f60a26fb6516e279fccadb06741f3693b1fec5b5d72ba36276",
+      "status": "running",
+      "task_id": "248",
       "verb": "extend-scope"
     },
     "export248-targeted-next-v1": {
@@ -19491,16 +19509,24 @@
       }
     },
     "248": {
+      "checkpoint": {
+        "baseline_failure_sha256": "a4c590b7aa643322bf0d71cd5e0865d0ff8f46f5418cc5336f15364b279a6101",
+        "branch": "codex/issue-248-keep-known-queued-running-media-export-c",
+        "head_sha": "9c18852f62efdbd828de74e7faa3d6fb8f21a3f1",
+        "remaining": "committed asset-path extension, stage checks, generated export browser/cleanup verification, full Python/Ruff/pip/repository checks, exact CI/controller integration and complete independent public delivery. No research access/image dispatch or PROGRESS.md edits.",
+        "summary": "Generated fake-timer baseline reproduces stopped polling after both network and503 failures (2 expected failures preserved). Bounded GET recovery and separate read/operation errors implemented; all46 focused export tests and the complete frontend unit/type/contract/production build pass. No POST retry. Existing locked tooling/browser cache reused without downloads. First asset scope request rejected for changing acceptance text; path-only replacement pending. No generated tracked asset edited before acknowledgement."
+      },
+      "checkpoint_at": 1792879590,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9c18852f62efdbd828de74e7faa3d6fb8f21a3f1",
         "branch": "codex/issue-248-keep-known-queued-running-media-export-c",
         "epoch": 1,
-        "expires_at": 1792890044,
+        "expires_at": 1792890390,
         "granted_at": 1792879244,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "91222ec1dabbbeca46f4e586d1ed1ecdc826d7dc9a3c11b3e6b5b88f1aeaf473"
+        "spec_hash": "41cda1989f9ed04177ac52c4217a7cf30dc98734aeb59caf536809e403809850"
       },
       "epoch": 1,
       "planned_at": 1792878078,
@@ -19539,7 +19565,9 @@
         "paths": [
           "backend/frontend/src/editor/exports/controller.ts",
           "backend/frontend/tests/exports.test.mjs",
-          "docs/BUG_REVIEW.md"
+          "docs/BUG_REVIEW.md",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json"
         ],
         "priority": 40,
         "resources": [],
@@ -19549,7 +19577,7 @@
           "Exact PR/main CI, controller integration and independent complete public delivery; no annotation-accuracy claim."
         ]
       },
-      "spec_hash": "91222ec1dabbbeca46f4e586d1ed1ecdc826d7dc9a3c11b3e6b5b88f1aeaf473",
+      "spec_hash": "41cda1989f9ed04177ac52c4217a7cf30dc98734aeb59caf536809e403809850",
       "status": "running"
     },
     "62": {
