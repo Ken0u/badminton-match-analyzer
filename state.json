@@ -4359,6 +4359,13 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "media-cache-repair-claim-v1": {
+      "actor": "Ken0u",
+      "at": 1792864861,
+      "fingerprint": "876cc273d0b72eca47c140ecece44d2dce0bbf51f8724f2c7656821778c49914",
+      "status": "idle",
+      "verb": "next"
+    },
     "media-cache-repair-plan-v1": {
       "actor": "Ken0u",
       "at": 1792864679,
