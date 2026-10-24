@@ -1132,6 +1132,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "laptop215-static-scope-v1": {
+      "actor": "dootz1",
+      "at": 1792811725,
+      "epoch": 1,
+      "fingerprint": "272fd11d466af3b3471be7d41d917f0b3f468ad2dc0dfe85d593c14ab19b096b",
+      "status": "running",
+      "task_id": "215",
+      "verb": "extend-scope"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -16289,7 +16298,7 @@
         "granted_at": 1792811564,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "cuda-ready-01a16bd6",
-        "spec_hash": "586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca"
+        "spec_hash": "2e35dee5ef586317e0d5d528491c589fead9e96d314ab5dec20d9c4a4a34e197"
       },
       "epoch": 1,
       "planned_at": 1792793740,
@@ -16321,7 +16330,8 @@
         "outcome": "Recover automatic library synchronization after a transient video-list read failure following a completed import.",
         "paths": [
           "backend/frontend/src/library/controller.ts",
-          "backend/frontend/tests/library.test.mjs"
+          "backend/frontend/tests/library.test.mjs",
+          "backend/badminton/static/"
         ],
         "priority": 20,
         "resources": [],
@@ -16331,7 +16341,7 @@
           "Frontend unit/type checks and required project checks; exact PR/main CI, controller merge and independent full public package/source/both-image delivery."
         ]
       },
-      "spec_hash": "586fa3aac0e425c23b04ed456408707a7498c06bf7b870319bbaa628e71820ca",
+      "spec_hash": "2e35dee5ef586317e0d5d528491c589fead9e96d314ab5dec20d9c4a4a34e197",
       "status": "running"
     },
     "62": {
