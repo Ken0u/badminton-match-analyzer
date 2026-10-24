@@ -410,6 +410,12 @@
       "task_id": "248",
       "verb": "plan"
     },
+    "export248-generated-assets-scope-v1": {
+      "actor": "Ken0u",
+      "reason": "scope expansion cannot change task semantics",
+      "status": "rejected",
+      "verb": "extend-scope"
+    },
     "export248-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792879244,
