@@ -5624,6 +5624,13 @@
       "task_id": "242",
       "verb": "human-approved"
     },
+    "rally242-registration-v1": {
+      "actor": "Ken0u",
+      "at": 1792868528,
+      "fingerprint": "48716302d142d57fe8b5bdadd1936a27bf225970e9f856cdbdc060c60686b91f",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -22269,16 +22276,20 @@
         "rally228-aggregate": "853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126",
         "rally228-context": "eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59",
         "rally228-index": "558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070",
-        "rally238-aggregate": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1"
+        "rally238-aggregate": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1",
+        "rally240-context": "02ebc417010c63b8bfd681c88905e51dd48907dfebb7bb11f0c2520bf2d408f0",
+        "rally240-doubles-gallery": "f8a95b425b9604d12dcc14dabd1c4382ead327266a0e47fa5cf6ff3754116e6b",
+        "rally240-plan": "c82d669a854448d0f31aa917c5d45161cee4ce0096381f2c3bae5519f9b03ed7",
+        "rally240-singles-gallery": "ac3c401a2a1ab4ad4b348e45e5a53f77fb6c3413ab848295c1f0e2c02e689bc0"
       },
       "capabilities": [
-        "cpu",
-        "windows",
         "amd64",
-        "review-inputs"
+        "cpu",
+        "review-inputs",
+        "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1792865039,
+      "registered_at": 1792868528,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
