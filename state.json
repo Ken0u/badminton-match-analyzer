@@ -5853,6 +5853,15 @@
       "task_id": "218",
       "verb": "submit"
     },
+    "roadmap230-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792843486,
+      "epoch": 1,
+      "fingerprint": "d921443b7f7b22334c71dcc9309becac8cc965e568546c6dceb973fbc6a2d44e",
+      "status": "running",
+      "task_id": "230",
+      "verb": "checkpoint"
+    },
     "roadmap230-next-v1": {
       "actor": "Ken0u",
       "at": 1792843105,
@@ -5880,6 +5889,15 @@
       "status": "ready",
       "task_id": "230",
       "verb": "plan"
+    },
+    "roadmap230-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792843493,
+      "epoch": 1,
+      "fingerprint": "66a7c2e9b098a2dd917cd34ae8764941b1a6c925cdebee613cabc4454e7ee8d0",
+      "status": "review",
+      "task_id": "230",
+      "verb": "submit"
     },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
@@ -17668,12 +17686,21 @@
       }
     },
     "230": {
+      "checkpoint": {
+        "branch": "codex/issue-230-refresh-the-shared-roadmap-and-bug-revie",
+        "evidence_sha256": "c3daf29266cf4679cefbd766feeda2139b186415dae41436b8c24f3258941536",
+        "head_sha": "06f766679e8a01dc8af87d875ceb77f149ef4ed9",
+        "pr_number": 231,
+        "remaining": "Exact PR CI, controller merge, exact-main CI and independent complete public delivery verification.",
+        "summary": "Two granted documentation files committed; historical sections unchanged. Repository/text/link/dependency/diff checks passed. No research access or new tests for prose-only changes."
+      },
+      "checkpoint_at": 1792843486,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4f0a93b0a952bd0d256cb602b915d5a299cc63b0",
         "branch": "codex/issue-230-refresh-the-shared-roadmap-and-bug-revie",
         "epoch": 1,
-        "expires_at": 1792853905,
+        "expires_at": 1792854286,
         "granted_at": 1792843105,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -17682,6 +17709,7 @@
       "epoch": 1,
       "planned_at": 1792842449,
       "planned_by": "Ken0u",
+      "pr_number": 231,
       "spec": {
         "acceptance": [
           "Search open/closed issues, PRs, coordination grants and committed reports for duplicate documentation work. This follows delivered189 and requires228,204,202,215,218 and221 Done with delivery_pending=false before implementation. Obtain a genuine isolated documentation grant; preserve original checkout changes and deprecated PROGRESS.md without opening or editing it.",
@@ -17729,7 +17757,13 @@
         ]
       },
       "spec_hash": "e7374256f3d2f1cd8a83e8bf6de3a3eb1fa35358cfca5567cc3deba5ecac3102",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4f0a93b0a952bd0d256cb602b915d5a299cc63b0",
+        "head_sha": "06f766679e8a01dc8af87d875ceb77f149ef4ed9",
+        "pr_number": 231,
+        "spec_hash": "e7374256f3d2f1cd8a83e8bf6de3a3eb1fa35358cfca5567cc3deba5ecac3102"
+      }
     },
     "62": {
       "checkpoint": {
