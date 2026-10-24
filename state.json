@@ -5616,6 +5616,15 @@
       "task_id": "240",
       "verb": "release"
     },
+    "rally242-checkpoint-code-v1": {
+      "actor": "Ken0u",
+      "at": 1792869794,
+      "epoch": 1,
+      "fingerprint": "c1b0fa47c669a508f5ec43d477c8b1ae841509d49efe0cbb11b3b306e5a09b61",
+      "status": "running",
+      "task_id": "242",
+      "verb": "checkpoint"
+    },
     "rally242-explicit-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792866106,
@@ -19023,12 +19032,24 @@
       "status": "blocked"
     },
     "242": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/rally242-grant-v1.json",
+          ".cache/rally242-check-focused-v2/results.json"
+        ],
+        "branch": "codex/issue-242-complete-the-six-specifically-authorized",
+        "head_sha": "876bf845e6386368742d6668b6882c9d274ca08d",
+        "new_image_bytes_transferred": 0,
+        "scientific_sessions_started": 0,
+        "summary": "Adopted the all-12-checks-passing draft #241 source into the genuine #242 branch. Continuation v2 in generated verification; 449 focused tests pass before additional reuse/fail-stop fixtures. No real prefix reuse, assessor, payload reservation or image transfer started. Original #240 evidence/deadline unchanged; its actual deadline is 20:59:41 UTC, and the fresh #242 interval is 19:04:53\u201323:04:53 UTC October24. Remaining: finish tests, committed consumer and prospective seals, six authorized readings, global audit, reports and normal integration/delivery."
+      },
+      "checkpoint_at": 1792869794,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "af061f4fcb90833acff971e733b094bde0ba80ae",
         "branch": "codex/issue-242-complete-the-six-specifically-authorized",
         "epoch": 1,
-        "expires_at": 1792879493,
+        "expires_at": 1792880594,
         "granted_at": 1792868693,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
