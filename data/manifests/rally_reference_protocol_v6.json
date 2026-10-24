@@ -1,0 +1,72 @@
+{
+  "schema_version": 6,
+  "task": 228,
+  "purpose": "Explicit one-attempt recovery of preserved targeted source references; development only",
+  "frozen226_commit": "5014296edb6b87282036b79d824fb0954470141f",
+  "frozen226_files": {
+    "backend/badminton/rally_reference_continuation.py": "0ba0b282230c19323e8987ff8e71596f6435448151d42941ab78b04af9b6474f",
+    "scripts/continue_rally_references.py": "974f2796f2d109398cc247dccca578d0e1376647ac6185a6311403c2ba2443d4",
+    "data/manifests/rally_reference_protocol_v5.json": "715d85e1653a6ce6d529155669506c31db850cfee6757ff662c940ce80d8f75d"
+  },
+  "original_public_protocols": {
+    "1": "8de82294d845aa334f1518ecdc3ce3ac6142ef92a32d9da52e45f5c5bcb9595b",
+    "2": "f8ba7d7795c18a1fa54e08e980d453549bdf2578606559f50365ef4095db88e5",
+    "3": "f273d92d3f81306fee46eabb9bb128e85c767243840337ebac316b3cf7224c58",
+    "4": "35cbf2d61a9b86e2e9b365353e1b49492529a0e6a10ea87b8941ee8693217779",
+    "5": "715d85e1653a6ce6d529155669506c31db850cfee6757ff662c940ce80d8f75d"
+  },
+  "archived_context_sha256": "795b230a8b6836742c9b776edb5ac30de47307c94e4960213c07ed1f4d4c63a6",
+  "archived_integrity_sha256": "0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e",
+  "scientific_producer_commit": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
+  "scientific_acceptance_commit": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
+  "inherited_deadline": 1792860317,
+  "no_renewed_scientific_time": true,
+  "original_successes": 512,
+  "retained_target_successes": 235,
+  "archived_completed_identities": 993,
+  "remaining_singles_chunks": {
+    "first": 151,
+    "last": 171,
+    "count": 21
+  },
+  "replacement": {
+    "chunk": 151,
+    "count": 1,
+    "requires_actual_exit_and_prospective_timestamp": true,
+    "additional_replacements": false
+  },
+  "native_frames": {
+    "go2uajSiBnE": 991,
+    "H1setLK1tig": 541
+  },
+  "prior_attempted_image_bytes": 7991688001,
+  "planned_suffix_image_bytes": 185872144,
+  "projected_cumulative_image_bytes": 8177560145,
+  "limits": {
+    "max_images_per_session": 20,
+    "max_session_image_bytes": 9437184,
+    "max_controlled_encoded_request_bytes": 14680064,
+    "encoded_envelope_reserve_bytes": 2097152,
+    "max_cumulative_image_bytes": 8589934592,
+    "max_cumulative_output_bytes": 8589934592,
+    "max_parallel_assessors": 1,
+    "pacing_seconds": 5,
+    "stop_new_dispatch_before_deadline_seconds": 60,
+    "implicit_retries": false,
+    "paid_services": false
+  },
+  "destination": "Same existing ChatGPT-authenticated Codex CLI/provider/model/authentication only",
+  "context": "Original native PNGs, unchanged public scientific rubric/schema, minimal native identities and same-stream own continuity only; no other labels or predictions",
+  "archived_failure": "Retain failed151 output and old STOP fence unchanged; never repair labels or promote failed membership. Charge old151 and replacement151 separately.",
+  "acceptance": "Both complete combined target indexes and global1014 unique completed execution identities including archived failed151 before unchanged frozen targeted_reference_status; use only256 validated targets. Preserve both source slots and unknowns.",
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  },
+  "archived226_inventory": {
+    "files": 412,
+    "sha256": "7640e612c4a430e1f3077396e5c69cdd1af51044eb5ddc269c87580a7ee0f2b6"
+  }
+}

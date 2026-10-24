@@ -1,5 +1,99 @@
 # Complete-rally source reference pilot
 
+## Explicit recovery after preserved image-identity failure
+
+[Issue #228](https://github.com/Ken0u/badminton-match-analyzer/issues/228) and its
+separate [v6 protocol](../data/manifests/rally_reference_protocol_v6.json)
+prepare only the 21 remaining unchanged singles targets, 151 through 171.
+The failed 151 output, old dispatch fence, original contexts and missing indexes
+remain unchanged. The recovery references 235 validated targets in place and
+permits one prospectively planned replacement of failed 151 after actual exit
+proof. Any new failure stops dispatch without another replacement.
+
+The [recovery command](../scripts/recover_rally_references.py) and its
+[metadata rules](../backend/badminton/rally_reference_recovery.py) retain the
+same scientific producer, schema, rubric and frozen acceptance. A separate
+opaque inventory binds all 412 archived files, including failed output bytes,
+without parsing scientific labels. Both cumulative limits remain 8 GiB.
+The 185,872,144-byte suffix projects 8,177,560,145 cumulative attempted image
+bytes, counting old failed 151 and its replacement separately. Scientific time
+does not renew: the inherited deadline is 16:45:17 UTC on October 24, 2026,
+with no new dispatch in its final 60 seconds.
+
+The recovery requires a genuine grant, committed clean consumer snapshot,
+whole-source/native/Store/process/context proof and prospective owning-issue
+timestamp before dispatch. Final comparison remains sealed until both complete
+combined target indexes and all 1,014 completed execution identities verify;
+the failed reference contributes only to execution history. Scientific status
+uses only the 256 validated targets and the unchanged frozen acceptance.
+
+### Completed execution and unchanged scientific result
+
+The [prospective owning-issue seal](https://github.com/Ken0u/badminton-match-analyzer/issues/228#issuecomment-6383452745)
+precedes every recovery dispatch. Tested consumer
+`1c8905ff40106b531c8e9f98856f79ee5105c648` ran from a separate clean snapshot;
+context SHA256 is
+`eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59`.
+The original schema, rubric, provider/model/authentication, native images and
+scientific acceptance remained unchanged.
+
+All **21 recovery sessions passed validation**, including the single planned
+replacement 151. The actual run exited successfully; its owner and all child
+lifetimes are independently absent. No further replacement, implicit retry,
+process signal or deadline extension occurred. The failed original 151 output
+and old fence remain intact. Both complete target indexes and all 1,014
+completed execution identities passed the global provenance audit before
+scientific labels were compared. The failed reference contributes only to
+execution history, never to scientific acceptance.
+
+| Completed evidence | Result |
+| --- | ---: |
+| Original exhaustive assessment successes | 512 |
+| Validated targeted references, both sources | 256 / 256 |
+| New recovery sessions | 21 / 21 |
+| Retained source slots / native frames | 2 / 1,532 |
+| Completed global execution identities, including archived failures | 1,014 |
+| Cumulative attempted original-image bytes | 8,177,560,145 |
+| Retained outputs at audit, bytes | 2,366,472,182 |
+| Scientifically complete references | 0 / 2 |
+| Slots with all requested observed-contact labels supported | 0 / 2 |
+
+| Source | Required / inspected target frames | Frozen incomplete reasons |
+| --- | ---: | --- |
+| Singles | 991 / 991 | Overlapping contact intervals; unresolved targeted source evidence; unsupported opening or terminal boundary |
+| Doubles | 541 / 541 | Unresolved targeted source evidence; unsupported opening or terminal boundary |
+
+This is now a completed source-assessment execution with **zero defensible
+complete references under the unchanged protocol**. It is distinct from #226's
+missing-session outcome. Full frame coverage and successful transport do not
+resolve contacts, source uncertainty or rally boundaries. The observed-contact
+support flag does not establish coverage of every family/side combination.
+No unknown was converted to a negative, neither source was dropped, and the
+scientific criterion was not relaxed after these results.
+
+The actual frozen audit exited successfully. Private aggregate SHA256:
+`853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126`;
+complete combined-index SHA256:
+`558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070`.
+Original labels, failed outputs and all per-frame evidence remain private and
+unchanged. Historical incomplete attempts remain preserved. The
+[#226 delivery record](https://github.com/Ken0u/badminton-match-analyzer/issues/226#issuecomment-6383257027)
+verifies that earlier software delivery separately.
+
+Software verification passes **393 focused and 2,608 full tests, with four
+optional skips**, plus Ruff, formatting, dependency, repository and diff checks.
+Independent observation verifies all 173 recorded test lifetimes absent.
+The final report is the only subsequent source change; tested code and protocol
+bytes remain unchanged. Final UTF-8/LF, JSON, local-link, credential-pattern and
+diff checks pass. Exact PR/main CI, controller integration and public delivery
+remain required.
+
+Agent judgments remain development evidence, not expert gold or automatic match
+accuracy. All four eligibility flags remain false; #62, #66, #67 and #71 remain
+incomplete. Further reference work must address unresolved evidence and
+boundaries through an independently specified source-review protocol; this
+completed recovery does not authorize another image pass or a weaker gate.
+
 ## Separately authorized targeted continuation
 
 [Issue #226](https://github.com/Ken0u/badminton-match-analyzer/issues/226)
