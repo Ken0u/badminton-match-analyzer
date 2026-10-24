@@ -16759,6 +16759,7 @@
       }
     },
     "221": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40068974349",
       "checkpoint": {
         "base_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
@@ -16787,7 +16788,7 @@
         "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792821311,
