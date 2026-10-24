@@ -5075,6 +5075,14 @@
       "task_id": "226",
       "verb": "submit"
     },
+    "rally228-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792837519,
+      "fingerprint": "bb1f3c7961f3f314728facd28eff0a154cae2de5e0e39685eb91bbbdc8ab6a20",
+      "status": "needs_human",
+      "task_id": "228",
+      "verb": "plan"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -6525,6 +6533,14 @@
       "fingerprint": "c49c2ab0c14cf2a4daa34ebfff4b727aced1f80cab353d066f8a705f09e91c96",
       "status": "needs_human",
       "task_id": "226",
+      "verb": "plan"
+    },
+    "spec-228-be579b153bb17665b1cfa7dabe7bc012173fd58f60f4e787d5fca85d7cccb788": {
+      "actor": "Ken0u",
+      "at": 1792837519,
+      "fingerprint": "f0306676385db622e2394a049a97848d0b08eeeb2cfcfa54c2dead9c07e5406e",
+      "status": "needs_human",
+      "task_id": "228",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -17373,6 +17389,77 @@
         "pr_number": 227,
         "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6"
       }
+    },
+    "228": {
+      "epoch": 0,
+      "planned_at": 1792837519,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Depend on delivered #226 / PR227. Obtain configured-owner frozen-scope authorization and a genuine fresh grant before implementation or scientific access. Apply the current explicit owner delegation transparently, without asserting personal human review. Preserve all predecessor tasks, contexts, deadlines, protocols, original outputs, source identities, failed attempts and fences. No second implementation per host.",
+          "Preserve the same 1532 native original PNGs (991 singles/541 doubles), exact native frame/PTS/timebase/orientation membership, fixed target plan0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b and original two source slots. Reuse all512 original and235 validated targeted successes in place. Dispatch only unchanged singles chunks151..171 (21 sessions). Old151 remains a failed reference, never repaired or promoted. The sole allowed replacement is new151 after actual old-owner/child exit proof and prospective plan; no automatic retries or further replacement after any new failure.",
+          "Add a separate v6 recovery protocol and reproducible new recovery command/module. Leave v1-v5, original scientific producer eebbe210c83aefb9d467e3740dbf1a39f161ac2a, frozen acceptance6cb7e4fa13ed591322e48b9de96c139d91cb41a8 and frozen226 consumer5014296edb6b87282036b79d824fb0954470141f byte-identical. New command loads unchanged consumers only after verifying source hashes. Never clear or bypass an old dispatch fence or fill an old absent index. Exclusive new directories reference immutable old successes in place.",
+          "Before scientific access reverify whole original media/census/clocks, native packets/PNGs, original Store/terminal seals, all old contexts/tool/source hashes, current grant, exact235-target prefix, old151 actual exit/opaque output and final226 integrity0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e. Preserve all993 completed execution identities including failed151; original incomplete094/unknown exit code stays preserved separately. Context/runtime/protocol/consumer/CLI hashes, prefix/suffix, budget, deadline and generated verification must be prospectively timestamped on the owning issue before dispatch.",
+          "Use the same existing ChatGPT-authenticated Codex CLI/provider/model/authentication, same original images, schema and source-only scientific rubric. Each genuinely fresh ephemeral read-only session receives only assigned originals, minimal protocol/native identities and that same adjudication streams own continuity notes; validated150 may seed continuity after metadata proof. No other-stream labels/predictions/tools/filesystem/shell/network/account access or assessor delegation. Scrub unrelated credentials. No source/image transforms, decode, new source, provider/model/credential, paid service or public raw images/labels.",
+          "Retain original9MiB/20-image and14MiB controlled encoded-content guard with2MiB reserve, five-second sequential source pacing and at most one active assessor. Reserve every attempted byte before launch. Prior attempted7991688001 plus exact21-session suffix185872144 gives8177560145 bytes, including old151 and its replacement separately. Cumulative attempted images and retained outputs including all prior artifacts/helpers/worktrees/checks each stay at most8589934592 bytes. No renewed scientific time: stop new dispatch60seconds before min(fresh grant+8hours,1792860317); original226/212 deadlines never change. Any failure fences new output, retains original process/output, and requires actual independently observed exit, without signals or implicit restart.",
+          "Final scientific comparison remains sealed until both complete combined target indexes and global actual unique thread/session/process/image/event-log/transport/payload/context/lifetime proof pass. A successful recovery has1014 completed global execution identities including old failed151, but uses only256 validated target references. Read retained original labels only through the unchanged frozen acceptance path after this gate. Same-stream continuity and validation of each just-produced segment are narrow execution exceptions. Do not inspect or change old151 labels to repair their image identity; opaque hashes/unchanged validator diagnostics suffice.",
+          "Use unchanged frozen validate_assessment and targeted_reference_status without relaxed joins, actor links, membership, events, boundary/side/family or unknown handling. Report all1532 frames/two source slots, scientific incomplete reasons and six-family/side support separately. An inability to execute or validate remains an honest incomplete result with no scientific comparison. Never tune software acceptance to real outputs. Agent judgments remain development evidence, not expert gold or demonstrated automatic match accuracy.",
+          "Generated-only tests cover archived235-prefix preservation, failed151 exclusion and separate replacement charging, exact235/21 coverage, global uniqueness including failed lifetimes, old/new context intervals and fixed inherited deadline, opaque-hash mutation, exclusive outputs, source/tool seals, actual child lifecycle, dispatch fences, and complete-global-gate ordering. No real science or transport in tests. Required focused/full Python, Ruff, format, pip, diff and repository checks; exact PR/main CI, normal controller integration and public package/both-image verification with honest image HEAD limits. No manual merge or raw coordination edits.",
+          "Commit only new code/tests/v6 protocol and aggregate report. Keep all four training_allowed/independent_test_allowed/model_deployment_allowed/dataset_redistribution_allowed=false. No app truth/predictions/weights/model access, training/inference/promotion, consumed holdout63 or deprecated PROGRESS access. Preserve other collaborator state. Software delivery or an incomplete result never closes #62/#66/#67/#71. Do not chain another scientific replacement automatically if this one fails; preserve and diagnose under the unchanged acceptance."
+        ],
+        "artifacts": {
+          "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+          "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+          "rally212-frozen-target-plan": "0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b",
+          "rally226-context": "795b230a8b6836742c9b776edb5ac30de47307c94e4960213c07ed1f4d4c63a6",
+          "rally226-final-integrity": "0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "226"
+        ],
+        "exclusions": [
+          "No old context/deadline/fence/grant/output/index edits, relabeling, acceptance relaxation, new sources or transforms, alternative provider/model/credentials, paid service, model/application truth access or edits, process signals, public raw data, consumed holdout63 or PROGRESS access.",
+          "No protected automation/auth/workflow/publishing/policy/dependency change, raw coordination edit, fabricated review, routine manual merge, implicit retry or additional replacement after new failure."
+        ],
+        "limits": {
+          "absolute_scientific_deadline": 1792860317,
+          "max_image_payload_bytes": 8589934592,
+          "max_images_per_session": 20,
+          "max_locally_controlled_encoded_request_bytes": 14680064,
+          "max_output_bytes": 8589934592,
+          "max_parallel_assessors": 1,
+          "max_replacement_launches": 1,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 8,
+          "max_session_image_bytes": 9437184,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Recover only the 21 remaining unchanged targeted rally-assessment chunks after the preserved source-image identity failure, using one prospectively authorized replacement and unchanged scientific acceptance.",
+        "paths": [
+          "backend/badminton/rally_reference_recovery.py",
+          "scripts/recover_rally_references.py",
+          "tests/test_rally_reference_recovery.py",
+          "data/manifests/rally_reference_protocol_v6.json",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Frozen full predecessor and failed-execution metadata audit before prospective replacement; exact inherited deadline and cumulative failed/repeated image accounting.",
+          "Generated lifecycle/provenance regressions and required local/exact PR/main/public delivery checks without source-acceptance changes."
+        ]
+      },
+      "spec_hash": "3218ee8bb7fea49f3abb5b58a59ff45bc473a8e4be127310844529e9e081c90b",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
