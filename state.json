@@ -18560,6 +18560,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "human_approval": {
