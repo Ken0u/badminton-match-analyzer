@@ -4366,6 +4366,26 @@
       "status": "idle",
       "verb": "next"
     },
+    "media-cache-repair-claim-v2": {
+      "actor": "Ken0u",
+      "at": 1792865196,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
+        "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
+        "epoch": 1,
+        "expires_at": 1792875996,
+        "granted_at": 1792865196,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74"
+      },
+      "epoch": 1,
+      "fingerprint": "21c02bbdd77643208d8fe0caa87a6b46804c58b8de47a2eb36f7e462165ff84f",
+      "status": "granted",
+      "task_id": "243",
+      "verb": "next"
+    },
     "media-cache-repair-plan-v1": {
       "actor": "Ken0u",
       "at": 1792864679,
@@ -18961,7 +18981,18 @@
       "status": "needs_human"
     },
     "243": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
+        "branch": "codex/issue-243-reject-changed-source-proxy-bytes-and-re",
+        "epoch": 1,
+        "expires_at": 1792875996,
+        "granted_at": 1792865196,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74"
+      },
+      "epoch": 1,
       "planned_at": 1792864679,
       "planned_by": "Ken0u",
       "spec": {
@@ -19010,7 +19041,7 @@
         ]
       },
       "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
