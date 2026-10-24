@@ -4414,6 +4414,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-checkpoint-doubles-targeted-terminal-v1": {
+      "actor": "Ken0u",
+      "at": 1792813889,
+      "epoch": 1,
+      "fingerprint": "eb5a9489fc4d926f195ca65ac9350316309da11dd9729fa46610c315c82d0d0d",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally212-checkpoint-draft-v1": {
       "actor": "Ken0u",
       "at": 1792797335,
@@ -16171,15 +16180,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "{\"all_targeted_lifetimes_absent\": false, \"at\": 1792813062.4230423, \"attempted_image_bytes\": 7204799089, \"both_targeted_indexes_complete\": false, \"coordination\": \"87a185a5c6389d8cd841525278af16de5f37836b\", \"deadline\": 1792820409, \"dispatch_stop\": false, \"labels_read\": false, \"lanes\": {\"H1setLK1tig\": {\"complete_index\": false, \"finished\": 72, \"launcher_alive\": true, \"started\": 72, \"targeted_cli_alive\": 0}, \"go2uajSiBnE\": {\"complete_index\": false, \"finished\": 73, \"launcher_alive\": true, \"started\": 74, \"targeted_cli_alive\": 1}}, \"lease_expiry\": 1792822071}\nBlind targeted adjudication status after both512original sessions and global genuine session/native/source audit. Original producer eebbe21 and separately sealed acceptance6cb7e4f remain unchanged. Full checks2384passed/4optional skips,230focused, Ruff/format/pip/diff/repository pass. Exact targeted plan/seal/timestamp are preserved. No source replacement, paid service, implicit retry or scientific label rewrite. All four eligibility flags remain false. Original grant/deadline and all cumulative budgets remain unchanged; no signal is sent to any process."
+        "summary": "Doubles targeted adjudication genuinely completed:actual attached tool33887returned exit0,84successful sessions and complete index SHA6fd930cc66b83bbf9994cfcf52dc84e6e28ddcdddb5ad5c0f0cd40034e1a165f. Independent metadata terminal verifier confirms all84index entries match original finish receipts and fixedplan chunks,541unique originalnativeframes,recorded ownerPID12764/create1792809435.739057 absent and all84CLI lifetimes absent. Closure receipt .cache/rally212-doubles-targeted-terminal-v1/receipt.json SHA8402d2b1cd45e9c5ae14948780dda23e6e1eb3f5886dd5067814709c753bd639. No scientific documents/images/predictions opened. Do not restart doubles or split/migrate the remaining live singles lane;all3replacement launches are consumed. Metadata observation1792813743 finds singles86of172successful,originalPID17952/create1792809434.447088 live,cwd/commandmatch;monitor1995and singles85807 remainlive,no failure/dispatchstop. Cumulativeattemptedimagebytes7401193955. Latestprefixaudit170targeted+757prior/original receipts=927distinctcompletedthreads,actual completedCLIabsence,receipt/eventlog/reservation consistency,max2concurrent;SHA33fd48946ee37c60e045992d22daf8365431ac1e726b5035c7c940d1b10814d3. It does not replace frozen finalaudit. Targeted documents remain sealed until BOTHsourceindexes and genuineexits/globalmetadataaudit. Both512original successes/515attempts preserved,3interruptedstarts charged with no inventedexitcodes,allreplacementallowanceconsumed. Originalgrant1792791609/deadline1792820409,sourceinputs/targetplan/protocols/producer/acceptance and8GiBcaps/all4falseeligibilityflags unchanged. Local combined receipt/nativeordinal guards remain fourgranted uncommitted files,300focused/2454fullpassed/4optional skips,Ruff/format/pip/diff/repositorypass;all153observed verificationlifetimes absent;verificationreceiptbc49f232dc963b83caffab7a420cab54d306ea231074c74c6e5794bb59ec9937. CodeSHA065cd7548da30ddfa58e0f0094f34a1facaa9e7951049ac4c346a381f613a8c4,testSHA3ddad6c4d433d9c137f5a30125f4b49b8d26047d6115e4de3626ce8669f2c1fa. Actualnewtesthelper14214exited0. Draft216descriptionV3/readbackverified,remotehead1b285c0 unchanged/unsubmitted,prior12exactCIjobs green;newlocalchangesneedfinalheadCIafterpublication. Do not push while monitorstillhardcodeshead. Last fulloutputaccounting2312648822bytesbelow8GiB,supplement14872325within64MiBheadroom;rerunbeforefinal. Next finish singles only,verify actualexit and bothcompleteindexes,run frozenfinalauditorV5/fullaccounting,finalactualreport/checks/commitpush/exactCI/controller/main/publicdelivery. No complete reference or fullmatch correctness claimed;#62/#66/#67/#71 remain incomplete. Rootbranch/PROGRESSedit preserved,PROGRESSdeprecated,no consumedholdout63 access. Latest operationalhandoff .cache/RALLY212_FRAME_ORDINAL_GUARD_CHECKPOINT_20261024.md. No paidservice,manualmerge,rawcoordination edits or credentialdisplay."
       },
-      "checkpoint_at": 1792813067,
+      "checkpoint_at": 1792813889,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792823867,
+        "expires_at": 1792824689,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
