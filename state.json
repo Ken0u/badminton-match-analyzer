@@ -16554,6 +16554,7 @@
       }
     },
     "218": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40063380208",
       "checkpoint": {
         "branch": "codex/issue-218-audit-public-evidence-for-shuttle-superv",
         "head_sha": "3fb8d80a88e016f673a688795b01c97ca1403fe3",
@@ -16572,7 +16573,7 @@
         "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792816301,
