@@ -5382,6 +5382,13 @@
       "task_id": "238",
       "verb": "human-approved"
     },
+    "rally238-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792856824,
+      "fingerprint": "d6f1e11b8d6dc61e618fe41d58561343868e6b968930654f2ac6658c46d34a1e",
+      "status": "idle",
+      "verb": "next"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
