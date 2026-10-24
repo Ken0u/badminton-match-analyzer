@@ -384,6 +384,14 @@
       "task_id": "235",
       "verb": "submit"
     },
+    "editor-report-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792885363,
+      "fingerprint": "243962c5eaf250ef247bb12660044c9dcbb732a2b863c80f04b0f4a4c5d8fd98",
+      "status": "ready",
+      "task_id": "252",
+      "verb": "plan"
+    },
     "events67-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730248,
@@ -7576,6 +7584,14 @@
       "fingerprint": "83358dbb2a0117cb919c78e8743ad30784963c1e3facb30913d8f9af81da0ea4",
       "status": "ready",
       "task_id": "250",
+      "verb": "plan"
+    },
+    "spec-252-46ea6c7c2823db89020a4daf16f3ebeb52f9d44b4421ac03bc8933a3ca58f0f6": {
+      "actor": "Ken0u",
+      "at": 1792885363,
+      "fingerprint": "3ce010d07252fa81645948c6ed353466aa5df32e39d695120498a891d1c43e31",
+      "status": "ready",
+      "task_id": "252",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -19838,6 +19854,57 @@
         "pr_number": 251,
         "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d"
       }
+    },
+    "252": {
+      "epoch": 0,
+      "planned_at": 1792885363,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issues, PRs and authoritative grants; preserve existing root edits, environments, research processes, original labels and deprecated PROGRESS.md. Depend on fully delivered250 and use a fresh committed isolated task grant. This is a generated-input product correctness repair; no source image or scientific label is read or transmitted.",
+          "Preserve the generated baseline reproduction: evaluate shuttle-0, refresh the same selection with completed shuttle-1, observe current run shuttle-1 while the displayed/downloadable report still describes shuttle-0. The tested baseline controller bytes must match trusted main. Reproduce view-change and delayed-result variants before repairing them. If a proposed variant is unsupported, do not invent a failure.",
+          "Limit production edits to the editor controller and its deterministic generated assets. Bind reports to the current source selection, saved revision, view ownership and the contacts/shuttle/recognition IDs actually evaluated. Clear completed reports when those inputs change or disappear; cancel/fence in-flight evaluations so an ignored abort cannot republish an obsolete report. Fence ABA run replacement and superseded concurrent evaluations. Do not clear valid reports on ordinary same-view frame ticks or polling with identical evaluated inputs; unrelated player/rally/segment/playback changes alone must not invalidate them.",
+          "Invalidate evaluation state on genuine view/window/mode changes, processing/tracking transitions and selected saved-document changes as necessary to preserve ownership. Keep current draft edits, annotation save/conflict handling, source PTS, proposal provenance, analysis core ownership and selection/disposal guards intact. Do not mutate, retry or rerun evaluation automatically; the user explicitly measures again. Backend evaluation math/contracts, saved truth and raw predictions remain unchanged.",
+          "Add generated regressions for replacement/removal of each evaluated run, view changes, delayed success/error after input replacement, ABA identities, competing evaluations, edits/saves, selection/disposal and stable input polling/frame ticks. Verify report display/download eligibility through the existing editor browser fixture where practical. No private samples, datasets, weights, model inference or new dependencies; process identities and cleanup must be verified before repeats.",
+          "Run relevant frontend unit/type/contract/build/stage/browser checks and required full Python, Ruff lint/format, pip, repository UTF8/LF/JSON/local-link and diff checks in isolated generated storage. Preserve baseline and any intermediate failures. Update only the current bug-review summary with the concrete trigger, behavior, checks and limitations; historical reports stay unchanged.",
+          "Publish a focused PR on the granted branch, submit exact source/head/base/spec and let the normal controller integrate after exact checks. Verify merged-main CI and independent complete public package/source/frontend/lock and both-image delivery. No manual merge, direct main write, raw coordination edit, CI/publishing retries/cancels/wakes or manufactured approval. Software correctness does not establish badminton accuracy; complete references remain0/2 and research eligibility flags remain false.",
+          "Bound the task to three hours from its fresh grant, 512MiB new generated outputs and three repair rounds. No image/source transfer, new assessor, paid service, security/auth/workflow/model/publishing/deployment change, historical-clock renewal or PROGRESS.md update."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "250"
+        ],
+        "exclusions": [
+          "No backend metric changes, scientific assessment/data, automatic evaluation POST retry, model training/promotion, auth/policy/workflow/deployment changes, paid service, manual merge or deprecated PROGRESS.md edits."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Keep evaluation displays and report downloads bound to the current saved annotation revision, selected review view and evaluated input-run identities, preventing obsolete completed or in-flight reports from appearing after input replacement.",
+        "paths": [
+          "backend/frontend/src/editor/controller.ts",
+          "backend/frontend/tests/editor.test.mjs",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated preserved stale-report reproduction, passing evaluation ownership/race regressions, frontend/editor-browser and required full repository checks.",
+          "Exact PR/main CI, normal controller merge and independent complete public delivery; no scientific accuracy claim."
+        ]
+      },
+      "spec_hash": "9d01ad8c56c3194bdbf5df9df302926738b867b2538078ec0463dca5605fa0a8",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
