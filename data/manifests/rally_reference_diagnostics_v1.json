@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "task": 238,
+  "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c",
+  "purpose": "Read-only diagnostic census; unchanged frozen scientific acceptance",
+  "frozen_checkouts": [
+    {
+      "path": ".cache/worktrees/rally228-producer-v1",
+      "commit": "1c8905ff40106b531c8e9f98856f79ee5105c648",
+      "files": {
+        "scripts/recover_rally_references.py": "97f2dfd6a09f6d94fc47e0e3955778abf64fbcf848982ccad75114aaacc5a775",
+        "backend/badminton/rally_reference_recovery.py": "401927784cf6a1150ce4e7b7368d111d1903274afc508268dc18d41490dd4cbf",
+        "data/manifests/rally_reference_protocol_v6.json": "25766b8e6f4ac6f34d0e7fa3e59461ee31a99bfa49d4e796f43316a24d20a68c"
+      }
+    },
+    {
+      "path": ".cache/worktrees/rally212-acceptance-v1",
+      "commit": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
+      "files": {
+        "backend/badminton/rally_source_reference.py": "407c42f5f09ed4519720fd89c16ae53322076589f242cf3c35d990fff36da864"
+      }
+    }
+  ],
+  "sealed_inputs": {
+    ".cache/rally228-source-only-v1/aggregate.json": "853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126",
+    ".cache/rally228-source-only-v1/combined-target-index.json": "558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070",
+    ".cache/rally228-source-only-v1/context.json": "eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59"
+  },
+  "source_slots": 2,
+  "native_frames": 1532,
+  "validated_target_references": 256,
+  "completed_global_execution_identities": 1014,
+  "prior_attempted_image_bytes": 8177560145,
+  "semantics": {
+    "frame_denominator": "Every native frame in each retained source; adjudication uninspected frames remain explicit",
+    "frame_counts": "Unique-frame unions across every observation variant; categories may overlap under conflict",
+    "event_signature": ["kind", "interval", "actor_id", "family", "side", "evidence"],
+    "signature_repetition": "Occurrences minus distinct acceptance-signature groups; reasons remain in private original occurrences",
+    "event_key": ["kind", "inclusive interval"],
+    "overlap": "All intersecting pairs of distinct serve/shot keys; identical keys are counted as repeats or conflicts separately",
+    "actor_support": "Definition accompanying the original contact document; no inferred cross-session person identity",
+    "no_truth_inference": "none_observed is a recorded source judgment, never a verified negative; groups are not physical contact counts"
+  },
+  "limits": {
+    "metadata_runtime_hours": 4,
+    "new_output_bytes": 1073741824,
+    "cumulative_retained_bytes": 8589934592,
+    "new_scientific_sessions": 0,
+    "new_image_payload_bytes": 0,
+    "max_repair_rounds": 3,
+    "paid_services": false
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  }
+}
