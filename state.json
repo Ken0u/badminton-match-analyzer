@@ -410,6 +410,26 @@
       "task_id": "248",
       "verb": "plan"
     },
+    "export248-targeted-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792879244,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "9c18852f62efdbd828de74e7faa3d6fb8f21a3f1",
+        "branch": "codex/issue-248-keep-known-queued-running-media-export-c",
+        "epoch": 1,
+        "expires_at": 1792890044,
+        "granted_at": 1792879244,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "91222ec1dabbbeca46f4e586d1ed1ecdc826d7dc9a3c11b3e6b5b88f1aeaf473"
+      },
+      "epoch": 1,
+      "fingerprint": "56a60676e8ef1ac6094299e5154461c38b400c921cbe8d1fc13a73c8eff03da4",
+      "status": "granted",
+      "task_id": "248",
+      "verb": "next"
+    },
     "external-merge-126-f2866cae9c1b11ec14594ea8c4ff611fa751375d": {
       "actor": "github-actions[bot]",
       "at": 1792454004,
@@ -19465,7 +19485,18 @@
       }
     },
     "248": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "9c18852f62efdbd828de74e7faa3d6fb8f21a3f1",
+        "branch": "codex/issue-248-keep-known-queued-running-media-export-c",
+        "epoch": 1,
+        "expires_at": 1792890044,
+        "granted_at": 1792879244,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "91222ec1dabbbeca46f4e586d1ed1ecdc826d7dc9a3c11b3e6b5b88f1aeaf473"
+      },
+      "epoch": 1,
       "planned_at": 1792878078,
       "planned_by": "Ken0u",
       "spec": {
@@ -19513,7 +19544,7 @@
         ]
       },
       "spec_hash": "91222ec1dabbbeca46f4e586d1ed1ecdc826d7dc9a3c11b3e6b5b88f1aeaf473",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
