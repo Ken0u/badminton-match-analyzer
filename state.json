@@ -5075,6 +5075,14 @@
       "task_id": "226",
       "verb": "submit"
     },
+    "rally228-delegated-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792837650,
+      "fingerprint": "6378749fecf71b64b7cf8a144998612bf7d9e31580c7796d21fe1287e840fa6a",
+      "status": "ready",
+      "task_id": "228",
+      "verb": "human-approved"
+    },
     "rally228-plan-v1": {
       "actor": "Ken0u",
       "at": 1792837519,
@@ -17392,8 +17400,14 @@
     },
     "228": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792837650,
+        "spec_hash": "3218ee8bb7fea49f3abb5b58a59ff45bc473a8e4be127310844529e9e081c90b"
+      },
       "planned_at": 1792837519,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Depend on delivered #226 / PR227. Obtain configured-owner frozen-scope authorization and a genuine fresh grant before implementation or scientific access. Apply the current explicit owner delegation transparently, without asserting personal human review. Preserve all predecessor tasks, contexts, deadlines, protocols, original outputs, source identities, failed attempts and fences. No second implementation per host.",
@@ -17459,7 +17473,7 @@
         ]
       },
       "spec_hash": "3218ee8bb7fea49f3abb5b58a59ff45bc473a8e4be127310844529e9e081c90b",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
