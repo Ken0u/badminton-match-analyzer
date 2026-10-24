@@ -5109,6 +5109,15 @@
       "task_id": "228",
       "verb": "human-approved"
     },
+    "rally228-midpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792840855,
+      "epoch": 1,
+      "fingerprint": "c9281c762c7bb9b3cb3f749936be3d73c99ecad80bf7b419bec1399cb82f5aa5",
+      "status": "running",
+      "task_id": "228",
+      "verb": "checkpoint"
+    },
     "rally228-next-v1": {
       "actor": "Ken0u",
       "at": 1792838855,
@@ -17481,16 +17490,17 @@
         "base_sha": "faf01c05746805e968ed312919576471704f319d",
         "branch": "codex/issue-228-recover-only-the-21-remaining-unchanged-",
         "head_sha": "1c8905ff40106b531c8e9f98856f79ee5105c648",
+        "observation_sha256": "cc1a9ff60b229ae900dc3e8a6735d7bea9263a6d3ee394992e5cc5d187e94322",
         "spec_hash": "3218ee8bb7fea49f3abb5b58a59ff45bc473a8e4be127310844529e9e081c90b",
-        "summary": "Five granted files committed/pushed and separate clean frozen recovery snapshot retained at1c8905f.393 focused/2608 full tests pass,4optional skips; all7required checks pass; independent audit finds173recorded verification lifetimes absent (receiptf4cf6197e96b4de230184727fe62c4b7d888c0d61e1f52136dc65b5611ba1925). Actual freeze preflight exited0 after whole original sources/clocks/PNGs/Store/frozen contexts/993completed identities/all412archive files reverified. Contexteab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59 binds235targetprefix and21suffix, projected8177560145bytes, originalCLI and inherited deadline1792860317. No recovery images dispatched or final scientific comparison. Next actual owning-issue prospective seal/downloaded timestamp, then unchanged frozenrun; one explicit replacement151 plus152..171 only, no further replacement/implicit retry. Old failed151 and alloldfences/contexts remain immutable. Deadline never renews; allfour flagsfalse; bothslots1532frames preserved and fullaccuracyunproven."
+        "summary": "Existing recovery remains live under verified recorded owner; planned replacement151 and subsequent targets through161 have passed unchanged validation:11of21 new sessions complete. Cumulative reserved/attempted image bytes8089721691 within unchanged8GiB. No current dispatch fence/new failure/implicit retry/process signal. Original failed151, oldfence and contexts unchanged. Final scientific comparison remains sealed; bothslots1532frames/unknowns remain, no reference certified. Same frozen consumer1c8905f/context eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59 and immutable deadline1792860317. Continue SAME existing run, no restart. After actual exit and independently verified owner absence, run unchanged frozen global audit before scientific aggregate. All4eligibilityflagsfalse; fullmatchaccuracyunproven."
       },
-      "checkpoint_at": 1792839993,
+      "checkpoint_at": 1792840855,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "faf01c05746805e968ed312919576471704f319d",
         "branch": "codex/issue-228-recover-only-the-21-remaining-unchanged-",
         "epoch": 1,
-        "expires_at": 1792850793,
+        "expires_at": 1792851655,
         "granted_at": 1792838855,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
