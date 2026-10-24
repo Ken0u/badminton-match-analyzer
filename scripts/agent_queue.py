@@ -7,6 +7,7 @@ import platform
 import sqlite3
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 from uuid import uuid4
@@ -88,6 +89,30 @@ def worker_identity():
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
     return value
+
+
+def save_client_json(path, value):
+    """Replace a local receipt only after its complete new bytes are written."""
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="utf-8",
+            newline="\n",
+            dir=path.parent,
+            prefix=path.name + ".",
+            suffix=".tmp",
+            delete=False,
+        ) as handle:
+            temporary = Path(handle.name)
+            handle.write(json.dumps(value, indent=2) + "\n")
+        temporary.replace(path)
+    finally:
+        if temporary is not None:
+            try:
+                temporary.unlink(missing_ok=True)
+            except OSError:
+                pass  # Preserve the original write failure for a safe diagnostic.
 
 
 def main(argv=None):
@@ -211,7 +236,15 @@ def main(argv=None):
         + json.dumps(request, sort_keys=True, indent=2)
         + "\n```"
     )
-    heartbeat_path = ROOT / ".cache" / "agent-heartbeat-comments.json"
+    receipt_dir = ROOT / ".cache"
+    try:
+        receipt_dir.mkdir(parents=True, exist_ok=True)
+    except OSError as exc:
+        raise ValueError(
+            "Cannot prepare local request receipt directory "
+            f"({type(exc).__name__}); request was not submitted."
+        ) from None
+    heartbeat_path = receipt_dir / "agent-heartbeat-comments.json"
     heartbeats = (
         json.loads(heartbeat_path.read_text(encoding="utf-8"))
         if heartbeat_path.exists()
@@ -230,17 +263,29 @@ def main(argv=None):
             method="POST",
             data={"body": body},
         )
-        if args.command == "heartbeat":
+    try:
+        if args.command == "heartbeat" and heartbeat_key not in heartbeats:
             heartbeats[heartbeat_key] = comment["id"]
-            heartbeat_path.write_text(
-                json.dumps(heartbeats, indent=2) + "\n", encoding="utf-8"
+            save_client_json(heartbeat_path, heartbeats)
+        save_client_json(
+            receipt_dir / "agent-last-request.json",
+            {"request": request, "comment": comment["html_url"]},
+        )
+    except OSError as exc:
+        raise ValueError(
+            json.dumps(
+                {
+                    "status": "local_receipt_write_failed",
+                    "request_id": request["request_id"],
+                    "comment": comment["html_url"],
+                    "error_type": type(exc).__name__,
+                    "instruction": (
+                        "Remote request was submitted. Poll status using this ID; "
+                        "retry only with the same request ID and payload."
+                    ),
+                }
             )
-    pending = ROOT / ".cache" / "agent-last-request.json"
-    pending.write_text(
-        json.dumps({"request": request, "comment": comment["html_url"]}, indent=2)
-        + "\n",
-        encoding="utf-8",
-    )
+        ) from None
     deadline = time.monotonic() + min(60, max(0, args.wait))
     while True:
         _tip, state = StateStore(gh, config["coordination_branch"]).read()
