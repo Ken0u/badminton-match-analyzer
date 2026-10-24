@@ -5382,11 +5382,38 @@
       "task_id": "238",
       "verb": "human-approved"
     },
+    "rally238-inputs-registration-v1": {
+      "actor": "Ken0u",
+      "at": 1792856993,
+      "fingerprint": "b265e9baa1796d8657a914093f768de567511cc2a5898cc495b9adb3ef8023ef",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally238-next-v1": {
       "actor": "Ken0u",
       "at": 1792856824,
       "fingerprint": "d6f1e11b8d6dc61e618fe41d58561343868e6b968930654f2ac6658c46d34a1e",
       "status": "idle",
+      "verb": "next"
+    },
+    "rally238-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792856993,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c79025c037e5099ac8794cb830ab0b50024fff46",
+        "branch": "codex/issue-238-diagnose-the-sealed-two-source-rally-ref",
+        "epoch": 1,
+        "expires_at": 1792867793,
+        "granted_at": 1792856993,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c"
+      },
+      "epoch": 1,
+      "fingerprint": "2ccaf22d29fad5ea576ddc1f9464515edf5bc2d0457f4b1446f540f39a7c2cb6",
+      "status": "granted",
+      "task_id": "238",
       "verb": "next"
     },
     "rally62-final-checkpoint-v1": {
@@ -18461,7 +18488,18 @@
       }
     },
     "238": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c79025c037e5099ac8794cb830ab0b50024fff46",
+        "branch": "codex/issue-238-diagnose-the-sealed-two-source-rally-ref",
+        "epoch": 1,
+        "expires_at": 1792867793,
+        "granted_at": 1792856993,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1792856688,
@@ -18530,7 +18568,7 @@
         ]
       },
       "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
@@ -21638,7 +21676,10 @@
         "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
         "rally212-frozen-target-plan": "0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b",
         "rally226-context": "795b230a8b6836742c9b776edb5ac30de47307c94e4960213c07ed1f4d4c63a6",
-        "rally226-final-integrity": "0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e"
+        "rally226-final-integrity": "0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e",
+        "rally228-aggregate": "853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126",
+        "rally228-context": "eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59",
+        "rally228-index": "558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070"
       },
       "capabilities": [
         "cpu",
@@ -21647,7 +21688,7 @@
         "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1792838713,
+      "registered_at": 1792856993,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
