@@ -5005,6 +5005,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally226-before-freeze-v1": {
+      "actor": "Ken0u",
+      "at": 1792833191,
+      "epoch": 1,
+      "fingerprint": "277833be7219566ecafe4c436f9faccacd2327808f77cfe3888cc3054a726ac4",
+      "status": "running",
+      "task_id": "226",
+      "verb": "checkpoint"
+    },
     "rally226-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792830881,
@@ -17243,12 +17252,21 @@
       }
     },
     "226": {
+      "checkpoint": {
+        "base_sha": "3eeb4ed750dc8bfc3b58b471e172ea9b7c18839c",
+        "branch": "codex/issue-226-complete-the-unchanged-frozen-two-source",
+        "head_sha": "5014296edb6b87282036b79d824fb0954470141f",
+        "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6",
+        "summary": "Five granted files committed/pushed at5014296. New continuation metadata gates, freeze/run/audit command, separate public v5 protocol and pending aggregate report preserve old scientific consumers and v1-v4.351focused and2566full tests pass,4optional skips; all7required checks pass and independent audit finds all164recorded verification lifetimes absent. Exclusive check receipt28b44e6e0832a029809ca7605846bbda465bd0824c382b0ed70abc1500b8fb62. Read-only frozen producer worktree created at this exact tested commit. Actual suffix metadata78sessions/690163662bytes; cumulative projected8169246915bytes below unchanged8GiB including interrupted old094 and new094 separately. No226images dispatched, no new scientific labels read, no process signaled, no predecessor changed. Next whole-original/packet/context/tool/Store/process/prefix preflight and prospective owning-issue context timestamp before launch. New scientific deadline remains1792860317 from actual grant1792831517; old212deadline1792820409 remains expired. User delegation transparently authorized this separate successor; no personal review asserted. Existing223main/public delivery verified. Full analyzer goal and62/66/67/71 remain open. No manual merge/paid service/consumed holdout/PROGRESS access.",
+        "verification_receipt_sha256": "28b44e6e0832a029809ca7605846bbda465bd0824c382b0ed70abc1500b8fb62"
+      },
+      "checkpoint_at": 1792833191,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3eeb4ed750dc8bfc3b58b471e172ea9b7c18839c",
         "branch": "codex/issue-226-complete-the-unchanged-frozen-two-source",
         "epoch": 1,
-        "expires_at": 1792842317,
+        "expires_at": 1792843991,
         "granted_at": 1792831517,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
