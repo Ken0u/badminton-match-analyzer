@@ -6411,6 +6411,15 @@
       "status": "rejected",
       "verb": "plan"
     },
+    "source220-predata-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792849967,
+      "epoch": 1,
+      "fingerprint": "4cdba6055cb64b78f6d4927982007872fcf8c1be79b68ea1dc0953ff2a3cc8c0",
+      "status": "running",
+      "task_id": "220",
+      "verb": "checkpoint"
+    },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
       "at": 1792419127,
@@ -17488,12 +17497,18 @@
       }
     },
     "220": {
+      "checkpoint": {
+        "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
+        "remaining": "Verify original-host immutable inputs/process/Store evidence; bounded metadata stage, source/usage inspection and exact metadata hash gate; private label byte/ordinal accounting; complete project checks, exact PR/main CI/controller integration and independent public delivery. Extra plan request source220-plan-v1 was malformed/rejected without effect; ordinary trusted issue planning succeeded. No retry of data/CI, no manual merge.",
+        "summary": "Committed epoch-1 grant confirmed. Four-path two-stage orchestration and metadata-only source manifest prepared in isolated worktree; 72 generated focused tests pass. No original or revised CSV contents, media, predictions or weights opened. Runtime/inputs will be sealed before actual metadata/comparison. Native bases remain null and eligibility false."
+      },
+      "checkpoint_at": 1792849967,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7885fb547e985514a2735ffb1ac985ce37e5443a",
         "branch": "codex/issue-220-bind-the-preserved-original-shuttle-test",
         "epoch": 1,
-        "expires_at": 1792860295,
+        "expires_at": 1792860767,
         "granted_at": 1792849495,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
