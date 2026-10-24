@@ -385,6 +385,12 @@ def test_entry_point_uses_original_shared_store_and_does_not_recover_busy_job(
         ("WEIGHTS", root / "models/weights"),
     ):
         monkeypatch.setattr(config, key, value)
+    for key, value in (
+        ("BADMINTON_ROOT", root),
+        ("BADMINTON_DATA_DIR", data),
+        ("BADMINTON_WEIGHTS_DIR", root / "models/weights"),
+    ):
+        monkeypatch.setenv(key, str(value))
     # These generated tests bypass original research-input verification only;
     # the real run_local_job and real shared Store admission remain exercised.
     monkeypatch.setattr(revision, "original_preflight", lambda *args: {"seals": {}})
@@ -433,3 +439,107 @@ def test_entry_point_uses_original_shared_store_and_does_not_recover_busy_job(
             json.loads((args.output / "metadata-terminal.json").read_bytes())["status"]
             == "completed"
         )
+
+
+@pytest.mark.parametrize(
+    "mutation", [None, "input", "active", "store", "live", "admission"]
+)
+def test_original_input_process_store_and_artifact_bindings(tmp_path, mutation):
+    import sqlite3
+
+    import psutil
+    from badminton.storage import Store
+
+    cache = tmp_path / ".cache"
+    cache.mkdir()
+    store = Store(tmp_path / "data/processed")
+    current = psutil.Process()
+    owner = {
+        "pid": current.pid,
+        "creation_time": current.create_time() - (0 if mutation == "live" else 123),
+        "cwd": str(tmp_path),
+        "command": ["generated original source task"],
+    }
+    paths = {
+        name: cache / name
+        for name in (
+            "archive",
+            "declaration",
+            "prior_report",
+            "terminal",
+            "evidence_index",
+        )
+    }
+    paths["archive"].write_bytes(b"generated archive bytes; no media")
+    paths["declaration"].write_bytes(b"generated declaration")
+    paths["terminal"].write_bytes(b"{}")
+    archive_sha = revision.digest(paths["archive"].read_bytes())
+    prior = {
+        "archive_sha256": archive_sha,
+        "eligibility": dict(revision.ELIGIBILITY),
+        "native_frames": 2,
+        "published_rows_parsed": 1,
+        "incomplete_ordinal_csv_files": 1,
+        "row_issues": {"incomplete_native_ordinal_coverage": 1},
+        "group_counts": {},
+    }
+    revision.save(paths["prior_report"], prior)
+    admission = cache / "admission.json"
+    revision.save(admission, {"job_id": "original", "process": owner})
+    document = {
+        "id": "original",
+        "status": "completed",
+        "owner_pid": owner["pid"],
+        "owner_started": owner["creation_time"],
+    }
+    raw = json.dumps(document)
+    with store.connect() as connection:
+        connection.execute("INSERT INTO jobs VALUES (?,?)", ("original", raw))
+    evidence = {
+        "jobs": [
+            {
+                "job_id": "original",
+                "process": owner,
+                "store_document_sha256": revision.digest(raw.encode()),
+                "admission": {
+                    "path": ".cache/admission.json",
+                    "sha256": revision.digest(admission.read_bytes()),
+                },
+                "terminal": {
+                    "path": ".cache/terminal",
+                    "sha256": revision.digest(paths["terminal"].read_bytes()),
+                },
+            }
+        ]
+    }
+    revision.save(paths["evidence_index"], evidence)
+    spec = {
+        "archive": {"bytes": paths["archive"].stat().st_size, "sha256": archive_sha},
+        **{
+            key: revision.digest(paths[name].read_bytes())
+            for name, key in (
+                ("declaration", "declaration_sha256"),
+                ("prior_report", "prior_report_sha256"),
+                ("terminal", "original_terminal_sha256"),
+                ("evidence_index", "prior_evidence_index_sha256"),
+            )
+        },
+    }
+    if mutation == "input":
+        paths["declaration"].write_bytes(b"changed")
+    elif mutation == "admission":
+        admission.write_bytes(b"changed")
+    elif mutation == "active":
+        store.claim_job({"id": "busy", "status": "running"})
+    elif mutation == "store":
+        with sqlite3.connect(store.db_path) as connection:
+            connection.execute(
+                "UPDATE jobs SET document=? WHERE id=?", ("{}", "original")
+            )
+    if mutation:
+        with pytest.raises((ValueError, KeyError)):
+            revision.original_preflight(tmp_path, paths, spec)
+    else:
+        result = revision.original_preflight(tmp_path, paths, spec)
+        assert result["process_proofs"][0]["original_lifetime_absent"] is True
+        assert result["attributed_prior"]["row_issues"] == prior["row_issues"]
