@@ -5625,6 +5625,15 @@
       "task_id": "242",
       "verb": "checkpoint"
     },
+    "rally242-checkpoint-consumer-v1": {
+      "actor": "Ken0u",
+      "at": 1792874890,
+      "epoch": 1,
+      "fingerprint": "cffdc212076002d11922badc55218a6f115878ee165a709327c370f742ed16ef",
+      "status": "running",
+      "task_id": "242",
+      "verb": "checkpoint"
+    },
     "rally242-checkpoint-verification-v2": {
       "actor": "Ken0u",
       "at": 1792874468,
@@ -19044,20 +19053,20 @@
       "checkpoint": {
         "branch": "codex/issue-242-complete-the-six-specifically-authorized",
         "evidence_paths": [
-          ".cache/rally242-check-focused-v6/results.json",
-          ".cache/rally242-check-all-v6-interruption-v1.json",
-          ".cache/rally242-check-all-v7/owner.json"
+          ".cache/rally242-final-checks-v1.json",
+          ".cache/rally242-check-all-v7/results.json",
+          ".cache/rally242-test-owner-observed-v1.json"
         ],
-        "head_sha": "876bf845e6386368742d6668b6882c9d274ca08d",
-        "status": "Final459focused generated checks pass. Fixed strict epoch JSON types and clean frozen-metadata import isolation before any real attempt. Earlier full2939pass receipt preserved; final-source v6full run interrupted by turn transition at85%,no final verdict. Independently confirmed recordedPID3504 absent and no other original matching test worker; preserve incomplete logs. Fresh isolated v7full run now observed alive with persistent wrapper and actual creation-time receipts. No real prefix reuse,assessor,payloadreservation or newimage transfer. Next:finalfullchecks,commit/freezeproducer,prospective context andpayloadseals,realStore reuse and sixexplicitlyauthorizedsessions,globalmetadataauditbeforecomparison,reports/PR/controller/exactmain/publicdelivery. Scientificdeadline remains2026-10-24T23:04:53Z;lease renewal cannot extend it."
+        "head_sha": "17c01bf63bba34cce24d57280f860bb574015248",
+        "status": "Final459focused and2941full generated tests pass with four optional skips; Ruff,format,pip,repository,UTF8LF/JSON/local-links anddiff checks pass. Strict epoch-type and clean frozen-gate import regressions fixed before real execution. Incomplete fullv6 logs/actual exit proof retained; finalv7 passed. Tested consumer committed/pushed and immutable detached producer frozen with exact-byte parity. No real prefixreuse,scientificassessor or image transfer yet. Next:prospective context seal,original-host realStore auditedreuse,exactpayloadseal,sixexplicitlyauthorizedcoarsereadings,globalidentity/exit audit before comparison,aggregate reports and normal PR/controller/exactmain/publicdelivery. Fixed scientificdeadline23:04:53UTC today;original240deadline20:59:41UTC unchanged. Original0/2 andallfourfalseeligibilityflags remain."
       },
-      "checkpoint_at": 1792874468,
+      "checkpoint_at": 1792874890,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "af061f4fcb90833acff971e733b094bde0ba80ae",
         "branch": "codex/issue-242-complete-the-six-specifically-authorized",
         "epoch": 1,
-        "expires_at": 1792885268,
+        "expires_at": 1792885690,
         "granted_at": 1792868693,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
