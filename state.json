@@ -1105,6 +1105,13 @@
       "task_id": "190",
       "verb": "submit"
     },
+    "laptop-cuda-01a16bd6-register-v1": {
+      "actor": "dootz1",
+      "at": 1792811424,
+      "fingerprint": "7388f6ce18e9c7af34044675cdd121810fe9b125d7c0f7f9563d2ff97c312ac2",
+      "status": "ok",
+      "verb": "register"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -19330,6 +19337,19 @@
   },
   "version": 1,
   "workers": {
+    "LAPTOP-FVMV3PD6/cuda-ready-01a16bd6": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "cuda"
+      ],
+      "host_id": "LAPTOP-FVMV3PD6",
+      "registered_at": 1792811424,
+      "session_id": "cuda-ready-01a16bd6"
+    },
     "MSI/01a15c4a-b79d-7ef1-aa5a-dedbddff5ae0": {
       "actor": "Ken0u",
       "artifacts": {},
