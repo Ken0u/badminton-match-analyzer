@@ -321,6 +321,15 @@
       "task_id": "221",
       "verb": "submit"
     },
+    "completion235-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792854341,
+      "epoch": 1,
+      "fingerprint": "43b522f4882a358d635cb19f055419076b712adb35407f18946b57d2645cf8e3",
+      "status": "running",
+      "task_id": "235",
+      "verb": "checkpoint"
+    },
     "completion235-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792853558,
@@ -18289,12 +18298,20 @@
       }
     },
     "235": {
+      "checkpoint": {
+        "branch": "codex/issue-235-observe-pending-exact-source-main-ci-and",
+        "evidence": ".cache/completion235-checks-v2; original virtualenv, isolated root/data/weights and cleared credential environment. Full tests currently running; do not infer exit from timeout. Root PROGRESS.md edits preserved.",
+        "head_sha": "6496a1a9cd48b7fa43b641c5479ceedbedd25ea0",
+        "remaining": "Complete full local/lint/format/pip/repository/diff checks and process audit; commit/publish normal PR, exact PR/main CI, controller integration and independently verified public delivery. Live observer behavior remains unproven before integration.",
+        "summary": "Six granted paths implemented in isolated .cache/worktrees/completion235-e1; candidate is uncommitted while verification runs. 379 focused generated checks pass. Initial overly strict routine authorization condition fixed; second failure was an ancestry fake representing valid main advancement, now corrected to actual divergence. Failed outputs preserved. Request timeout and command-specific dispatch allowlist added. No real privileged candidate code execution, data access, process signals or policy/CI/publisher edits."
+      },
+      "checkpoint_at": 1792854341,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6496a1a9cd48b7fa43b641c5479ceedbedd25ea0",
         "branch": "codex/issue-235-observe-pending-exact-source-main-ci-and",
         "epoch": 1,
-        "expires_at": 1792864531,
+        "expires_at": 1792865141,
         "granted_at": 1792853731,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
