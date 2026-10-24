@@ -6151,6 +6151,14 @@
       "task_id": "138",
       "verb": "next"
     },
+    "roadmap-status-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792877266,
+      "fingerprint": "52805d97c29958ac1e06dffb8086c62d15581204dd781e540254dc5eaf8db184",
+      "status": "ready",
+      "task_id": "246",
+      "verb": "plan"
+    },
     "roadmap138-browser1-v1": {
       "actor": "dootz1",
       "at": 1792470889,
@@ -19281,6 +19289,57 @@
         "pr_number": 244,
         "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74"
       }
+    },
+    "246": {
+      "epoch": 0,
+      "planned_at": 1792877266,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Follow delivered230 without duplicating its historical snapshot. Search all open/closed issues, PRs and current grants before planning. Require220/238/242/243 Done with delivery_pending=false and independently verified complete public delivery before implementation. Obtain a genuine documentation-only grant; preserve root checkout edits, environments, datasets, research evidence and deprecated PROGRESS.md without reading or changing it.",
+          "Change only PROJECT_PLAN.md and docs/BUG_REVIEW.md in an isolated granted worktree. Date the current snapshot October24,2026 UTC. Use current merged aggregate reports and authenticated exact-source integration/delivery receipts; preserve earlier dated sections byte-for-byte and keep original failures and frozen protocols distinct from completed recoveries. No raw input or scientific-label access or recomputation.",
+          "Replace stale current-tense220 prerequisites with actual completed accounting:29 literal cases/12656 records per side, equal raw ordinal sets and29 unequal byte strings. This establishes neither numeric differences nor expert truth. Null native bases, unscored native comparisons, filename discrepancies, quarantine and all four false eligibility flags remain; source identity, rights, overlap and checkpoint membership remain unresolved. Matching names or ordinal sets cannot establish original media/clock correspondence.",
+          "Record238 metadata diagnostics and242 sparse context as separate evidence from228 full-native assessment. Preserve0/2 complete references, two source slots/all1532 native frames and false eligibility flags. Six new242 readings completed using exactly34040436 new image bytes; known A/B scene equality32/34 singles and18/19 doubles is agreement, not accuracy. Retain unknowns and1479 unsampled frames unreviewed in the sparse pilot; earlier full-native inspection is a separate experiment. No claim of exact contacts, precise boundaries, continuous identity, family/side truth or complete references follows.",
+          "Summarize243 source/timestamp/proxy cache bugs with actual delivered behavior and generated validation: opened-file identity/change metadata, pathname revalidation, Windows ChangeTime plus journal USN and unavailable-metadata fallback. Preserve the failed first Windows CI revision, filesystem-metadata limitations, and existing source-clock/orientation/decoder behavior. Verify precise claims against its report and completion receipt rather than assuming details from the task title. Software success does not establish badminton accuracy or upgrade running applications.",
+          "State concrete next scientific dependencies: a separately frozen temporal/native contact and actor review protocol addressing unsupported openings/endings and contact ambiguity, supported source/clock correspondence and applicable usage/provenance, then complete event/identity/doubles and unseen-match correction-time evaluations. Keep62/65/66/67/68/71 incomplete. Exhausted historical62/212/228/242 allowances are not new grants; do not request unfiltered next, transfer more images, relax acceptance, repeat assessors or open consumed holdout inputs.",
+          "Run repository UTF8/LF/JSON/local-link validation, dependency health, source-bound prose review and git diff checks. No new tests or inference for documentation-only changes; require exact PR/main CI, controller merge, equal merged/submitted document/tree bytes and independent complete public package/both-image delivery. Checkpoint the owning issue with actual evidence and limitations.",
+          "Bound implementation to2h from grant,128MiB new retained outputs and3repair rounds; zero paid services/new dependencies. No application/code/UI/model/default/CI/security/controller/publishing policy changes, credentials/Project changes, research process control, image transfer, source/media/label/weight access, training, deployment, installation or manual merge."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "220",
+          "238",
+          "242",
+          "243"
+        ],
+        "exclusions": [
+          "Documentation only; no scientific recomputation or private research inputs, image dispatch, consumed holdout access, policy/deployment/model changes, deprecated PROGRESS.md edits, paid service or manual merge."
+        ],
+        "limits": {
+          "max_output_bytes": 134217728,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Refresh the shared roadmap and bug review with delivered upstream-label accounting, sealed rally diagnostics, coarse temporal context and source/cache hardening, preserving all scientific limits.",
+        "paths": [
+          "PROJECT_PLAN.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 110,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Source-bound documentation review; repository UTF8/LF/JSON/local-link, dependency and whitespace checks; historical sections unchanged.",
+          "Exact PR/main CI, controller integration, merged-source parity and independent complete public package/both-image delivery."
+        ]
+      },
+      "spec_hash": "1a5f5b014fb2292c04007ea25f6d43120969502cb01c4c05c64160cfd08596d4",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
