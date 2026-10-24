@@ -185,6 +185,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "client223-before-full-checks-v1": {
+      "actor": "Ken0u",
+      "at": 1792829561,
+      "epoch": 1,
+      "fingerprint": "a895fc238b8ed2415cc5063d82fef80cd619f3d254a531347b2050e08fdaa1da",
+      "status": "running",
+      "task_id": "223",
+      "verb": "checkpoint"
+    },
     "client223-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792828838,
@@ -17051,12 +17060,18 @@
       }
     },
     "223": {
+      "checkpoint": {
+        "branch": "codex/issue-223-preserve-controller-request-identity-and",
+        "head_sha": "05e514c534f01470c1ec8b9f4b53c1ec2e1604b4",
+        "summary": "Granted two-path repair implemented and locally committed: prepare worktree-local receipts before remote POST/PATCH; atomic receipt replacement; safe post-success diagnostic preserves real ID/comment URL and instructs same-ID reconciliation without payload/exception-text disclosure or automatic resubmission. Original mocked repro established missing-cache failure after remote post. Initial6clientcases+existing127queuecases passed133focused checks before one additional read-only-status/payload-parity regression; full final focused/required checks next. Existing shared identity, request bodies, heartbeat PATCH reuse, auth/grants/controller/workflow/lease/scientific deadlines unchanged. Only scripts/agent_queue.py and tests/test_agent_queue_client.py modified. No scientific inputs/labels/predictions/media/weights or PROGRESS accessed. All #212 evidence and incomplete outcome preserved. Local branch not pushed until required verification passes."
+      },
+      "checkpoint_at": 1792829561,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a673aa4cd8e1b5860c801314cf4ab0202e590a5d",
         "branch": "codex/issue-223-preserve-controller-request-identity-and",
         "epoch": 1,
-        "expires_at": 1792840033,
+        "expires_at": 1792840361,
         "granted_at": 1792829233,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
