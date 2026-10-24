@@ -17338,6 +17338,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "human_approval": {
