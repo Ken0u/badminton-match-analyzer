@@ -392,6 +392,21 @@
       "task_id": "252",
       "verb": "plan"
     },
+    "editor252-browser-scope-v1": {
+      "actor": "Ken0u",
+      "reason": "scope expansion cannot change task semantics",
+      "status": "rejected",
+      "verb": "extend-scope"
+    },
+    "editor252-browser-scope-v2": {
+      "actor": "Ken0u",
+      "at": 1792885973,
+      "epoch": 1,
+      "fingerprint": "75893b678786813d1cd55afdf07ee487db213a288440e8bd7b46c84eb0988d26",
+      "status": "running",
+      "task_id": "252",
+      "verb": "extend-scope"
+    },
     "editor252-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792885647,
@@ -19902,7 +19917,7 @@
         "granted_at": 1792885500,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "9d01ad8c56c3194bdbf5df9df302926738b867b2538078ec0463dca5605fa0a8"
+        "spec_hash": "63f1733c449b124bdf9612c63b1943a8a5990e661147c3e1a8175296003df1c4"
       },
       "epoch": 1,
       "planned_at": 1792885363,
@@ -19941,7 +19956,8 @@
           "backend/frontend/tests/editor.test.mjs",
           "backend/badminton/static/app.js",
           "backend/badminton/static/build-manifest.json",
-          "docs/BUG_REVIEW.md"
+          "docs/BUG_REVIEW.md",
+          "tests/frontend-editor.mjs"
         ],
         "priority": 30,
         "resources": [],
@@ -19951,7 +19967,7 @@
           "Exact PR/main CI, normal controller merge and independent complete public delivery; no scientific accuracy claim."
         ]
       },
-      "spec_hash": "9d01ad8c56c3194bdbf5df9df302926738b867b2538078ec0463dca5605fa0a8",
+      "spec_hash": "63f1733c449b124bdf9612c63b1943a8a5990e661147c3e1a8175296003df1c4",
       "status": "running"
     },
     "62": {
