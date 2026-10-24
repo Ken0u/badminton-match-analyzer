@@ -19560,6 +19560,7 @@
       }
     },
     "248": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40138883514",
       "checkpoint": {
         "branch": "codex/issue-248-keep-known-queued-running-media-export-c",
         "evidence_sha256": "fe6172a5eb6269885b5b957c9b7db4b53c75c81d9e0117db7e28635c88c36b7e",
@@ -19581,7 +19582,7 @@
         "spec_hash": "4f0a9d2ee0ec2a1d86c1f79da1a0b5f06540b24cef3f2e98d1f71f40c282aa44"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792880519,
