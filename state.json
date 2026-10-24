@@ -4739,6 +4739,15 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally212-e2-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792828171,
+      "epoch": 2,
+      "fingerprint": "e9609538d23f7b4515586f98d8dd24ec8e2a110d8d9a0688aaf053bfb81ccbcf",
+      "status": "review",
+      "task_id": "212",
+      "verb": "submit"
+    },
     "rally212-interruption-recover-v1": {
       "actor": "Ken0u",
       "at": 1792826904,
@@ -16543,6 +16552,7 @@
       },
       "planned_at": 1792788556,
       "planned_by": "Ken0u",
+      "pr_number": 224,
       "reason": "released after terminal proof",
       "repair_rounds": 0,
       "spec": {
@@ -16615,7 +16625,13 @@
         ]
       },
       "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "3662f4e42aa819358d3cd40cfb2a3b5ba7de3ae4",
+        "head_sha": "f409a03b159726978e786facfadb2e5de50a5bec",
+        "pr_number": 224,
+        "spec_hash": "502ec6d1525243135cf8968919aca55262efd25c179a2c6e0b83e9f1d2c103d1"
+      }
     },
     "213": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40027926387",
