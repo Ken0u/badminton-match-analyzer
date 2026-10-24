@@ -1132,6 +1132,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "laptop215-checkpoint-v1": {
+      "actor": "dootz1",
+      "at": 1792812300,
+      "epoch": 1,
+      "fingerprint": "df68054740f90b5923cf74db820e2fcddc9014351c38718bd01eeb43385a5bb2",
+      "status": "running",
+      "task_id": "215",
+      "verb": "checkpoint"
+    },
     "laptop215-static-scope-v1": {
       "actor": "dootz1",
       "at": 1792811725,
@@ -16289,12 +16298,24 @@
       }
     },
     "215": {
+      "checkpoint": {
+        "branch": "codex/issue-215-recover-automatic-library-synchronizatio",
+        "head_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
+        "progress": "CUDA bootstrap and three synthetic GPU operations verified; baseline generated frontend regression fails as expected before repair. Scope extension committed for generated static bundle. Implementing acknowledgement only on a current successful library read. Original checkout clean and MSI #212 untouched.",
+        "remaining": "Complete race/manual/disposal regressions, all required checks, exact-head CI/controller/main/public delivery.",
+        "tests": {
+          "baseline_frontend": "89 passed",
+          "baseline_python": "2233 passed, 38 failed, 30 errors, 4 skips: Windows long temporary paths; retained original log; retry only failures at shorter generated temp path.",
+          "red_regression": "new unchanged-import recovery assertion fails (2 reads, expected 3)"
+        }
+      },
+      "checkpoint_at": 1792812300,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-215-recover-automatic-library-synchronizatio",
         "epoch": 1,
-        "expires_at": 1792822364,
+        "expires_at": 1792823100,
         "granted_at": 1792811564,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "cuda-ready-01a16bd6",
