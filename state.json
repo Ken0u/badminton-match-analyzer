@@ -1150,6 +1150,15 @@
       "task_id": "215",
       "verb": "extend-scope"
     },
+    "laptop215-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792812993,
+      "epoch": 1,
+      "fingerprint": "a2a21a7e071e70a5fec5d69f49e2a250350d819951a003936c5668d673c8b62c",
+      "status": "review",
+      "task_id": "215",
+      "verb": "submit"
+    },
     "mac-01a15493-110-start": {
       "actor": "dootz1",
       "at": 1792439855,
@@ -16324,6 +16333,7 @@
       "epoch": 1,
       "planned_at": 1792793740,
       "planned_by": "Ken0u",
+      "pr_number": 217,
       "spec": {
         "acceptance": [
           "Reproduce on main 88e0408a871b6047d1b8b9d1b2a956b15177bce9 using generated in-memory API responses only: initial empty library, completed import job, one failing GET /api/videos, then unchanged successful /api/jobs polls. The current controller never retries that failed library read; manual reload immediately recovers the imported video. Preserve the reproduction evidence; do not use real media, source labels, models or application data.",
@@ -16363,7 +16373,13 @@
         ]
       },
       "spec_hash": "2e35dee5ef586317e0d5d528491c589fead9e96d314ab5dec20d9c4a4a34e197",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
+        "head_sha": "0257d7d55228116ba98484a4b998d0254c47632d",
+        "pr_number": 217,
+        "spec_hash": "2e35dee5ef586317e0d5d528491c589fead9e96d314ab5dec20d9c4a4a34e197"
+      }
     },
     "62": {
       "checkpoint": {
