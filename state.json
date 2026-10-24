@@ -194,6 +194,15 @@
       "task_id": "221",
       "verb": "checkpoint"
     },
+    "comparison221-environment-v1": {
+      "actor": "dootz1",
+      "at": 1792820395,
+      "epoch": 1,
+      "fingerprint": "65e616a9800d8227982a0d7d31ba72d114e46c455010840fa88ef682f9be0ca3",
+      "status": "running",
+      "task_id": "221",
+      "verb": "checkpoint"
+    },
     "comparison221-next-v1": {
       "actor": "dootz1",
       "at": 1792819082,
@@ -16711,25 +16720,26 @@
       "checkpoint": {
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
         "evidence": [
-          "All five granted files implemented; 54 generated focused tests pass.",
-          "Nine frozen baseline cases: 3 declared-frame comparisons, 6 explicitly unscored; all nine cases and known rows retained.",
-          "Ruff check/format, pip check, repository UTF-8/LF/strict-JSON/link verification and staged diff checks pass.",
-          "Exact decimal comparison preserves changes below float resolution. No real scientific inputs, GPU work, training or promotion."
+          "54 focused regressions, nine pre-frozen generated measurements and documented example pass. Static/dependency/repository checks pass.",
+          "Full suite attempt1:2341passed,14failed,4skipped in388.50s. All14 failed on Windows-length paths; logs and actual exit1 retained.",
+          "Shorter .cache retry:6pass/8longer-path failures. Extended-prefix retry:8SQLite-URI failures. System-temp retry:5pass/3Git-ignore failures. Final3pass in fresh short ignored Git fixture container. No source/test/policy modification between these environmental retries.",
+          "Verification processes exited before retries; no research processes signalled."
         ],
         "head_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "immutable_deadline": 1792847882,
-        "preservation": "Original and #218 worktrees, #212/MSI epoch1 and research reservations preserved. Code-only edits confined to five granted paths; private generated evidence in ignored .cache.",
-        "remaining": "Run full Python suite once, review final diff, commit/push/PR, exact CI/controller/main/public delivery.",
-        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62",
-        "staged_diff_sha256": "084b744c35a0163b003ffb4180e33174326600b14fabe509f14ee8931ca6f354"
+        "measurement_receipt_sha256": "7da878f6ee5ea544e8534620ff3889d1f7346f159fbbe7010811d99b3be90863",
+        "module_sha256": "ba13fd4b427297803691decb3cecb18dc42fa00cabbd6ea9026e6261331d67ee",
+        "preservation": "#212/MSI, originals/predictions/holdouts/eligibility unchanged. Fixture Git repo contains generated test outputs only; application source stays in granted w221 worktree. All prior failure logs retained.",
+        "remaining": "Full suite attempt2 in a fresh short ignored fixture directory, final diff/commit/PR, exact CI/controller/main/public delivery.",
+        "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
       },
-      "checkpoint_at": 1792819667,
+      "checkpoint_at": 1792820395,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "6d0d453fa440e297ab8481de74261f2b65a2bbe3",
         "branch": "codex/issue-221-implement-a-bounded-offline-shuttle-labe",
         "epoch": 1,
-        "expires_at": 1792830467,
+        "expires_at": 1792831195,
         "granted_at": 1792819082,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "roadmap-01a16c1a",
