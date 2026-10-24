@@ -6990,6 +6990,14 @@
       "task_id": "235",
       "verb": "plan"
     },
+    "spec-238-f009ecde2f3e2faccd65880dbfcac058e1f522baeb19e3e107db6b7edba02ffd": {
+      "actor": "Ken0u",
+      "at": 1792856553,
+      "fingerprint": "9d63901c7fed748c07937fa7cc84cf2e0876bfe42d3f6626906b1da6c5263be2",
+      "status": "needs_human",
+      "task_id": "238",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -18436,6 +18444,72 @@
         "pr_number": 236,
         "spec_hash": "f461341382f3e570c0a5a969956ac60300f501970532b06eab3aae5cfd3afac5"
       }
+    },
+    "238": {
+      "epoch": 0,
+      "planned_at": 1792856553,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all issues, open PRs, coordination and aggregate history for duplicates. Depend on fully delivered228 and235; preserve root edits, environments, sources, datasets, predictions, historical tasks/failures/fences and open PR30/78/82/237. Obtain matching configured-owner delegated frozen-scope authorization and a fresh targeted committed MSI grant before code or private labels. Record delegation honestly without personal human review.",
+          "Use six exact paths only: pure diagnostic module, CLI, generated tests, public metadata-only protocol, aggregate diagnostic report and pointer in complete-rally report. Preserve every old scientific producer/protocol/consumer. Pin original acceptance6cb7e4fa13ed591322e48b9de96c139d91cb41a8 and recovery1c8905ff40106b531c8e9f98856f79ee5105c648. No monkeypatching frozen acceptance or capturing its internal inputs. Load verified frozen modules in a clean credential-free process, check their actual origin/hash, and call unchanged targeted_reference_status directly on separately read validated streams.",
+          "Before scientific JSON inspection revalidate sealed228 aggregate853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126, index558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070 and contexteab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59. Reuse unchanged frozen recovery metadata gates read-only: original contexts/media/clocks/packet/PNG headers and hashes, real Store/terminal seals, old process absence, all original/failure output hashes and1014 global execution identities including excluded failures, exact256 validated target membership and8177560145 attempted image bytes. Never call old audit writing exclusive aggregate, fill an old missing index, clear a fence or renew old scientific deadlines. Parse no failed scientific labels.",
+          "Prospectively freeze and timestamp tested committed consumer/protocol/runtime bindings on this owning issue before actual diagnostic execution. Use original MSI and real shared Store run_local_job with pinned BADMINTON_ROOT/data/weights, cleared account credential variables, one bounded CPU metadata job and data:windows-primary reservation. A separate fresh metadata runtime is not renewed source-assessment time. Original owner/assessor lifetimes must remain absent; verify actual new parent/child/Store completion and artifacts before reporting success. No signals or automatic restart on timeout.",
+          "Census all1532 native frames (991 singles/541 doubles), both exhaustive original streams and all256 targeted references. Keep native membership and repeated overlap observations separate. Per source/stream report unique-frame denominator, inspected memberships, missing frames, repeated frame observations and contradictory state variants; unique-frame unions for unknown/possible contact, nonlive/unknown scene, unknown camera, gap/censor coverage; per-frame contact/scene category counts may overlap when variants conflict. Private diagnostic ledger retains source-document/row provenance and variants without rewriting labels. Public output includes aggregate counts/hashes only, never raw frames, labels, per-contact intervals, free-text actor descriptions or process/session identities.",
+          "Distinguish exact event-signature repeats from conflicting same-kind/same-interval signatures and distinct-key overlapping contact intervals. Count raw event occurrences, distinct acceptance-signature groups, repetition excess, within-document and cross-document repeats, conflicting keys and all distinct-key intersecting contact pairs, retaining every original occurrence/provenance privately. Do not merge intervals, infer a contact count, choose a preferred variant, reinterpret none_observed as a known negative, or call overlap a detector bug. Preserve actor-definition variants/local identity support, unresolved contacts, missing requested family/side support and serve/terminal/censor evidence gaps as diagnostics only.",
+          "After full provenance gate call unchanged frozen scientific acceptance independently of diagnostic calculations and compare exact per-source results with sealed228 aggregate, including reasons,991/541 required-inspected target counts, four false eligibility flags and0/2 complete references/fully supported slots. Any mismatch fails closed, preserves outputs and receives diagnosis; no post-result acceptance tuning. Diagnostic counts do not establish expert gold, event truth, detector accuracy, new complete references or training-ready rows.",
+          "Implement generated-only tests for unknown/conflict preservation, overlapping chunk memberships, repeated signatures versus distinct overlapping intervals, conflicting event/actor definitions, missing/native membership violations, inclusive interval bounds, source/lane/image mismatches, exact denominator accounting and public/private separation. Test metadata gate ordering and output exclusivity, unchanged acceptance call/result parity, origin binding, actual admitted/exited generated Store execution and source tamper refusal. No real labels/images, transport or model calls in tests.",
+          "Publish only reproducible code/tests/protocol and aggregate report with unchanged0/2 result, diagnostic limitations and evidence requirements for a separately specified future temporal-context source review. No new assessor, image viewing/decoding/preparation/copy/transfer, inference/training/model/holdout access, source substitution, relabeling, interval collapsing, criterion change, app truth edit, promotion, paid service/dependency or public raw scientific data. Integrity reads/checksums and unchanged PNG header checks are permitted. No scientific session or image payload; no old budget/time renewal.",
+          "Fresh task runtime at most4h, new task outputs/helpers/worktrees/checks at most1GiB, total prior scientific retained outputs plus new task at most8GiB, at most3 repair rounds. Stop before limit with explicit incomplete status; preserve failed attempts. Focused/full Python, Ruff, format, pip, repository UTF8/LF/JSON/local links and diff checks. Exact PR/main CI, normal controller integration and independent complete public package/both-image verification remain mandatory; descriptor HEAD limits explicit. No routine manual merge, raw coordination edits, automation/credentials/workflow/publishing changes or fabricated approval. #62/#66/#67/#71 remain incomplete."
+        ],
+        "artifacts": {
+          "rally228-aggregate": "853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126",
+          "rally228-context": "eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59",
+          "rally228-index": "558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "228",
+          "235"
+        ],
+        "exclusions": [
+          "No source-assessment execution, scientific label edits or new acceptance, raw data publication, media viewing/decode/transform/transfer, model or holdout access, old context/index/fence/deadline edits, protected automation changes, spending, process signals, manual merge, raw coordination mutation or PROGRESS access/change."
+        ],
+        "limits": {
+          "max_cumulative_retained_bytes": 8589934592,
+          "max_image_payload_bytes": 0,
+          "max_output_bytes": 1073741824,
+          "max_parallel_assessors": 0,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Diagnose the sealed two-source rally-reference failure using an immutable metadata census, preserving the unchanged 0/2 scientific verdict and every unknown.",
+        "paths": [
+          "backend/badminton/rally_reference_diagnostics.py",
+          "scripts/diagnose_rally_references.py",
+          "tests/test_rally_reference_diagnostics.py",
+          "data/manifests/rally_reference_diagnostics_v1.json",
+          "docs/RALLY_REFERENCE_DIAGNOSTICS_REPORT.md",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Generated-only census, provenance, immutable acceptance, admitted lifecycle and privacy regressions; required local and exact PR/main checks.",
+          "Actual original-host read-only full provenance and unchanged verdict replay; private ledger/public aggregates; independent public delivery verification."
+        ]
+      },
+      "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
