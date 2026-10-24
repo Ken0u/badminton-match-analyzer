@@ -5451,6 +5451,21 @@
       "task_id": "238",
       "verb": "submit"
     },
+    "rally240-delegated-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792861027,
+      "fingerprint": "f93c2d30223ae55dd1e4be4e62bf4eda80f492001a3525b94ca7500beca55b81",
+      "status": "ready",
+      "task_id": "240",
+      "verb": "human-approved"
+    },
+    "rally240-inputs-registration-v1": {
+      "actor": "Ken0u",
+      "at": 1792861027,
+      "fingerprint": "160e052fd0a288d4cf6150448ba49942a9ce44ac71abe3b5d4a490f4c67610ea",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -18657,8 +18672,14 @@
     },
     "240": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792861027,
+        "spec_hash": "76384232177c0f484f4cf904c88b7c5f7dd9f968ce0c8e6ccef847a669c627f4"
+      },
       "planned_at": 1792860868,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Search all open/closed issues, PRs, coordination and reports; depend on fully delivered238. Preserve root edits, environments, data, original labels/predictions, open PR30/78/82/237 and all historical protocols/failures/fences/deadlines. Obtain transparent configured-owner delegated authorization of this exact frozen scope and a targeted committed MSI grant before implementation or source viewing. Never assert personal human review.",
@@ -18720,7 +18741,7 @@
         ]
       },
       "spec_hash": "76384232177c0f484f4cf904c88b7c5f7dd9f968ce0c8e6ccef847a669c627f4",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
@@ -21831,7 +21852,8 @@
         "rally226-final-integrity": "0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e",
         "rally228-aggregate": "853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126",
         "rally228-context": "eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59",
-        "rally228-index": "558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070"
+        "rally228-index": "558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070",
+        "rally238-aggregate": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1"
       },
       "capabilities": [
         "cpu",
@@ -21840,7 +21862,7 @@
         "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1792856993,
+      "registered_at": 1792861027,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
