@@ -321,6 +321,14 @@
       "task_id": "221",
       "verb": "submit"
     },
+    "completion235-delegated-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792853558,
+      "fingerprint": "95e936413e2848f06f78080ee483dfa79557d695b66582020629c081f5e607b9",
+      "status": "ready",
+      "task_id": "235",
+      "verb": "human-approved"
+    },
     "completion235-plan-v1": {
       "actor": "Ken0u",
       "at": 1792853407,
@@ -18262,8 +18270,14 @@
     },
     "235": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792853558,
+        "spec_hash": "f461341382f3e570c0a5a969956ac60300f501970532b06eab3aae5cfd3afac5"
+      },
       "planned_at": 1792853407,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Search all issue/PR/grant/history for duplicates; preserve historical30 and dependency PR79 including its overlapping agent-queue path. Begin only after220/232 are fully delivered, matching configured-owner delegated frozen-scope authorization and a committed isolated MSI grant. Preserve root PROGRESS.md edits, all environments, data, processes and prior evidence.",
@@ -18314,7 +18328,7 @@
         ]
       },
       "spec_hash": "f461341382f3e570c0a5a969956ac60300f501970532b06eab3aae5cfd3afac5",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
