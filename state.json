@@ -5429,6 +5429,12 @@
       "task_id": "218",
       "verb": "checkpoint"
     },
+    "roadmap218-merged-checkpoint-v1": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "roadmap218-submit-v1": {
       "actor": "dootz1",
       "at": 1792815820,
