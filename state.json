@@ -5582,6 +5582,14 @@
       "task_id": "240",
       "verb": "release"
     },
+    "rally242-explicit-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792866106,
+      "fingerprint": "4d5be09bd5383179d97cdec2aaa02a5197b55a5df13827e8ca42b31677f52e17",
+      "status": "ready",
+      "task_id": "242",
+      "verb": "human-approved"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -18939,8 +18947,14 @@
     },
     "242": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792866106,
+        "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1"
+      },
       "planned_at": 1792863837,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Search all issues,PRs,coordination and reports for duplicates. Preserve #240/draft241/consumer4fa64333afaff67aad8c79a9be97cf622b06e891 and reporthead e8ebc937eec32e112d3c52f62b3556a23d5c1116,all original branches/contexts/deadlines/outputs,root edits,environments,source labels/predictions and PR30/78/82/237. Specific configured-owner authorization must explicitly cover these private derived galleries sent to the existing ChatGPT-authenticated Codex CLI; general autonomy delegation must not stand in for it. No assessor starts before that authorization,committed fresh original-MSI grant and prospective exact context/payload seal. Never retry or work around the recorded automatic-review rejection under old240.",
@@ -19005,7 +19019,7 @@
         ]
       },
       "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1",
-      "status": "needs_human"
+      "status": "ready"
     },
     "243": {
       "checkpoint": {
