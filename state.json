@@ -330,6 +330,15 @@
       "task_id": "235",
       "verb": "checkpoint"
     },
+    "completion235-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792854756,
+      "epoch": 1,
+      "fingerprint": "9bf6592908014de3d1d556420c8e331aecb5e4797e9bb78e4599c5de66ead650",
+      "status": "running",
+      "task_id": "235",
+      "verb": "checkpoint"
+    },
     "completion235-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792853558,
@@ -365,6 +374,15 @@
       "status": "needs_human",
       "task_id": "235",
       "verb": "plan"
+    },
+    "completion235-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792854767,
+      "epoch": 1,
+      "fingerprint": "e9973623676fa7c4efa8590c769d8f98b6ea3102e9e5b1cd50463341bd218ea3",
+      "status": "review",
+      "task_id": "235",
+      "verb": "submit"
     },
     "events67-readiness-checkpoint-v1": {
       "actor": "Ken0u",
@@ -18300,18 +18318,19 @@
     "235": {
       "checkpoint": {
         "branch": "codex/issue-235-observe-pending-exact-source-main-ci-and",
-        "evidence": ".cache/completion235-checks-v2; original virtualenv, isolated root/data/weights and cleared credential environment. Full tests currently running; do not infer exit from timeout. Root PROGRESS.md edits preserved.",
-        "head_sha": "6496a1a9cd48b7fa43b641c5479ceedbedd25ea0",
-        "remaining": "Complete full local/lint/format/pip/repository/diff checks and process audit; commit/publish normal PR, exact PR/main CI, controller integration and independently verified public delivery. Live observer behavior remains unproven before integration.",
-        "summary": "Six granted paths implemented in isolated .cache/worktrees/completion235-e1; candidate is uncommitted while verification runs. 379 focused generated checks pass. Initial overly strict routine authorization condition fixed; second failure was an ancestry fake representing valid main advancement, now corrected to actual divergence. Failed outputs preserved. Request timeout and command-specific dispatch allowlist added. No real privileged candidate code execution, data access, process signals or policy/CI/publisher edits."
+        "evidence_sha256": "041618ca65d8dffbeea1fad0822f248b410015b345227dc86535e784924503d0",
+        "head_sha": "c5e627f3d833435684544019e9618776da0b1ac6",
+        "pr_number": 236,
+        "remaining": "Exact PR/main CI, normal controller integration, independent complete public delivery and honest prospective observer evidence.",
+        "summary": "379 focused/2738 full tests and all project checks pass; final lifetimes absent. Six granted files only; exact scoped owner delegation accepted. No candidate code credential execution or research data access."
       },
-      "checkpoint_at": 1792854341,
+      "checkpoint_at": 1792854756,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6496a1a9cd48b7fa43b641c5479ceedbedd25ea0",
         "branch": "codex/issue-235-observe-pending-exact-source-main-ci-and",
         "epoch": 1,
-        "expires_at": 1792865141,
+        "expires_at": 1792865556,
         "granted_at": 1792853731,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -18325,6 +18344,7 @@
       },
       "planned_at": 1792853407,
       "planned_by": "Ken0u",
+      "pr_number": 236,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -18376,7 +18396,13 @@
         ]
       },
       "spec_hash": "f461341382f3e570c0a5a969956ac60300f501970532b06eab3aae5cfd3afac5",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "6496a1a9cd48b7fa43b641c5479ceedbedd25ea0",
+        "head_sha": "c5e627f3d833435684544019e9618776da0b1ac6",
+        "pr_number": 236,
+        "spec_hash": "f461341382f3e570c0a5a969956ac60300f501970532b06eab3aae5cfd3afac5"
+      }
     },
     "62": {
       "checkpoint": {
