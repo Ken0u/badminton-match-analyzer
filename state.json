@@ -185,6 +185,14 @@
       "status": "ok",
       "verb": "register"
     },
+    "client223-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792828692,
+      "fingerprint": "20d7f1a597f25d52c9d50332067ba01e462b616b79cc225668bc5dd7a094fec2",
+      "status": "needs_human",
+      "task_id": "223",
+      "verb": "plan"
+    },
     "comparison221-baseline-v1": {
       "actor": "dootz1",
       "at": 1792819244,
@@ -6368,6 +6376,14 @@
       "fingerprint": "96efa08166fa40a9d5260bf8ded3932d1095de39a6ba003d4fcd97d1378182ce",
       "status": "ready",
       "task_id": "221",
+      "verb": "plan"
+    },
+    "spec-223-8baeec1b7b86e531ae9e310bb23e77da1b46a7a09dc609289dc33295f4d54921": {
+      "actor": "Ken0u",
+      "at": 1792828692,
+      "fingerprint": "287b905a2035d10d3e1e767d8819cb8a334eeb9e6cd7a39841efe48583267cdd",
+      "status": "needs_human",
+      "task_id": "223",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -16994,6 +17010,53 @@
         "pr_number": 222,
         "spec_hash": "a99cddb0062bf7855fdd5705f1d57e0d22333c4d310cfd227631454635ad9f62"
       }
+    },
+    "223": {
+      "epoch": 0,
+      "planned_at": 1792828692,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Reproduce the fresh linked-worktree client failure with mocked GitHub transport, shared existing worker identity and an absent worktree-local .cache. Confirm the current client posts a request before failing to save agent-last-request.json; no real requests or credentials in tests.",
+          "Create the required worktree-local receipt directory before submitting a remote request for commands that persist client receipts. Preserve existing shared worker identity, request ID and exact canonical payload. Do not require a preexisting .cache or change the repository root checkout.",
+          "When local directory preparation fails, fail before the remote POST/PATCH. When a remote request succeeds but the local receipt or heartbeat index cannot be written, retain the actual request ID and returned comment URL in a clear non-secret diagnostic so callers can reconcile or retry the same ID. Do not automatically submit a second remote request or invent a remote receipt.",
+          "Keep heartbeat update/reuse behavior, existing local receipt files and worker identity intact. Bound client diagnostics to real request identity/comment metadata and exception class or safe local path; never print credentials, token values, entire environment, full remote request bodies or untrusted exception payloads.",
+          "Add focused meaningful generated client tests for first checkpoint/register use in a new linked worktree, first heartbeat, existing heartbeat PATCH reuse, pre-POST directory failure and post-success local-write failure. Assert exact transport call counts and retained ID/URL. All transports are mocked; preserve controller/grant/authorization semantics.",
+          "Run focused tests, full Python suite, Ruff check/format, pip check, git diff --check and repository checks using the existing virtual environment and isolated generated data. Require exact PR CI, controller integration, exact merged-main verification and public wheel/source/both-image delivery. Preserve original #212 branches, evidence, scientific deadline and incomplete result."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "212"
+        ],
+        "exclusions": [
+          "No authorization/policy/controller/workflow/check/retry/lease/deadline/merge/publishing change, raw coordination edits, manual merge or fabricated owner/reviewer approval.",
+          "No scientific input, source image, label, prediction, model, media, dataset, weight, consumed holdout63 or deprecated PROGRESS access/changes; no process control, data migration, dependency acquisition or paid service."
+        ],
+        "limits": {
+          "max_output_bytes": 1073741824,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Preserve controller request identity and local receipts when a fresh linked worktree has no .cache directory or receipt persistence fails after remote success.",
+        "paths": [
+          "scripts/agent_queue.py",
+          "tests/test_agent_queue_client.py"
+        ],
+        "priority": 5,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Offline generated mocked-transport reproduction and regression checks verify pre-POST preparation, single remote request, real request ID/comment diagnostic and existing heartbeat reuse.",
+          "Required Python/static/dependency/repository checks, exact PR/main CI, normal controller integration and independently checked public package/both-image delivery; no scientific accuracy claim."
+        ]
+      },
+      "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
