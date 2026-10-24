@@ -4783,6 +4783,14 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "rally-join-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792881595,
+      "fingerprint": "54b03364eecc7aa19afc6c09fad3eb138d223ee1692dcb1c407b52e8f993f030",
+      "status": "ready",
+      "task_id": "250",
+      "verb": "plan"
+    },
     "rally208-claim-v1": {
       "actor": "Ken0u",
       "at": 1792746046,
@@ -7498,6 +7506,14 @@
       "fingerprint": "248dd74758591b950af409bba796c77967196078058989d3f729865998567ee4",
       "status": "ready",
       "task_id": "248",
+      "verb": "plan"
+    },
+    "spec-250-7962349f7acc7c6dc780b086e9dcf6248b75060bc11b655b2138606d73abba6c": {
+      "actor": "Ken0u",
+      "at": 1792881595,
+      "fingerprint": "83358dbb2a0117cb919c78e8743ad30784963c1e3facb30913d8f9af81da0ea4",
+      "status": "ready",
+      "task_id": "250",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -19648,6 +19664,67 @@
         "pr_number": 249,
         "spec_hash": "4f0a9d2ee0ec2a1d86c1f79da1a0b5f06540b24cef3f2e98d1f71f40c282aa44"
       }
+    },
+    "250": {
+      "epoch": 0,
+      "planned_at": 1792881595,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Follow approved Data and evaluation priority1 in PROJECT_PLAN.md after fully delivered238/242/248. Audit all open/closed issues/PRs and active grants, preserve root checkout/environments/datasets/research processes/deprecated PROGRESS.md, and obtain a fresh committed isolated grant. This is a new metadata-only task; do not reactivate62 or reuse any historical image allowance, deadline, assessor or scientific execution.",
+          "Implement only the six reserved paths. Freeze a versioned public protocol and generated checks before reading scientific JSON. Pin both original source/clock/packet identities, all1532 native frames, the sealed238 ledger and242 context output, their tested frozen consumers and original global execution/lifetime/Store/artifact evidence. Revalidate source-bound hashes and the original historical provenance gate before parsing labels. Reuse completed evidence read-only; never call old preparation, assessment, writing audit/aggregation or sealing helpers, and do not alter old outputs, clocks, failures, fences or acceptance consumers.",
+          "Create an exclusive private joined ledger keyed by exact native ordinal with all native observation occurrences and original document/row/hash provenance, plus sparse scene/play/actor observations only on their sampled frames. Keep source IDs, PTS/time base, orientation, missing/unavailable inputs, all native frames and original inclusive event intervals. Do not forward-fill sparse context, infer contact absence from none_observed/unsampled frames, merge event mentions into physical contacts, infer a precise ending from stopped_play, or map actors across documents/streams from equal ID strings or court positions.",
+          "Join evidence by source/frame identity only and report cross-granularity agreement/conflict/unknown/unavailable support as metadata diagnostics, not accuracy or resolved truth. Keep all three native lanes and all three coarse lanes separate; lane-name equality across experiments does not imply shared sessions or people. Retain each native/contact/actor variant, ambiguity and overlapping distinct-contact pair. Every generated review question must cite its source/clock/frame range and original occurrence references; no majority vote, averaged contact timestamp, actor remap, acceptance or eligibility promotion.",
+          "Define a prospective contiguous source-review rubric covering whole-window scene context, explicit physical-contact identity across overlapping chunks, document-local actor support and source-based opening/terminal evidence. It must require new independent source evidence to resolve conflicts and preserve intervals/unknowns when unsupported. No operational dispatcher or image budget is authorized: future image/source assessment needs a separate frozen task and specifically authorized payload/destination. The rubric and joined ledger must be structurally distinct from historical annotation truth and unchanged acceptance.",
+          "Provide freeze/run/audit metadata commands requiring a tested clean committed consumer, prospective owning-issue context seal, current genuine original-host grant, credential-free pinned original roots, exclusive outputs and real shared Store admission. Verify actual PID/creation/cwd/command and Store terminal/artifact/lifetime evidence; no process signals, retries or restart on timeout. A fresh metadata interval is four hours from this grant and renews no old scientific clock. No media viewing/decoding/rendering, new galleries, new source download, image transfer, CLI assessor, model predictions, inference/training or holdout access. Opaque hashing and original PNG headers are permitted solely for provenance.",
+          "On the original Windows host, run one prospectively sealed metadata assembly after full consumer checks and committed freeze. Verify joined denominator1532, sampled53/unsampled1479, exact per-lane occurrence preservation and unchanged original0/2 complete references/0/2 supported-label slots/all four false eligibility flags. Independently audit output hashes, original inputs unchanged and all recorded lifetimes terminal. Any actual failed attempt remains preserved and fences another attempt until diagnosed within the three-round bound; no implicit repeat.",
+          "Meaningful generated regressions must reject source/clock/hash/ordinal mismatches, missing or extra/duplicate records, boolean ordinals, corrupted provenance, omitted lanes, false actor linking, sparse forward-fill, hidden unknowns and nonfinite/duplicate-key JSON. Verify retained duplicate event mentions/overlapping intervals and no scientific-input mutation; exact frame joins must be independent of source-list/dictionary iteration order. Run focused and full Python/Ruff/pip/repository UTF8/LF/JSON/local-link/diff checks in isolated generated storage before actual private-label assembly; no new dependencies.",
+          "Publish only reproducible code, the public protocol and aggregate report; original images, labels, descriptions, joined ledger and per-contact intervals stay private. Update only a current roadmap pointer, preserving historical sections and existing measured failures. Normal focused PR, exact PR/main CI, controller merge and independent complete public package/source/lock/both-image delivery are required. No manual merge, direct main push, coordination edit or CI/publishing retry/cancel/wake; no policy/auth/workflow/model/deployment/paid-service change.",
+          "Bound implementation/metadata execution to four hours from fresh grant,1GiB new retained outputs and8GiB cumulative retained scientific outputs including prior attempts; at most three repair rounds. Zero new scientific sessions or outbound image bytes. This supplies an auditable review specification, not new complete references, expert truth or demonstrated badminton annotation accuracy."
+        ],
+        "artifacts": {
+          "rally238-ledger": "cdb6a7f59417a0a17eee3313619b3c77e37357b9d64e2a28107e3be9dac92b33",
+          "rally242-aggregate": "9959e3d740d18c82e1918f1706c85d89ec7e489d00572000f7cb4cb7dbc20580"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "238",
+          "242",
+          "248"
+        ],
+        "exclusions": [
+          "No new source assessment/image payload, science/model inference/training/holdout, altered acceptance, actor/contact truth inference, policy/auth/workflow change, model promotion/deployment, paid service, manual merge or PROGRESS.md edits."
+        ],
+        "limits": {
+          "max_output_bytes": 1073741824,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Produce a source-bound joined native/coarse-context evidence ledger and prospective contiguous source-review rubric for the two retained rally slots, preserving every conflict, unknown and unchanged zero-reference verdict without new image assessment.",
+        "paths": [
+          "backend/badminton/rally_evidence_join.py",
+          "scripts/join_rally_evidence.py",
+          "tests/test_rally_evidence_join.py",
+          "data/manifests/rally_evidence_join_v1.json",
+          "docs/RALLY_EVIDENCE_JOIN_REPORT.md",
+          "PROJECT_PLAN.md"
+        ],
+        "priority": 35,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Prospectively frozen generated and full verification, one original-host read-only assembly retaining1532 native frames/53 sparse samples, complete occurrence provenance, unchanged0/2 acceptance and independently terminal Store/process/artifact evidence.",
+          "Exact PR/main CI, normal controller merge and complete independent public package/both-image delivery; zero new assessment sessions/image bytes and no annotation-accuracy claim."
+        ]
+      },
+      "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
