@@ -19378,6 +19378,7 @@
       }
     },
     "246": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40136223124",
       "checkpoint": {
         "branch": "codex/issue-246-refresh-the-shared-roadmap-and-bug-revie",
         "evidence_sha256": "f92e98e8d0934943ff428398a6ab5eea164ccebd7d701f68a2ae18a71c93ce28",
@@ -19399,7 +19400,7 @@
         "spec_hash": "1a5f5b014fb2292c04007ea25f6d43120969502cb01c4c05c64160cfd08596d4"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792878314,
