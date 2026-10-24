@@ -5807,12 +5807,30 @@
       "task_id": "250",
       "verb": "checkpoint"
     },
+    "rally250-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792883811,
+      "epoch": 1,
+      "fingerprint": "439d9204022fee5ddba2e35cd8fb492bd2f8d64b48f5c673a096de1a2ae53fb6",
+      "status": "running",
+      "task_id": "250",
+      "verb": "checkpoint"
+    },
     "rally250-registration-v1": {
       "actor": "Ken0u",
       "at": 1792881746,
       "fingerprint": "e613cb9108ed198d7949c17782437b7ffd8bebab1e01d1965260df9ea5279483",
       "status": "ok",
       "verb": "register"
+    },
+    "rally250-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792883818,
+      "epoch": 1,
+      "fingerprint": "cc512e7ed4e3b3830dee8c492fd44a80284f2e89fef9f43bd5037ed537ff64b3",
+      "status": "review",
+      "task_id": "250",
+      "verb": "submit"
     },
     "rally250-targeted-claim-v1": {
       "actor": "Ken0u",
@@ -19704,17 +19722,18 @@
     "250": {
       "checkpoint": {
         "branch": "codex/issue-250-produce-a-source-bound-joined-native-coa",
-        "head_sha": "70588e967ad53cbfba83a4b7cea86394dd390cff",
-        "remaining": "Full generated checks, clean committed consumer/prospective issue seal, single real-Store metadata assembly and independent audit, focused PR/exact CI/controller delivery.",
-        "summary": "Implemented exact native/coarse occurrence join, prospective contiguous source-review rubric and freeze/run/audit CLI under the six granted paths. Generated checks pass; public protocol pins72sealed inputs before any scientific JSON read. Task-owned code inspection found/fixed Windows worker lineage, phase/lease deadline guards, Store-bound execution sidecars and single-output failure fencing. No private-label assembly, scientific session or image transfer has started. Full generated project verification comes next; root edits/environments/datasets/deprecated PROGRESS.md preserved."
+        "head_sha": "b7398b37a0c0ce89c20f3a300333bc80441b31ae",
+        "pr_number": 251,
+        "remaining": "Exact PR/main CI, normal controller integration and independent public package/source/lock/both-image delivery.",
+        "summary": "Completed tested/prospectively sealed metadata-only assembly and separate audit;160focused/3101full tests+4optional skips pass.1532frames/53samples/1479unsampled and6120native frame/153event/159coarse occurrences retained. Original1020unique execution identities/256targets and12terminal recorded lifetimes verify.0/2references/all4flagsfalse;0newscience/imagebytes. Private evidence stays ignored; code/test/protocol frozen byte parity verified. No manufactured PR approval."
       },
-      "checkpoint_at": 1792882535,
+      "checkpoint_at": 1792883811,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "70588e967ad53cbfba83a4b7cea86394dd390cff",
         "branch": "codex/issue-250-produce-a-source-bound-joined-native-coa",
         "epoch": 1,
-        "expires_at": 1792893335,
+        "expires_at": 1792894611,
         "granted_at": 1792881915,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -19723,6 +19742,7 @@
       "epoch": 1,
       "planned_at": 1792881595,
       "planned_by": "Ken0u",
+      "pr_number": 251,
       "spec": {
         "acceptance": [
           "Follow approved Data and evaluation priority1 in PROJECT_PLAN.md after fully delivered238/242/248. Audit all open/closed issues/PRs and active grants, preserve root checkout/environments/datasets/research processes/deprecated PROGRESS.md, and obtain a fresh committed isolated grant. This is a new metadata-only task; do not reactivate62 or reuse any historical image allowance, deadline, assessor or scientific execution.",
@@ -19778,7 +19798,13 @@
         ]
       },
       "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "70588e967ad53cbfba83a4b7cea86394dd390cff",
+        "head_sha": "b7398b37a0c0ce89c20f3a300333bc80441b31ae",
+        "pr_number": 251,
+        "spec_hash": "04005309f18cfbea6f9141393f18ca23a02fb07cc1273f497808c2ba3903c10d"
+      }
     },
     "62": {
       "checkpoint": {
