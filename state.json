@@ -4521,6 +4521,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "rally212-verified-wait-17928002-v1": {
+      "actor": "Ken0u",
+      "at": 1792800318,
+      "epoch": 1,
+      "fingerprint": "c83982d9c6f125a7fb2153f532fb54523fa1ded389263291f0dbc9346118c1c8",
+      "status": "running",
+      "task_id": "212",
+      "verb": "checkpoint"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -15912,15 +15921,15 @@
       "checkpoint": {
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "head_sha": "1b285c017ff71ef58765c64f2989543c972c8f42",
-        "summary": "Found159664bytes of task bytecode under shared.cache/__pycache__ omitted from supplementary V2 accounting. No scientific image/label/prediction was opened. Preserve V1/V2 and historical scientific base counters. Use .cache/rally212-retained-output-audit-v3.py before targeted dispatch and final reporting;SHA2d14cf94979d932dfffe13e10620bea09772230a4036b28d089b774767d540d4. It composes unchanged V2,includes task-named shared bytecode metadata, disables its own bytecode writes,and never follows directory links. Eight new membership cases plus six existing metadata traversal cases pass. At1792799972.812716,base2231385615+supplement14796870=2246182485bytes<8GiB, supplement<64MiB frozen dispatch headroom. V3 receipt SHA209ca1cd903035fa9c1eabfca25792bbd600c699e1396d4cf937b7f203eda1ec. This is a metadata snapshot,not an atomic transaction. Final frozen planner/auditor retained-byte fields remain BASE counters;attach full corrected sidecar and cite both receipts. No producer/context/protocol/ packing/label/eligibility/deadline change. Same actual original process handles65809/23768 and observers41462/26828 were revalidated live this turn;both original indexes/global genuine audit still gate label comparison. No restart,signal or partial scientific reads. Draft216 remains unsubmitted1b285c0 with previously12passing exact CI jobs. Prepared future delivery V2/preparation/checkpoint remain preserved (accepted1792799772);no actual task212 public delivery claimed. Next original completion,watcher exact target plan/cost,fullV3accounting, prospective execution freeze,blind adjudication,final full-denominator aggregate/report/checks/controller/main/actual public delivery. Original grant1792791609/deadline1792820409,fourfalseeligibility flags and all scientific freezes unchanged;root branch/deprecated PROGRESS edit preserved. Full-match correctness remains unproven."
+        "summary": "VERIFIED WAIT during unchanged source-only originals. Same actual tool handles65809/23768/41462/26828 were polled live this goal turn;no restart or signal. Fresh metadata-only global audit at1792800310.1201293 verifies299of512 completed originals,A150/B149,245prior absent lifetimes,544unique completed threads,4032177620charged image bytes,max2concurrent. Audit receipt SHA96912f128a8021dc6768293d465cef7499a7e9b1376c11d87c6caf9ad5be3f26. Both complete original indexes absent;parent labels unopened. Watcher26828 still plans ONCE after both complete indexes,verified original exits and full genuine native/source/session audit. Do not run the planner manually. Mandatory supplementary output counter is now V3 (.cache/rally212-retained-output-audit-v3.py,SHA2d14cf94979d932dfffe13e10620bea09772230a4036b28d089b774767d540d4), including task-named shared bytecode. Rerun before targeted dispatch and final;frozen scientific counters remain historical bases,attach full corrected accounting sidecar. Prepared public delivery verifier V2 remains unexecuted against real delivery. Draft216 clean/pushed/ unsubmitted1b285c0,12exact CI jobs previously passed. No new scientific result or accuracy claim. Original producer/strict acceptance/contexts/ protocols/packing/cumulative caps/fourfalseeligibility flags and immutable grant deadline1792820409 unchanged. Root branch/deprecated PROGRESS edit,all private artifacts and research processes preserved. Next originals completion,watcher exact target plan/cost,V3accounting, prospective execution freeze,blind adjudication,final aggregate/report/ checks/controller/main and actual public delivery. Goal stays active."
       },
-      "checkpoint_at": 1792800033,
+      "checkpoint_at": 1792800318,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "88e0408a871b6047d1b8b9d1b2a956b15177bce9",
         "branch": "codex/issue-212-complete-two-unchanged-native-rally-wind",
         "epoch": 1,
-        "expires_at": 1792810833,
+        "expires_at": 1792811118,
         "granted_at": 1792791609,
         "host_id": "MSI",
         "session_id": "rally212-msi-20261023-v1",
