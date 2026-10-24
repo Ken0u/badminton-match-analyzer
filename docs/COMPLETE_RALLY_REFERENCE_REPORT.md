@@ -1,5 +1,16 @@
 # Complete-rally source reference pilot
 
+The separately specified [sparse temporal-context pilot](RALLY_TEMPORAL_CONTEXT_REPORT.md)
+under #240, continued by specifically authorized #242, tests sparse whole-window
+scene and actor context before another full native contact pass. #242 reuses the
+unchanged prepared galleries with a separate grant, context and runtime; it
+preserves the original 0/2 result and supplies no exact contact or
+complete-reference evidence.
+All six #242 coarse readings and their global execution audit are complete.
+Known A/B scene equality is 32/34 singles and 18/19 doubles sampled frames,
+retaining unknowns and all 1,479 unsampled native frames. This agreement does
+not validate contacts, identities, boundaries or a complete rally reference.
+
 The separate [metadata diagnostic census](RALLY_REFERENCE_DIAGNOSTICS_REPORT.md)
 under #238 preserves the sealed 0/2 result and all original uncertainties. It
 adds no image assessment, labels or relaxed scientific acceptance.
