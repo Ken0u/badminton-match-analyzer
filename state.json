@@ -185,6 +185,14 @@
       "status": "ok",
       "verb": "register"
     },
+    "client223-delegated-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792828838,
+      "fingerprint": "3a5308ea0e7b0fc4b2f17da3e005b7d13d9cf8d4a4a530a0ecadb48dfd51b200",
+      "status": "ready",
+      "task_id": "223",
+      "verb": "human-approved"
+    },
     "client223-plan-v1": {
       "actor": "Ken0u",
       "at": 1792828692,
@@ -17023,8 +17031,14 @@
     },
     "223": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792828838,
+        "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec"
+      },
       "planned_at": 1792828692,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Reproduce the fresh linked-worktree client failure with mocked GitHub transport, shared existing worker identity and an absent worktree-local .cache. Confirm the current client posts a request before failing to save agent-last-request.json; no real requests or credentials in tests.",
@@ -17066,7 +17080,7 @@
         ]
       },
       "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
