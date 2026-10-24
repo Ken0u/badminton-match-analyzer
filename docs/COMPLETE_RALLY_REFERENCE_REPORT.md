@@ -1,5 +1,39 @@
 # Complete-rally source reference pilot
 
+## Explicit recovery after preserved image-identity failure
+
+[Issue #228](https://github.com/Ken0u/badminton-match-analyzer/issues/228) and its
+separate [v6 protocol](../data/manifests/rally_reference_protocol_v6.json)
+prepare only the 21 remaining unchanged singles targets, 151 through 171.
+The failed 151 output, old dispatch fence, original contexts and missing indexes
+remain unchanged. The recovery references 235 validated targets in place and
+permits one prospectively planned replacement of failed 151 after actual exit
+proof. Any new failure stops dispatch without another replacement.
+
+The [recovery command](../scripts/recover_rally_references.py) and its
+[metadata rules](../backend/badminton/rally_reference_recovery.py) retain the
+same scientific producer, schema, rubric and frozen acceptance. A separate
+opaque inventory binds all 412 archived files, including failed output bytes,
+without parsing scientific labels. Both cumulative limits remain 8 GiB.
+The 185,872,144-byte suffix projects 8,177,560,145 cumulative attempted image
+bytes, counting old failed 151 and its replacement separately. Scientific time
+does not renew: the inherited deadline is 16:45:17 UTC on October 24, 2026,
+with no new dispatch in its final 60 seconds.
+
+The recovery requires a genuine grant, committed clean consumer snapshot,
+whole-source/native/Store/process/context proof and prospective owning-issue
+timestamp before dispatch. Final comparison remains sealed until both complete
+combined target indexes and all 1,014 completed execution identities verify;
+the failed reference contributes only to execution history. Scientific status
+uses only the 256 validated targets and the unchanged frozen acceptance.
+
+At this preparation checkpoint no recovery image is dispatched and no complete
+reference is certified. Generated verification and prospective seals precede
+any assessment. Preserve both source slots/all 1,532 frames, unknowns and every
+earlier incomplete result. Agent judgments remain development evidence, not
+expert gold or automatic match accuracy. All four eligibility flags remain
+false, and #62, #66, #67 and #71 remain incomplete.
+
 ## Separately authorized targeted continuation
 
 [Issue #226](https://github.com/Ken0u/badminton-match-analyzer/issues/226)
