@@ -741,7 +741,25 @@ def recover_external_merges(gh, config, store, state, main):
     return state
 
 
-def integrate(gh, config, state):
+def follow_merged_pr(gh, config, store, task, response):
+    """One confirmation-only pass; the merge response is never adoption evidence."""
+    if not isinstance(response, dict) or response.get("merged") is not True:
+        return store.read()[1]
+    merged = response.get("sha")
+    if not isinstance(merged, str) or not re.fullmatch(r"[0-9a-f]{40}", merged):
+        return store.read()[1]
+    # Re-read trusted state rather than replaying the pre-merge snapshot. Any
+    # concurrent task change defers to an ordinary pass with its normal gates.
+    _, state = store.read()
+    expected = {key: value for key, value in task.items() if key != "task_id"}
+    if state.get("tasks", {}).get(task["task_id"]) != expected:
+        return state
+    return integrate(
+        gh, config, state, _merged_only=(task["task_id"], merged, expected)
+    )
+
+
+def integrate(gh, config, state, *, _merged_only=None):
     """Serial external side effects, journalled before merging and replay-safe."""
     from .queue import apply_request
 
@@ -756,13 +774,18 @@ def integrate(gh, config, state):
     if enforcement == "github" and not protections_present(gh):
         raise ValueError("Required branch protections are absent; integration disabled")
     main = gh.repo("git/ref/heads/main")["object"]["sha"]
-    for task_id in state.get("tasks", {}):
-        state = external_merge_incident(gh, store, state, task_id)
-    state = recover_external_merges(gh, config, store, state, main)
+    if _merged_only is None:
+        for task_id in state.get("tasks", {}):
+            state = external_merge_incident(gh, store, state, task_id)
+        state = recover_external_merges(gh, config, store, state, main)
     # Delivery is an independent outbox. Failed/exhausted publication cannot
     # occupy the serial merge lane or starve later eligible implementation.
     for task_id, task in list(state.get("tasks", {}).items()):
-        if task.get("status") == "done" and task.get("delivery_pending"):
+        if (
+            _merged_only is None
+            and task.get("status") == "done"
+            and task.get("delivery_pending")
+        ):
             state = deliver(gh, store, state, task_id, task["merge_sha"])
     tasks = {
         task_id: {**task, "task_id": task_id}
@@ -791,8 +814,24 @@ def integrate(gh, config, state):
     )
     if state.get("paused") and not active:
         return state
+    if _merged_only is not None:
+        task_id, merged, expected = _merged_only
+        if main != merged or state.get("tasks", {}).get(task_id) != expected:
+            return state
+        candidates = [t for t in active if t["task_id"] == task_id]
     for task in sorted(candidates, key=lambda t: str(t["task_id"])):
         pr = gh.repo(f"pulls/{task['pr_number']}")
+        if _merged_only is not None and (
+            pr.get("merged") is not True
+            or pr.get("merge_commit_sha") != _merged_only[1]
+            or pr.get("number") != task["pr_number"]
+            or pr.get("base", {}).get("ref") != "main"
+            or pr.get("head", {}).get("repo", {}).get("full_name")
+            != config["repository"]
+        ):
+            # Eventual consistency is allowed. Never merge again, adopt from
+            # the response alone, or fence a transient observation in this pass.
+            return state
         if pr.get("merged"):
             merged = pr["merge_commit_sha"]
             submission = task.get("submission", {})
@@ -807,6 +846,8 @@ def integrate(gh, config, state):
                 and (not task.get("merge_sha") or task["merge_sha"] == merged)
             )
             if not journalled:
+                if _merged_only is not None:
+                    return state
                 tip, current = store.read()
                 current = apply_request(
                     current,
@@ -853,6 +894,11 @@ def integrate(gh, config, state):
                 "action_required",
             )
             tip, current = store.read()
+            if _merged_only is not None and (
+                current.get("tasks", {}).get(task["task_id"]) != _merged_only[2]
+                or gh.repo("git/ref/heads/main")["object"]["sha"] != merged
+            ):
+                return current
             target = current["tasks"][str(task["task_id"])]
             if target["status"] != "done":
                 current = apply_request(
@@ -998,10 +1044,10 @@ def integrate(gh, config, state):
                 errors or ["Main advanced; refresh integration evidence"],
             )
             return current
-        gh.repo(
+        response = gh.repo(
             f"pulls/{task['pr_number']}/merge",
             method="PUT",
             data={"sha": pr["head"]["sha"], "merge_method": "squash"},
         )
-        return current
+        return follow_merged_pr(gh, config, store, target, response)
     return state

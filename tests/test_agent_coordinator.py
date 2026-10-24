@@ -656,6 +656,202 @@ def optional_merge_setup():
     return gh, store, config
 
 
+def test_merge_followthrough_dispatches_without_another_event_or_second_merge():
+    gh, store, config = optional_merge_setup()
+    tip, state = store.read()
+    state["tasks"]["2"] = copy.deepcopy(state["tasks"]["1"])
+    state["tasks"]["2"]["pr_number"] = 43
+    store.write(tip, state)
+    transport, merges = gh.repo, []
+
+    def record(path, *, method="GET", **kwargs):
+        if method == "PUT":
+            merges.append(path)
+        if path == "pulls/43":
+            pytest.fail("The follow-through must never inspect a second PR")
+        return transport(path, method=method, **kwargs)
+
+    gh.repo = record
+    state = integrate(gh, config, store.read()[1])
+    task = state["tasks"]["1"]
+    assert merges == ["pulls/42/merge"]
+    assert task["status"] == "verifying_main"
+    assert task["merge_sha"] == gh.merge_sha
+    assert state["tasks"]["2"]["status"] == "review"
+    assert gh.external[-1] == (
+        "actions/workflows/ci.yml/dispatches",
+        {"ref": "main", "inputs": {"verify_sha": gh.merge_sha}},
+    )
+
+
+@pytest.mark.parametrize("event", ["push", "workflow_dispatch"])
+@pytest.mark.parametrize(
+    "outcome", ["queued", "in_progress", "success", "failure", "cancelled"]
+)
+def test_merge_followthrough_reuses_existing_exact_ci_without_retry(event, outcome):
+    gh, store, config = optional_merge_setup()
+    conclusion = None if outcome in {"queued", "in_progress"} else outcome
+    gh.ci = [
+        {
+            "id": 3,
+            "event": event,
+            "head_sha": gh.merge_sha if event == "push" else BASE,
+            "display_title": f"Verify {gh.merge_sha}",
+            "status": "completed" if conclusion else outcome,
+            "conclusion": conclusion,
+        }
+    ]
+    state = integrate(gh, config, store.read()[1])
+    assert not any(path.endswith("ci.yml/dispatches") for path, _ in gh.external)
+    task = state["tasks"]["1"]
+    if conclusion == "success":
+        assert task["status"] == "done" and task["delivery_pending"]
+    else:
+        assert task["status"] == "verifying_main"
+        assert bool(state.get("paused")) is (conclusion is not None)
+
+
+@pytest.mark.parametrize(
+    "defect",
+    [
+        "unmerged",
+        "head",
+        "base",
+        "merge",
+        "number",
+        "repository",
+        "main",
+        "journal",
+        "submission",
+        "epoch",
+    ],
+)
+def test_merge_followthrough_defers_unconfirmed_or_changed_evidence(defect):
+    gh, store, config = optional_merge_setup()
+    transport, merges = gh.repo, []
+    stale = copy.deepcopy(gh.pr)
+
+    def observe(path, *, method="GET", **kwargs):
+        if path.endswith("/merge") and method == "PUT":
+            merges.append(path)
+            result = transport(path, method=method, **kwargs)
+            if defect == "main":
+                gh.main = "f" * 40
+            elif defect in {"journal", "submission", "epoch"}:
+                tip, state = store.read()
+                task = state["tasks"]["1"]
+                if defect == "journal":
+                    task.pop("integration")
+                elif defect == "submission":
+                    task["submission"]["head_sha"] = "f" * 40
+                else:
+                    task["claim"]["epoch"] += 1
+                store.write(tip, state)
+            return result
+        if path == "pulls/42" and method == "GET" and gh.pr["merged"]:
+            result = copy.deepcopy(gh.pr)
+            if defect == "unmerged":
+                return stale
+            if defect == "head":
+                result["head"]["sha"] = "f" * 40
+            if defect == "base":
+                result["base"]["sha"] = "f" * 40
+            if defect == "merge":
+                result["merge_commit_sha"] = "f" * 40
+            if defect == "number":
+                result["number"] = 43
+            if defect == "repository":
+                result["head"]["repo"]["full_name"] = "other/fork"
+            return result
+        return transport(path, method=method, **kwargs)
+
+    gh.repo = observe
+    state = integrate(gh, config, store.read()[1])
+    assert merges == ["pulls/42/merge"]
+    assert state["tasks"]["1"]["status"] == "integrating"
+    assert not state["tasks"]["1"].get("merge_sha")
+    assert not any(path.endswith("ci.yml/dispatches") for path, _ in gh.external)
+    assert not gh.issues  # No false external-merge incident from a stale read.
+    if defect in {"unmerged", "head", "base", "merge", "number", "repository"}:
+        gh.repo = transport
+        recovered = integrate(gh, config, store.read()[1])
+        assert recovered["tasks"]["1"]["status"] == "verifying_main"
+
+
+@pytest.mark.parametrize("boundary", ["confirmation", "ci", "state", "dispatch"])
+def test_merge_followthrough_adapter_failure_preserves_journal_for_ordinary_recovery(
+    boundary,
+):
+    gh, store, config = optional_merge_setup()
+    transport = gh.repo
+
+    def fail(path, *, method="GET", **kwargs):
+        if gh.pr["merged"] and (
+            (boundary == "confirmation" and path == "pulls/42")
+            or (boundary == "ci" and path.startswith("actions/workflows/ci.yml/runs"))
+            or (boundary == "state" and path.startswith("git/ref/heads/codex/"))
+            or (boundary == "dispatch" and path.endswith("ci.yml/dispatches"))
+        ):
+            raise GitHubError("generated post-merge adapter failure")
+        return transport(path, method=method, **kwargs)
+
+    gh.repo = fail
+    with pytest.raises(GitHubError, match="post-merge"):
+        integrate(gh, config, store.read()[1])
+    gh.repo = transport
+    preserved = store.read()[1]["tasks"]["1"]
+    assert preserved["status"] in {"integrating", "verifying_main"}
+    assert preserved["integration"]["head_sha"] == HEAD
+    assert preserved["submission"]["base_sha"] == BASE
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "verifying_main"
+
+
+@pytest.mark.parametrize("boundary", ["state", "main"])
+def test_merge_followthrough_rechecks_after_ci_observation(boundary):
+    gh, store, config = optional_merge_setup()
+    transport = gh.repo
+
+    def race(path, *, method="GET", **kwargs):
+        result = transport(path, method=method, **kwargs)
+        if path.startswith("actions/workflows/ci.yml/runs"):
+            if boundary == "main":
+                gh.main = "f" * 40
+            else:
+                tip, state = store.read()
+                state["tasks"]["1"]["submission"]["head_sha"] = "f" * 40
+                store.write(tip, state)
+        return result
+
+    gh.repo = race
+    state = integrate(gh, config, store.read()[1])
+    assert state["tasks"]["1"]["status"] == "integrating"
+    assert not any(path.endswith("ci.yml/dispatches") for path, _ in gh.external)
+
+
+@pytest.mark.parametrize(
+    "response",
+    [None, {}, {"merged": False}, {"merged": True}, {"merged": True, "sha": "invalid"}],
+)
+def test_merge_followthrough_does_not_adopt_from_malformed_response(response):
+    gh, store, config = optional_merge_setup()
+    transport = gh.repo
+
+    def replace_response(path, *, method="GET", **kwargs):
+        result = transport(path, method=method, **kwargs)
+        return response if path.endswith("/merge") and method == "PUT" else result
+
+    gh.repo = replace_response
+    state = integrate(gh, config, store.read()[1])
+    assert gh.pr["merged"] and state["tasks"]["1"]["status"] == "integrating"
+    assert not any(path.endswith("ci.yml/dispatches") for path, _ in gh.external)
+    gh.repo = transport
+    assert (
+        integrate(gh, config, store.read()[1])["tasks"]["1"]["status"]
+        == "verifying_main"
+    )
+
+
 @pytest.mark.parametrize("reviewed", [False, True])
 def test_optional_review_controller_merges_verifies_main_and_completes_public_delivery(
     reviewed,
@@ -667,10 +863,8 @@ def test_optional_review_controller_merges_verifies_main_and_completes_public_de
         store.write(store.read()[0], h.state)
     state = integrate(gh, config, store.read()[1])
     task = state["tasks"]["1"]
-    assert task["status"] == "integrating" and gh.pr["merged"] is True
+    assert task["status"] == "verifying_main" and gh.pr["merged"] is True
     assert ("review" in task) is reviewed
-    state = integrate(gh, config, store.read()[1])
-    assert state["tasks"]["1"]["status"] == "verifying_main"
     gh.ci = [
         {
             "id": 10,
@@ -954,7 +1148,7 @@ def test_sensitive_main_repair_has_its_own_owner_authorization_and_completes(
     store.write(store.read()[0], state)
     gh.merge_sha = "e" * 40
     state = integrate(gh, config, store.read()[1])
-    assert state["tasks"]["900"]["status"] == "integrating" and gh.pr["merged"]
+    assert state["tasks"]["900"]["status"] == "verifying_main" and gh.pr["merged"]
     assert state["paused"]
     gh.ci = [
         {
@@ -1409,7 +1603,7 @@ def test_exhausted_publication_does_not_starve_a_later_merge():
     result = integrate(gh, config, store.read()[1])
     assert result["tasks"]["0"]["delivery_error"]
     assert result["tasks"]["0"]["delivery_pending"]
-    assert result["tasks"]["1"]["status"] == "integrating"
+    assert result["tasks"]["1"]["status"] == "verifying_main"
     assert gh.pr["merged"] is True
 
 
@@ -1846,7 +2040,7 @@ def test_external_merge_fence_does_not_starve_an_unrelated_valid_integration():
     gh.repo, gh.pages = multi_pr, multi_pages
     state = integrate(gh, config, store.read()[1])
     assert state["tasks"]["1"]["status"] == "recovery_required"
-    assert state["tasks"]["2"]["status"] == "integrating"
+    assert state["tasks"]["2"]["status"] == "verifying_main"
     assert pr2["merged"] is True and gh.main == "f" * 40
 
 
@@ -1976,7 +2170,7 @@ def test_optional_controller_does_not_launder_genuine_changes_verdict(new_head):
     assert gh.pr["merged"] is new_head
     task = state["tasks"]["1"]
     if new_head:
-        assert "review" not in task and task["status"] == "integrating"
+        assert "review" not in task and task["status"] == "verifying_main"
     else:
         assert task["review"]["verdict"] == "changes"
         assert task["review"]["findings"] == [
