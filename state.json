@@ -5625,6 +5625,15 @@
       "task_id": "242",
       "verb": "checkpoint"
     },
+    "rally242-checkpoint-verification-v2": {
+      "actor": "Ken0u",
+      "at": 1792874468,
+      "epoch": 1,
+      "fingerprint": "a66f042c0ae55aecd80e27f33e9e83083d080603924c6e097a3e4f5038cfe65f",
+      "status": "running",
+      "task_id": "242",
+      "verb": "checkpoint"
+    },
     "rally242-explicit-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792866106,
@@ -19033,23 +19042,22 @@
     },
     "242": {
       "checkpoint": {
-        "artifacts": [
-          ".cache/rally242-grant-v1.json",
-          ".cache/rally242-check-focused-v2/results.json"
-        ],
         "branch": "codex/issue-242-complete-the-six-specifically-authorized",
+        "evidence_paths": [
+          ".cache/rally242-check-focused-v6/results.json",
+          ".cache/rally242-check-all-v6-interruption-v1.json",
+          ".cache/rally242-check-all-v7/owner.json"
+        ],
         "head_sha": "876bf845e6386368742d6668b6882c9d274ca08d",
-        "new_image_bytes_transferred": 0,
-        "scientific_sessions_started": 0,
-        "summary": "Adopted the all-12-checks-passing draft #241 source into the genuine #242 branch. Continuation v2 in generated verification; 449 focused tests pass before additional reuse/fail-stop fixtures. No real prefix reuse, assessor, payload reservation or image transfer started. Original #240 evidence/deadline unchanged; its actual deadline is 20:59:41 UTC, and the fresh #242 interval is 19:04:53\u201323:04:53 UTC October24. Remaining: finish tests, committed consumer and prospective seals, six authorized readings, global audit, reports and normal integration/delivery."
+        "status": "Final459focused generated checks pass. Fixed strict epoch JSON types and clean frozen-metadata import isolation before any real attempt. Earlier full2939pass receipt preserved; final-source v6full run interrupted by turn transition at85%,no final verdict. Independently confirmed recordedPID3504 absent and no other original matching test worker; preserve incomplete logs. Fresh isolated v7full run now observed alive with persistent wrapper and actual creation-time receipts. No real prefix reuse,assessor,payloadreservation or newimage transfer. Next:finalfullchecks,commit/freezeproducer,prospective context andpayloadseals,realStore reuse and sixexplicitlyauthorizedsessions,globalmetadataauditbeforecomparison,reports/PR/controller/exactmain/publicdelivery. Scientificdeadline remains2026-10-24T23:04:53Z;lease renewal cannot extend it."
       },
-      "checkpoint_at": 1792869794,
+      "checkpoint_at": 1792874468,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "af061f4fcb90833acff971e733b094bde0ba80ae",
         "branch": "codex/issue-242-complete-the-six-specifically-authorized",
         "epoch": 1,
-        "expires_at": 1792880594,
+        "expires_at": 1792885268,
         "granted_at": 1792868693,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
