@@ -171,6 +171,16 @@ verification receipts remain preserved. These checks establish software behavior
 final exact-head CI, controller integration, merged-main checks and public
 delivery remain separate requirements.
 
+After audited recovery, the new granted branch incorporates main
+`3662f4e42aa819358d3cd40cfb2a3b5ba7de3ae4` and passes **300 focused tests and
+2,508 full tests, with four optional skips**. Ruff, formatting, dependencies,
+diff and repository checks pass; all 154 observed verification lifetimes are
+independently absent. Verification receipt SHA256 is
+`19526dafea0c45ab3c038dda966696951668360ba9afbd44af02e764a9350764`.
+The final documentation-only update is checked separately. Exact final-head CI,
+controller integration, merged-main verification and public candidate delivery
+are recorded on [the owning issue](https://github.com/Ken0u/badminton-match-analyzer/issues/212).
+
 ## Authorized dense assessment: transport failure, both references incomplete
 
 The separately owner-authorized [#210 follow-up](https://github.com/Ken0u/badminton-match-analyzer/issues/210)
