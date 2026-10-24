@@ -5005,6 +5005,14 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally226-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792830718,
+      "fingerprint": "6b9af74b1b68dbb942992e16cc0d28bacba385cad472d714ed2fe83af297fc56",
+      "status": "needs_human",
+      "task_id": "226",
+      "verb": "plan"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -6447,6 +6455,14 @@
       "fingerprint": "287b905a2035d10d3e1e767d8819cb8a334eeb9e6cd7a39841efe48583267cdd",
       "status": "needs_human",
       "task_id": "223",
+      "verb": "plan"
+    },
+    "spec-226-5606748c9df92bc593141245bfbd119bd0e06dd9a6917b05fcf5c7827c516ebe": {
+      "actor": "Ken0u",
+      "at": 1792830718,
+      "fingerprint": "c49c2ab0c14cf2a4daa34ebfff4b727aced1f80cab353d066f8a705f09e91c96",
+      "status": "needs_human",
+      "task_id": "226",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -17179,6 +17195,78 @@
         "pr_number": 225,
         "spec_hash": "c2e0d7caa166296345e92013a26cc5180a0b3a91389410f123926b8890f50dec"
       }
+    },
+    "226": {
+      "epoch": 0,
+      "planned_at": 1792830718,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "This is a separate risk-human successor to completed #212 / PR224, dependent on delivered #223 / PR225. Freeze this exact specification and obtain configured-owner authorization before a fresh genuine grant. Apply the owner's explicit current delegation transparently; do not assert a personal human review. Preserve #212's expired immutable deadline, consumed replacements, sealed labels, incomplete result, branches, worktrees and original uncommitted changes. No image dispatch is authorized by planning alone.",
+          "Preserve all 1532 unchanged original native PNGs, singles991/doubles541, exact source/bounds/PTS/timebase/orientation and fixed target plan0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b. Reuse all512 validated original successes and178 validated targeted successes without relabeling. Finish only the missing78 singles target chunks094..171, preserving the interrupted094 attempt and unknown exit code. No new source, decoding, crop, resize, composite, image copy, source selection, shorter denominator or third exhaustive original pass.",
+          "Before scientific access, reverify whole source/census/clock/packet/native PNG and original Store/terminal seals, original process lifetime absence and preserved prefix metadata. Bind #212 final incomplete aggregate47c938ed4e217d602773398609749f2f7ccd604b1f5c36b9fdb61d450c5c6e2d, final integrity7752e89860f89b0cc1f742ecd22570562e3a58d97e374298288bcd68e9485d48, original producer eebbe210c83aefb9d467e3740dbf1a39f161ac2a and frozen acceptance consumer6cb7e4fa13ed591322e48b9de96c139d91cb41a8. Archived consumer deadlines establish predecessor timing only; never edit, reactivate or overwrite them. Verify original historical timestamps against their own deadline and new dispatch against the successor's own immutable deadline.",
+          "Publish a separate v5 continuation protocol and reproducible continuation/archived-evidence tooling. Keep public protocols v1-v4 byte-identical and preserve the original scientific acceptance semantics. Freeze current source/runtime/execution/protocol hashes, exact prefix/suffix references, attempted-byte accounting, context, deadline and generated verification on the owning issue before dispatch. Exclusive new output paths reference original successes in place and never fill or overwrite #212's absent index or run folders. Changed or missing predecessor evidence stops execution with both source slots retained.",
+          "Send only assigned original PNGs and minimal public protocol/frame/hash/timing plus that same source adjudication stream's own continuity notes to the existing ChatGPT-authenticated Codex CLI, using the same provider/model/authentication as #212. Each genuinely fresh ephemeral read-only assessor gets at most20 images/9MiB raw, at most14MiB controlled encoded request including2MiB reserve. No other stream assessments, predictions, tools, filesystem, network, shell, account access or delegation inside assessors. Scrub unrelated credentials before child launch; never expose credentials or private labels in logs/source/builds. The prior targeted chunk093's own notes may seed unchanged stream continuity only after provenance validation; this is not a new independent original stream.",
+          "Keep cumulative attempted image payload <=8589934592 bytes including all predecessor overlaps/failures/partials/repeats and #212's7479083253 already attempted bytes. Reserve all attempts before launch. Complete planned suffix cost must be metadata-recomputed before any launch, including replacement094 which is additionally charged. Retained outputs including all predecessor artifacts/helpers/worktrees/verification remain <=8GiB, without copying originals. At most two concurrent assessors, five-second pacing; sequential source continuity is mandatory. Stop dispatch60seconds before the fresh grant plus8hours; checkpoints and interruption never reset it. No paid services or new provider/model/credential.",
+          "No automatic retry. A failed launch fences all new dispatch; preserve output and independently prove actual process identity/exit before any replacement. Permit at most one replacement per new failed segment and at most two new replacements total, prospectively timestamped on the issue and with unchanged originals/provider/model. Repeated transport-size failure stops for diagnosis without changing frozen packing. These are successor limits and do not restore #212 replacements. Never signal, kill or restart predecessor processes; a missing handle or timeout is not exit evidence.",
+          "Keep targeted scientific labels sealed for final comparison until both combined target indexes and global actual session/thread/process/image/event-log/transport/payload/lifetime metadata pass. Original retained labels may be read only through the unchanged frozen acceptance path after this gate; same-stream continuity and validation of each just-produced segment are the narrow execution exceptions. Independently verify old and new timestamps against their respective frozen contexts, genuine unique sessions across all predecessors, full assigned membership, joins, actor links, inclusive intervals and all unknowns. Use unchanged targeted_reference_status from the frozen acceptance consumer for real final status; do not tune it or labels based on observed results. Report all1532 frames/two source slots, incomplete reasons and six-family/side support separately. Agent judgments are development evidence, not expert gold truth or established automatic accuracy.",
+          "Generated-only regressions must verify archived-deadline/current-deadline separation, changed artifacts/contexts, prefix/suffix coverage and continuity, missing/duplicate/type-aliased ordinals and identities, valid transport limits/base64 rounding, cumulative failed/repeated-byte accounting, exclusive outputs, actual child lifecycle and safe dispatch fences, sealed-global-gate ordering and honest unknown-preserving results. Existing reference validation and v1-v4 behavior remain unchanged. No scientific labels may inform software acceptance changes; a reproducible real incompatibility is recorded as incomplete rather than relaxed away.",
+          "Commit only code, generated tests, separate public v5 protocol and aggregate report. Retain all four training_allowed/independent_test_allowed/model_deployment_allowed/dataset_redistribution_allowed=false. No source/labels/individual contacts/process identities in public Git/builds, no application truth/prediction/model/weight access or modification, no training/inference/model promotion. Never access consumed holdout63 or deprecated PROGRESS. Preserve other tasks/environments/data/processes. No workflow/auth/controller/retry-policy/publishing changes, manual merge, raw coordination edits, fabricated approval or paid service.",
+          "Use a focused genuine grant/worktree and checkpoint before long operations. Run meaningful focused generated tests and full Python/Ruff/format/pip/diff/repository checks, exact PR CI, normal controller integration, exact merged-main CI and independently verified public package/both-image delivery with honest image-verification limits. No second implementation per host. Delivered software or a scientifically incomplete result never closes #62/#66/#67/#71 or establishes full-match accuracy. An exhausted/failed execution remains an explicit incomplete two-slot result, preserving all original evidence."
+        ],
+        "artifacts": {
+          "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+          "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+          "rally212-final-incomplete-aggregate": "47c938ed4e217d602773398609749f2f7ccd604b1f5c36b9fdb61d450c5c6e2d",
+          "rally212-final-integrity": "7752e89860f89b0cc1f742ecd22570562e3a58d97e374298288bcd68e9485d48",
+          "rally212-frozen-target-plan": "0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "212",
+          "223"
+        ],
+        "exclusions": [
+          "No predecessor grant/deadline/replacement replay or edits; no new source/data/model/weight/dependency acquisition, image transform/decode/copy, source/region/denominator substitution, original label overwrite, consumed holdout63 or deprecated PROGRESS access.",
+          "No prediction/application-truth/model access or edits, training/inference/eligibility change/public raw data, process signals, alternate provider/model/credentials, paid service, protected automation/policy/deployment/publishing change, raw coordination edits, fabricated review or manual merge."
+        ],
+        "limits": {
+          "max_image_payload_bytes": 8589934592,
+          "max_images_per_session": 20,
+          "max_locally_controlled_encoded_request_bytes": 14680064,
+          "max_output_bytes": 8589934592,
+          "max_parallel_assessors": 2,
+          "max_replacement_launches": 2,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 8,
+          "max_session_image_bytes": 9437184,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Complete the unchanged frozen two-source targeted rally adjudication through an independently authorized continuation, reusing validated immutable successes and preserving every predecessor incomplete result.",
+        "paths": [
+          "backend/badminton/rally_reference_continuation.py",
+          "scripts/continue_rally_references.py",
+          "tests/test_rally_reference_continuation.py",
+          "data/manifests/rally_reference_protocol_v5.json",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Frozen successor provenance/continuation plan and independent full global metadata gate before unchanged source acceptance; all predecessors/deadlines/failed attempts retained and fully charged.",
+          "Meaningful generated regressions, required local/static checks, exact PR/main CI, controller integration and public package/both-image verification; no scientific accuracy or rights claim from software delivery."
+        ]
+      },
+      "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
