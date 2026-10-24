@@ -17318,6 +17318,7 @@
       }
     },
     "226": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40086744364",
       "checkpoint": {
         "base_sha": "3eeb4ed750dc8bfc3b58b471e172ea9b7c18839c",
         "branch": "codex/issue-226-complete-the-unchanged-frozen-two-source",
@@ -17339,7 +17340,7 @@
         "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
