@@ -1,5 +1,104 @@
 # Complete-rally source reference pilot
 
+## Separately authorized targeted continuation
+
+[Issue #226](https://github.com/Ken0u/badminton-match-analyzer/issues/226)
+defines a separate [v5 continuation protocol](../data/manifests/rally_reference_protocol_v5.json)
+for the unchanged two source slots. It preserves #212's elapsed deadline,
+interrupted attempt, incomplete result, source windows, all original protocols
+and both frozen scientific consumers. The current configured-owner delegation
+was recorded transparently through the normal frozen-scope authorization flow;
+no personal human review is asserted.
+
+The continuation retains 512 original successes and 178 targeted successes in
+place. The prospective suffix contains 78 singles target chunks, 094 through
+171. Exact metadata costing was **690,163,662 additional image bytes** and
+**8,169,246,915 cumulative attempted bytes**, including the predecessor's failed
+094 attempt separately from its replacement. Both cumulative image payload and
+retained-output limits remain 8 GiB. Each session retains the original 9 MiB /
+20-image limit and encoded-content guard. Its separate immutable deadline is
+eight hours from its own grant; this never restores #212's expired execution.
+
+The new [metadata gates](../backend/badminton/rally_reference_continuation.py)
+check archived execution against its original interval, new dispatch against
+the new interval, unique actual session/thread/process identities, original
+frame membership, opaque output hashes, cumulative failed/repeated payload and
+exclusive outputs. Both pipes are drained with bounded metadata retention;
+failures fence new dispatch and the actual original child is observed to exit.
+No process is signaled or implicitly retried. The scientific acceptance
+function remains the unchanged frozen #212 acceptance consumer.
+
+The [continuation command](../scripts/continue_rally_references.py) separates
+`freeze`, `run` and `audit`. It requires the original host's private evidence,
+an exclusive `rally226-*` output directory under the original cache, a clean
+committed consumer snapshot and a prospective owning-issue context timestamp.
+A clone does not supply the evidence. Completed targets are referenced in
+place; the predecessor's absent index and interrupted run are never filled or
+overwritten. Final scientific comparison waits for both complete combined
+target indexes and the global execution/native/transport/lifetime audit. The
+same stream's validated preceding continuity notes are the narrow execution
+exception; other targeted labels remain sealed until that global gate.
+
+### Actual continuation: stopped at source-image identity validation
+
+The [prospective owning-issue seal](https://github.com/Ken0u/badminton-match-analyzer/issues/226#issuecomment-6382426347)
+records tested consumer `5014296edb6b87282036b79d824fb0954470141f`, context
+SHA256 `795b230a8b6836742c9b776edb5ac30de47307c94e4960213c07ed1f4d4c63a6`
+and the separate immutable scientific deadline before dispatch. All original
+sources, native packets, PNGs, clocks, Store terminal evidence and predecessor
+execution seals passed preflight. Historical contexts and the expired #212
+deadline were preserved.
+
+The continuation completed **57 validated sessions**, chunks 094 through 150.
+Chunk 151's process exited successfully with valid execution metadata, but its
+assessment failed the unchanged exact assigned-image identity check. Its
+original output is retained without correction. The failure fenced further
+dispatch, and the original owner and child lifetimes are independently absent.
+No automatic retry, replacement or process signal occurred. This is an
+incomplete execution result, not a scientific rejection of either source.
+
+| Continuation evidence | Result |
+| --- | ---: |
+| Retained original native frames, both slots | 1,532 |
+| Original exhaustive successes reused | 512 |
+| Earlier targeted successes reused | 178 |
+| New validated targeted successes | 57 |
+| New exited assessment failing source-image identity validation | 1 |
+| Combined validated targeted successes | 235 / 256 |
+| Remaining targets, including failed 151 | 21 |
+| Cumulative attempted image bytes, including failed attempts | 7,991,688,001 |
+| Retained outputs at final metadata audit, bytes | 2,347,656,646 |
+| Complete references certified | 0 / 2 |
+
+Final metadata audit reverified both whole originals, clocks, native packets,
+PNG identities, original Store terminal seals, unchanged consumers, all 993
+completed execution identities including the validation failure, and actual
+recorded-lifetime absence. Its private receipt SHA256 is
+`0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e`.
+This audit used opaque assessment hashes without a scientific comparison.
+
+Both complete combined target indexes are still unavailable. The frozen
+scientific audit returns `both_complete_target_indexes_required` without
+reading scientific labels; targeted final comparison remains sealed. Neither
+source slot is dropped, and no unknown is converted to a negative. Completing
+the remaining suffix requires a prospectively frozen recovery with actual exit
+proof and preserved failed/repeated-byte accounting. The dispatch fence is
+retained; this command does not implicitly resume an interrupted output.
+
+Generated verification before dispatch passes **351 focused and 2,566 full
+tests, with four optional skips**. Ruff, formatting, dependency, diff and
+repository checks pass; all 164 recorded verification lifetimes were
+independently absent. The new module contributes 51 generated regressions.
+These checks establish software behavior, not badminton annotation accuracy.
+Final report UTF-8/LF, JSON, local links, credential-pattern and diff checks
+pass; all four tested code/protocol files remain byte-identical. Exact PR/main
+CI, controller integration and public delivery remain required.
+
+Agent judgments remain development evidence, not expert gold or established
+full-match accuracy. All four research eligibility flags remain false; #62,
+#66, #67 and #71 remain incomplete. Preserve #212's earlier incomplete result
+and every original artifact. No model is trained or promoted.
+
 ## Transport-bounded successor: original passes complete, reference incomplete
 
 The owner-authorized [#212 successor](https://github.com/Ken0u/badminton-match-analyzer/issues/212)

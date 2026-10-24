@@ -1,0 +1,67 @@
+{
+  "schema_version": 5,
+  "task": 226,
+  "purpose": "Separately authorized continuation of unchanged targeted source adjudication; development only",
+  "original_public_protocols": {
+    "1": "8de82294d845aa334f1518ecdc3ce3ac6142ef92a32d9da52e45f5c5bcb9595b",
+    "2": "f8ba7d7795c18a1fa54e08e980d453549bdf2578606559f50365ef4095db88e5",
+    "3": "f273d92d3f81306fee46eabb9bb128e85c767243840337ebac316b3cf7224c58",
+    "4": "35cbf2d61a9b86e2e9b365353e1b49492529a0e6a10ea87b8941ee8693217779"
+  },
+  "predecessor_artifacts": {
+    ".cache/rally212-final-incomplete-e2-v1.json": "47c938ed4e217d602773398609749f2f7ccd604b1f5c36b9fdb61d450c5c6e2d",
+    ".cache/rally212-retrospective-integrity-v1/receipt.json": "7752e89860f89b0cc1f742ecd22570562e3a58d97e374298288bcd68e9485d48",
+    ".cache/rally212-targeted-plan-v1/plan.json": "0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b",
+    ".cache/rally212-targeted-plan-v1/execution-seal-v5.json": "24ef8684f99ad547e176d11876a5a96268a66228e2d4e345dd785e9374280f07",
+    ".cache/rally212-interruption-v1/receipt.json": "4022497e3c6a3c431a62f659703e39fc5d1bc7d731e174a353102514c2a9df9e",
+    ".cache/rally212-downstream-tools-freeze-v5.json": "1438c2b8ce5fd771cdea99d9e48de158b79d1acad79f33ab4c1f2e9c84d12881"
+  },
+  "producer_commit": "eebbe210c83aefb9d467e3740dbf1a39f161ac2a",
+  "scientific_acceptance_commit": "6cb7e4fa13ed591322e48b9de96c139d91cb41a8",
+  "original_deadline": 1792820409,
+  "original_successes": 512,
+  "retained_successes": {
+    "go2uajSiBnE": 94,
+    "H1setLK1tig": 84
+  },
+  "remaining_singles_chunks": {
+    "first": 94,
+    "last": 171,
+    "count": 78
+  },
+  "native_frames": {
+    "go2uajSiBnE": 991,
+    "H1setLK1tig": 541
+  },
+  "destination": "Existing ChatGPT-authenticated Codex CLI only; unchanged provider/model/authentication",
+  "context": "Original native PNGs, minimal protocol/frame/hash/timing and same-stream continuity only; no other assessments or predictions",
+  "limits": {
+    "max_images_per_session": 20,
+    "max_session_image_bytes": 9437184,
+    "max_controlled_encoded_request_bytes": 14680064,
+    "encoded_envelope_reserve_bytes": 2097152,
+    "max_cumulative_image_bytes": 8589934592,
+    "max_cumulative_output_bytes": 8589934592,
+    "task_seconds_from_fresh_grant": 28800,
+    "stop_new_dispatch_before_deadline_seconds": 60,
+    "max_parallel_assessors": 2,
+    "pacing_seconds": 5,
+    "max_replacement_launches": 2,
+    "implicit_retries": false,
+    "paid_services": false
+  },
+  "payload": {
+    "already_attempted_image_bytes": 7479083253,
+    "planned_suffix_image_bytes": 690163662,
+    "projected_cumulative_image_bytes": 8169246915,
+    "includes_interrupted_predecessor094_and_new094_separately": true
+  },
+  "eligibility": {
+    "training_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "dataset_redistribution_allowed": false
+  },
+  "acceptance": "Both complete combined target indexes and global actual execution/native/transport/lifetime provenance before unchanged frozen targeted_reference_status; preserve unknown/incomplete results and both source slots. No expert gold or automatic accuracy claim.",
+  "predecessor_immutability": "No predecessor context, deadline, grant, label, run folder or absent index is edited or reactivated. New outputs reference immutable validated successes in place."
+}
