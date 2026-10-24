@@ -4282,6 +4282,15 @@
       "task_id": "232",
       "verb": "release"
     },
+    "merge232-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792846874,
+      "epoch": 2,
+      "fingerprint": "c9d945a8d1035a5143ff6a06bc81364d3707dc2e9efa33c77789ea5a13f68f6e",
+      "status": "running",
+      "task_id": "232",
+      "verb": "checkpoint"
+    },
     "merge232-delegated-authorization-v1": {
       "actor": "Ken0u",
       "at": 1792844560,
@@ -4354,6 +4363,15 @@
       "status": "running",
       "task_id": "232",
       "verb": "checkpoint"
+    },
+    "merge232-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792846881,
+      "epoch": 2,
+      "fingerprint": "3467f9ec10fb2e0a0e5c56fd9f32e1752b45b3bc3dec40ccab835510bb2242d5",
+      "status": "review",
+      "task_id": "232",
+      "verb": "submit"
     },
     "msi-confirmed-cuda-capability-v1": {
       "actor": "Ken0u",
@@ -17908,26 +17926,19 @@
     "232": {
       "checkpoint": {
         "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr-e2",
-        "head_sha": "ea58de87baec288b2d842bc23b4485022f776ddd",
-        "original_runtime_deadline": 1792855775,
-        "preserved_before_result": ".cache/merge232-before-v1/reproduction.json",
-        "preserved_failed_full": ".cache/merge232-checks-v1",
-        "remaining": "Complete local full/static/dependency/repository verification, commit/publish exact PR, controller integration, main CI and independent public delivery.",
-        "source_hashes": {
-          "docs/CONTROLLER_MERGE_FOLLOWTHROUGH_REPORT.md": "2c67b66fe0878c6d85b1d1065c6914179c9403d3e2226411ae9938b649314202",
-          "scripts/devops/coordinator.py": "914dd96d2bef12ecd84ee094c5123a7888edcb7974f83c357bd224d3235fee11",
-          "tests/test_agent_coordinator.py": "c78807375872125ef32d905869decc0b3d3f94d5dd38ca54168b798a161fa0e6",
-          "tests/test_free_integration.py": "2285f01d9135efa4d12e7b0403a012bf1a47791630e428ee382fa9f506d4f339"
-        },
-        "summary": "Fresh four-path epoch-2 grant confirmed. Preserved original implementation cherry-picked, sole old Free-mode assertion updated plus exact dispatch assertion; protection denial and policy vetoes retained. Focused generated checks pass; full checks running with isolated roots and original venv."
+        "evidence_sha256": "8328d3323287e0d67c36e27454e75211a7100eb6c4b9049700644adf08a8c144",
+        "head_sha": "a082b2185aa73dd72c6fb3cfd791dc3e82531518",
+        "pr_number": 233,
+        "remaining": "Exact PR CI, controller merge, exact-main CI and independent complete public delivery verification.",
+        "summary": "Bounded controller follow-through; all seven local checks pass, 2640 full tests / four optional skips. Old source/failed test receipt preserved."
       },
-      "checkpoint_at": 1792846459,
+      "checkpoint_at": 1792846874,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c7108f599f453b091bb7fe580d52173a060345c9",
         "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr-e2",
         "epoch": 2,
-        "expires_at": 1792857259,
+        "expires_at": 1792857674,
         "granted_at": 1792846304,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -17941,6 +17952,7 @@
       },
       "planned_at": 1792845994,
       "planned_by": "Ken0u",
+      "pr_number": 233,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -17987,7 +17999,13 @@
         ]
       },
       "spec_hash": "f601c2656b03669dbcff953700c834f4e8c597c1691eb5fedcdd425c583b7884",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c7108f599f453b091bb7fe580d52173a060345c9",
+        "head_sha": "a082b2185aa73dd72c6fb3cfd791dc3e82531518",
+        "pr_number": 233,
+        "spec_hash": "f601c2656b03669dbcff953700c834f4e8c597c1691eb5fedcdd425c583b7884"
+      }
     },
     "62": {
       "checkpoint": {
