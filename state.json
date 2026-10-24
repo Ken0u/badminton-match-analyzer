@@ -7127,6 +7127,14 @@
       "task_id": "240",
       "verb": "plan"
     },
+    "spec-242-517d68562d9b0d82e1ff3c2a6e1668f2466f44aae823ebacab35a066d7cacc9e": {
+      "actor": "Ken0u",
+      "at": 1792863837,
+      "fingerprint": "3f166c7b8a20aaed01fd3cbf800a241aa312b3bbc77629d1daef9a8125591f03",
+      "status": "needs_human",
+      "task_id": "242",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -18793,6 +18801,76 @@
       },
       "spec_hash": "76384232177c0f484f4cf904c88b7c5f7dd9f968ce0c8e6ccef847a669c627f4",
       "status": "running"
+    },
+    "242": {
+      "epoch": 0,
+      "planned_at": 1792863837,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all issues,PRs,coordination and reports for duplicates. Preserve #240/draft241/consumer4fa64333afaff67aad8c79a9be97cf622b06e891 and reporthead e8ebc937eec32e112d3c52f62b3556a23d5c1116,all original branches/contexts/deadlines/outputs,root edits,environments,source labels/predictions and PR30/78/82/237. Specific configured-owner authorization must explicitly cover these private derived galleries sent to the existing ChatGPT-authenticated Codex CLI; general autonomy delegation must not stand in for it. No assessor starts before that authorization,committed fresh original-MSI grant and prospective exact context/payload seal. Never retry or work around the recorded automatic-review rejection under old240.",
+          "Adopt the seven-path tested240 implementation through the new granted branch and normal PR process,after all12exact draft241CI jobs pass. Preserve its frozen producer checkout and v1protocol byte-for-byte. Add one v2continuation protocol and minimally extend the same CLI/tests for audited reuse,new task/epoch/context bindings and fresh runtime; coarse sampling/schema/rubric/scientific definitions remain unchanged. No old code-only or physical claim may remain active when the new task claims overlapping paths/resource. Preserve draft241 until the tested replacement PR and transfer record exist; no manual merge or direct main/coordination writes.",
+          "Reuse only the unchanged five prepared derived gallery PNGs in place,not new sources or rerendering. Original240 context SHA02ebc417010c63b8bfd681c88905e51dd48907dfebb7bb11f0c2520bf2d408f0; exact plan SHA c82d669a854448d0f31aa917c5d45161cee4ce0096381f2c3bae5519f9b03ed7; singles gallery manifest ac3c401a2a1ab4ad4b348e45e5a53f77fb6c3413ab848295c1f0e2c02e689bc0; doubles manifest f8a95b425b9604d12dcc14dabd1c4382ead327266a0e47fa5cf6ff3754116e6b. Independently verify original real Store completion,admission/terminal/artifact seals,all original process exits and exact source/clock/native packet/PNG/gallery hashes. Reuse unchanged frozen metadata gate for1014historical execution identities/256targeted references without old scientific-label parsing. Verify original packet bytes before/after. Any mismatch fails closed; preserve originals and incomplete status.",
+          "Retain both source slots and all1532native-frame denominators:991singles/541doubles,34/19sampled native frames in3/2sheets,1479unsampled frames explicit. Galleries remain derived sparse context,never original-resolution or exhaustive contact evidence. No new video decode,source preparation,images,crops,resizing,repacking,source substitution,predictions,models,old labels,training or holdout access.",
+          "After tested committed consumer and prospective new context/gallery/payload seal,run at most six genuine fresh existing ChatGPT-authenticated Codex CLI sessions: independentA/B and separate blind source-only adjudication per source,one complete gallery per session. New attempted payload fixed at34040436bytes (7432625singles and3914187doubles per lane); prior attempted image bytes8177560145 remain charged; total projected8211600581within8GiB. At most20gallery attachments/9MiBraw per session,14MiBlocalencodedguard and2MiBcontextreserve. Up to2parallel assessors; no replacements,implicit retries,additional images or alternate destination. Retain every failed attempt and stop new dispatch on any failure. No session started and no new images were transmitted in240; its blocked command is not a completed scientific invocation.",
+          "Each session receives only its source gallery,minimal protocol/native/frame/hash context and fixed schema/rubric,without other lanes or old scientific labels. No tools,filesystem,shell,network,delegation,account files or model output in assessor. Assess only sampled scene/coarse play and locally visually supported actor/camera continuity with explicit unknowns. Actor IDs stay lane-local. Never infer exact contacts,family/side,precise serve/end,negative contact absence,unsampled continuity,expert gold,complete references or causal improvement against old tasks. Preserve all per-frame variants privately; publish only aggregate agreement/unknown/continuity/unavailable counts and hashes.",
+          "Original MSI and actual shared Store run_local_job admission with pinned BADMINTON_ROOT/data/weights are required for bounded reuse/assessment. Clear account credential variables from data workers while retaining only existing CLI login use. Observe original wrapper/launcher/Store/CLI child lifetimes through terminal/absence/artifact evidence; no process signals or restart on timeout. Audit all attempted original session/thread/process/output/log/image identities globally before scientific comparison. Six validated successful sessions are needed for a completed pilot; otherwise retain both slots and explicit execution incompleteness without selecting partial scientific results.",
+          "Fresh continuation runtime at most four hours from its genuine new grant,prospectively timestamped; this never changes240old deadline,context,outputs or allowance. At most512MiB new retained outputs and8GiBcumulative scientific retained outputs,including240andall earlier failures; no new paid service or intentional provider/model/authentication change. Exact CLI/runtime/input bindings must be sealed before launch. Count nested link metadata without following targets and reject linked task roots. All four eligibility flags remain false and original0/2 complete references remains unchanged.",
+          "Generated-only regressions cover immutable prepared-prefix reuse,source/packet/gallery/receipt tampering,original versus fresh grant/deadline intervals,strict types,unavailable/unsampled denominators,lane/session separation,sparse no-contact gates,real Store admitted/exited completion/failure,malformed event/final response receipt preservation,output exclusivity and fail-stop payload/runtime limits. Required focused/full Python,Ruff,format,pip,repository/UTF8LF/JSON/local links/diff checks; exact PR/main CI,normal controller integration and independent complete public package/both-image verification. Report actual results/limits honestly. #62/#66/#67/#71 and full automatic annotation correctness remain incomplete."
+        ],
+        "artifacts": {
+          "rally240-context": "02ebc417010c63b8bfd681c88905e51dd48907dfebb7bb11f0c2520bf2d408f0",
+          "rally240-doubles-gallery": "f8a95b425b9604d12dcc14dabd1c4382ead327266a0e47fa5cf6ff3754116e6b",
+          "rally240-plan": "c82d669a854448d0f31aa917c5d45161cee4ce0096381f2c3bae5519f9b03ed7",
+          "rally240-singles-gallery": "ac3c401a2a1ab4ad4b348e45e5a53f77fb6c3413ab848295c1f0e2c02e689bc0"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "238"
+        ],
+        "exclusions": [
+          "No launch under general delegated authority or bypass of automatic approval rejection; no old deadline/fence/index/context rewrite,new gallery/source/transform,extra/replacement session,alternate destination,exact contact/shot/boundary labeling,scientific acceptance change,model/training/holdout/promotion,public images/labels,paid service,protected automation/auth/publishing change,process signals,manual merge,raw coordination write or PROGRESS changes."
+        ],
+        "limits": {
+          "max_cumulative_image_payload_bytes": 8589934592,
+          "max_cumulative_retained_bytes": 8589934592,
+          "max_new_image_payload_bytes": 34040436,
+          "max_output_bytes": 536870912,
+          "max_parallel_assessors": 2,
+          "max_replacement_launches": 0,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "max_scientific_sessions": 6,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Complete the six specifically authorized coarse temporal-context readings of the unchanged sealed #240 galleries, preserving its blocked first launch and expired deadline without implicit renewal.",
+        "paths": [
+          "backend/badminton/rally_temporal_context.py",
+          "scripts/pilot_rally_temporal_context.py",
+          "tests/test_rally_temporal_context.py",
+          "data/manifests/rally_temporal_context_v1.json",
+          "data/manifests/rally_temporal_context_v2.json",
+          "docs/RALLY_TEMPORAL_CONTEXT_REPORT.md",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md",
+          "docs/ANNOTATION_GUIDE.md"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Generated reuse/provenance/process/privacy/deadline/fail-stop tests and all required checks.",
+          "Explicit payload authorization;original-host sealed-prefix reuse and six independent sessions;global exit/Store audit before aggregate comparison;exact PR/main CI/controller/public delivery."
+        ]
+      },
+      "spec_hash": "6330d09661f3ef49203651f93b078507fc5ec9a7c57a01724e35e9885063e2e1",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
