@@ -4264,6 +4264,14 @@
       "task_id": "98",
       "verb": "review-result"
     },
+    "merge232-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792844377,
+      "fingerprint": "4de29dfc5ca7163fa1ca9711daf29c22ec6e274ac6caaf4bca951e00ff0c85a1",
+      "status": "needs_human",
+      "task_id": "232",
+      "verb": "plan"
+    },
     "msi-confirmed-cuda-capability-v1": {
       "actor": "Ken0u",
       "at": 1792731805,
@@ -6690,6 +6698,14 @@
       "fingerprint": "641adf0bfb733d17800e4b3de4000f10b6ec2e5d75ffb5aff0baa100c5c1f471",
       "status": "ready",
       "task_id": "230",
+      "verb": "plan"
+    },
+    "spec-232-ae5cbefab46cbda588e57474a625d4769161d283c3f3ffc370adc581e6b17bb7": {
+      "actor": "Ken0u",
+      "at": 1792844377,
+      "fingerprint": "e967a2ceea846c97b2e67cc01800daa766fb88bba3e6d5af4d3e56f5298c62aa",
+      "status": "needs_human",
+      "task_id": "232",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -17786,6 +17802,56 @@
         "pr_number": 231,
         "spec_hash": "e7374256f3d2f1cd8a83e8bf6de3a3eb1fa35358cfca5567cc3deba5ecac3102"
       }
+    },
+    "232": {
+      "epoch": 0,
+      "planned_at": 1792844377,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all issue/PR/grant/history for duplicates, including215 completion-event observations and228/230 normal wakes. Begin only after230 is Done with delivery_pending=false, matching configured-owner authorization and a committed isolated grant. Preserve root checkout edits, environments, data, processes, historical evidence and deprecated PROGRESS.md without access or changes.",
+          "Reproduce the current gap with generated FakeGitHub transport/state evidence before changing behavior: a successful journalled controller squash merge returns integrating without dispatching exact-main CI until another controller pass. Pin baselinec7108f599f453b091bb7fe580d52173a060345c9 source and public228/230 run chronology. Cite official GitHub GITHUB_TOKEN closed/push event suppression and workflow_dispatch exception; distinguish this supported post-merge explanation from still-unproven publishing-completion event behavior.",
+          "After the existing exact-head/base/spec/scope/review/conversation/native/authorization/ancestry/race gates permit the serial controller merge, perform at most one bounded post-merge follow-through. Re-read actual merged PR/source and trusted state, retain the exact original journal/submission binding, and reuse the existing merged-main verification transition/dispatch behavior. Do not adopt a merge solely from a successful response or dispatch from an unconfirmed/stale/mismatched PR, missing journal or unrelated source. Do not merge a second PR or recurse indefinitely within that pass.",
+          "Preserve ordinary controller enforcement, ownership/epochs/reservations, optional-review policy and real requested-changes vetoes, sensitive-scope authorization and stricter historical external-merge recovery. No manual merge, direct main push, raw coordination edits, fabricated review, new credentials, workflow YAML/permissions/security configuration, check/timeout/retry-threshold changes or model/deployment policy change.",
+          "Reuse exact-source existing CI when queued/running/successful/failed; never implicitly rerun a failed check or dispatch a duplicate known matching run. Preserve source SHA separately from tested/main/publisher identities. Lost merge responses, transient unconfirmed merge observations, concurrent state/main changes and adapter failures retain the journal and recover safely on a later ordinary pass. Eventual observation gaps are explicit; do not claim an adversarial atomic GitHub transaction or exactly-once network effect without evidence.",
+          "Add meaningful generated transport/state regressions for same-pass successful merge to exact-main dispatch; no synthetic closed/push event dependency; missing/stale/mismatched confirmation; response loss and subsequent journalled recovery; existing CI states; external-merge fencing; no second merge or recursive loop; and retained policy gates. Preserve historical tests and failure evidence rather than making all fakes claim immediate real-world consistency.",
+          "Publish only reproducible controller code/tests and an aggregate report with official references, observed chronology, generated before/after behavior and limitations. Do not claim this change fixes publishing-completion events, replays old runs, deploys an app/model or improves badminton accuracy. The implementation PR is merged by old trusted code; acknowledge any normal wake needed for its own transition, and do not claim live prospective execution of new post-merge code until a later real controller merge supplies that evidence.",
+          "Run focused coordinator tests and required full Python/lint/format/dependency/repository/diff checks with original virtualenv and isolated pinned roots/data. Record terminal status and authentic process identity for local tests; no research/inference/process signals. Exact PR/main CI, controller integration, full public package/both-image delivery and independent source/artifact verification remain mandatory. Configured optional agent review does not authorize invented approvals.",
+          "Bound new outputs including generated checks/worktree/tooling to1GiB, runtime3h from grant and3repair rounds. No paid services, new packages/dependencies, scientific labels/media/weights/predictions/image transfer, consumed holdout, training, application-truth edits, eligibility changes, raw data publication or unrelated roadmap work."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "230"
+        ],
+        "exclusions": [
+          "No workflow/permission/credential/policy configuration changes, CI retries, raw coordination edits, routine manual merges, source-image/research/holdout access, model promotion, deployment or PROGRESS.md changes. Publishing-completion event diagnosis is outside this repair."
+        ],
+        "limits": {
+          "max_output_bytes": 1073741824,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Follow a confirmed controller-managed PR merge into the existing exact-main verification path in the same bounded controller pass, without relying on suppressed token-created merge events.",
+        "paths": [
+          "scripts/devops/coordinator.py",
+          "tests/test_agent_coordinator.py",
+          "docs/CONTROLLER_MERGE_FOLLOWTHROUGH_REPORT.md"
+        ],
+        "priority": 10,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Generated before/after transport/state evidence and focused/full required project checks on exact source.",
+          "Exact PR/main CI, controller integration and independently verified complete public package/both-image delivery; preserve honest live-evidence limits."
+        ]
+      },
+      "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
