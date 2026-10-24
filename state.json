@@ -5005,6 +5005,14 @@
       "task_id": "212",
       "verb": "checkpoint"
     },
+    "rally226-delegated-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1792830881,
+      "fingerprint": "f3ee5427851b2bdf959635cd575304a523a02f7f399c9617df3dca5be699cd3c",
+      "status": "ready",
+      "task_id": "226",
+      "verb": "human-approved"
+    },
     "rally226-plan-v1": {
       "actor": "Ken0u",
       "at": 1792830718,
@@ -17198,8 +17206,14 @@
     },
     "226": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1792830881,
+        "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6"
+      },
       "planned_at": 1792830718,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "This is a separate risk-human successor to completed #212 / PR224, dependent on delivered #223 / PR225. Freeze this exact specification and obtain configured-owner authorization before a fresh genuine grant. Apply the owner's explicit current delegation transparently; do not assert a personal human review. Preserve #212's expired immutable deadline, consumed replacements, sealed labels, incomplete result, branches, worktrees and original uncommitted changes. No image dispatch is authorized by planning alone.",
@@ -17266,7 +17280,7 @@
         ]
       },
       "spec_hash": "ac58790c2db04dedd4ca9a64a15a63c7583cde5a697261f568c46d8bcd263ec6",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
