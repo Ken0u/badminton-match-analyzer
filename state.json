@@ -1288,6 +1288,14 @@
       "task_id": "210",
       "verb": "invalidate-review"
     },
+    "invalidate-243-78d53578ff1c6a25dd63b91d4782640b8679e752-3e56467814b01efd1d904cab886a1e99a49336b9": {
+      "actor": "github-actions[bot]",
+      "at": 1792867354,
+      "fingerprint": "91cae7a109f1718fead58f9510b6d37ffeffbc7a60dd059f693050345a2adc02",
+      "status": "running",
+      "task_id": "243",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -19044,6 +19052,7 @@
       "planned_at": 1792864679,
       "planned_by": "Ken0u",
       "pr_number": 244,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Preserve root edits, historical tasks/branches/PRs, environments, private data, source labels/predictions and all scientific allowances. This independent generated-only application repair must not launch #240/#242 assessments, send images, claim old62 or alter research labels, protocols, deadlines or eligibility.",
@@ -19090,7 +19099,7 @@
         ]
       },
       "spec_hash": "aa984872f8e514e8009621eeee1b7179016dfaf526ba89ca5c80fe4d564b1f74",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "3e56467814b01efd1d904cab886a1e99a49336b9",
         "head_sha": "3b3de2031610f32aa14e0d0cfd13a93d13d7cb1f",
