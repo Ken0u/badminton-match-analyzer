@@ -6746,6 +6746,14 @@
       "task_id": "230",
       "verb": "plan"
     },
+    "spec-232-363779c2ca84792c1655acf447b4fb2c47d77355c281b1afc25beecb3c224e02": {
+      "actor": "Ken0u",
+      "at": 1792845994,
+      "fingerprint": "7000cd5f5284a0a4b4cfcefed96d411d857d9f5af2d05f1a9f77623843f63e48",
+      "status": "needs_human",
+      "task_id": "232",
+      "verb": "plan"
+    },
     "spec-232-ae5cbefab46cbda588e57474a625d4769161d283c3f3ffc370adc581e6b17bb7": {
       "actor": "Ken0u",
       "at": 1792844377,
@@ -17861,62 +17869,9 @@
       }
     },
     "232": {
-      "checkpoint": {
-        "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr",
-        "evidence_sha256": "47eed4ca0cfa505e7cb1eca84fb4038dffec5df90da131352f335fc8b401d780",
-        "head_sha": "7e6bd6825ac0742bc5edeb770e0e16dcf2133e83",
-        "remaining": "Refreeze same task adding only tests/test_free_integration.py under delegated scope authorization; obtain fresh epoch before updating assertion, then rerun affected/full checks and complete exact CI/controller/public delivery.",
-        "summary": "Generated before-result sealed; 359 focused tests pass. Full suite has one old Free integration status assertion expecting integrating rather than verifying_main. Preserve failed output. No out-of-scope edits made."
-      },
-      "checkpoint_at": 1792845856,
       "epoch": 1,
-      "history": [
-        {
-          "at": 1792845865,
-          "claim": {
-            "actor": "Ken0u",
-            "baseline_sha": "c7108f599f453b091bb7fe580d52173a060345c9",
-            "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr",
-            "epoch": 1,
-            "expires_at": 1792856656,
-            "granted_at": 1792844975,
-            "host_id": "MSI",
-            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-            "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7"
-          },
-          "terminal_proof": {
-            "artifacts": {
-              "branch": "codex/issue-232-follow-a-confirmed-controller-managed-pr",
-              "failed_checks": ".cache/merge232-checks-v1",
-              "head_sha": "7e6bd6825ac0742bc5edeb770e0e16dcf2133e83",
-              "outputs_preserved": true
-            },
-            "host_id": "MSI",
-            "process": {
-              "command": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe -m pytest -q --basetemp C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\merge232-checks-v1\\full-temp --junitxml C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\merge232-checks-v1\\pytest.xml -o tmp_path_retention_policy=failed",
-              "creation_time": 1792845440.0502615,
-              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\merge232-e1",
-              "exited": true,
-              "pid": 4804
-            },
-            "store": {
-              "note": "Generated isolated tests only; no shared research Store job or process signal.",
-              "status": "no_job"
-            },
-            "terminal": true
-          },
-          "verb": "release"
-        }
-      ],
-      "human_approval": {
-        "actor": "Ken0u",
-        "at": 1792844560,
-        "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7"
-      },
-      "planned_at": 1792844377,
+      "planned_at": 1792845994,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
-      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Search all issue/PR/grant/history for duplicates, including215 completion-event observations and228/230 normal wakes. Begin only after230 is Done with delivery_pending=false, matching configured-owner authorization and a committed isolated grant. Preserve root checkout edits, environments, data, processes, historical evidence and deprecated PROGRESS.md without access or changes.",
@@ -17950,6 +17905,7 @@
         "paths": [
           "scripts/devops/coordinator.py",
           "tests/test_agent_coordinator.py",
+          "tests/test_free_integration.py",
           "docs/CONTROLLER_MERGE_FOLLOWTHROUGH_REPORT.md"
         ],
         "priority": 10,
@@ -17960,8 +17916,8 @@
           "Exact PR/main CI, controller integration and independently verified complete public package/both-image delivery; preserve honest live-evidence limits."
         ]
       },
-      "spec_hash": "9040f573a8dd85c305343cff6fa10ccfd9ad69f70d569e074116ffbab89f03a7",
-      "status": "ready"
+      "spec_hash": "f601c2656b03669dbcff953700c834f4e8c597c1691eb5fedcdd425c583b7884",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
