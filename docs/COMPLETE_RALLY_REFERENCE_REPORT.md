@@ -1,5 +1,9 @@
 # Complete-rally source reference pilot
 
+The separate [metadata diagnostic census](RALLY_REFERENCE_DIAGNOSTICS_REPORT.md)
+under #238 preserves the sealed 0/2 result and all original uncertainties. It
+adds no image assessment, labels or relaxed scientific acceptance.
+
 ## Explicit recovery after preserved image-identity failure
 
 [Issue #228](https://github.com/Ken0u/badminton-match-analyzer/issues/228) and its
