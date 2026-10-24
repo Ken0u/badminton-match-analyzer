@@ -7075,6 +7075,14 @@
       "task_id": "238",
       "verb": "plan"
     },
+    "spec-240-082bf618241f8aa2805a9d5f0d101706648056eadedcb58442ca19807ca173b1": {
+      "actor": "Ken0u",
+      "at": 1792860868,
+      "fingerprint": "008c9a8e962ba3d2aed49cbd51fcaff58fa5fce1d985ecee034595a18b59413a",
+      "status": "needs_human",
+      "task_id": "240",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -18646,6 +18654,73 @@
         "pr_number": 239,
         "spec_hash": "dd36b097f238fcf70beb5fe58a3448f03c370150fadc695713d5fae16abca24c"
       }
+    },
+    "240": {
+      "epoch": 0,
+      "planned_at": 1792860868,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issues, PRs, coordination and reports; depend on fully delivered238. Preserve root edits, environments, data, original labels/predictions, open PR30/78/82/237 and all historical protocols/failures/fences/deadlines. Obtain transparent configured-owner delegated authorization of this exact frozen scope and a targeted committed MSI grant before implementation or source viewing. Never assert personal human review.",
+          "Use only the seven exact granted paths. Keep old source producers, assessments, recovery, census and frozen acceptance byte-identical. This is a new coarse development pilot, not repair or reinterpretation of0/2. Original991singles/541doubles native-frame denominators remain explicit. #62/#66/#67/#71 and four research eligibility flags stay incomplete/false.",
+          "Before actual preparation bind tested committed consumer/protocol/runtime, unchanged source/clock/dense-packet/PNG identities,238 aggregate and228 provenance through prospective owning-issue timestamp. On original MSI reuse the unchanged1532 prepared original PNGs; verify all packet/native identities and hashes, original real Store/terminal seals and recorded process exits read-only before selecting thumbnails. No new source/download/media decode or original-label parsing is required. Use real shared Store run_local_job with pinned BADMINTON_ROOT/data and data:windows-primary for bounded preparation/assessment; observe actual wrapper/launcher/Store owner and every CLI child through terminal/absence/artifact proof. Never infer exit from timeout.",
+          "Prospectively fixed sampling: first valid native frame at or after each one-second source-PTS point relative to the start of each entire unchanged dense window, plus first and last native ordinal, retaining coincident grid memberships. Missing/corrupt/orientation-error images are explicit unavailable samples, never skipped or replaced. No gap between selected samples certifies event absence. Derive chronological4x4 contact sheets with640x360 letterboxed RGB thumbnails, black padding, separate frame/PTS/time captions and at most16tiles each. PIL LANCZOS resizing and PNG encoding only. Preserve originals. Rendered dimensions, exact source-to-tile mapping, original/derived hashes and algorithm/runtime bindings are private auditable metadata. Thumbnails are clearly derived sparse context, never original-resolution contact evidence.",
+          "After exact prospective preparation and payload costing/seal, run exactly six genuinely fresh existing ChatGPT-authenticated Codex CLI sessions: independentA/B and separate blind source adjudication, one per source per lane. Each receives the same complete chronological sparse gallery for its source, minimal public protocol/native/frame/hash context, fixed rubric and schema; no other lane labels, prior scientific labels, predictions, models, application annotations or account files. No tools/network/shell/filesystem/delegation in assessor. The adjudication is blind and reports source evidence independently; it must not choose the preferred earlier answer. At most2parallel sessions; at most20galleryPNG attachments and9MiB raw per session with14MiB local encoded guard/2MiB context reserve. Total new attempted image payload at most128MiB, including every failed attempt. New cumulative ceiling is old8177560145 plus at most134217728 bytes, still under8GiB. Stop on any failure without replacement or implicit retry; preserve genuine invocation/thread/process/output/receipt hashes and complete logs, bounded output and explicit incomplete status.",
+          "Assess only sampled-frame scene/live-replay/nonplay/unknown, coarse service-preparation/exchange/stopped-play/unknown states, camera continuity and visually supported actor descriptions/links with explicit unknowns. Validate exact frame/sheet/session membership, strict types, local actor evidence and source/lane separation. No exact racket contacts, family/side, exact serve/end timestamps, exhaustive labels, complete-rally claims, gold labels or retrospective identity support may be inferred from sparse thumbnails. An actor string, screen position or court end alone is not a persistent identity. Keep all observations/variants privately with provenance; report aggregate agreement/unknown/continuity counts and unavailable/unsampled denominators, not per-contact labels or free-text actor descriptions.",
+          "Audit all six original execution identities and actual process exits before scientific comparison. Preserve unknowns/disagreements and distinguish rendered/inspected samples from all native frames. A failed or incomplete lane contributes no positive pilot-completion claim; retain both slots. Report whether coarse temporal context yields supported scene/continuity observations, without claiming causal improvement against the earlier different task or unlocking contact evaluation. Full native contact/identity/boundary review would require a separate frozen task and grant; this pilot supplies no further source-assessment allowance.",
+          "Generated-only tests cover deterministic PTS/VFR sampling/endpoint/duplicate memberships, unavailable samples, orientation/geometry/hash/path tampering, LF source bindings, sheet bounds and captions, genuine receipt provenance/schema/strict integer/bool rejection, lane/session reuse, sparse denominator/unknown preservation, no-contact eligibility gates, exclusive outputs, fail-stop payload/runtime limits and real Store completion/failure where practical. Required local focused/full Python, Ruff, format, pip, repository/JSON/link and diff checks; exact PR/main CI, normal controller integration and independent complete public package/both-image verification. No manual merge or direct main/coordination mutation.",
+          "A fresh four-hour preparation/pilot deadline starts at this task grant; old scientific runtime never renews. At most512MiB new retained outputs,8GiB cumulative scientific retained outputs including previous attempts; at most128MiB new attempted image payload; no paid service or model/provider/authentication change. Timestamp the exact prepared gallery/payload plan before six sessions. Stop before any limit, preserve output exclusivity and failures. Account nested link metadata without following targets; reject linked task roots. Final repository report contains only aggregate results and hashes; originals, galleries, labels, private paths and scientific execution identities remain ignored."
+        ],
+        "artifacts": {
+          "rally228-context": "eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59",
+          "rally238-aggregate": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "238"
+        ],
+        "exclusions": [
+          "No exhaustive native contact pass, event/family/side annotation, source substitution, label or acceptance rewrite, source video decode, models/training/holdout/promotion, public image/label redistribution, prior deadline/fence/index edits, authentication/automation/publishing policy changes, spending, process signaling, implicit retry/replacement, manual merge, raw coordination mutation or PROGRESS changes."
+        ],
+        "limits": {
+          "max_cumulative_image_payload_bytes": 8589934592,
+          "max_cumulative_retained_bytes": 8589934592,
+          "max_new_image_payload_bytes": 134217728,
+          "max_output_bytes": 536870912,
+          "max_parallel_assessors": 2,
+          "max_replacement_launches": 0,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "max_scientific_sessions": 6,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Pilot whole-window temporal scene and actor context for the same two rally sources before proposing another exhaustive native-contact assessment.",
+        "paths": [
+          "backend/badminton/rally_temporal_context.py",
+          "scripts/pilot_rally_temporal_context.py",
+          "tests/test_rally_temporal_context.py",
+          "data/manifests/rally_temporal_context_v1.json",
+          "docs/RALLY_TEMPORAL_CONTEXT_REPORT.md",
+          "docs/COMPLETE_RALLY_REFERENCE_REPORT.md",
+          "docs/ANNOTATION_GUIDE.md"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Generated sampling/rendering/provenance/lifecycle/privacy/fail-stop regressions and all required repository checks.",
+          "Prospectively sealed original-host bounded preparation and six independent coarse source sessions, private audit, aggregate result, exact PR/main CI/controller/public delivery."
+        ]
+      },
+      "spec_hash": "76384232177c0f484f4cf904c88b7c5f7dd9f968ce0c8e6ccef847a669c627f4",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
