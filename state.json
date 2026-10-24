@@ -5421,6 +5421,15 @@
       "task_id": "218",
       "verb": "checkpoint"
     },
+    "roadmap218-submit-v1": {
+      "actor": "dootz1",
+      "at": 1792815820,
+      "epoch": 1,
+      "fingerprint": "df46d36d7b6039e85804eac0cc8b244eb59b2094f39476ef1699f04ae2243df7",
+      "status": "review",
+      "task_id": "218",
+      "verb": "submit"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -16521,6 +16530,7 @@
       "epoch": 1,
       "planned_at": 1792815284,
       "planned_by": "dootz1",
+      "pr_number": 219,
       "spec": {
         "acceptance": [
           "Revalidate current Issues, active PRs and authoritative coordination before claiming; preserve #212/MSI and all existing jobs, branches, annotations and predictions. This is a metadata/documentation audit within #65, not detector training, new source assessment or a replacement for #62.",
@@ -16568,7 +16578,13 @@
         ]
       },
       "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "3fb8d80a88e016f673a688795b01c97ca1403fe3",
+        "head_sha": "0273ea359298dfde15c356c376cdaa41aec81188",
+        "pr_number": 219,
+        "spec_hash": "bb100c29f793b68ed7ca336c5b48b8f78cd41f23bb53c4911a9128fa01cc9457"
+      }
     },
     "62": {
       "checkpoint": {
