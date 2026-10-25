@@ -405,6 +405,24 @@
       "task_id": "264",
       "verb": "checkpoint"
     },
+    "clock264-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792902063,
+      "epoch": 1,
+      "fingerprint": "565e10d8694d327c3d94a30bc501e2ac4dac5e73025cd17bfc7c7f2d1d5487ba",
+      "status": "running",
+      "task_id": "264",
+      "verb": "checkpoint"
+    },
+    "clock264-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792902070,
+      "epoch": 1,
+      "fingerprint": "6717017f06bacda8b04df4c4188a39714102fb3b45c0aceaa84be14fbd0e22d5",
+      "status": "review",
+      "task_id": "264",
+      "verb": "submit"
+    },
     "comparison221-baseline-v1": {
       "actor": "dootz1",
       "at": 1792819244,
@@ -21077,17 +21095,19 @@
     "264": {
       "checkpoint": {
         "branch": "codex/issue-264-reject-contact-and-recognition-evaluatio",
-        "head_sha": "7939da84c308c5696c6e4df438edeeff2f0d9b20",
-        "remaining": "Core integration, final focused/full checks and normal PR/main/public delivery.",
-        "summary": "#264 implementation checkpoint: preserved the four-case generated native-clock reproduction; current genuine epoch1/granted branch at baseline7939da84c308c5696c6e4df438edeeff2f0d9b20. Parent API/CLI source-clock wiring, generated API/CLI cases and focused report/bug-review changes are local in the isolated granted worktree. Bounded core evaluator/unit-test subtask runs in a separate isolated worktree with three-file ownership; parent retains grant and publication. Parent-owned lint/format checks pass. Remaining: integrate exact finished core bytes, focused/full required checks with process receipts, focused PR/exact CI/controller integration and full independent public delivery. No real scientific image/label access, inference, model/default/policy change, manual merge or workflow retry; original deprecated PROGRESS edit/data/research preserved. Scientific references0/2/all four eligibility flagsfalse; overall product objective unachieved."
+        "evidence_sha256": "d41f1a90eba5a023f737757c352c2e95e31f934a2e4d64ee78ddeb7368fc1c0b",
+        "head_sha": "297f01f0a7bea3aa58c3587552e4ff5f1f729f73",
+        "pr_number": 265,
+        "remaining": "Exact PR/main CI, controller integration and independently verified complete public delivery.",
+        "summary": "Native-clock/time identity validated before contact and recognition scoring; unavailable pure compatibility is explicit. 647 focused/3831 full Python tests pass, four optional skips, required checks pass. Local receipt SHA256 d41f1a90eba5a023f737757c352c2e95e31f934a2e4d64ee78ddeb7368fc1c0b."
       },
-      "checkpoint_at": 1792901468,
+      "checkpoint_at": 1792902063,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7939da84c308c5696c6e4df438edeeff2f0d9b20",
         "branch": "codex/issue-264-reject-contact-and-recognition-evaluatio",
         "epoch": 1,
-        "expires_at": 1792912268,
+        "expires_at": 1792912863,
         "granted_at": 1792901173,
         "host_id": "MSI",
         "session_id": "b80f2c05765e40ff9fa024c1530840f1",
@@ -21096,6 +21116,7 @@
       "epoch": 1,
       "planned_at": 1792901011,
       "planned_by": "Ken0u",
+      "pr_number": 265,
       "spec": {
         "acceptance": [
           "Follow the approved regular bug-review roadmap after fully delivered262. Audit all issue/PR history and committed grants; preserve original root edits, deprecated PROGRESS.md, environments, datasets, research, saved annotations and predictions. Obtain a fresh committed code-only grant and isolated worktree before production edits.",
@@ -21150,7 +21171,13 @@
         ]
       },
       "spec_hash": "1f16636d3c1ba7d3e8a1e292be18e6dddfd55edcc66a7f5e99ac8ede561a003c",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "7939da84c308c5696c6e4df438edeeff2f0d9b20",
+        "head_sha": "297f01f0a7bea3aa58c3587552e4ff5f1f729f73",
+        "pr_number": 265,
+        "spec_hash": "1f16636d3c1ba7d3e8a1e292be18e6dddfd55edcc66a7f5e99ac8ede561a003c"
+      }
     },
     "62": {
       "checkpoint": {
