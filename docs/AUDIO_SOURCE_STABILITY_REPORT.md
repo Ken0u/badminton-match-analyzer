@@ -77,9 +77,12 @@ exists. Executable/test hashes remain unchanged, both exact interpreter
 lifetimes are independently absent, and no observation errors occurred. The
 complete original run is retained. A fresh run uses a shorter temporary root
 and preserves the disjoint upstream rally-boundary change merged meanwhile.
-Full-suite and required static verification,
-source stability, process-lifetime evidence and exact PR/main/controller/candidate
-delivery are recorded on the owning issue as each finishes. Original failed
+The final combined run passes **4,464 tests with four optional skips in 467.91
+seconds**. Its executable/test hashes remain unchanged, both exact interpreter
+lifetimes are independently absent, and no observation errors occurred. Ruff
+lint/format (241 files), dependencies, repository, UTF-8/LF, tracked JSON, local
+report links and whitespace checks pass. Exact PR/main/controller/candidate
+delivery is recorded on the owning issue as each finishes. Original failed
 logs and generated artifacts remain ignored workstation evidence, unavailable
 from a clone.
 
