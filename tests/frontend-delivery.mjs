@@ -61,6 +61,7 @@ if (requestedModes.includes("--exports")) {
     "tests/frontend-editor.mjs",
     "tests/frontend-delivery.mjs",
     "tests/shuttle-overlay-context.mjs",
+    "tests/frontend-admission.mjs",
     "tests/frontend-parity.mjs",
     "tests/media_fixtures.py",
     "tests/rally_fixture.py",
@@ -2460,8 +2461,8 @@ async function runExportsMode() {
   const fs = await import("node:fs/promises");
   const path = (await import("node:path")).default;
   const os = (await import("node:os")).default;
-  const { spawn, execFileSync } = await import("node:child_process");
-  const { once } = await import("node:events");
+  const { execFileSync } = await import("node:child_process");
+  const { startAdmission } = await import("./frontend-admission.mjs");
   const { chromium } = await import("playwright");
   const { repository, python, protocol, sha256, startFixture } =
     await import("./frontend-fixtures.mjs");
@@ -2488,12 +2489,13 @@ async function runExportsMode() {
     errors = [],
     routeEvents = [],
     releases = [];
-  let fixture, browser, page, frontendBase, admission;
+  let fixture, browser, page, frontendBase, admission, initiatingError;
   const hashes = {};
   for (const name of [
     "tests/frontend-fixtures.mjs",
     "tests/frontend-delivery.mjs",
     "tests/shuttle-overlay-context.mjs",
+    "tests/frontend-admission.mjs",
     "tests/media_fixtures.py",
     "tests/rally_fixture.py",
     "tests/test_rally_overlay.py",
@@ -2764,92 +2766,16 @@ print(json.dumps({'source_sha256':v['sha256'],'revision':m['annotation_revision'
     return manifest;
   }
 
-  // Real shared Store admission, with a cooperative gate in THIS disposable app.
-  const admissionProbe = String.raw`
-import json,os,sys,time
-from pathlib import Path
-repo,root,evidence=map(Path,sys.argv[1:4]);video=sys.argv[4]
-os.environ['BADMINTON_ROOT']=str(repo);os.environ['BADMINTON_DATA_DIR']=str(root/'processed')
-sys.path.insert(0,str(repo/'backend'))
-import psutil
-from badminton.storage import Store
-from badminton.jobs import run_local_job
-def work(job,progress):
- progress(.2)
- p=psutil.Process()
- (evidence/'admission-receipt.json').write_text(json.dumps({'pid':p.pid,'started':p.create_time(),'cwd':p.cwd(),'command':p.cmdline(),'job_id':job,'root':str(root)}))
- deadline=time.monotonic()+45
- while not (evidence/'admission-release').exists():
-  if time.monotonic()>deadline: raise RuntimeError('Owned admission gate expired; do not restart')
-  time.sleep(.05)
- return {'purpose':'Generated CPU admission check; no inference'}
-print(json.dumps(run_local_job(Store(root/'processed'),'fixture',video,work)))
-`;
+  // The helper registers cleanup synchronously before any startup evidence await.
   async function admit(video) {
-    const script = path.join(evidence, "admission-probe.py");
-    await fs.writeFile(script, admissionProbe);
-    const log = await fs.open(path.join(evidence, "admission.log"), "w");
-    const child = spawn(
-      python,
-      ["-u", script, repository, fixture.root, evidence, video.id],
-      {
-        cwd: repository,
-        env: {
-          ...process.env,
-          BADMINTON_ROOT: repository,
-          BADMINTON_DATA_DIR: path.join(fixture.root, "processed"),
-        },
-        stdio: ["ignore", log.fd, log.fd],
+    return startAdmission({
+      root: fixture.root,
+      evidence,
+      video,
+      register: (owned) => {
+        admission = owned;
       },
-    );
-    await log.close();
-    const finished = once(child, "exit");
-    const receipt = await waitFor(async () => {
-      try {
-        return JSON.parse(
-          await fs.readFile(
-            path.join(evidence, "admission-receipt.json"),
-            "utf8",
-          ),
-        );
-      } catch {
-        assert.equal(
-          child.exitCode,
-          null,
-          "Owned admission worker exited early",
-        );
-        return false;
-      }
-    }, "Owned admission startup failed; inspect durable log");
-    assert.equal(receipt.pid, child.pid);
-    const verify = String.raw`import json,psutil,sys;r=json.loads(sys.argv[1]);p=psutil.Process(r['pid']);assert abs(p.create_time()-r['started'])<.01 and p.cwd()==r['cwd'] and p.cmdline()==r['command'];print('verified')`;
-    assert.equal(
-      execFileSync(python, ["-c", verify, JSON.stringify(receipt)], {
-        encoding: "utf8",
-      }).trim(),
-      "verified",
-    );
-    admission = {
-      child,
-      receipt,
-      async stop() {
-        await fs.writeFile(
-          path.join(evidence, "admission-release"),
-          "cooperative release\n",
-        );
-        const [code, signal] = await finished;
-        assert.equal(code, 0, "Owned admission worker failed; preserve log");
-        assert.equal(signal, null);
-        await write("admission-cleanup.json", {
-          ...receipt,
-          code,
-          signal,
-          released: true,
-        });
-        admission = null;
-      },
-    };
-    return admission;
+    });
   }
 
   try {
@@ -3596,6 +3522,7 @@ print(json.dumps(run_local_job(Store(root/'processed'),'fixture',video,work)))
     });
     console.log(`Frontend exports passed: ${checks.length} groups`);
   } catch (error) {
+    initiatingError = error;
     await write("result.json", {
       status: "failed",
       error: error.stack,
@@ -3622,9 +3549,26 @@ print(json.dumps(run_local_job(Store(root/'processed'),'fixture',video,work)))
     process.exitCode = 1;
   } finally {
     for (const release of releases) release();
-    if (admission) await admission.stop();
-    if (browser) await browser.close();
-    if (fixture) await fixture.stop();
+    const cleanupErrors = [];
+    for (const stop of [
+      () => admission?.stop(),
+      () => browser?.close(),
+      () => fixture?.stop(),
+    ]) {
+      try {
+        await stop();
+      } catch (error) {
+        cleanupErrors.push(error);
+      }
+    }
+    if (cleanupErrors.length) {
+      await write("cleanup-errors.json", {
+        initiatingError: initiatingError?.stack,
+        errors: cleanupErrors.map((error) => error.stack),
+      });
+      process.exitCode = 1;
+      if (!initiatingError) throw cleanupErrors[0];
+    }
   }
 }
 
@@ -3769,6 +3713,11 @@ async function runLibraryMode() {
         "No external application, model, dataset, or running service is used",
       ],
       harness: sha256(await fs.readFile(new URL(import.meta.url))),
+      admissionHelper: sha256(
+        await fs.readFile(
+          path.join(repository, "tests/frontend-admission.mjs"),
+        ),
+      ),
       shuttleContextHelper: sha256(
         await fs.readFile(
           new URL("./shuttle-overlay-context.mjs", import.meta.url),
