@@ -5647,11 +5647,29 @@
       "task_id": "275",
       "verb": "checkpoint"
     },
+    "protocol275-checkpoint-v3": {
+      "actor": "Ken0u",
+      "at": 1792911981,
+      "epoch": 1,
+      "fingerprint": "22f6f84c7b97ff5e51d8328d58376468d43385dde80dbd72e85b2a5971767bfa",
+      "status": "running",
+      "task_id": "275",
+      "verb": "checkpoint"
+    },
     "protocol275-submit-v2": {
       "actor": "Ken0u",
       "at": 1792911345,
       "epoch": 1,
       "fingerprint": "79434f27d77c99fae0bf8c914453ee93938e37cf68565c97c3133727beda8f5f",
+      "status": "review",
+      "task_id": "275",
+      "verb": "submit"
+    },
+    "protocol275-submit-v3": {
+      "actor": "Ken0u",
+      "at": 1792912077,
+      "epoch": 1,
+      "fingerprint": "d328d3182ec36a28d3c6911ff8954c7428ac82bbbf12e964e5378b54cd1f7389",
       "status": "review",
       "task_id": "275",
       "verb": "submit"
@@ -22283,19 +22301,19 @@
     "275": {
       "checkpoint": {
         "branch": "codex/issue-275-make-public-source-distributions-contain",
-        "evidence_sha256": "107951d1cee9c2b5b5e8f69d2db3307d1dabe3b64d0013fdc0e922133fe4a72e",
-        "head_sha": "5322ec23a3b31d54bca0313d193e7027653e28bc",
+        "evidence_sha256": "861bacc56553bca25fa350c16665f339d775f0168c124d69b969d22cdf409ed1",
+        "head_sha": "7aa640cfc2b70b4311f7add500db580b5ea275b9",
         "pr_number": 276,
         "remaining": "Exact PR/main CI, controller integration and independently verified complete public source/wheel/frontend/lock/both-image delivery.",
-        "summary": "All50 focused/4181 full Python tests pass, four optional skips; required checks pass. Real build/installed HTTP verifies45 public manifests,93 runtime files and both canary exclusions. Stable final source and terminal lifetimes verified. Zero scientific/image access; local receipt SHA256 107951d1cee9c2b5b5e8f69d2db3307d1dabe3b64d0013fdc0e922133fe4a72e."
+        "summary": "All53 focused/4184 full Python tests pass, four optional skips; required checks pass. Real build/installed HTTP verifies45 public manifests,93 runtime files and both canary exclusions. Stable final source and35 terminal lifetimes verified. Zero scientific/image access; local receipt SHA256 861bacc56553bca25fa350c16665f339d775f0168c124d69b969d22cdf409ed1."
       },
-      "checkpoint_at": 1792911217,
+      "checkpoint_at": 1792911981,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
         "branch": "codex/issue-275-make-public-source-distributions-contain",
         "epoch": 1,
-        "expires_at": 1792922017,
+        "expires_at": 1792922781,
         "granted_at": 1792909623,
         "host_id": "MSI",
         "session_id": "7c82293f597c4220a41b086449a033b5",
@@ -22352,10 +22370,10 @@
         ]
       },
       "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
-        "head_sha": "5322ec23a3b31d54bca0313d193e7027653e28bc",
+        "head_sha": "7aa640cfc2b70b4311f7add500db580b5ea275b9",
         "pr_number": 276,
         "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41"
       }
