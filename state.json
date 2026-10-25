@@ -25156,6 +25156,7 @@
       }
     },
     "305": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40230333260",
       "checkpoint": {
         "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
         "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/305#issuecomment-6402191020",
@@ -25176,7 +25177,7 @@
         "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792959054,
