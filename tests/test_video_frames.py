@@ -199,3 +199,192 @@ def test_source_and_orientation_guards_are_not_relaxed(source):
         list(media.iter_frames(document | {"sha256": "0" * 64}, root, times, 0, 4))
     with pytest.raises(OrientationError, match="Reimport"):
         list(media.iter_frames(document | {"rotation": 90}, root, times, 0, 4))
+
+
+@pytest.fixture
+def mutable_source(tmp_path):
+    """Keep registered truth immutable while allowing generated media changes."""
+
+    def create(mode="singles", rotation=0):
+        path = write_rotated_video(tmp_path / "mutable.mp4", rotation)
+        # A valid free atom allows same-size data changes without corrupting PTS.
+        with path.open("ab") as stream:
+            stream.write((16).to_bytes(4, "big") + b"free" + b"original")
+        store = Store(tmp_path / "processed")
+        document = inspect_video(path, mode, store, tmp_path)
+        times = media.timestamps_for(store.data, document["id"])
+        folder = store.data / document["id"]
+        prior = {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()}
+        annotations = store.annotations(document["id"]).model_dump()
+        return path, store, document, times, prior, annotations
+
+    return create
+
+
+def changing_native_decoder(monkeypatch, change, phase, failure=None):
+    """Inject a source change around real native decoding and normal close."""
+    original = media.open_media
+    observed = {"closed": False, "changed": False, "yielded_pts": []}
+
+    def mutate():
+        if not observed["changed"]:
+            change()
+            observed["changed"] = True
+
+    @contextmanager
+    def opened(*args, **kwargs):
+        try:
+            with original(*args, **kwargs) as container:
+
+                class Decoder:
+                    streams = container.streams
+                    seek = container.seek
+
+                    def decode(self, stream):
+                        for position, frame in enumerate(container.decode(stream)):
+                            if position == 1:
+                                if phase == "decode":
+                                    mutate()
+                                if failure == "decode":
+                                    raise RuntimeError("original decoder failure")
+                            observed["yielded_pts"].append(frame.pts)
+                            yield frame
+
+                yield Decoder()
+        finally:
+            observed["closed"] = True
+            if phase == "teardown":
+                mutate()
+            if failure == "teardown":
+                raise RuntimeError("original teardown failure")
+
+    monkeypatch.setattr(media, "open_media", opened)
+    return observed
+
+
+def assert_registered_source_unchanged(store, document, prior, annotations):
+    folder = store.data / document["id"]
+    assert {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()} == prior
+    assert store.video(document["id"]) == document
+    assert store.annotations(document["id"]).model_dump() == annotations
+
+
+@pytest.mark.parametrize("phase", ["decode", "teardown"])
+@pytest.mark.parametrize("mode,rotation", [("singles", 0), ("doubles", 90)])
+def test_complete_native_read_rejects_changed_source_after_media_close(
+    mutable_source, tmp_path, monkeypatch, phase, mode, rotation
+):
+    path, store, document, times, prior, annotations = mutable_source(mode, rotation)
+    original = path.read_bytes()
+    observed = changing_native_decoder(
+        monkeypatch, lambda: path.write_bytes(original + b"changed"), phase
+    )
+    frames = media.iter_frames(document, tmp_path, times, 1, 4)
+    returned = []
+    with pytest.raises(media.SourceChangedError, match="changed since import"):
+        for index, timestamp, frame in frames:
+            returned.append((index, timestamp))
+            assert (frame.width, frame.height) == (
+                document["width"],
+                document["height"],
+            )
+    assert returned == list(enumerate(times[1:4], start=1))
+    assert observed["closed"] and observed["changed"]
+    assert_registered_source_unchanged(store, document, prior, annotations)
+
+
+@pytest.mark.parametrize("replacement", [False, True])
+def test_native_read_rejects_same_size_restored_mtime_source_after_teardown(
+    mutable_source, tmp_path, monkeypatch, replacement
+):
+    from test_file_cache import changed
+
+    path, store, document, times, prior, annotations = mutable_source()
+    content = path.read_bytes()
+    observed = changing_native_decoder(
+        monkeypatch,
+        lambda: changed(path, content[:-1] + b"X", replacement),
+        "teardown",
+    )
+    with pytest.raises(media.SourceChangedError, match="changed since import"):
+        list(media.iter_frames(document, tmp_path, times, 0, 4))
+    assert observed["closed"] and observed["changed"]
+    assert_registered_source_unchanged(store, document, prior, annotations)
+
+
+def test_native_read_rejects_source_removed_during_teardown(
+    mutable_source, tmp_path, monkeypatch
+):
+    path, store, document, times, prior, annotations = mutable_source()
+    observed = changing_native_decoder(monkeypatch, path.unlink, "teardown")
+    with pytest.raises(FileNotFoundError, match="source is unavailable"):
+        list(media.iter_frames(document, tmp_path, times, 0, 4))
+    assert observed["closed"] and not path.exists()
+    assert_registered_source_unchanged(store, document, prior, annotations)
+
+
+def test_byte_identical_replacement_remains_the_registered_native_source(
+    mutable_source, tmp_path, monkeypatch
+):
+    path, _store, document, times, _prior, _annotations = mutable_source()
+    original = path.read_bytes()
+
+    def replace():
+        replacement = path.with_suffix(".new")
+        replacement.write_bytes(original)
+        replacement.replace(path)
+
+    observed = changing_native_decoder(monkeypatch, replace, "teardown")
+    assert [
+        i for i, _, _ in media.iter_frames(document, tmp_path, times, 0, 4)
+    ] == list(range(4))
+    assert observed["closed"] and path.read_bytes() == original
+
+
+@pytest.mark.parametrize("phase", ["decode", "teardown"])
+def test_original_native_failure_is_not_replaced_by_later_source_validation(
+    mutable_source, tmp_path, monkeypatch, phase
+):
+    path, _store, document, times, _prior, _annotations = mutable_source()
+    original = path.read_bytes()
+    observed = changing_native_decoder(
+        monkeypatch,
+        lambda: path.write_bytes(original + b"changed"),
+        "teardown",
+        failure=phase,
+    )
+    with pytest.raises(RuntimeError, match=f"original {phase}.*failure"):
+        list(media.iter_frames(document, tmp_path, times, 0, 4))
+    assert observed["closed"] and observed["changed"]
+
+
+def test_changed_source_does_not_turn_explicit_partial_close_into_failure(
+    mutable_source, tmp_path, monkeypatch
+):
+    path, _store, document, times, _prior, _annotations = mutable_source()
+    original = path.read_bytes()
+    observed = changing_native_decoder(
+        monkeypatch, lambda: path.write_bytes(original + b"changed"), "teardown"
+    )
+    frames = media.iter_frames(document, tmp_path, times, 0, 4)
+    assert next(frames)[0] == 0
+    frames.close()
+    assert observed["closed"] and observed["changed"]
+    assert len(observed["yielded_pts"]) == 1
+    with pytest.raises(media.SourceChangedError, match="changed since import"):
+        media.resolve_source(document, tmp_path)
+
+
+def test_injected_consumer_failure_survives_changed_source_close(
+    mutable_source, tmp_path, monkeypatch
+):
+    path, _store, document, times, _prior, _annotations = mutable_source()
+    original = path.read_bytes()
+    observed = changing_native_decoder(
+        monkeypatch, lambda: path.write_bytes(original + b"changed"), "teardown"
+    )
+    frames = media.iter_frames(document, tmp_path, times, 0, 4)
+    next(frames)
+    with pytest.raises(RuntimeError, match="original consumer failure"):
+        frames.throw(RuntimeError("original consumer failure"))
+    assert observed["closed"] and observed["changed"]
