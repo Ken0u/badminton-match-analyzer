@@ -7192,6 +7192,15 @@
       "task_id": "282",
       "verb": "checkpoint"
     },
+    "rally282-checkpoint-resumed-v1": {
+      "actor": "Ken0u",
+      "at": 1792920510,
+      "epoch": 1,
+      "fingerprint": "36c1b95ba09dae69c266f46a82c3e37a34058a8aef894144c4bed9e358acba6c",
+      "status": "running",
+      "task_id": "282",
+      "verb": "checkpoint"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -23038,19 +23047,25 @@
     },
     "282": {
       "checkpoint": {
+        "artifacts": [
+          ".cache/rally282-interrupted-full-v1.json",
+          ".cache/rally282-working-base-v2.json",
+          ".cache/rally282-check-focused-v2",
+          ".cache/rally282-check-all-v2",
+          ".cache/rally282-generated-proof-v1.json"
+        ],
         "branch": "codex/issue-282-compare-prospectively-supplied-native-ra",
-        "evidence_sha256": "c5c82e05f0af74f8d14383d26e30b4be8aff3c432d3dd0f1f72a018d50c43d91",
-        "head_sha": "7d3cca2e749327583ec852538ba981c74762613d",
-        "remaining": "Run focused verification first; inspect failures and terminal/source evidence before any correction/full run. Then full required checks, actual-count report, focused commit/PR/exact CI/controller and independent full public delivery.",
-        "summary": "Six-path uncommitted generated-only implementation adds prospective A/B comparison and bounded offline CLI, preserving full expected frames, all overlap/unknown/missing diagnostics and original qualified local variants. Separate adjudication never changes A/B counts; independence stays unavailable and scientific gates remain false. Generated pure and actual gated CLI tests cover raw bindings, prefixes/unavailable/bundles, uncertainty, safe inputs/output collisions/limits and actual interrupted reads. Four files formatted; two lint-only findings preserved and corrected; final lint passes. Tests have not started. No scientific packet/gallery/label/prediction/image opened; no assessor/model/Store/network or image transfer. Original work, other-host281 and PROGRESS preserved."
+        "head_sha": "3a022197096026bbba54bdf0d6d44750397d8299",
+        "remaining": "Wait for the same full-v2 checker to become terminal and inspect actual results/source/process evidence; then final actual-count docs, six-path commit/PR, exact CI/controller and independently verified full public delivery.",
+        "summary": "Resumed the same grant after interruption. Original full-v1 observation handle is absent; all184 recorded original test lifetimes are independently terminal, checker command absent, source unchanged, and no pytest completion/exit status exists. Preserved that run as incomplete without claiming success. Rebased unpublished commit74cafa8 over delivered nonoverlapping281 main ee9d6ca; all six owned file bytes unchanged. New focused-v2:1000 passed, all197 observed lifetimes terminal and source stable. Full-v2 now runs in a fresh directory; lint/format pass, pytest past30percent with no failures so far. Six generated proof scenarios preserve all native frames and original variants; separate adjudication does not change A/B counts. No scientific input/image/label/prediction/private-plan access, Store/model/assessor or image transfer. Original work and PROGRESS preserved."
       },
-      "checkpoint_at": 1792917776,
+      "checkpoint_at": 1792920510,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7d3cca2e749327583ec852538ba981c74762613d",
         "branch": "codex/issue-282-compare-prospectively-supplied-native-ra",
         "epoch": 1,
-        "expires_at": 1792928576,
+        "expires_at": 1792931310,
         "granted_at": 1792917162,
         "host_id": "MSI",
         "session_id": "934e803e7ccc45c9a71d2460ce3c7f53",
