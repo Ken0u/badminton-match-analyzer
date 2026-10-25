@@ -7226,6 +7226,12 @@
       "task_id": "282",
       "verb": "checkpoint"
     },
+    "rally282-checkpoint-refresh-v3": {
+      "actor": "Ken0u",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "rally282-checkpoint-resumed-v1": {
       "actor": "Ken0u",
       "at": 1792920510,
