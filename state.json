@@ -7254,6 +7254,15 @@
       "task_id": "282",
       "verb": "checkpoint"
     },
+    "rally282-checkpoint-final-v2": {
+      "actor": "Ken0u",
+      "at": 1792922046,
+      "epoch": 1,
+      "fingerprint": "655552706fc8e15ea9fdebf7382099f44fcacd71c7feb3d574da8f20f01710a3",
+      "status": "running",
+      "task_id": "282",
+      "verb": "checkpoint"
+    },
     "rally282-checkpoint-refresh-v3": {
       "actor": "Ken0u",
       "reason": "checkpoint requires running work",
@@ -7274,6 +7283,15 @@
       "at": 1792921067,
       "epoch": 1,
       "fingerprint": "ab8bd0ed381934000c043db3a7a5a300dd7f4d02af4ff9efab985dbbc6035697",
+      "status": "review",
+      "task_id": "282",
+      "verb": "submit"
+    },
+    "rally282-submit-final-v2": {
+      "actor": "Ken0u",
+      "at": 1792922058,
+      "epoch": 1,
+      "fingerprint": "0e991aba1c2bd0b4538ff3ab9ffc353e3e7bbf36074b84779db57cf23a6d26ed",
       "status": "review",
       "task_id": "282",
       "verb": "submit"
@@ -23149,19 +23167,19 @@
     "282": {
       "checkpoint": {
         "branch": "codex/issue-282-compare-prospectively-supplied-native-ra",
-        "evidence_sha256": "070194fb6032ab433684d17ff5db4d80f1c3c8093c90acfe0900fea448348baa",
-        "head_sha": "7e7484dc223885baf9f086a48d9b60b6cc3b8951",
+        "evidence_sha256": "23c3ad64239390d123df2af06c0592938dcdb8ec4122309e264de89c787aa5f3",
+        "head_sha": "2f90351a26a649cfd19e8a0e0ea8ff731e9df8be",
         "pr_number": 286,
-        "remaining": "Exact PR/main CI, controller integration and independently verified full public wheel/source/frontend/lock/both-image delivery.",
-        "summary": "All 1000 focused/4310 full Python tests pass, 4 optional skips; all required checks pass. Six generated scenarios preserve full native coverage, original variants and separate adjudication. Stable final source and terminal lifetimes verified; scientific/image access zero. Local receipt SHA256 070194fb6032ab433684d17ff5db4d80f1c3c8093c90acfe0900fea448348baa."
+        "remaining": "Exact updated PR/main CI, controller integration and independently verified public delivery.",
+        "summary": "Combined-base verification passes1000 focused/4346 full tests, 4 optional skips and all required checks. Stable executable/test bytes and terminal lifetimes verified. Six generated scenarios retain the full denominator, original variants and separate adjudication. No scientific access. Receipt SHA256 23c3ad64239390d123df2af06c0592938dcdb8ec4122309e264de89c787aa5f3."
       },
-      "checkpoint_at": 1792920985,
+      "checkpoint_at": 1792922046,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7d3cca2e749327583ec852538ba981c74762613d",
         "branch": "codex/issue-282-compare-prospectively-supplied-native-ra",
         "epoch": 1,
-        "expires_at": 1792931785,
+        "expires_at": 1792932846,
         "granted_at": 1792917162,
         "host_id": "MSI",
         "session_id": "934e803e7ccc45c9a71d2460ce3c7f53",
@@ -23222,10 +23240,10 @@
         ]
       },
       "spec_hash": "1f1299e2761de712ccf989ae9eda13f6bd21ce18746d7af43d28d4f837ed02e4",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9",
-        "head_sha": "7e7484dc223885baf9f086a48d9b60b6cc3b8951",
+        "base_sha": "4426b2fea1835de0b1e9755f618ce26626cb1516",
+        "head_sha": "2f90351a26a649cfd19e8a0e0ea8ff731e9df8be",
         "pr_number": 286,
         "spec_hash": "1f1299e2761de712ccf989ae9eda13f6bd21ce18746d7af43d28d4f837ed02e4"
       }
