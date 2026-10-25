@@ -9936,6 +9936,15 @@
       "task_id": "299",
       "verb": "extend-scope"
     },
+    "tiling299-submit-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792943290,
+      "epoch": 1,
+      "fingerprint": "49b37d35916a50e0eae81e2dea0eca060e25d51892d8b335f23786a189cd6868",
+      "status": "review",
+      "task_id": "299",
+      "verb": "submit"
+    },
     "verify-101-9d7ee10b6bf474993b4781abdc533ebfdca751e8-False": {
       "actor": "github-actions[bot]",
       "at": 1792537003,
@@ -24610,6 +24619,7 @@
       "epoch": 1,
       "planned_at": 1792933607,
       "planned_by": "Ken0u",
+      "pr_number": 300,
       "spec": {
         "acceptance": [
           "Refresh trusted main, roadmap/guidance/bug reports, complete issue/PR history and authoritative grants. Preserve delivered294/295, root edits/deprecated PROGRESS and all existing environments/research. Obtain a fresh committed routine GPU grant and isolated worktree before implementation or predictions. Original-host metadata-only prerequisite seals the same source inventory/packet/labels/baseline/checkpoint,50 complete camera views/13499 rows, no active shared Store jobs; no model/media opened during planning.",
@@ -24669,7 +24679,26 @@
         ]
       },
       "spec_hash": "d4d81772a9147155358c5c9560fb81a2cee6da1eb85f70d55aceadcf764aa3a2",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e49b7fc0a96b056ae9ef32461a002041d79d698d",
+        "head_sha": "b59afbe3bc2b00fc6b577aa9ecdef394967c5fe2",
+        "native_evidence": {
+          "code_sha": "b59afbe3bc2b00fc6b577aa9ecdef394967c5fe2",
+          "limitations": [
+            "Familiar agent-labeled two-source development cases, not expert or held-out full-match accuracy.",
+            "No improvement in nominal localization/component recall; no model/default/threshold promotion.",
+            "Timing observational under incidental unrelated graphics load, not controlled speed benchmark.",
+            "Final head adds only packaging/docs to immutable executed scientific consumers; no additional inference.",
+            "Exact final PR/main CI and complete independent public delivery still required."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "be50b0149d8b7dac867c14abb5e68c0e924abdea30c7b29c780773d44c817df2",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 300,
+        "spec_hash": "d4d81772a9147155358c5c9560fb81a2cee6da1eb85f70d55aceadcf764aa3a2"
+      }
     },
     "62": {
       "checkpoint": {
