@@ -7409,6 +7409,15 @@
       "task_id": "282",
       "verb": "submit"
     },
+    "rally288-checkpoint-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792925154,
+      "epoch": 1,
+      "fingerprint": "e21e4b47c1c0c70f259b807e42d77828d99b52745782733315ee772556afc84a",
+      "status": "running",
+      "task_id": "288",
+      "verb": "checkpoint"
+    },
     "rally288-checkpoint-implementation-v1": {
       "actor": "Ken0u",
       "at": 1792924092,
@@ -7417,6 +7426,15 @@
       "status": "running",
       "task_id": "288",
       "verb": "checkpoint"
+    },
+    "rally288-submit-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792925194,
+      "epoch": 1,
+      "fingerprint": "44521e384b304ea979cd049e205db69df2c6b40dffb228a280ee03aa2bf6539e",
+      "status": "review",
+      "task_id": "288",
+      "verb": "submit"
     },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
@@ -23615,19 +23633,19 @@
     "288": {
       "checkpoint": {
         "branch": "codex/issue-288-record-complete-native-frame-evidence-ra",
-        "head_sha": "8aa35420fdf89e2ec33cd7370e50d926f0bc681a",
-        "input_freeze_receipt": ".cache/rally288-input-freeze-v1.json",
-        "native_replay_receipt": ".cache/rally288-native-evidence-v2.json",
-        "remaining": "Complete full checks, generated baseline parity proof, report/docs, exact source PR submission/controller integration and independent public delivery.",
-        "summary": "Metadata-only full evidence ranges implemented. Read-only frozen replay of2 existing development cases/4 perception artifacts preserves every original proposal field and catalog/context/input/annotation bytes; no model inference/images. Final focused v2 passes449tests; initial focused v1 retained8new bounds-test failures/441passes, diagnosed followup search range and fixed context only. All prior receipts retained; lint/format pass. Full v1 running with stable source and recorded process identities."
+        "evidence_sha256": "106138b5275cb7948673369cda7f86dc53ec77ae66fdc7c13af3c36cf2ee27b2",
+        "head_sha": "d347dcdb93796fe057801ee1b6165ab477ff30c3",
+        "pr_number": 291,
+        "remaining": "Exact PR/main/controller and independent complete public delivery.",
+        "summary": "449 focused / 4423 full tests pass, four optional skips and all required checks; final source stable and all recorded lifetimes terminal. Original 16 generated / 2 cached proposals preserved, 4 unsupported matches excluded with denominators retained and 4 full-context matches usable. Native cached-replay and generated proof receipts retained; no inference/images. Local receipt SHA256 106138b5275cb7948673369cda7f86dc53ec77ae66fdc7c13af3c36cf2ee27b2."
       },
-      "checkpoint_at": 1792924092,
+      "checkpoint_at": 1792925154,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8aa35420fdf89e2ec33cd7370e50d926f0bc681a",
         "branch": "codex/issue-288-record-complete-native-frame-evidence-ra",
         "epoch": 1,
-        "expires_at": 1792934892,
+        "expires_at": 1792935954,
         "granted_at": 1792923803,
         "host_id": "MSI",
         "session_id": "8693413d1ec0499d88d7a0ebed3da0e5",
@@ -23636,6 +23654,7 @@
       "epoch": 1,
       "planned_at": 1792923630,
       "planned_by": "Ken0u",
+      "pr_number": 291,
       "spec": {
         "acceptance": [
           "Audit complete issue/PR history and active reservations, retain the four generated baseline failures and obtain an isolated committed code-only grant. This follows278/282 and is disjoint from other-host287 audio work. Baseline proposals omit candidate context_start_frame/context_end_frame; four singles/doubles generated cases earn interval compatibility although necessary pose evidence is outside reviewed timing bounds. Preserve deprecated PROGRESS/root edits and all historical outputs.",
@@ -23685,7 +23704,24 @@
         ]
       },
       "spec_hash": "ca74b69013711453530704c632629d9b48a53b2e52a6efc6cdbfb497f72ff9a9",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4cb27902f80d4b51e728bd55faf977667523cdf9",
+        "head_sha": "d347dcdb93796fe057801ee1b6165ab477ff30c3",
+        "native_evidence": {
+          "code_sha": "d347dcdb93796fe057801ee1b6165ab477ff30c3",
+          "limitations": [
+            "Read-only cached development perception replay; no detector/model weights loaded or native video decoded.",
+            "Checkpoint aggregate binds recorded artifact metadata, not a fresh weight load or inference result.",
+            "No scientific labels scored, new source assessment, source truth or badminton accuracy established."
+          ],
+          "model_sha256": "6df8da66813b7c5f739ede5be52635f854ab29a9829149f46f347a3071916553",
+          "receipt_sha256": "b3c44b480f591c20afe1b5f214723f58a0148ef5d089ac04174bbe19a965c60d",
+          "source_sha256": "71597ec1a19362cf304a9f208001951be467d648960cecf12ba6afe8e46318a2"
+        },
+        "pr_number": 291,
+        "spec_hash": "ca74b69013711453530704c632629d9b48a53b2e52a6efc6cdbfb497f72ff9a9"
+      }
     },
     "290": {
       "claim": {
