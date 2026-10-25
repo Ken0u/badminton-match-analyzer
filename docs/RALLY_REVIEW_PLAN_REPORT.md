@@ -67,18 +67,51 @@ rounds. New scientific sessions and outbound image bytes are both zero.
 ## Verification and result
 
 Generated verification passes **451 focused and 3,525 full Python tests**,
-with four optional skips, plus Ruff lint/format, dependencies, repository
-UTF-8/LF/JSON/local links and whitespace checks. Final code/test timing and
-recorded terminal test lifetimes are verified. Initial generated fixture and
-lint failures remain preserved. Task-owned inspection corrected a separate
-hash/parse-read race and preserved terminal subprocess receipts after failed
-identity observations; generated regressions cover both.
+with four optional skips, plus Ruff lint/format, dependency consistency,
+repository UTF-8/LF/JSON/local links and whitespace checks. Final source timing
+and recorded terminal verification lifetimes were checked. The first core and
+parent fixture failures and lint failures remain preserved. Task-owned inspection
+found and corrected a separate hash/parse-read race and loss of a subprocess
+receipt after access-denied observation; generated regressions cover both.
 
-The single original-host metadata plan and separate audit remain pending.
-The owning issue will record their results, exact PR/main verification,
-controller integration and independent public delivery. Only code, the public
-protocol and aggregate counts/hashes are published; native images, labels,
-process/session paths and the per-frame schedule stay private.
+The clean tested consumer `e59840e3bc9e5040ef6e07a583f17c59067e5f9e` was committed before the
+[prospective owning-issue seal](https://github.com/Ken0u/badminton-match-analyzer/issues/262#issuecomment-6393060021). Exactly one original-host
+metadata plan completed under the real shared Store in about
+10 seconds. The frozen #250 read-only
+audit passed before packet/gallery metadata was parsed. A separate post-exit
+audit revalidated unchanged inputs, Store/terminal/artifact evidence and the
+original wrapper/launcher/worker chain, finding all
+8 recorded outer execution lifetimes
+absent. It reconstructed the exact new schedule and costs after another
+read-only historical audit; no scientific preparation or assessment was repeated.
+
+| Source | Plan | Native frames | Samples | Sessions per lane | Native bytes once | Overlap bytes per lane | Gallery bytes per lane | Total bytes per lane |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Doubles | planned | 541 | 19 | 136 | 554667137 | 151796412 | 469847247 | 1176310796 |
+| Singles | planned | 991 | 34 | 267 | 1112863758 | 307069175 | 929236895 | 2349169828 |
+
+Across three prospective exhaustive lanes, the schedule status is
+**planned**, with **1,209 proposed sessions** and
+**10,576,441,872 proposed image bytes**. Native byte totals count
+each original image once; overlap and gallery costs include every repeated
+membership in a lane. A session counts every distinct native/gallery image
+against both caps. These are prospective transport costs, without confirmation
+that a future transport or assessor can execute them or resolve the evidence.
+All 1,532 native frames and 53 samples remain, with no omitted native frame.
+The 1,479 unsampled frames receive navigation context, without new sparse labels.
+
+Actual new scientific sessions and dispatched image bytes are **both zero**.
+Historical payload accounting, original 1,020 execution identities/256 targets,
+unknowns, conflicting event intervals and scientific acceptance remain unchanged.
+Complete references remain **0/2** and all four eligibility flags remain false.
+No old allowance or runtime is renewed by these prospective costs.
+
+Aggregate SHA256 is `2d9712684072798c17a74aa0845e5157286da4ecbd2e5748802dca07de1bd8db`; private plan SHA256 is
+`870272e7206f4957373a70ed077df4067dff7763663ecdb8f14dc97f42459c34`. Only code, protocol, aggregate counts and hashes are
+published; images, labels, process/session paths and the per-frame schedule stay
+private. Exact PR/main CI, normal controller integration and complete independent
+public delivery remain pending at this report checkpoint; their eventual
+receipts belong on the owning issue.
 
 Any actual future image assessment requires a separate frozen task, specifically
 authorized payload/destination and fresh execution budget. This planner does
