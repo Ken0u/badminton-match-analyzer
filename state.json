@@ -5574,6 +5574,15 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "protocol275-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792910364,
+      "epoch": 1,
+      "fingerprint": "f2e501439decb51ee03c22d9702ad87195ca360c0344c37692644f0fd083fac8",
+      "status": "running",
+      "task_id": "275",
+      "verb": "checkpoint"
+    },
     "public-protocol-next-v1": {
       "actor": "Ken0u",
       "at": 1792909623,
@@ -22160,12 +22169,25 @@
       "status": "ready"
     },
     "275": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/protocol275-check-focused-v2",
+          ".cache/protocol275-check-all-v1",
+          ".cache/protocol275-built-v1",
+          ".cache/protocol275-built-v2"
+        ],
+        "branch": "codex/issue-275-make-public-source-distributions-contain",
+        "head_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
+        "remaining": "Finish stable full suite, actual canary-exclusion/build/install and lifetime receipts; finalize report, focused PR and exact PR/main/controller/public-delivery verification.",
+        "summary": "Five granted paths implemented locally: 45 literal public manifest includes, exact Git/source-archive membership and byte verification, generated rejection regressions and focused report. 50 focused package/environment tests pass. Full checks in progress. Real wheel/sdist and installed HTTP consumer succeeded; first monitoring wrapper raced original process exit before saving final receipt. Original build log and HTTP receipt retained; both prior original/HTTP PIDs independently absent. Corrected wrapper repeating the check without product changes or process signals. No scientific access/image transfer, no PROGRESS edit or collaborator path changes."
+      },
+      "checkpoint_at": 1792910364,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
         "branch": "codex/issue-275-make-public-source-distributions-contain",
         "epoch": 1,
-        "expires_at": 1792920423,
+        "expires_at": 1792921164,
         "granted_at": 1792909623,
         "host_id": "MSI",
         "session_id": "7c82293f597c4220a41b086449a033b5",
