@@ -8867,6 +8867,14 @@
       "task_id": "278",
       "verb": "plan"
     },
+    "spec-279-3972e3607aa89a2a3f136734f1c472c8706089a71251bf9b9026db2922fad12c": {
+      "actor": "dootz1",
+      "at": 1792914670,
+      "fingerprint": "ac629b2746ced9a85ad617ff689b8b470a9de7ee5c938a8a1b0fcf90592eb35b",
+      "status": "needs_human",
+      "task_id": "279",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -22618,6 +22626,53 @@
       },
       "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3",
       "status": "running"
+    },
+    "279": {
+      "epoch": 0,
+      "planned_at": 1792914670,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Revalidate current main, exact workflow/package/test-runner call paths, issue history and authoritative grants. Preserve original273 local23/23 and hosted browser evidence as distinct proof; no false claim that root regressions ran in historical CI. Depend on completed273 and obtain separate configured-owner authorization of this frozen risk-human workflow scope, committed grant and isolated worktree before editing.",
+          "Invoke the two existing exact root test files through existing suitable Linux/native jobs with the locked project venv and explicit actual-admission opt-in. Pin generated root/data and interpreter selection so Windows tests actually use the normal project venv launcher, without __PYVENV_LAUNCHER__ or a direct-base workaround. Retain actual direct-controller Store-double evidence separately from real Store workers. Preserve existing platform-specific skips with explicit reasons; the three admission actual-process cases must execute rather than silently skip on supported runners.",
+          "Do not change ownership/admission/test helpers or their assertions, startup/cleanup deadlines,45-second gate, signal checks, real Store admission or production runtime. Preserve all existing Python/frontend/build/package/browser/container checks and required gate; do not rename/remove checks, broaden credentials, add paid services or install undeclared dependencies. Keep test processes disposable and unrelated to application/research jobs.",
+          "Retain credential-free generated source/probe hashes, test outcomes and actual cleanup/worker/Store receipts as bounded CI artifacts, including failure evidence. Verify recorded original lifetimes independently absent and successful Store IDs/worker creation/video/kind/status agree; never infer exit from timeouts or restart a possibly live worker. Original failures and distinct unsupported cases stay explicit.",
+          "Run focused local ownership/admission checks and required Python/Ruff/format/pip/repository UTF8/LF/JSON/local-link/diff checks using existing dependencies and fresh generated output. Document actual Linux/Windows/macOS suite counts and supported skips from complete exact-head hosted jobs; do not manufacture unavailable platform evidence.",
+          "Publish only the two granted workflow/report files through normal exact PR/main CI and controller integration. Independently verify full merged tree and complete public candidate/package/source/frontend/lock/both-image receipts including45 unchanged public protocol manifests. No manual main push/merge/raw coordination edit or workflow retry/cancel/wake. A future helper defect requires its own authorized scope, not weakened tests.",
+          "Bound implementation to4h from grant,512MiB retained new output and three diagnosed repair rounds. No scientific input/label/image/prediction access or new assessor sessions, inference/training/holdout/model promotion, deployment or paid service. Scientific references remain0/2 and eligibility flags false; green process/software checks establish no full-match annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "273"
+        ],
+        "exclusions": [
+          "No test/helper/assertion/signal-authority/deadline/production/runtime/frontend/dependency/auth/credential/model/label/protocol/acceptance-gate change, original scientific input access, paid service, manual merge or PROGRESS read/update."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Run the existing fixture ownership and admission regression suites automatically with the locked project virtual environment on Linux, Windows and macOS, preserving all existing CI gates and process-signal authority.",
+        "paths": [
+          ".github/workflows/ci.yml",
+          "docs/FRONTEND_PROCESS_CI_REPORT.md"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Existing root suites executed with real project venv and enabled actual-admission cases, source/process/Store artifacts and explicit platform skips; all existing exact CI gates preserved.",
+          "Required checks, controller integration, exact merged-main and independent complete public delivery including45 protocol files."
+        ]
+      },
+      "spec_hash": "399ceab75b9098cdd4b02468917b304609813b0f1abbd2434415c8640432b086",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
