@@ -5151,6 +5151,21 @@
       "task_id": "250",
       "verb": "plan"
     },
+    "rally-review-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792898153,
+      "fingerprint": "0e852e965099ed2caa79b6028c4428f098d6f42fdcd3effdfd0458daa07e30d6",
+      "status": "ready",
+      "task_id": "262",
+      "verb": "plan"
+    },
+    "rally-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792898153,
+      "fingerprint": "ddcc0f7a82b6420e5f07b2619f070761b2a5ad6d42f8a5ce106bd7907d328b90",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally208-claim-v1": {
       "actor": "Ken0u",
       "at": 1792746046,
@@ -8015,6 +8030,14 @@
       "fingerprint": "4f4c697886ad5a1511fc69b3c28deeda75e446437e237701718245a716ca3c6d",
       "status": "ready",
       "task_id": "260",
+      "verb": "plan"
+    },
+    "spec-262-41e5cbca96c5c17a05a5e28b88a7ae8b5c1c84600a4d6ad20ab32bb629f7c6ba": {
+      "actor": "Ken0u",
+      "at": 1792898153,
+      "fingerprint": "984e27d03c290ec14f64ec74eb211c6b67788838202fc3d9e7bbd329740a89e2",
+      "status": "ready",
+      "task_id": "262",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -20814,6 +20837,71 @@
         "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a"
       }
     },
+    "262": {
+      "epoch": 0,
+      "planned_at": 1792898153,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Follow approved Data and evaluation priority1 after delivered250/260. Audit all history/PRs/grants; preserve root edits, deprecated PROGRESS, environments, data, research, annotations and predictions. Obtain a fresh original-host code/metadata grant and isolated worktree; reserve only the six named paths and data:windows-primary.",
+          "Freeze protocol, generated tests and clean committed consumer before original metadata planning. Pin original250 joined evidence/context/aggregate/terminal, its clean historical tested producer and prospective timestamp, original208 dense packets and240 galleries. Run the original frozen250 read-only completed audit in a credential-free subprocess before consuming original packet/gallery metadata. Preserve original1020execution provenance,256targets, all1532nativeframes,53sparse samples, historical unknowns/conflicts and unchanged0/2 references/fourfalseeligibilityflags. Never invoke earlier writing preparation, assessment, aggregation or sealing helpers.",
+          "Implement a pure deterministic prospective planner consuming validated original native packet and gallery metadata only. Retain exact source/clock/packet/image identities, PTS/time-base/orientation, all native ordinals and original PNG bytes. Associate each native frame with the gallery sheet containing its nearest sampled source time, breaking ties by native ordinal. This is navigation context only: do not interpolate sparse scene labels or imply visibility, actors, contacts or truth at unsampled frames. No media viewing/decoding/rendering, crops, new images, source downloads or predictions.",
+          "Pack frames chronologically into bounded contiguous batches with one preceding native-frame overlap after the first batch, repeated relevant gallery sheets, a9MiB total-image-byte limit and20distinct-image limit per proposed session. Count all gallery and native bytes and every repeated membership. Never omit a native frame or force an oversized input through by truncation/downsampling. If even a minimum valid batch cannot fit, return an explicit unavailable plan with the original full denominator and reason; no silent budget increase or substitute evidence. Gallery input order and dictionary iteration must not affect the plan.",
+          "Retain two independent prospective exhaustive lanes plus one separately named source-adjudication lane using the same complete schedule; these are planned lanes, not real sessions or votes. Independent manifests contain only original source/image/clock identities, fixed source-only rubric and future own-stream continuity requirements, with no historical labels, descriptions, event intervals or other-stream outputs. Record native coverage, overlap/context costs, source order and exact proposed aggregate payload/session counts. Keep actual new sessions and dispatched image bytes at0. No dispatcher, authenticated CLI/API client or assessor launcher is implemented or invoked.",
+          "Bind every plan to the exact packet, gallery, prior audit, protocol and tested consumer. Supply a versioned prospective output contract covering whole-window context, contact correspondence across overlap, document-local actor evidence, inclusive contact/serve/terminal uncertainty, unknown family/side, missing/hidden evidence and independence. This is a review specification, not accepted annotation truth or an alternative scientific acceptance gate. Existing scientific outputs and acceptance consumers remain byte-identical.",
+          "Provide freeze/run/read-only-audit metadata commands with current genuine original-host grant/epoch/spec, clean committed consumers, prospective owning-issue seal, immutable four-hour interval, exclusive outputs and real shared Store run_local_job admission. Pin original root/data before imports and clear credentials. Record PID/creation/cwd/command, Store terminal/artifact/lifetime evidence and independent original process absence. A failure fences the output; no implicit repeat, signal or restart on timeout. New planner metadata may be reconstructed for audit, but no original scientific preparation or assessment is repeated.",
+          "After final generated/full checks and consumer commit, execute exactly one sealed original-host metadata plan. Independently verify all source memberships, exact1532native/53sampled denominators, chronological no-gap coverage, repeated-byte totals, unchanged original inputs and independently terminal process/Store/artifact evidence. Report infeasibility honestly if any bound cannot be met. Keep original historical payload accounting distinct from proposed future cost; no consumed image allowance or old runtime is renewed.",
+          "Meaningful generated tests cover VFR/PTS/orientation/source identities, sheet boundaries and nearest-time ties, overlapping native memberships, exact byte/image caps, oversize minimum batches, missing/duplicate/unordered/boolean ordinals, nonfinite/duplicate-key JSON, hash/provenance corruption, changed inputs/runtime/consumer, exclusive failed outputs, stale grants and process/artifact cleanup. Verify no semantic labels reach independent payloads and all unavailable/unknown cases and denominators remain. Run focused/full Python, Ruff lint/format, pip, UTF8/LF/JSON/local links and diff checks in isolated generated storage; no new dependencies.",
+          "Publish reproducible code, protocol and aggregate planning report only; private packet/image/label/session/process paths and per-frame schedule stay ignored. Update only current roadmap pointer, preserving historical evidence. Normal focused PR, exact PR/main CI, controller integration and independent complete public package/source/frontend/lock/both-image delivery required. No manual merge, direct main push, raw coordination write, workflow retry/cancel/wake, policy/auth/deployment/model/default change or paid service.",
+          "Bound task to four hours from fresh grant,512MiB new outputs and8GiB cumulative retained scientific outputs including prior attempts, three diagnosed repair rounds. Zero new scientific sessions and zero outbound image bytes. Any future actual source/image assessment must be a separate frozen explicitly authorized task with exact payload/destination and fresh execution budget. This planner neither resolves original unknowns nor completes62/66/67/71 or establishes full-match accuracy."
+        ],
+        "artifacts": {
+          "joined250-aggregate": "f76b689df32d35d0d79c45cb13a7676c2398529d6ca988b797a0dbd5afe5fdc9",
+          "joined250-ledger": "cdf01c00d00134825d8dd095708dfabe1ca9aa562e34ab40b4257bfca179b40d"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "250",
+          "260"
+        ],
+        "exclusions": [
+          "No new scientific image/label reading or transfer, image rendering/decoding, source download, assessor, inference/training/holdout, changed acceptance, model/policy/auth/workflow/deployment change, new dependency, paid service, manual merge or PROGRESS edits. Original metadata may be read only after the frozen historical provenance audit."
+        ],
+        "limits": {
+          "max_cumulative_output_bytes": 8589934592,
+          "max_image_payload_bytes": 0,
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "max_scientific_sessions": 0,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Produce a prospectively frozen, provenance-bound chronological native-frame and temporal-gallery review schedule with exact prospective image costs and exhaustive coverage, without new image assessment or execution authority.",
+        "paths": [
+          "backend/badminton/rally_review_plan.py",
+          "scripts/plan_rally_review.py",
+          "tests/test_rally_review_plan.py",
+          "data/manifests/rally_review_plan_v1.json",
+          "docs/RALLY_REVIEW_PLAN_REPORT.md",
+          "PROJECT_PLAN.md"
+        ],
+        "priority": 35,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Prospectively sealed generated/full verification and one original-host metadata plan with exact coverage/cost/source provenance and independently terminal real Store/process/artifact evidence.",
+          "Exact PR/main CI, normal controller integration and independent complete public delivery; actual new scientific sessions/image bytes remain zero."
+        ]
+      },
+      "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -23986,6 +24074,18 @@
       "host_id": "MSI",
       "registered_at": 1792499263,
       "session_id": "7e09f59c-76d7-4231-a7be-c9e40572234e"
+    },
+    "MSI/7edc859bbd9747e0aa21c74ad1ad103d": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792898153,
+      "session_id": "7edc859bbd9747e0aa21c74ad1ad103d"
     },
     "MSI/9b465dc1a2ba4999bd038162102f230c": {
       "actor": "Ken0u",
