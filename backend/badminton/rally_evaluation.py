@@ -192,7 +192,7 @@ def _discontinuities(run, annotations, times, count):
     gaps = {
         i for i in range(1, count) if times[i] - times[i - 1] > MAX_FRAME_STEP_S + 1e-9
     }
-    return sorted(cuts | gaps), sorted(gaps)
+    return sorted(cuts | gaps), sorted(gaps), sorted(cuts)
 
 
 def _split(left, right, discontinuities):
@@ -202,6 +202,20 @@ def _split(left, right, discontinuities):
 
 def _contained(item, ranges):
     return any(a <= item["start_frame"] <= item["end_frame"] < b for a, b in ranges)
+
+
+def _evidence_exclusion(candidate, ranges, cuts, gaps):
+    """Check declared half-open evidence without inventing missing legacy context."""
+    if "context_start_frame" not in candidate:
+        return None
+    left, right = candidate["context_start_frame"], candidate["context_end_frame"]
+    if any(left < cut < right for cut in cuts):
+        return "evidence_context_crosses_camera_cut"
+    if any(left < gap < right for gap in gaps):
+        return "evidence_context_crosses_source_timestamp_gap"
+    if not any(start <= left < right <= end for start, end in ranges):
+        return "evidence_context_outside_reviewed_coverage"
+    return None
 
 
 def _interval_pairs(events, candidates):
@@ -292,7 +306,9 @@ def _compatibility(events, candidates, ranges):
     }
 
 
-def _kind_report(kind, flag, events, candidates, windows, scenes, run_range, cuts):
+def _kind_report(
+    kind, flag, events, candidates, windows, scenes, run_range, cuts, camera_cuts, gaps
+):
     relevant = [e for e in events if e["kind"] == kind]
     references = [e for e in relevant if e.get("status") in ("reviewed", "corrected")]
     predictions = [c for c in candidates if c["kind"] == kind]
@@ -330,7 +346,16 @@ def _kind_report(kind, flag, events, candidates, windows, scenes, run_range, cut
         else:
             exact_ranges.extend(pieces)
     included_events = [e for e in references if _contained(e, ranges)]
-    included_candidates = [c for c in predictions if _contained(c, ranges)]
+    evidence_exclusions = {
+        c["id"]: reason
+        for c in predictions
+        if (reason := _evidence_exclusion(c, ranges, camera_cuts, gaps))
+    }
+    included_candidates = [
+        c
+        for c in predictions
+        if _contained(c, ranges) and c["id"] not in evidence_exclusions
+    ]
     exact_events = [e for e in included_events if _contained(e, exact_ranges)]
     exact_candidates = [c for c in included_candidates if _contained(c, exact_ranges)]
     event_ids, candidate_ids = (
@@ -356,6 +381,25 @@ def _kind_report(kind, flag, events, candidates, windows, scenes, run_range, cut
             "excluded_candidate_ids": [
                 c["id"] for c in predictions if c["id"] not in candidate_ids
             ],
+            "candidate_evidence_context": {
+                "meaning": "Declared source ranges are validated for comparison eligibility; missing metadata cannot certify the proposal's full evidence",
+                "declared_candidate_ids": [
+                    c["id"] for c in predictions if "context_start_frame" in c
+                ],
+                "unavailable_candidate_ids": [
+                    c["id"] for c in predictions if "context_start_frame" not in c
+                ],
+                "excluded_candidates": [
+                    {
+                        "id": c["id"],
+                        "reason": evidence_exclusions[c["id"]],
+                        "context_start_frame": c["context_start_frame"],
+                        "context_end_frame": c["context_end_frame"],
+                    }
+                    for c in predictions
+                    if c["id"] in evidence_exclusions
+                ],
+            },
             "uncertain_reference_event_ids": [
                 e["id"] for e in included_events if e["start_frame"] < e["end_frame"]
             ],
@@ -394,7 +438,7 @@ def evaluate_rallies(video, annotations, run, source_times, tolerance_s=0.12):
     count = _source_clock(video, source_times)
     revision = _integer(annotations.get("revision"), "Annotation revision")
     windows, scenes = _coverage_records(annotations, count)
-    cuts, gaps = _discontinuities(run, annotations, source_times, count)
+    cuts, gaps, camera_cuts = _discontinuities(run, annotations, source_times, count)
     run_range = _validate_context(video, annotations, run, count)
     raw_events = _records(annotations.get("events", []), "Annotation events")
     _identifiers(raw_events, "Annotation event")
@@ -440,7 +484,16 @@ def evaluate_rallies(video, annotations, run, source_times, tolerance_s=0.12):
     kinds = {}
     for kind, flag in KINDS.items():
         report = _kind_report(
-            kind, flag, events, candidates, windows, scenes, run_range, cuts
+            kind,
+            flag,
+            events,
+            candidates,
+            windows,
+            scenes,
+            run_range,
+            cuts,
+            camera_cuts,
+            gaps,
         )
         exact_events, exact_candidates, exact_ranges = report.pop("_exact_inputs")
         if exact_ranges:
