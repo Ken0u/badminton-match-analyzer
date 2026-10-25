@@ -1377,6 +1377,15 @@
       "task_id": "266",
       "verb": "submit"
     },
+    "goal-01a17154-submit271-v1": {
+      "actor": "dootz1",
+      "at": 1792909796,
+      "epoch": 1,
+      "fingerprint": "c43e6e689f8b069e6cbaad0eb7177bd484368186afe165798616e97a012f7888",
+      "status": "review",
+      "task_id": "271",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -22023,6 +22032,7 @@
       "epoch": 1,
       "planned_at": 1792906709,
       "planned_by": "dootz1",
+      "pr_number": 274,
       "spec": {
         "acceptance": [
           "Revalidate issue266 controller integration/delivery, current main, duplicate issues, grants and scope before implementation. Obtain a committed isolated-worktree grant; preserve other edits, deprecated PROGRESS, original annotations/predictions, environments and research jobs.",
@@ -22066,7 +22076,13 @@
         ]
       },
       "spec_hash": "b2f66a53f42b49a22fc7ab3c561111b588ea30a46b0aa638cf8e3d0adab28a6e",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
+        "head_sha": "8474afc127717ec887425354523c341c9c568f4f",
+        "pr_number": 274,
+        "spec_hash": "b2f66a53f42b49a22fc7ab3c561111b588ea30a46b0aa638cf8e3d0adab28a6e"
+      }
     },
     "273": {
       "epoch": 0,
