@@ -1,5 +1,17 @@
 # Bug review and implementation progress
 
+The [boundary-evidence evaluation repair](BOUNDARY_EVIDENCE_EVALUATION_REPORT.md)
+addresses six generated serve/ending proposals that incorrectly received perfect
+timing and interval credit despite declared evidence crossing a camera cut,
+native timestamp gap or unreviewed frame. Both comparison paths now require
+declared evidence inside one eligible reviewed source range, retaining references,
+missed/false denominators, uncertainty and explicit legacy unavailable metadata.
+All 788 focused and 4,236 full Python tests pass, with four optional full-suite
+skips, plus required lint/format, dependencies, repository and whitespace checks.
+Final source stability, terminal process lifetimes, the two corrected new-test
+expectations and remaining limits are recorded in the report and owning issue.
+No saved label or inference changes; scientific references remain 0/2.
+
 The [public-protocol packaging repair](PUBLIC_PROTOCOL_PACKAGING_REPORT.md)
 addresses an actual public source archive that included protocol-dependent tests
 but omitted all 45 tracked JSON manifests. Explicit source-file inclusion and

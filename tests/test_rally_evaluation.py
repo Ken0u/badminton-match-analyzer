@@ -524,6 +524,177 @@ def test_interval_times_and_optional_evidence_context_must_bind_to_source():
         evaluate_rallies(*args)
 
 
+def evidence_barrier_inputs(kind, barrier, *, uncertain=False):
+    prefix = "contact_" if kind == "serve" else "terminal_"
+    reference = event("reference", 20, kind)
+    prediction = candidate(
+        "unsupported", 20, kind, context_start_frame=19, context_end_frame=22
+    )
+    if uncertain:
+        reference.update({prefix + "start_frame": 20, prefix + "end_frame": 21})
+        prediction.update(start_frame=20, end_frame=21, timing="uncertain_interval")
+    windows = [window()]
+    if barrier == "review_gap":
+        windows = [window(0, 19), window(20, 40)]
+    elif barrier == "incomplete_review":
+        flag = "serves_complete" if kind == "serve" else "rally_ends_complete"
+        windows = [window(0, 20, **{flag: False}), window(20, 40)]
+    elif barrier == "excluded_scene":
+        windows = [window(0, 20, scene="unknown"), window(20, 40)]
+    args = inputs([reference], [prediction], windows)
+    if barrier == "camera_cut":
+        args[2]["cut_frames"] = args[2]["court_context"]["cut_frames"] = [20]
+    elif barrier == "timestamp_gap":
+        args[3][20:] = [time + 0.2 for time in args[3][20:]]
+        prediction["time_s"] = args[3][20]
+    elif barrier == "excluded_scene":
+        args[1]["scene_ranges"] = [
+            {"id": "excluded", "start_frame": 0, "end_frame": 20, "scene": "non_play"}
+        ]
+    bind(args[2], args[1])
+    return args
+
+
+@pytest.mark.parametrize("kind", ["serve", "rally_end"])
+@pytest.mark.parametrize(
+    "barrier,reason,frames",
+    [
+        ("camera_cut", "evidence_context_crosses_camera_cut", 40),
+        ("timestamp_gap", "evidence_context_crosses_source_timestamp_gap", 40),
+        ("review_gap", "evidence_context_outside_reviewed_coverage", 39),
+        ("incomplete_review", "evidence_context_outside_reviewed_coverage", 20),
+        ("excluded_scene", "evidence_context_outside_reviewed_coverage", 20),
+    ],
+)
+@pytest.mark.parametrize("uncertain", [False, True])
+def test_boundary_evidence_cannot_cross_source_or_review_barriers(
+    kind, barrier, reason, frames, uncertain
+):
+    args = evidence_barrier_inputs(kind, barrier, uncertain=uncertain)
+    original = deepcopy(args)
+    report = evaluate_rallies(*args)["kinds"][kind]
+    assert args == original
+    coverage = report["coverage"]
+    assert coverage["reviewed_frames"] == frames
+    assert coverage["reviewed_events"] == 1
+    assert coverage["evaluated_candidates"] == 0
+    assert coverage["excluded_event_ids"] == []
+    assert coverage["excluded_candidate_ids"] == ["unsupported"]
+    assert coverage["uncertain_candidate_ids"] == []
+    evidence = coverage["candidate_evidence_context"]
+    assert evidence["declared_candidate_ids"] == ["unsupported"]
+    assert evidence["unavailable_candidate_ids"] == []
+    assert evidence["excluded_candidates"] == [
+        {
+            "id": "unsupported",
+            "reason": reason,
+            "context_start_frame": 19,
+            "context_end_frame": 22,
+        }
+    ]
+    support = report["interval_compatibility"]
+    assert support["reviewed_event_count"] == 1
+    assert support["candidate_count"] == support["matched_count"] == 0
+    assert support["unmatched_event_ids"] == ["reference"]
+    if uncertain:
+        assert coverage["uncertain_reference_event_ids"] == ["reference"]
+        if barrier == "review_gap":
+            timing = report["representative_timing"]
+            assert report["status"] == "scored"
+            assert coverage["point_timing_frame_ranges"] == [[0, 19]]
+            assert all(timing["metrics"][name] == 0 for name in ("tp", "fp", "fn"))
+            assert timing["metrics"]["f1"] is None
+        else:
+            assert report["representative_timing"] is None
+    else:
+        metrics = report["representative_timing"]["metrics"]
+        assert (metrics["tp"], metrics["fp"], metrics["fn"], metrics["f1"]) == (
+            0,
+            0,
+            1,
+            0,
+        )
+
+
+@pytest.mark.parametrize("kind", ["serve", "rally_end"])
+@pytest.mark.parametrize("barrier", ["camera_cut", "timestamp_gap", "review_gap"])
+def test_evidence_exclusion_keeps_other_matches_false_positives_and_misses(
+    kind, barrier
+):
+    args = evidence_barrier_inputs(kind, barrier)
+    args[1]["events"].append(event("valid-reference", 25, kind))
+    args[2]["candidates"].extend(
+        [
+            candidate(
+                "valid", 25, kind, args[3], context_start_frame=24, context_end_frame=27
+            ),
+            candidate(
+                "false", 30, kind, args[3], context_start_frame=29, context_end_frame=32
+            ),
+        ]
+    )
+    report = evaluate_rallies(*args)["kinds"][kind]
+    timing = report["representative_timing"]
+    assert timing["metrics"] == {
+        "tp": 1,
+        "fp": 1,
+        "fn": 1,
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+    }
+    assert timing["unmatched_event_ids"] == ["reference"]
+    assert timing["unmatched_candidate_ids"] == ["false"]
+    assert report["coverage"]["reviewed_events"] == 2
+    assert report["coverage"]["evaluated_candidates"] == 2
+    assert report["interval_compatibility"]["matched_count"] == 1
+    assert report["interval_compatibility"]["unmatched_event_ids"] == ["reference"]
+    assert report["interval_compatibility"]["unmatched_candidate_ids"] == ["false"]
+
+
+@pytest.mark.parametrize("kind", ["serve", "rally_end"])
+@pytest.mark.parametrize("barrier", ["camera_cut", "timestamp_gap"])
+@pytest.mark.parametrize("frame,left,right", [(19, 18, 20), (20, 20, 22)])
+def test_half_open_evidence_can_end_or_start_exactly_at_a_source_barrier(
+    kind, barrier, frame, left, right
+):
+    args = evidence_barrier_inputs(kind, barrier)
+    args[1]["events"] = [event("reference", frame, kind)]
+    args[2]["candidates"] = [
+        candidate(
+            "valid",
+            frame,
+            kind,
+            args[3],
+            context_start_frame=left,
+            context_end_frame=right,
+        )
+    ]
+    report = evaluate_rallies(*args)["kinds"][kind]
+    assert report["representative_timing"]["metrics"]["tp"] == 1
+    assert report["interval_compatibility"]["matched_count"] == 1
+    assert report["coverage"]["candidate_evidence_context"]["excluded_candidates"] == []
+
+
+@pytest.mark.parametrize("kind", ["serve", "rally_end"])
+@pytest.mark.parametrize("barrier", ["camera_cut", "timestamp_gap", "review_gap"])
+def test_legacy_missing_evidence_remains_usable_and_explicitly_unavailable(
+    kind, barrier
+):
+    args = evidence_barrier_inputs(kind, barrier)
+    for field in ("context_start_frame", "context_end_frame"):
+        del args[2]["candidates"][0][field]
+    original = deepcopy(args)
+    report = evaluate_rallies(*args)["kinds"][kind]
+    assert args == original
+    assert report["representative_timing"]["metrics"]["tp"] == 1
+    assert report["interval_compatibility"]["matched_count"] == 1
+    evidence = report["coverage"]["candidate_evidence_context"]
+    assert evidence["declared_candidate_ids"] == []
+    assert evidence["unavailable_candidate_ids"] == ["unsupported"]
+    assert evidence["excluded_candidates"] == []
+
+
 @pytest.mark.parametrize(
     "field,value",
     [
