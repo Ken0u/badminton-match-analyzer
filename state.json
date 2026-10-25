@@ -20336,6 +20336,7 @@
       }
     },
     "256": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40151740557",
       "checkpoint": {
         "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
         "evidence_sha256": "44b8c9513c0cc2b41d2186ac2bd80da12b9e0ee8db5eccefacb60e56b94f54e6",
@@ -20357,7 +20358,7 @@
         "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792892243,
