@@ -11,6 +11,7 @@ import time
 from fractions import Fraction
 from pathlib import Path
 from types import SimpleNamespace
+from uuid import uuid4
 
 import psutil
 import pytest
@@ -20,6 +21,26 @@ from badminton import rally_temporal_context as temporal
 
 CHECKOUT = Path(__file__).resolve().parents[1]
 SCRIPT = CHECKOUT / "scripts/validate_rally_review.py"
+
+
+# Hold the real interpreter until the parent independently records its lifetime.
+# Reading stdin also releases the gate on parent exit; no orphan waits forever.
+CLI_STARTUP_GATE = r"""
+import json, os, runpy, sys
+from pathlib import Path
+import psutil
+p = psutil.Process()
+startup = Path(sys.argv[1])
+pending = startup.with_suffix('.pending')
+pending.write_text(json.dumps({'pid':p.pid, 'created':p.create_time(),
+    'cwd':p.cwd(), 'command':p.cmdline(), 'nonce':sys.argv[2]}), encoding='utf-8')
+os.replace(pending, startup)
+if sys.stdin.buffer.read(1) != b'\n':
+    raise SystemExit('Generated CLI startup was not released')
+sys.argv = sys.argv[3:]
+sys.path[0] = str(Path(sys.argv[0]).parent)
+runpy.run_path(sys.argv[0], run_name='__main__')
+"""
 
 
 def encoded(value):
@@ -148,7 +169,7 @@ def workspace(tmp_path, *, unavailable=False, bundle=False):
     return plan, documents
 
 
-def invoke(tmp_path, *extra, output="validated.json"):
+def invoke(tmp_path, *extra, output="validated.json", startup_delay=0):
     env = os.environ.copy()
     for key in (
         "GH_TOKEN",
@@ -187,34 +208,80 @@ def invoke(tmp_path, *extra, output="validated.json"):
     run = runs / f"run-{len(list(runs.iterdir())):03d}"
     run.mkdir(exist_ok=False)
     stdout, stderr = run / "stdout.log", run / "stderr.log"
+    gate, startup_path = run / "startup_gate.py", run / "startup.json"
+    gate.write_text(CLI_STARTUP_GATE, encoding="utf-8")
+    nonce = uuid4().hex
+    gated_command = [command[0], str(gate), str(startup_path), nonce, *command[1:]]
     identities, observation_errors = {}, []
+
+    def observe(process):
+        try:
+            parent = psutil.Process(process.pid)
+            for child in [parent, *parent.children(recursive=True)]:
+                try:
+                    row = {
+                        "pid": child.pid,
+                        "created": child.create_time(),
+                        "cwd": child.cwd(),
+                        "command": child.cmdline(),
+                    }
+                    identities[(row["pid"], row["created"])] = row
+                except psutil.NoSuchProcess:
+                    continue
+                except psutil.AccessDenied:
+                    observation_errors.append(child.pid)
+        except psutil.NoSuchProcess:
+            pass
+        except psutil.AccessDenied:
+            observation_errors.append(process.pid)
+
+    startup, startup_verified, startup_error = None, False, None
     with stdout.open("wb") as out, stderr.open("wb") as err:
         process = subprocess.Popen(
-            command, cwd=CHECKOUT, env=env, stdout=out, stderr=err
+            gated_command,
+            cwd=CHECKOUT,
+            env=env,
+            stdin=subprocess.PIPE,
+            stdout=out,
+            stderr=err,
         )
-        while process.poll() is None:
+        try:
+            # Regression coverage can delay the first sample past a fast CLI exit.
+            time.sleep(startup_delay)
+            deadline = time.monotonic() + 10
+            while not startup_path.exists():
+                observe(process)
+                assert process.poll() is None, "CLI startup gate exited early"
+                assert time.monotonic() < deadline, "CLI startup gate timed out"
+                time.sleep(0.01)
+            startup = json.loads(startup_path.read_text(encoding="utf-8"))
+            observe(process)
+            assert startup["nonce"] == nonce
+            row = identities[(startup["pid"], startup["created"])]
+            assert row["cwd"] == startup["cwd"]
+            assert Path(row["cwd"]).resolve() == CHECKOUT
+            assert row["command"] == startup["command"]
+            assert row["command"][1:] == gated_command[1:]
+            startup_verified = True
+            process.stdin.write(b"\n")
+            process.stdin.flush()
+        except BaseException as error:
+            startup_error = error
+        finally:
             try:
-                parent = psutil.Process(process.pid)
-                for child in [parent, *parent.children(recursive=True)]:
-                    try:
-                        row = {
-                            "pid": child.pid,
-                            "created": child.create_time(),
-                            "cwd": child.cwd(),
-                            "command": child.cmdline(),
-                        }
-                        identities[(row["pid"], row["created"])] = row
-                    except psutil.NoSuchProcess:
-                        continue
-                    except psutil.AccessDenied:
-                        observation_errors.append(child.pid)
-            except psutil.NoSuchProcess:
+                process.stdin.close()
+            except BrokenPipeError:
                 pass
-            except psutil.AccessDenied:
-                observation_errors.append(process.pid)
+        while process.poll() is None:
+            observe(process)
             time.sleep(0.01)
         code = process.wait()
     receipt = {
+        "requested_command": command,
+        "startup": startup,
+        "startup_verified": startup_verified,
+        "startup_error": str(startup_error) if startup_error else None,
+        "gate_sha256": hashlib.sha256(gate.read_bytes()).hexdigest(),
         "returncode": code,
         "identities": list(identities.values()),
         "observation_errors": observation_errors,
@@ -226,7 +293,30 @@ def invoke(tmp_path, *extra, output="validated.json"):
         assert not (
             psutil.pid_exists(pid) and psutil.Process(pid).create_time() == created
         )
+    if startup_error is not None:
+        raise startup_error
+    assert startup_verified, receipt
     return code, stdout.read_text(encoding="utf-8"), stderr.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("invalid", [False, True])
+def test_startup_gate_records_identity_before_delayed_first_observation(
+    tmp_path, invalid
+):
+    workspace(tmp_path)
+    extra = ("--generated-invalid-option",) if invalid else ()
+    code, stdout, _ = invoke(tmp_path, *extra, startup_delay=0.1)
+    assert code == (2 if invalid else 0)
+    assert (stdout == "") is invalid
+    receipt = json.loads((tmp_path / "cli-runs/run-000/cli-process.json").read_bytes())
+    assert receipt["startup_verified"] is True
+    assert receipt["startup_error"] is None
+    assert receipt["requested_command"][1] == str(SCRIPT)
+    assert any(
+        row["pid"] == receipt["startup"]["pid"]
+        and row["created"] == receipt["startup"]["created"]
+        for row in receipt["identities"]
+    )
 
 
 def test_actual_cli_preserves_native_denominators_unknowns_and_private_documents(

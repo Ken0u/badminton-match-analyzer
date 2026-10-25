@@ -182,3 +182,36 @@ separately in [#273](https://github.com/Ken0u/badminton-match-analyzer/issues/27
 Exact PR/main checks, actual hosted new-case receipts and candidate delivery
 remain required; their checkpoints belong on #271. These generated software
 checks do not establish full-match annotation accuracy.
+
+### Inherited CLI process-observation race
+
+After #270 advanced main, #271 normally merged its source without changing any
+of the three executable browser-test hashes. Combined local verification passed
+4,143 Python tests (four skips, 429.55 seconds). Exact-head run `40167994787`
+passed the actual default browser matrix and its new canvas case; downloaded
+receipts independently verify all 40 groups, consumed helper hashes and complete
+fixture cleanup. The revision artifact's tested tree exactly matches the local
+refreshed tree; installed-wheel HTTP verifies five assets, three routes,
+authentication and owned-server exit.
+
+That run's macOS native job failed in the inherited generated CLI test helper:
+a rejection returned code 2 before the polling loop captured any process
+identity. It retained the intended rejection but failed the strict nonempty
+identity assertion (one failed, 4,115 passed, 28 skipped). Logs and its actual
+XML artifact remain under `.cache/goal-01a17154/mac271-failure*`. No retry hides
+that failure. A committed routine path extension adds only
+`tests/test_rally_review_contract_cli.py`; acceptance, resources, runtime and
+scientific semantics remain unchanged. Its frozen specification is recorded on
+the owning issue and in coordination.
+
+The generated interpreter now publishes a nonce-bound startup receipt and waits
+on stdin while the parent independently observes its actual PID, creation time,
+cwd and complete command through the spawned process tree. Only after matching
+that identity does the parent release it to run the unchanged CLI script with
+the original argv, script import path and environment. Closing the pipe on a
+startup error or parent exit releases the wait. Process observations, original
+requested command, startup verification and gate-source hash are retained.
+Nonempty identities, observation-error rejection and post-exit lifetime checks
+remain mandatory. Two generated regressions delay the first parent observation
+for successful and invalid-argument CLI exits. All 39 focused CLI cases pass;
+full final-source and hosted native verification remain recorded on #271.
