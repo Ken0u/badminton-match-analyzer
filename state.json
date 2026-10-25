@@ -1429,6 +1429,15 @@
       "task_id": "281",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint290-tests-v1": {
+      "actor": "dootz1",
+      "at": 1792925324,
+      "epoch": 1,
+      "fingerprint": "ac45bbf95ddaf42404595b2ca9fe3447d2ead1abaa56b800f17a469bf74ac4ff",
+      "status": "running",
+      "task_id": "290",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
@@ -23724,12 +23733,27 @@
       }
     },
     "290": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/goal-01a17154/tests290-red.log",
+          ".cache/goal-01a17154/tests290-red-valid.log",
+          ".cache/goal-01a17154/tests290-green.log",
+          ".cache/goal-01a17154/tests290-focused.log",
+          ".cache/goal-01a17154/comparison290.json",
+          ".cache/goal-01a17154/tested290-before.json"
+        ],
+        "branch": "codex/issue-290-investigate-and-if-reproduced-with-gener",
+        "head": "4cb27902f80d4b51e728bd55faf977667523cdf9",
+        "remaining": "Full/static/text/process/source verification, final report/4filecommit/PRexactCI/controller merge/main/complete candidate audits. Preserve root/environments/research/otherhost288 and pending279. No originalscientific/modeloperations; scientificreferences0/2,eligibilityfalse.",
+        "summary": "Frozen39generated additions: valid baseline26fail/66pass; all original92cases now pass unchanged. Two additional actualnative WAV/silentMP4 postclose controls pass. Focused216pass. Minimal final source revalidation outside decoder fallback preserves unexpected original I/O errors, source removal/concurrentread errors, stable missing/corrupt behavior and original actualAPI perception/prediction/nonempty savedrevisions. Initial setup1pass/91errors retained separately. Starting fullsuite with frozen hashes, fresh short ignored output and actual wrapper/worker identity monitor."
+      },
+      "checkpoint_at": 1792925324,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "4cb27902f80d4b51e728bd55faf977667523cdf9",
         "branch": "codex/issue-290-investigate-and-if-reproduced-with-gener",
         "epoch": 1,
-        "expires_at": 1792935586,
+        "expires_at": 1792936124,
         "granted_at": 1792924786,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
