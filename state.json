@@ -547,6 +547,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "contact258-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792893404,
+      "epoch": 1,
+      "fingerprint": "c259fda68ddd5c2539ef65974ef5be5d76d25cde9483226b79c33e684f9f1530",
+      "status": "running",
+      "task_id": "258",
+      "verb": "checkpoint"
+    },
     "contact258-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792893261,
@@ -20482,12 +20491,20 @@
       }
     },
     "258": {
+      "checkpoint": {
+        "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
+        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/258#issuecomment-6392190889",
+        "head_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
+        "remaining": "Combined camera-context domain review, focused/full verification, controller integration and independent full public delivery.",
+        "summary": "Reproduced current-main false cross-camera contact and recognition credit using generated frames19/20 across cut20. Task-owned disjoint contact evaluator/tests and recognition evaluator/tests are underway; parent owns API/CLI regressions/docs/verification/publication. No scientific image or label accessed, no inference/dependency/model/policy changes. Root edits and PROGRESS remain preserved."
+      },
+      "checkpoint_at": 1792893404,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
         "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
         "epoch": 1,
-        "expires_at": 1792904061,
+        "expires_at": 1792904204,
         "granted_at": 1792893261,
         "host_id": "MSI",
         "session_id": "9b465dc1a2ba4999bd038162102f230c",
