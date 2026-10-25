@@ -1388,6 +1388,26 @@
       "status": "idle",
       "verb": "next"
     },
+    "goal-01a17154-next-import281-v1": {
+      "actor": "dootz1",
+      "at": 1792915764,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
+        "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
+        "epoch": 1,
+        "expires_at": 1792926564,
+        "granted_at": 1792915764,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "c7e6a51f45c9fe7fe60bb9145760b9c073c591b82f2439bb0dfbcc9f2988b10b"
+      },
+      "epoch": 1,
+      "fingerprint": "29bc6d06f14592c8f2fcc078af0a7f39984d1ba7ed02f2b337cf2d4f8e6a8c74",
+      "status": "granted",
+      "task_id": "281",
+      "verb": "next"
+    },
     "goal-01a17154-next-postsubmit-v1": {
       "actor": "dootz1",
       "reason": "host already owns work in this lane",
@@ -8898,6 +8918,14 @@
       "fingerprint": "ac629b2746ced9a85ad617ff689b8b470a9de7ee5c938a8a1b0fcf90592eb35b",
       "status": "needs_human",
       "task_id": "279",
+      "verb": "plan"
+    },
+    "spec-281-eaf8f58c0e7e58ab9c19d140c277ef502cedca0314a606d73b6f5c8e476fe026": {
+      "actor": "dootz1",
+      "at": 1792915764,
+      "fingerprint": "aa3461005fb360cf45b2acf492e030d5586de8aefcfdc10a99a0b56e760af320",
+      "status": "ready",
+      "task_id": "281",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -22703,6 +22731,67 @@
       },
       "spec_hash": "399ceab75b9098cdd4b02468917b304609813b0f1abbd2434415c8640432b086",
       "status": "needs_human"
+    },
+    "281": {
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
+        "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
+        "epoch": 1,
+        "expires_at": 1792926564,
+        "granted_at": 1792915764,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "c7e6a51f45c9fe7fe60bb9145760b9c073c591b82f2439bb0dfbcc9f2988b10b"
+      },
+      "epoch": 1,
+      "planned_at": 1792915764,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Audit current source, import history including103/173 and related media/cache integrity repairs, all open PRs and authoritative reservations. Preserve completed273/277 and other-host278/280, the separately gated279 workflow proposal, root edits, all worktrees/environments/research/source/annotations/predictions and deprecated PROGRESS. Obtain a committed separate code-only grant in an isolated granted branch before executable reproduction or editing. No original scientific input or image is accessed.",
+          "Current main e48cbd9beb806b6fa95f85fe42df02d499277c06 hashes a source before inspect_video opens/decodes it and publishes metadata/timestamps/poster/registration afterward without a final byte check. Treat this as a code observation, not an already-proven runtime defect. First retain generated actual-media reproduction for a persistent source replacement/change between the hash and decoder and/or during decoded progress. Record source bytes/digests, decoded frame/PTS observations, returned registration and actual downstream source-validation result. Use only disposable tiny generated media and Store; no network, original app Store, research input or inference. Preserve negative results and do not invent a bug or expand the task if not reproduced.",
+          "If confirmed, make the smallest repair within ingest.py that rejects observable source changes during hashing/decoding before publishing the resulting native timestamps, poster/sheet, metadata or Store registration. Reuse existing unchanged stable-read/file-digest guards where appropriate; preserve source-validation error semantics and original initiating failures. Do not weaken cache invalidation, fabricate a new source identity for mixed input, truncate input or silently accept unavailable evidence. Source mutation after a validated import remains subject to existing downstream checks; do not claim universal protection against unobservable or adversarial hidden writes.",
+          "Keep unchanged imports, identical duplicate imports and mode-conflict behavior correct, including native PTS/origin/VFR/end duration/orientation/dimensions, content-derived identity, upload/YouTube source provenance, saved manual annotations/revisions and original predictions. A failed changed-source reimport must not replace earlier valid registered metadata/timestamps/poster or saved truth. Keep existing whole-source decoding and sampling behavior; no source substitution, new dependency, schema/API/default/model/decoder logging or signal-authority change.",
+          "Add meaningful generated positive/negative tests covering actual valid source changes before/during decode, stable source control, unchanged duplicate/reimport provenance, original digest-read error propagation, changed source with unchanged/restored size/mtime when feasible and explicit platform limits. Exercise actual disposable Store/API import job failure/completion and existing downstream source validation without external YouTube calls. Preserve failure evidence and exact selected denominators; do not relabel stubs as real external-service verification. If strict safety requires changing a reserved helper/API/storage area, request a justified extension first; do not edit it under this four-file grant.",
+          "Run focused source-import/orientation/playback/cache/API checks and required full Python/Ruff/format/pip/repository UTF8/LF/JSON/local-link/diff checks in the existing3.10venv with pinned root/data and fresh disposable output. Preserve executable/test source hashes and independently observed original/worker terminal test lifetimes. Respect native FFmpeg logging restoration and initialize torchvision before threaded PyAV decoding as required; no GPU/inference/research Store job or undeclared install.",
+          "Document concrete generated before/after evidence, unchanged-source controls and material race/observability limits in the focused report, preserving historical counts and failures. Publish only four granted files through focused PR, exact PR/main CI, controller integration and independently audited complete public candidate/package/source/frontend/lock/both-image delivery including45 unchanged public protocol manifests. No manual main push/merge, raw coordination writes or workflow retry/cancel/wake. A negative investigation may publish only its accurate report, with no manufactured implementation change.",
+          "Bound work to4h from fresh grant,512MiB new retained output and three diagnosed repair rounds. No source image/label/prediction/holdout access, scientific assessor sessions, image payload, training/inference/model promotion, deployment, auth/policy/workflow/dependency changes, paid services or PROGRESS read/update. Complete scientific references remain0/2 and all four eligibility flags false. Import integrity/software checks establish no complete-match annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "273"
+        ],
+        "exclusions": [
+          "No original scientific source/image/label/prediction/holdout access, inference/training/model/default/schema/API/auth/storage/cache-helper/FFmpeg-runtime/workflow/policy/dependency change, deployment, paid service, manual merge or PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Investigate and, when reproduced with generated inputs, reject a source that changes during import hashing/decoding before publishing inconsistent source identity, native timestamps or metadata.",
+        "paths": [
+          "backend/badminton/ingest.py",
+          "tests/test_import_source_stability.py",
+          "tests/test_import_api.py",
+          "docs/IMPORT_SOURCE_STABILITY_REPORT.md"
+        ],
+        "priority": 40,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated actual-media import/source-consistency reproduction, unchanged-source and reimport truth/provenance controls, disposable actual API/Store consumers and focused/full required checks with source and process receipts.",
+          "Exact PR/main/controller and complete independent public package/source/frontend/lock/both-image delivery, retaining45 unchanged public protocol files and explicit limitations."
+        ]
+      },
+      "spec_hash": "c7e6a51f45c9fe7fe60bb9145760b9c073c591b82f2439bb0dfbcc9f2988b10b",
+      "status": "running"
     },
     "62": {
       "checkpoint": {
