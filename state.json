@@ -945,6 +945,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "exact-frame303-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792950541,
+      "epoch": 1,
+      "fingerprint": "581c951132c79e5323b5e3191b1716328e933563e672e0ca3be401d7651d834d",
+      "status": "running",
+      "task_id": "303",
+      "verb": "checkpoint"
+    },
     "export-poll-plan-v1": {
       "actor": "Ken0u",
       "at": 1792878078,
@@ -24926,12 +24935,19 @@
       }
     },
     "303": {
+      "checkpoint": {
+        "branch": "codex/issue-303-serve-an-exact-frame-review-jpeg-only-af",
+        "head_sha": "e980d1d607806a2b1072fd36d37b3bafafe7a816",
+        "remaining": "Actual full-suite/dependency/repository/diff terminal results, final docs, focused commit/PR/exact submission, exact PR/main CI/controller merge and full independent public delivery.",
+        "summary": "Exact-frame API now fully consumes canonical native range and post-close source validation before JPEG encoding, with actionable409/404 and original decoder/close failure precedence. Fourteen baseline regression failures and12 controls preserved; all216 focused checks pass after repair.26 generated endpoint cases cover omission/PTS/source writes/close/restoredmtime/removal/display/origin/rotation/pixel and saved artifact preservation. Full suite live; lint and format passed. Only four granted paths changed, no scientific source/model/image transfer or accuracy claim. Root dirty deprecatedPROGRESS preserved."
+      },
+      "checkpoint_at": 1792950541,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e980d1d607806a2b1072fd36d37b3bafafe7a816",
         "branch": "codex/issue-303-serve-an-exact-frame-review-jpeg-only-af",
         "epoch": 1,
-        "expires_at": 1792961006,
+        "expires_at": 1792961341,
         "granted_at": 1792950206,
         "host_id": "MSI",
         "session_id": "f9113478d9024d1ab2fb5b17099b0b68",
