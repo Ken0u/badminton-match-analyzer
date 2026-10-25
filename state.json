@@ -365,6 +365,21 @@
       "task_id": "309",
       "verb": "submit"
     },
+    "capacity-next-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792966438,
+      "fingerprint": "243c91507461a514caf9955c6cf01345c6d089af41bf07cf6471592d5eed95b0",
+      "status": "ready",
+      "task_id": "311",
+      "verb": "plan"
+    },
+    "capacity-next-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792966438,
+      "fingerprint": "bd6f8e5bed7c88df64cc933e0cd986809d79878fc8dcd31f61fc25dd288574e7",
+      "status": "ok",
+      "verb": "register"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -9885,6 +9900,14 @@
       "fingerprint": "1f19169ea5f9852542c3a34786e8a705e7cdb5186abbb357153a5f06b2bea183",
       "status": "ready",
       "task_id": "309",
+      "verb": "plan"
+    },
+    "spec-311-3372b30546f918cb61c0199cd710b5486dcb212094d272cd7f7aadd6c851329f": {
+      "actor": "Ken0u",
+      "at": 1792966438,
+      "fingerprint": "766ff6cfc6e3790aa1bb9f61cb72ef82e7819579a140fd90be282ae8b1ca5da8",
+      "status": "ready",
+      "task_id": "311",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -25618,6 +25641,76 @@
         "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b"
       }
     },
+    "311": {
+      "epoch": 0,
+      "planned_at": 1792966438,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Continue approved localization roadmap65 after305/307/309. Audit complete issue/PR/grant history and current processes/Store. Previous305 decoder-only recipe failed its generated test and remains rejected, not rerun or retuned. This is a new separately frozen comparison, not renewal of any old clock. Preserve original edits, deprecated PROGRESS, environments, datasets, annotations, predictions, sources, installed checkpoints and research processes. Obtain genuine fresh original-host GPU/data grant and isolated worktree before edits/generation/model work.",
+          "Freeze exact generator, two training recipes, source/model/protocol/consumer/runtime seals and deadline on the owning issue before native work. Use the same owned procedural rendering distributions as305, copied into an independently versioned generator with namespace synthetic-shuttle-capacity-v1. Exactly128 training/16 validation/16 test independent24-frame groups, fresh SHA-derived seeds disjoint from all305 seeds; no old generated test, original63 holdout or old selected checkpoints opened. No broadcast pixels/crops/labels/textures enter training or selection. Procedural labels are generated coordinates, not expert badminton truth.",
+          "Fix exactly two learning variants before results: decoder trains the same four up_block_3 convolution/predictor tensors; convolution trains all17 convolution weights plus predictor weight/bias (19 tensors). Both keep every BatchNorm affine tensor/statistic frozen and model in eval mode. Both initialize from the unchanged pinned136190877-byte parent checkpoint, same20261025 RNG seed/order, four epochs, batch1, AdamW lr/weight_decay0.0001, gradient norm clip1, float16 CUDA autocast/GradScaler with float32 parameters. Same cyclic8-frame chunks, sigma1.5/support4.5 Gaussian targets, balanced support/complement MSE, negative frames retained. No alternate learning rate/loss/seed/epoch extension or fallback memory recipe.",
+          "Use all16 validation groups/allthree disjoint8-frame chunks each epoch and select each method independently by minimum mean validation loss, earliest ties. Freeze BOTH selected checkpoints/training receipts before ANY new test group generation or prediction. A single synthetic-test stage compares unchanged parent, decoder and convolution on identical fresh16 complete24-frame groups using actual overlapping ensemble and observed component selector at unchanged0.5 threshold and512x288 geometry. Report all three fixed variants, visibility/localization/negative/displaced/component counts and exact full denominators. No winner selection or additional recipe based on test or real diagnostics; any negative, infeasible or incomplete result is valid.",
+          "Then compare all three variants on the same original50 complete target camera/background views/13499 rows, not target crops. Independently reproduce unchanged parent control before either learned real-source inference. Require exact original frame/PTS/camera/physical component/visibility/selection geometry, confidence absolute tolerance0.00001 relative0; omit exactly four declared selector-dependency fields using unchanged physical_observations_v1 and independently validate current dependency context on every row. Legacy protocols retain strict validation. Any mismatch fences candidates/scoring; preserve actual failure evidence. No control substitution, source replacement or changed thresholds.",
+          "Retain all60 familiar cases (25localizable,7supported negatives,28unknown), every unavailable state and overlapping source/difficulty/selection groups. Familiar labels remain diagnostic only and all four eligibility flags false. Seal all three complete raw outputs and terminal provenance on owning issue before sole familiar diagnostic scoring. Preserve tolerance0.005 source diagonal, displacement FP+FN, radial uncertainty bounds and complete missing/negative denominators. No scientific complete-rally reference, original-match test independence, family/side, serve/end or identity accuracy inferred; references remain0/2 and65/62/66/67/71 incomplete.",
+          "Add research-only checkpoint dispatch in shuttle.py with exact capacity study/variant/selection binding, validate parent/protocol/training/checkpoint bytes before native reads and again before output publication. Existing synthetic305 override validation and all application defaults remain unchanged; no arbitrary checkpoint option or installed weights. Keep old generator/experiment code/protocols untouched. New module/runner use immutable clean consumers, exclusive outputs, canonical seals and refuse implicit training/test/scoring repetition or changed source/runtime. Preserve native PTS/orientation/full-view medians/cuts/scenes, initialize torchvision before threaded PyAV and retain FFmpeg restoration.",
+          "Every heavy/native stage requires current genuine GPU/data reservations AND original data/processed Store run_local_job admission. Pin original root/shared data/weights before imports and clear credentials. Revalidate exact PID/creation/cwd/command, queue epoch, shared jobs and durable artifacts before every transition. Record admission/terminal/runtime/source evidence and independently prove prior observed lifetimes absent; timeout/missing observer is not exit. No competing heavy work, unrelated process control, Store substitution or app truth overwrite. Generated tests use disposable pinned roots, never real scientific input/model files.",
+          "Meaningful generated tests cover new namespace/group separation and exact raster/target/negative provenance; loss/tie selection; actual tiny-input TrackNet update with all19 requested tensors eligible and frozen BN byte-identical, contrasted with four-tensor recipe; both-selection-before-test gating and identical test inputs; strict protocol/model/selection tamper rejection before decode; unchanged default and old305 paths, raw control/context/clock provenance, unknown/unavailable accounting, exclusive one-shot outputs and genuine admitted/terminal generated evidence. Run focused/full pytest and required Ruff/format/pip/repository UTF8-LF/JSON/local-link/diff checks with existing environment; fixed executable bytes throughout final tests and native work. Preserve diagnosed failures, request genuine scope expansion before extra paths/resources.",
+          "Exactly nine granted paths, including explicit MANIFEST.in include for the new public protocol; preserve all47 previous public manifests. Final exact source PR/main CI/controller integration plus independent public source/wheel/frontend/lock/all48 protocol manifests and both anonymous image manifests/config/descriptors verification. No manual merge/main push/raw coordination changes, workflow retry/cancel/wake, auth/policy/deployment/dependency/storage/schema/default changes, new downloads/image transfer/assessor, model promotion, paid service or deprecated PROGRESS edits. Bound all work to four hours from fresh grant,4GiB new retained outputs,three diagnosed repair rounds; no silent repeat or denominator reduction at limits."
+        ],
+        "artifacts": {
+          "readiness-audit": "0d3b01c2a3324ddef773fa319723d95686d957fd805b31f917727503eb32a3d6",
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+          "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+          "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+        },
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "141",
+          "305",
+          "307",
+          "309"
+        ],
+        "exclusions": [
+          "No original-source training/tuning or consumed holdout63/old305 test access, old selected checkpoint reuse, source/download/image transfer/assessor, model/default promotion, app/API/UI changes, sensitive automation/auth/deployment/dependency/storage/schema edits, manual merge, paid service or deprecated PROGRESS edits."
+        ],
+        "limits": {
+          "max_output_bytes": 4294967296,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Measure whether convolution-wide synthetic learning improves shuttle localization over the fixed decoder-only learning recipe, using fresh procedural source groups, separately selected checkpoints and unchanged familiar-source diagnostics without model promotion.",
+        "paths": [
+          "backend/badminton/shuttle.py",
+          "backend/badminton/shuttle_capacity.py",
+          "backend/badminton/shuttle_capacity_synthetic.py",
+          "scripts/compare_shuttle_capacity.py",
+          "tests/test_shuttle_capacity.py",
+          "tests/test_shuttle_capacity_synthetic.py",
+          "data/manifests/shuttle_capacity_protocol_v1.json",
+          "docs/SHUTTLE_CAPACITY_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary",
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Prospective fixed fresh procedural groups/two training capacities, both-selection-before-test gate, all three variants reported; real shared GPU/Store admission and exact native control.",
+          "Meaningful generated/focused/full checks, immutable process/source seals, exact PR/main CI/controller integration and independent complete public delivery; no accuracy/promotion claim."
+        ]
+      },
+      "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -29125,6 +29218,26 @@
       "host_id": "MSI",
       "registered_at": 1792933607,
       "session_id": "f17f985d05bf4a7586132fcdbddfcfd2"
+    },
+    "MSI/f415707f271945a68a71ac06d42abc41": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "readiness-audit": "0d3b01c2a3324ddef773fa319723d95686d957fd805b31f917727503eb32a3d6",
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs",
+        "cuda"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792966438,
+      "session_id": "f415707f271945a68a71ac06d42abc41"
     },
     "MSI/f9113478d9024d1ab2fb5b17099b0b68": {
       "actor": "Ken0u",
