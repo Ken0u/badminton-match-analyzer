@@ -10030,6 +10030,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "synthetic305-checkpoint-candidate-v1": {
+      "actor": "Ken0u",
+      "at": 1792956826,
+      "epoch": 1,
+      "fingerprint": "039ec1b8f358b14b45142b0f7718f52d536d461e7e0121cbc8e5266d555bd8ea",
+      "status": "running",
+      "task_id": "305",
+      "verb": "checkpoint"
+    },
     "synthetic305-checkpoint-control-v3": {
       "actor": "Ken0u",
       "at": 1792955460,
@@ -25116,18 +25125,18 @@
     "305": {
       "checkpoint": {
         "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
-        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/305#issuecomment-6401940496",
+        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/305#issuecomment-6402191020",
         "head_sha": "c6bedf822f58433cfb8ffc55728c1d754fb68237",
-        "remaining": "Finish fixed control/candidate/raw stages once; privately audit terminal/source/tensor/preservation receipts and publicly timestamp only raw-output hashes before real scoring; final aggregate report/exact CI/controller/main/full public delivery.",
-        "summary": "Fixed four-epoch synthetic training and one-shot test completed; validation selectedepoch4. Negative generated localization1/282 versus11/282 default,102/102 false observations on negatives for both. Unchanged full-view control live; process/admission identities verified privately. No tuning or promotion."
+        "remaining": "Finish existing candidate/raw-index once; independent terminal/raw seals before sole familiar report; aggregate docs/exact CI/controller/main/full public delivery. Original research deadline unchanged.",
+        "summary": "Full original control passed 50 views/13499 rows with zero differences; original control terminal. Existing candidate chain running with privately verified shared admission. Independent group-lineage audit passed; negative synthetic result preserved. No tuning, restart or promotion."
       },
-      "checkpoint_at": 1792955460,
+      "checkpoint_at": 1792956826,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "80de6792dc0f2a6c5442cc82131856072c891a49",
         "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
         "epoch": 1,
-        "expires_at": 1792966260,
+        "expires_at": 1792967626,
         "granted_at": 1792953762,
         "host_id": "MSI",
         "session_id": "38cb048544ad42769dddcd36b6f75292",
