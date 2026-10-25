@@ -24640,6 +24640,7 @@
         "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
         "spec_hash": "d4d81772a9147155358c5c9560fb81a2cee6da1eb85f70d55aceadcf764aa3a2"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
