@@ -1279,6 +1279,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "goal-01a17154-check284-tests-v1": {
+      "actor": "dootz1",
+      "at": 1792919587,
+      "epoch": 1,
+      "fingerprint": "e22396cda89d416f6c64d807100bc436f269d8c74b3e7843c402069405ddd54d",
+      "status": "running",
+      "task_id": "284",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint266-temp-v1": {
       "actor": "dootz1",
       "at": 1792904733,
@@ -23094,12 +23103,25 @@
       "status": "running"
     },
     "284": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/goal-01a17154/probe284-baseline.json",
+          ".cache/goal-01a17154/probe284-repaired.json",
+          ".cache/goal-01a17154/tests284-red.log",
+          ".cache/goal-01a17154/tests284-green.log"
+        ],
+        "branch": "codex/issue-284-investigate-and-if-reproduced-with-gener",
+        "head": "ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9",
+        "remaining": "Complete broader focused/full/static/dependency/text checks, final report and4file commit/PR, exactCI/controllermain and complete candidate audits.279workflow still pending separate owner decision; no scientific inputs/model operations.",
+        "summary": "Generated baseline frozen:14 direct cases and11 actual disposableAPI jobs; shifted frame/time,duplicate/conflicting rows andtimecollision produce unsupported suggestions.19 regressionfailures/35passes retained; repaired54audio direct/API tests pass. Sparse/partial/VFR/nonzero source controls retained. Only audio_contacts consumer changed; untouched visual/defaultoff/extraction/annotations/source artifacts. Starting monitored fullsuite with pinned root/data and fresh short ignored temp; preserve exact wrapper/worker lifetime and source hashes."
+      },
+      "checkpoint_at": 1792919587,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9",
         "branch": "codex/issue-284-investigate-and-if-reproduced-with-gener",
         "epoch": 1,
-        "expires_at": 1792929966,
+        "expires_at": 1792930387,
         "granted_at": 1792919166,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
