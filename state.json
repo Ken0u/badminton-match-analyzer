@@ -400,6 +400,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "capacity311-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792967048,
+      "epoch": 1,
+      "fingerprint": "7af9bf1dcd18372d7b342c4af4adbc75fba8eda65b601894ce20a95d9c87e7af",
+      "status": "running",
+      "task_id": "311",
+      "verb": "checkpoint"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -25662,12 +25671,19 @@
       }
     },
     "311": {
+      "checkpoint": {
+        "branch": "codex/issue-311-measure-whether-convolution-wide-synthet",
+        "head_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
+        "remaining": "Prospective clean freeze, admitted two training/one synthetic/three native stages, raw seal/report, exact CI/controller/delivery.",
+        "summary": "Implemented the two fixed capacity recipes and separately versioned fresh procedural generator in the nine granted paths. Both validation selections are required before test generation; all three methods share complete test inputs. Added exact study/method/experiment/training/selection/model binding and preserved old305/default dispatch. Initial generated checks found and corrected unknown-recipe validation ordering; stale local harness filename diagnosed before tests ran. Generated checks exercise actual tiny TrackNet updates/frozen BN, genuine Store admission boundaries, native metadata, control mismatch, complete negatives/unknown accounting and one-shot outputs. Full required checks and prospective clean consumer/runtime freeze still precede any native model/media work. No generation/training/inference on research inputs has started. Prior experiment, holdout, app truth, root edit and deprecated PROGRESS preserved; no image transfer. References0/2; accuracy unproven. Remaining: clean consumer commit/push and prospective freeze seal; admitted bounded stages, raw seal before sole diagnostics; full checks/normal controller integration/exact CI/public delivery."
+      },
+      "checkpoint_at": 1792967048,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
         "branch": "codex/issue-311-measure-whether-convolution-wide-synthet",
         "epoch": 1,
-        "expires_at": 1792977431,
+        "expires_at": 1792977848,
         "granted_at": 1792966631,
         "host_id": "MSI",
         "session_id": "f415707f271945a68a71ac06d42abc41",
