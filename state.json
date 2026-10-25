@@ -20150,6 +20150,7 @@
         "session_id": "cc0ce1ab9d664201b48bec7d6108da04",
         "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
