@@ -1256,6 +1256,15 @@
       "task_id": "266",
       "verb": "submit"
     },
+    "goal-01a17154-submit266-v2": {
+      "actor": "dootz1",
+      "at": 1792906154,
+      "epoch": 1,
+      "fingerprint": "ffa5c9a504f47a93b40717ab335ff742e3641e73d17a092e58f52ae36414e547",
+      "status": "review",
+      "task_id": "266",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -21517,10 +21526,10 @@
         ]
       },
       "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
-        "head_sha": "17b98ebc85a37a3e9843fd71f1aad7810b28a479",
+        "base_sha": "7259712d2a2f9b4825845c9e61c9823b7f146d83",
+        "head_sha": "64a3c15297daa8f1f87af9bb9e08bdaf116a82d0",
         "pr_number": 269,
         "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d"
       }
