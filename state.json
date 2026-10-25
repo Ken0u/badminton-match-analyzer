@@ -927,6 +927,21 @@
       "task_id": "248",
       "verb": "next"
     },
+    "export273-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792908909,
+      "fingerprint": "df00130284a54c7fb6db06c570e5ac4865fc237944c2a9f35d92b82da3ffd16a",
+      "status": "ready",
+      "task_id": "273",
+      "verb": "plan"
+    },
+    "export273-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792908909,
+      "fingerprint": "1891944f2883fd494dc713fcf9a9ba5477ab8d4209e6528f44dab8267d69e022",
+      "status": "ok",
+      "verb": "register"
+    },
     "external-merge-126-f2866cae9c1b11ec14594ea8c4ff611fa751375d": {
       "actor": "github-actions[bot]",
       "at": 1792454004,
@@ -1237,6 +1252,15 @@
       "status": "running",
       "task_id": "271",
       "verb": "checkpoint"
+    },
+    "goal-01a17154-extend271-native-v1": {
+      "actor": "dootz1",
+      "at": 1792908909,
+      "epoch": 1,
+      "fingerprint": "58cda4bfc4616a93a077273bef1276f4b597e83beaded599d55f7605e35c1072",
+      "status": "running",
+      "task_id": "271",
+      "verb": "extend-scope"
     },
     "goal-01a17154-extend271-v1": {
       "actor": "dootz1",
@@ -8555,6 +8579,14 @@
       "fingerprint": "039ce517eaf298300a67c28d9e1c06ac21d3bbdaa14e9b6d09faa4dbd1887479",
       "status": "ready",
       "task_id": "271",
+      "verb": "plan"
+    },
+    "spec-273-2a2960f58ae6d704b6b10bfacf7c94739a3cc8b2bb0b2d2b2c246750d55bd364": {
+      "actor": "dootz1",
+      "at": 1792908909,
+      "fingerprint": "9d7535338392969a66035536d372eb6b87c7ab2cd187988554c06bb2ad903f28",
+      "status": "ready",
+      "task_id": "273",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -21933,7 +21965,7 @@
         "granted_at": 1792907229,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
-        "spec_hash": "614d9064e51e05fe333bdf7da1899b63c1b47671264d71331ef3ae3364532c36"
+        "spec_hash": "b2f66a53f42b49a22fc7ab3c561111b588ea30a46b0aa638cf8e3d0adab28a6e"
       },
       "epoch": 1,
       "planned_at": 1792906709,
@@ -21969,7 +22001,8 @@
           "tests/frontend-editor.mjs",
           "tests/frontend-delivery.mjs",
           "tests/shuttle-overlay-context.mjs",
-          "docs/SHUTTLE_OVERLAY_CONTEXT_REPORT.md"
+          "docs/SHUTTLE_OVERLAY_CONTEXT_REPORT.md",
+          "tests/test_rally_review_contract_cli.py"
         ],
         "priority": 45,
         "resources": [],
@@ -21979,8 +22012,61 @@
           "Exact PR/main CI plus explicit new-case artifact inspection and complete public package/both-image delivery; no accuracy claim."
         ]
       },
-      "spec_hash": "614d9064e51e05fe333bdf7da1899b63c1b47671264d71331ef3ae3364532c36",
+      "spec_hash": "b2f66a53f42b49a22fc7ab3c561111b588ea30a46b0aa638cf8e3d0adab28a6e",
       "status": "running"
+    },
+    "273": {
+      "epoch": 0,
+      "planned_at": 1792908909,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Reuse existing trusted collaborator issue273 and related181/187/194/197/198 process-ownership history; audit all history/grants before claiming. Preserve original root edits, deprecated PROGRESS, environments/data/research/annotations/predictions. Obtain a separate committed code-only grant and isolated worktree. Depend on271 completion so its frontend-delivery reservation and original failure/workaround evidence remain untouched.",
+          "The concrete existing bug is frontend-delivery.mjs export admit(): it asserts receipt.pid equals spawn().pid and assigns admission cleanup only after fallible receipt/identity checks. A normal Windows venv launcher legitimately has a distinct worker; failure leaves its real Store job gated until the existing45-second deadline. Reproduce with generated disposable inputs and the existing normal3.10venv launcher; retain actual launcher/worker creation/cwd/command/executable lineage, original failure and eventual Store/process terminal evidence. No original research process/job is started, signalled or repaired.",
+          "Extract a bounded test-only admission helper and reuse existing exported fixtureOwnership/fixtureProcessProbe unchanged. Bind fresh nonce, exact root/cwd/argv, expected virtual/base executables, parent-child lineage and creation times before accepting a direct worker or verified launcher descendant receipt. Never trust PID equality or a receipt PID alone. Reject changed or unrelated receipt identities and do not broaden process discovery or signal permission.",
+          "Register owned startup cleanup immediately after spawn, before any fallible startup await/assertion. Handle spawn errors, missing/malformed/stale/mismatched receipts, early exit and injected startup failure without losing cleanup responsibility or replacing the initiating error. Cooperative release must remain first and bounded; independently verify all recorded owned launcher/worker lifetimes absent. If fallback stop is necessary, use only the existing identity-revalidated fixtureOwnership path, retaining incomplete evidence and refusing authority when identity is unavailable or changed. Concurrent/repeated stops share one cleanup result; an observation timeout alone never proves exit.",
+          "Keep the original real shared Store run_local_job admission,45-second gate/error,20-second startup bound, explicit denied export followed by explicit successful retry, all13 export groups and all other parity/production/library/editor checks. Pin generated root/data before backend config import. Distinguish successful cooperative release and completed Store job from deliberately failed startup, unknown lifetime or failed worker; preserve original receipts/logs. The fixture may only use disposable generated media and Store, never the main application or original research Store.",
+          "Add meaningful generated injected-record and actual-process regressions for direct interpreter and Windows launcher-descendant identity, malformed/wrong nonce/root/lifetime/argv or unrelated receipt, spawn error, failure before receipt acceptance, cooperative release, normal/failed startup and repeated/concurrent cleanup. Exercise normal Windows3.10venv without the271 direct-base __PYVENV_LAUNCHER__ workaround. Keep deterministic unit identity cases separate from actual OS/process evidence and verify original worker/launcher descendants terminal independently; preserve failed attempts. A test-only injection must not weaken production harness validation.",
+          "Run focused Node ownership/admission tests, real generated production delivery/parity/editor/export/library browser suites as appropriate with actual13export groups and complete owned fixture cleanup, all required Python/Ruff/format/pip/repository/UTF8/LF/JSON/local-link/diff checks, and applicable frontend formatting/type/build/stage checks without editing compiled runtime or dependencies. Use existing project Python/portable Node/FFmpeg and preexisting browser/dependencies where available; authorized local loopback access for disposable fixtures only. Retain stable executable/test source hashes and original/worker process exit receipts.",
+          "Publish only four granted test/report paths and credential-free aggregate evidence. Normal focused PR, exact PR/main CI, controller integration and independent complete public package/source/frontend/lock/both-image delivery. Preserve271 tests and report, optional configured review policy and unchanged signal checks. No main push/manual merge/raw coordination write/workflow retry/cancel/wake, policy/auth/workflow/deployment/model/runtime/default/dependency/source-truth change, new paid service or PROGRESS edit.",
+          "Bound new outputs to512MiB and implementation to4h from fresh grant with three diagnosed repair rounds. No original scientific input/label/image access or transfer, inference/training/holdout or model promotion. Scientific references remain0/2 and all four eligibility flags false; portable green verification does not establish badminton annotation accuracy or complete62/66/67/71."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "270",
+          "271"
+        ],
+        "exclusions": [
+          "No application/runtime/shared process-signal implementation, scientific input/label/image/inference/model, dependency/policy/auth/workflow/deployment change, new paid service, manual merge or deprecated PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Repair generated export-admission fixture ownership and failed-startup cleanup on normal Windows virtual-environment launchers without changing application admission or signal authority.",
+        "paths": [
+          "tests/frontend-delivery.mjs",
+          "tests/frontend-admission.mjs",
+          "tests/frontend-admission.test.mjs",
+          "docs/FRONTEND_EXPORT_ADMISSION_REPORT.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated direct/launcher/failed-startup ownership tests, actual Windows normal-venv worker and Store lifecycle proof, unchanged13group export admission denial/retry and production/browser cleanup.",
+          "Required project checks with stable source/process receipts; exact PR/main CI/controller integration and independent complete public delivery."
+        ]
+      },
+      "spec_hash": "d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
@@ -25104,6 +25190,18 @@
       "host_id": "MSI",
       "registered_at": 1792547823,
       "session_id": "07727ebc-b884-496e-87ba-23c262d285a3"
+    },
+    "MSI/0d88562017ab4d47ae7e5e55d460d7cd": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792908909,
+      "session_id": "0d88562017ab4d47ae7e5e55d460d7cd"
     },
     "MSI/16dbb3112d1f4a4cb656dfac512bc201": {
       "actor": "Ken0u",
