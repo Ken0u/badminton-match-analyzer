@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "task": 270,
+  "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda",
+  "purpose": "Generated-tested structural review contract; no image execution or scientific acceptance authority",
+  "contract_sha256": "5cc1ba22ebe9572fbf376b97e144b828e0a5e0f836bf0e47de2b837935e2ae44",
+  "contract": {
+    "schema_version": 1,
+    "kind": "native_rally_review_contract",
+    "document_kind": "native_rally_review",
+    "fields": {
+      "document": [
+        "schema_version",
+        "kind",
+        "contract_sha256",
+        "plan_sha256",
+        "source",
+        "lane",
+        "batch_index",
+        "previous_document_sha256",
+        "observations",
+        "actors",
+        "events",
+        "boundaries",
+        "event_correspondence",
+        "actor_correspondence",
+        "notes"
+      ],
+      "source": [
+        "source_id",
+        "source_sha256",
+        "clock_sha256"
+      ],
+      "observation": [
+        "frame",
+        "native",
+        "camera",
+        "camera_view",
+        "scene",
+        "contact",
+        "actor_ids",
+        "notes"
+      ],
+      "native": [
+        "frame",
+        "pts",
+        "time_base",
+        "time_s",
+        "rotation",
+        "source_size",
+        "display_size",
+        "orientation_error",
+        "corrupt",
+        "image",
+        "available"
+      ],
+      "native_image": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "actor": [
+        "actor_id",
+        "visibility",
+        "evidence_frames",
+        "notes"
+      ],
+      "event": [
+        "event_id",
+        "kind",
+        "start_frame",
+        "end_frame",
+        "evidence_frames",
+        "support",
+        "actor_id",
+        "family",
+        "side",
+        "terminal_basis",
+        "notes"
+      ],
+      "boundaries": [
+        "opening",
+        "ending",
+        "notes"
+      ],
+      "event_correspondence": [
+        "current_event_id",
+        "previous_event_id",
+        "relation",
+        "evidence_frames",
+        "notes"
+      ],
+      "actor_correspondence": [
+        "current_actor_id",
+        "previous_actor_id",
+        "relation",
+        "evidence_frames",
+        "notes"
+      ]
+    },
+    "enums": {
+      "lane": [
+        "independent_a",
+        "independent_b",
+        "source_adjudication"
+      ],
+      "camera": [
+        "unchanged",
+        "change",
+        "unknown"
+      ],
+      "scene": [
+        "live",
+        "replay",
+        "non_play",
+        "unknown"
+      ],
+      "contact": [
+        "observed",
+        "possible",
+        "not_observed",
+        "unknown"
+      ],
+      "visibility": [
+        "visible",
+        "hidden",
+        "unknown"
+      ],
+      "event_kind": [
+        "serve",
+        "shot",
+        "rally_end",
+        "unresolved_contact"
+      ],
+      "support": [
+        "supported",
+        "uncertain",
+        "unknown"
+      ],
+      "family": [
+        "clear",
+        "lift",
+        "net",
+        "drop",
+        "smash",
+        "drive",
+        "unknown"
+      ],
+      "side": [
+        "forehand",
+        "backhand",
+        "unknown"
+      ],
+      "terminal_basis": [
+        "observed_terminal",
+        "stopped_play",
+        "last_stroke",
+        "shuttle_absence",
+        "unknown"
+      ],
+      "boundary": [
+        "observed",
+        "censored",
+        "unknown"
+      ],
+      "event_relation": [
+        "same",
+        "distinct",
+        "unresolved"
+      ],
+      "actor_relation": [
+        "supported",
+        "distinct",
+        "unresolved"
+      ]
+    },
+    "rules": {
+      "json": "Original immutable UTF8 bytes; duplicate keys, nonfinite numbers, unknown fields and boolean ordinals rejected.",
+      "plan": "Reconstruct every structural field with the unchanged original planner. Canonical packet/gallery SHA256 values are bindings only, not proof of original input provenance.",
+      "bundle": "A source-plan bundle requires explicit source_id selection. Documents bind SHA256 of the entire original supplied plan bytes.",
+      "identity": "Exact contract hash, raw plan hash, source and clock, lane and zero-based batch index. Previous hash is null only for batch zero; otherwise SHA256 of immediately preceding own-stream original bytes.",
+      "observations": "One ordered observation for each scheduled native frame including overlap. Native is the exact full plan frame object. Camera_view is a document-local nonempty view ID, or null only with unknown camera evidence. Equal view strings across documents never establish view correspondence. Gallery context supplies no observations or truth.",
+      "local_ids": "Nonempty bounded document-local IDs, unique within their own actor/event namespace. Equal strings across documents never imply correspondence.",
+      "evidence": "Evidence frame arrays are strictly increasing unique integers in the document batch. Visible actors need evidence; every actor evidence frame must cite that actor in its observation. Hidden/unknown actors may have empty evidence.",
+      "intervals": "Inclusive native intervals lie within the document batch. Evidence lies within interval. Both endpoints may be null only with no evidence and uncertain/unknown support; supported events need evidence. No exact physical timing is inferred.",
+      "contacts": "Every observed/possible contact observation has a serve/shot/unresolved_contact event citing that evidence frame. Unknown/not_observed never proves physical absence. Repeated mentions remain separate variants.",
+      "terminal": "Only rally_end may have a nonunknown terminal_basis; rally_end family/side remain unknown. Stopped play, last stroke and shuttle absence remain limitations and never prove exact ending. Observed opening/ending needs a supported serve/rally_end respectively, with observed_terminal for ending. Censoring and unknown boundaries remain explicit.",
+      "links": "Only immediate-predecessor local IDs may be cited. Supplied evidence is shared overlap present in both definitions. Same-event/supported-actor requires nonempty shared evidence and one-to-one noncontradictory mapping; supported actors must both be visible. Distinct/unresolved may be unsupported claims with empty evidence and explicit uncertainty notes. Missing, unresolved or conflicting evidence is retained as unresolved diagnostics. Links never merge events or actors.",
+      "prefix": "Only chronological prefixes accepted. Full expected native denominator and all unchanged parsed document variants and raw hashes retained. Private coverage records selected source/lane/raw plan hash, expected/observed/missing native ordinals and per-frame observation counts including zero counts. Unavailable plan accepts zero documents and retains reason and denominator.",
+      "notes": "Every notes field is explicit text of at most 8192 characters; empty string is permitted.",
+      "acceptance": "Structural coverage only. Scientific complete_references=0; all four eligibility flags false; scientific_acceptance_changed=false; execution_authorized=false. No classifier scores or scientific acceptance."
+    }
+  },
+  "io_limits": {
+    "plan_bytes": 16777216,
+    "manifest_bytes": 1048576,
+    "document_bytes": 2097152,
+    "total_input_bytes": 134217728,
+    "documents": 4096
+  },
+  "actual_new_scientific_sessions": 0,
+  "actual_new_image_bytes": 0,
+  "scientific_execution_authorized": false
+}
