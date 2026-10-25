@@ -8,6 +8,7 @@ This module performs no inference and never changes its inputs.
 
 import itertools
 import math
+import re
 from collections import deque
 
 from .evaluation import _contact_score, _frame_bounds
@@ -50,6 +51,12 @@ def _range(item, count, name):
 
 
 def _source_clock(video, times):
+    if not isinstance(video.get("id"), str) or not video["id"]:
+        raise ValueError("Source video ID must be a nonempty string")
+    if not isinstance(video.get("sha256"), str) or not re.fullmatch(
+        r"[0-9a-f]{64}", video["sha256"]
+    ):
+        raise ValueError("Source video hash must be a SHA-256 hexadecimal digest")
     count = _integer(video.get("frame_count"), "Source frame count", 1)
     if not isinstance(times, (list, tuple)) or len(times) != count:
         raise ValueError("Native source timestamps must cover every source frame")

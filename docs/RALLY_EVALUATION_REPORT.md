@@ -75,14 +75,22 @@ cuts/gaps, duplicate IDs and matching counterexamples. API/CLI checks cover
 saved coverage/history/export, completed-job validation, source mutation,
 tolerance, run lineage and mixed evaluation requests. Frontend and browser
 checks exercise persistence, report display/download and stale-response guards.
-Local verification passes **3,226 Python tests**, with four optional skips,
-including **100 pure boundary evaluator tests** and **25 API/CLI tests**.
+Final local verification passes **3,240 Python tests**, with four optional skips,
+including **114 pure boundary evaluator tests** and **25 API/CLI tests**. The
+initial 3,226-test pass remains preserved; the final suite includes 14 added
+source-metadata cases.
 All **180 frontend tests** and **17 generated editor browser groups** pass.
 Type/contract/build/stage, Ruff lint/format, frontend formatting, dependency,
 repository UTF-8/LF/JSON/local-link and whitespace checks pass. An intermediate
 formatting failure was corrected; the failed receipt is preserved. Browser
 cleanup is complete, and recorded original fixture lifetimes are independently
 absent. Existing pinned dependencies and the cached browser were reused.
+
+Entry-point review reproduced a missing shared video ID raising `KeyError` and
+an identical numeric source hash being accepted. The pure evaluator now requires
+a nonempty video ID and a valid SHA-256 digest before comparing artifact lineage.
+The original submitted revision and generated reproduction remain preserved;
+the PR was made draft while this correction received full verification.
 
 Exact PR/main CI and public delivery receipts belong on the owning issue after
 controller integration. Local software checks alone do not establish successful

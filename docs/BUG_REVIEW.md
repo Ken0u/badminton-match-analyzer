@@ -7,8 +7,12 @@ saved proposals to source clocks and current context, keeps gaps/cuts separate,
 preserves exclusions and distinguishes representative-time scores from possible
 interval support. The editor includes rally inputs in report ownership and
 clears obsolete results/downloads without another evaluation request. Generated
-verification passes 3,226 Python tests (four optional skips), 180 frontend tests
-and all 17 generated editor browser groups, with complete fixture cleanup.
+verification includes 114 pure evaluator and 25 API/CLI cases; final full
+verification passed 3,240 Python tests (four optional skips), 180 frontend tests
+and all 17 generated editor browser groups. Entry-point review also reproduced
+an absent shared video ID escaping as a key error and an identical numeric hash
+being accepted; explicit identity/digest validation and 14 regressions correct
+both cases. Final verification includes these added cases, with complete cleanup.
 Type/contract/build/stage, Ruff, formatting, dependencies and repository checks
 pass. Scientific limits are recorded in the report; no new source assessment,
 inference or model promotion is involved.

@@ -65,6 +65,25 @@ def inputs(events=None, candidates=None, windows=None, mode="singles"):
     return video, annotations, run, [i * 0.04 for i in range(40)]
 
 
+@pytest.mark.parametrize("value", [None, "", False, 5, [], {}])
+def test_invalid_shared_source_identity_is_rejected(value):
+    args = inputs(windows=[window()])
+    args[0]["id"] = args[2]["video_id"] = value
+    if value is None:
+        del args[0]["id"]
+        del args[2]["video_id"]
+    with pytest.raises(ValueError, match="Source video ID"):
+        evaluate_rallies(*args)
+
+
+@pytest.mark.parametrize("value", [None, "", True, 1, [], {}, "a" * 63, "g" * 64])
+def test_invalid_shared_source_hash_is_rejected(value):
+    args = inputs(windows=[window()])
+    args[0]["sha256"] = args[2]["video_sha256"] = value
+    with pytest.raises(ValueError, match="Source video hash"):
+        evaluate_rallies(*args)
+
+
 @pytest.mark.parametrize("mode", ["singles", "doubles"])
 @pytest.mark.parametrize("kind", ["serve", "rally_end"])
 def test_exact_positive_negative_coverage_and_input_immutability(mode, kind):
