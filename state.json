@@ -2245,6 +2245,14 @@
       "task_id": "266",
       "verb": "invalidate-review"
     },
+    "invalidate-275-7aa640cfc2b70b4311f7add500db580b5ea275b9-d73911463a1ad15ca9be21d5dbfa255df3f3790f": {
+      "actor": "github-actions[bot]",
+      "at": 1792911955,
+      "fingerprint": "423ef60cffeda99bbdc63ee616db71e5cfec1dddb4d6452d3a6d1941fb073f86",
+      "status": "running",
+      "task_id": "275",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -22297,6 +22305,7 @@
       "planned_at": 1792909462,
       "planned_by": "Ken0u",
       "pr_number": 276,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Repair actual public source0e5a17c278e050e41c7993677c7cd8a43ca957eb candidate40167963093: source archive SHA154bcffe6eaff7745f3569da00f4b11fbd3ee46b624dd303c8a1b40d6b308733 omits45/45 tracked data/manifests JSON files while shipping tests that read them, including rally_review_contract_v1.json. Preserve source inventory evidence and historical successful package checks; those checks verified backend parity but did not require these public files.",
@@ -22343,7 +22352,7 @@
         ]
       },
       "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
         "head_sha": "5322ec23a3b31d54bca0313d193e7027653e28bc",
