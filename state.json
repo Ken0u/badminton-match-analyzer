@@ -7411,6 +7411,15 @@
       "task_id": "260",
       "verb": "checkpoint"
     },
+    "source260-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792896640,
+      "epoch": 1,
+      "fingerprint": "26c18bf935b880e4c035d39338eaf699f9b7cb8ffcc48060fae1c5ed52d2c4f7",
+      "status": "running",
+      "task_id": "260",
+      "verb": "checkpoint"
+    },
     "source260-next-v1": {
       "actor": "Ken0u",
       "at": 1792896005,
@@ -7430,6 +7439,15 @@
       "status": "granted",
       "task_id": "260",
       "verb": "next"
+    },
+    "source260-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792896681,
+      "epoch": 1,
+      "fingerprint": "20b4753d3345a51fbf04f8b0cc602e99d44de7d72fced5898ef58d2212ba700f",
+      "status": "review",
+      "task_id": "260",
+      "verb": "submit"
     },
     "spec-101-1b123aac32c7857b134582e83b0e759854f5af64e686e1386895b30b2d1fa00d": {
       "actor": "Ken0u",
@@ -20688,23 +20706,19 @@
     "260": {
       "checkpoint": {
         "branch": "codex/issue-260-reject-explicit-conflicting-or-malformed",
-        "evidence": [
-          "Generated8case baseline API/CLI returned F1=1 for conflicting/null hashes in contact and shuttle artifacts; saved inputs unchanged. .cache/evaluation-source-hash-repro-v2/results.json.",
-          "Initial focused fixture failed20setups from omitted explicit unknown family/side; corrected fixture passes328. Initial all-v1 stopped at formatting before pytest; formatting corrected, all-v2 now live with recorded process identity. All attempts preserved.",
-          "Only5granted paths; no real scientific data, images, inference, models, dependencies or workflow changes. Root PROGRESS original hash preserved."
-        ],
-        "head_sha": "1fa657a0069e3cfae7963eca04827fbee631b17b",
-        "remaining": "Finish full verification; audit final-source/terminal lifetimes and scope; publish exact source PR; normal controller integration, exact PR/main CI and independently verified complete public delivery.",
-        "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a",
-        "stage": "Source-hash validation and additive legacy provenance implemented in shared evaluator. 328 focused tests pass; full final-source Python run in progress after lint/format pass."
+        "evidence_sha256": "0fc478c0cacd5292b88f9fe0ba1d7cb699faf7076a05f68c7b79fa247e823765",
+        "head_sha": "4845bd216ddbc99634fa17d9425965d7e9faf7ab",
+        "pr_number": 261,
+        "remaining": "Exact PR/main CI, controller integration and independently verified complete public delivery.",
+        "summary": "Explicit conflicting/malformed source hashes now fail before scoring; legacy omission remains transparent as unavailable. 328 focused / 3393 full Python tests pass, four optional skips, required checks pass. Local receipt SHA256 0fc478c0cacd5292b88f9fe0ba1d7cb699faf7076a05f68c7b79fa247e823765."
       },
-      "checkpoint_at": 1792896234,
+      "checkpoint_at": 1792896640,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "1fa657a0069e3cfae7963eca04827fbee631b17b",
         "branch": "codex/issue-260-reject-explicit-conflicting-or-malformed",
         "epoch": 1,
-        "expires_at": 1792907034,
+        "expires_at": 1792907440,
         "granted_at": 1792896005,
         "host_id": "MSI",
         "session_id": "6bd9e2e585fe4cd79d59b2d1bada859e",
@@ -20713,6 +20727,7 @@
       "epoch": 1,
       "planned_at": 1792895827,
       "planned_by": "Ken0u",
+      "pr_number": 261,
       "spec": {
         "acceptance": [
           "Audit all issue/PR history and authoritative grants, prioritize this generated reproduced bug, and preserve root edits, environments, datasets, research, annotations, predictions and deprecated PROGRESS.md. Depend on fully delivered258, then obtain a fresh committed code-only grant and isolated worktree before production edits.",
@@ -20758,7 +20773,13 @@
         ]
       },
       "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "1fa657a0069e3cfae7963eca04827fbee631b17b",
+        "head_sha": "4845bd216ddbc99634fa17d9425965d7e9faf7ab",
+        "pr_number": 261,
+        "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a"
+      }
     },
     "62": {
       "checkpoint": {
