@@ -9,6 +9,15 @@
       "task_id": "254",
       "verb": "plan"
     },
+    "actor254-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792887902,
+      "epoch": 1,
+      "fingerprint": "b8179bbcfc105a99593b9d648a542b9530925d89724ddfb3cb9badfee4708a1e",
+      "status": "running",
+      "task_id": "254",
+      "verb": "checkpoint"
+    },
     "actor254-register-v1": {
       "actor": "Ken0u",
       "at": 1792887545,
@@ -20079,12 +20088,20 @@
       }
     },
     "254": {
+      "checkpoint": {
+        "branch": "codex/issue-254-clear-provisional-linked-actor-hints-whe",
+        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/254#issuecomment-6391388638",
+        "head_sha": "98056b1614e3f58f7c381c2f0b129710a401b444",
+        "remaining": "Local verification, PR/controller integration, exact-source CI and independent public delivery.",
+        "summary": "Preserved two generated baseline failures on exact-main controller bytes: replacement analyses with absent/empty identities retain Actor A for a reused player run. Granted isolated actor254-e1 implementation now derives actors only from the current identity result; generated missing/stale/current/race checks are added. No scientific input, model inference or image transfer. Existing identical locked dependencies reused without installation; root edits and PROGRESS.md preserved."
+      },
+      "checkpoint_at": 1792887902,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "98056b1614e3f58f7c381c2f0b129710a401b444",
         "branch": "codex/issue-254-clear-provisional-linked-actor-hints-whe",
         "epoch": 1,
-        "expires_at": 1792898527,
+        "expires_at": 1792898702,
         "granted_at": 1792887727,
         "host_id": "MSI",
         "session_id": "cc0ce1ab9d664201b48bec7d6108da04",
