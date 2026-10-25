@@ -245,7 +245,9 @@ export function EditorApp() {
   const [auto, setAuto] = useState(true),
     [audio, setAudio] = useState(false),
     [recognize, setRecognize] = useState(true),
-    [complete, setComplete] = useState(false);
+    [complete, setComplete] = useState(false),
+    [servesComplete, setServesComplete] = useState(false),
+    [rallyEndsComplete, setRallyEndsComplete] = useState(false);
   const [part, setPart] = useState(0);
   const renders = useRef(0);
   renders.current++;
@@ -297,6 +299,8 @@ export function EditorApp() {
     setLabeling(false);
     setSceneId(null);
     setComplete(false);
+    setServesComplete(false);
+    setRallyEndsComplete(false);
     const start = state.video.review_start_frame,
       cal = doc.calibrations.find(
         (c) => c.start_frame <= start && start < c.end_frame,
@@ -758,6 +762,8 @@ export function EditorApp() {
             id: existing?.id ?? crypto.randomUUID(),
             ...range,
             contacts_complete: complete,
+            serves_complete: servesComplete,
+            rally_ends_complete: rallyEndsComplete,
             scene: fields.value["review-scene"] as NonNullable<
               Schema["ReviewWindow"]["scene"]
             >,
@@ -1647,8 +1653,10 @@ export function EditorApp() {
                 </Panel>
                 <Panel id="review-panel" title="Reviewed clips & accuracy">
                   <p>
-                    Review every contact and native source frame. Mark complete
-                    only after inspecting the whole clip.
+                    Inspect the whole clip using native source frames. Declare
+                    contact, serve and rally-ending coverage separately, only
+                    after labeling every event of that kind, including missed
+                    proposals.
                   </p>
                   <div className="row">
                     <Field
@@ -1677,6 +1685,29 @@ export function EditorApp() {
                     />
                     Every contact in this clip is labeled
                   </label>
+                  <label>
+                    <input
+                      id="review-serves-complete"
+                      type="checkbox"
+                      checked={servesComplete}
+                      onChange={(e) => setServesComplete(e.target.checked)}
+                    />
+                    Every serve in this clip is labeled
+                  </label>
+                  <label>
+                    <input
+                      id="review-rally-ends-complete"
+                      type="checkbox"
+                      checked={rallyEndsComplete}
+                      onChange={(e) => setRallyEndsComplete(e.target.checked)}
+                    />
+                    Every rally ending in this clip is labeled
+                  </label>
+                  <small>
+                    A complete contact review does not establish complete serve
+                    or ending labels. Keep uncertain timing bounds; a clip edge
+                    or last stroke alone does not establish a boundary.
+                  </small>
                   <Field
                     id="review-notes"
                     label="Review notes"
@@ -1700,6 +1731,10 @@ export function EditorApp() {
                               "review-notes": w.notes ?? "",
                             }));
                             setComplete(w.contacts_complete ?? false);
+                            setServesComplete(w.serves_complete ?? false);
+                            setRallyEndsComplete(
+                              w.rally_ends_complete ?? false,
+                            );
                             seek(w.start_frame);
                           }}
                         >
@@ -1709,6 +1744,8 @@ export function EditorApp() {
                             {w.contacts_complete
                               ? "all contacts labeled"
                               : "incomplete"}
+                            {w.serves_complete && " · all serves labeled"}
+                            {w.rally_ends_complete && " · all endings labeled"}
                           </small>
                         </button>
                         <button
@@ -2211,6 +2248,101 @@ function Suggestions({
     </section>
   );
 }
+function BoundaryEvaluation({
+  kind,
+  result,
+}: {
+  kind: "serve" | "rally_end";
+  result: ObjectData;
+}) {
+  const label = kind === "serve" ? "Serve" : "Rally-ending",
+    coverage = object(result.coverage ?? {}),
+    timing = result.representative_timing
+      ? object(result.representative_timing)
+      : null,
+    metrics = timing?.metrics ? object(timing.metrics) : null,
+    intervals = result.interval_compatibility
+      ? object(result.interval_compatibility)
+      : null,
+    skipped = objects(coverage.skipped_windows),
+    timingSkipped = objects(coverage.point_timing_skipped_windows),
+    percent = (value: unknown) =>
+      typeof value === "number" ? `${(value * 100).toFixed(1)}%` : "—",
+    reason = (value: unknown) =>
+      str(value, "review needed").replaceAll("_", " ");
+  return (
+    <section
+      id={kind === "serve" ? "evaluation-serve" : "evaluation-rally-end"}
+    >
+      <p>
+        <strong>{label} proposals</strong>
+        <br />
+        {array(coverage.usable_window_ids).length} complete live review
+        window(s) cover {num(coverage.reviewed_events)} reviewed boundary
+        event(s) and {num(coverage.evaluated_candidates)} proposal(s).
+      </p>
+      {metrics ? (
+        <p>
+          Representative-timing F1 {percent(metrics.f1)}
+          <br />
+          Precision {percent(metrics.precision)} · recall{" "}
+          {percent(metrics.recall)}
+          <br />
+          {num(metrics.tp)} matched · {num(metrics.fp)} false ·{" "}
+          {num(metrics.fn)} missed within {num(timing?.tolerance_s).toFixed(3)}{" "}
+          s.
+          <br />
+          Point-timing coverage: {num(coverage.point_timing_event_count)}{" "}
+          reviewed boundary event(s) and{" "}
+          {num(coverage.point_timing_candidate_count)} proposal(s).
+        </p>
+      ) : (
+        <p>
+          {result.status === "needs_exact_boundary_timing"
+            ? "Reviewed boundary timing remains uncertain; point-timing metrics are unavailable."
+            : "No complete live boundary review window is fully covered for point-timing metrics."}
+        </p>
+      )}
+      {intervals ? (
+        <p>
+          Possible interval support: {num(intervals.matched_count)}/
+          {num(intervals.reviewed_event_count)} reviewed boundary event(s) have
+          a one-to-one compatible proposal interval across{" "}
+          {num(intervals.candidate_count)} proposal(s).
+        </p>
+      ) : (
+        <p>No exhaustively reviewed live coverage for interval comparison.</p>
+      )}
+      <small>
+        Uncertain proposal representative times are navigation frames, not exact
+        physical boundary times. Interval compatibility is possible temporal
+        support, not accuracy or F1; it cannot resolve uncertain source
+        evidence.
+      </small>
+      {(skipped.length > 0 || timingSkipped.length > 0) && (
+        <ul>
+          {skipped.map((window, index) => (
+            <li key={`coverage-${index}`}>
+              Clip {str(window.id)} excluded: {reason(window.reason)}.
+            </li>
+          ))}
+          {timingSkipped.map((window, index) => (
+            <li key={`timing-${index}`}>
+              Clip {str(window.id)} excluded from point timing:{" "}
+              {reason(window.reason)}.
+            </li>
+          ))}
+        </ul>
+      )}
+      <small>
+        {array(coverage.excluded_event_ids).length} event(s) and{" "}
+        {array(coverage.excluded_candidate_ids).length} proposal(s) excluded
+        from coverage. Download the report for frame intervals, unmatched IDs
+        and source/run provenance.
+      </small>
+    </section>
+  );
+}
 function Evaluation({
   report,
   dirty,
@@ -2248,7 +2380,7 @@ function Evaluation({
         {dirty ? (
           "Save your edits, then measure this revision."
         ) : !report ? (
-          "Label a complete live clip to measure contact accuracy."
+          "Label a complete live clip and declare review coverage before measuring."
         ) : (
           <>
             <p>Saved revision {num(report.annotation_revision)}</p>
@@ -2305,6 +2437,21 @@ function Evaluation({
                 </div>
               );
             })}
+            {report.rallies &&
+              (() => {
+                const boundaryKinds = object(
+                  object(report.rallies).kinds ?? {},
+                );
+                return (["serve", "rally_end"] as const).map((kind) =>
+                  boundaryKinds[kind] ? (
+                    <BoundaryEvaluation
+                      key={kind}
+                      kind={kind}
+                      result={object(boundaryKinds[kind])}
+                    />
+                  ) : null,
+                );
+              })()}
             {report.recognition &&
               (() => {
                 const r = object(report.recognition),

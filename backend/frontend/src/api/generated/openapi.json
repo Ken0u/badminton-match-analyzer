@@ -238,6 +238,17 @@
             ],
             "title": "Contacts Run Id"
           },
+          "rallies_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rallies Run Id"
+          },
           "recognition_run_id": {
             "anyOf": [
               {
@@ -718,6 +729,11 @@
             "title": "Notes",
             "type": "string"
           },
+          "rally_ends_complete": {
+            "default": false,
+            "title": "Rally Ends Complete",
+            "type": "boolean"
+          },
           "scene": {
             "default": "unknown",
             "enum": [
@@ -727,6 +743,11 @@
             ],
             "title": "Scene",
             "type": "string"
+          },
+          "serves_complete": {
+            "default": false,
+            "title": "Serves Complete",
+            "type": "boolean"
           },
           "start_frame": {
             "minimum": 0,

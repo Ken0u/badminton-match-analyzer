@@ -601,6 +601,8 @@ export interface components {
         EvaluationRequest: {
             /** Contacts Run Id */
             contacts_run_id?: string | null;
+            /** Rallies Run Id */
+            rallies_run_id?: string | null;
             /** Recognition Run Id */
             recognition_run_id?: string | null;
             /** Shuttle Run Id */
@@ -765,11 +767,21 @@ export interface components {
              */
             notes?: string;
             /**
+             * Rally Ends Complete
+             * @default false
+             */
+            rally_ends_complete?: boolean;
+            /**
              * Scene
              * @default unknown
              * @enum {string}
              */
             scene?: "live" | "replay" | "unknown";
+            /**
+             * Serves Complete
+             * @default false
+             */
+            serves_complete?: boolean;
             /** Start Frame */
             start_frame: number;
         };

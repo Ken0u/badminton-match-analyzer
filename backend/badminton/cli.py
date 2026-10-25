@@ -92,6 +92,7 @@ def main():
     evaluate.add_argument(
         "--recognition-run", help="Completed shot-family recognition job ID"
     )
+    evaluate.add_argument("--rallies-run", help="Completed serve/end proposal job ID")
     evaluate.add_argument("--output", type=Path, help="Also save the JSON report")
     export_plan = commands.add_parser(
         "export-rally-plan",
@@ -556,10 +557,20 @@ def main():
         print(json.dumps(summary, indent=2))
     elif args.command == "evaluate":
         from .evaluation import evaluate_contacts, evaluate_shuttle
+        from .rally_evaluation import evaluate_rallies
         from .recognition_evaluation import evaluate_recognition
 
-        if not any((args.contacts_run, args.shuttle_run, args.recognition_run)):
-            parser.error("Supply --contacts-run, --shuttle-run, or --recognition-run")
+        if not any(
+            (
+                args.contacts_run,
+                args.shuttle_run,
+                args.recognition_run,
+                args.rallies_run,
+            )
+        ):
+            parser.error(
+                "Supply --contacts-run, --shuttle-run, --recognition-run, or --rallies-run"
+            )
         store = Store(DATA)
         try:
             video = store.video(args.video_id)
@@ -571,6 +582,15 @@ def main():
                 "video_sha256": video["sha256"],
                 "annotation_revision": annotations["revision"],
             }
+            if args.rallies_run:
+                report["rallies"] = evaluate_rallies(
+                    video,
+                    annotations,
+                    load_evaluation_run(
+                        store, args.video_id, args.rallies_run, "rallies"
+                    ),
+                    timestamps_for(DATA, args.video_id),
+                )
             if args.recognition_run:
                 report["recognition"] = evaluate_recognition(
                     video,

@@ -909,6 +909,8 @@ try {
     const unknown = await api(rallyRoot + "/annotations");
     assert.equal(unknown.review_windows[0].scene, "unknown");
     assert.equal(unknown.review_windows[0].contacts_complete, false);
+    assert.equal(unknown.review_windows[0].serves_complete, false);
+    assert.equal(unknown.review_windows[0].rally_ends_complete, false);
     const visible = unknown.shuttle_points.find((p) => p.frame === 10);
     assert.equal(visible.visible, true);
     await exact(10);
@@ -940,6 +942,55 @@ try {
     await page.locator("#review-complete").check();
     await page.locator("#add-review").click();
     await save();
+    const contactsOnly = (
+      await api(rallyRoot + "/annotations")
+    ).review_windows.find((w) => w.start_frame === 80);
+    assert.equal(contactsOnly.contacts_complete, true);
+    assert.equal(contactsOnly.serves_complete, false);
+    assert.equal(contactsOnly.rally_ends_complete, false);
+    // Boundary exhaustiveness is declared independently. The generated serves
+    // and endings retain their uncertain source intervals, never exact truth.
+    await page.locator("#review-start").fill("15");
+    await page.locator("#review-end").fill("80");
+    await page.locator("#review-complete").uncheck();
+    await page.locator("#review-serves-complete").check();
+    await page.locator("#review-rally-ends-complete").check();
+    await page.locator("#add-review").click();
+    await save();
+    const boundaryDocument = await api(rallyRoot + "/annotations");
+    const boundaryWindow = boundaryDocument.review_windows.find(
+      (w) => w.start_frame === 15,
+    );
+    assert.equal(boundaryWindow.contacts_complete, false);
+    assert.equal(boundaryWindow.serves_complete, true);
+    assert.equal(boundaryWindow.rally_ends_complete, true);
+    await reloadSelected(seeded.rally);
+    await page.locator("#review-panel").evaluate((e) => {
+      e.open = true;
+    });
+    await page.locator(`[data-load-review="${boundaryWindow.id}"]`).click();
+    assert.equal(await page.locator("#review-complete").isChecked(), false);
+    assert.equal(
+      await page.locator("#review-serves-complete").isChecked(),
+      true,
+    );
+    assert.equal(
+      await page.locator("#review-rally-ends-complete").isChecked(),
+      true,
+    );
+    const boundaryExport = await api(rallyRoot + "/export");
+    assert.deepEqual(
+      boundaryExport.annotations.review_windows,
+      boundaryDocument.review_windows,
+    );
+    const historicUnknown = await api(
+      rallyRoot + `/revisions/${unknown.revision}`,
+    );
+    assert.equal(historicUnknown.review_windows[0].serves_complete, false);
+    assert.equal(historicUnknown.review_windows[0].rally_ends_complete, false);
+    await page.waitForFunction(
+      () => document.querySelector("#rally-count").textContent === "2",
+    );
     await page.locator("#evaluate").click();
     await page.locator("#download-evaluation").waitFor({ state: "visible" });
     const report = JSON.parse(
@@ -949,6 +1000,23 @@ try {
     assert.equal(report.annotation_revision, doc.revision);
     assert.equal(report.video_sha256, seeded.rally.sha256);
     assert.equal(report.shuttle.coverage.labeled_frames, 2);
+    assert.ok(report.rallies.run_id);
+    assert.equal(report.rallies.video_sha256, seeded.rally.sha256);
+    assert.equal(report.rallies.annotation_revision, doc.revision);
+    for (const kind of ["serve", "rally_end"]) {
+      const result = report.rallies.kinds[kind];
+      assert.equal(result.status, "needs_exact_boundary_timing");
+      assert.equal(result.representative_timing, null);
+      assert.equal(result.interval_compatibility.matched_count, 1);
+      assert.equal(result.interval_compatibility.reviewed_event_count, 1);
+      assert.ok(result.coverage.point_timing_skipped_windows.length);
+    }
+    await page.locator("#evaluation-serve").waitFor();
+    await page.locator("#evaluation-rally-end").waitFor();
+    assert.match(
+      await page.locator("#evaluation-results").textContent(),
+      /interval|possible/i,
+    );
     let evaluationPosts = 0;
     const countEvaluation = (request) => {
       if (
@@ -962,10 +1030,10 @@ try {
     const removeEvaluatedRun = async (route) => {
       const response = await route.fetch();
       const jobs = await response.json();
-      assert.ok(jobs.some((job) => job.id === report.shuttle.run_id));
+      assert.ok(jobs.some((job) => job.id === report.rallies.run_id));
       await route.fulfill({
         response,
-        json: jobs.filter((job) => job.id !== report.shuttle.run_id),
+        json: jobs.filter((job) => job.id !== report.rallies.run_id),
       });
     };
     await page.route(jobsRoute, removeEvaluatedRun);
@@ -995,6 +1063,9 @@ try {
       unknownWindowPreserved: true,
       evaluationRevision: report.annotation_revision,
       obsoleteReportAndDownloadCleared: true,
+      independentBoundaryCompletenessPreserved: true,
+      boundaryIntervalsNotScoredAsExactTiming: true,
+      obsoleteRallyReportClearedWithoutAnotherPost: true,
       coverage: report.shuttle.coverage,
     };
   });

@@ -77,7 +77,12 @@ export function createEditorController() {
     viewVersion = 0,
     evaluationVersion = 0;
   let automaticAnalysis = true;
-  const evaluatedStages = ["contacts", "shuttle", "recognition"] as const;
+  const evaluatedStages = [
+    "contacts",
+    "shuttle",
+    "recognition",
+    "rallies",
+  ] as const;
   function evaluationInputs(state: EditorSnapshot) {
     return JSON.stringify([
       state.video?.id ?? null,
@@ -698,12 +703,13 @@ export function createEditorController() {
         version = edits,
         revision = drafts.getSnapshot()!.revision,
         inputs = evaluationInputs(snapshot());
-      if (!r.contacts && !r.shuttle && !r.recognition)
-        throw Error("Run shuttle tracking and contact proposals first.");
+      if (!r.contacts && !r.shuttle && !r.recognition && !r.rallies)
+        throw Error("Run tracking or event proposals first.");
       const runIds = {
         contacts: r.contacts?.id ?? null,
         shuttle: r.shuttle?.id ?? null,
         recognition: r.recognition?.id ?? null,
+        rallies: r.rallies?.id ?? null,
       };
       invalidateEvaluation();
       requestVersion = evaluationVersion;
@@ -718,6 +724,7 @@ export function createEditorController() {
                 contacts_run_id: runIds.contacts,
                 shuttle_run_id: runIds.shuttle,
                 recognition_run_id: runIds.recognition,
+                rallies_run_id: runIds.rallies,
               },
             }),
           );
