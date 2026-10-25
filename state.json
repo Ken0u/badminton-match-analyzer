@@ -9733,6 +9733,14 @@
       "task_id": "303",
       "verb": "plan"
     },
+    "spec-305-279192b22ff5af31a66993dd0c4f64361089de1c1c25ef9dece3bf679e1e21fa": {
+      "actor": "Ken0u",
+      "at": 1792953537,
+      "fingerprint": "8a512a2dd9b73e098a5b22a376e1640de19f69a352be63e686fbf89d741df9b9",
+      "status": "ready",
+      "task_id": "305",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -9986,6 +9994,21 @@
       "status": "needs_human",
       "task_id": "98",
       "verb": "plan"
+    },
+    "synthetic-next-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792953537,
+      "fingerprint": "3e81fcd2f97d250ad11061389fda2752b97dc540d2cab0af3be939d8c8a68a8e",
+      "status": "ready",
+      "task_id": "305",
+      "verb": "plan"
+    },
+    "synthetic-next-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792953537,
+      "fingerprint": "b41152a6bdeb816720eae217268de316deb69755b40c2397e2c2b308b01c711f",
+      "status": "ok",
+      "verb": "register"
     },
     "tiling-next-next-v1": {
       "actor": "Ken0u",
@@ -25052,6 +25075,76 @@
         "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc"
       }
     },
+    "305": {
+      "epoch": 0,
+      "planned_at": 1792953537,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Refresh trusted main/guidance/roadmap/bug reports, all issue/PR history and authoritative coordination. Link completed303/299/294/204/141 and approved localization roadmap65; no duplicate synthetic adaptation exists. Preserve original root edits, deprecated PROGRESS, every environment/source/label/prediction/weight/process and completed deliveries. Obtain a fresh committed routine GPU grant and isolated worktree before editing, model loading, generation or predictions.",
+          "Before any predictions publicly timestamp exact protocol, generator/consumer/runtime/input/view/checkpoint seals. Generate only own deterministic RGB backgrounds, perspective court lines, moving geometric actors/rackets, static/moving white distractors and a parabolic moving bright shuttle with varied radius/intensity, blur and explicit absence/occlusion; no broadcast pixels, crops, labels, downloaded textures or external image assessor. Freeze every distribution/seed in protocol and code before execution. Exactly160 independent generated source groups of24 frames at512x288:128 train,16 validation,16 test, disjoint group seeds derived by SHA256(namespace,split,index), seed namespace synthetic-shuttle-v1. Keep each complete group in one split; median background uses its complete24 frames. Generated coordinates/absence are procedural truth only, not badminton expert labels.",
+          "Exactly one initialization from unchanged MIT-licensed checkpoint df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a. Train only convolution weights in up_block_3 plus predictor weight/bias; freeze all other tensors, every BatchNorm affine parameter and running statistic, keep eval mode, and verify frozen tensor byte equality after training. Fixed seed20261025, four epochs, batch1, AdamW lr0.0001/weight_decay0.0001, CUDA autocast float16 with float32 master parameters and GradScaler, fixed norm clip1. Each epoch visits128 train groups once in fixed seeded permutation; the eight-frame chunk starts at8*((epoch_zero_based+group_index)%3). Target sigma1.5 gaussian truncated at4.5 pixels; absent/occluded targets zero. Balanced spatial squared error averages positive-support and complementary pixel errors with equal0.5 weights, empty support contributes zero. Reject nonfinite loss/gradients/tensors. No additional schedule/seed/architecture/variant after results.",
+          "Evaluate all three disjoint eight-frame chunks of every synthetic validation group after each epoch; select minimum mean balanced validation loss, earliest epoch on ties. Retain epoch deltas/losses and immutable selected checkpoint with parent/protocol/training provenance. Open synthetic test only after selection is durably sealed; evaluate unchanged and selected weights once on every complete test group using the actual overlapping ensemble/selector and fixed threshold0.5. Keep full generated visible/negative denominators, localization TP/FP/FN/TN, displacement as FP+FN, errors, component agreement and output/model-call/time/memory accounting. Synthetic holdout generalization is not real-video accuracy; no tuning on this or familiar diagnostics.",
+          "Add an explicit research-only optional track_shuttle checkpoint override requiring exact file SHA256 plus bound parent/protocol/training seals, validated before model/media work; candidate cannot replace the installed manifest/default or reach API/UI/CLI app options. Default path retains exact original manifest enforcement/output behavior. Preserve512x288, threshold0.5, sequence8 background concat, native frame/PTS/orientation, complete-view native median background, camera/scene/selection resets, observed-only components and temporal ensemble. Candidate checkpoints and every new output remain in exclusive ignored research directories; no model installation or automatic promotion.",
+          "After synthetic selection, use the same original50 complete target camera/background views/13499 rows. Independently reproduce unchanged control before any candidate real-source inference. Require exact original frame/PTS/camera/physical component/visibility/selection geometry, confidence absolute tolerance0.00001 relative0; omit exactly the four declared selection dependency fields using existing physical_observations_v1 projection and validate current transitive dependency metadata on every row independently. Legacy resolution/tiling validation remains unchanged. Any mismatch blocks candidate real inference/scoring; preserve evidence and diagnose before another attempt. No baseline substitution or cropped target-only views.",
+          "Retain all60 familiar cases,25 localizable,7 supported negatives,28 unknown, unavailable states and overlapping source/difficulty/selection groups. Seal raw complete outputs externally before sole diagnostic scoring. Reuse existing strict source/packet/label/baseline auditing and metrics at tolerance0.005 source diagonal, including radial uncertainty bounds, observed component presence versus ranking failures and complete precision/recall denominators. Real-source inputs remain diagnostic only, all four eligibility flags false; never train/select/tune from them or access consumed holdout63. Any result, including catastrophic synthetic transfer, is valid and must be reported. Keep65/62/66/67/71 incomplete and references0/2.",
+          "Every native training/inference stage requires genuine queue GPU reservation AND original data/processed Store run_local_job admission. Pin original root/shared data/weights before imports, initialize torchvision before threaded PyAV, preserve native FFmpeg restoration. Record actual process PID/creation/cwd/command, Store/admission/terminal receipts, immutable code/runtime/input seals and validate prior terminal lifetimes before resume; timeout/missing observer alone never proves exit. Revalidate job/process/artifacts/ownership before each launch. No competing heavy job, unrelated process stop/restart or overwrite. Generated unit tests use disposable pinned roots and no real scientific media/models.",
+          "Meaningful generated regressions cover deterministic seed/group separation, varied motion/absence/occlusion/blur/distractors and exact coordinate/heatmap alignment; loss/empty-positive behavior; actual frozen-prefix and BN invariance with trainable updates, fixed selection/ties and post-selection-only test access; strict override/default/provenance tamper rejection before native work; unchanged native control projection/context/source clocks, unknown/unavailable denominators, exclusive freeze/resume/admission/seal failures. Run focused and required full pytest/Ruff/format/pip/UTF8-LF/JSON/local-link/diff checks using current environment. Final-head consumer bytes must match actual native evidence. Exact PR/main CI/controller integration plus independent full public package/source/frontend/lock/all47 manifests/both anonymous image manifest/config/descriptors verification; no manual merge/main push/raw coordination edits or workflow retry/cancel/wake.",
+          "Bound native research to four hours from grant,2GiB new retained outputs,three diagnosed repair rounds,one candidate and no paid service. Missing prerequisites stop comparable execution without replacement. No new source/download/image transfer/assessor, scientific label change/eligibility promotion, consumed holdout63 access, app model/default installation, deployment/auth/policy/workflow/dependency/storage/schema/evaluator/nativeAV changes, or deprecated PROGRESS access/update. Request a genuine scope extension before any extra path/resource."
+        ],
+        "artifacts": {
+          "readiness-audit": "c6bc943485b5495a88402bf539835bf40433e17a17f476aeac86a2b13919ebf4",
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+          "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+          "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+        },
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "141",
+          "204",
+          "294",
+          "299",
+          "303"
+        ],
+        "exclusions": [
+          "No real-source training or tuning, new downloads/image transfer/assessor, consumed holdout63, model/default promotion, app/API/UI option, sensitive automation/deployment/dependency changes, paid service or deprecated PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 2147483648,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Test one fixed, research-only last-decoder TrackNet adaptation trained entirely on own procedural synthetic shuttle footage; measure synthetic generalization and familiar-source transfer without installing weights or changing app defaults.",
+        "paths": [
+          "backend/badminton/shuttle.py",
+          "backend/badminton/shuttle_synthetic.py",
+          "backend/badminton/shuttle_adaptation.py",
+          "scripts/train_synthetic_shuttle.py",
+          "tests/test_shuttle_synthetic.py",
+          "tests/test_shuttle_adaptation.py",
+          "data/manifests/shuttle_synthetic_protocol_v1.json",
+          "docs/SYNTHETIC_SHUTTLE_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Prospectively fixed synthetic generator/training/selection, synthetic-test then familiar diagnostic separation; full unchanged control gate and immutable inputs/weights; real shared GPU admission/process/Store receipts.",
+          "Focused/full required checks, exact source PR/main CI/controller integration and independent complete public delivery; accuracy and app promotion remain unproven."
+        ]
+      },
+      "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -28240,6 +28333,26 @@
       "host_id": "MSI",
       "registered_at": 1792881746,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+    },
+    "MSI/38cb048544ad42769dddcd36b6f75292": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "readiness-audit": "c6bc943485b5495a88402bf539835bf40433e17a17f476aeac86a2b13919ebf4",
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs",
+        "cuda"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792953537,
+      "session_id": "38cb048544ad42769dddcd36b6f75292"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
       "actor": "Ken0u",
