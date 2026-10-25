@@ -20748,6 +20748,7 @@
         "session_id": "6bd9e2e585fe4cd79d59b2d1bada859e",
         "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
