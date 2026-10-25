@@ -9,6 +9,13 @@
       "task_id": "254",
       "verb": "plan"
     },
+    "actor254-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792887545,
+      "fingerprint": "4872601cd35ba7d82d9134e8b03967cdbd38260586c69c52bc45c789de9f3cac",
+      "status": "ok",
+      "verb": "register"
+    },
     "actor254-targeted-next-v1": {
       "actor": "Ken0u",
       "reason": "worker registration does not match actor, host and session",
@@ -23273,6 +23280,18 @@
       "host_id": "MSI",
       "registered_at": 1792632986,
       "session_id": "broadcast179-review-6f42d839a2"
+    },
+    "MSI/cc0ce1ab9d664201b48bec7d6108da04": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792887545,
+      "session_id": "cc0ce1ab9d664201b48bec7d6108da04"
     },
     "MSI/cfd18714-5a16-4720-811c-0bde1ada4c14": {
       "actor": "Ken0u",
