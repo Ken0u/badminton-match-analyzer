@@ -11188,6 +11188,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "video293-checkpoint-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792928311,
+      "epoch": 1,
+      "fingerprint": "eda9190667a3a4a02d05835f0c932be84c788459898699239de545a619383e91",
+      "status": "running",
+      "task_id": "293",
+      "verb": "checkpoint"
+    },
     "video293-checkpoint-implementation-v1": {
       "actor": "Ken0u",
       "at": 1792927664,
@@ -11196,6 +11205,15 @@
       "status": "running",
       "task_id": "293",
       "verb": "checkpoint"
+    },
+    "video293-submit-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792928408,
+      "epoch": 1,
+      "fingerprint": "c392f7f94fc39404620b2758b8421322bb11a50dc6fff907bc25ada3e180ff8d",
+      "status": "review",
+      "task_id": "293",
+      "verb": "submit"
     },
     "windows-active-next-20261019-v1": {
       "actor": "Ken0u",
@@ -24028,17 +24046,19 @@
     "293": {
       "checkpoint": {
         "branch": "codex/issue-293-reject-observable-source-byte-changes-du",
-        "head_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
-        "remaining": "Focused and full required checks, final aggregate documentation, exact PR/main/controller integration and independently verified full public delivery.",
-        "summary": "Post-exhaustion/post-teardown source revalidation implemented in the sole runtime file. Generated real-PyAV mutations/rotated VFR subranges, same-size/restored-mtime replacement/removal, intact-source replacement, failure precedence, partial early-close, actual camera scan and API artifact preservation regressions prepared. Lint passes; formatting applied. Original four failing generated baseline cases and planning correction preserved. No scientific input/inference/image transfer."
+        "evidence_sha256": "dacaf8bb9b7a75f0586ebfafe49c9206ae8a1f2ae845b60ac4a09390ff950db0",
+        "head_sha": "972cf96c6c00bc8c729a9026bed2e705ebf78fc1",
+        "pr_number": 296,
+        "remaining": "Exact CI/controller/main and independent complete public delivery.",
+        "summary": "190 focused / 4482 full tests pass, four optional skips and all required checks; source stable, 967 terminal observed lifetimes. All four generated stale-source completions now reject after close; actual camera/API outputs and prior truth preserved. No original scientific inputs, research inference or image transfer. Local receipt SHA256 dacaf8bb9b7a75f0586ebfafe49c9206ae8a1f2ae845b60ac4a09390ff950db0."
       },
-      "checkpoint_at": 1792927664,
+      "checkpoint_at": 1792928311,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
         "branch": "codex/issue-293-reject-observable-source-byte-changes-du",
         "epoch": 1,
-        "expires_at": 1792938464,
+        "expires_at": 1792939111,
         "granted_at": 1792927448,
         "host_id": "MSI",
         "session_id": "aac920ab35ff422abe970597d106ffb6",
@@ -24047,6 +24067,7 @@
       "epoch": 1,
       "planned_at": 1792927230,
       "planned_by": "Ken0u",
+      "pr_number": 296,
       "spec": {
         "acceptance": [
           "Audit complete issue/PR history, current authoritative queue and all active reservations. Preserve generated four-case failure evidence and obtain an isolated code-only committed grant. This is distinct from delivered173 native coverage,243 cache invalidation,281/PR283 import publication and the other-host290 audio repair; preserve all of them and deprecated PROGRESS/root edits.",
@@ -24096,7 +24117,13 @@
         ]
       },
       "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
+        "head_sha": "972cf96c6c00bc8c729a9026bed2e705ebf78fc1",
+        "pr_number": 296,
+        "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8"
+      }
     },
     "295": {
       "claim": {
