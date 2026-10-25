@@ -18,12 +18,30 @@
       "task_id": "254",
       "verb": "checkpoint"
     },
+    "actor254-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792888474,
+      "epoch": 1,
+      "fingerprint": "27d9a31e7f2c5038521f0f8ee7cb6ea2167d301c78f5f3a842d72f7129900e1d",
+      "status": "running",
+      "task_id": "254",
+      "verb": "checkpoint"
+    },
     "actor254-register-v1": {
       "actor": "Ken0u",
       "at": 1792887545,
       "fingerprint": "4872601cd35ba7d82d9134e8b03967cdbd38260586c69c52bc45c789de9f3cac",
       "status": "ok",
       "verb": "register"
+    },
+    "actor254-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792888482,
+      "epoch": 1,
+      "fingerprint": "678d12260a2eb202adf34f924bc1662f08a7fdb6bbc8406612493d5faaa4317c",
+      "status": "review",
+      "task_id": "254",
+      "verb": "submit"
     },
     "actor254-targeted-next-v1": {
       "actor": "Ken0u",
@@ -20090,18 +20108,19 @@
     "254": {
       "checkpoint": {
         "branch": "codex/issue-254-clear-provisional-linked-actor-hints-whe",
-        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/254#issuecomment-6391388638",
-        "head_sha": "98056b1614e3f58f7c381c2f0b129710a401b444",
-        "remaining": "Local verification, PR/controller integration, exact-source CI and independent public delivery.",
-        "summary": "Preserved two generated baseline failures on exact-main controller bytes: replacement analyses with absent/empty identities retain Actor A for a reused player run. Granted isolated actor254-e1 implementation now derives actors only from the current identity result; generated missing/stale/current/race checks are added. No scientific input, model inference or image transfer. Existing identical locked dependencies reused without installation; root edits and PROGRESS.md preserved."
+        "evidence_sha256": "4b69cbb90231468db1fd9b39e35290800b8a4dbc988b97dcf8f380d1a2e5be57",
+        "head_sha": "3447b6566f77987080e0b3cf29f776864995039d",
+        "pr_number": 255,
+        "remaining": "Exact PR/main CI, controller integration and independent complete public delivery.",
+        "summary": "Actor hints now derive only from the current identity response and clear when identity metadata is absent/unusable/context-stale. Generated preserved baseline and ownership races pass; 174 frontend/17 editor browser/3101 Python tests pass,4optional skips. First sandboxed browser timeout and terminal-process diagnosis retained; unchanged browser suite passes with local network access. Five granted paths, no scientific input/model/policy change. Local receipt SHA256 4b69cbb90231468db1fd9b39e35290800b8a4dbc988b97dcf8f380d1a2e5be57."
       },
-      "checkpoint_at": 1792887902,
+      "checkpoint_at": 1792888474,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "98056b1614e3f58f7c381c2f0b129710a401b444",
         "branch": "codex/issue-254-clear-provisional-linked-actor-hints-whe",
         "epoch": 1,
-        "expires_at": 1792898702,
+        "expires_at": 1792899274,
         "granted_at": 1792887727,
         "host_id": "MSI",
         "session_id": "cc0ce1ab9d664201b48bec7d6108da04",
@@ -20110,6 +20129,7 @@
       "epoch": 1,
       "planned_at": 1792886860,
       "planned_by": "Ken0u",
+      "pr_number": 255,
       "spec": {
         "acceptance": [
           "Search all open/closed issues, active PRs and coordination grants to avoid duplicate work. Preserve root edits, environments, datasets, research, annotations and deprecated PROGRESS.md. Depend on fully delivered252 and use a fresh committed task grant with an isolated worktree.",
@@ -20154,7 +20174,13 @@
         ]
       },
       "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "98056b1614e3f58f7c381c2f0b129710a401b444",
+        "head_sha": "3447b6566f77987080e0b3cf29f776864995039d",
+        "pr_number": 255,
+        "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c"
+      }
     },
     "62": {
       "checkpoint": {
