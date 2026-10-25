@@ -35,11 +35,17 @@ become runtime model assets or reviewed application annotations.
 
 ## Verification and remaining limits
 
-All **50 focused package/environment tests and 4,181 full Python tests**
+All **53 focused package/environment tests and 4,184 full Python tests**
 pass, with four optional full-suite skips. Ruff lint/format, dependency consistency,
 repository UTF-8/LF/JSON/local links and whitespace checks pass. The original-base
-suite passed 4,179 tests before the nonoverlapping #271 main update; the final
-suite above checks the combined source. Executable/test bytes remain stable.
+suite passed 4,179 tests before the nonoverlapping #271 main update; an earlier
+combined suite passed 4,181. Further generated review reproduced an archive with
+a valid release directory plus rootless `data/private-canary.json` being accepted.
+The PR was made a draft before changing source. Requiring exactly one release
+root and directory-only top-level entries now rejects that bypass, with three
+real archive regressions. The first new full-check launch stopped on a raw-regex
+literal lint requirement in the added test; that failure is preserved separately.
+The final suite above passes on stable executable/test bytes.
 
 Actual wheel/source builds verify all 45 public manifests, 93 runtime files and
 five frontend files. Two seeded generated private canaries are excluded, with

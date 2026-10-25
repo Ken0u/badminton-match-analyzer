@@ -128,6 +128,28 @@ def test_nonordinary_data_members_are_rejected(tmp_path, monkeypatch, kind):
         verify([*rows, ("data/manifests/first.json", b"", kind)])
 
 
+@pytest.mark.parametrize(
+    "name", ["data/private.json", "other/data/manifests/private.json", "root.json"]
+)
+def test_source_archive_cannot_hide_extra_files_under_another_root(
+    tmp_path, monkeypatch, name
+):
+    _, _, verify, wheel = archive_fixture(tmp_path, monkeypatch)
+    verify()
+    source = tmp_path / "generated.tar.gz"
+    with tarfile.open(source, "r:gz") as archive:
+        original = [(item, archive.extractfile(item).read()) for item in archive]
+    with tarfile.open(source, "w:gz") as archive:
+        for item, raw in original:
+            archive.addfile(item, io.BytesIO(raw))
+        raw = b"generated private canary"
+        item = tarfile.TarInfo(name)
+        item.size = len(raw)
+        archive.addfile(item, io.BytesIO(raw))
+    with pytest.raises(ValueError, match=r"source distribution.*root"):
+        package.verify_archives(tmp_path, wheel, source)
+
+
 def test_only_public_data_parent_directories_are_accepted(tmp_path, monkeypatch):
     _, rows, verify, _ = archive_fixture(tmp_path, monkeypatch)
     assert (

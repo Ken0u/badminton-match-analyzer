@@ -322,6 +322,7 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
         )
     with tarfile.open(sdist, "r:gz") as archive:
         members = archive.getmembers()
+        roots = set()
         for member in members:
             path = PurePosixPath(member.name)
             if (
@@ -332,6 +333,11 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
                 or member.islnk()
             ):
                 raise ValueError("Unsafe source distribution member")
+            roots.add(path.parts[0])
+            if len(path.parts) == 1 and not member.isdir():
+                raise ValueError("Unsafe source distribution root member")
+        if len(roots) != 1:
+            raise ValueError("Unsafe source distribution: inconsistent archive roots")
         public = public_manifest_sources(root)
         public_seen = set()
         source = {}
