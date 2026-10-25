@@ -11147,6 +11147,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "video293-checkpoint-implementation-v1": {
+      "actor": "Ken0u",
+      "at": 1792927664,
+      "epoch": 1,
+      "fingerprint": "e5e6805cafb4c4829d5dd5c5def9821d0480d720578b59b78b39ebea54848cd9",
+      "status": "running",
+      "task_id": "293",
+      "verb": "checkpoint"
+    },
     "windows-active-next-20261019-v1": {
       "actor": "Ken0u",
       "at": 1792417543,
@@ -23976,12 +23985,19 @@
       }
     },
     "293": {
+      "checkpoint": {
+        "branch": "codex/issue-293-reject-observable-source-byte-changes-du",
+        "head_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
+        "remaining": "Focused and full required checks, final aggregate documentation, exact PR/main/controller integration and independently verified full public delivery.",
+        "summary": "Post-exhaustion/post-teardown source revalidation implemented in the sole runtime file. Generated real-PyAV mutations/rotated VFR subranges, same-size/restored-mtime replacement/removal, intact-source replacement, failure precedence, partial early-close, actual camera scan and API artifact preservation regressions prepared. Lint passes; formatting applied. Original four failing generated baseline cases and planning correction preserved. No scientific input/inference/image transfer."
+      },
+      "checkpoint_at": 1792927664,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
         "branch": "codex/issue-293-reject-observable-source-byte-changes-du",
         "epoch": 1,
-        "expires_at": 1792938248,
+        "expires_at": 1792938464,
         "granted_at": 1792927448,
         "host_id": "MSI",
         "session_id": "aac920ab35ff422abe970597d106ffb6",
