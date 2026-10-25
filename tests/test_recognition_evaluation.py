@@ -4,6 +4,43 @@ import pytest
 from badminton.recognition_evaluation import evaluate_recognition
 
 
+@pytest.mark.parametrize("frame,bounds", [(9, (9, 10)), (20, (19, 20))])
+@pytest.mark.parametrize("status", ["reviewed", "corrected"])
+def test_outside_navigation_uncertainty_withholds_classification_credit(
+    frame, bounds, status
+):
+    video, doc, run = fixture()
+    doc["events"] = [doc["events"][0]]
+    doc["events"][0].update(frame=15, time_s=0.6)
+    doc["events"].append(
+        doc["events"][0]
+        | {
+            "id": "uncertain",
+            "frame": frame,
+            "time_s": frame * 0.04,
+            "status": status,
+            "contact_start_frame": bounds[0],
+            "contact_end_frame": bounds[1],
+        }
+    )
+    doc["review_windows"][0].update(start_frame=10, end_frame=20)
+    run["candidates"] = [run["candidates"][0]]
+    run["candidates"][0].update(frame=15, time_s=0.6, side="forehand")
+    before = copy.deepcopy((video, doc, run))
+    result = evaluate_recognition(
+        video, doc, run, native_timestamps=[i * 0.04 for i in range(100)]
+    )
+    assert result["status"] == "needs_complete_live_review"
+    assert result["family"]["known_contact_count"] == 0
+    assert result["hitter"]["known_contact_count"] == 0
+    assert result["complete_event"] is None
+    assert result["matches"] == []
+    assert result["coverage"]["skipped_windows"] == [
+        {"id": "w", "reason": "contact_timing_needs_adjudication"}
+    ]
+    assert (video, doc, run) == before
+
+
 def fixture():
     video = {"id": "v", "sha256": "a" * 64, "frame_count": 100}
     events = [
