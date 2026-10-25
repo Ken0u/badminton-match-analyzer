@@ -10030,6 +10030,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "synthetic305-checkpoint-frozen-v1": {
+      "actor": "Ken0u",
+      "at": 1792954962,
+      "epoch": 1,
+      "fingerprint": "6b8b0f2c71423cd546dac7330366e79ccb56e0ed311f228b214066fd81507f34",
+      "status": "running",
+      "task_id": "305",
+      "verb": "checkpoint"
+    },
     "tiling-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792933796,
@@ -25096,12 +25105,21 @@
       }
     },
     "305": {
+      "checkpoint": {
+        "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
+        "experiment_sha256": "516ce8e313a1f84e2f116ef62776b3faea4cd12160767ff5be6f18651204d56a",
+        "head_sha": "c6bedf822f58433cfb8ffc55728c1d754fb68237",
+        "protocol_sha256": "f2f788d4b72359446d367786055b7e902f9b3240fb0229c62ce793d1f4ea6a2a",
+        "remaining": "Actual admitted training, selected-only synthetic test, unchanged complete-view control gate, candidate diagnostics with external raw-output commitment, final report, exact CI/controller/main and independent public delivery.",
+        "summary": "Tested sole synthetic-only adaptation and exact generator/training/selection/protocol/code/input seals publicly frozen before real checkpoint loading. 4658 full tests/four skips and154 focused pass, all required checks pass. Installed model/app truth/source eligibility unchanged; references0/2."
+      },
+      "checkpoint_at": 1792954962,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "80de6792dc0f2a6c5442cc82131856072c891a49",
         "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
         "epoch": 1,
-        "expires_at": 1792964562,
+        "expires_at": 1792965762,
         "granted_at": 1792953762,
         "host_id": "MSI",
         "session_id": "38cb048544ad42769dddcd36b6f75292",
