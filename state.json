@@ -22,6 +22,26 @@
       "status": "rejected",
       "verb": "next"
     },
+    "actor254-targeted-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792887727,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "98056b1614e3f58f7c381c2f0b129710a401b444",
+        "branch": "codex/issue-254-clear-provisional-linked-actor-hints-whe",
+        "epoch": 1,
+        "expires_at": 1792898527,
+        "granted_at": 1792887727,
+        "host_id": "MSI",
+        "session_id": "cc0ce1ab9d664201b48bec7d6108da04",
+        "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c"
+      },
+      "epoch": 1,
+      "fingerprint": "4719c323d2fafe791b0fd0c72916342e41c4f6f5f03a896c905e55280d7a0d78",
+      "status": "granted",
+      "task_id": "254",
+      "verb": "next"
+    },
     "adopt-003628c8dcaecb68b1f14319cad228db61bf5c092e5028caeb9297739a68b42e": {
       "actor": "github-actions[bot]",
       "at": 1792454159,
@@ -20059,7 +20079,18 @@
       }
     },
     "254": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "98056b1614e3f58f7c381c2f0b129710a401b444",
+        "branch": "codex/issue-254-clear-provisional-linked-actor-hints-whe",
+        "epoch": 1,
+        "expires_at": 1792898527,
+        "granted_at": 1792887727,
+        "host_id": "MSI",
+        "session_id": "cc0ce1ab9d664201b48bec7d6108da04",
+        "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c"
+      },
+      "epoch": 1,
       "planned_at": 1792886860,
       "planned_by": "Ken0u",
       "spec": {
@@ -20106,7 +20137,7 @@
         ]
       },
       "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
