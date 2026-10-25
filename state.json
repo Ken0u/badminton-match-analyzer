@@ -9995,6 +9995,26 @@
       "task_id": "98",
       "verb": "plan"
     },
+    "synthetic-next-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792953762,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "80de6792dc0f2a6c5442cc82131856072c891a49",
+        "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
+        "epoch": 1,
+        "expires_at": 1792964562,
+        "granted_at": 1792953762,
+        "host_id": "MSI",
+        "session_id": "38cb048544ad42769dddcd36b6f75292",
+        "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b"
+      },
+      "epoch": 1,
+      "fingerprint": "098d2dbb5ac89d4192d0c8acfed4342fb2bf97212a71be5807dc3a0dc123b90a",
+      "status": "granted",
+      "task_id": "305",
+      "verb": "next"
+    },
     "synthetic-next-plan-v1": {
       "actor": "Ken0u",
       "at": 1792953537,
@@ -25076,7 +25096,18 @@
       }
     },
     "305": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "80de6792dc0f2a6c5442cc82131856072c891a49",
+        "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
+        "epoch": 1,
+        "expires_at": 1792964562,
+        "granted_at": 1792953762,
+        "host_id": "MSI",
+        "session_id": "38cb048544ad42769dddcd36b6f75292",
+        "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b"
+      },
+      "epoch": 1,
       "planned_at": 1792953537,
       "planned_by": "Ken0u",
       "spec": {
@@ -25143,7 +25174,7 @@
         ]
       },
       "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
