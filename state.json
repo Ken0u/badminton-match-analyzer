@@ -136,6 +136,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "boundary-evidence-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792913711,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5",
+        "branch": "codex/issue-278-prevent-saved-serve-rally-end-proposals-",
+        "epoch": 1,
+        "expires_at": 1792924511,
+        "granted_at": 1792913711,
+        "host_id": "MSI",
+        "session_id": "8c83ed3322c44fa58e4743a23db98417",
+        "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3"
+      },
+      "epoch": 1,
+      "fingerprint": "a9a02a034b62cd9128e7bad0ca615a8f502b8fad319863f63de36b58532568cc",
+      "status": "granted",
+      "task_id": "278",
+      "verb": "next"
+    },
     "boundary-evidence-plan-v1": {
       "actor": "Ken0u",
       "at": 1792913505,
@@ -8820,6 +8840,14 @@
       "fingerprint": "8aa4ab09666e8d82edffed5631e08ef79189a3421535a669c47e5ff19657e4ca",
       "status": "ready",
       "task_id": "275",
+      "verb": "plan"
+    },
+    "spec-278-a60df9c7b94dcaef16ae6314d5b7366668f431a704216de719bb6c59b09c91ac": {
+      "actor": "Ken0u",
+      "at": 1792913711,
+      "fingerprint": "c518ef49b151940d227114364435146367956bc24ae9d5ecb2435b4cf092f8c8",
+      "status": "ready",
+      "task_id": "278",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -22475,8 +22503,19 @@
       }
     },
     "278": {
-      "epoch": 0,
-      "planned_at": 1792913505,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5",
+        "branch": "codex/issue-278-prevent-saved-serve-rally-end-proposals-",
+        "epoch": 1,
+        "expires_at": 1792924511,
+        "granted_at": 1792913711,
+        "host_id": "MSI",
+        "session_id": "8c83ed3322c44fa58e4743a23db98417",
+        "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3"
+      },
+      "epoch": 1,
+      "planned_at": 1792913711,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
@@ -22525,7 +22564,7 @@
         ]
       },
       "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
