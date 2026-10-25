@@ -311,3 +311,174 @@ def test_sparse_high_rate_pose_corroboration_checks_the_entire_wrist_context(con
         assert result[0]["evidence"]["audio_support"][0]["pose"]["pose_samples"] == 3
     else:
         assert result == original
+
+
+def interval_scenario(rate=60, case="aligned"):
+    center = 4 if case == "edge" else 75 if case == "tail" else 24
+    times = [
+        frame / rate + (7.5 + 0.002 * (frame % 2) if case == "vfr_origin" else 0)
+        for frame in range(80)
+    ]
+    if case == "timestamp_gap":
+        times = [t + (0.11 if frame >= 18 else 0) for frame, t in enumerate(times)]
+    shuttle, players, video, cues = scenario()
+    template_shuttle, template_player = shuttle["frames"][0], players["frames"][0]
+    shuttle["frames"], players["frames"] = [], []
+    for frame, t in enumerate(times):
+        row = copy.deepcopy(template_shuttle)
+        row.update(frame=frame, time_s=t)
+        visible = frame != center or case == "no_gap"
+        row["shuttle"].update(
+            visible=visible, x=300 if visible else None, y=200 if visible else None
+        )
+        shuttle["frames"].append(row)
+        player = copy.deepcopy(template_player)
+        player.update(frame=frame, time_s=t)
+        player["players"][0]["keypoints"][9] = [
+            300 if case == "static_wrist" else 300 + (frame - center) * 4,
+            200,
+            0.9,
+        ]
+        players["frames"].append(player)
+    if case == "sparse":
+        players["frames"] = players["frames"][::4]
+    elif case in ("cut", "player_cut"):
+        (players if case == "player_cut" else shuttle)["cut_frames"] = [18]
+    elif case in ("replay_bound", "player_replay_bound", "unknown_bound"):
+        (players if case == "player_replay_bound" else shuttle)["frames"][17][
+            "scene"
+        ] = "unknown" if case == "unknown_bound" else "replay"
+    elif case == "excluded_bound":
+        shuttle["frames"][17]["shuttle"]["selection_context_excluded"] = True
+    elif case == "frame_gap":
+        shuttle["frames"].pop(17)
+    elif case == "bound_pose_mismatch":
+        players["frames"][17]["frame"] = 101
+    elif case == "bound_pose_duplicate":
+        players["frames"].append(copy.deepcopy(players["frames"][32]))
+    elif case in (
+        "history_valid",
+        "history_replay",
+        "missing_history",
+        "history_cut",
+        "history_player_replay",
+        "recursive_history",
+    ):
+        shuttle["frames"][17]["shuttle"].update(
+            selection_context_start_frame=10, selection_context_end_frame=18
+        )
+        if case == "history_replay":
+            shuttle["frames"][10]["scene"] = "replay"
+        elif case == "missing_history":
+            shuttle["frames"].pop(10)
+        elif case == "history_cut":
+            shuttle["cut_frames"] = [11]
+        elif case == "history_player_replay":
+            players["frames"][10]["scene"] = "replay"
+        elif case == "recursive_history":
+            shuttle["frames"][10]["shuttle"].update(
+                selection_context_start_frame=5, selection_context_end_frame=11
+            )
+    cues["peaks"][0]["time_s"] = times[center] + 0.005
+    if case == "missing_audio":
+        cues["status"] = "missing"
+    elif case == "duplicate_sound":
+        cues["peaks"].append(cues["peaks"][0] | {"time_s": times[center] + 0.01})
+    video.update(
+        fps=rate,
+        frame_count=80,
+        duration_s=times[-1] + 1 / rate,
+        source_start_s=7.5 if case == "vfr_origin" else 0,
+    )
+    return shuttle, players, video, cues, times
+
+
+@pytest.mark.parametrize("rate", [24, 25, 30, 50, 60, 120])
+def test_new_audio_interval_brackets_source_time_at_each_rate(rate):
+    shuttle, players, video, cues, times = interval_scenario(rate)
+    inputs = copy.deepcopy((shuttle, players, video, cues))
+    result = add_audio_support([], shuttle, players, video, cues)
+    assert (shuttle, players, video, cues) == inputs
+    assert len(result) == 1
+    candidate = result[0]
+    onset = cues["peaks"][0]["time_s"]
+    left = max(frame for frame, t in enumerate(times) if t <= onset - 0.12)
+    right = min(frame for frame, t in enumerate(times) if t >= onset + 0.12)
+    assert candidate["start_frame"] == left
+    assert candidate["end_frame"] == right
+    assert candidate["start_time_s"] == times[left]
+    assert candidate["end_time_s"] == times[right]
+    assert candidate["context_start_frame"] <= left
+    assert candidate["context_end_frame"] > right
+    navigation = min(range(len(times)), key=lambda i: abs(times[i] - onset))
+    assert candidate["frame"] == navigation
+    assert candidate["time_s"] == times[navigation]
+    assert candidate["timing"] == "uncertain_interval"
+    assert candidate["interval_bounds"] == "inclusive"
+    assert candidate["reviewed"] is False
+
+
+@pytest.mark.parametrize(
+    "case,expected",
+    [
+        ("sparse", 1),
+        ("vfr_origin", 1),
+        ("duplicate_sound", 1),
+        ("history_valid", 1),
+        ("recursive_history", 1),
+        ("edge", 0),
+        ("tail", 0),
+        ("cut", 0),
+        ("player_cut", 0),
+        ("replay_bound", 0),
+        ("player_replay_bound", 0),
+        ("unknown_bound", 0),
+        ("excluded_bound", 0),
+        ("frame_gap", 0),
+        ("timestamp_gap", 0),
+        ("missing_audio", 0),
+        ("no_gap", 0),
+        ("static_wrist", 0),
+        ("history_replay", 0),
+        ("missing_history", 0),
+        ("bound_pose_mismatch", 0),
+        ("bound_pose_duplicate", 0),
+        ("history_cut", 0),
+        ("history_player_replay", 0),
+    ],
+)
+def test_new_audio_interval_preserves_available_and_excluded_context(case, expected):
+    shuttle, players, video, cues, times = interval_scenario(case=case)
+    result = add_audio_support([], shuttle, players, video, cues)
+    assert len(result) == expected
+    if expected:
+        candidate = result[0]
+        onset = cues["peaks"][0]["time_s"]
+        assert candidate["start_time_s"] <= onset - 0.12
+        assert candidate["end_time_s"] >= onset + 0.12
+        assert candidate["time_s"] == times[24]
+        assert candidate["context_start_frame"] <= candidate["start_frame"]
+        assert candidate["context_end_frame"] > candidate["end_frame"]
+        if case == "history_valid":
+            assert candidate["context_start_frame"] == 10
+        elif case == "recursive_history":
+            assert candidate["context_start_frame"] == 5
+    else:
+        far = max(
+            range(len(times)), key=lambda i: abs(times[i] - cues["peaks"][0]["time_s"])
+        )
+        visual = [
+            {"id": "far", "frame": far, "time_s": times[far], "evidence": {"keep": [1]}}
+        ]
+        assert add_audio_support(visual, shuttle, players, video, cues) == visual
+
+
+def test_missing_new_interval_endpoint_preserves_existing_tail_corroboration():
+    shuttle, players, video, cues, times = interval_scenario(case="tail")
+    assert add_audio_support([], shuttle, players, video, cues) == []
+    visual = [{"id": "tail", "frame": 70, "time_s": times[70], "evidence": {}}]
+    original = copy.deepcopy(visual)
+    result = add_audio_support(visual, shuttle, players, video, cues)
+    assert visual == original
+    assert len(result) == 1 and result[0]["time_s"] == times[70]
+    assert len(result[0]["evidence"]["audio_support"]) == 1
