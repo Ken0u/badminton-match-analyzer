@@ -1262,6 +1262,12 @@
       "task_id": "271",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint273-refresh-v1": {
+      "actor": "dootz1",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint273-v1": {
       "actor": "dootz1",
       "at": 1792910795,
