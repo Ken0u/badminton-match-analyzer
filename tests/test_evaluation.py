@@ -1,4 +1,5 @@
 import json
+from copy import deepcopy
 
 import pytest
 from badminton.cli import load_evaluation_run
@@ -58,6 +59,251 @@ def annotations(events=None, windows=None, points=None):
         "review_windows": windows or [],
         "shuttle_points": points or [],
     }
+
+
+def camera_run(candidates, cuts=None, *, location="run", start=0, end=100):
+    run = contact_run(candidates, start, end)
+    cuts = [20] if cuts is None else cuts
+    if location == "run":
+        run["cut_frames"] = cuts
+    elif location == "court":
+        run.update(
+            court_context={"start_frame": start, "end_frame": end, "cut_frames": cuts},
+            calibration_signature=[],
+        )
+    return run
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize("location", ["run", "court", "review"])
+@pytest.mark.parametrize("status", ["reviewed", "corrected"])
+def test_contacts_do_not_match_across_known_camera_cuts(mode, location, status):
+    labels = annotations([event("before", 19, 0.76, status=status)], [window(0, 40)])
+    run = camera_run([("after", 20, 0.8)], location=location)
+    if location == "review":
+        labels["camera_corrections"] = [{"frame": 20, "is_cut": True}]
+    before = deepcopy((labels, run))
+    result = evaluate_contacts(video() | {"mode": mode}, labels, run)
+    assert result["metrics"]["tp"] == 0
+    assert result["metrics"]["fp"] == result["metrics"]["fn"] == 1
+    assert result["coverage"]["frame_ranges"] == [[0, 20], [20, 40]]
+    assert result["coverage"]["reviewed_frames"] == 40
+    assert result["coverage"]["reviewed_event_ids"] == ["before"]
+    assert result["coverage"]["evaluated_candidate_ids"] == ["after"]
+    assert result["coverage"]["camera_cut_frames"] == [20]
+    assert result["coverage"]["camera_context_metadata"] == "available"
+    assert result["interval_coverage"]["matched_count"] == 0
+    assert result["tighter_tolerance"]["metrics"]["tp"] == 0
+    assert (labels, run) == before
+
+
+def test_legacy_camera_context_is_unavailable_without_inventing_a_barrier():
+    result = evaluate_contacts(
+        video(),
+        annotations([event("before", 19, 0.76)], [window(0, 40)]),
+        contact_run([("after", 20, 0.8)]),
+    )
+    assert result["metrics"]["tp"] == 1
+    assert result["coverage"]["camera_cut_frames"] == []
+    assert result["coverage"]["camera_context_metadata"] == "unavailable"
+
+
+def test_touching_review_windows_merge_then_split_at_camera_cuts():
+    labels = annotations(
+        [event("one", 19, 0.76), event("two", 21, 0.84)],
+        [window(0, 20), window(20, 40)],
+    )
+    result = evaluate_contacts(
+        video(), labels, camera_run([("one", 20, 0.8), ("two", 22, 0.88)])
+    )
+    assert result["coverage"]["frame_ranges"] == [[0, 20], [20, 40]]
+    assert (
+        result["metrics"]["tp"]
+        == result["metrics"]["fp"]
+        == result["metrics"]["fn"]
+        == 1
+    )
+    assert result["unmatched_event_ids"] == ["one"]
+    assert len(result["unmatched_candidate_ids"]) == 1
+
+
+def test_multiple_cuts_and_run_review_edges_keep_each_frame_once():
+    labels = annotations(
+        [event("a", 10, 0.4), event("b", 20, 0.8), event("c", 30, 1.2)],
+        [window(10, 40)],
+    )
+    run = camera_run(
+        [("a", 10, 0.4), ("b", 20, 0.8), ("c", 30, 1.2)],
+        [10, 20, 30, 40],
+        start=10,
+        end=40,
+    )
+    result = evaluate_contacts(video(), labels, run)
+    assert result["coverage"]["frame_ranges"] == [[10, 20], [20, 30], [30, 40]]
+    assert result["coverage"]["reviewed_frames"] == 30
+    assert result["metrics"]["tp"] == 3
+    assert result["interval_coverage"]["matched_count"] == 3
+
+
+@pytest.mark.parametrize(
+    "changes,reason",
+    [
+        ({"start_frame": 19, "end_frame": 20}, "contact_interval_crosses_camera_cut"),
+        (
+            {"context_start_frame": 18, "context_end_frame": 21},
+            "evidence_context_crosses_camera_cut",
+        ),
+    ],
+)
+def test_cross_cut_contact_interval_or_evidence_is_excluded_not_truncated(
+    changes, reason
+):
+    labels = annotations([event("contact", 19, 0.76)], [window(0, 40)])
+    run = camera_run([("crossing", 19, 0.76)])
+    run["candidates"][0].update(changes)
+    result = evaluate_contacts(video(), labels, run)
+    assert result["metrics"]["tp"] == result["metrics"]["fp"] == 0
+    assert result["metrics"]["fn"] == 1
+    assert result["coverage"]["reviewed_contacts"] == 1
+    assert result["coverage"]["evaluated_candidate_ids"] == []
+    assert result["coverage"]["excluded_candidate_ids"] == ["crossing"]
+    assert result["coverage"]["candidate_exclusions"] == [
+        {"id": "crossing", "reason": reason}
+    ]
+    assert result["interval_coverage"]["candidate_count"] == 0
+
+
+@pytest.mark.parametrize("cut", [18, 20])
+def test_half_open_evidence_edges_do_not_cross_a_cut(cut):
+    run = camera_run([("point", 19, 0.76)], [cut])
+    run["candidates"][0].update(context_start_frame=18, context_end_frame=20)
+    result = evaluate_contacts(
+        video(), annotations([event("point", 19, 0.76)], [window(0, 40)]), run
+    )
+    assert result["metrics"]["tp"] == 1
+    assert result["coverage"]["evaluated_candidate_ids"] == ["point"]
+
+
+@pytest.mark.parametrize(
+    "changes,reason",
+    [
+        (
+            {"start_frame": 19, "end_frame": 21},
+            "contact_interval_outside_reviewed_coverage",
+        ),
+        (
+            {"context_start_frame": 18, "context_end_frame": 22},
+            "evidence_context_outside_reviewed_coverage",
+        ),
+    ],
+)
+def test_contact_or_evidence_cannot_bridge_a_gap_in_review(changes, reason):
+    run = contact_run([("crossing", 19, 0.76)])
+    run["candidates"][0].update(changes)
+    result = evaluate_contacts(
+        video(),
+        annotations([event("point", 19, 0.76)], [window(0, 20), window(21, 40)]),
+        run,
+    )
+    assert result["metrics"]["fn"] == 1
+    assert result["metrics"]["tp"] == result["metrics"]["fp"] == 0
+    assert result["coverage"]["candidate_exclusions"] == [
+        {"id": "crossing", "reason": reason}
+    ]
+    assert result["coverage"]["reviewed_frames"] == 39
+
+
+def test_legacy_inferred_evidence_is_retained_when_checking_camera_context():
+    run = camera_run([("legacy", 19, 0.76)])
+    run["candidates"][0]["evidence_source"] = "observed_trajectory"
+    result = evaluate_contacts(
+        video(), annotations([event("point", 19, 0.76)], [window(0, 40)]), run
+    )
+    assert result["coverage"]["candidate_exclusions"] == [
+        {"id": "legacy", "reason": "evidence_context_crosses_camera_cut"}
+    ]
+
+
+@pytest.mark.parametrize("location", ["run", "court"])
+@pytest.mark.parametrize(
+    "bad", [None, (), {}, "20", [True], [0], [-1], [100], [1.5], ["20"]]
+)
+def test_malformed_camera_cut_metadata_is_rejected(location, bad):
+    run = camera_run([], [], location=location)
+    owner = run if location == "run" else run["court_context"]
+    owner["cut_frames"] = bad
+    with pytest.raises(ValueError, match="Camera cut"):
+        evaluate_contacts(video(), annotations(windows=[window()]), run)
+
+
+@pytest.mark.parametrize(
+    "context",
+    [
+        None,
+        [],
+        {},
+        {"start_frame": True, "end_frame": 100},
+        {"start_frame": 1, "end_frame": 100},
+        {"start_frame": 0, "end_frame": 101},
+    ],
+)
+def test_malformed_frozen_court_context_is_rejected(context):
+    run = contact_run([]) | {"court_context": context, "calibration_signature": []}
+    with pytest.raises(ValueError, match="court context"):
+        evaluate_contacts(video(), annotations(windows=[window()]), run)
+
+
+def test_current_camera_or_court_changes_reject_stale_known_context():
+    labels = annotations(windows=[window()])
+    run = camera_run([], [], location="court")
+    labels["camera_corrections"] = [{"frame": 20, "is_cut": True}]
+    with pytest.raises(ValueError, match="context changed"):
+        evaluate_contacts(video(), labels, run)
+    labels.pop("camera_corrections")
+    run["calibration_signature"] = [[0, 100, []]]
+    with pytest.raises(ValueError, match="context changed"):
+        evaluate_contacts(video(), labels, run)
+
+
+def test_camera_review_signature_rejects_changes_without_court_metadata():
+    run = camera_run([], []) | {"camera_review_signature": []}
+    labels = annotations(windows=[window()])
+    labels["camera_corrections"] = [{"frame": 20, "is_cut": True}]
+    with pytest.raises(ValueError, match="Camera review changed"):
+        evaluate_contacts(video(), labels, run)
+
+
+@pytest.mark.parametrize(
+    "bad", [None, {}, [{"frame": 20, "is_cut": 1}], [{"frame": True, "is_cut": True}]]
+)
+def test_malformed_reviewed_camera_additions_are_rejected(bad):
+    labels = annotations(windows=[window()]) | {"camera_corrections": bad}
+    with pytest.raises(ValueError, match=r"camera|Camera"):
+        evaluate_contacts(video(), labels, contact_run([]))
+
+
+def test_removal_of_a_known_cut_requires_new_proposals():
+    labels = annotations(windows=[window()])
+    labels["camera_corrections"] = [{"frame": 20, "is_cut": False}]
+    with pytest.raises(ValueError, match="Camera review changed"):
+        evaluate_contacts(video(), labels, camera_run([]))
+
+
+@pytest.mark.parametrize("flag", ["requires_context_rerun", "requires_tracking_rerun"])
+def test_explicit_stale_contact_context_is_not_scored(flag):
+    run = contact_run([]) | {flag: True}
+    with pytest.raises(ValueError, match="stale"):
+        evaluate_contacts(video(), annotations(windows=[window()]), run)
+
+
+def test_coverage_id_contract_is_present_when_no_windows_are_eligible():
+    result = evaluate_contacts(
+        video(), annotations([event("e", 1, 0.04)]), contact_run([("c", 1, 0.04)])
+    )
+    assert result["metrics"] is None
+    assert result["coverage"]["reviewed_event_ids"] == []
+    assert result["coverage"]["evaluated_candidate_ids"] == []
+    assert result["coverage"]["excluded_candidate_ids"] == ["c"]
 
 
 @pytest.mark.parametrize(

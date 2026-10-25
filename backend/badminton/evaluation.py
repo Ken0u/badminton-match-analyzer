@@ -9,8 +9,9 @@ representative times, which are navigation locations for occlusion proposals.
 """
 
 import math
+from itertools import pairwise
 
-from .scene_review import reviewed_contacts
+from .scene_review import camera_review_signature, reviewed_contacts
 
 
 def _base(video, annotations, run, stage):
@@ -241,6 +242,122 @@ def _interval_coverage(events, candidates, ranges):
     }
 
 
+def _contact_camera_context(video, annotations, run):
+    """Validate known camera lineage without claiming missing legacy metadata.
+
+    Cut ordinals name the first frame of a new view. A legacy artifact without
+    a frozen context may still use explicit reviewed additions as conservative
+    comparison barriers; it cannot certify that no other edit exists.
+    """
+    count = video["frame_count"]
+
+    def cut(value):
+        if type(value) is not int or not 0 < value < count:
+            raise ValueError(
+                "Camera cuts must be integer source frames inside the video"
+            )
+        return value
+
+    context = run.get("court_context")
+    if "court_context" in run:
+        if not isinstance(context, dict):
+            raise ValueError("Contact court context must be an object")
+        left, right = context.get("start_frame"), context.get("end_frame")
+        if (
+            type(left) is not int
+            or type(right) is not int
+            or not 0 <= left <= run["start_frame"] < run["end_frame"] <= right <= count
+        ):
+            raise ValueError(
+                "Contact court context must contain its run within the source"
+            )
+    cuts = set()
+    known = False
+    for owner in (run, context):
+        if owner is None:
+            continue
+        for key in (
+            "cut_frames",
+            "raw_cut_frames",
+            "known_preceding_cut_frames",
+            "known_preceding_timestamp_gaps",
+        ):
+            if key not in owner:
+                continue
+            values = owner[key]
+            if not isinstance(values, list):
+                raise ValueError("Camera cut metadata must be a list of source frames")
+            validated = [cut(value) for value in values]
+            if key == "cut_frames":
+                known = True
+                cuts.update(validated)
+        preceding = owner.get("preceding_reviewed_cut_frame")
+        if preceding is not None:
+            cut(preceding)
+    corrections = annotations.get("camera_corrections", [])
+    if not isinstance(corrections, list):
+        raise ValueError("Reviewed camera corrections must be a list")
+    for correction in corrections:
+        if (
+            not isinstance(correction, dict)
+            or type(correction.get("is_cut")) is not bool
+        ):
+            raise ValueError(
+                "Reviewed camera corrections need a source frame and boolean decision"
+            )
+        frame = cut(correction.get("frame"))
+        if correction["is_cut"]:
+            cuts.add(frame)
+            known = True
+        elif frame in cuts:
+            raise ValueError("Camera review changed known cuts; rerun proposals")
+    signature = run.get("camera_review_signature")
+    if "camera_review_signature" in run:
+        if not isinstance(signature, list):
+            raise ValueError("Contact camera review signature must be a list")
+        for item in signature:
+            if (
+                not isinstance(item, list)
+                or len(item) != 2
+                or type(item[1]) is not bool
+            ):
+                raise ValueError("Contact camera review signature is malformed")
+            cut(item[0])
+        if signature != camera_review_signature(
+            annotations, run["start_frame"], run["end_frame"]
+        ):
+            raise ValueError("Camera review changed contact inputs; rerun proposals")
+    if any(
+        run.get(key) for key in ("requires_context_rerun", "requires_tracking_rerun")
+    ):
+        raise ValueError("Contact input context is stale; rerun proposals")
+    try:
+        reviewed = reviewed_contacts(run, annotations)
+    except (KeyError, TypeError, AttributeError) as exc:
+        raise ValueError("Contact camera/court context is malformed") from exc
+    if reviewed["requires_context_rerun"]:
+        raise ValueError(
+            "Camera or court context changed contact inputs; rerun proposals"
+        )
+    return sorted(cuts), "available" if known else "unavailable", reviewed
+
+
+def _contact_context_exclusion(item, ranges, cuts):
+    """Require all possible contact/evidence frames in one reviewed camera view."""
+    left, right = item["start_frame"], item["end_frame"] + 1
+    if any(left < cut < right for cut in cuts):
+        return "contact_interval_crosses_camera_cut"
+    if not any(start <= left < right <= end for start, end in ranges):
+        return "contact_interval_outside_reviewed_coverage"
+    if "context_start_frame" in item:
+        left, right = item["context_start_frame"], item["context_end_frame"]
+        if any(left < cut < right for cut in cuts):
+            return "evidence_context_crosses_camera_cut"
+        if not any(start <= left < right <= end for start, end in ranges):
+            return "evidence_context_outside_reviewed_coverage"
+    return None
+
+
 def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
     """Score contacts only inside fully covered, exhaustive live review windows.
 
@@ -255,6 +372,9 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
         raise ValueError("Contact tolerance must be finite and nonnegative")
     result = _base(video, annotations, contact_run, "contacts")
     start, end = contact_run["start_frame"], contact_run["end_frame"]
+    cuts, camera_metadata, reviewed = _contact_camera_context(
+        video, annotations, contact_run
+    )
     all_events = [
         event
         for event in annotations.get("events", [])
@@ -272,12 +392,13 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
     ]
     if len({item["id"] for item in all_candidates}) != len(all_candidates):
         raise ValueError("Contact candidate IDs must be unique")
-    excluded_context_ids = [
-        c["id"]
-        for c in reviewed_contacts(contact_run, annotations)["candidates"]
-        if c["scene_excluded"]
+    # The reviewed copy can add conservative evidence context for old artifacts.
+    # Validate and consume that same view instead of losing its context metadata.
+    all_candidates = [
+        _validate_candidate(candidate, video, contact_run)
+        for candidate in reviewed["candidates"]
     ]
-    all_candidates = [c for c in all_candidates if c["id"] not in excluded_context_ids]
+    excluded_context_ids = [c["id"] for c in all_candidates if c["scene_excluded"]]
     usable, skipped = [], []
     for window in annotations.get("review_windows", []):
         if window["scene"] != "live":
@@ -310,12 +431,27 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
             ranges[-1][1] = max(ranges[-1][1], right)
         else:
             ranges.append([left, right])
+    uninterrupted = []
+    for start, end in ranges:
+        bounds = [start, *[cut for cut in cuts if start < cut < end], end]
+        uninterrupted.extend([left, right] for left, right in pairwise(bounds))
+    ranges = uninterrupted
 
     def included(frame):
         return any(left <= frame < right for left, right in ranges)
 
     events = [event for event in all_events if included(event["frame"])]
-    candidates = [item for item in all_candidates if included(item["frame"])]
+    candidates, exclusions = [], []
+    for item in all_candidates:
+        reason = (
+            "reviewed_scene_excludes_evidence"
+            if item["scene_excluded"]
+            else _contact_context_exclusion(item, ranges, cuts)
+        )
+        if reason:
+            exclusions.append({"id": item["id"], "reason": reason})
+        else:
+            candidates.append(item)
     for item in events + candidates:
         if not math.isfinite(item["time_s"]) or item["time_s"] < 0:
             raise ValueError("Contact timestamps must be finite source times")
@@ -336,6 +472,12 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
             "reviewed_frames": sum(right - left for left, right in ranges),
             "reviewed_contacts": len(events),
             "evaluated_candidates": len(candidates),
+            "reviewed_event_ids": [item["id"] for item in events],
+            "evaluated_candidate_ids": [item["id"] for item in candidates],
+            "excluded_candidate_ids": [item["id"] for item in exclusions],
+            "candidate_exclusions": exclusions,
+            "camera_cut_frames": cuts,
+            "camera_context_metadata": camera_metadata,
             "uncertain_candidate_count": sum(
                 _uncertain_candidate(item) for item in candidates
             ),
