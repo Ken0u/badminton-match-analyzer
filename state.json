@@ -21213,6 +21213,7 @@
       }
     },
     "264": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40163004997",
       "checkpoint": {
         "branch": "codex/issue-264-reject-contact-and-recognition-evaluatio",
         "head_sha": "96ff7da8742ab33dc4735ecacf0e6f6cf5b632ef",
@@ -21233,7 +21234,7 @@
         "spec_hash": "1f16636d3c1ba7d3e8a1e292be18e6dddfd55edcc66a7f5e99ac8ede561a003c"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792903134,
