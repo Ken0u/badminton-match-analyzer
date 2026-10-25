@@ -21517,6 +21517,7 @@
       }
     },
     "267": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40165400539",
       "checkpoint": {
         "branch": "codex/issue-267-keep-saved-contact-and-recognition-compa",
         "evidence_sha256": "460e8de1752c19965b276665fb352dd9b23f62a306920211794908f9eebd9f95",
@@ -21538,7 +21539,7 @@
         "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792905303,
