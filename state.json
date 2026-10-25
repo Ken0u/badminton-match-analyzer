@@ -1280,6 +1280,15 @@
       "task_id": "273",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint273-v3": {
+      "actor": "dootz1",
+      "at": 1792911886,
+      "epoch": 1,
+      "fingerprint": "fec339f076eda186d6a2e71dc19fccd9a3b634c8ceba1cbfe4252aa53a287f25",
+      "status": "running",
+      "task_id": "273",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
@@ -22185,25 +22194,27 @@
     "273": {
       "checkpoint": {
         "artifacts": [
-          ".cache/w273/.cache/evidence",
-          ".cache/goal-01a17154/baseline273-process.json",
-          ".cache/goal-01a17154/admission273-actual.log",
-          ".cache/goal-01a17154/admission273-actual-v2.log",
-          ".cache/goal-01a17154/admission273-actual-v3.log",
-          ".cache/goal-01a17154/export273-final.log"
+          ".cache/goal-01a17154/admission273-final.log",
+          ".cache/goal-01a17154/ownership273-final.log",
+          ".cache/goal-01a17154/admission273-audit.json",
+          ".cache/goal-01a17154/browser273-production.log",
+          ".cache/goal-01a17154/browser273-library.log",
+          ".cache/goal-01a17154/export273-final.log",
+          ".cache/goal-01a17154/browser273-editor-final.log",
+          ".cache/goal-01a17154/browser273-parity-final.log"
         ],
         "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
         "head": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
-        "remaining": "Final-source actual tests including spawn-error; remaining defaultproduction19/library8/editor18/parity, ownership regressions, frontend/required fullPython and evidence/source/process/output audits. Then focused commit/PR/exactCI/controller/main/public delivery. Preserve all failed attempts. Four-hour/512MiB budget remains from grant1792910590; no inference/training/model/runtime changes.",
-        "summary": "Normal original Windows3.10venv (no __PYVENV_LAUNCHER__) reproduces baseline worker7804 vs launcher57596; unchanged PID assertion fails before cleanup registration. Worker original gate45s failed disposable Store job f4da2f624cf14b4cbdf623d5b1529a9c; both recorded PIDs independently absent, fixture cleanup complete. Wrapper creation metadata not captured before exit and not fabricated. New test-only helper reuses fixtureOwnership/fixtureProcessProbe byte-identically, binds nonce/root/cwd/argv/executables/lineage/lifetime, registers immediate cleanup, atomically publishes receipts, bounded cooperative release then existing strict owner, cached concurrent/idempotent cleanup, original startup error preservation and explicit worker/Store statuses. Actual v3 tests22/22pass including real direct OS lifetime and normalvenv normal/failedstartup Store workers; all original candidate lifetimes audited next. Initial actual test omitted fixture seed and failed before admission launch; direct/fixture cleanup retained. Final current helper strengthened deadline/Store receipt binding and adds actual spawn-error regression. Complete normalvenv export matrix passes13groups including real Store denial/explicit retry; Ruff234/format/pip/diff pass. Exactly4granted paths edited/new, no runtime/dependency/workflow/science changes."
+        "remaining": "FullPython same source, frozen browser/source/probe/process/output/document audits, final report/commit/PR exactCI. Controller main/public delivery only. No standalone legacy parity repair outside scope. Preserve baseline failures/unknown launcher creation, no restart on timeout. Four-hour512MiB limits unchanged from grant1792910590.",
+        "summary": "Final executable source frozen: delivery2a6089e5501e5f286a177de6e85ef9af2ab3e160ddd2d86cc6d600ebea5be78d, helpercd4e55ad1536611457837c245f41e7d68d461a422e2ef1c39566c67a12503ae1, test915e529b64f8811191a696fcef8ae5b5b0262d9e0ff97cb25d1c243d76836404. All23admission cases pass including actual OS spawn-error/direct and normalWindowsvenv realStore normal/preacceptance failure. Shared ownership71pass/2explicit skips; real new admission tests cover originalvenv process lifetimes. Complete normalvenv production19/library8/export13 and directeditor18groups pass with all terminal cleanups. ASTaudit proves all40existing action bodies and shared fixture/editor/parity/shuttle bytes unchanged. Read-only audit22cleanup receipts/38original exact lifetimes absent; successful realStore jobs match read-only SQLite. Frontend200/type/contract/build/stage5assets pass; Ruff234/format/pip/repository/Prettier/diff pass. Preserved firstactualseed omission before worker spawn; firstdirecteditor lacked dist and failed before fixture startup, then existing build completed and editor18passed. Historical standalone frontend-parity.mjs fails its unchanged initial onboarding assertion against modern defaultReact; supported production's17frozen parity blocks pass. No assertion/source edit hides this; rawfailed log/fixture cleanup retained. Starting one required fullPython run with fresh short git-ignored temp b273a; no scientific job/inference/runtime/policy change."
       },
-      "checkpoint_at": 1792911471,
+      "checkpoint_at": 1792911886,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
         "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
         "epoch": 1,
-        "expires_at": 1792922271,
+        "expires_at": 1792922686,
         "granted_at": 1792910590,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
