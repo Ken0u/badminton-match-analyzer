@@ -1120,6 +1120,12 @@
       "status": "idle",
       "verb": "next"
     },
+    "goal-01a17154-plan266-v1": {
+      "actor": "dootz1",
+      "reason": "spec fields must match the version 1 task contract",
+      "status": "rejected",
+      "verb": "plan"
+    },
     "goal-01a17154-register-v1": {
       "actor": "dootz1",
       "at": 1792903074,
@@ -8239,6 +8245,14 @@
       "fingerprint": "bb388d2a54f033c332b039855aadc4ed6de23bbc2d4b5ef9ff05c906fa1eb71b",
       "status": "ready",
       "task_id": "264",
+      "verb": "plan"
+    },
+    "spec-266-63d3bb49a1791d75462349722bb9e6136ba7b3329c100b8e2ddccf8c29292a7c": {
+      "actor": "dootz1",
+      "at": 1792903261,
+      "fingerprint": "672df8b9c91074887eabbdbcca4fc0e3b8c131565501a07456a14c58aba504be",
+      "status": "ready",
+      "task_id": "266",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -21254,6 +21268,54 @@
         "pr_number": 265,
         "spec_hash": "1f16636d3c1ba7d3e8a1e292be18e6dddfd55edcc66a7f5e99ac8ede561a003c"
       }
+    },
+    "266": {
+      "epoch": 0,
+      "planned_at": 1792903261,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Preserve the generated recording-canvas reproduction: exact delivered Playback.draw code draws a line from frame1 (10,10) to frame2 (90,90) despite an automatic cut, reviewed cut, timestamp discontinuity or reviewed scene boundary at frame2. The continuous no-boundary control must retain its trail. No real footage, scientific labels or model outputs are needed.",
+          "Obtain a committed grant and isolated worktree before production edits; preserve existing edits, environments, datasets, predictions and deprecated PROGRESS.md. Check all issue/PR history and current coordination reservations before claiming.",
+          "Render the recent shuttle path only from the latest effective camera cut, timestamp discontinuity or reviewed scene-range start/end at or before the displayed frame. Never draw prior-view trail segments on the new view. Honor reviewed camera additions/removals consistently with existing calibration context, while timestamp gaps remain non-removable. Detect source-clock gaps using the existing frontend convention rather than FPS-based frame identity. Preserve legacy runs with unavailable boundary metadata and ordinary VFR continuity without inventing cuts.",
+          "Keep missing/invisible/invalid observations as breaks; do not invent zero coordinates for invalid visible positions. Preserve native pixel coordinates, current visible observation markers, manual labels, original run data and user overlay switches. Factor a small pure helper if useful so rendering consumes the tested context logic.",
+          "Add generated regression tests for camera cuts/additions/removals, non-removable timestamp gaps, scene starts/ends, boundaries inside the history window with no observation exactly at the boundary, consecutive frames, missing/invisible/nonfinite coordinates and source-edge frames. Include a generated browser recording-canvas assertion on the actual editor showing the false bridge is absent while the ordinary continuous trail and manual markers still work.",
+          "Run focused frontend tests, typecheck, contract, build/stage parity and relevant browser checks plus required Python/Ruff/pip/diff checks. Use existing project environment and generated disposable storage; preserve failed attempts and cleanup evidence. No new dependency, model or scientific data access.",
+          "Document concrete before/after, verification and limits in the focused report. Submit a focused PR with exact head/base/spec hashes for normal controller integration, exact-head/main CI and verified candidate delivery. Software overlay correctness does not establish badminton annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No scientific image/label access or transfer, native inference/training, model/default changes, new dependencies, auth/policy/workflow/deployment changes, paid services, direct main push/manual merge or PROGRESS.md edits."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Keep the editor shuttle trail inside its current source camera/scene/time context instead of drawing false flight across discontinuities.",
+        "paths": [
+          "backend/frontend/src/editor/Playback.tsx",
+          "backend/frontend/src/editor/model.ts",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs",
+          "backend/badminton/static/",
+          "docs/SHUTTLE_OVERLAY_CONTEXT_REPORT.md"
+        ],
+        "priority": 25,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated exact-draw baseline, meaningful helper and browser regressions; focused and required checks on unchanged final source.",
+          "Exact PR/main checks, controller integration and candidate delivery; report accuracy limitations."
+        ]
+      },
+      "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
