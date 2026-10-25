@@ -9885,6 +9885,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "tiling299-checkpoint-control-running-v1": {
+      "actor": "Ken0u",
+      "at": 1792936136,
+      "epoch": 1,
+      "fingerprint": "38d23f67924231098300a93f316d409085f82afce4ed4354736b12c7bfe360f4",
+      "status": "running",
+      "task_id": "299",
+      "verb": "checkpoint"
+    },
     "tiling299-checkpoint-frozen-v1": {
       "actor": "Ken0u",
       "at": 1792935673,
@@ -24555,17 +24564,21 @@
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
         "experiment_sha256": "d2a848ad17b20314da8e723d3da213736202a471532bdf114c0b7837a31a4098",
         "head_sha": "f6c26cb60d38809fdbac1b9365f80d114587997b",
-        "protocol_sha256": "23d5c71bf0cc69be6d5ca8f80184f7dff4dc74a548d23891d2557c4c3ee1445b",
-        "remaining": "Original-host prelaunch, unchanged control compatibility gate before candidate, raw terminal seal before interpretation, final aggregate report and exact CI/controller/main/independent public delivery.",
-        "summary": "Frozen **before native predictions**: source `f6c26cb60d38809fdbac1b9365f80d114587997b`, spec `dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a`, epoch1. Final local 4,605 Python tests pass/four optional skips,171 focused; required checks pass and 1998 independently observed lifetimes are terminal. All60 familiar cases/50 complete views/13499 native rows and original source/label/checkpoint/baseline graph verified. No external image transfer or new labels/training/default change."
+        "job_id": "1db6e687764c431081ebe2f510f1fe18",
+        "live_checkpoint_sha256": "2ac74c8645b345de41b7fbb716d5f6c515086520ca8d53b3a4ab6b23b49c75a7",
+        "owner_pid": 19532,
+        "owner_started": 1792935794.6761491,
+        "pr_number": 300,
+        "remaining": "Observe this same process; never restart on a missing handle or timeout. Verify independently terminal lifetimes/Store/artifacts and complete compatible control gate before candidate. Check unchanged originals and fresh idle shared admission; timestamp gate and renew lease before the sole fixed candidate. Seal terminal raw outputs before interpretation, produce aggregate report, finalize PR and exact CI/controller/main/independent public delivery. Keep65/full accuracy open; no new image assessment/transfer, training, promotion or recipe changes.",
+        "summary": "Native control is running: 8/50 complete source views, candidate0/50. Shared Store job `1db6e687764c431081ebe2f510f1fe18` has verified original owner PID19532, creation1792935794.6761491, matching actual cwd/command/Store ownership and live lifetime. This is processing coverage, not an accuracy result. Source head `f6c26cb60d38809fdbac1b9365f80d114587997b` is preserved in [draft PR#300](https://github.com/Ken0u/badminton-match-analyzer/pull/300);4,605 full tests/four optional skips and171 focused tests pass."
       },
-      "checkpoint_at": 1792935673,
+      "checkpoint_at": 1792936136,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e49b7fc0a96b056ae9ef32461a002041d79d698d",
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
         "epoch": 1,
-        "expires_at": 1792946473,
+        "expires_at": 1792946936,
         "granted_at": 1792933796,
         "host_id": "MSI",
         "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
