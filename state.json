@@ -1422,6 +1422,26 @@
       "status": "idle",
       "verb": "next"
     },
+    "goal-01a17154-next-audio284-v1": {
+      "actor": "dootz1",
+      "at": 1792919166,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9",
+        "branch": "codex/issue-284-investigate-and-if-reproduced-with-gener",
+        "epoch": 1,
+        "expires_at": 1792929966,
+        "granted_at": 1792919166,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "1a72d9b4e567409ba6d8828a53bc86bac70c8b60de623ee6e5863a9bca5352d4"
+      },
+      "epoch": 1,
+      "fingerprint": "7707e3aaad2246b6b003ab080413e7438da45dd6ff3cfd2475573ed484828abb",
+      "status": "granted",
+      "task_id": "284",
+      "verb": "next"
+    },
     "goal-01a17154-next-import281-v1": {
       "actor": "dootz1",
       "at": 1792915764,
@@ -1543,6 +1563,14 @@
       "fingerprint": "68c238fe8e724b2fd5e153555ddc7e3afc643ba4c9ca95ebb6f710b56815bee0",
       "status": "running",
       "task_id": "281",
+      "verb": "plan"
+    },
+    "goal-01a17154-plan284-v1": {
+      "actor": "dootz1",
+      "at": 1792919166,
+      "fingerprint": "08b644f446698e81e5a37a4c2ce24b328b2f8455276adcd8516018f0cb5dc13e",
+      "status": "ready",
+      "task_id": "284",
       "verb": "plan"
     },
     "goal-01a17154-register-v1": {
@@ -9045,6 +9073,14 @@
       "fingerprint": "5d9f4e2178279519f2cd77b6ea18368e392cf6d24e9efa54fd72b36340a14eac",
       "status": "ready",
       "task_id": "282",
+      "verb": "plan"
+    },
+    "spec-284-38e64b0939af1114eb5b738d602b6fd6b2ec169e1ad24a95320a5b861470345a": {
+      "actor": "dootz1",
+      "at": 1792919166,
+      "fingerprint": "e1b630b2e105053ee0c61fd6bc89d918579516a8328b304b888fb6936c7bdc62",
+      "status": "ready",
+      "task_id": "284",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -23055,6 +23091,67 @@
         ]
       },
       "spec_hash": "1f1299e2761de712ccf989ae9eda13f6bd21ce18746d7af43d28d4f837ed02e4",
+      "status": "running"
+    },
+    "284": {
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9",
+        "branch": "codex/issue-284-investigate-and-if-reproduced-with-gener",
+        "epoch": 1,
+        "expires_at": 1792929966,
+        "granted_at": 1792919166,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "1a72d9b4e567409ba6d8828a53bc86bac70c8b60de623ee6e5863a9bca5352d4"
+      },
+      "epoch": 1,
+      "planned_at": 1792919166,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Revalidate current main, owning issue/specification, all active grants/PRs and related audio37/contact-clock264/267/scene-context history before execution. Preserve completed281/283, other-host282, pending279workflow owner decision, root edits, all environments/data/research and deprecatedPROGRESS. Obtain a fresh committed routine code-only grant and isolated granted branch/worktree before any executable reproduction or edit. This proposal is not a grant.",
+          "Baseline code observation on merged main ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9: add_audio_support selects player rows by time and consumes wrist movement without verifying their frame identity/time correspondence to the shuttle rows used for audio context. Do not assert a runtime defect until generated before/after evidence confirms it. First retain a frozen synthetic control and mutations that change only pose source-frame identity or time consistency, including shifted IDs, duplicate/conflicting rows and partial missing pose context as applicable. Exercise both direct consumer and actual disposable Store/API background job with existing audio extraction stubbed; no original video/audio, labels, predictions, models, inference, research Store or external service access. Preserve negative outcomes rather than manufacture a repair.",
+          "If confirmed, implement the smallest source-alignment guard entirely in audio_contacts.py. Add/corroborate optional audio evidence only when relevant pose samples have unambiguous frame identities and source times consistent with the shuttle context. Preserve explicit unknown/missing context; do not reassign frames, interpolate pose/trajectory values, manufacture identity, silently retime rows, score mismatches as negatives or claim absolute native-clock validation from pairwise agreement alone. Suppress unsupported optional audio evidence and retain preexisting visual candidates byte-for-byte when context cannot support it; unavailable audio retains current visual fallback. Do not change contacts.py, core visual proposal outputs, audio thresholds, extraction, default-off opt-in behavior, API/schema, models or dependency versions. Request scope extension before any additional path.",
+          "Preserve valid aligned positive controls and valid sparse pose sampling where existing minimum wrist-support requirements are met, inclusive uncertainty bounds, native VFR/nonzero-origin times, scene/camera exclusions, source-selection context, conflicting hitter evidence and duplicate-sound behavior. Do not impose nominal FPS, dense pose completeness or new scene truth. No annotations/revisions/source predictions or original supplied inputs are changed. Existing visual candidates must retain timing/score/hitter/evidence when optional support is ineligible.",
+          "Add meaningful direct and actual disposable API regressions with generated perception documents: positive aligned cases, same-time/different-frame mismatches, duplicate or inconsistent pose frame/time evidence, unavailable/missing/partial context, cuts/replays and preserved visual/annotation/artifact bytes. Existing acoustic decoding/source-origin tests remain in the selected denominator; an audio extraction stub establishes integration behavior only, not real acoustic or live YouTube accuracy. Record precisely which malformed cases reproduce and which were already excluded. Do not broaden the task into global cache/schema redesign or calibrate thresholds to scientific examples.",
+          "Run focused audio/contact/scene/source-clock/API checks and required full Python3.10/Ruff/format/pip/repository/diff checks using the existing environment, pinned root/data and fresh disposable output. Initialize torchvision before threadedPyAV, preserve native FFmpeg logging restoration and capture before/after source hashes plus actual wrapper/worker identities/independently observed absence for long tests. No heavyjob restart on timeout, research artifacts or installs.",
+          "Document baseline and repaired generated outcomes, full retained counts, untouched visual/default/extraction behavior, pairwise-source-consistency limits and absent scientific accuracy evidence in the focused report. Publish only four granted files through focused commits/PR; exactPR/main checks, controller integration and independently audited complete candidate package/source/frontend/lock/bothanonymouspublicimage manifests and45unchanged publicprotocol bytes. No manualmerge/mainpush/workflowretry/cancel/wake, approval fabrication or coordination edit. A negative investigation may publish only an accurate report.",
+          "Limits:4hours from freshgrant,512MiBnew retained outputs,three diagnosedrepairrounds,no paidservices. No original scientific source/image/audio/label/prediction/holdout access, independentassessor sessions, imagepayload, training/inference/modelpromotion/deployment/auth/policy/workflow/dependency/storage/corevisual/audioextractor change or PROGRESS access/update. Complete scientificreferences remain0/2 and all four eligibilityflagsfalse; this is source-consistency verification, not full automatic badminton accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "281"
+        ],
+        "exclusions": [
+          "No original scientific source/image/audio/label/prediction/holdout/model access, training/inference, research Store/datajob, audio threshold/default/extractor or corevisual contacts.py edit, API/schema/storage/auth/policy/workflow/dependency change, deployment/model promotion, paidservice, manualmerge or PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Investigate and, if reproduced with generated inputs, prevent optional audio contact support from combining inconsistent player/shuttle source-frame identities or times while preserving visual proposals and uncertainty.",
+        "paths": [
+          "backend/badminton/audio_contacts.py",
+          "tests/test_audio_contacts.py",
+          "tests/test_audio_api.py",
+          "docs/AUDIO_CONTACT_ALIGNMENT_REPORT.md"
+        ],
+        "priority": 40,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Frozen generated perception source-identity/time mutation reproduction and aligned/sparse/uncertain/scene controls, actual disposable API/Store job and immutable visual/annotation/prediction artifacts; focused/full required checks with source/process receipts.",
+          "ExactPR/main/controller delivery and complete independently audited package/source/frontend/lock/bothpublicmanifest/45publicprotocolbytes, with explicit non-accuracy limitations."
+        ]
+      },
+      "spec_hash": "1a72d9b4e567409ba6d8828a53bc86bac70c8b60de623ee6e5863a9bca5352d4",
       "status": "running"
     },
     "62": {
