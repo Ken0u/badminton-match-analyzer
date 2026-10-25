@@ -1241,6 +1241,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "goal-01a17154-submit266-v1": {
+      "actor": "dootz1",
+      "at": 1792905236,
+      "epoch": 1,
+      "fingerprint": "c7d8864b4b1d6dea3cbb219c3a8cd678932b26b7a527245949b47863193df5b5",
+      "status": "review",
+      "task_id": "266",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -21426,6 +21435,7 @@
       "epoch": 1,
       "planned_at": 1792903261,
       "planned_by": "dootz1",
+      "pr_number": 269,
       "spec": {
         "acceptance": [
           "Preserve the generated recording-canvas reproduction: exact delivered Playback.draw code draws a line from frame1 (10,10) to frame2 (90,90) despite an automatic cut, reviewed cut, timestamp discontinuity or reviewed scene boundary at frame2. The continuous no-boundary control must retain its trail. No real footage, scientific labels or model outputs are needed.",
@@ -21468,7 +21478,13 @@
         ]
       },
       "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "head_sha": "17b98ebc85a37a3e9843fd71f1aad7810b28a479",
+        "pr_number": 269,
+        "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d"
+      }
     },
     "267": {
       "checkpoint": {
