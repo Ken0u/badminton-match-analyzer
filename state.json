@@ -347,6 +347,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "camera309-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792963799,
+      "epoch": 1,
+      "fingerprint": "ff06f4cfc35ace778f1337c7180b68ad2e857047e7d4a1add5a0146b5de505f8",
+      "status": "running",
+      "task_id": "309",
+      "verb": "checkpoint"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -25492,12 +25501,19 @@
       }
     },
     "309": {
+      "checkpoint": {
+        "branch": "codex/issue-309-evaluate-raw-camera-cut-detections-again",
+        "head_sha": "77a72cfc4aae6e5149bda4ffe770cbbc58135fee",
+        "remaining": "Full verification, focused PR/exact CI/controller integration, merged-main and independent public delivery.",
+        "summary": "Implemented raw camera-cut scoring and offline JSON CLI in the five granted paths. All449 focused generated and adjacent evaluator tests pass. Initial import ordering and one lint suggestion corrected; original check evidence preserved. Full required project suite is running with fixed executable bytes, disposable storage and independently observed process lifetimes; lint/format pass. Complete transition/eligible/excluded counts, no cross-window/gap matching, raw versus corrected separation and input/output preservation are exercised. No scientific source/image/label access, assessor, inference, training or model change. Complete scientific references0/2 and automatic annotation accuracy unproven. Remaining: full checks, focused PR/exact CI/controller integration, merged-main and independent complete public delivery."
+      },
+      "checkpoint_at": 1792963799,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "77a72cfc4aae6e5149bda4ffe770cbbc58135fee",
         "branch": "codex/issue-309-evaluate-raw-camera-cut-detections-again",
         "epoch": 1,
-        "expires_at": 1792974198,
+        "expires_at": 1792974599,
         "granted_at": 1792963398,
         "host_id": "MSI",
         "session_id": "9f039f325d2a441b97eb51521ff283ef",
