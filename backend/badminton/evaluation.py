@@ -14,6 +14,7 @@ from collections.abc import Sequence
 from itertools import pairwise
 from numbers import Real
 
+from .contacts import MAX_FRAME_STEP_S
 from .scene_review import camera_review_signature, reviewed_contacts
 
 TIME_EPSILON_S = 0.00002
@@ -424,17 +425,21 @@ def _contact_camera_context(video, annotations, run):
     return sorted(cuts), "available" if known else "unavailable", reviewed
 
 
-def _contact_context_exclusion(item, ranges, cuts):
-    """Require all possible contact/evidence frames in one reviewed camera view."""
+def _contact_context_exclusion(item, ranges, cuts, gaps=()):
+    """Require contact/evidence frames in one continuous reviewed source view."""
     left, right = item["start_frame"], item["end_frame"] + 1
     if any(left < cut < right for cut in cuts):
         return "contact_interval_crosses_camera_cut"
+    if any(left < gap < right for gap in gaps):
+        return "contact_interval_crosses_source_timestamp_gap"
     if not any(start <= left < right <= end for start, end in ranges):
         return "contact_interval_outside_reviewed_coverage"
     if "context_start_frame" in item:
         left, right = item["context_start_frame"], item["context_end_frame"]
         if any(left < cut < right for cut in cuts):
             return "evidence_context_crosses_camera_cut"
+        if any(left < gap < right for gap in gaps):
+            return "evidence_context_crosses_source_timestamp_gap"
         if not any(start <= left < right <= end for start, end in ranges):
             return "evidence_context_outside_reviewed_coverage"
     return None
@@ -453,8 +458,9 @@ def evaluate_contacts(
     window until a reviewer adjudicates the contact frame.
 
     A supplied complete native clock validates every reference/proposal time
-    before exclusions. Omitting it retains legacy scoring with unavailable
-    clock validation; artifact times are never rewritten or inferred from FPS.
+    before exclusions and separates comparisons at unsupported source steps.
+    Omitting it retains legacy scoring with unavailable clock validation;
+    artifact times are never rewritten or inferred from FPS.
     """
     if not math.isfinite(tolerance_s) or tolerance_s < 0:
         raise ValueError("Contact tolerance must be finite and nonnegative")
@@ -465,6 +471,16 @@ def evaluate_contacts(
         )
     result["prediction_clock_status"] = (
         "validated" if native_timestamps is not None else "unavailable"
+    )
+    gaps = (
+        [
+            frame
+            for frame in range(1, video["frame_count"])
+            if native_timestamps[frame] - native_timestamps[frame - 1]
+            > MAX_FRAME_STEP_S + 1e-9
+        ]
+        if native_timestamps is not None
+        else []
     )
     start, end = contact_run["start_frame"], contact_run["end_frame"]
     cuts, camera_metadata, reviewed = _contact_camera_context(
@@ -527,8 +543,9 @@ def evaluate_contacts(
         else:
             ranges.append([left, right])
     uninterrupted = []
+    barriers = sorted(set(cuts) | set(gaps))
     for start, end in ranges:
-        bounds = [start, *[cut for cut in cuts if start < cut < end], end]
+        bounds = [start, *[frame for frame in barriers if start < frame < end], end]
         uninterrupted.extend([left, right] for left, right in pairwise(bounds))
     ranges = uninterrupted
 
@@ -541,7 +558,7 @@ def evaluate_contacts(
         reason = (
             "reviewed_scene_excludes_evidence"
             if item["scene_excluded"]
-            else _contact_context_exclusion(item, ranges, cuts)
+            else _contact_context_exclusion(item, ranges, cuts, gaps)
         )
         if reason:
             exclusions.append({"id": item["id"], "reason": reason})
@@ -572,6 +589,7 @@ def evaluate_contacts(
             "excluded_candidate_ids": [item["id"] for item in exclusions],
             "candidate_exclusions": exclusions,
             "camera_cut_frames": cuts,
+            "source_timestamp_gap_frames": gaps,
             "camera_context_metadata": camera_metadata,
             "uncertain_candidate_count": sum(
                 _uncertain_candidate(item) for item in candidates
