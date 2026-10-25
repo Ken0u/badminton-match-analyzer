@@ -7,6 +7,127 @@ from badminton.evaluation import evaluate_contacts, evaluate_shuttle
 from badminton.storage import Store
 
 
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize("status", ["reviewed", "corrected"])
+@pytest.mark.parametrize("kind", ["serve", "shot"])
+@pytest.mark.parametrize("frame,bounds", [(9, (9, 10)), (20, (19, 20))])
+def test_outside_navigation_uncertainty_overlaps_complete_window(
+    mode, status, kind, frame, bounds
+):
+    times = [2 + i * 0.04 + (i % 2) * 0.003 for i in range(100)]
+    labels = annotations(
+        [
+            event("certain", 15, times[15]),
+            event(
+                "uncertain",
+                frame,
+                times[frame],
+                kind=kind,
+                status=status,
+                contact_start_frame=bounds[0],
+                contact_end_frame=bounds[1],
+            ),
+        ],
+        [window(10, 20)],
+    )
+    run = contact_run([("exact", 15, times[15])])
+    before = deepcopy((labels, run))
+    result = evaluate_contacts(
+        video() | {"mode": mode}, labels, run, native_timestamps=times
+    )
+    assert result["status"] == "needs_complete_live_review"
+    assert result["metrics"] is result["interval_coverage"] is None
+    assert result["coverage"]["skipped_windows"] == [
+        {"id": "review-10", "reason": "contact_timing_needs_adjudication"}
+    ]
+    assert result["coverage"]["reviewed_frames"] == 0
+    assert result["coverage"]["excluded_reviewed_contacts"] == 2
+    assert result["coverage"]["excluded_candidates"] == 1
+    assert (labels, run) == before
+
+
+@pytest.mark.parametrize(
+    "frame,left,right,status,kind",
+    [
+        (9, 8, 9, "reviewed", "shot"),
+        (20, 20, 21, "corrected", "serve"),
+        (9, 9, 9, "reviewed", "shot"),
+        (20, 20, 20, "corrected", "shot"),
+        (9, 9, 10, "predicted", "shot"),
+        (20, 19, 20, "predicted", "serve"),
+        (9, 9, 10, "reviewed", "rally_end"),
+    ],
+)
+def test_nonoverlapping_point_predicted_and_terminal_references_keep_scores(
+    frame, left, right, status, kind
+):
+    extra = {"terminal_start_frame": left, "terminal_end_frame": right}
+    if kind != "rally_end":
+        extra = {"contact_start_frame": left, "contact_end_frame": right}
+    labels = annotations(
+        [
+            event("certain", 15, 0.6),
+            event("other", frame, frame * 0.04, status=status, kind=kind, **extra),
+        ],
+        [window(10, 20)],
+    )
+    run = contact_run([("exact", 15, 0.6)])
+    before = deepcopy((labels, run))
+    result = evaluate_contacts(video(), labels, run)
+    assert result["status"] == "scored"
+    assert result["coverage"]["frame_ranges"] == [[10, 20]]
+    assert result["coverage"]["skipped_windows"] == []
+    assert result["metrics"]["f1"] == 1
+    assert (labels, run) == before
+
+
+@pytest.mark.parametrize("clock", ["legacy", "vfr", "gap"])
+@pytest.mark.parametrize("cuts", [[], [11]])
+def test_spanning_uncertainty_preserves_a_separate_reliable_window(clock, cuts):
+    times = [2 + i * 0.04 + (i % 2) * 0.003 for i in range(100)]
+    if clock == "gap":
+        times = [value + (0.25 if i >= 10 else 0) for i, value in enumerate(times)]
+    labels = annotations(
+        [
+            event(
+                "unresolved", 5, times[5], contact_start_frame=5, contact_end_frame=25
+            ),
+            event("affected", 15, times[15]),
+            event("reliable", 35, times[35]),
+        ],
+        [window(10, 20), window(30, 40)],
+    )
+    run = camera_run([("affected", 15, times[15]), ("reliable", 35, times[35])], cuts)
+    before = deepcopy((labels, run))
+    result = evaluate_contacts(
+        video(), labels, run, native_timestamps=None if clock == "legacy" else times
+    )
+    assert result["coverage"]["skipped_windows"] == [
+        {"id": "review-10", "reason": "contact_timing_needs_adjudication"}
+    ]
+    assert result["coverage"]["usable_window_ids"] == ["review-30"]
+    assert result["coverage"]["frame_ranges"] == [[30, 40]]
+    assert result["coverage"]["excluded_reviewed_contacts"] == 2
+    assert result["coverage"]["excluded_candidates"] == 1
+    assert result["metrics"]["f1"] == 1
+    assert result["matches"][0]["event_id"] == "reliable"
+    assert (labels, run) == before
+
+
+def test_uncertainty_spanning_touching_review_windows_withholds_both():
+    labels = annotations(
+        [event("unresolved", 5, 0.2, contact_start_frame=5, contact_end_frame=25)],
+        [window(10, 20), window(20, 30)],
+    )
+    result = evaluate_contacts(video(), labels, contact_run([]))
+    assert result["metrics"] is None
+    assert result["coverage"]["usable_window_ids"] == []
+    assert result["coverage"]["skipped_windows"] == [
+        {"id": "review-10", "reason": "contact_timing_needs_adjudication"},
+        {"id": "review-20", "reason": "contact_timing_needs_adjudication"},
+    ]
+
+
 def video():
     return {
         "id": "sample",

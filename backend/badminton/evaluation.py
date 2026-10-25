@@ -454,8 +454,8 @@ def evaluate_contacts(
     explicitly declare ``contacts_complete`` after missed hits are also added.
     Replay/unknown windows and partially covered windows never contribute scores.
     Predicted annotation events and rally endings are never ground truth. A
-    reviewed contact whose timing remains an interval invalidates its complete
-    window until a reviewer adjudicates the contact frame.
+    reviewed contact whose timing remains an interval invalidates every overlapping
+    complete window until a reviewer adjudicates the contact frame.
 
     A supplied complete native clock validates every reference/proposal time
     before exclusions and separates comparisons at unsupported source steps.
@@ -496,7 +496,7 @@ def evaluate_contacts(
     for event in all_events:
         left, right = _frame_bounds(event, video["frame_count"], "contact_")
         if left < right:
-            uncertain_events.append(event)
+            uncertain_events.append((left, right))
     all_candidates = [
         _validate_candidate(candidate, video, contact_run)
         for candidate in contact_run["candidates"]
@@ -526,8 +526,8 @@ def evaluate_contacts(
         elif window["start_frame"] < start or window["end_frame"] > end:
             reason = "run_does_not_cover_entire_window"
         elif any(
-            window["start_frame"] <= event["frame"] < window["end_frame"]
-            for event in uncertain_events
+            left < window["end_frame"] and window["start_frame"] <= right
+            for left, right in uncertain_events
         ):
             reason = "contact_timing_needs_adjudication"
         else:
