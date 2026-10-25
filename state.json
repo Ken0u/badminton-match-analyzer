@@ -9885,6 +9885,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "tiling299-checkpoint-control-complete-v2": {
+      "actor": "Ken0u",
+      "at": 1792937507,
+      "epoch": 1,
+      "fingerprint": "872b08496d4eb5ffcc3d05917ed0cea7b75fe04247e748ed038ce0d67fa3ec83",
+      "status": "running",
+      "task_id": "299",
+      "verb": "checkpoint"
+    },
     "tiling299-checkpoint-control-running-v1": {
       "actor": "Ken0u",
       "at": 1792936136,
@@ -24577,23 +24586,22 @@
     "299": {
       "checkpoint": {
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
+        "control_gate_sha256": "3083c2945f64a4b07b4261673bb7f00e8e575c63119860651b6edc006b3e2f91",
+        "control_receipt_sha256": "5acc1f90eacb9c0aca76b4b702178781000fab3f9ffe3d664ee2e3872dc67fa2",
         "experiment_sha256": "d2a848ad17b20314da8e723d3da213736202a471532bdf114c0b7837a31a4098",
-        "head_sha": "f6c26cb60d38809fdbac1b9365f80d114587997b",
-        "job_id": "1db6e687764c431081ebe2f510f1fe18",
-        "live_checkpoint_sha256": "2ac74c8645b345de41b7fbb716d5f6c515086520ca8d53b3a4ab6b23b49c75a7",
-        "owner_pid": 19532,
-        "owner_started": 1792935794.6761491,
+        "head_sha": "5e442cfaf861a0e071a03a6a07e63a74ccb2969b",
+        "package_receipt_sha256": "45320a9fac1f49c4d8ba4dca9d46c119ffb89e81d9e583aefeb5e71a36155a16",
         "pr_number": 300,
-        "remaining": "Observe this same process; never restart on a missing handle or timeout. Verify independently terminal lifetimes/Store/artifacts and complete compatible control gate before candidate. Check unchanged originals and fresh idle shared admission; timestamp gate and renew lease before the sole fixed candidate. Seal terminal raw outputs before interpretation, produce aggregate report, finalize PR and exact CI/controller/main/independent public delivery. Keep65/full accuracy open; no new image assessment/transfer, training, promotion or recipe changes.",
-        "summary": "Native control is running: 8/50 complete source views, candidate0/50. Shared Store job `1db6e687764c431081ebe2f510f1fe18` has verified original owner PID19532, creation1792935794.6761491, matching actual cwd/command/Store ownership and live lifetime. This is processing coverage, not an accuracy result. Source head `f6c26cb60d38809fdbac1b9365f80d114587997b` is preserved in [draft PR#300](https://github.com/Ken0u/badminton-match-analyzer/pull/300);4,605 full tests/four optional skips and171 focused tests pass."
+        "remaining": "After acknowledged lease renewal and fresh idle Store/process/GPU inspection, launch the single frozen candidate once. Independently verify terminal outputs and timestamp raw checksums before scoring. Then publish aggregate report, exact final-head CI/controller integration/main/full public delivery. Keep65/full accuracy open; no tuning/promotion/new images.",
+        "summary": "Control independently verified: all50 complete views /13499 rows, compatible historical physical outputs, 0 differences. All78 frozen consumers match; current dependency provenance replayed independently. Shared Store completed and all4 observed original process lifetimes independently terminal. Candidate has never started; no label scoring."
       },
-      "checkpoint_at": 1792936136,
+      "checkpoint_at": 1792937507,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e49b7fc0a96b056ae9ef32461a002041d79d698d",
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
         "epoch": 1,
-        "expires_at": 1792946936,
+        "expires_at": 1792948307,
         "granted_at": 1792933796,
         "host_id": "MSI",
         "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
