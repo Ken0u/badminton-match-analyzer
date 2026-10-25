@@ -89,3 +89,96 @@ Software verification here concerns overlay continuity. Full-match automatic
 annotation accuracy, exhaustive independently adjudicated contacts and
 persistent identity remain separate release requirements. No new scientific
 reference, data/model eligibility or deployment claim follows from this repair.
+
+## Default production browser coverage (#271)
+
+Inspection of actual artifacts from #266's exact-head CI run `40165715562`
+found 18 production/parity, eight library and 13 export groups. All passed, but
+the production suite did not execute `shuttle-context-overlay`. Its 20 helper
+unit cases and the successful local direct-editor canvas case are separate
+evidence. A hash of the direct-editor script in the CI receipt did not establish
+that its canvas case ran. The original #266 reproduction, failed attempts and
+local receipts remain preserved; #271 addresses this distinct coverage gap.
+
+The direct editor and staged production suite now share
+`tests/shuttle-overlay-context.mjs`. It records the actual editor canvas's shuttle
+path and checks continuous observations, a camera cut and a reviewed scene start.
+The continuous control must contain earlier observations and a line to
+`(300, 200)`; each boundary variant must contain only the current `moveTo`.
+Every variant preserves the normalized manual marker, hides/restores the
+predicted path through the overlay control, and retains saved annotation JSON
+and original prediction hashes. Route overrides affect disposable generated
+responses only. No production implementation or scientific input changes.
+
+The additional `production shuttle-context-overlay` group runs after all
+existing parity/performance groups. The 17 frozen parity blocks, source-clock
+semantics, performance protocol, ceilings and measurements remain unchanged.
+The default inventory becomes **19 groups = 17 parity + two production groups**;
+library and export inventories remain eight and 13. Evidence binds the shared
+helper's source hash in both consumers and all production delivery modes.
+
+The first local direct-editor run passes all 18 groups, and the first production
+run passes all 19, including the new canvas case. The library run passes all eight.
+Initial export verification exposes a preexisting Windows venv assumption:
+the admission receipt names the actual Python worker while `spawn().pid` names
+its launcher. The assertion fails before cooperative cleanup is registered.
+The worker subsequently fails its unchanged 45-second gate. Both exact worker
+and launcher lifetimes are independently absent, the Store job is failed and
+the application fixture cleanup is complete. Original receipts/logs and
+`.cache/goal-01a17154/failed-export271-terminal.json` are preserved; no worker is
+restarted. The controller rejected a bounded scope request to reuse the existing
+ownership verifier because it changes task semantics. No admission-harness repair
+was applied. A local environment-only comparison instead launches the existing
+venv's base worker with CPython's `__PYVENV_LAUNCHER__` set to that venv interpreter.
+Its executable identity, prefix, base prefix, full import path and package file
+locations exactly match normal venv startup. This removes only the launcher
+process, permitting the unchanged PID-equality and real shared admission checks.
+Both startup observations are preserved as `venv271-normal.json` and
+`venv271-direct.json` in the same ignored evidence folder. The default CI runs on
+POSIX; this local workaround does not repair Windows launcher portability.
+
+An initial local read-only audit assumed absent process observations were status
+objects. The existing fixture schema represents independently observed absence
+as `null`; inspecting that schema corrected the audit without changing any
+fixture, identity check or software assertion. The completed editor audit verifies
+all three canvas receipts, helper/source hashes and terminal cleanup. An initial
+repository-check command used a nonexistent filename; the actual
+`scripts/verify_repository.py` passes. These command/audit failures remain in local
+evidence and are distinct from test failures. Full verification and exact hosted
+CI/delivery checkpoints are recorded on the owning issue as they complete.
+
+Final local verification passes all 18 direct-editor groups and all **40 default
+delivery groups (19 production, eight library, 13 export)**. Final delivery runs
+use the equivalent direct venv-worker startup above; the original failed export
+attempt is retained separately. Actual receipts include all three canvas modes,
+manual markers, overlay toggles and unchanged saved annotations/predictions.
+The independent read-only audit checks every expected group, every consumed
+helper/source hash and complete fixture cleanup with final absent observations.
+The direct editor's static listener is closed. The generated admission worker
+cooperatively exits with code zero, and an independent local process check finds
+its PID absent. Structural inspection of JavaScript syntax trees confirms all
+39 original production/parity/library/export action bodies are unchanged; the
+production-specific case is appended. The fixture and performance-protocol bytes
+also match #266's merged source. Initial audit inventory assumptions and their
+corrections are preserved in execution evidence.
+
+All 3,953 Python tests pass (four optional skips, 453.47 seconds, one existing
+deprecation warning), using the previously documented short-temporary-path
+runner. Its launcher and worker lifetimes are independently absent after exit.
+All 200 frontend tests, three staged-delivery tests, type/contract/build/stage,
+Ruff lint/format, dependency, repository and whitespace checks pass. The existing
+process-ownership suite passes 71 cases with two platform/opt-in skips. No new
+native inference, model, scientific source or application-truth access occurs.
+
+Local final browser evidence is under `.cache/w271/.cache/evidence/`:
+`frontend-editor-hpnXHy`, `frontend-delivery-38fW5A`,
+`frontend-delivery-library-qxnrDp` and `frontend-delivery-exports-HBn03T`.
+Independent audits, frozen test hashes, Python logs and process/Store receipts
+are under `.cache/goal-01a17154/`, including `editor271-audit.json`,
+`browser271-final-audit.json`, `tested-source-hashes271-final.json` and
+`python271-verification.json`. These ignored artifacts remain local and are
+unavailable in a clone. The unfixed Windows admission-launcher behavior is tracked
+separately in [#273](https://github.com/Ken0u/badminton-match-analyzer/issues/273).
+Exact PR/main checks, actual hosted new-case receipts and candidate delivery
+remain required; their checkpoints belong on #271. These generated software
+checks do not establish full-match annotation accuracy.

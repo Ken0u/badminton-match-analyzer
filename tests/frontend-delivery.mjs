@@ -1,5 +1,9 @@
 /** Production delivery: FastAPI assets and the complete frozen editor matrix. */
 import assert from "node:assert/strict";
+import {
+  recordShuttlePath,
+  checkShuttleContextOverlay,
+} from "./shuttle-overlay-context.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
@@ -56,6 +60,7 @@ if (requestedModes.includes("--exports")) {
     "tests/frontend-fixtures.mjs",
     "tests/frontend-editor.mjs",
     "tests/frontend-delivery.mjs",
+    "tests/shuttle-overlay-context.mjs",
     "tests/frontend-parity.mjs",
     "tests/media_fixtures.py",
     "tests/rally_fixture.py",
@@ -297,6 +302,7 @@ if (requestedModes.includes("--exports")) {
     });
     page.setDefaultTimeout(15000);
     page.on("pageerror", (error) => errors.push(error.message));
+    await page.addInitScript(recordShuttlePath);
     await page.addInitScript(() => {
       window.baselineDraws = [];
       window.baselineArcs = [];
@@ -2335,6 +2341,20 @@ if (requestedModes.includes("--exports")) {
         timelineEvents: 1000,
       };
     });
+    // Additional production case; the frozen 17 parity blocks run unchanged.
+    await check("production shuttle-context-overlay", () =>
+      checkShuttleContextOverlay({
+        page,
+        api,
+        rallyRoot,
+        video: seeded.rally,
+        reloadSelected,
+        exact,
+        rawPredictionPaths,
+        predictionHashes,
+        sha256,
+      }),
+    );
     assert.deepEqual(
       checks.map(({ name }) => name),
       [
@@ -2356,6 +2376,7 @@ if (requestedModes.includes("--exports")) {
         "exports",
         "accessibility",
         "performance",
+        "production shuttle-context-overlay",
       ],
     );
     assert.deepEqual(errors, []);
@@ -2378,7 +2399,7 @@ if (requestedModes.includes("--exports")) {
       hashes,
       checks: checks.length,
       frozenParityBlocks: 17,
-      productionDeliveryBlocks: 1,
+      productionDeliveryBlocks: 2,
       limitations: [
         "Generated software checks do not establish badminton annotation accuracy",
         "External downloader and model perception use explicit fixture stubs",
@@ -2472,6 +2493,7 @@ async function runExportsMode() {
   for (const name of [
     "tests/frontend-fixtures.mjs",
     "tests/frontend-delivery.mjs",
+    "tests/shuttle-overlay-context.mjs",
     "tests/media_fixtures.py",
     "tests/rally_fixture.py",
     "tests/test_rally_overlay.py",
@@ -3747,6 +3769,11 @@ async function runLibraryMode() {
         "No external application, model, dataset, or running service is used",
       ],
       harness: sha256(await fs.readFile(new URL(import.meta.url))),
+      shuttleContextHelper: sha256(
+        await fs.readFile(
+          new URL("./shuttle-overlay-context.mjs", import.meta.url),
+        ),
+      ),
     });
     page = await browser.newPage({ viewport: { width: 1440, height: 1080 } });
     page.on("pageerror", (error) => errors.push(error.message));
