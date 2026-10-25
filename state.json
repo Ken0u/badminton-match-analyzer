@@ -1433,6 +1433,15 @@
       "task_id": "271",
       "verb": "submit"
     },
+    "goal-01a17154-submit273-v1": {
+      "actor": "dootz1",
+      "at": 1792912646,
+      "epoch": 1,
+      "fingerprint": "ac2e48185efbaee9e38c1d25aa8cc6d3bef65c3d9d8d4956bab7c47a66947555",
+      "status": "review",
+      "task_id": "273",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -22265,6 +22274,7 @@
       "epoch": 1,
       "planned_at": 1792908909,
       "planned_by": "Ken0u",
+      "pr_number": 277,
       "spec": {
         "acceptance": [
           "Reuse existing trusted collaborator issue273 and related181/187/194/197/198 process-ownership history; audit all history/grants before claiming. Preserve original root edits, deprecated PROGRESS, environments/data/research/annotations/predictions. Obtain a separate committed code-only grant and isolated worktree. Depend on271 completion so its frontend-delivery reservation and original failure/workaround evidence remain untouched.",
@@ -22312,7 +22322,13 @@
         ]
       },
       "spec_hash": "d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
+        "head_sha": "06ce151fe694f19ca270ef54fcc6f51d52a4aa47",
+        "pr_number": 277,
+        "spec_hash": "d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24"
+      }
     },
     "275": {
       "checkpoint": {
