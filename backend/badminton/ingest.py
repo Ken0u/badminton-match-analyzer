@@ -1,29 +1,32 @@
 """Decode source presentation timestamps and create a sparse visual audit."""
 
-import hashlib
 import itertools
 from pathlib import Path
 
 from PIL import Image, ImageDraw
 
 from .av_runtime import open_media
+from .file_cache import FileChangedError, file_digest
 from .orientation import (
     OrientationError,
     display_dimensions,
     frame_rotation,
     orient_frame,
 )
-from .video import write_json
+from .video import SourceChangedError, write_json
+
+
+def _source_digest(path):
+    try:
+        return file_digest(path)
+    except FileChangedError as error:
+        raise SourceChangedError(str(error)) from error
 
 
 def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
     path = path.resolve()
     relative = path.relative_to(root.resolve())
-    digest = hashlib.sha256()
-    with path.open("rb") as f:
-        for chunk in iter(lambda: f.read(1024 * 1024), b""):
-            digest.update(chunk)
-    checksum = digest.hexdigest()
+    checksum = _source_digest(path)
     video_id = checksum[:16]
     try:
         existing = store.video(video_id)
@@ -112,6 +115,10 @@ def inspect_video(path: Path, mode: str, store, root: Path, progress=None):
             "audio": bool(container.streams.audio),
             "samples": [{"frame": i, "time_s": t} for i, t, _ in samples],
         }
+    # Decode can outlive a source replacement. Validate before publishing any
+    # artifact, including when this content ID already has reviewed results.
+    if _source_digest(path) != checksum:
+        raise SourceChangedError("Video source changed during import; retry the import")
     sheet = Image.new("RGB", (384 * 3, 242 * 6), "#101b21")
     draw = ImageDraw.Draw(sheet)
     for n, (index, timestamp, img) in enumerate(samples):
