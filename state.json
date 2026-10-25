@@ -1637,6 +1637,14 @@
       "task_id": "287",
       "verb": "plan"
     },
+    "goal-01a17154-plan290-v1": {
+      "actor": "dootz1",
+      "at": 1792924594,
+      "fingerprint": "b8f829e2a859716722a42a21fabfe3e97b71a606696c3729e73ff75ca12ce45d",
+      "status": "ready",
+      "task_id": "290",
+      "verb": "plan"
+    },
     "goal-01a17154-register-v1": {
       "actor": "dootz1",
       "at": 1792903074,
@@ -9313,6 +9321,14 @@
       "fingerprint": "363e5fd6bf5de3b2a55d3b58b4551be07b9dbe03593b255c1911f503e6b5cf80",
       "status": "ready",
       "task_id": "288",
+      "verb": "plan"
+    },
+    "spec-290-eb67be3132fdca319b21e74d9bd3a07e089fefc9cac0b95c29887f2d4722ef6b": {
+      "actor": "dootz1",
+      "at": 1792924594,
+      "fingerprint": "6b3e3eb359f5daa619d202625f1e0951058de29d1a5ca1662d2c309f418faa5a",
+      "status": "ready",
+      "task_id": "290",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -23639,6 +23655,57 @@
       },
       "spec_hash": "ca74b69013711453530704c632629d9b48a53b2e52a6efc6cdbfb497f72ff9a9",
       "status": "running"
+    },
+    "290": {
+      "epoch": 0,
+      "planned_at": 1792924594,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Refresh current main, PROJECT_PLAN, BUG_REVIEW, collaboration/configuration, owning issue/specification, authoritative committed grants, active PRs and related audio37/284/287 and source-stability281 history. Dependency287 must be complete. Preserve root edits, completed worktrees/environments/research, other-host288, pending sensitive279 and deprecatedPROGRESS. Executable reproduction and implementation require a fresh committed routine grant, its isolated granted branch, pinned application root and disposable data.",
+          "Code observation on merged287 source4cb27902f80d4b51e728bd55faf977667523cdf9: extract_audio_cues validates the source before open_media but has no later check, and missing-audio returns from inside the context manager. This is not yet a runtime-proven defect. Freeze generated direct and actual disposable Store/API controls for stable PCM, silent/missing audio, corrupt audio and persistent source changes during decode, missing-stream teardown and normal teardown. Retain all before/after cases and original failures. A negative investigation may deliver a report only. Use generated media/decoded records; do not read original scientific media/audio/labels/predictions or run models.",
+          "If reproduced, minimally revalidate the imported source through the existing resolve_source/file_digest mechanism after normal decode/teardown and before returning available, missing or handled-unavailable acoustic results. A changed or removed source must fail rather than supply optional cues under stale provenance. Keep source-validation failures outside broad decoder fallback or explicitly propagate SourceChangedError; it is a ValueError subtype. Preserve existing source-error types/messages and FileChangedError conversion from the existing validator. Do not edit video.py/file_cache.py/API/storage or duplicate their caching/identity machinery.",
+          "Preserve initiating unexpected decode/seek/teardown I/O errors and existing optional fallback for stable corrupt/unsupported audio. Cover mutation during otherwise handled FFmpegError/ValueError paths without partial cues. Do not claim transactional snapshot isolation or detect writes that restore original bytes before the final check, hide filesystem metadata or occur after that check. Do not add retries, locks, source copies, hash algorithms, dependencies, timing thresholds or nominal-time inference.",
+          "Retain unchanged real PCM onset/timestamp/origin behavior, silent missing status, corrupt fallback, discontinuities/missingPTS/nonfinite behavior, opt-in/default-off support, original visual-only results and consumer thresholds. Preserve the native av_runtime.open_media logging restoration before open and close and initialize torchvision before threaded PyAV. Direct tests should include stable controls, decode/teardown mutation, same-size restored-mtime persistent edits where feasible, removal, validator FileChangedError propagation and original unexpected error preservation, using generated inputs only.",
+          "Exercise the actual contacts API/Store/job path with acoustic extraction active, generated source and perception runs, and nonempty saved annotations. Verify stable optional/visual-only controls; post-decode changes fail the job without publishing a contacts artifact or rewriting perception/prediction bytes or either saved annotation revision/timestamps. Source-byte mutations are deliberate disposable-fixture actions, never application truth or research edits. Stub only generated decoder/container behavior where precise mutation timing requires it, not extract_audio_cues or the source validator. Report stubbed integration separately from real PCM and YouTube/acoustic accuracy.",
+          "Run focused audio/source/API and required Python3.10 full/Ruff/format/pip/repository/diff checks with fresh ignored output. Capture before/after executable/test hashes, actual long-test wrapper/worker lifetime identities and independently observed absence; never infer exit from timeout/absent handle or restart a heavy job. No inference/training/install, competing jobs or scientific Store. Record baseline, minimal correction, controls, exceptions, preserved defaults/PTS/predictions and last-check limitations in AUDIO_SOURCE_STABILITY_REPORT.",
+          "Publish exactly the four granted paths through focused commit/PR, exact PR CI, controller integration, exact merged-main verification and independently audited complete candidate package/source/frontend/lock/45publicprotocol bytes/both anonymous public image manifests. Follow configured review policy, preserve reservations and blocking findings, never fabricate approval or manually merge/pushmain/retry/cancel/wake workflows/edit coordination. Checkpoints/handoffs belong on the owning issue.",
+          "Limits:4hours from grant,512MiB new retained output,three diagnosed repair rounds,no paidservices. No scientific input/image/audio/label/prediction/holdout access, independent scientific sessions, inference/training, deployment/modelpromotion, auth/policy/workflow/dependency/video/filecache/API/storage/av_runtime/corevisual/consumer changes or PROGRESS access/update. Complete scientific references remain0/2, all four eligibilityflagsfalse, native AV sync and full automatic match accuracy unproven. Request a scope extension before any extra path/resource."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "287"
+        ],
+        "exclusions": [
+          "No original scientific inputs/model operations, deployment/promotion, sensitive auth/policy/workflow/dependency/storage/video/filecache/API/av_runtime/corevisual/audio-consumer edits, paidservices, manualmerge/mainpush/coordination edits or PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Investigate and, if reproduced with generated inputs, reject optional acoustic results when source bytes change during decoding or normal media teardown.",
+        "paths": [
+          "backend/badminton/audio.py",
+          "tests/test_audio.py",
+          "tests/test_audio_api.py",
+          "docs/AUDIO_SOURCE_STABILITY_REPORT.md"
+        ],
+        "priority": 35,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Frozen generated direct and actual contacts API/Store before/after controls, explicit stable/mutation/error denominators, original perception/annotation preservation and required full/static/source/process checks.",
+          "Exact PR/main/controller verification and complete independently audited candidate/source/frontend/lock/45publicprotocol/both anonymous public manifest delivery; no accuracy or snapshot-isolation claim."
+        ]
+      },
+      "spec_hash": "36d40d8e8d3cef0f6f24649f6008dc711b99301da59820f146b73036af332043",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
