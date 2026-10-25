@@ -1134,6 +1134,15 @@
       "task_id": "93",
       "verb": "review-result"
     },
+    "gap267-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792904524,
+      "epoch": 1,
+      "fingerprint": "00064be111ce0b44651cf0115434e62924e8cb9319ead78caa6fd0d4279ca7c1",
+      "status": "running",
+      "task_id": "267",
+      "verb": "checkpoint"
+    },
     "goal-01a1714f-next": {
       "actor": "dootz1",
       "at": 1792902579,
@@ -21431,12 +21440,19 @@
       "status": "running"
     },
     "267": {
+      "checkpoint": {
+        "branch": "codex/issue-267-keep-saved-contact-and-recognition-compa",
+        "head_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "remaining": "Finish full checks, final receipt/report, PR/exact CI/controller/main and independent public delivery.",
+        "summary": "Integrated the bounded two-file evaluator/pure-test subtask into the granted worktree. Native source timestamp barriers separate strict, tighter and interval comparison domains, retaining all reviewed frames and point missed/false denominators; crossing interval/evidence IDs have distinct exclusions. Registered generated singles/doubles API/CLI cases pass: 756 focused tests, unchanged saved input bytes. Full required checks now run in disposable generated storage with process/source receipts. The first full-check attempt stopped at Ruff RUF007 in the new API test; fixed with pairwise, preserving the failed attempt. Core initial expectation/regex failures remain preserved separately. No scientific inputs, images, inference, models, defaults, policy or other-host paths changed; deprecated PROGRESS and original root edits remain preserved. Scientific references remain 0/2 and four flags false."
+      },
+      "checkpoint_at": 1792904524,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
         "branch": "codex/issue-267-keep-saved-contact-and-recognition-compa",
         "epoch": 1,
-        "expires_at": 1792914921,
+        "expires_at": 1792915324,
         "granted_at": 1792904121,
         "host_id": "MSI",
         "session_id": "16dbb3112d1f4a4cb656dfac512bc201",
