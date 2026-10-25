@@ -1,5 +1,20 @@
 # Bug review and implementation progress
 
+The [source timestamp-gap evaluation repair](CONTACT_TIMESTAMP_EVALUATION_REPORT.md)
+addresses a generated frame-19/frame-20 match across a 0.11-second source gap
+that incorrectly earned contact, stroke-family and complete-event F1 1.0.
+Validated native gap barriers now separate comparison domains while retaining
+all reviewed frames and point missed/false denominators. Intervals and evidence
+crossing gaps retain explicit exclusions, and recognition consumes the same
+eligible IDs. Verification and unavailable-clock limitations are recorded in
+the report: 756 focused and 3,953 full Python tests pass, with four optional
+skips, plus lint/format, dependencies, repository and whitespace checks. Final
+executable/test bytes and terminal process lifetimes were verified; initial
+new-test expectation/lint failures remain preserved. Exact PR/main checks and
+public delivery are tracked on the owning issue. Scientific complete references
+remain 0/2; software checks do not establish full-match badminton annotation
+accuracy.
+
 The [native-clock evaluation repair](EVALUATION_CLOCK_REPORT.md) addresses a
 generated API/CLI failure in which a frame-5 proposal claims frame 15's time and
 receives contact and drive-classification F1 1.0. Contact and recognition
