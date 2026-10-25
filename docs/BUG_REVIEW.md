@@ -1,5 +1,18 @@
 # Bug review and implementation progress
 
+The [exact-frame API repair](EXACT_FRAME_REVIEW_REPORT.md) prevents review images
+from silently substituting the next native frame when the requested frame is
+missing. It fully consumes the canonical one-frame reader, including normal
+media close and final source validation, before encoding JPEG. Changed source,
+PTS or display metadata returns an actionable conflict; unavailable media
+returns 404. Fourteen generated regressions fail against the original endpoint;
+all 216 focused and 4,631 full Python checks pass after the repair, with four
+optional full-suite skips and required lint/format/dependency/repository checks.
+Valid VFR/origin/rotation pixels, metadata, clocks, annotations and prior
+predictions are preserved. Exact CI and public delivery evidence belong on the
+owning issue. This protects
+software review integrity; references remain 0/2 and accuracy remains unproven.
+
 The [native video source stability repair](VIDEO_SOURCE_STABILITY_REPORT.md)
 rejects source-byte changes after a complete frame read and normal decoder
 teardown. Four generated singles/doubles cases formerly completed with stale

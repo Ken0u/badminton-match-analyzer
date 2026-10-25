@@ -17,12 +17,14 @@ from pydantic import Field
 from . import config
 from .access import AccessMiddleware
 from .calibration_context import court_context_changed, court_run_context
-from .ingest import inspect_video, read_frame
+from .ingest import inspect_video
 from .jobs import JobCancelled
+from .orientation import OrientationError
 from .schemas import Annotations, StrictModel
 from .storage import ConflictError, Store
 from .video import (
     SourceChangedError,
+    iter_frames,
     resolve_source,
     timestamps_for,
     validate_range,
@@ -427,7 +429,15 @@ def create_app(
         if index >= v["frame_count"]:
             raise HTTPException(422, "Frame exceeds video length")
         times = timestamps_for(data, video_id)
-        img = read_frame(source(v), times[index], v["source_start_s"])
+        try:
+            # Exhaust the single-frame range: its image is provisional until
+            # normal media close and the reader's final source validation.
+            frames = list(iter_frames(v, root, times, index, index + 1))
+        except (SourceChangedError, OrientationError) as exc:
+            raise HTTPException(409, str(exc)) from exc
+        except FileNotFoundError as exc:
+            raise HTTPException(404, str(exc)) from exc
+        img = frames[0][2].to_image()
         buffer = io.BytesIO()
         img.save(buffer, format="JPEG", quality=90)
         return Response(
