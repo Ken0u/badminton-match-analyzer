@@ -245,6 +245,24 @@
       "task_id": "278",
       "verb": "checkpoint"
     },
+    "boundary278-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792915306,
+      "epoch": 1,
+      "fingerprint": "611084196295d19eb6eab3eec3adc0328419e30bd25eeb26a23e546a0cf38acd",
+      "status": "running",
+      "task_id": "278",
+      "verb": "checkpoint"
+    },
+    "boundary278-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792915403,
+      "epoch": 1,
+      "fingerprint": "3dfc41258585fd44f1d3624acdf1575ca7dbbcd34aae758a2e90a91a8b08cff3",
+      "status": "review",
+      "task_id": "278",
+      "verb": "submit"
+    },
     "broadcast179-register-6f42d839a2": {
       "actor": "Ken0u",
       "at": 1792632986,
@@ -22561,23 +22579,20 @@
     },
     "278": {
       "checkpoint": {
-        "artifacts": [
-          ".cache/boundary-evidence-repro-v1.json",
-          ".cache/boundary278-check-focused-v1",
-          ".cache/boundary278-check-all-v1"
-        ],
         "branch": "codex/issue-278-prevent-saved-serve-rally-end-proposals-",
-        "head_sha": "032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5",
-        "remaining": "Wait for the recorded full run to become terminal, preserve its expected two failures, correct the new assertions once, rerun focused/full checks on stable final source, finalize report and normal PR/exact CI/controller/public delivery.",
-        "summary": "Five-path local implementation excludes declared boundary evidence across camera/time/review barriers, preserves references and other eligible denominators, and reports legacy unavailable metadata. First generated focused run:786 passed/two added-test expectation failures, all original six reproductions and12 saved API/CLI cases pass. The two failures assume no point report beside an uncertain window, but a separate complete negative review range correctly retains an empty report. Application behavior must be preserved; only those expectations need correction. A full run was started before inspecting focused failures; it remains live on stable unchanged source and will finish without interruption before correcting the tests. Initial formatting-only check also preserved. No original scientific input/image/label/prediction access, model/inference or PROGRESS/collaborator edit."
+        "evidence_sha256": "5af78f093ed77ff707ad2bd97ddf0ecb801008b20db7f7ab49c818484e3d0cd7",
+        "head_sha": "8b18510d48b147660b956a1857972a03cf5a18a7",
+        "pr_number": 280,
+        "remaining": "Exact PR/main CI, controller integration and independently verified complete public delivery.",
+        "summary": "All 788 focused / 4,236 full Python tests pass, four optional skips; required checks pass. Six false-perfect boundary scores removed with unchanged reviewed/reference denominators. Final source and terminal lifetimes verified. Zero scientific/image access; local receipt SHA256 5af78f093ed77ff707ad2bd97ddf0ecb801008b20db7f7ab49c818484e3d0cd7. Publication created PR280 successfully, then stopped before any queue request because its local checkpoint-v1 filename already held preserved first-round evidence; resumed using fresh v2 request files without repushing, recreating the PR or overwriting evidence."
       },
-      "checkpoint_at": 1792914214,
+      "checkpoint_at": 1792915306,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5",
         "branch": "codex/issue-278-prevent-saved-serve-rally-end-proposals-",
         "epoch": 1,
-        "expires_at": 1792925014,
+        "expires_at": 1792926106,
         "granted_at": 1792913711,
         "host_id": "MSI",
         "session_id": "8c83ed3322c44fa58e4743a23db98417",
@@ -22586,6 +22601,7 @@
       "epoch": 1,
       "planned_at": 1792913711,
       "planned_by": "Ken0u",
+      "pr_number": 280,
       "spec": {
         "acceptance": [
           "Preserve generated-only reproduction on delivered main032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5: serve and rally_end frame20 predictions with declared evidence[19,22) receive representative F1=1 and interval match1 across a camera cut20, native timestamp gap20 or unreviewed frame19. The evaluator validates evidence bounds but its candidate matching checks only boundary intervals. Preserve all six original results and historical checks; no original scientific source, label, image or prediction is opened.",
@@ -22633,7 +22649,13 @@
         ]
       },
       "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
+        "head_sha": "8b18510d48b147660b956a1857972a03cf5a18a7",
+        "pr_number": 280,
+        "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3"
+      }
     },
     "279": {
       "epoch": 0,
