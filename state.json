@@ -1454,6 +1454,15 @@
       "task_id": "290",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint295-combined-v1": {
+      "actor": "dootz1",
+      "at": 1792929434,
+      "epoch": 1,
+      "fingerprint": "9934a12acde7d6972f35bb47c7e91c87b2d974a7d8e3f813fdd1b3834867fd38",
+      "status": "running",
+      "task_id": "295",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint295-tests-v1": {
       "actor": "dootz1",
       "at": 1792928701,
@@ -24169,24 +24178,23 @@
     "295": {
       "checkpoint": {
         "artifacts": [
-          ".cache/goal-01a17154/tests295-red.log",
-          ".cache/goal-01a17154/tests295-green.log",
-          ".cache/goal-01a17154/tests295-focused.log",
-          ".cache/goal-01a17154/comparison295.json",
-          ".cache/goal-01a17154/tested295-before.json"
+          ".cache/goal-01a17154/python295-final-verification.json",
+          ".cache/goal-01a17154/pytest295-final.log",
+          ".cache/goal-01a17154/tested295-combined-source-before.json",
+          ".cache/goal-01a17154/comparison295.json"
         ],
         "branch": "codex/issue-295-investigate-and-if-reproduced-with-gener",
-        "head": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
-        "remaining": "Full/static/source/process/text checks, final report/commit/PR, exact PR/main/controller and independently audited complete candidate delivery. Preserve other-host293, ungranted294, pending279, root/worktrees/environments/research and PROGRESS. No scientific/model operations; references0/2, eligibilityfalse.",
-        "summary": "Valid frozen baseline: all28 generated cases fail on unchanged production, including actual saved API/CLI singles/doubles. Minimal inclusive-interval/half-open-window overlap correction passes196 module tests and676 focused tests. Original two test-module ASTs remain unchanged after removing new functions. Stable point/disjoint/predicted/terminal/separate-window/VFR/cut/gap controls and original predictions, source metadata, timestamps and all saved revision documents/timestamps verify. Initial two-file formatting-only finding retained and corrected. Starting full verification with frozen executable/test hashes and actual interpreter lifetime monitoring."
+        "head": "6499ea328e146a390fdb2f65d6c080b823d1df23",
+        "remaining": "Final combined full/static/source/process/text checks, report-only completion/commit/PR, exact PR/main/controller and complete candidate audits. Preserve root, worktrees, environments, research, proposal294 and pending279. No scientific/model operations; references0/2, eligibilityfalse.",
+        "summary": "First full verification passed4510 tests with4 optional skips in471.75s. Both original interpreter lifetimes independently absent, no observation errors, owned executable/test hashes stable. Focused commit9a745d9 preserved; disjoint upstream native-video repair e0e97a465fd5cd84d61d99c1bd9eaf92cca98424 merged cleanly into6499ea328e146a390fdb2f65d6c080b823d1df23. All owned executable/test bytes unchanged. Starting final combined verification once with246 tracked Python files frozen and fresh short temporary b295b, preserving original b295a evidence."
       },
-      "checkpoint_at": 1792928701,
+      "checkpoint_at": 1792929434,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
         "branch": "codex/issue-295-investigate-and-if-reproduced-with-gener",
         "epoch": 1,
-        "expires_at": 1792939501,
+        "expires_at": 1792940234,
         "granted_at": 1792928226,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
