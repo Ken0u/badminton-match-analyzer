@@ -154,11 +154,29 @@
       "task_id": "256",
       "verb": "checkpoint"
     },
+    "boundary256-checkpoint-v3": {
+      "actor": "Ken0u",
+      "at": 1792891972,
+      "epoch": 1,
+      "fingerprint": "3cfbeb8e8e1602df2e3c547391646ff502d0d0faa8fe0ef3cc1099838db57139",
+      "status": "running",
+      "task_id": "256",
+      "verb": "checkpoint"
+    },
     "boundary256-submit-v2": {
       "actor": "Ken0u",
       "at": 1792891227,
       "epoch": 1,
       "fingerprint": "6eb816ba6f2e49d14076b6f4c83470825551dae02d2c8823e038929b0a531061",
+      "status": "review",
+      "task_id": "256",
+      "verb": "submit"
+    },
+    "boundary256-submit-v3": {
+      "actor": "Ken0u",
+      "at": 1792892020,
+      "epoch": 1,
+      "fingerprint": "90c6639572895a943ac58a9f73d5815681886c8f43231a3f2956de109e580c3b",
       "status": "review",
       "task_id": "256",
       "verb": "submit"
@@ -20296,19 +20314,19 @@
     "256": {
       "checkpoint": {
         "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
-        "evidence_sha256": "9113b8e3a3fcc8d477c1e2ea61b97b96578e3f11458e6a7b0cc6d20c7c66efc6",
-        "head_sha": "5e59a44de874ba2bcf710fd6a91c644a5580f5c6",
+        "evidence_sha256": "44b8c9513c0cc2b41d2186ac2bd80da12b9e0ee8db5eccefacb60e56b94f54e6",
+        "head_sha": "9cd8cab8a13b11c144271301b7056661d494d9f4",
         "pr_number": 257,
-        "remaining": "Exact PR/main CI, controller integration and independent complete public delivery.",
-        "summary": "Independent serve/ending completeness, native-clock evaluation, exact timing versus possible interval support, and editor stale-report fencing implemented in all17 granted paths. Generated checks:3226 Python passed,4optional skips;180 frontend;17 browser groups with complete cleanup. No scientific input/model/policy change. Local receipt SHA256 9113b8e3a3fcc8d477c1e2ea61b97b96578e3f11458e6a7b0cc6d20c7c66efc6."
+        "remaining": "Exact PR/main CI, controller integration and complete public delivery.",
+        "summary": "Final source metadata correction and full generated verification pass:3240 Python,180 frontend,17 browser groups; cleanup complete."
       },
-      "checkpoint_at": 1792891221,
+      "checkpoint_at": 1792891972,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
         "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
         "epoch": 1,
-        "expires_at": 1792902021,
+        "expires_at": 1792902772,
         "granted_at": 1792890272,
         "host_id": "MSI",
         "session_id": "c36935dca7b147e08454839f993f5c88",
@@ -20379,10 +20397,10 @@
         ]
       },
       "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
-        "head_sha": "5e59a44de874ba2bcf710fd6a91c644a5580f5c6",
+        "head_sha": "9cd8cab8a13b11c144271301b7056661d494d9f4",
         "pr_number": 257,
         "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f"
       }
