@@ -1707,6 +1707,15 @@
       "task_id": "284",
       "verb": "submit"
     },
+    "goal-01a17154-submit287-v1": {
+      "actor": "dootz1",
+      "at": 1792923630,
+      "epoch": 1,
+      "fingerprint": "21bb2c19290c45039ed71f598ccc223434b1356b0a9791d066d22be677f62824",
+      "status": "review",
+      "task_id": "287",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -6125,6 +6134,28 @@
       "task_id": "250",
       "verb": "plan"
     },
+    "rally-producer-context-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792923630,
+      "fingerprint": "723e45b01230e5da91b130a39a334a5a1d5057a006ca0cba8efa8982e0006cc3",
+      "status": "ready",
+      "task_id": "288",
+      "verb": "plan"
+    },
+    "rally-producer-context-register-input-v2": {
+      "actor": "Ken0u",
+      "at": 1792923630,
+      "fingerprint": "6a7cffe006b96d747f50602aca436642fb725eafa3dc846268e51fcf8851f70b",
+      "status": "ok",
+      "verb": "register"
+    },
+    "rally-producer-context-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792923630,
+      "fingerprint": "98ecfe4288667d843d7e6aa603158b83ca308b5e52bd1c9cd6cb5f2528b8ab13",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally-review-plan-v1": {
       "actor": "Ken0u",
       "at": 1792898153,
@@ -9237,6 +9268,14 @@
       "fingerprint": "50636f41377f8a3708e6ccabbdad0a701c8c4fa75d2f270b9e9c36c05182624f",
       "status": "ready",
       "task_id": "287",
+      "verb": "plan"
+    },
+    "spec-288-59c02a2b1b46671ad44e7767ca7f2ab0788f583895f6d138dd026c90ff859b67": {
+      "actor": "Ken0u",
+      "at": 1792923630,
+      "fingerprint": "363e5fd6bf5de3b2a55d3b58b4551be07b9dbe03593b255c1911f503e6b5cf80",
+      "status": "ready",
+      "task_id": "288",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -23422,6 +23461,7 @@
       "epoch": 1,
       "planned_at": 1792921273,
       "planned_by": "dootz1",
+      "pr_number": 289,
       "spec": {
         "acceptance": [
           "Refresh current main, PROJECT_PLAN, BUG_REVIEW, collaboration/configuration, owning issue/specification, active grants/PRs and related audio37/284/285 and source-clock history. Dependency284 must be complete. Preserve root edits, all completed worktrees/environments/research, other-host282, pending sensitive279 and deprecatedPROGRESS. Start executable reproduction or implementation only with a fresh committed routine grant, isolated granted branch and pinned root/disposable data.",
@@ -23466,7 +23506,68 @@
         ]
       },
       "spec_hash": "cdc10171cc42297d6b582d48d080d396eb59fedc94639d35a0e16d9a7b466129",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "8aa35420fdf89e2ec33cd7370e50d926f0bc681a",
+        "head_sha": "3e2b94f7e3fb87608ba778fc4d4edf7a24ef235e",
+        "pr_number": 289,
+        "spec_hash": "cdc10171cc42297d6b582d48d080d396eb59fedc94639d35a0e16d9a7b466129"
+      }
+    },
+    "288": {
+      "epoch": 0,
+      "planned_at": 1792923630,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Audit complete issue/PR history and active reservations, retain the four generated baseline failures and obtain an isolated committed code-only grant. This follows278/282 and is disjoint from other-host287 audio work. Baseline proposals omit candidate context_start_frame/context_end_frame; four singles/doubles generated cases earn interval compatibility although necessary pose evidence is outside reviewed timing bounds. Preserve deprecated PROGRESS/root edits and all historical outputs.",
+          "Add paired half-open native context_start_frame/context_end_frame to newly produced candidates. Compute a conservative complete bounded evidence span covering every pose/shuttle observation read to accept the candidate, including pose-lag dependencies, preceding shuttle-speed observations, quiet prelaunch context, launch/departure evidence and incoming/settled/quiet-followup evidence. Keep evidence within its eligible continuous segment; do not substitute FPS-derived ordinals, clip evidence silently, bridge missing/cut/scene/clock barriers or declare the entire input run scientific truth.",
+          "Preserve existing candidate IDs/count/order/kinds, inclusive proposal uncertainty bounds, times, track/player hints, numerical evidence, detection thresholds and model/default behavior. New context fields describe provenance, never precise contact, server identity, fault/line-call truth or complete correctness. Existing saved artifacts keep their bytes and missing legacy context remains explicitly unavailable; change no evaluator policy or annotation schema.",
+          "Add meaningful generated tests for singles/doubles and both boundary kinds, constant/variable/native source times, nonzero starts, high rates, clipped/missing/cut/scene-gap inputs, pose-lag and previous-speed dependencies, exact half-open endpoints and input immutability. Check actual newly generated saved Store/API proposals include their full context; unchanged evaluator excludes proposals with evidence outside reviewed coverage while retaining review/reference denominators and leaves complete eligible evidence usable. Compare all previous candidate fields with the frozen baseline, not only added fields.",
+          "Before source edits, freeze hashes for the two existing local development source metadata/calibration contexts and original player/shuttle artifacts from .cache/rally-proposal-data (singles970dbd8adfe548d8 player38cfdedc74d248208727aff21d4c3e45 shuttled8ea631a9bd44eec8aa928b228f5fdb7; doublesc406a1187130b845 playere67258122f424671980cc1e7afca11d5 shuttle19ceccbfe8914cc59b18110d96db9b06). Replay pure proposal logic on these immutable cached inputs under baseline/current code without loading models, decoding/displaying/transferring images, inspecting scientific labels or using the shared Store for writes. Verify every original candidate field unchanged, new ranges source-bounded, and original inputs/source metadata/annotations byte-identical. If cached artifacts or context cannot be verified, preserve unavailable evidence and stop native publication rather than acquire replacements or invent a receipt. Bind exact source/model/code/input hashes and explicit cached-replay limitations as required native evidence.",
+          "Run focused rally/API/evaluation/contact/recognition regressions and full Python/Ruff/format/pip/repository UTF8/LF/JSON/local-link/diff checks with the existing3.10venv and fresh pinned generated test root/data. Record stable executable/test hashes and independently terminal launcher/worker/descendant lifetimes. Preserve failed attempts and limit diagnosed repair rounds to3.",
+          "Document concrete four-case before/after evidence, half-open versus inclusive semantics, metadata-only detection parity and native cached-replay limitations. Publish only six granted paths through focused PR/exact CI/controller integration, verify exact merged-main tree and independently audit complete public package/source/frontend/locks/both-image delivery and all45 unchanged public manifests. No manual merge/main push/raw coordination edit/workflow retry/cancel/wake.",
+          "Bound implementation to4h from grant and512MiB new retained outputs. No actual new scientific frames/labels/predictions/private review-plan access, assessor sessions/image transfer, data acquisition, model inference/training/promotion, held-out evaluation, new service/fee, auth/policy/workflow/dependency/deployment changes or research Store mutations. Only immutable existing development perception/context inputs may be read for the stated cache replay. Complete references stay0/2, four eligibility flags false and62/66/67/71 incomplete."
+        ],
+        "artifacts": {
+          "generated_failure_sha256": "79a4a6cd9d4bd7e7865a5470eefcce210dc4175b4228d59fa12519dd518c467f"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "278",
+          "282"
+        ],
+        "exclusions": [
+          "No detection/model/threshold/default change, scientific assessment/acceptance change, new image transfer/inference/training/data acquisition, historical output/label overwrite, evaluator policy change, auth/workflow/dependency/deployment change or PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Record complete native-frame evidence ranges on newly generated serve and rally-end proposals so downstream review/evaluation can distinguish proposal timing from the wider source observations actually used.",
+        "paths": [
+          "backend/badminton/rallies.py",
+          "tests/test_rallies.py",
+          "tests/test_rally_api.py",
+          "tests/test_rally_proposal_evidence.py",
+          "docs/RALLY_PROPOSAL_EVIDENCE_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Four generated native-proposal/evaluator failure cases corrected with immutable candidate timing/detection fields and full source-evidence denominators.",
+          "Immutable cached development input replay with actual source/checkpoint/input/code hashes, no inference or label scoring; required full checks, exact PR/main/controller and complete independently verified public delivery."
+        ]
+      },
+      "spec_hash": "ca74b69013711453530704c632629d9b48a53b2e52a6efc6cdbfb497f72ff9a9",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
@@ -26715,6 +26816,18 @@
       "host_id": "MSI",
       "registered_at": 1792898457,
       "session_id": "7edc859bbd9747e0aa21c74ad1ad103d"
+    },
+    "MSI/8693413d1ec0499d88d7a0ebed3da0e5": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "generated_failure_sha256": "79a4a6cd9d4bd7e7865a5470eefcce210dc4175b4228d59fa12519dd518c467f"
+      },
+      "capabilities": [
+        "cpu"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792923630,
+      "session_id": "8693413d1ec0499d88d7a0ebed3da0e5"
     },
     "MSI/8c83ed3322c44fa58e4743a23db98417": {
       "actor": "Ken0u",
