@@ -299,3 +299,134 @@ def test_generated_audio_job_uses_corresponding_source_rows(
     assert source.read_bytes() == source_bytes
     assert store.annotations(video["id"]).model_dump_json() == annotation_bytes
     assert saved_revisions() == revision_rows
+
+
+@pytest.mark.parametrize(
+    "rate,case,expected",
+    [(rate, "aligned", 1) for rate in (24, 25, 30, 50, 60, 120)]
+    + [
+        (60, case, 1)
+        for case in (
+            "sparse",
+            "vfr_origin",
+            "duplicate_sound",
+            "history_valid",
+            "recursive_history",
+        )
+    ]
+    + [
+        (60, case, 0)
+        for case in (
+            "edge",
+            "tail",
+            "cut",
+            "player_cut",
+            "replay_bound",
+            "player_replay_bound",
+            "unknown_bound",
+            "excluded_bound",
+            "frame_gap",
+            "timestamp_gap",
+            "missing_audio",
+            "no_gap",
+            "static_wrist",
+            "history_replay",
+            "missing_history",
+            "bound_pose_mismatch",
+            "bound_pose_duplicate",
+            "history_cut",
+            "history_player_replay",
+        )
+    ],
+)
+def test_generated_audio_interval_api_preserves_source_bounds_and_review_context(
+    catalog, monkeypatch, rate, case, expected
+):
+    import badminton.audio as audio
+    from badminton.schemas import Event, SceneRange
+    from test_audio_contacts import interval_scenario
+
+    root, data, store, video = catalog
+    shuttle, players, metadata, cues, times = interval_scenario(rate, case)
+    video.update(metadata)
+    store.register(video)
+    write_json(data / video["id"] / "timestamps.json", times)
+    original_bytes = {}
+    for stage, document in (("shuttle", shuttle), ("players", players)):
+        document.update(stage=stage, video_id=video["id"], start_frame=0, end_frame=80)
+        path = data / video["id"] / "runs" / f"{stage}.json"
+        write_json(path, document)
+        original_bytes[path] = path.read_bytes()
+    reviewed = store.annotations(video["id"])
+    reviewed.events.append(
+        Event(
+            id="keep",
+            rally_id="R1",
+            kind="shot",
+            frame=24,
+            family="drop",
+            side="backhand",
+            status="corrected",
+        )
+    )
+    store.save_annotations(video["id"], reviewed)
+
+    def revisions():
+        with store.connect() as db:
+            return db.execute(
+                "SELECT revision,document,saved_at FROM annotations ORDER BY revision"
+            ).fetchall()
+
+    original_revisions = revisions()
+    source = root / video["path"]
+    source_bytes = source.read_bytes()
+    monkeypatch.setattr(audio, "extract_audio_cues", lambda *_: copy.deepcopy(cues))
+    with TestClient(create_app(root, data)) as client:
+        base = f"/api/videos/{video['id']}"
+        response = client.post(
+            base + "/contacts",
+            json={
+                "shuttle_run_id": "shuttle",
+                "player_run_id": "players",
+                "include_audio": True,
+            },
+        )
+        assert response.status_code == 202, response.text
+        job = wait(store, response.json()["id"])
+        assert job["status"] == "completed", job
+        path = data / video["id"] / "runs" / f"{job['id']}.json"
+        raw_bytes = path.read_bytes()
+        result = json.loads(raw_bytes)
+        assert len(result["candidates"]) == expected
+        assert revisions() == original_revisions
+        assert source.read_bytes() == source_bytes
+        assert all(
+            path.read_bytes() == original for path, original in original_bytes.items()
+        )
+        if expected:
+            candidate = result["candidates"][0]
+            onset = cues["peaks"][0]["time_s"]
+            assert candidate["start_time_s"] <= onset - 0.12
+            assert candidate["end_time_s"] >= onset + 0.12
+            assert candidate["context_start_frame"] <= candidate["start_frame"]
+            assert candidate["context_end_frame"] > candidate["end_frame"]
+            assert candidate["interval_bounds"] == "inclusive"
+            assert not client.get(base + "/runs/" + job["id"]).json()["candidates"][0][
+                "scene_excluded"
+            ]
+            # A later explicit unknown at the inclusive endpoint must exclude
+            # the proposal through the unchanged existing review endpoint.
+            current = store.annotations(video["id"])
+            current.scene_ranges.append(
+                SceneRange(
+                    id="later-unknown",
+                    start_frame=candidate["end_frame"],
+                    end_frame=candidate["end_frame"] + 1,
+                    scene="unknown",
+                )
+            )
+            store.save_annotations(video["id"], current)
+            refreshed = client.get(base + "/runs/" + job["id"]).json()
+            assert refreshed["candidates"][0]["scene_excluded"] is True
+            assert path.read_bytes() == raw_bytes
+            assert revisions()[:2] == original_revisions

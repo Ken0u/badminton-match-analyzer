@@ -44,6 +44,40 @@ def _aligned_players(window, players):
     return sorted(aligned, key=lambda row: row["time_s"])
 
 
+def _interval_context(rows, index, onset, cuts, diagonal):
+    """Bracket source times and retain every consumed selection-history row."""
+    before = [i for i in range(index + 1) if rows[i]["time_s"] <= onset - 0.12]
+    after = [i for i in range(index, len(rows)) if rows[i]["time_s"] >= onset + 0.12]
+    if not before or not after:
+        return None
+    left, right = before[-1], after[0]
+    start, end = min(left, index - 4), max(right, index + 4)
+    positions = {row["frame"]: i for i, row in enumerate(rows)}
+    while True:
+        context = rows[start : end + 1]
+        required_start, required_end = start, end
+        for row in context:
+            point = row["shuttle"]
+            first = point.get("selection_context_start_frame", row["frame"])
+            last = point.get("selection_context_end_frame", row["frame"] + 1)
+            if (
+                type(first) is not int
+                or type(last) is not int
+                or not first <= row["frame"] < last
+                or first not in positions
+                or last - 1 not in positions
+            ):
+                return None
+            required_start = min(required_start, positions[first])
+            required_end = max(required_end, positions[last - 1])
+        if (required_start, required_end) == (start, end):
+            break
+        start, end = required_start, required_end
+    if not _valid_window(context, cuts, diagonal):
+        return None
+    return rows[left], rows[right], context
+
+
 def add_audio_support(candidates, shuttle_run, player_run, video, cues):
     """Keep visual proposals; add only uncertain, visually supported intervals.
 
@@ -146,11 +180,17 @@ def add_audio_support(candidates, shuttle_run, player_run, video, cues):
             continue
         # Bracket +/-120 ms with actual source frames, not inferred FPS. These
         # are review bounds, not a calibrated contact confidence interval.
-        before = [row for row in window if row["time_s"] <= t - 0.12]
-        after = [row for row in window if row["time_s"] >= t + 0.12]
-        if not before or not after:
+        interval = _interval_context(rows, index, t, cuts, diagonal)
+        if interval is None:
             continue
-        left, right, middle = before[-1], after[0], rows[index]
+        left, right, context = interval
+        context_players = _aligned_players(context, players)
+        if context_players is None or any(
+            row.get("scene", "live") != "live" or row.get("cut") or row.get("scene_cut")
+            for row in context_players
+        ):
+            continue
+        middle = rows[index]
         selected.append(
             {
                 "id": f"contact-audio-{middle['frame']}",
@@ -160,11 +200,8 @@ def add_audio_support(candidates, shuttle_run, player_run, video, cues):
                 "end_frame": right["frame"],
                 "start_time_s": left["time_s"],
                 "end_time_s": right["time_s"],
-                "context_start_frame": min(
-                    row["shuttle"].get("selection_context_start_frame", row["frame"])
-                    for row in window
-                ),
-                "context_end_frame": window[-1]["frame"] + 1,
+                "context_start_frame": context[0]["frame"],
+                "context_end_frame": context[-1]["frame"] + 1,
                 "interval_bounds": "inclusive",
                 "timing": "uncertain_interval",
                 "track_id": pose["track_id"],
