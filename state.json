@@ -1253,6 +1253,15 @@
       "task_id": "271",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint271-v3": {
+      "actor": "dootz1",
+      "at": 1792909177,
+      "epoch": 1,
+      "fingerprint": "c29129d40230b97654c3306cf6037984ccbb20759ed7b7b166468d1259031742",
+      "status": "running",
+      "task_id": "271",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
@@ -21943,25 +21952,26 @@
       "checkpoint": {
         "artifacts": [
           ".cache/w271",
-          ".cache/goal-01a17154/browser271-final-audit.json",
-          ".cache/goal-01a17154/editor271-audit.json",
-          ".cache/goal-01a17154/tested-source-hashes271-final.json",
-          ".cache/goal-01a17154/python271-verification.json",
-          ".cache/goal-01a17154/failed-export271-terminal.json"
+          ".cache/goal-01a17154/pr271-browser-audit.json",
+          ".cache/goal-01a17154/pr271-revision-http-audit.json",
+          ".cache/goal-01a17154/mac271-failure-clean.log",
+          ".cache/goal-01a17154/mac271-failure-artifacts",
+          ".cache/goal-01a17154/python271-base-verification.json",
+          ".cache/goal-01a17154/tested-source-hashes271-native.json"
         ],
         "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
-        "head": "80edd469f8fd9e3018450895895fd9258c6c5beb",
+        "head": "8474afc127717ec887425354523c341c9c568f4f",
         "pr_number": 274,
-        "remaining": "Finish combined-source full checks; push refreshed head and submit exact head/base/spec. Verify exact PR/mainCI, actual default-CI new case/artifact plus complete cleanup, controller integration and full package/both-image delivery. Goal stays active; no scientific accuracy/model promotion claim.",
-        "summary": "Scoped four-file implementation is committed and PR274 attached. Original local full suite3953 passed/4skipped; frontend200/stage3/process71+2skip, all required type/contract/stage/Ruff/pip/repository/whitespace checks pass. Direct editor18 and final production19/library8/export13 pass; independent audits confirm continuous/cut/scene path receipts, manual/toggle/data preservation, consumed helper hashes and terminal fixture/static/admission cleanup. Structural audit confirms all39 original check action bodies and fixture/protocol bytes unchanged. Preserved first export failure from Windows venv wrapper/worker PID mismatch and failed45s Store job; both exact lifetimes independently absent. Scope extension rejected for changed semantics; no admission repair applied. Equivalent direct existing venv-worker startup verified identical prefix/path/package provenance and runs unchanged assertions. Proposed separate273. Initial publication lacked local Git identity; reused prior verified authenticated dootz1 attribution; first empty remote branch and failed PR creation preserved. No force push. Main advanced with270, so normal merge refresh80edd469 now includes base0e5a17c; all3 executable test hashes unchanged, diff vs main exactly4granted files. Starting combined-source verification before submission."
+        "remaining": "Final full suite on8474afc with fresh short temp; exact PRCI including macOS race fix, submit latest head/base/new spec, controller integration/exactmain actualbrowser artifact and public candidate package/both-image audit. No runtime/scientific truth/model promotion changes.",
+        "summary": "Combined source80edd469 passed4143Python/4skip plus frontend200 and required checks. Actual exact-head browser artifact from40167994787 independently confirms19production+8library+13export, new canvas mode receipts, helper hashes and complete cleanup; revision tree/installed-wheel HTTP verified. That exactCI failed native macOS in inherited270 test helper: fast expected CLI rejection returned2 before any psutil identity sample (1failed4115passed28skip). Preserved sanitized full job logs and actual XML; no retry hides it. Committed path extension goal-01a17154-extend271-native-v1 accepted epoch1; current spec b2f66a53f42b49a22fc7ab3c561111b588ea30a46b0aa638cf8e3d0adab28a6e adds only tests/test_rally_review_contract_cli.py without semantic/resource changes. Granted repair8474afc uses an atomic nonce-bound startup receipt and stdin gate; parent independently verifies actual interpreter identity in its spawned tree before unchanged CLI script/argv/environment runs. Observation and terminal requirements retained, gate exits on pipe EOF, source/request/startup evidence preserved. Two delayed-first-observation regressions added. All39focused CLI tests pass, Ruff234/format/repository/diff pass. Original3browser executable hashes unchanged; all4frozen test hashes preserved. Scope diff vs base0e5a17c exactly5granted files. Starting final full suite; exact new-headCI triggered by normal push."
       },
-      "checkpoint_at": 1792908445,
+      "checkpoint_at": 1792909177,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
         "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
         "epoch": 1,
-        "expires_at": 1792919245,
+        "expires_at": 1792919977,
         "granted_at": 1792907229,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
