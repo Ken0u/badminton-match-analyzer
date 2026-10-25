@@ -7,6 +7,7 @@ import {
   parseTimes,
   parseVideo,
   displayCalibrations,
+  displayShuttle,
   courtSignature,
   cameraChanged,
   courtChanged,
@@ -46,6 +47,147 @@ const doc = () =>
     ],
     shuttle_points: [],
   });
+
+const shuttlePoint = (frame) => ({ x: frame * 7 + 3, y: frame * 5 + 2 });
+function shuttleFixture(metadata = {}, annotations = {}) {
+  return {
+    labels: { ...doc(), ...annotations },
+    run: {
+      start_frame: 0,
+      end_frame: 20,
+      frames: Array.from({ length: 20 }, (_, frame) => ({
+        frame,
+        shuttle: { visible: true, ...shuttlePoint(frame) },
+      })),
+      ...metadata,
+    },
+    times: Array.from({ length: 20 }, (_, frame) => frame / 25),
+  };
+}
+const trace = (fixture, frame = 5) =>
+  displayShuttle(fixture.labels, fixture.run, fixture.times, 25, frame);
+const points = (start, end) =>
+  Array.from({ length: end - start }, (_, i) => shuttlePoint(start + i));
+
+for (const [name, metadata, annotations] of [
+  ["automatic cut", { cut_frames: [3] }, {}],
+  ["raw cut", { raw_cut_frames: [3], cut_frames: [] }, {}],
+  ["reviewed cut", {}, { camera_corrections: [{ frame: 3, is_cut: true }] }],
+  ["preceding cut", { known_preceding_cut_frames: [3] }, {}],
+  ["legacy preceding cut", { preceding_reviewed_cut_frame: 3 }, {}],
+  [
+    "gap metadata",
+    { boundaries: [{ frame: 3, reason: "timestamp_discontinuity" }] },
+    {},
+  ],
+  ["preceding gap", { known_preceding_timestamp_gaps: [3] }, {}],
+  [
+    "scene start",
+    {},
+    { scene_ranges: [{ start_frame: 3, end_frame: 8, scene: "replay" }] },
+  ],
+  [
+    "scene end",
+    {},
+    { scene_ranges: [{ start_frame: 0, end_frame: 3, scene: "unknown" }] },
+  ],
+]) {
+  test(`shuttle display removes all earlier-view history at ${name}`, () => {
+    const fixture = shuttleFixture(metadata, annotations);
+    const before = structuredClone(fixture);
+    assert.deepEqual(trace(fixture), {
+      segments: [points(3, 6)],
+      current: shuttlePoint(5),
+    });
+    assert.deepEqual(fixture, before);
+  });
+}
+test("shuttle display honors cut removals and ignores future boundaries", () => {
+  const fixture = shuttleFixture(
+    { raw_cut_frames: [3, 8], cut_frames: [3, 8] },
+    { camera_corrections: [{ frame: 3, is_cut: false }] },
+  );
+  assert.deepEqual(trace(fixture).segments, [points(0, 6)]);
+  fixture.labels.camera_corrections.push({ frame: 4, is_cut: true });
+  assert.deepEqual(trace(fixture).segments, [points(4, 6)]);
+});
+test("shuttle display cannot remove native time gaps with a camera correction", () => {
+  const fixture = shuttleFixture(
+    {},
+    {
+      camera_corrections: [{ frame: 3, is_cut: false }],
+    },
+  );
+  fixture.times = fixture.times.map(
+    (time, frame) => time + (frame >= 3 ? 1 : 0),
+  );
+  assert.deepEqual(trace(fixture).segments, [points(3, 6)]);
+  assert.equal(
+    displayCalibrations(
+      fixture.labels,
+      fixture.run,
+      fixture.times,
+      25,
+      false,
+    )[0].end_frame,
+    3,
+  );
+});
+test("shuttle display keeps VFR and legacy continuous paths in source pixels", () => {
+  const fixture = shuttleFixture();
+  fixture.times = [
+    0,
+    0.02,
+    0.07,
+    0.1,
+    0.15,
+    0.21,
+    ...fixture.times.slice(6).map((t) => t + 0.1),
+  ];
+  assert.deepEqual(trace(fixture), {
+    segments: [points(0, 6)],
+    current: shuttlePoint(5),
+  });
+  assert.deepEqual(trace(shuttleFixture(), 19).segments, [points(7, 20)]);
+});
+test("a boundary without an observation still removes prior-view history", () => {
+  const fixture = shuttleFixture({ cut_frames: [3] });
+  fixture.run.frames = fixture.run.frames.filter((row) => row.frame !== 3);
+  assert.deepEqual(trace(fixture).segments, [points(4, 6)]);
+  assert.deepEqual(trace(fixture, 3), { segments: [], current: null });
+});
+for (const [name, value] of [
+  ["missing", undefined],
+  ["invisible", { visible: false, x: null, y: null }],
+  ["null", { visible: true, x: null, y: 12 }],
+  ["nonfinite", { visible: true, x: NaN, y: 12 }],
+  ["infinite", { visible: true, x: 12, y: Infinity }],
+  ["nonnumeric", { visible: true, x: "12", y: 12 }],
+]) {
+  test(`shuttle display breaks at ${name} observations without invented coordinates`, () => {
+    const fixture = shuttleFixture();
+    fixture.run.frames[3].shuttle = value;
+    assert.deepEqual(trace(fixture).segments, [points(0, 3), points(4, 6)]);
+    assert.deepEqual(trace(fixture, 3), {
+      segments: [points(0, 3)],
+      current: null,
+    });
+  });
+}
+test("shuttle display respects source and run edges", () => {
+  const fixture = shuttleFixture();
+  assert.deepEqual(trace(fixture, 0), {
+    segments: [[shuttlePoint(0)]],
+    current: shuttlePoint(0),
+  });
+  fixture.run.start_frame = 3;
+  fixture.run.end_frame = 8;
+  assert.deepEqual(trace(fixture).segments, [points(3, 6)]);
+  for (const frame of [-1, 2, 8, 20, 1.5, NaN])
+    assert.deepEqual(trace(fixture, frame), { segments: [], current: null });
+  fixture.run = null;
+  assert.deepEqual(trace(fixture), { segments: [], current: null });
+});
 async function actorFixture() {
   const { createEditorController } =
     await import("../.test-build/editor/controller.js");
