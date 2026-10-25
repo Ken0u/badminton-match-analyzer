@@ -23207,6 +23207,7 @@
       }
     },
     "282": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40183575974",
       "checkpoint": {
         "branch": "codex/issue-282-compare-prospectively-supplied-native-ra",
         "evidence_sha256": "23c3ad64239390d123df2af06c0592938dcdb8ec4122309e264de89c787aa5f3",
@@ -23228,7 +23229,7 @@
         "spec_hash": "1f1299e2761de712ccf989ae9eda13f6bd21ce18746d7af43d28d4f837ed02e4"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792922488,
