@@ -9918,6 +9918,15 @@
       "status": "rejected",
       "verb": "extend-scope"
     },
+    "tiling299-extend-package-v2": {
+      "actor": "Ken0u",
+      "at": 1792937028,
+      "epoch": 1,
+      "fingerprint": "7c1f99c120e615e246543fc00e5d84590bb77088dc956ae0651a39927a55081f",
+      "status": "running",
+      "task_id": "299",
+      "verb": "extend-scope"
+    },
     "verify-101-9d7ee10b6bf474993b4781abdc533ebfdca751e8-False": {
       "actor": "github-actions[bot]",
       "at": 1792537003,
@@ -24588,7 +24597,7 @@
         "granted_at": 1792933796,
         "host_id": "MSI",
         "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
-        "spec_hash": "dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a"
+        "spec_hash": "d4d81772a9147155358c5c9560fb81a2cee6da1eb85f70d55aceadcf764aa3a2"
       },
       "epoch": 1,
       "planned_at": 1792933607,
@@ -24638,7 +24647,8 @@
           "tests/test_shuttle_tiling.py",
           "tests/test_shuttle_resolution.py",
           "data/manifests/shuttle_tiling_protocol_v1.json",
-          "docs/SHUTTLE_TILING_REPORT.md"
+          "docs/SHUTTLE_TILING_REPORT.md",
+          "MANIFEST.in"
         ],
         "priority": 100,
         "resources": [
@@ -24650,7 +24660,7 @@
           "Focused/full required checks, exact source CI/controller integration and independent full public delivery; no model/default/eligibility promotion."
         ]
       },
-      "spec_hash": "dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a",
+      "spec_hash": "d4d81772a9147155358c5c9560fb81a2cee6da1eb85f70d55aceadcf764aa3a2",
       "status": "running"
     },
     "62": {
