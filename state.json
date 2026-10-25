@@ -673,6 +673,21 @@
       "task_id": "252",
       "verb": "next"
     },
+    "evaluation-clock-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792901011,
+      "fingerprint": "ac8cd33b220a0dacede978b16241d5984b5c30492806dd234cd34d11f9034035",
+      "status": "ready",
+      "task_id": "264",
+      "verb": "plan"
+    },
+    "evaluation-clock-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792901011,
+      "fingerprint": "7d889e72270a7bd1bde29d6dec4e3a2a3352614d9354a3ce0fde0ffd54cac97d",
+      "status": "ok",
+      "verb": "register"
+    },
     "evaluation-source-plan-v1": {
       "actor": "Ken0u",
       "at": 1792895827,
@@ -8107,6 +8122,14 @@
       "fingerprint": "984e27d03c290ec14f64ec74eb211c6b67788838202fc3d9e7bbd329740a89e2",
       "status": "ready",
       "task_id": "262",
+      "verb": "plan"
+    },
+    "spec-264-2d6ab8de144c39f5cc9c69299fe187981427f6f2b5df284bfe93929aeacb1334": {
+      "actor": "Ken0u",
+      "at": 1792901011,
+      "fingerprint": "bb388d2a54f033c332b039855aadc4ed6de23bbc2d4b5ef9ff05c906fa1eb71b",
+      "status": "ready",
+      "task_id": "264",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -21022,6 +21045,66 @@
         "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021"
       }
     },
+    "264": {
+      "epoch": 0,
+      "planned_at": 1792901011,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Follow the approved regular bug-review roadmap after fully delivered262. Audit all issue/PR history and committed grants; preserve original root edits, deprecated PROGRESS.md, environments, datasets, research, saved annotations and predictions. Obtain a fresh committed code-only grant and isolated worktree before production edits.",
+          "Preserve the generated four-case API/CLI reproduction on the delivered262 source. A candidate at frame5 (native0.2seconds) claiming0.6seconds currently matches the reviewed frame15 and receives contact F1=1 or drive-classification F1=1. Matched-frame controls also succeed. This is a software reproduction using generated files only, without reading real match media or scientific labels.",
+          "Add an optional keyword-only native timestamp sequence to pure contact and recognition evaluators without breaking existing positional tolerance calls. When provided require full native frame coverage, finite nonnegative numeric values excluding booleans, and strictly increasing source times. Validate reviewed contact and proposal representative times against their native ordinals and any supplied inclusive interval-time endpoints against the corresponding native bounds using a fixed small serialization tolerance consistent with existing boundary evaluation. Reject inconsistent values with actionable ValueError before any score, including excluded/no-label candidates; never silently rewrite the artifact or infer timing from FPS.",
+          "Wire API and CLI contact/recognition evaluation to the registered source timestamp sequence; do not use an artifact-supplied replacement clock. Ensure recognition forwards the same clock into contact matching before family/side/hitter/complete-event scoring. Return HTTP422 or CLI error/no newly written report on invalid clocks or mismatched artifact times. Missing or malformed stored timestamp files must not produce a report or silently downgrade to unavailable validation. Preserve combined evaluation and the existing stricter rally evaluator.",
+          "Expose an additive report clock-validation status for the pure evaluator compatibility path: supplied and checked native clocks are validated; omitted clocks are unavailable, never verified. Native PTS and orientation retain their original identities. Matching VFR clocks, legacy artifacts without optional interval-time metadata, uncertainty bounds, absent prediction source hashes, camera cuts, scene exclusions, review gaps, missing-output denominators and unknown/assisted classification labels retain existing behavior. Do not rescore real scientific outputs.",
+          "Generated pure tests cover contacts/recognition, exact valid and mismatched representative/interval times, VFR timestamps, serialization tolerance, invalid length/order/nonfinite/negative/boolean clocks, invalid source ordinals, no-label and excluded candidates, optional clock compatibility, unchanged inputs and preserved abstention/uncertainty/camera/coverage denominators. API and CLI tests use real registered generated artifacts to exercise success, rejection, no report overwrite or mutation and valid combined requests. Existing source-hash, camera, recognition and boundary regressions remain green.",
+          "Run focused and required full Python, Ruff lint/format, pip consistency, repository UTF8/LF/JSON/local-link and diff checks using the existing project virtual environment and disposable generated storage. Preserve actual failed attempts and process lifetime evidence; final tested executable/test bytes must remain stable through publication. No additional native inference or new dependency.",
+          "Document concrete before/after, compatibility/status limitations and generated validation in the focused report and current bug-review summary. Publish only granted paths with a focused PR, exact head/base/spec submission, normal controller integration, exact PR/main CI and independent complete public package/source/frontend/lock/both-image delivery before completion.",
+          "Bound work to three hours from fresh grant,512MiB new outputs and three diagnosed repair rounds. No scientific image/label access or transfer, new assessor, media decode/render/download, holdout access, inference/training/model/default change, policy/auth/workflow/publishing/deployment change, paid service, manual merge, direct main push, raw coordination write, workflow retry/cancel/wake or deprecated PROGRESS edit. Scientific complete references remain0/2 and all four eligibility flags false; correct software measurements do not establish full-match accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "262"
+        ],
+        "exclusions": [
+          "No real scientific inputs, image transfer, inference, model/default, policy/auth/workflow/deployment, dependencies, paid service, manual merge or PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Reject contact and recognition evaluation artifacts whose declared representative or interval times disagree with native source frames, preserving verified timing, unknowns and existing comparison domains.",
+        "paths": [
+          "backend/badminton/evaluation.py",
+          "backend/badminton/recognition_evaluation.py",
+          "backend/badminton/api.py",
+          "backend/badminton/cli.py",
+          "tests/test_evaluation_clock.py",
+          "tests/test_evaluation_clock_api.py",
+          "tests/test_contact_camera_evaluation_api.py",
+          "tests/test_evaluation.py",
+          "tests/test_recognition_evaluation.py",
+          "tests/test_recognition_api.py",
+          "tests/test_workflow.py",
+          "docs/EVALUATION_CLOCK_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Preserved four-case generated API/CLI reproduction, native-clock rejection/compatibility tests and all required focused/full checks.",
+          "Exact PR/main CI, controller integration and independently verified complete public delivery; no new scientific assessment."
+        ]
+      },
+      "spec_hash": "1f16636d3c1ba7d3e8a1e292be18e6dddfd55edcc66a7f5e99ac8ede561a003c",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -24221,6 +24304,18 @@
       "host_id": "MSI",
       "registered_at": 1792893105,
       "session_id": "9b465dc1a2ba4999bd038162102f230c"
+    },
+    "MSI/b80f2c05765e40ff9fa024c1530840f1": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792901011,
+      "session_id": "b80f2c05765e40ff9fa024c1530840f1"
     },
     "MSI/broadcast179-review-6f42d839a2": {
       "actor": "Ken0u",
