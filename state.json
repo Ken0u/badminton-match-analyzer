@@ -8679,6 +8679,15 @@
       "task_id": "307",
       "verb": "checkpoint"
     },
+    "shuttle-clock307-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792961391,
+      "epoch": 1,
+      "fingerprint": "6b20001bce5da21c9d5880b55c1f434f6c1f6ee5a8586853076d00628c49c8cd",
+      "status": "review",
+      "task_id": "307",
+      "verb": "submit"
+    },
     "shuttle139-review-v2-grant-cfd18714": {
       "actor": "Ken0u",
       "at": 1792485587,
@@ -25346,6 +25355,7 @@
       "epoch": 1,
       "planned_at": 1792960258,
       "planned_by": "Ken0u",
+      "pr_number": 308,
       "spec": {
         "acceptance": [
           "Continue approved regular bug review after delivered #305. Revalidate trusted main guidance, complete issue/PR history and authoritative reservations; link related #260/#264/#267/#303. Obtain a fresh committed code-only grant and isolated worktree before production edits. Preserve original edits, environments, datasets, annotations, predictions, weights, processes and deprecated PROGRESS.",
@@ -25397,7 +25407,13 @@
         ]
       },
       "spec_hash": "6842fb40027d75e61465bb8f6b6112c4b51acff456351354d7c90a02601b3fa0",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "6c84f5cb47e310e8fe19d62d8ead67e9ba395a46",
+        "head_sha": "37e61ca6e8b379e1115621f698b96a2bb942c5f1",
+        "pr_number": 308,
+        "spec_hash": "6842fb40027d75e61465bb8f6b6112c4b51acff456351354d7c90a02601b3fa0"
+      }
     },
     "62": {
       "checkpoint": {
