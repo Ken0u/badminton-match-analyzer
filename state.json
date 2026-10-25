@@ -20130,6 +20130,7 @@
       }
     },
     "254": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40148462299",
       "checkpoint": {
         "branch": "codex/issue-254-clear-provisional-linked-actor-hints-whe",
         "evidence_sha256": "4b69cbb90231468db1fd9b39e35290800b8a4dbc988b97dcf8f380d1a2e5be57",
@@ -20151,7 +20152,7 @@
         "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792889065,
