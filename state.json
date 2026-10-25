@@ -1120,10 +1120,38 @@
       "status": "idle",
       "verb": "next"
     },
+    "goal-01a17154-next266-v1": {
+      "actor": "dootz1",
+      "at": 1792903431,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "branch": "codex/issue-266-keep-the-editor-shuttle-trail-inside-its",
+        "epoch": 1,
+        "expires_at": 1792914231,
+        "granted_at": 1792903431,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d"
+      },
+      "epoch": 1,
+      "fingerprint": "0a6c5081f5118dc7e3e269d35e01e949439ae3b8b9bc8ff6f8af0e7b642a9e82",
+      "status": "granted",
+      "task_id": "266",
+      "verb": "next"
+    },
     "goal-01a17154-plan266-v1": {
       "actor": "dootz1",
       "reason": "spec fields must match the version 1 task contract",
       "status": "rejected",
+      "verb": "plan"
+    },
+    "goal-01a17154-plan266-v2": {
+      "actor": "dootz1",
+      "at": 1792903431,
+      "fingerprint": "fad7fa08f1d9e242935e2dbabbfbf1f1b1a6dd856c1e7387b7c497223bba3880",
+      "status": "running",
+      "task_id": "266",
       "verb": "plan"
     },
     "goal-01a17154-register-v1": {
@@ -21270,7 +21298,18 @@
       }
     },
     "266": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "branch": "codex/issue-266-keep-the-editor-shuttle-trail-inside-its",
+        "epoch": 1,
+        "expires_at": 1792914231,
+        "granted_at": 1792903431,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d"
+      },
+      "epoch": 1,
       "planned_at": 1792903261,
       "planned_by": "dootz1",
       "spec": {
@@ -21315,7 +21354,7 @@
         ]
       },
       "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
