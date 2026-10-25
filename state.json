@@ -24343,6 +24343,7 @@
         "session_id": "goal-01a17154",
         "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
