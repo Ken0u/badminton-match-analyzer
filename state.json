@@ -136,6 +136,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "boundary256-targeted-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792890272,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
+        "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
+        "epoch": 1,
+        "expires_at": 1792901072,
+        "granted_at": 1792890272,
+        "host_id": "MSI",
+        "session_id": "c36935dca7b147e08454839f993f5c88",
+        "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f"
+      },
+      "epoch": 1,
+      "fingerprint": "96f708dd0812214c691d946343a2245809d7b694cd7356594802e259fae6a568",
+      "status": "granted",
+      "task_id": "256",
+      "verb": "next"
+    },
     "broadcast179-register-6f42d839a2": {
       "actor": "Ken0u",
       "at": 1792632986,
@@ -20239,7 +20259,18 @@
       }
     },
     "256": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
+        "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
+        "epoch": 1,
+        "expires_at": 1792901072,
+        "granted_at": 1792890272,
+        "host_id": "MSI",
+        "session_id": "c36935dca7b147e08454839f993f5c88",
+        "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f"
+      },
+      "epoch": 1,
       "planned_at": 1792890131,
       "planned_by": "Ken0u",
       "spec": {
@@ -20302,7 +20333,7 @@
         ]
       },
       "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
