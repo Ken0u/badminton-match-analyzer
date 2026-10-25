@@ -6227,6 +6227,15 @@
       "task_id": "250",
       "verb": "next"
     },
+    "rally262-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792898947,
+      "epoch": 1,
+      "fingerprint": "a1d0d8de2c5411889a0a6b07ec1d97cf956d2f8e819e1689765b521a2a73c716",
+      "status": "running",
+      "task_id": "262",
+      "verb": "checkpoint"
+    },
     "rally262-input-next-v1": {
       "actor": "Ken0u",
       "at": 1792898618,
@@ -20872,12 +20881,25 @@
       }
     },
     "262": {
+      "checkpoint": {
+        "branch": "codex/issue-262-produce-a-prospectively-frozen-provenanc",
+        "evidence": [
+          "Genuine epoch1 grant after input-qualified registration. Initial idle request and local registration-helper failure preserved; no duplicate implementation.",
+          "Protocol pins93opaque input hashes and original tested250producer before original scientific metadata access. No image viewing/decoding/rendering, label assessment, image dispatch, model/inference or original preparation rerun.",
+          "CLI uses clean original250read-only audit before packet/gallery metadata; real shared Store, credential-free pinned roots, exclusive output/failure fencing, immutable4hour clock and independently terminal process evidence. Generated checks pending."
+        ],
+        "head_sha": "c2c3c5a15b0b5c3a546057f2a50e0346cb75b089",
+        "remaining": "Finish generated/full checks and clean consumer commit; prospective issue seal; exactly one real-Store metadata plan and separate audit; exact PR/controller/main CI and complete public delivery. No new image authority.",
+        "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021",
+        "stage": "Metadata-only review planner and generated tests delegated under worker prompt; parent implements freeze/run/read-only-audit CLI, public protocol, aggregate report and roadmap pointer."
+      },
+      "checkpoint_at": 1792898947,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c2c3c5a15b0b5c3a546057f2a50e0346cb75b089",
         "branch": "codex/issue-262-produce-a-prospectively-frozen-provenanc",
         "epoch": 1,
-        "expires_at": 1792909418,
+        "expires_at": 1792909747,
         "granted_at": 1792898618,
         "host_id": "MSI",
         "session_id": "7edc859bbd9747e0aa21c74ad1ad103d",
