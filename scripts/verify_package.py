@@ -11,6 +11,7 @@ import mimetypes
 import os
 import re
 import secrets
+import stat
 import subprocess
 import sys
 import tarfile
@@ -246,6 +247,50 @@ def package_sources(root: Path) -> dict[str, bytes]:
     }
 
 
+def public_manifest_sources(root: Path) -> dict[str, bytes]:
+    """Read only tracked public JSON files; never discover local data by glob."""
+    names = (
+        subprocess.check_output(
+            ["git", "ls-files", "-z", "--", "data/manifests"], cwd=root
+        )
+        .decode("utf-8")
+        .split("\0")
+    )
+    result = {}
+    for name in names:
+        if not name or PurePosixPath(name).suffix != ".json":
+            continue
+        parts = PurePosixPath(name).parts
+        if (
+            not safe_relative(name)
+            or len(parts) != 3
+            or parts[:2] != ("data", "manifests")
+            or name in result
+        ):
+            raise ValueError("Invalid tracked public manifest path")
+        source = root / name
+        for item in (root / "data", source.parent, source):
+            try:
+                info = item.lstat()
+            except FileNotFoundError as error:
+                raise ValueError("Tracked public manifest is missing") from error
+            if stat.S_ISLNK(info.st_mode) or (
+                getattr(info, "st_file_attributes", 0)
+                & getattr(stat, "FILE_ATTRIBUTE_REPARSE_POINT", 0x400)
+            ):
+                raise ValueError("Symlink or reparse point in tracked public manifests")
+            if not (
+                stat.S_ISREG(info.st_mode)
+                if item == source
+                else stat.S_ISDIR(info.st_mode)
+            ):
+                raise ValueError("Tracked public manifest path is not ordinary")
+        result[name] = source.read_bytes()
+    if not result:
+        raise ValueError("No tracked public manifests to verify")
+    return result
+
+
 def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
     expected = package_sources(root)
     with zipfile.ZipFile(wheel) as archive:
@@ -277,15 +322,24 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
         )
     with tarfile.open(sdist, "r:gz") as archive:
         members = archive.getmembers()
+        roots = set()
         for member in members:
             path = PurePosixPath(member.name)
             if (
-                path.is_absolute()
+                not safe_relative(member.name.rstrip("/"))
+                or path.is_absolute()
                 or ".." in path.parts
                 or member.issym()
                 or member.islnk()
             ):
                 raise ValueError("Unsafe source distribution member")
+            roots.add(path.parts[0])
+            if len(path.parts) == 1 and not member.isdir():
+                raise ValueError("Unsafe source distribution root member")
+        if len(roots) != 1:
+            raise ValueError("Unsafe source distribution: inconsistent archive roots")
+        public = public_manifest_sources(root)
+        public_seen = set()
         source = {}
         required = {"uv.lock", "pyproject.toml", ".python-version", ".node-version"}
         verified = set()
@@ -300,6 +354,21 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
                     )
                 verified.add(relative)
             parts = PurePosixPath(relative).parts
+            if parts and parts[0] == "data":
+                if member.isdir() and relative in {"data", "data/manifests"}:
+                    continue
+                if not member.isfile() or relative not in public:
+                    raise ValueError("Unexpected data in source distribution")
+                if relative in public_seen:
+                    raise ValueError("Duplicate public manifest in source distribution")
+                stream = archive.extractfile(member)
+                assert stream is not None
+                if (
+                    member.size != len(public[relative])
+                    or stream.read(len(public[relative]) + 1) != public[relative]
+                ):
+                    raise ValueError("Source distribution public manifest bytes differ")
+                public_seen.add(relative)
             if any(
                 part in {".cache", ".env", ".media", ".aws", ".codex"} for part in parts
             ):
@@ -318,6 +387,8 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
                 source[relative.removeprefix("backend/")] = stream.read()
         if verified != required:
             raise ValueError("Source distribution missing reproducibility files")
+        if public_seen != public.keys():
+            raise ValueError("Source distribution missing tracked public manifests")
     if source != expected:
         raise ValueError(
             "Source distribution package bytes differ from tracked sources"
@@ -326,6 +397,7 @@ def verify_archives(root: Path, wheel: Path, sdist: Path) -> dict:
     return {
         "package_files": len(expected),
         "frontend_files": len(assets),
+        "public_manifest_files": len(public),
         "wheel_sha256": hashlib.sha256(wheel.read_bytes()).hexdigest(),
         "sdist_sha256": hashlib.sha256(sdist.read_bytes()).hexdigest(),
     }
