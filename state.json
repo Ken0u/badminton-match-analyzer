@@ -8635,6 +8635,21 @@
       "task_id": "294",
       "verb": "submit"
     },
+    "shuttle-clock-next-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792960258,
+      "fingerprint": "4122070aaa5b30cb036fb4d5f0830688c1464fa367a3af644b2e01784359f7db",
+      "status": "ready",
+      "task_id": "307",
+      "verb": "plan"
+    },
+    "shuttle-clock-next-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792960258,
+      "fingerprint": "14c8fa109b0389317c9a60f4743daba3852babf3e0b35f40e122e4303c92e47a",
+      "status": "ok",
+      "verb": "register"
+    },
     "shuttle139-review-v2-grant-cfd18714": {
       "actor": "Ken0u",
       "at": 1792485587,
@@ -9747,6 +9762,14 @@
       "fingerprint": "8a512a2dd9b73e098a5b22a376e1640de19f69a352be63e686fbf89d741df9b9",
       "status": "ready",
       "task_id": "305",
+      "verb": "plan"
+    },
+    "spec-307-6e8fd88dee4394a2ee7e3230419f78a3466324a2ef6757ca95e859f10bac7b41": {
+      "actor": "Ken0u",
+      "at": 1792960258,
+      "fingerprint": "fe8f9d9075380d2643dcfca7ea2738a00bf8f416dc6c94d0383e8e47c14fafa3",
+      "status": "ready",
+      "task_id": "307",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -25272,6 +25295,63 @@
         "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b"
       }
     },
+    "307": {
+      "epoch": 0,
+      "planned_at": 1792960258,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Continue approved regular bug review after delivered #305. Revalidate trusted main guidance, complete issue/PR history and authoritative reservations; link related #260/#264/#267/#303. Obtain a fresh committed code-only grant and isolated worktree before production edits. Preserve original edits, environments, datasets, annotations, predictions, weights, processes and deprecated PROGRESS.",
+          "Preserve the generated-only 12-case API/CLI reproduction: matching controls, rows with conflicting frame15/time5, and missing native clock maps all currently return perfect shuttle F1 for both match modes and CFR/VFR. Inputs remain byte-identical. Report this as artifact validation failure, not proof of scientific localization error.",
+          "Add keyword-only native_timestamps to pure evaluate_shuttle, preserving positional tolerance calls and legacy pure calls with explicit unavailable clock status. When supplied require complete finite nonnegative strictly increasing native clocks, reject booleans and invalid source frame counts; reuse the existing contact clock contract through a small shared helper without changing contact/recognition behavior.",
+          "Before label/run coverage filtering or metric calculation, validate every supplied shuttle row as an object with a strict integer native frame within the declared run and a finite numeric nonnegative time_s matching that native timestamp within unchanged 20-microsecond tolerance. Reject missing/malformed/conflicting time/frame metadata, including unlabelled rows; do not normalize artifact times or infer them from FPS. Retain the existing duplicate-frame check, missing-output accounting, negative labels, displacement FP+FN, source hash compatibility and unknown/unavailable semantics. Do not require complete inference rows: missing predictions remain explicitly missing.",
+          "API and CLI must load the actual native timestamp map for shuttle-only and combined evaluations and pass it to evaluate_shuttle. Missing/malformed/incomplete clocks or conflicting original row times produce actionable API422/CLI exit2; no successful partial report or overwrite of an existing report on failure. Continue source byte validation and preserve input files/history. Valid VFR/nonzero-origin/gap clocks retain original metrics with validated clock status.",
+          "Generated regressions cover pure and actual registered API/CLI both singles/doubles, matching/mismatched and missing clocks, strict frame/time types, malformed clock values, unlabelled/outside-run rows, no labels/no outputs, tolerance edges, legacy calls, combined evaluation, unchanged annotations/source/artifact bytes and preserved existing report after failure. First preserve meaningful failing regressions on the granted baseline, then verify repaired behavior. No real scientific media/model/label access or image transfer.",
+          "Run focused/full project pytest, Ruff lint/format, dependency/repository UTF8-LF/JSON/local-link and diff checks with project virtualenv. Publish a focused PR and exact source checks for controller integration, verify merged main and independently inspect public source/package/frontend/lock/protocol files and both anonymous image manifests/configs/descriptors. No manual merge/main push, coordination edits, retries/cancels/wakes, sensitive workflow/auth/storage/dependency/schema/model/default changes, new assessment, paid service or consumed holdout access. Keep full annotation accuracy unproven and references0/2."
+        ],
+        "artifacts": {
+          "generated-reproduction": "fc7713546883ab142d6fe5b32c1e655425781a983cbfb12b67ef04335588ae62"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "260",
+          "264",
+          "267",
+          "303",
+          "305"
+        ],
+        "exclusions": [
+          "No inference/training/scientific source or label access, image transfer/assessor, source clock rewrite, metric formula/denominator change, model promotion, sensitive automation/deployment/auth/storage/dependency/schema edits, manual merge or deprecated PROGRESS edits."
+        ],
+        "limits": {
+          "max_output_bytes": 2147483648,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Reject saved shuttle evaluation artifacts whose row times conflict with native frame identity, and require native clock loading in the API/CLI without changing localization metrics, labels, or inference.",
+        "paths": [
+          "backend/badminton/evaluation.py",
+          "backend/badminton/api.py",
+          "backend/badminton/cli.py",
+          "tests/test_shuttle_evaluation_clock.py",
+          "tests/test_shuttle_evaluation_clock_api.py",
+          "docs/SHUTTLE_EVALUATION_CLOCK_REPORT.md"
+        ],
+        "priority": 90,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated reproduction and failing regressions, pure/API/CLI source clock guard with preserved metrics and inputs.",
+          "Focused/full required checks, exact PR/main checks and independent public delivery; no scientific accuracy claim."
+        ]
+      },
+      "spec_hash": "6842fb40027d75e61465bb8f6b6112c4b51acff456351354d7c90a02601b3fa0",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -28430,6 +28510,21 @@
       "host_id": "MSI",
       "registered_at": 1792903943,
       "session_id": "16dbb3112d1f4a4cb656dfac512bc201"
+    },
+    "MSI/2908411681094eef9ea25acc43139636": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "generated-reproduction": "fc7713546883ab142d6fe5b32c1e655425781a983cbfb12b67ef04335588ae62"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792960258,
+      "session_id": "2908411681094eef9ea25acc43139636"
     },
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
