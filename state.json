@@ -1697,6 +1697,12 @@
       "task_id": "290",
       "verb": "plan"
     },
+    "goal-01a17154-plan295-v1": {
+      "actor": "dootz1",
+      "reason": "spec fields must match the version 1 task contract",
+      "status": "rejected",
+      "verb": "plan"
+    },
     "goal-01a17154-register-v1": {
       "actor": "dootz1",
       "at": 1792903074,
@@ -9440,6 +9446,14 @@
       "fingerprint": "17302226259dbd4f824d7f6700f39d94cb2ea370ef17ce6c4c23345fac26caae",
       "status": "ready",
       "task_id": "293",
+      "verb": "plan"
+    },
+    "spec-295-a1a6c97573229f514f48979cacd330ca1458e52084401d516cf0c473f91cd1d7": {
+      "actor": "dootz1",
+      "at": 1792928015,
+      "fingerprint": "df79c8a76a619de9291e3ac03a48ed4a7816792185f75369129ae370646a0a5b",
+      "status": "ready",
+      "task_id": "295",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -24063,6 +24077,59 @@
       },
       "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8",
       "status": "running"
+    },
+    "295": {
+      "epoch": 0,
+      "planned_at": 1792928015,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Refresh current main, PROJECT_PLAN, BUG_REVIEW, collaboration/configuration, all duplicate history and active grants/PRs. Preserve delivered290, the other-host293 reservation, ungranted294, pending sensitive279, root/completed worktrees/environments/research and deprecated PROGRESS. Reproduction and implementation require a fresh committed routine grant and its isolated branch with pinned application root/disposable data.",
+          "Read-only observation on merged290 source f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7: evaluate_contacts identifies uncertain reviewed/corrected serve/shot events from inclusive contact bounds, but its complete-window guard tests only event.frame membership. Runtime impact is not yet established. Freeze generated singles/doubles before/after cases with a valid unresolved interval overlapping a half-open complete live window while navigation lies before or after it. Include an ordinary exact contact/prediction inside the window so unsupported perfect contact/recognition credit is observable. A negative investigation may deliver a report only.",
+          "If reproduced, minimally make existing contact_timing_needs_adjudication eligibility depend on overlap of the entire unresolved inclusive reference interval with the half-open review window. Include the last possible frame at window.start; exclude an interval starting exactly at window.end. Never clip, choose a favorable frame, split uncertainty into synthetic contacts or rewrite labels/times. Preserve reason precedence, existing explicit window IDs/skip reasons, full input/excluded denominators and unaffected separated eligible windows. Do not redesign scores or matching.",
+          "Retain reviewed/corrected serve/shot semantics and ignore predicted labels and rally_end events for this guard. Cover both navigation directions, spanning/touching/adjacent/nonoverlapping intervals, multiple windows, point-adjudicated controls, optional absent point bounds, source offsets/VFR clock validation, known camera cuts and timestamp gaps, and complete original data immutability. Native source identity/clock/context checks and candidate evidence exclusions stay unchanged; malformed inputs must retain existing rejection behavior.",
+          "Exercise real generated Store save/load and actual evaluation API/CLI contact and recognition paths, with source-bound saved artifacts and nonempty annotation revisions. Verify affected-window metrics are withheld through the existing status/coverage contract, unaffected-window scores and denominators remain correct, and saved source metadata, timestamp table, both annotation revisions/timestamps and original prediction bytes are unchanged. Stub no evaluator or storage path. No original scientific media/labels/predictions, new model inference or external source acquisition.",
+          "Run focused evaluation/recognition/clock/context/API/CLI tests and required Python3.10 full/Ruff/format/pip/repository UTF8-LF/JSON/local-link/diff checks using the existing environment and fresh ignored short temporary paths. Preserve all failed attempts, before/after executable/test hashes, actual launcher/worker lifetime identities and independently observed terminal status; an observation timeout gives no restart authority. Use real Store admission for any heavy job; this generated investigation needs none.",
+          "Document the generated failure or negative finding, interval arithmetic and stable controls, exact measurement change and limits in CONTACT_REVIEW_UNCERTAINTY_REPORT. Publish exactly five granted paths through a focused commit/PR, exact PR CI, configured review policy, controller integration, exact merged-main verification and independent complete candidate package/source/frontend/lock/45-public-protocol/both-anonymous-manifest audits. Never fabricate approval, manually merge/main-push/retry/cancel/wake workflows or edit coordination state.",
+          "Limits: four hours from grant, 512MiB new retained output, three diagnosed repair rounds and no paid services. No scientific assessment/image dispatch/source acquisition/holdout/model/training/deployment/promotion, auth/policy/workflow/dependency/storage/API/schema/native AV runtime/candidate-generation changes or PROGRESS access/update. Complete references remain0/2, all four eligibility flagsfalse and full automatic annotation accuracy unproven. Request scope expansion before any extra path/resource."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "258",
+          "267",
+          "290"
+        ],
+        "exclusions": [
+          "No source/model/scientific operations, schema/API/storage/matching/candidate-generation/policy/workflow/dependency/deployment changes, weakened gates, paid services or PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Investigate and, if reproduced with generated inputs, withhold contact and recognition scores for review windows overlapped by an unresolved reviewed contact interval even when its navigation frame lies outside the window.",
+        "paths": [
+          "backend/badminton/evaluation.py",
+          "tests/test_evaluation.py",
+          "tests/test_recognition_evaluation.py",
+          "tests/test_contact_uncertainty_evaluation_api.py",
+          "docs/CONTACT_REVIEW_UNCERTAINTY_REPORT.md"
+        ],
+        "priority": 25,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Frozen generated direct and real saved Store/API/CLI before/after contact/recognition controls with full interval/window boundaries, unchanged artifacts and retained denominators.",
+          "Required focused/full/static/source/process checks and exact PR/main/controller/independently audited complete candidate delivery; software evidence supplies no scientific accuracy."
+        ]
+      },
+      "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
