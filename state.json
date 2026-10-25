@@ -8034,6 +8034,21 @@
       "task_id": "138",
       "verb": "next"
     },
+    "roadmap-next-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792944366,
+      "fingerprint": "cf977f4e1ba058582c07175da99971c4599556006154ab858be4fd67ce86f4fb",
+      "status": "ready",
+      "task_id": "301",
+      "verb": "plan"
+    },
+    "roadmap-next-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792944366,
+      "fingerprint": "6dd6ae12b49325e9fb493b199b7f24d0644af2088e3a1548dea687fb3fc46106",
+      "status": "ok",
+      "verb": "register"
+    },
     "roadmap-status-plan-v1": {
       "actor": "Ken0u",
       "at": 1792877266,
@@ -9602,6 +9617,14 @@
       "fingerprint": "fb80836de81096862276162fe5fe986c542a8dfe1b1d3d9d19941351fab48a24",
       "status": "ready",
       "task_id": "299",
+      "verb": "plan"
+    },
+    "spec-301-7e2057622a8c38d41d7023540246daefec138b5083c196b5ac891121eab8901b": {
+      "actor": "Ken0u",
+      "at": 1792944366,
+      "fingerprint": "fdce102f012b1d5f8674129ec090727a98b085eaf4d51d2fde0b4abc2df3ba83",
+      "status": "ready",
+      "task_id": "301",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -24733,6 +24756,52 @@
         "spec_hash": "d4d81772a9147155358c5c9560fb81a2cee6da1eb85f70d55aceadcf764aa3a2"
       }
     },
+    "301": {
+      "epoch": 0,
+      "planned_at": 1792944366,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Revalidate current main, trusted guidance, complete issue/PR history, reports, coordination grants and actual completion/delivery receipts. Preserve all existing root edits, deprecated PROGRESS, environments, datasets and application/research state. Obtain a fresh routine CPU grant and isolated worktree before editing the two shared summary files.",
+          "Date the current snapshot accurately and replace stale latest-source claims with verified exact PR/main and public delivery receipts. Summarize the complete fixed tiling result and source-bound selection-history diagnostic alongside the rejected resolution/threshold experiments. Preserve all 60 cases, 25 visible, seven negatives and 28 unknowns; distinguish component presence from selection, familiar development agreement from accuracy, and observational cost from controlled benchmarking. Defaults and every four-way eligibility flag remain unchanged.",
+          "Bring the current summary and bug status into agreement with delivered source/clock/gap/context/evidence-range repairs, optional acoustic alignment and post-teardown source validation, full native video/import source stability, generated review document/comparison consumers and export admission ownership. Use authoritative reports and owning issue completion checkpoints; preserve historical failures/counts and pending CI coverage issue279. Link to detailed evidence instead of reproducing long histories.",
+          "Keep historical 0/2 complete references and missing locally supported contact/actor/boundary evidence explicit. Describe generated document validation/planning/comparison as software only: no new scientific assessment, image dispatch or labels. Keep source rights/original-media clock/overlap/checkpoint-membership prerequisites and separate untouched source holdouts. Next steps remain bounded within the approved roadmap, with no model/default promotion or weaker scientific acceptance.",
+          "Change only PROJECT_PLAN.md and docs/BUG_REVIEW.md; no code/tests/protocol/workflow/policy/dependency/data/credential changes. Check UTF8/LF, strict JSON/local links/repository and diff, required static/dependency checks using the existing environment. Do not add tests or repeat inference/training/scoring for documentation. Retain exact CI on PR/main and normal controller integration, then independently verify complete public package/source/frontend/lock/all46 protocol and both image delivery receipts. No manual merge/main push/raw coordination edit/workflow retry/cancel/wake.",
+          "Bound to two hours from grant,64MiB retained new outputs and three diagnosed repair rounds. No scientific image/prediction/label access, new external research source or image session, paid service, deployment/model installation or promotion, authentication/policy changes or PROGRESS access/update. Green software checks do not establish full-match badminton annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "299"
+        ],
+        "exclusions": [
+          "Documentation only; no scientific data access or new image transfer, training/inference/scoring, code/tests/protocol/workflow/policy/dependency changes, promotion, paid service, manual merge or deprecated PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 67108864,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Refresh the shared project plan and bug review with delivered native evidence, evaluation/source integrity repairs, frozen shuttle diagnostics and the actual remaining source-review and accuracy prerequisites.",
+        "paths": [
+          "PROJECT_PLAN.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Report/owning-issue/coordination provenance cross-check, repository UTF8/LF/JSON/local-link checks and required static/dependency/whitespace checks; no new scientific execution.",
+          "Exact PR/main CI and controller integration followed by independent complete public delivery including all46 manifests."
+        ]
+      },
+      "spec_hash": "ba2c36f5dd8bea486c952835e69caebe6273dbb83b02fec173cace554d40ff2a",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -28192,6 +28261,18 @@
       "host_id": "MSI",
       "registered_at": 1792933607,
       "session_id": "f17f985d05bf4a7586132fcdbddfcfd2"
+    },
+    "MSI/ff1687e23a7941ada25b66448f327138": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792944366,
+      "session_id": "ff1687e23a7941ada25b66448f327138"
     },
     "MSI/guidance213-msi-20261023-v1": {
       "actor": "Ken0u",
