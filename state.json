@@ -356,6 +356,15 @@
       "task_id": "309",
       "verb": "checkpoint"
     },
+    "camera309-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792964438,
+      "epoch": 1,
+      "fingerprint": "9230f12fa476ce3ce8e12e338f97585ab68646804dae8d75f6c85c3af3d735b0",
+      "status": "review",
+      "task_id": "309",
+      "verb": "submit"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -25522,6 +25531,7 @@
       "epoch": 1,
       "planned_at": 1792963198,
       "planned_by": "Ken0u",
+      "pr_number": 310,
       "spec": {
         "acceptance": [
           "Continue approved Data and evaluation/Perception camera-quality milestone from #38/#39 after #307. Search complete issue/PR history and current grants; preserve original checkout edits, environments, datasets, processes, models, annotations, predictions and deprecated PROGRESS. Obtain a fresh committed code-only grant and isolated worktree before production edits.",
@@ -25567,7 +25577,13 @@
         ]
       },
       "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "77a72cfc4aae6e5149bda4ffe770cbbc58135fee",
+        "head_sha": "af64bbeec3e420a24e0ef4a82f128967c6c99a70",
+        "pr_number": 310,
+        "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b"
+      }
     },
     "62": {
       "checkpoint": {
