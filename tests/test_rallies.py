@@ -28,6 +28,14 @@ def test_observed_launch_and_stop_propose_intervals_without_reading_labels(mode)
         assert c["start_frame"] <= c["frame"] <= c["end_frame"]
         assert c["needs_review"] and c["player_id"] is None
         assert c["timing"] == "uncertain_interval"
+        assert (
+            run["start_frame"]
+            <= c["context_start_frame"]
+            <= c["start_frame"]
+            <= c["end_frame"]
+            < c["context_end_frame"]
+            <= run["end_frame"]
+        )
     serve = next(c for c in run["candidates"] if c["kind"] == "serve")
     end = next(c for c in run["candidates"] if c["kind"] == "rally_end")
     assert serve["start_frame"] <= 25 <= serve["end_frame"]
