@@ -8670,6 +8670,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "shuttle-clock307-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792960827,
+      "epoch": 1,
+      "fingerprint": "1d74e959a4cce8fca6be098c38927d2fc353fb409561ebfe9fd9953fe45cc651",
+      "status": "running",
+      "task_id": "307",
+      "verb": "checkpoint"
+    },
     "shuttle139-review-v2-grant-cfd18714": {
       "actor": "Ken0u",
       "at": 1792485587,
@@ -25316,12 +25325,19 @@
       }
     },
     "307": {
+      "checkpoint": {
+        "branch": "codex/issue-307-reject-saved-shuttle-evaluation-artifact",
+        "head_sha": "6c84f5cb47e310e8fe19d62d8ead67e9ba395a46",
+        "remaining": "Full verification, focused PR/exact CI/controller integration, merged-main and independent public delivery.",
+        "summary": "Generated shuttle native-clock repair implemented in the granted isolated branch. Preserved twelve original API/CLI reproduction cases and sixteen meaningful baseline regression failures. All762 focused pure/API/CLI/contact/recognition/rally checks pass after correcting one new fixture that accidentally used its valid native time. Lint/format pass after two regex literals were marked raw. Full required project suite is currently running with observed process lifetimes and disposable data. No scientific source/model/labels, inference, image transfer or promotion; original edits, environments, app truth and deprecated PROGRESS preserved. Complete references0/2 and overall annotation accuracy remain unproven. Remaining: full verification, focused PR/exact CI/controller integration, merged-main and independent public delivery."
+      },
+      "checkpoint_at": 1792960827,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "6c84f5cb47e310e8fe19d62d8ead67e9ba395a46",
         "branch": "codex/issue-307-reject-saved-shuttle-evaluation-artifact",
         "epoch": 1,
-        "expires_at": 1792971257,
+        "expires_at": 1792971627,
         "granted_at": 1792960457,
         "host_id": "MSI",
         "session_id": "2908411681094eef9ea25acc43139636",
