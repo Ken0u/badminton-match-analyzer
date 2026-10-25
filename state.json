@@ -20542,6 +20542,7 @@
       }
     },
     "258": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40154748764",
       "checkpoint": {
         "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
         "evidence_sha256": "d009c06f7644e1c9594ecad18bd164b85ebc385f66ae5162b70fe98549921069",
@@ -20563,7 +20564,7 @@
         "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792894975,
