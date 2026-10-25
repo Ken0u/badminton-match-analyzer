@@ -592,6 +592,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "contact-gap-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792904121,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "branch": "codex/issue-267-keep-saved-contact-and-recognition-compa",
+        "epoch": 1,
+        "expires_at": 1792914921,
+        "granted_at": 1792904121,
+        "host_id": "MSI",
+        "session_id": "16dbb3112d1f4a4cb656dfac512bc201",
+        "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686"
+      },
+      "epoch": 1,
+      "fingerprint": "4bf0baf1ccc602236b26fb73c0b968147bafcdfb9322d0c7f5de3d4bb6810a83",
+      "status": "granted",
+      "task_id": "267",
+      "verb": "next"
+    },
     "contact-gap-plan-v1": {
       "actor": "Ken0u",
       "at": 1792903943,
@@ -21411,7 +21431,18 @@
       "status": "running"
     },
     "267": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "branch": "codex/issue-267-keep-saved-contact-and-recognition-compa",
+        "epoch": 1,
+        "expires_at": 1792914921,
+        "granted_at": 1792904121,
+        "host_id": "MSI",
+        "session_id": "16dbb3112d1f4a4cb656dfac512bc201",
+        "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686"
+      },
+      "epoch": 1,
       "planned_at": 1792903943,
       "planned_by": "Ken0u",
       "spec": {
@@ -21463,7 +21494,7 @@
         ]
       },
       "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
