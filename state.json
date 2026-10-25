@@ -1363,6 +1363,13 @@
       "status": "rejected",
       "verb": "extend-scope"
     },
+    "goal-01a17154-next-after273-v1": {
+      "actor": "dootz1",
+      "at": 1792915050,
+      "fingerprint": "ad0e22b1d3834d8803d2e356a51ecf57334d6cde3c5a3ba98a502e4d15a70f05",
+      "status": "idle",
+      "verb": "next"
+    },
     "goal-01a17154-next-postsubmit-v1": {
       "actor": "dootz1",
       "reason": "host already owns work in this lane",
