@@ -10057,6 +10057,15 @@
       "task_id": "305",
       "verb": "checkpoint"
     },
+    "synthetic305-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792958543,
+      "epoch": 1,
+      "fingerprint": "0ae2e64698f02193d32b2ee597c4bbb0fb418f2135cab0602daafae0a46d0cb2",
+      "status": "review",
+      "task_id": "305",
+      "verb": "submit"
+    },
     "tiling-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792933796,
@@ -25145,6 +25154,7 @@
       "epoch": 1,
       "planned_at": 1792953537,
       "planned_by": "Ken0u",
+      "pr_number": 306,
       "spec": {
         "acceptance": [
           "Refresh trusted main/guidance/roadmap/bug reports, all issue/PR history and authoritative coordination. Link completed303/299/294/204/141 and approved localization roadmap65; no duplicate synthetic adaptation exists. Preserve original root edits, deprecated PROGRESS, every environment/source/label/prediction/weight/process and completed deliveries. Obtain a fresh committed routine GPU grant and isolated worktree before editing, model loading, generation or predictions.",
@@ -25209,7 +25219,25 @@
         ]
       },
       "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "80de6792dc0f2a6c5442cc82131856072c891a49",
+        "head_sha": "940719203427742f5695af452264aa2aa12da674",
+        "native_evidence": {
+          "code_sha": "940719203427742f5695af452264aa2aa12da674",
+          "limitations": [
+            "Synthetic localization generalization is negative; no selected-model promotion.",
+            "Familiar60-case diagnostic is agent-labeled development evidence, not expert or independent full-match truth.",
+            "Unknowns retained; complete references0/2, all four eligibility flags false.",
+            "Source/runtime/byte/process receipts prove exercised behavior and provenance, not complete badminton annotation accuracy."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "bed456340ed2b3219c6ea826f873adcd93f16efcb2f31a9cce0727dc3d00023a",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 306,
+        "spec_hash": "6565ffc74a6b29e94ea48a0d40c32270f489bd9e0db894ebbec677a077518e5b"
+      }
     },
     "62": {
       "checkpoint": {
