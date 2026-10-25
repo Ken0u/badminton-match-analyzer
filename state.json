@@ -7402,6 +7402,15 @@
       "task_id": "220",
       "verb": "submit"
     },
+    "source260-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792896234,
+      "epoch": 1,
+      "fingerprint": "e2f36ba59f09f5d36a980f3ca7d183774524cfffa46652a2aaf75bd22eb6e232",
+      "status": "running",
+      "task_id": "260",
+      "verb": "checkpoint"
+    },
     "source260-next-v1": {
       "actor": "Ken0u",
       "at": 1792896005,
@@ -20677,12 +20686,25 @@
       }
     },
     "260": {
+      "checkpoint": {
+        "branch": "codex/issue-260-reject-explicit-conflicting-or-malformed",
+        "evidence": [
+          "Generated8case baseline API/CLI returned F1=1 for conflicting/null hashes in contact and shuttle artifacts; saved inputs unchanged. .cache/evaluation-source-hash-repro-v2/results.json.",
+          "Initial focused fixture failed20setups from omitted explicit unknown family/side; corrected fixture passes328. Initial all-v1 stopped at formatting before pytest; formatting corrected, all-v2 now live with recorded process identity. All attempts preserved.",
+          "Only5granted paths; no real scientific data, images, inference, models, dependencies or workflow changes. Root PROGRESS original hash preserved."
+        ],
+        "head_sha": "1fa657a0069e3cfae7963eca04827fbee631b17b",
+        "remaining": "Finish full verification; audit final-source/terminal lifetimes and scope; publish exact source PR; normal controller integration, exact PR/main CI and independently verified complete public delivery.",
+        "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a",
+        "stage": "Source-hash validation and additive legacy provenance implemented in shared evaluator. 328 focused tests pass; full final-source Python run in progress after lint/format pass."
+      },
+      "checkpoint_at": 1792896234,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "1fa657a0069e3cfae7963eca04827fbee631b17b",
         "branch": "codex/issue-260-reject-explicit-conflicting-or-malformed",
         "epoch": 1,
-        "expires_at": 1792906805,
+        "expires_at": 1792907034,
         "granted_at": 1792896005,
         "host_id": "MSI",
         "session_id": "6bd9e2e585fe4cd79d59b2d1bada859e",
