@@ -22647,6 +22647,7 @@
       }
     },
     "278": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40176065065",
       "checkpoint": {
         "branch": "codex/issue-278-prevent-saved-serve-rally-end-proposals-",
         "evidence_sha256": "5af78f093ed77ff707ad2bd97ddf0ecb801008b20db7f7ab49c818484e3d0cd7",
@@ -22668,7 +22669,7 @@
         "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792915847,
