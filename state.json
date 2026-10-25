@@ -22062,6 +22062,7 @@
         "session_id": "goal-01a17154",
         "spec_hash": "b2f66a53f42b49a22fc7ab3c561111b588ea30a46b0aa638cf8e3d0adab28a6e"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
