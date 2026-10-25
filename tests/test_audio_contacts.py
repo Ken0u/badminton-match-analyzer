@@ -163,3 +163,151 @@ def test_multiple_sounds_at_one_gap_do_not_duplicate_a_contact_or_replace_hitter
     assert all(
         not item["hitter_agrees"] for item in result[0]["evidence"]["audio_support"]
     )
+
+
+@pytest.mark.parametrize(
+    "failure",
+    [
+        "shifted_frames",
+        "shifted_times",
+        "duplicate",
+        "conflicting_duplicate",
+        "time_collision",
+        "missing_frame",
+        "missing_time",
+        "boolean_frame",
+        "fractional_frame",
+        "nan_time",
+        "infinite_time",
+        "boolean_time",
+        "wrong_time_outside_window",
+    ],
+)
+def test_audio_requires_unambiguous_corresponding_pose_frames(failure):
+    shuttle, players, video, cues = scenario()
+    rows = players["frames"]
+    if failure == "shifted_frames":
+        for row in rows:
+            row["frame"] += 100
+    elif failure == "shifted_times":
+        for row in rows:
+            row["time_s"] += 0.005
+    elif failure in ("duplicate", "conflicting_duplicate"):
+        duplicate = copy.deepcopy(rows[12])
+        if failure == "conflicting_duplicate":
+            duplicate["time_s"] += 0.001
+        rows.append(duplicate)
+    elif failure == "time_collision":
+        rows[12]["time_s"] = rows[11]["time_s"]
+    elif failure in ("missing_frame", "missing_time"):
+        rows[12].pop("frame" if failure == "missing_frame" else "time_s")
+    elif failure == "boolean_frame":
+        rows[12]["frame"] = True
+    elif failure == "fractional_frame":
+        rows[12]["frame"] = 12.5
+    elif failure == "nan_time":
+        rows[12]["time_s"] = float("nan")
+    elif failure == "infinite_time":
+        rows[12]["time_s"] = float("inf")
+    elif failure == "boolean_time":
+        rows[12]["time_s"] = True
+    elif failure == "wrong_time_outside_window":
+        rows[12]["time_s"] = 10
+    original = copy.deepcopy((shuttle, players, video, cues))
+    # Deliberately unsorted: ineligible optional evidence must preserve the
+    # entire visual result, including order, timing, scores and nested evidence.
+    visual = [
+        {"id": "later", "frame": 20, "time_s": 0.8, "evidence": {"kept": [1]}},
+        {
+            "id": "near",
+            "frame": 12,
+            "time_s": 0.48,
+            "track_id": 7,
+            "score": 0.6,
+            "evidence": {"missing_frames": [12]},
+        },
+    ]
+    before = copy.deepcopy(visual)
+    assert add_audio_support([], shuttle, players, video, cues) == []
+    assert add_audio_support(visual, shuttle, players, video, cues) == before
+    assert visual == before
+    # The NaN object itself is preserved rather than normalized or replaced.
+    assert (shuttle, players, video, cues) == original
+
+
+@pytest.mark.parametrize("sampling", ["sparse", "partial", "vfr_nonzero", "roundoff"])
+def test_aligned_pose_support_preserves_native_sparse_and_variable_times(sampling):
+    shuttle, players, video, cues = scenario()
+    if sampling == "sparse":
+        players["frames"] = players["frames"][::2]
+    elif sampling == "partial":
+        players["frames"].pop(12)
+    elif sampling == "vfr_nonzero":
+        for run in (shuttle, players):
+            for row in run["frames"]:
+                row["time_s"] += 7.5 + row["frame"] % 3 * 0.001
+        cues["peaks"][0]["time_s"] += 7.5
+    elif sampling == "roundoff":
+        for row in players["frames"]:
+            row["time_s"] += 1e-12
+    result = add_audio_support([], shuttle, players, video, cues)
+    assert len(result) == 1
+    candidate = result[0]
+    assert candidate["frame"] == 12 and candidate["track_id"] == 7
+    assert candidate["start_time_s"] <= cues["peaks"][0]["time_s"] - 0.12
+    assert candidate["end_time_s"] >= cues["peaks"][0]["time_s"] + 0.12
+    assert candidate["interval_bounds"] == "inclusive"
+    assert candidate["evidence"]["pose"]["pose_samples"] >= 3
+
+
+def test_alignment_does_not_require_pose_outside_the_audio_context():
+    shuttle, players, video, cues = scenario()
+    players["frames"][0]["frame"] = 100
+    players["frames"][0]["time_s"] = -10
+    assert len(add_audio_support([], shuttle, players, video, cues)) == 1
+
+
+def test_insufficient_aligned_sparse_pose_remains_unavailable():
+    shuttle, players, video, cues = scenario()
+    players["frames"] = players["frames"][::4]
+    assert add_audio_support([], shuttle, players, video, cues) == []
+
+
+@pytest.mark.parametrize(
+    "context", ["aligned", "wrong_frame", "cut", "player_replay", "selection_excluded"]
+)
+def test_sparse_high_rate_pose_corroboration_checks_the_entire_wrist_context(context):
+    shuttle, players, video, cues = scenario()
+    for run in (shuttle, players):
+        for row in run["frames"]:
+            row["time_s"] = row["frame"] / 60
+    players["frames"] = [
+        row for row in players["frames"] if row["frame"] in (6, 12, 18)
+    ]
+    cues["peaks"][0]["time_s"] = 0.205
+    if context == "wrong_frame":
+        players["frames"][-1]["frame"] = 100
+    elif context == "cut":
+        shuttle["cut_frames"] = [7]
+    elif context == "player_replay":
+        players["frames"][0]["scene"] = "replay"
+    elif context == "selection_excluded":
+        shuttle["frames"][6]["shuttle"]["selection_context_excluded"] = True
+    visual = [
+        {
+            "id": "visual",
+            "frame": 12,
+            "time_s": 0.2,
+            "track_id": 7,
+            "score": 0.6,
+            "evidence": {"original": True},
+        }
+    ]
+    original = copy.deepcopy(visual)
+    result = add_audio_support(visual, shuttle, players, video, cues)
+    assert visual == original
+    if context == "aligned":
+        assert result[0] == original[0] | {"evidence": result[0]["evidence"]}
+        assert result[0]["evidence"]["audio_support"][0]["pose"]["pose_samples"] == 3
+    else:
+        assert result == original
