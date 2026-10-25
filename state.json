@@ -5429,6 +5429,21 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "rally-contract-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792906328,
+      "fingerprint": "df12f2306860fe9f237ca209aa486528651bf5f48da186a291caa76107636729",
+      "status": "ready",
+      "task_id": "270",
+      "verb": "plan"
+    },
+    "rally-contract-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792906328,
+      "fingerprint": "f947cf58fd5cf240ee54b0ab5370e92150ebbf1b21b48166022fab8fc7ec2825",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally-join-plan-v1": {
       "actor": "Ken0u",
       "at": 1792881595,
@@ -21625,6 +21640,65 @@
         "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686"
       }
     },
+    "270": {
+      "epoch": 0,
+      "planned_at": 1792906328,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Follow approved Data and evaluation priority1 after fully delivered262/267. Audit all issue/PR history and grants; preserve root edits, deprecated PROGRESS, environments/data/research/annotations/predictions and other-host266 frontend/static work. Obtain a fresh code-only grant and isolated worktree before production edits. Reserve only the seven exact paths; no original scientific metadata or labels are consumed.",
+          "The concrete gap is delivered262 OUTPUT_CONTRACT: it specifies own-stream preceding-document hashes, local actors, inclusive event uncertainty and native/gallery continuity in prose, but has no consumer validating new combined review documents. Add a separate versioned contract; preserve historical262 planner, old scientific outputs, acceptance consumers and zero-reference verdict byte-identically. No alternative scientific gate, dispatcher, authenticated assessor/client or process launcher.",
+          "Implement pure deterministic validation from original UTF8 JSON bytes, parsing and hashing the same bytes once with duplicate-key/nonfinite/type strictness. Accept one original262 source-plan object and one explicitly chosen planned lane. Reconstruct/check the full structural schedule using existing planner semantics: exact source/clock/provenance fields, native ordinal/PTS/time-base/orientation/image identity, limits, gallery/navigation associations, chronological batches, one-frame overlap, costs, lane manifests and full denominators. Validate canonical raw-input hashes as bindings, not fabricated proof of original input/assessment provenance; callers still need the historical262 audit.",
+          "Freeze exact document fields in a public versioned manifest and shared pure contract. Every document binds exact raw plan SHA256, contract identity, source hashes, one lane and integer batch index. Its predecessor is null only for the first batch, otherwise the SHA256 of the immediately preceding original document bytes in the same source/lane. Reject reordered/skipped/duplicate batches, wrong source/lane/plan/contract, stale predecessor, booleans as ordinals and unknown fields. Never substitute a canonical JSON hash for raw document identity.",
+          "Require exactly one native frame observation for every planned batch frame including overlap, preserving supplied native order and local camera/scene/contact/actor evidence plus explicit notes/unknowns. Gallery context cannot replace native observations or forward-fill sparse labels. Keep scene live/replay/non_play/unknown and contact observed/possible/not_observed/unknown distinct. Unknown or not_observed does not certify physical absence. No media/image path is opened, rendered, decoded or sent.",
+          "Each document defines only its own actor IDs and event IDs, explicit source evidence frames, inclusive native-frame intervals and source-support uncertainty. Retain serve/shot/rally_end/unresolved_contact, all six families and forehand/backhand with unknown labels, hidden actors and missing opening/terminal evidence. Validate local references and interval/frame support without guessing what images show. Preserve unsupported stopped-play/last-stroke/shuttle-absence terminal bases as limitations, never exact ending proof. Every observed/possible contact frame must have an appropriate event mention; do not turn repeated mentions into extra physical contacts.",
+          "Validate explicit immediate-predecessor contact-correspondence and actor-correspondence claims with current/prior document-local IDs and overlap source evidence. Preserve same/distinct/unresolved claims separately without merging events, renaming actors, averaging times or majority votes. Same-contact/supported-actor claims need shared overlap evidence and a nonconflicting one-to-one claim mapping; equality of ID strings, clothing or court position supplies no automatic correspondence. Missing or conflicting correspondence remains explicit unresolved diagnostics; it cannot become resolved identity or accepted truth.",
+          "Support a valid chronological prefix as incomplete rather than silently shrinking expected coverage; preserve original full native denominator, actual distinct inspected/missing frame counts, repeated overlap observations and all original document/event/actor variants with raw hashes. Unavailable plans retain their complete denominator and reason with zero documents. Complete structural coverage is named structurally_complete only; scientific complete_references stays0, all four eligibility flags false, scientific_acceptance_changed false and execution_authorized false. No classifier/model/pipeline scores or accuracy claims.",
+          "Add an offline CLI for explicitly supplied local JSON plan/documents and lane, bounded input sizes and safe non-symlink input handling. Hash and parse the same opened bytes, validate before publishing, preserve original bytes and write exclusive UTF8/LF JSON output without overwriting existing files or following output symlinks. Emit aggregate structural status only to stdout; detailed document/source judgments stay in the private output. No app Store, network, credential access or heavyweight imports. This task invokes the CLI on generated fixtures only; actual source-data use requires its own granted protocol/provenance.",
+          "Meaningful generated pure and actual CLI regressions cover constant/VFR/nonzero-origin/rotated plans, exact native/image/gallery identities, caps/cost/overlap corruption, duplicate/nonfinite/boolean/unknown fields, altered raw byte hashes, source/lane isolation, missing/reordered/prefix/unavailable plans, repeated event variants, equal actor IDs without correspondence, supported/unresolved/conflicting links, inclusive boundary evidence, hidden/unknown family/side/terminal cases, original-input immutability, exclusive outputs and rejected CLI reports. No private packet/gallery/label reading or new scientific assessment.",
+          "Run focused and full Python, Ruff lint/format, dependency consistency, repository UTF8/LF/JSON/local-link/diff checks in disposable generated storage using the project environment. Preserve failed attempts, unchanged final executable/test bytes and independently terminal original/worker process lifetimes. No new dependencies. Delegate a bounded isolated core subtask; parent retains grant, integration and publication.",
+          "Publish only reproducible code, public structural protocol, generated-verification report and current roadmap pointer. Normal focused PR, exact PR/main CI, controller integration and independently verified complete public package/source/frontend/lock/both-image delivery. No manual merge, direct main push, raw coordination write, workflow retry/cancel/wake, policy/auth/workflow/deployment/model/default change, paid service or PROGRESS edit.",
+          "Bound implementation to four hours from fresh grant,512MiB new outputs and three diagnosed repair rounds. Actual new scientific sessions/image payload bytes remain0. This neither authorizes nor executes the262 proposed1209sessions/10576441872imagebytes, renews old budgets/deadlines, resolves original scientific unknowns nor completes62/66/67/71. Scientific references stay0/2 and all four research flagsfalse; full automatic-match annotation remains unproven."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "262",
+          "267"
+        ],
+        "exclusions": [
+          "No actual scientific input/label/image consumption or transfer, media decode/render, assessor, source download, inference/training/holdout, changed scientific acceptance, model/policy/auth/workflow/deployment/dependency change, paid service, manual merge or deprecated PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Provide a frozen generated-input-tested structural contract and stream validator for future contiguous native rally source review, preserving each document-local event/actor occurrence, own-stream provenance and unknown or missing coverage without accepting scientific truth.",
+        "paths": [
+          "backend/badminton/rally_review_contract.py",
+          "scripts/validate_rally_review.py",
+          "tests/test_rally_review_contract.py",
+          "tests/test_rally_review_contract_cli.py",
+          "data/manifests/rally_review_contract_v1.json",
+          "docs/RALLY_REVIEW_CONTRACT_REPORT.md",
+          "PROJECT_PLAN.md"
+        ],
+        "priority": 35,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated-only pure and actual offline CLI contract/continuity/denominator/provenance regressions; full required checks with stable bytes and terminal process receipts.",
+          "Exact PR/main CI, normal controller integration and independent complete public delivery; zero actual source assessment or scientific truth promotion."
+        ]
+      },
+      "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -24896,6 +24970,18 @@
       "host_id": "MSI",
       "registered_at": 1792890131,
       "session_id": "c36935dca7b147e08454839f993f5c88"
+    },
+    "MSI/c66898df3c3f4ecb8b5e57a261278e6b": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792906328,
+      "session_id": "c66898df3c3f4ecb8b5e57a261278e6b"
     },
     "MSI/cc0ce1ab9d664201b48bec7d6108da04": {
       "actor": "Ken0u",
