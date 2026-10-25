@@ -136,6 +136,21 @@
       "status": "ok",
       "verb": "register"
     },
+    "boundary-evidence-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792913505,
+      "fingerprint": "f63275373f91a87b0290d9b1917af5808e7b3bf4f168e7154266fec2ab604f2e",
+      "status": "ready",
+      "task_id": "278",
+      "verb": "plan"
+    },
+    "boundary-evidence-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792913505,
+      "fingerprint": "f1f7cb521adce99210a97154479b8b619e93a7e59fc5d754a3cf9ac53b204a35",
+      "status": "ok",
+      "verb": "register"
+    },
     "boundary256-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792890550,
@@ -1262,6 +1277,15 @@
       "task_id": "271",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint273-currentbase-v1": {
+      "actor": "dootz1",
+      "at": 1792913351,
+      "epoch": 1,
+      "fingerprint": "b97e4c2c35a8a7a382c1d6c223b049020ae9c43c7a27c359b86c0593f5294d92",
+      "status": "running",
+      "task_id": "273",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint273-refresh-v1": {
       "actor": "dootz1",
       "reason": "checkpoint requires running work",
@@ -1444,6 +1468,15 @@
       "at": 1792912646,
       "epoch": 1,
       "fingerprint": "ac2e48185efbaee9e38c1d25aa8cc6d3bef65c3d9d8d4956bab7c47a66947555",
+      "status": "review",
+      "task_id": "273",
+      "verb": "submit"
+    },
+    "goal-01a17154-submit273-v2": {
+      "actor": "dootz1",
+      "at": 1792913505,
+      "epoch": 1,
+      "fingerprint": "0aaee8f326a32a20b214a65fb483b2fba57a629e83a1a971637cde716dd28b65",
       "status": "review",
       "task_id": "273",
       "verb": "submit"
@@ -22267,27 +22300,26 @@
     "273": {
       "checkpoint": {
         "artifacts": [
-          ".cache/goal-01a17154/admission273-final.log",
-          ".cache/goal-01a17154/ownership273-final.log",
-          ".cache/goal-01a17154/admission273-audit.json",
-          ".cache/goal-01a17154/browser273-production.log",
-          ".cache/goal-01a17154/browser273-library.log",
-          ".cache/goal-01a17154/export273-final.log",
-          ".cache/goal-01a17154/browser273-editor-final.log",
-          ".cache/goal-01a17154/browser273-parity-final.log"
+          ".cache/goal-01a17154/pr273-source-http-audit.json",
+          ".cache/goal-01a17154/pr273-browser-audit.json",
+          ".cache/goal-01a17154/pr273-admission-audit.json",
+          ".cache/goal-01a17154/browser273-refresh-audit.json",
+          ".cache/goal-01a17154/admission273-refreshed-audit.json",
+          ".cache/goal-01a17154/pytest273-refresh.log",
+          ".cache/goal-01a17154/python273-refresh-live.json"
         ],
         "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
-        "head": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
-        "remaining": "FullPython same source, frozen browser/source/probe/process/output/document audits, final report/commit/PR exactCI. Controller main/public delivery only. No standalone legacy parity repair outside scope. Preserve baseline failures/unknown launcher creation, no restart on timeout. Four-hour512MiB limits unchanged from grant1792910590.",
-        "summary": "Final executable source frozen: delivery2a6089e5501e5f286a177de6e85ef9af2ab3e160ddd2d86cc6d600ebea5be78d, helpercd4e55ad1536611457837c245f41e7d68d461a422e2ef1c39566c67a12503ae1, test915e529b64f8811191a696fcef8ae5b5b0262d9e0ff97cb25d1c243d76836404. All23admission cases pass including actual OS spawn-error/direct and normalWindowsvenv realStore normal/preacceptance failure. Shared ownership71pass/2explicit skips; real new admission tests cover originalvenv process lifetimes. Complete normalvenv production19/library8/export13 and directeditor18groups pass with all terminal cleanups. ASTaudit proves all40existing action bodies and shared fixture/editor/parity/shuttle bytes unchanged. Read-only audit22cleanup receipts/38original exact lifetimes absent; successful realStore jobs match read-only SQLite. Frontend200/type/contract/build/stage5assets pass; Ruff234/format/pip/repository/Prettier/diff pass. Preserved firstactualseed omission before worker spawn; firstdirecteditor lacked dist and failed before fixture startup, then existing build completed and editor18passed. Historical standalone frontend-parity.mjs fails its unchanged initial onboarding assertion against modern defaultReact; supported production's17frozen parity blocks pass. No assertion/source edit hides this; rawfailed log/fixture cleanup retained. Starting one required fullPython run with fresh short git-ignored temp b273a; no scientific job/inference/runtime/policy change."
+        "head": "50ace2026bc4ec6908edc9c686c26ebd6f23aab2",
+        "remaining": "Finish original combined fullPython, verify stable source/XML/process receipts, push existing merge commit, resubmit exact newhead/currentbase after grant revalidation. Then exact freshPR checks/controller merge/main/candidate delivery and public45protocol bytes audit. Preserve all original failures/worktrees/data/PROGRESS; no scientific source/image/inference/training/model/policy/runtime/dependency/workflow change.",
+        "summary": "Controller invalidated old base normally; task273 running epoch1/spec unchanged, current-main032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5 merged without conflict or rewriting. New treeaaa1c73924a739c39f84eb244de12deae6503bce; exactly four granted paths differ, all four bytes match original tested06ce151. Original exactPR40172009629 all12checks/actual sourceHTTP/browser/admission audits pass. Refreshed real Windows normalvenv admission23/23, sharedownership71/2explicit skips, production19/library8/export13, frontend200/type/contract/stage5assets/Ruff235/format/pip/repository/Prettier/whitespace pass. Read-only audit31cleanup receipts/53original lifetimes terminal with completed disposableStore jobs; AST40existing action bodies/sharedfixture/editor/parity/shuttle bytes unchanged. Combined fullPython is still the original one run session14102, wrapper51356/start1792912958.579686 and worker53292/start1792912958.5890992 verified live, no restart. Cache now310106605bytes plus16MiB reserve below512MiB. Earlier checkpoint-refresh request was rejected because task was then review; no lease/grant manufactured. Cache-only relative .NET read failure was corrected with resolved absolute path; actual refreshed audit succeeded, no evidence/source mutation."
       },
-      "checkpoint_at": 1792911886,
+      "checkpoint_at": 1792913351,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
         "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
         "epoch": 1,
-        "expires_at": 1792922686,
+        "expires_at": 1792924151,
         "granted_at": 1792910590,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
@@ -22345,10 +22377,10 @@
         ]
       },
       "spec_hash": "d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24",
-      "status": "running",
+      "status": "review",
       "submission": {
-        "base_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
-        "head_sha": "06ce151fe694f19ca270ef54fcc6f51d52a4aa47",
+        "base_sha": "032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5",
+        "head_sha": "50ace2026bc4ec6908edc9c686c26ebd6f23aab2",
         "pr_number": 277,
         "spec_hash": "d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24"
       }
@@ -22441,6 +22473,59 @@
         "pr_number": 276,
         "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41"
       }
+    },
+    "278": {
+      "epoch": 0,
+      "planned_at": 1792913505,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve generated-only reproduction on delivered main032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5: serve and rally_end frame20 predictions with declared evidence[19,22) receive representative F1=1 and interval match1 across a camera cut20, native timestamp gap20 or unreviewed frame19. The evaluator validates evidence bounds but its candidate matching checks only boundary intervals. Preserve all six original results and historical checks; no original scientific source, label, image or prediction is opened.",
+          "Audit all issue/PR history and active grants before planning, then obtain an isolated fresh code-only grant. Reserve only five exact paths, with no overlap or modification of the other host273 repair/PR277. Preserve root edits, deprecated PROGRESS, all environments/data/research/annotations/predictions and all historical failed attempts. Depend on delivered256/267/275; current Project status is not a grant.",
+          "For each boundary kind, require every explicitly supplied candidate evidence half-open source range to lie wholly inside one eligible uninterrupted reviewed range after the existing camera cuts, native timestamp gaps, run coverage and scene exclusions. Apply that same eligible candidate set to representative timing, inclusive interval compatibility and all candidate/uncertainty counts. A point interval after a barrier must not conceal preceding invalid evidence. Preserve existing strict malformed/partial/out-of-run evidence rejection and source hash/clock/context-staleness validation order.",
+          "Keep reviewed frame coverage, reference eligibility, kind-specific completeness, exact/uncertain reference rules, missed/false-positive denominators for other eligible proposals, one-to-one matching and optional evidence-free legacy behavior unchanged. Add explicit per-candidate evidence exclusion diagnostics and report unavailable declared evidence without fabricating full context or silently omitting it. An excluded invalid-evidence proposal remains visible by original ID but cannot earn a match; its eligible unmatched reference remains a miss. Do not alter saved inputs, historical reports or scientific acceptance.",
+          "Add generated pure positive/negative regressions for both serve and ending, camera and timestamp barriers at exact endpoints, review gaps/partial or excluded coverage, valid post-barrier evidence, uncertain intervals, absent legacy metadata, valid other proposals, input immutability and preserved nonzero negative/missed denominators. Exercise the actual saved Store/API and offline CLI consumers using disposable generated source bytes/timestamps only, with unchanged artifacts/annotations/inputs, retained explicit IDs/diagnostics and unchanged mixed contact/recognition requests. No media decoding or new signal authority is needed.",
+          "Run focused boundary/contact/recognition evaluation tests and all required Python/Ruff/format/pip/repository UTF8/LF/JSON/local-link/diff checks in existing3.10venv with pinned generated root/data and fresh disposable output. Retain source hashes, failed attempts and independently observed original/worker terminal test lifetimes. Preserve existing dependencies and compiled/runtime/frontend bytes; no expensive inference or scientific access/transfer.",
+          "Append concrete defect, generated before/after verification, evidence-unavailable limits and remaining scientific gaps to a focused report and current bug review, preserving historical counts. Publish only the five granted paths through a focused PR and exact PR/main CI/controller integration; independently verify complete public wheel/source/frontend/lock/both-image delivery including the unchanged45 public protocol manifests. No manual merge/main push/raw coordination edit/workflow retry/cancel/wake or policy/auth/workflow/deployment/model/default/dependency change.",
+          "Bound implementation to4h from fresh grant,512MiB new retained outputs and three diagnosed repair rounds. Zero scientific input/label/image access, new assessor sessions or image bytes; no Store research job/inference/training/holdout/model promotion or paid service. Complete scientific references remain0/2 and all four eligibility flags false. This repairs measurement validity, not full-match annotation accuracy or completion of62/66/67/71."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "256",
+          "267",
+          "275"
+        ],
+        "exclusions": [
+          "No inference/detection/default/model/label/protocol/schema, original scientific input/image/label/prediction, runtime/frontend/compiled asset, dependency/policy/auth/workflow/deployment change, paid service, manual merge or PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Prevent saved serve/rally-end proposals from earning timing or interval credit when their declared evidence crosses source or reviewed-coverage barriers, while preserving reference denominators and explicit unavailable metadata.",
+        "paths": [
+          "backend/badminton/rally_evaluation.py",
+          "tests/test_rally_evaluation.py",
+          "tests/test_rally_evaluation_api.py",
+          "docs/BOUNDARY_EVIDENCE_EVALUATION_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Six generated before/after context-leak cases, exact boundary/legacy/denominator controls and real disposable saved API/CLI consumers; focused/full required checks with stable source and independently terminal processes.",
+          "Exact PR/main/controller and independent complete public package/source/frontend/lock/both-image delivery with45 unchanged public manifests."
+        ]
+      },
+      "spec_hash": "c6de0b39e80ce14f244d37e672b07f37ee09566d61f29da3ae0eeb50d362ebe3",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
@@ -25689,6 +25774,18 @@
       "host_id": "MSI",
       "registered_at": 1792898457,
       "session_id": "7edc859bbd9747e0aa21c74ad1ad103d"
+    },
+    "MSI/8c83ed3322c44fa58e4743a23db98417": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792913505,
+      "session_id": "8c83ed3322c44fa58e4743a23db98417"
     },
     "MSI/9b465dc1a2ba4999bd038162102f230c": {
       "actor": "Ken0u",
