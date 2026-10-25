@@ -46,6 +46,9 @@ def test_api_rally_run_keeps_labels_and_raw_evidence_then_flags_context_edits(
         assert run["requires_proposal_rerun"] is False
         assert run["calibration_provenance"] == "recorded_snapshot"
         assert all(c["player_id"] is None for c in run["candidates"])
+        for candidate in run["candidates"]:
+            assert 0 <= candidate["context_start_frame"] <= candidate["start_frame"]
+            assert candidate["end_frame"] < candidate["context_end_frame"] <= 100
         assert store.annotations(video["id"]).model_dump() == before
         raw_result = (path / f"{job_id}.json").read_bytes()
         changed = before | {
