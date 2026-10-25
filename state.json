@@ -1762,6 +1762,15 @@
       "task_id": "287",
       "verb": "submit"
     },
+    "goal-01a17154-submit290-v1": {
+      "actor": "dootz1",
+      "at": 1792926550,
+      "epoch": 1,
+      "fingerprint": "25adcef485ef71dd121b18b9372caeb17d29fb6606fd9ba33b011923a78f427c",
+      "status": "review",
+      "task_id": "290",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -23806,6 +23815,7 @@
       "epoch": 1,
       "planned_at": 1792924594,
       "planned_by": "dootz1",
+      "pr_number": 292,
       "spec": {
         "acceptance": [
           "Refresh current main, PROJECT_PLAN, BUG_REVIEW, collaboration/configuration, owning issue/specification, authoritative committed grants, active PRs and related audio37/284/287 and source-stability281 history. Dependency287 must be complete. Preserve root edits, completed worktrees/environments/research, other-host288, pending sensitive279 and deprecatedPROGRESS. Executable reproduction and implementation require a fresh committed routine grant, its isolated granted branch, pinned application root and disposable data.",
@@ -23851,7 +23861,13 @@
         ]
       },
       "spec_hash": "36d40d8e8d3cef0f6f24649f6008dc711b99301da59820f146b73036af332043",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "3145049a754e09e6f004ac25c4663c089dbb1c0a",
+        "head_sha": "e6adac470862f350a4559d30c4e5d6fa84192faa",
+        "pr_number": 292,
+        "spec_hash": "36d40d8e8d3cef0f6f24649f6008dc711b99301da59820f146b73036af332043"
+      }
     },
     "62": {
       "checkpoint": {
