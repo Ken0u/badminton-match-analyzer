@@ -72,7 +72,8 @@ def iter_frames(video, root, times, start, end):
 
     Completeness is checked on normal iteration, never in a finalizer: a caller
     can intentionally close a partial read without turning cancellation into an
-    input failure. The existing media context still owns decoder teardown.
+    input failure. Source bytes are revalidated after successful exhaustion and
+    normal media teardown; yielded frames remain provisional until then.
     """
     try:
         start, end = operator.index(start), operator.index(end)
@@ -125,6 +126,10 @@ def iter_frames(video, root, times, start, end):
                 f"Could not decode the complete native frame range: expected frame "
                 f"{expected} before {end}. Retry processing or reimport the source."
             )
+    # A decoder can finish with buffered frames from a source that has changed.
+    # Check after close as well, without replacing an initiating decode/close error
+    # or treating an explicitly partial read as a completed source validation.
+    resolve_source(video, root)
 
 
 def _replace_json(temporary, path):

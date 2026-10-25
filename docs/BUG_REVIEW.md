@@ -1,5 +1,18 @@
 # Bug review and implementation progress
 
+The [native video source stability repair](VIDEO_SOURCE_STABILITY_REPORT.md)
+rejects source-byte changes after a complete frame read and normal decoder
+teardown. Four generated singles/doubles cases formerly completed with stale
+source hashes; all four now fail after close while preserving exact frame/PTS
+and orientation behavior. Actual camera scans/API jobs fail before publishing
+or overwriting artifacts; original metadata, clocks and annotations remain
+unchanged. All 190 focused and 4,482 full Python tests pass, with four optional
+full-suite skips and required checks. Stable source/process evidence, the
+preserved planning-only dependency correction and exact CI/public delivery
+checkpoints belong on the issue. Intentional partial close and original errors
+retain their semantics; this does not supply snapshot isolation or annotation
+accuracy. No scientific inputs/inference/image transfer; references remain 0/2.
+
 The [rally proposal evidence repair](RALLY_PROPOSAL_EVIDENCE_REPORT.md) records
 the wider source observations used for newly generated serve/end suggestions.
 Four generated singles/doubles cases previously earned interval credit under

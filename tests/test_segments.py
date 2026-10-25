@@ -192,3 +192,73 @@ def test_scan_api_uses_job_admission_and_preserves_reviewed_revisions(
         (tmp_path / video["path"]).write_bytes(b"changed")
         assert client.post(base + "/segments").status_code == 409
     assert store.annotations(video["id"]).model_dump() == initial
+
+
+@pytest.mark.parametrize("phase", ["decode", "teardown"])
+@pytest.mark.parametrize("existing_output", [False, True])
+def test_changed_native_source_cannot_publish_or_overwrite_camera_scan(
+    tmp_path, monkeypatch, phase, existing_output
+):
+    from test_video_frames import changing_native_decoder
+
+    video, data, store = make_source(tmp_path)
+    path = tmp_path / video["path"]
+    original = path.read_bytes()
+    folder = data / video["id"]
+    prior = {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()}
+    annotations = store.annotations(video["id"]).model_dump()
+    output = data / "camera-output.json"
+    if existing_output:
+        output.write_bytes(b"preserved prior camera artifact\n")
+    progress = []
+    observed = changing_native_decoder(
+        monkeypatch, lambda: path.write_bytes(original + b"changed"), phase
+    )
+    with pytest.raises(SourceChangedError, match="changed since import"):
+        scan_video(video, tmp_path, data, progress.append, output)
+    assert observed["closed"] and observed["changed"]
+    assert len(observed["yielded_pts"]) == video["frame_count"]
+    assert 1 not in progress
+    if existing_output:
+        assert output.read_bytes() == b"preserved prior camera artifact\n"
+    else:
+        assert not output.exists()
+    assert {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()} == prior
+    assert store.video(video["id"]) == video
+    assert store.annotations(video["id"]).model_dump() == annotations
+
+
+@pytest.mark.parametrize("phase", ["decode", "teardown"])
+def test_camera_api_job_fails_without_artifact_when_native_source_changes(
+    tmp_path, monkeypatch, phase
+):
+    from test_video_frames import changing_native_decoder
+
+    monkeypatch.delenv("BADMINTON_USERNAME", raising=False)
+    monkeypatch.delenv("BADMINTON_PASSWORD", raising=False)
+    video, data, store = make_source(tmp_path)
+    path = tmp_path / video["path"]
+    original = path.read_bytes()
+    folder = data / video["id"]
+    prior = {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()}
+    annotations = store.annotations(video["id"]).model_dump()
+    observed = changing_native_decoder(
+        monkeypatch, lambda: path.write_bytes(original + b"changed"), phase
+    )
+    base = f"/api/videos/{video['id']}"
+    with TestClient(create_app(tmp_path, data)) as client:
+        response = client.post(base + "/segments")
+        assert response.status_code == 202
+        job_id = response.json()["id"]
+        for _ in range(200):
+            job = next(job for job in store.jobs() if job["id"] == job_id)
+            if job["status"] not in ("running", "queued"):
+                break
+            time.sleep(0.01)
+        assert job["status"] == "failed", job
+        assert "changed since import" in job["message"]
+        assert client.get(base + "/runs/" + job_id).status_code == 404
+        assert not (folder / "runs" / f"{job_id}.json").exists()
+    assert observed["closed"] and observed["changed"]
+    assert {p.name: p.read_bytes() for p in folder.iterdir() if p.is_file()} == prior
+    assert store.annotations(video["id"]).model_dump() == annotations
