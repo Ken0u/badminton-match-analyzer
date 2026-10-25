@@ -683,6 +683,15 @@
       "task_id": "258",
       "verb": "checkpoint"
     },
+    "contract270-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792907064,
+      "epoch": 1,
+      "fingerprint": "8076fac49f299e66f2d6332a060117306fc91fa40358a4d62b4a38f6a3b31646",
+      "status": "running",
+      "task_id": "270",
+      "verb": "checkpoint"
+    },
     "editor-report-plan-v1": {
       "actor": "Ken0u",
       "at": 1792885363,
@@ -1224,6 +1233,26 @@
       "fingerprint": "0a6c5081f5118dc7e3e269d35e01e949439ae3b8b9bc8ff6f8af0e7b642a9e82",
       "status": "granted",
       "task_id": "266",
+      "verb": "next"
+    },
+    "goal-01a17154-next271-v1": {
+      "actor": "dootz1",
+      "at": 1792907229,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
+        "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
+        "epoch": 1,
+        "expires_at": 1792918029,
+        "granted_at": 1792907229,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "614d9064e51e05fe333bdf7da1899b63c1b47671264d71331ef3ae3364532c36"
+      },
+      "epoch": 1,
+      "fingerprint": "24348fb6ee3aece59c7deb968d202e708e8030da66abc96a2f0fbf48ce9f2fc0",
+      "status": "granted",
+      "task_id": "271",
       "verb": "next"
     },
     "goal-01a17154-plan266-v1": {
@@ -21717,12 +21746,19 @@
       }
     },
     "270": {
+      "checkpoint": {
+        "branch": "codex/issue-270-provide-a-frozen-generated-input-tested-",
+        "head_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
+        "remaining": "Final core handoff, protocol/CLI/focused/full verification, exact PR/main and independent public delivery.",
+        "summary": "Current genuine #270 epoch1 implementation: isolated parent branch was fast-forwarded before edits to already controller-merged disjoint PR269/main e47f9ff; original grant base7259712 retained in local working-base receipt. No collaborator source was modified. Bounded core owns only new pure validator/test in a second isolated worktree; core142 generated tests and focused lint/format pass, with initial lint-only failure preserved. Parent offline CLI, generated subprocess CLI tests, focused report and current roadmap pointer are written; parent lint/format pass. Contract raw plan/document identity, complete native/overlap schedule, document-local event/actor variants, explicit correspondence and incomplete/unknown denominators remain structural only. No original scientific input, image, label, private plan, assessor, Store, model, network client or acceptance consumer is read/changed. Remaining: final core handoff, public manifest parity, CLI/focused/full checks and stable-source/process receipts, then normal PR/exact CI/controller/main and independent public delivery. Original root edits and deprecated PROGRESS preserved; historical references0/2/four false flags unchanged."
+      },
+      "checkpoint_at": 1792907064,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7259712d2a2f9b4825845c9e61c9823b7f146d83",
         "branch": "codex/issue-270-provide-a-frozen-generated-input-tested-",
         "epoch": 1,
-        "expires_at": 1792917312,
+        "expires_at": 1792917864,
         "granted_at": 1792906512,
         "host_id": "MSI",
         "session_id": "c66898df3c3f4ecb8b5e57a261278e6b",
@@ -21787,7 +21823,18 @@
       "status": "running"
     },
     "271": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
+        "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
+        "epoch": 1,
+        "expires_at": 1792918029,
+        "granted_at": 1792907229,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "614d9064e51e05fe333bdf7da1899b63c1b47671264d71331ef3ae3364532c36"
+      },
+      "epoch": 1,
       "planned_at": 1792906709,
       "planned_by": "dootz1",
       "spec": {
@@ -21832,7 +21879,7 @@
         ]
       },
       "spec_hash": "614d9064e51e05fe333bdf7da1899b63c1b47671264d71331ef3ae3364532c36",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
