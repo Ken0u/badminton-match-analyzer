@@ -136,6 +136,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "boundary256-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792890550,
+      "epoch": 1,
+      "fingerprint": "7ea6dac897cada2587142e847b64bc39b0f4c8953c87947def0466013666408f",
+      "status": "running",
+      "task_id": "256",
+      "verb": "checkpoint"
+    },
     "boundary256-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792890272,
@@ -20259,12 +20268,20 @@
       }
     },
     "256": {
+      "checkpoint": {
+        "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
+        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/256#issuecomment-6391775799",
+        "head_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
+        "remaining": "Combined implementation review, focused/full verification, normal controller integration and independent delivery.",
+        "summary": "End-to-end boundary evaluation implementation is delegated across disjoint evaluator/tests, schema/API/CLI, and UI/model files. Parent extends report ownership, generated contracts, browser coverage and docs. No scientific inputs or images accessed, no model inference or new dependency. Independent review declarations default false; uncertain references remain separate from representative timing. Existing root edits, research and PROGRESS.md are preserved."
+      },
+      "checkpoint_at": 1792890550,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
         "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
         "epoch": 1,
-        "expires_at": 1792901072,
+        "expires_at": 1792901350,
         "granted_at": 1792890272,
         "host_id": "MSI",
         "session_id": "c36935dca7b147e08454839f993f5c88",
