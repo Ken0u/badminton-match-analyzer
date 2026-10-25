@@ -24617,6 +24617,7 @@
       }
     },
     "299": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40209563418",
       "checkpoint": {
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
         "control_gate_sha256": "3083c2945f64a4b07b4261673bb7f00e8e575c63119860651b6edc006b3e2f91",
@@ -24641,7 +24642,7 @@
         "spec_hash": "d4d81772a9147155358c5c9560fb81a2cee6da1eb85f70d55aceadcf764aa3a2"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792943557,
