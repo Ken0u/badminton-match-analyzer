@@ -4,6 +4,7 @@ import hashlib
 import io
 import json
 import time
+from pathlib import Path
 
 import av
 import numpy as np
@@ -11,6 +12,7 @@ import pytest
 from badminton.api import create_app
 from badminton.media_import import MediaImportError, save_upload
 from badminton.storage import Store
+from badminton.video import SourceChangedError, resolve_source
 from fastapi.testclient import TestClient
 
 
@@ -280,6 +282,118 @@ def test_youtube_metadata_keeps_source_id_separate_from_content_id(
         assert client.get(f"/api/videos/{expected_id}/media").content == content
     assert calls == ["https://www.youtube.com/watch?v=abcdefghijk"]
     assert len(media_files(root)) == 1
+
+
+@pytest.mark.parametrize("source_type", ["local", "upload", "youtube"])
+def test_changed_source_fails_actual_import_job_before_publication(
+    import_context, monkeypatch, source_type
+):
+    import badminton.ingest as ingest
+    import badminton.media_import as media_import
+
+    root, data, content = import_context
+    source = root / "local.mp4"
+    source.write_bytes(content)
+    expected_id = hashlib.sha256(content).hexdigest()[:16]
+    original_open = ingest.open_media
+    changes = []
+
+    def opening(path):
+        changed = Path(path)
+        # A valid free box changes bytes while preserving decodability.
+        changed.write_bytes(content + b"\x00\x00\x00\x08free")
+        changes.append(changed)
+        return original_open(path)
+
+    def download(url, media_root, max_bytes, progress):
+        path = save_upload(io.BytesIO(content), "download.mp4", media_root, max_bytes)
+        return path, {"source_type": "youtube", "id": "abcdefghijk", "url": url}
+
+    monkeypatch.setattr(ingest, "open_media", opening)
+    monkeypatch.setattr(media_import, "download_youtube", download)
+    with TestClient(create_app(root, data)) as client:
+        if source_type == "local":
+            response = client.post(
+                "/api/import", json={"path": source.name, "mode": "singles"}
+            )
+        elif source_type == "upload":
+            response = upload(client, content)
+        else:
+            response = client.post(
+                "/api/import/youtube",
+                json={"url": "https://youtu.be/abcdefghijk", "mode": "singles"},
+            )
+        assert response.status_code == 202, response.text
+        job = wait_job(Store(data), response.json()["id"])
+        assert job["status"] == "failed", job
+        assert "source changed" in job["message"].lower()
+        assert client.get("/api/videos").json() == []
+        folder = data / expected_id
+        assert not any(path.is_file() for path in folder.rglob("*"))
+    assert len(changes) == 1
+    if source_type == "local":
+        assert source.read_bytes() != content
+    else:
+        assert media_files(root) == []
+
+
+def test_changed_local_reimport_job_preserves_review_and_upload_provenance(
+    import_context, monkeypatch
+):
+    import badminton.ingest as ingest
+
+    root, data, content = import_context
+    store = Store(data)
+    original_open = ingest.open_media
+    with TestClient(create_app(root, data)) as client:
+        first = upload(client, content, "Reviewed original.mp4")
+        assert wait_job(store, first.json()["id"])["status"] == "completed"
+        video = client.get("/api/videos").json()[0]
+        annotations_url = f"/api/videos/{video['id']}/annotations"
+        document = client.get(annotations_url).json()
+        document["events"] = [
+            {
+                "id": "manual-before-failed-import",
+                "rally_id": "R1",
+                "kind": "shot",
+                "frame": 1,
+                "family": "clear",
+                "side": "forehand",
+            }
+        ]
+        saved = client.put(annotations_url, json=document)
+        assert saved.status_code == 200, saved.text
+        folder = data / video["id"]
+        (folder / "original-prediction.json").write_text(
+            '{"syntheticOriginalPrediction":true}\n', encoding="utf-8"
+        )
+
+        def snapshot():
+            return {
+                path.relative_to(folder): path.read_bytes()
+                for path in folder.rglob("*")
+                if path.is_file()
+            }
+
+        published = snapshot()
+
+        def opening(path):
+            Path(path).write_bytes(content + b"\x00\x00\x00\x08free")
+            return original_open(path)
+
+        monkeypatch.setattr(ingest, "open_media", opening)
+        response = client.post(
+            "/api/import", json={"path": video["path"], "mode": "singles"}
+        )
+        assert response.status_code == 202, response.text
+        job = wait_job(store, response.json()["id"])
+        assert job["status"] == "failed", job
+        assert "source changed" in job["message"].lower()
+        assert store.video(video["id"]) == video
+        assert store.annotations(video["id"]).model_dump() == saved.json()
+        assert snapshot() == published
+        with pytest.raises(SourceChangedError):
+            resolve_source(video, root)
 
 
 def test_invalid_youtube_url_creates_no_job_and_failed_download_creates_no_video(
