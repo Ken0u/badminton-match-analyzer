@@ -1429,6 +1429,15 @@
       "task_id": "281",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint290-final-v1": {
+      "actor": "dootz1",
+      "at": 1792925921,
+      "epoch": 1,
+      "fingerprint": "bd5b07d05f97bd90313fdefb873ff0aa9715c59e8942328a8fe600d2acf17d3a",
+      "status": "running",
+      "task_id": "290",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint290-tests-v1": {
       "actor": "dootz1",
       "at": 1792925324,
@@ -23762,20 +23771,22 @@
           ".cache/goal-01a17154/tests290-green.log",
           ".cache/goal-01a17154/tests290-focused.log",
           ".cache/goal-01a17154/comparison290.json",
-          ".cache/goal-01a17154/tested290-before.json"
+          ".cache/goal-01a17154/tested290-before.json",
+          ".cache/goal-01a17154/python290-full-verification.json",
+          ".cache/goal-01a17154/failure290-path-audit.json"
         ],
         "branch": "codex/issue-290-investigate-and-if-reproduced-with-gener",
-        "head": "4cb27902f80d4b51e728bd55faf977667523cdf9",
+        "head": "319671070f1b832982612de05e5ff6cf8947b18d",
         "remaining": "Full/static/text/process/source verification, final report/4filecommit/PRexactCI/controller merge/main/complete candidate audits. Preserve root/environments/research/otherhost288 and pending279. No originalscientific/modeloperations; scientificreferences0/2,eligibilityfalse.",
-        "summary": "Frozen39generated additions: valid baseline26fail/66pass; all original92cases now pass unchanged. Two additional actualnative WAV/silentMP4 postclose controls pass. Focused216pass. Minimal final source revalidation outside decoder fallback preserves unexpected original I/O errors, source removal/concurrentread errors, stable missing/corrupt behavior and original actualAPI perception/prediction/nonempty savedrevisions. Initial setup1pass/91errors retained separately. Starting fullsuite with frozen hashes, fresh short ignored output and actual wrapper/worker identity monitor."
+        "summary": "First full4440pass/8fail/4optional skips477.94sec retained with stable source, both exact interpreter lifetimes independentlyabsent and no observationerrors. All8failures are generated artifact paths262-266characters with existing parent. Preserve run and pathaudit. Own4filecommit29d0428 then merged disjoint288/291 upstream3145049 without conflict; own executable/testbytes unchanged. Required static241files/text/dependency/repository checks pass on combined source. Starting fresh combined fullsuite using shorter existinguserTEMP b290f, same assertions and identity/source monitor. No heavyjob restart or production change to fix test environment."
       },
-      "checkpoint_at": 1792925324,
+      "checkpoint_at": 1792925921,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "4cb27902f80d4b51e728bd55faf977667523cdf9",
         "branch": "codex/issue-290-investigate-and-if-reproduced-with-gener",
         "epoch": 1,
-        "expires_at": 1792936124,
+        "expires_at": 1792936721,
         "granted_at": 1792924786,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
