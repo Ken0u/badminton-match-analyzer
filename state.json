@@ -24968,6 +24968,7 @@
       }
     },
     "303": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40220514440",
       "checkpoint": {
         "branch": "codex/issue-303-serve-an-exact-frame-review-jpeg-only-af",
         "head_sha": "e980d1d607806a2b1072fd36d37b3bafafe7a816",
@@ -24987,7 +24988,7 @@
         "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792951648,
