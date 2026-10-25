@@ -1375,6 +1375,15 @@
       "task_id": "281",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint281-refresh-v1": {
+      "actor": "dootz1",
+      "at": 1792917233,
+      "epoch": 1,
+      "fingerprint": "a1dac24bc1a5ce3aed2350a6071ca20ab4f33313fc5536558b3f85f73fcd9399",
+      "status": "running",
+      "task_id": "281",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint281-tests-v1": {
       "actor": "dootz1",
       "at": 1792916667,
@@ -22837,22 +22846,23 @@
     "281": {
       "checkpoint": {
         "artifacts": [
-          ".cache/goal-01a17154/tests281-red.log",
-          ".cache/goal-01a17154/tests281-focused1.log",
-          ".cache/w281/.cache/pytest281-focused1.xml"
+          ".cache/goal-01a17154/python281-full-verification.json",
+          ".cache/w281/.cache/pytest281-full.xml",
+          ".cache/goal-01a17154/python281-refreshed-live.json",
+          ".cache/goal-01a17154/text281.json"
         ],
         "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
-        "head": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
-        "remaining": "Full checks, focused source/orientation/playback/cache checks, report, commit/PR exact CI/controller main/public candidate audits.279 stays pending separate owner approval. Four granted paths only.",
-        "summary": "Generated baseline preserved: eight failing source-stability tests, three controls pass. Minimal ingest-only repair now passes 13 source-stability and28API tests (41 total), including actual local/upload/stubbedYouTube job rejection, prior truth/provenance/artifact preservation, nativeclock duplicates, restoredmtime mutation and initiating I/O/decode error identity. No source/model/research access. Starting monitored full Python suite with fresh short ignored temp; source hashes and exact wrapper/worker absence will be preserved."
+        "head": "7e3fa49a4f7a88a2a6926914a60dee0f753de0e0",
+        "remaining": "Complete refreshed fullsuite/checks; publish exact-headPR and submit; audit actualPR/main tree+HTTP+browser+admission and candidate/source45protocol/package/frontend/lock/bothpublicimages. Preserve all baseline failures and initial successful run.",
+        "summary": "Initial generated regression baseline8failed/3passed; repair focused41pass and broadmedia178pass. First full Python4201passed/4optional skips in441.28s, exit0 and both actual wrapper/worker lifetimes independently absent without observationerrors. Ruff/format/pip/diff/UTF8LF/trackedJSON/changedreportlinks pass. Repair committed87c4213 then clean merge of other-host verified7d3cca2; current7e3fa49 changes only4granted paths vs that base. Second fullsuite now running against exact combined commit with before/after source/tree/lifetime sealing and fresh short ignored temp b281b. No original scientific inputs/models/datajobs accessed. Standalone goal remains active;279workflow approval stays separate/pending."
       },
-      "checkpoint_at": 1792916667,
+      "checkpoint_at": 1792917233,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
         "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
         "epoch": 1,
-        "expires_at": 1792927467,
+        "expires_at": 1792928033,
         "granted_at": 1792915764,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
