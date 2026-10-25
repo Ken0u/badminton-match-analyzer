@@ -1271,6 +1271,15 @@
       "task_id": "273",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint273-v2": {
+      "actor": "dootz1",
+      "at": 1792911471,
+      "epoch": 1,
+      "fingerprint": "0ae2d89914b4e6595b9f07dd222ee06bdfb8fb7f5b67e7a14e585be7fb611cd5",
+      "status": "running",
+      "task_id": "273",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
@@ -22176,23 +22185,25 @@
     "273": {
       "checkpoint": {
         "artifacts": [
-          ".cache/w273",
-          ".cache/goal-01a17154/grant273-state.json",
-          ".cache/goal-01a17154/failed-export271-terminal.json",
-          ".cache/goal-01a17154/task271-delivery-final.json"
+          ".cache/w273/.cache/evidence",
+          ".cache/goal-01a17154/baseline273-process.json",
+          ".cache/goal-01a17154/admission273-actual.log",
+          ".cache/goal-01a17154/admission273-actual-v2.log",
+          ".cache/goal-01a17154/admission273-actual-v3.log",
+          ".cache/goal-01a17154/export273-final.log"
         ],
         "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
         "head": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
-        "remaining": "Reproduce original normal-venv admission failure, verify original disposable worker/launcher/Store terminal without restart; implement only four granted test/report paths, meaningful injected/actual regressions, required checks and controller/exactCI/public delivery. Four-hour and512MiB limits start at fresh grant1792910590; three repair rounds. No science/runtime/policy changes.",
-        "summary": "Fresh epoch1 grant revalidated at committed coordination fd48037; Ken0u spec d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24 unchanged, baseline d739114. New isolated clean worktree .cache/w273 on exact granted branch. Related181/187/194/197/198 history and original271 failure/terminal proof reviewed; shared fixtureOwnership/fixtureProcessProbe will remain byte-identical. Prior271 delivery fully audited, controller done/delivery_pending false/candidate40169957374. No273 tracked edits yet. Normal original Windows3.10venv selected with __PYVENV_LAUNCHER__ unset; preparing cached declared Node dependencies and unchanged generated export baseline. Initial fetch expected remote branch but grant only names local branch; fetched baseline and created correct isolated branch without remote mutation."
+        "remaining": "Final-source actual tests including spawn-error; remaining defaultproduction19/library8/editor18/parity, ownership regressions, frontend/required fullPython and evidence/source/process/output audits. Then focused commit/PR/exactCI/controller/main/public delivery. Preserve all failed attempts. Four-hour/512MiB budget remains from grant1792910590; no inference/training/model/runtime changes.",
+        "summary": "Normal original Windows3.10venv (no __PYVENV_LAUNCHER__) reproduces baseline worker7804 vs launcher57596; unchanged PID assertion fails before cleanup registration. Worker original gate45s failed disposable Store job f4da2f624cf14b4cbdf623d5b1529a9c; both recorded PIDs independently absent, fixture cleanup complete. Wrapper creation metadata not captured before exit and not fabricated. New test-only helper reuses fixtureOwnership/fixtureProcessProbe byte-identically, binds nonce/root/cwd/argv/executables/lineage/lifetime, registers immediate cleanup, atomically publishes receipts, bounded cooperative release then existing strict owner, cached concurrent/idempotent cleanup, original startup error preservation and explicit worker/Store statuses. Actual v3 tests22/22pass including real direct OS lifetime and normalvenv normal/failedstartup Store workers; all original candidate lifetimes audited next. Initial actual test omitted fixture seed and failed before admission launch; direct/fixture cleanup retained. Final current helper strengthened deadline/Store receipt binding and adds actual spawn-error regression. Complete normalvenv export matrix passes13groups including real Store denial/explicit retry; Ruff234/format/pip/diff pass. Exactly4granted paths edited/new, no runtime/dependency/workflow/science changes."
       },
-      "checkpoint_at": 1792910795,
+      "checkpoint_at": 1792911471,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
         "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
         "epoch": 1,
-        "expires_at": 1792921595,
+        "expires_at": 1792922271,
         "granted_at": 1792910590,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
