@@ -18,6 +18,20 @@ def kinds(args):
 
 
 @pytest.mark.parametrize("mode", ["singles", "doubles"])
+def test_legacy_and_explicit_per_frame_selection_context_are_identical(mode):
+    args = scene(mode)
+    legacy = propose_rallies(*args)
+    for row in args[2]["frames"]:
+        row["shuttle"].update(
+            selection_context_start_frame=row["frame"],
+            selection_context_end_frame=row["frame"] + 1,
+        )
+    before = deepcopy(args)
+    assert propose_rallies(*args) == legacy
+    assert args == before
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
 def test_observed_launch_and_stop_propose_intervals_without_reading_labels(mode):
     args = scene(mode)
     before = deepcopy(args)
