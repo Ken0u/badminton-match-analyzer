@@ -1591,6 +1591,14 @@
       "task_id": "284",
       "verb": "plan"
     },
+    "goal-01a17154-plan287-v1": {
+      "actor": "dootz1",
+      "at": 1792921273,
+      "fingerprint": "bb54d1e8979adf82becf6440815542358f55d8f941ebfe9cc880d8ac18d36076",
+      "status": "ready",
+      "task_id": "287",
+      "verb": "plan"
+    },
     "goal-01a17154-register-v1": {
       "actor": "dootz1",
       "at": 1792903074,
@@ -9143,6 +9151,14 @@
       "fingerprint": "e1b630b2e105053ee0c61fd6bc89d918579516a8328b304b888fb6936c7bdc62",
       "status": "ready",
       "task_id": "284",
+      "verb": "plan"
+    },
+    "spec-287-d8eef3747d621572d0593b08ac765796bb634891ac616831224cb3c72f072008": {
+      "actor": "dootz1",
+      "at": 1792921273,
+      "fingerprint": "50636f41377f8a3708e6ccabbdad0a701c8c4fa75d2f270b9e9c36c05182624f",
+      "status": "ready",
+      "task_id": "287",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -23261,6 +23277,56 @@
         "pr_number": 285,
         "spec_hash": "1a72d9b4e567409ba6d8828a53bc86bac70c8b60de623ee6e5863a9bca5352d4"
       }
+    },
+    "287": {
+      "epoch": 0,
+      "planned_at": 1792921273,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Refresh current main, PROJECT_PLAN, BUG_REVIEW, collaboration/configuration, owning issue/specification, active grants/PRs and related audio37/284/285 and source-clock history. Dependency284 must be complete. Preserve root edits, all completed worktrees/environments/research, other-host282, pending sensitive279 and deprecatedPROGRESS. Start executable reproduction or implementation only with a fresh committed routine grant, isolated granted branch and pinned root/disposable data.",
+          "Code observation on284 submitted head21ccec1d4d48de5f372cfcae613196a5d2d53492: new audio interval bounds are selected only from nine shuttle rows, which may not bracket the existing plus/minus120ms range at higher frame rates. The284 sparse60fps corroboration control establishes preservation of existing visual support, not new-interval behavior. First freeze generated direct and actual disposable Store/API controls at ordinary/high frame rates and VFR/nonzero origins, retain before/after outcomes and existing exclusions, and confirm whether a new interval is lost despite otherwise eligible evidence. Stub only acoustic extraction for API integration; no original scientific media/audio/labels/predictions/weights, inference or scientific Store. A negative investigation may deliver a report only.",
+          "If reproduced, make a minimal consumer-only correction in audio_contacts.py: bracket the unchanged plus/minus120ms review range with actual available source frame times beyond the nine-row gap window when necessary. Preserve original acoustic proximity, gap and pose thresholds, default-off behavior, uncertainty and source-frame navigation. Never infer nominal FPS, interpolate, retime, pad source context, reduce an interval to fit unavailable endpoints or assert exact contact/AV timing. Incomplete/unavailable endpoints remain unsupported.",
+          "Before adding an interval, validate the complete source context between chosen inclusive bounds, the original gap context and selection-history context. Retain contiguous source identity, monotonic actual times, existing discontinuity limits, both runs cut/scene exclusions and284 unambiguous pose/source correspondence. Never bridge cuts/replays, excluded selection context, missing source rows or ambiguous clocks. Candidate context metadata must cover every consumed source frame and selection-context start, so existing subsequent scene review cannot silently accept an interval built from excluded context. Keep API/schema, scene_review implementation, core visual contacts.py, extractor, model/default/dependency behavior unchanged. Request scope extension before any additional path.",
+          "Preserve original visual candidates and their timing/score/hitter/evidence when optional support is unavailable; valid corroboration and duplicate-sound/conflicting-hitter behavior remain. Add meaningful direct/API regressions with generated perceptions for ordinary/high frame rates, sparse aligned poses, VFR/nonzero origins, inclusive bounds, endpoint availability and exclusions outside the old nine-row window. Verify actual returned/stored candidate context and subsequent existing scene-review behavior where applicable, plus original source/perception bytes and nonempty saved annotation revisions. Retain all baseline cases, including already excluded and unavailable cases; stubbed acoustic integration is not real acoustic/YouTube accuracy.",
+          "Run focused audio/contact/scene/clock/API and required Python3.10 full/Ruff/format/pip/repository/diff checks with fresh disposable output. Initialize torchvision before threaded PyAV, preserve native FFmpeg logging restoration and capture before/after source hashes and actual long-test wrapper/worker identities with independently observed lifetime absence. No install, inference/training, competing jobs, heavyjob restart, model promotion or research artifact modification.",
+          "Record the generated baseline, correction, controls, retained denominators, default/threshold/visual preservation and uncertainty/native-clock limitations in AUDIO_CONTACT_INTERVAL_REPORT. Publish only the four granted paths through focused commit/PR, exact PR/main/controller verification and independently audited complete candidate packages/source/frontend/lock/45public protocol bytes/both anonymous public image manifests. Do not manually merge, pushmain, retry/cancel/wake workflows, fabricate approval or edit coordination. Code review follows actual trusted configuration; no self-verdict.",
+          "Limits:4hours from fresh grant,512MiB new retained output,three diagnosed repair rounds,no paidservices. No scientific input/image/audio/label/prediction/holdout access, independent scientific sessions, training/inference, deployment/promotion, auth/policy/workflow/dependency/storage/corevisual/extractor change or PROGRESS access/update. This is generated source-time interval behavior only; complete scientific references remain0/2, all four eligibility flagsfalse and automatic full-match accuracy unproven."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "284"
+        ],
+        "exclusions": [
+          "No scientific inputs/models/inference/training, research Store/data job, threshold/default/extractor/corevisual/API/schema/scene_review/storage/auth/policy/workflow/dependency change, deployment/promotion, paidservice, manualmerge/mainpush, coordination edit or PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Investigate and, if reproduced with generated inputs, bracket optional audio review intervals using actual source times on high-frame-rate matches while retaining source alignment and visual fallback.",
+        "paths": [
+          "backend/badminton/audio_contacts.py",
+          "tests/test_audio_contacts.py",
+          "tests/test_audio_api.py",
+          "docs/AUDIO_CONTACT_INTERVAL_REPORT.md"
+        ],
+        "priority": 35,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Frozen generated direct and actual Store/API source-time interval comparison and controls, original source/perception/annotation preservation, focused/full required checks and source/process receipts.",
+          "Exact PR/main/controller integration and complete independently audited package/source/frontend/lock/45publicprotocol/both publicmanifest delivery, without accuracy claims."
+        ]
+      },
+      "spec_hash": "cdc10171cc42297d6b582d48d080d396eb59fedc94639d35a0e16d9a7b466129",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
