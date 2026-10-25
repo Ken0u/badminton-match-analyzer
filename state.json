@@ -6236,6 +6236,15 @@
       "task_id": "262",
       "verb": "checkpoint"
     },
+    "rally262-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792899758,
+      "epoch": 1,
+      "fingerprint": "8f14757a14af99d031d8c6b17e050eddf68d5e424ca1e56fad36e0cd289adfec",
+      "status": "running",
+      "task_id": "262",
+      "verb": "checkpoint"
+    },
     "rally262-input-next-v1": {
       "actor": "Ken0u",
       "at": 1792898618,
@@ -6269,6 +6278,15 @@
       "fingerprint": "c111e1cc3f5a2ba6e84e4c7a8f11b0c4b43b65ad13510d0c8b7c1d9924eddc63",
       "status": "idle",
       "verb": "next"
+    },
+    "rally262-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792899765,
+      "epoch": 1,
+      "fingerprint": "97ebd9e555afcf4cb91119d22efa7bd9ca38930e044030245e04f4786ab16ea3",
+      "status": "review",
+      "task_id": "262",
+      "verb": "submit"
     },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
@@ -20883,23 +20901,18 @@
     "262": {
       "checkpoint": {
         "branch": "codex/issue-262-produce-a-prospectively-frozen-provenanc",
-        "evidence": [
-          "Genuine epoch1 grant after input-qualified registration. Initial idle request and local registration-helper failure preserved; no duplicate implementation.",
-          "Protocol pins93opaque input hashes and original tested250producer before original scientific metadata access. No image viewing/decoding/rendering, label assessment, image dispatch, model/inference or original preparation rerun.",
-          "CLI uses clean original250read-only audit before packet/gallery metadata; real shared Store, credential-free pinned roots, exclusive output/failure fencing, immutable4hour clock and independently terminal process evidence. Generated checks pending."
-        ],
-        "head_sha": "c2c3c5a15b0b5c3a546057f2a50e0346cb75b089",
-        "remaining": "Finish generated/full checks and clean consumer commit; prospective issue seal; exactly one real-Store metadata plan and separate audit; exact PR/controller/main CI and complete public delivery. No new image authority.",
-        "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021",
-        "stage": "Metadata-only review planner and generated tests delegated under worker prompt; parent implements freeze/run/read-only-audit CLI, public protocol, aggregate report and roadmap pointer."
+        "head_sha": "d1ad6624f1edb38033217ddcbea6ac03d251a316",
+        "pr_number": 263,
+        "remaining": "Exact PR/main CI, normal controller integration and independent complete public delivery.",
+        "summary": "Metadata-only planner/audit complete:451focused/3525fulltests,4optional skips;1532nativeframes/53samples. Proposed 1209sessions/10576441872bytes; actual new sessions/imagebytes0. References0/2/flagsfalse. Frozen consumer/code/test/protocol parity retained. No manufactured approval."
       },
-      "checkpoint_at": 1792898947,
+      "checkpoint_at": 1792899758,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "c2c3c5a15b0b5c3a546057f2a50e0346cb75b089",
         "branch": "codex/issue-262-produce-a-prospectively-frozen-provenanc",
         "epoch": 1,
-        "expires_at": 1792909747,
+        "expires_at": 1792910558,
         "granted_at": 1792898618,
         "host_id": "MSI",
         "session_id": "7edc859bbd9747e0aa21c74ad1ad103d",
@@ -20908,6 +20921,7 @@
       "epoch": 1,
       "planned_at": 1792898153,
       "planned_by": "Ken0u",
+      "pr_number": 263,
       "spec": {
         "acceptance": [
           "Follow approved Data and evaluation priority1 after delivered250/260. Audit all history/PRs/grants; preserve root edits, deprecated PROGRESS, environments, data, research, annotations and predictions. Obtain a fresh original-host code/metadata grant and isolated worktree; reserve only the six named paths and data:windows-primary.",
@@ -20967,7 +20981,13 @@
         ]
       },
       "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c2c3c5a15b0b5c3a546057f2a50e0346cb75b089",
+        "head_sha": "d1ad6624f1edb38033217ddcbea6ac03d251a316",
+        "pr_number": 263,
+        "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021"
+      }
     },
     "62": {
       "checkpoint": {
