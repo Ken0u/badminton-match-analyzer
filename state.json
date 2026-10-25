@@ -673,6 +673,21 @@
       "task_id": "252",
       "verb": "next"
     },
+    "evaluation-source-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792895827,
+      "fingerprint": "52c6c8044d1c2f6f92f4cef5e8e2cb91874bb6a49d3b1251a368a4e1600a34d6",
+      "status": "ready",
+      "task_id": "260",
+      "verb": "plan"
+    },
+    "evaluation-source-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792895827,
+      "fingerprint": "d26ff5b3a7611ec905b440e79d86467ee02759d71797ca4a88384ad84db177d1",
+      "status": "ok",
+      "verb": "register"
+    },
     "events67-readiness-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792730248,
@@ -7937,6 +7952,14 @@
       "fingerprint": "c36e522f031b8829ff7ccb00ec04c163118319a97e452278742bc90b44b472bc",
       "status": "ready",
       "task_id": "258",
+      "verb": "plan"
+    },
+    "spec-260-86a95e5b83fd3e1f375fc5273ba0ffb8bcdaf352fd1882ce74d42ef20b05bd29": {
+      "actor": "Ken0u",
+      "at": 1792895827,
+      "fingerprint": "4f4c697886ad5a1511fc69b3c28deeda75e446437e237701718245a716ca3c6d",
+      "status": "ready",
+      "task_id": "260",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -20633,6 +20656,57 @@
         "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6"
       }
     },
+    "260": {
+      "epoch": 0,
+      "planned_at": 1792895827,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Audit all issue/PR history and authoritative grants, prioritize this generated reproduced bug, and preserve root edits, environments, datasets, research, annotations, predictions and deprecated PROGRESS.md. Depend on fully delivered258, then obtain a fresh committed code-only grant and isolated worktree before production edits.",
+          "Preserve the generated eight-case API/CLI reproduction: contact and shuttle artifacts with a mismatching64-zero source hash or explicit null currently receive HTTP200 and F1=1, indistinguishable from matching and absent-legacy hashes. Bind tested evaluator bytes to fresh main, retain all original attempts and do not read real scientific sources or labels.",
+          "Limit production changes to evaluation.py. In shared contact/shuttle evaluation validation, require any explicitly supplied video_sha256 to be a valid64-character hexadecimal SHA256 string matching the current video source identity. Reject mismatching, null, empty, nonstring or malformed supplied values with actionable ValueError before producing a score. Keep existing video/stage/range validation. Do not add a loader bypass, silently replace a conflicting hash, rerun inference or alter artifacts.",
+          "Preserve legacy artifacts with no video_sha256 key, but add an explicit additive report source-hash status distinguishing unavailable prediction provenance from a validated match. Never label absence as verified or silently install a hash into the artifact. Current matching artifacts keep all metrics, denominators, timing/camera exclusions and normalized coordinate behavior unchanged. Recognition and rally evaluation retain their existing stricter source requirements and contracts.",
+          "Generated regressions cover both evaluator stages and matching, conflicting, absent, null, empty, malformed/nonstring source values, wrong stage/video and rejection before metric calculation including no-label cases. Exercise registered completed runs through actual API and CLI; verify422/nonzero on explicit bad hashes, valid/legacy scoring with clear provenance, unchanged saved artifacts/annotations and no report output on rejected CLI input. Preserve current camera-cut, unknown, uncertainty, missing-output and source-PTS behavior; no model invocation.",
+          "Run focused and required full Python, Ruff lint/format, pip consistency, repository UTF8/LF/JSON/local-link and diff checks on final source in isolated generated storage with existing root virtual environment. No frontend change or extra native inference. Preserve actual failures and verification process lifetimes; repeat only as justified by changes or failures.",
+          "Document concrete before/after, legacy limitations, additive provenance field and generated evidence in a focused report and current bug-review summary. Publish only granted paths on the granted branch; submit exact head/base/spec and let the controller integrate. Verify exact PR/main CI and independent complete public package/source/frontend/lock and both anonymous image delivery before completion.",
+          "Bound work to three hours from fresh grant,512MiB new outputs including tests/downloaded evidence and three diagnosed repair rounds. No scientific image/label access or transfer, new assessor, source download, heldout access, inference/training/model/default change, dependency, auth/security/workflow/publishing/deployment change, paid service, manual merge, direct main push, raw coordination edit, CI retry/cancel/wake or PROGRESS edit. Complete scientific references stay0/2 and all four eligibility flags false; this protects software measurements without establishing full-match accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "258"
+        ],
+        "exclusions": [
+          "No scientific assessment/data/model work, policy/auth/workflow/deployment change, new dependency, paid service, manual merge, production artifact mutation or deprecated PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Reject explicit conflicting or malformed source hashes in contact and shuttle evaluation while retaining transparently unverified legacy artifacts without source-hash metadata.",
+        "paths": [
+          "backend/badminton/evaluation.py",
+          "tests/test_evaluation.py",
+          "tests/test_evaluation_source_api.py",
+          "docs/EVALUATION_SOURCE_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Preserved generated API/CLI baseline and source-hash rejection/legacy compatibility regressions; focused/full required checks.",
+          "Exact PR/main CI, normal controller integration and independently verified complete public delivery; no annotation-accuracy claim."
+        ]
+      },
+      "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -23779,6 +23853,18 @@
       "host_id": "MSI",
       "registered_at": 1792492889,
       "session_id": "64a866d3b0a648e78d0fc6837481003e"
+    },
+    "MSI/6bd9e2e585fe4cd79d59b2d1bada859e": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792895827,
+      "session_id": "6bd9e2e585fe4cd79d59b2d1bada859e"
     },
     "MSI/7e09f59c-76d7-4231-a7be-c9e40572234e": {
       "actor": "Ken0u",
