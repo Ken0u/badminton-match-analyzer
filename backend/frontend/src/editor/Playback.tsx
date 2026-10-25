@@ -4,9 +4,9 @@ import {
   array,
   clock,
   displayCalibrations,
+  displayShuttle,
   frameAt,
   num,
-  object,
   objects,
   str,
   cameraChanged,
@@ -161,32 +161,29 @@ export const Playback = memo(function Playback({
           ctx.fillText(String(i + 1), p.x * w + 10, p.y * h - 8);
         });
       }
-      const shuttle = new Map(
-        (s.runs.shuttle?.run.frames ?? []).map((row) => [num(row.frame), row]),
-      );
       if (config.current.showShuttle) {
+        const shuttle = displayShuttle(
+          d,
+          s.runs.shuttle?.run ?? null,
+          s.times,
+          s.video.fps,
+          f,
+        );
         ctx.strokeStyle = "#ffd379";
         ctx.fillStyle = "#ffd379";
         ctx.lineWidth = 2;
         ctx.beginPath();
-        let connected = false;
-        for (let index = f - 12; index <= f; index++) {
-          const raw = shuttle.get(index)?.shuttle,
-            p = raw ? object(raw) : null;
-          if (!p?.visible) {
-            connected = false;
-            continue;
+        for (const segment of shuttle.segments) {
+          for (const [index, point] of segment.entries()) {
+            if (index) ctx.lineTo(point.x, point.y);
+            else ctx.moveTo(point.x, point.y);
           }
-          if (connected) ctx.lineTo(num(p.x), num(p.y));
-          else ctx.moveTo(num(p.x), num(p.y));
-          connected = true;
         }
         ctx.stroke();
-        const raw = shuttle.get(f)?.shuttle,
-          p = raw ? object(raw) : null;
-        if (p?.visible) {
+        const p = shuttle.current;
+        if (p) {
           ctx.beginPath();
-          ctx.arc(num(p.x), num(p.y), 6, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, 6, 0, Math.PI * 2);
           ctx.fill();
           ctx.strokeStyle = "#182227";
           ctx.stroke();

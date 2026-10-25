@@ -452,19 +452,24 @@ export function courtChanged(doc: Document, run: Run) {
     (c.known_preceding_cut_frames != null && cameraChanged(doc, parseRun(c)))
   );
 }
-export function displayCalibrations(
+function displayCameraCuts(
   doc: Document,
   run: Run | null,
   times: number[],
   fps: number,
-  automaticValid: boolean,
+  clockStart = 1,
+  clockEnd = times.length,
 ) {
   const gaps = new Set(
     array(run?.known_preceding_timestamp_gaps).map((x) => num(x)),
   );
   for (const b of objects(run?.boundaries))
     if (b.reason === "timestamp_discontinuity") gaps.add(num(b.frame));
-  for (let f = 1; f < times.length; f++)
+  for (
+    let f = Math.max(1, clockStart);
+    f < Math.min(times.length, clockEnd);
+    f++
+  )
     if ((times[f] ?? 0) - (times[f - 1] ?? 0) > Math.max(0.1, 2.5 / fps) + 1e-8)
       gaps.add(f);
   const cuts = new Set(
@@ -483,11 +488,73 @@ export function displayCalibrations(
     if (c.is_cut) cuts.add(c.frame);
     else if (!gaps.has(c.frame)) cuts.delete(c.frame);
   }
+  return cuts;
+}
+export function displayCalibrations(
+  doc: Document,
+  run: Run | null,
+  times: number[],
+  fps: number,
+  automaticValid: boolean,
+) {
+  const cuts = displayCameraCuts(doc, run, times, fps);
   return effectiveCalibrations(doc, {
     court_context_version: 1,
     cut_frames: [...cuts],
     automatic_calibrations: automaticValid ? run?.automatic_calibrations : [],
   });
+}
+/** Native pixel observations from the current view, never inferred flight. */
+export function displayShuttle(
+  doc: Document,
+  run: Run | null,
+  times: number[],
+  fps: number,
+  frame: number,
+): { segments: Point[][]; current: Point | null } {
+  const segments: Point[][] = [];
+  if (
+    !run ||
+    !Number.isSafeInteger(frame) ||
+    frame < 0 ||
+    frame >= times.length ||
+    frame < run.start_frame ||
+    frame >= run.end_frame
+  )
+    return { segments, current: null };
+  let start = Math.max(0, frame - 12, run.start_frame);
+  // Only gaps inside the short displayed history can affect this trail.
+  const cuts = displayCameraCuts(doc, run, times, fps, start, frame + 1);
+  for (const scene of doc.scene_ranges) {
+    cuts.add(scene.start_frame);
+    cuts.add(scene.end_frame);
+  }
+  for (const cut of cuts) if (start < cut && cut <= frame) start = cut;
+  const rows = new Map(run.frames.map((row) => [row.frame, row]));
+  let segment: Point[] | null = null;
+  let current: Point | null = null;
+  for (let index = start; index <= frame; index++) {
+    const raw = rows.get(index)?.shuttle;
+    const p = raw ? object(raw) : null;
+    if (
+      p?.visible !== true ||
+      typeof p.x !== "number" ||
+      typeof p.y !== "number" ||
+      !Number.isFinite(p.x) ||
+      !Number.isFinite(p.y)
+    ) {
+      segment = null;
+      continue;
+    }
+    const point = { x: p.x, y: p.y };
+    if (!segment) {
+      segment = [];
+      segments.push(segment);
+    }
+    segment.push(point);
+    if (index === frame) current = point;
+  }
+  return { segments, current };
 }
 export function ownedCandidates(run: Run | null) {
   return (run?.candidates ?? []).filter(
