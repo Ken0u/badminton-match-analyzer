@@ -547,6 +547,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "contact258-targeted-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792893261,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
+        "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
+        "epoch": 1,
+        "expires_at": 1792904061,
+        "granted_at": 1792893261,
+        "host_id": "MSI",
+        "session_id": "9b465dc1a2ba4999bd038162102f230c",
+        "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6"
+      },
+      "epoch": 1,
+      "fingerprint": "f642ad3106eef01fa281c6e18e572fd2de103837f4fadf5fcf819d47b64c7c61",
+      "status": "granted",
+      "task_id": "258",
+      "verb": "next"
+    },
     "editor-report-plan-v1": {
       "actor": "Ken0u",
       "at": 1792885363,
@@ -20462,7 +20482,18 @@
       }
     },
     "258": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
+        "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
+        "epoch": 1,
+        "expires_at": 1792904061,
+        "granted_at": 1792893261,
+        "host_id": "MSI",
+        "session_id": "9b465dc1a2ba4999bd038162102f230c",
+        "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6"
+      },
+      "epoch": 1,
       "planned_at": 1792893105,
       "planned_by": "Ken0u",
       "spec": {
@@ -20515,7 +20546,7 @@
         ]
       },
       "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
