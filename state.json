@@ -556,6 +556,24 @@
       "task_id": "258",
       "verb": "checkpoint"
     },
+    "contact258-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792894421,
+      "epoch": 1,
+      "fingerprint": "c6f72c603ab662f678901c2133a9d374f743fd6caf199a73574e3e8bb152acba",
+      "status": "running",
+      "task_id": "258",
+      "verb": "checkpoint"
+    },
+    "contact258-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792894427,
+      "epoch": 1,
+      "fingerprint": "ffb2ee38de27620887027ca46d2a8e70b1d2ccc397ba96617cdecb9b660fe091",
+      "status": "review",
+      "task_id": "258",
+      "verb": "submit"
+    },
     "contact258-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792893261,
@@ -20502,18 +20520,19 @@
     "258": {
       "checkpoint": {
         "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
-        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/258#issuecomment-6392280859",
-        "head_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
-        "remaining": "Combined camera-context domain review, focused/full verification, controller integration and independent full public delivery.",
-        "summary": "Contact/recognition camera-context repair is implemented in7granted paths. Final139focused tests pass. First full run passed3341tests/4optional skips but a semantic source write overlapped launch by0.103seconds; exact import timing is unproven and that run is preserved without final-source verification credit. A fresh full run is live against unchanged source, including2additional API stale-cut regressions. No scientific data/labels/images/inference/model/policy changes. Root edits preserved."
+        "evidence_sha256": "d009c06f7644e1c9594ecad18bd164b85ebc385f66ae5162b70fe98549921069",
+        "head_sha": "5f0063df614391b8f45daea60810be2ba6b00491",
+        "pr_number": 259,
+        "remaining": "Exact PR/main CI, controller integration and independently verified complete public delivery.",
+        "summary": "Generated baseline cross-cut TP1/F1=1 now becomesTP0/FP1/FN1 with retained reference/proposal/frame denominators. Crossing interval/evidence exclusions also bind recognition domain.139focused/3343full Python pass,4optional skips; required lint/format/dependency/repository checks pass. Final source and terminal test lifetimes verified. Receipt SHA256 d009c06f7644e1c9594ecad18bd164b85ebc385f66ae5162b70fe98549921069."
       },
-      "checkpoint_at": 1792894049,
+      "checkpoint_at": 1792894421,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
         "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
         "epoch": 1,
-        "expires_at": 1792904849,
+        "expires_at": 1792905221,
         "granted_at": 1792893261,
         "host_id": "MSI",
         "session_id": "9b465dc1a2ba4999bd038162102f230c",
@@ -20522,6 +20541,7 @@
       "epoch": 1,
       "planned_at": 1792893105,
       "planned_by": "Ken0u",
+      "pr_number": 259,
       "spec": {
         "acceptance": [
           "Revalidate all issue/PR history, current main and grants; prioritize this reproduced measurement bug. Preserve root edits, deprecated PROGRESS.md, environments, datasets, research, reviewed annotations and saved predictions. Obtain a fresh committed code-only grant and isolated branch/worktree, dependent on delivered256. Preserve generated baseline reproduction SHA256 8210c8d697594e3fca6300aa57b398a06172abb76a8838328dd247d42381450e. This does not complete scientific62/66/67/71 or provide labels.",
@@ -20572,7 +20592,13 @@
         ]
       },
       "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
+        "head_sha": "5f0063df614391b8f45daea60810be2ba6b00491",
+        "pr_number": 259,
+        "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6"
+      }
     },
     "62": {
       "checkpoint": {
