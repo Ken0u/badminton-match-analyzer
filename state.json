@@ -910,6 +910,21 @@
       "task_id": "67",
       "verb": "release"
     },
+    "exact-frame-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792950007,
+      "fingerprint": "b8ab6000116c7f411e7ec1016d33ce2e44cfff010abe81b69846778ad317f5db",
+      "status": "ready",
+      "task_id": "303",
+      "verb": "plan"
+    },
+    "exact-frame-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792950007,
+      "fingerprint": "3319b794a94ed37ac35dae14a047aad7300dea809e0b67e68a234b2b0e4ae63f",
+      "status": "ok",
+      "verb": "register"
+    },
     "export-poll-plan-v1": {
       "actor": "Ken0u",
       "at": 1792878078,
@@ -24891,7 +24906,7 @@
     },
     "303": {
       "epoch": 0,
-      "planned_at": 1792949798,
+      "planned_at": 1792950007,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
@@ -28399,6 +28414,20 @@
       "host_id": "MSI",
       "registered_at": 1792933607,
       "session_id": "f17f985d05bf4a7586132fcdbddfcfd2"
+    },
+    "MSI/f9113478d9024d1ab2fb5b17099b0b68": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "generated_failure_sha256": "d77b9f4102b29183a5493a487ba768cb55b04bf26e1f2d36120130155585f5d9"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792950007,
+      "session_id": "f9113478d9024d1ab2fb5b17099b0b68"
     },
     "MSI/ff1687e23a7941ada25b66448f327138": {
       "actor": "Ken0u",
