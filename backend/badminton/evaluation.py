@@ -9,6 +9,7 @@ representative times, which are navigation locations for occlusion proposals.
 """
 
 import math
+import re
 from itertools import pairwise
 
 from .scene_review import camera_review_signature, reviewed_contacts
@@ -20,6 +21,18 @@ def _base(video, annotations, run, stage):
     start, end = run["start_frame"], run["end_frame"]
     if not 0 <= start < end <= video["frame_count"]:
         raise ValueError("Run range must lie within the source video")
+    source_hash_status = "unavailable"
+    if "video_sha256" in run:
+        source_hash = run["video_sha256"]
+        if not isinstance(source_hash, str) or not re.fullmatch(
+            r"[0-9a-fA-F]{64}", source_hash
+        ):
+            raise ValueError(
+                "Prediction video_sha256 must be a valid SHA256 source hash"
+            )
+        if source_hash.lower() != video["sha256"].lower():
+            raise ValueError("Prediction source hash does not match this video")
+        source_hash_status = "matched"
     return {
         "video_id": video["id"],
         "video_sha256": video["sha256"],
@@ -27,6 +40,7 @@ def _base(video, annotations, run, stage):
         "run_id": run.get("run_id"),
         "run_start_frame": start,
         "run_end_frame": end,
+        "prediction_source_hash_status": source_hash_status,
     }
 
 

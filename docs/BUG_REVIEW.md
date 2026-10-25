@@ -1,5 +1,17 @@
 # Bug review and implementation progress
 
+The [evaluation source-hash repair](EVALUATION_SOURCE_REPORT.md) rejects
+contact and shuttle artifacts whose explicit source hash conflicts with the
+registered video or is malformed. Generated API/CLI reproductions previously
+scored these artifacts at F1 1.0. Legacy artifacts without a hash remain usable
+with explicit unavailable provenance; valid matches keep their metrics and
+denominators. All 328 focused checks pass, including existing camera, recognition
+and rally evaluation tests. Final verification passes 3,393 Python tests with
+four optional skips, plus Ruff lint/format, dependencies, repository and whitespace
+checks. The initial fixture setup and pre-pytest formatting failures are preserved.
+Scientific complete references remain 0/2; this validates software provenance,
+without establishing annotation accuracy.
+
 The [contact evaluation context repair](CONTACT_EVALUATION_CONTEXT_REPORT.md)
 corrects a generated frame-19/frame-20 match across a known camera cut that
 previously reported contact F1 1.0 and credited recognition family/hitter/complete

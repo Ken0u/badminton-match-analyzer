@@ -575,6 +575,74 @@ def shuttle_run(predictions, start=0, end=100):
     }
 
 
+@pytest.mark.parametrize("stage", ["contacts", "shuttle"])
+@pytest.mark.parametrize("known_hash", [False, True])
+def test_evaluation_source_hash_status_preserves_metrics_and_inputs(stage, known_hash):
+    labels = annotations([event("hit", 1, 0.04)], [window()], [point(1)])
+    run = (
+        contact_run([("proposal", 1, 0.04)])
+        if stage == "contacts"
+        else shuttle_run([(1, True, 50, 50)])
+    )
+    evaluator = evaluate_contacts if stage == "contacts" else evaluate_shuttle
+    legacy = evaluator(video(), labels, run)
+    if known_hash:
+        run["video_sha256"] = video()["sha256"].upper()
+    before = deepcopy((labels, run))
+    result = evaluator(video(), labels, run)
+    assert result["prediction_source_hash_status"] == (
+        "matched" if known_hash else "unavailable"
+    )
+    assert result["metrics"]["f1"] == 1
+    assert result | {"prediction_source_hash_status": "unavailable"} == legacy
+    assert (labels, run) == before
+
+
+@pytest.mark.parametrize("stage", ["contacts", "shuttle"])
+@pytest.mark.parametrize(
+    "source_hash",
+    [
+        None,
+        "",
+        "0" * 64,
+        "a" * 63,
+        "a" * 65,
+        "g" * 64,
+        "a" * 63 + "\n",
+        1,
+        True,
+        [],
+        {},
+    ],
+)
+def test_evaluation_rejects_bad_source_hash_before_scoring_without_labels(
+    stage, source_hash
+):
+    run = contact_run([]) if stage == "contacts" else shuttle_run([])
+    run["video_sha256"] = source_hash
+    # Deliberately unavailable prediction payload: source rejection must precede
+    # candidate/frame parsing, even when there are no references to score.
+    run.pop("candidates" if stage == "contacts" else "frames")
+    before = deepcopy(run)
+    evaluator = evaluate_contacts if stage == "contacts" else evaluate_shuttle
+    with pytest.raises(ValueError, match="source hash"):
+        evaluator(video(), annotations(), run)
+    assert run == before
+
+
+@pytest.mark.parametrize("stage", ["contacts", "shuttle"])
+@pytest.mark.parametrize("wrong_field", ["video_id", "stage"])
+def test_matching_source_hash_does_not_bypass_video_or_stage_validation(
+    stage, wrong_field
+):
+    run = contact_run([]) if stage == "contacts" else shuttle_run([])
+    run.update(video_sha256=video()["sha256"])
+    run[wrong_field] = "other"
+    evaluator = evaluate_contacts if stage == "contacts" else evaluate_shuttle
+    with pytest.raises(ValueError, match=f"{stage} run"):
+        evaluator(video(), annotations(), run)
+
+
 def test_shuttle_visibility_localization_and_missing_output_are_distinct():
     labels = annotations(
         points=[
