@@ -11074,6 +11074,13 @@
       "task_id": "97",
       "verb": "verify-main"
     },
+    "video-stability-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792927019,
+      "fingerprint": "f8f652bac8751506d8a7f29f9f1e619130d6da832aa2675efe947717fafb12d6",
+      "status": "idle",
+      "verb": "next"
+    },
     "video-stability-plan-v1": {
       "actor": "Ken0u",
       "at": 1792926771,
