@@ -1375,6 +1375,15 @@
       "task_id": "281",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint281-tests-v1": {
+      "actor": "dootz1",
+      "at": 1792916667,
+      "epoch": 1,
+      "fingerprint": "a4ef20838e5c202d343a780593a13c091d5f9d561b67f70611d72ab78155ef0a",
+      "status": "running",
+      "task_id": "281",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
@@ -22785,22 +22794,22 @@
     "281": {
       "checkpoint": {
         "artifacts": [
-          ".cache/w281/.cache/evidence/import281-baseline/result.json",
-          ".cache/goal-01a17154/repro281-baseline.log",
-          ".cache/goal-01a17154/repro281-baseline-process.json"
+          ".cache/goal-01a17154/tests281-red.log",
+          ".cache/goal-01a17154/tests281-focused1.log",
+          ".cache/w281/.cache/pytest281-focused1.xml"
         ],
         "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
         "head": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
-        "remaining": "Add generated failing regressions before minimal ingestion stable-digest/final-source-validation repair; preserve earlier published truth/provenance and source-clock/orientation controls. Focused/full required checks, source/process seals, exactPR/main/controller/public delivery. Scope stays4files;279 workflow approval remains separate and pending.",
-        "summary": "Unchanged baseline e48cbd9 actual generated media reproduces3 successful inconsistent imports: before decoder open, during decoded progress and existing-video reimport. All returned checksum disagrees with actual current source; existing downstream resolve_source raisesSourceChangedError. Reimport overwrites4 prior artifacts: timestamps, metadata, poster and sheet. Raw result/source bytes retained; original sourcecode hash e0440753db7cdbb80cac1102e1defac7138dff969c73553281cc50d9fd935d66. One baseline command exits0; both exact normalvenv interpreter lifetimes independently absent, no observation errors. No scientific source/image/label/prediction or inference accessed."
+        "remaining": "Full checks, focused source/orientation/playback/cache checks, report, commit/PR exact CI/controller main/public candidate audits.279 stays pending separate owner approval. Four granted paths only.",
+        "summary": "Generated baseline preserved: eight failing source-stability tests, three controls pass. Minimal ingest-only repair now passes 13 source-stability and28API tests (41 total), including actual local/upload/stubbedYouTube job rejection, prior truth/provenance/artifact preservation, nativeclock duplicates, restoredmtime mutation and initiating I/O/decode error identity. No source/model/research access. Starting monitored full Python suite with fresh short ignored temp; source hashes and exact wrapper/worker absence will be preserved."
       },
-      "checkpoint_at": 1792916356,
+      "checkpoint_at": 1792916667,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
         "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
         "epoch": 1,
-        "expires_at": 1792927156,
+        "expires_at": 1792927467,
         "granted_at": 1792915764,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
