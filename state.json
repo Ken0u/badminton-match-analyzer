@@ -25358,6 +25358,7 @@
       }
     },
     "307": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40234035142",
       "checkpoint": {
         "branch": "codex/issue-307-reject-saved-shuttle-evaluation-artifact",
         "head_sha": "6c84f5cb47e310e8fe19d62d8ead67e9ba395a46",
@@ -25377,7 +25378,7 @@
         "spec_hash": "6842fb40027d75e61465bb8f6b6112c4b51acff456351354d7c90a02601b3fa0"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792961883,
