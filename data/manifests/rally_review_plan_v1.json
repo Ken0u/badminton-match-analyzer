@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "task": 262,
+  "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021",
+  "purpose": "Prospective chronological native-frame and temporal-gallery review schedule, metadata only",
+  "sources": [
+    {
+      "source_id": "go2uajSiBnE",
+      "category": "singles",
+      "source_sha256": "708a6f1732204e2446d27bb7093c8af1c393deebc0391b67a678e0e72f7b34d9",
+      "clock_sha256": "f1cf689916f85716fddb692f5bb9118812a4f4c66f211ed4b9de7e7c6fb3965f",
+      "packet_sha256": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+      "native_frame_count": 991
+    },
+    {
+      "source_id": "H1setLK1tig",
+      "category": "doubles",
+      "source_sha256": "49485613fd93210c5c739f7f1e07948ac558691719e9315772d6f213b3273623",
+      "clock_sha256": "867467f96a9bedecff035053d765e368d70abcde13d79dc4830b4c24fe87d5b0",
+      "packet_sha256": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+      "native_frame_count": 541
+    }
+  ],
+  "native_root": ".cache/rally208-source-only-v1/dense-v1",
+  "gallery_root": ".cache/rally240-source-only-v1/galleries",
+  "output_root": ".cache/rally262-plan-v1",
+  "prior": {
+    "checkout": ".cache/worktrees/rally250-producer-v1",
+    "commit": "001ddea7734c189049363fa33bedc88c7544705a",
+    "files": {
+      "backend/badminton/rally_evidence_join.py": "b89ed2930672a39c56832149b7aff3c2bdfa78594ab2c557f74331bef3e2a5d3",
+      "scripts/join_rally_evidence.py": "d94546c54c7268edb0d6a69c6d0190c413d47ce287c2f4daa1456e3da4c7bc37",
+      "tests/test_rally_evidence_join.py": "05ace25fb3a169723d298830a412b8eff0648139a7b2406cc813169e16904bfc",
+      "data/manifests/rally_evidence_join_v1.json": "a77d8c88289268a2950059a379c65caf6ab7f319a8a22d4e936b8ba05a86c5a3"
+    },
+    "output": ".cache/rally250-joined-v1",
+    "timestamp": ".cache/rally250-timestamp-v1.json"
+  },
+  "sealed_inputs": {
+    ".cache/rally208-source-only-v1/dense-v1/H1setLK1tig.packet.json": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
+    ".cache/rally208-source-only-v1/dense-v1/go2uajSiBnE.packet.json": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
+    ".cache/rally238-diagnostics-v1/admission.json": "fd8e009c35c9657af565650ccdc8a9a94a23bba0ebeb5583ec7ce5793226543a",
+    ".cache/rally238-diagnostics-v1/aggregate.json": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1",
+    ".cache/rally238-diagnostics-v1/context.json": "e0a4b3579d53a7c5927df892c1e4c3d62cfc47be790fb9f255975bf48cd54547",
+    ".cache/rally238-diagnostics-v1/ledger.json": "cdb6a7f59417a0a17eee3313619b3c77e37357b9d64e2a28107e3be9dac92b33",
+    ".cache/rally238-diagnostics-v1/terminal.json": "08560d40a9198148a1b18d0b4f5d9bf57c746d80f1acf9951c460660f05fa4ea",
+    ".cache/rally238-native-v1/audit-v2.json": "0d71a0301e8fd603a21d06209663c5394f5ba611218a26e8ca7ccc814509fe94",
+    ".cache/rally238-native-v1/finish.json": "8c7fb883a88d8ec596910ea057f057eb2d25004118ff4799e4ea040c80f3f66f",
+    ".cache/rally238-native-v1/owner.json": "1589dd2247b70bb9e079c1b78b2c37c1851d14a67892283b30c198a6bfacbc85",
+    ".cache/rally240-native-prepare-v1/audit.json": "eb0928300424695b2435608bb987df3b082c36d1683d8722dffcc97e1a89f44b",
+    ".cache/rally240-native-prepare-v1/finish.json": "a16e4a3aa6c7938d32ede1f445c38c0c415bce6ef474c162a1e2ac74a4ee575f",
+    ".cache/rally240-native-prepare-v1/owner.json": "e6ed692bd9138cf7687e1d29d21fe6107a3aa6adf637d79ddcb3b90ef0f11cb0",
+    ".cache/rally240-native-prepare-v1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".cache/rally240-native-prepare-v1/stdout.log": "8c712b0e52401bb5d147f1f6a32948e1f2a687c5c5a338f9c56139a99e5aba1a",
+    ".cache/rally240-source-only-v1/context.json": "02ebc417010c63b8bfd681c88905e51dd48907dfebb7bb11f0c2520bf2d408f0",
+    ".cache/rally240-source-only-v1/galleries/H1setLK1tig/gallery.json": "f8a95b425b9604d12dcc14dabd1c4382ead327266a0e47fa5cf6ff3754116e6b",
+    ".cache/rally240-source-only-v1/galleries/H1setLK1tig/sheet-000.png": "d837671f01ad94e630665090bbfe488fdf85f5e954b080f20003ad758b9b477d",
+    ".cache/rally240-source-only-v1/galleries/H1setLK1tig/sheet-001.png": "226ccfa267d20cb8366400af7accb14ecb0fc273b9804e01c13a9ca6ac2df365",
+    ".cache/rally240-source-only-v1/galleries/go2uajSiBnE/gallery.json": "ac3c401a2a1ab4ad4b348e45e5a53f77fb6c3413ab848295c1f0e2c02e689bc0",
+    ".cache/rally240-source-only-v1/galleries/go2uajSiBnE/sheet-000.png": "46a695cfad78f3d385bd86447cf89db9fda88b9782e274bf68dc639f314cef24",
+    ".cache/rally240-source-only-v1/galleries/go2uajSiBnE/sheet-001.png": "e7e5ad19d7f022a6f97d3b5ce44db4fd6a9cce0ff10509358190869f703bc542",
+    ".cache/rally240-source-only-v1/galleries/go2uajSiBnE/sheet-002.png": "b61535ee2ef3ce1bd9569241870b5d58083ad278d28c67d8512cb570851625d5",
+    ".cache/rally240-source-only-v1/metadata-gate.json": "387e272c0d896330458b65a8cd2156f118d29688f3122e9bc28b5cb10fcfa6c8",
+    ".cache/rally240-source-only-v1/pilot-plan.json": "c82d669a854448d0f31aa917c5d45161cee4ce0096381f2c3bae5519f9b03ed7",
+    ".cache/rally240-source-only-v1/preparation/admission.json": "04596a278afbbbbede9cb5e00593e121ad609109ceb5b542aa1788c5ab308c60",
+    ".cache/rally240-source-only-v1/preparation/terminal.json": "bb0c0d311176f2d98a600f658652d7d2a5f65621d6d12ca069c652bfe04f9b85",
+    ".cache/rally242-comparison-receipt-v1.json": "63dcbf59fd9a46d8e4fffaf11b432101f8c800b6a6bbf3f8dad20aaa07bebbe3",
+    ".cache/rally242-global-metadata-audit-v1.json": "d1eeb44b5e39a753c8cfdb7c8bf2cf12e687d1dd1c58fd3ffa47c6a826ff4c4c",
+    ".cache/rally242-native-assess-v1/audit.json": "80c4a231dbcfa0912048ae19647563508c75d098bfa5b753d931f5419ffedda3",
+    ".cache/rally242-native-assess-v1/finish.json": "b1d68d32056905b38f70fd4745e0962184b819c37788dc40a20d386a7f6ede22",
+    ".cache/rally242-native-assess-v1/owner.json": "7ecab43b70ee9402c8186d08db313182d0e6a92c896c718350790a57517fa7a8",
+    ".cache/rally242-native-assess-v1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".cache/rally242-native-assess-v1/stdout.log": "191b94792c36b45ee079650ccd4af925e6e8d4cf86b576648ae42b10fb487d3e",
+    ".cache/rally242-native-prepare-v1/audit.json": "d5144ed9b406d6d095c917b99ae9ab397ad6e18375bc5fea9f8bc303956d8507",
+    ".cache/rally242-native-prepare-v1/finish.json": "35b68abeb6a0b6bfe76aebd8a1d17d57ea1840ac607af5eb49d6c064f79e0e5b",
+    ".cache/rally242-native-prepare-v1/owner.json": "0c470fe9ed9d76d3d97fd70b6b5d4560dcdf935373792b4145216be4e1ad91f6",
+    ".cache/rally242-native-prepare-v1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".cache/rally242-native-prepare-v1/stdout.log": "bdd14afdb987eeaf14cdbcd6d496ac753456de00a251f73f56c3d8eea0cbddb3",
+    ".cache/rally242-source-only-v1/aggregate.json": "9959e3d740d18c82e1918f1706c85d89ec7e489d00572000f7cb4cb7dbc20580",
+    ".cache/rally242-source-only-v1/assessment/admission.json": "e342d239452efc4fd75b22f218974328297204c7b8e93c4179bcf1ad33393c10",
+    ".cache/rally242-source-only-v1/assessment/terminal.json": "9723372afb64f822d0724596af66972ff0e409a96a8d94ccd6e66905ea68e756",
+    ".cache/rally242-source-only-v1/context.json": "cf39b05d1f7ef7a14245b2ebaf38cabe280c17e4948394036e653aa8a119a640",
+    ".cache/rally242-source-only-v1/metadata-gate.json": "a818ae0bdbc1b5d384c880cb278ba2263e7a043f228442cf8da874307c540900",
+    ".cache/rally242-source-only-v1/pilot-plan.json": "896fd1124e918e2abc5d5bcbfda9c3772ec202c5b24fbada79e835eadb1fae85",
+    ".cache/rally242-source-only-v1/preparation/admission.json": "6f50ea9d6844a3eceae563164593a746b89d5850b52cdb7d86f6b1cb04eb27b8",
+    ".cache/rally242-source-only-v1/preparation/terminal.json": "4fe2cacda80d8d865594aaf6780d166168cad7e7893a5488f1c2d3f6aad18faf",
+    ".cache/rally242-source-only-v1/session-index.json": "6dc6dcd94461f5c616e53691fa622a995afba668af1c501425830753900bfcab",
+    ".cache/rally242-source-only-v1/sessions/adjudication/H1setLK1tig/events.jsonl": "eeac606a54e62bcc02020632eb5c429f1ebbd2e918a9f373cb4987975e3f177b",
+    ".cache/rally242-source-only-v1/sessions/adjudication/H1setLK1tig/finish.json": "3ac088292cc1c48c21b6116d306dbbebc3e0f8e63e1b0e7f89ca5f55b163a0ec",
+    ".cache/rally242-source-only-v1/sessions/adjudication/H1setLK1tig/original-final.json": "53095f36ef3aa6f415b38f5859b9e8682e4d629213b099af7a5e7cb6f61cffbf",
+    ".cache/rally242-source-only-v1/sessions/adjudication/H1setLK1tig/stderr.log": "3c6be914a72d7a252ae92c00a8efcd2db001b2c1db13f0d1097d7260b5c6b35a",
+    ".cache/rally242-source-only-v1/sessions/adjudication/go2uajSiBnE/events.jsonl": "03bf1604f881350431291d0d92f5744489e36cf148e4d3e970cd4d0873ae3635",
+    ".cache/rally242-source-only-v1/sessions/adjudication/go2uajSiBnE/finish.json": "0ef3a47959397b0ab7e91d1b998d29b6e482b69b1788b719dda11b3c93f60ef6",
+    ".cache/rally242-source-only-v1/sessions/adjudication/go2uajSiBnE/original-final.json": "6f1684539830fed6a8c20b51bf555a71b122c562b585ab2e31e3b0e220f3682f",
+    ".cache/rally242-source-only-v1/sessions/adjudication/go2uajSiBnE/stderr.log": "c9ddaa8c5b2219ae0501e3b0fd4cdbc4fb585b2a88c6a8b22c72400656fa602a",
+    ".cache/rally242-source-only-v1/sessions/independent_a/H1setLK1tig/events.jsonl": "df62ee5287a003f3e64608748f8686a3677b0cb5e66f97484c248f2eecba26fa",
+    ".cache/rally242-source-only-v1/sessions/independent_a/H1setLK1tig/finish.json": "ed4dd9598ebc3637e4662a558f8e17281803a6b02447b670e9b7b0ff4582c821",
+    ".cache/rally242-source-only-v1/sessions/independent_a/H1setLK1tig/original-final.json": "f986536c46c875f738d5cf0723f8558d732d5a633dc1489fbb117094b71297b1",
+    ".cache/rally242-source-only-v1/sessions/independent_a/H1setLK1tig/stderr.log": "f60dccd8a32ba8dbba247083ac54ca0bd271e6b5856a19cef8894735d21b3f3b",
+    ".cache/rally242-source-only-v1/sessions/independent_a/go2uajSiBnE/events.jsonl": "3214e2b5abd1e0d08ab4d80042d1816918ed6927e65bce4e82a2d77da5362794",
+    ".cache/rally242-source-only-v1/sessions/independent_a/go2uajSiBnE/finish.json": "1176c3b6ce719b5119ca4029ab944b42a3d76860176d39d229efe82c842f45f4",
+    ".cache/rally242-source-only-v1/sessions/independent_a/go2uajSiBnE/original-final.json": "7f3484c4d894f496ea5cea84e41276630cd0d12271822a38fc017199c74cd4f9",
+    ".cache/rally242-source-only-v1/sessions/independent_a/go2uajSiBnE/stderr.log": "e94158fc929707806c2e7dcb334b6ff63df3e601b00e19e608b451d23d13ba9e",
+    ".cache/rally242-source-only-v1/sessions/independent_b/H1setLK1tig/events.jsonl": "cf187a229a68d4b64b23f2e92682caa5b138532eb5ce7ac14b57278d45b97859",
+    ".cache/rally242-source-only-v1/sessions/independent_b/H1setLK1tig/finish.json": "23cf26a31388a4729a816b13fee1689bef8fec7d8f3747fdbcc2e24f44dc3a37",
+    ".cache/rally242-source-only-v1/sessions/independent_b/H1setLK1tig/original-final.json": "4c0dfa5e58bbdc190159a2b47c52e7d162fa44b94caec67afbefe3cf09aebe06",
+    ".cache/rally242-source-only-v1/sessions/independent_b/H1setLK1tig/stderr.log": "c0e114dba01a711a0801810da0be43df87d024f9dbcaeab585c416374a77cf6e",
+    ".cache/rally242-source-only-v1/sessions/independent_b/go2uajSiBnE/events.jsonl": "b1276118e128134d3512e946e7fbda9c9443c2bfbc5771d79ca54f45916f51b6",
+    ".cache/rally242-source-only-v1/sessions/independent_b/go2uajSiBnE/finish.json": "4835124efc1ac24b3936fd16a1df87bd7607bcf9570bb8a137e18f0a52b264ea",
+    ".cache/rally242-source-only-v1/sessions/independent_b/go2uajSiBnE/original-final.json": "08f60de6deebeefebf4c05c6d9572f813658e5b696f218e89b063dad77288f99",
+    ".cache/rally242-source-only-v1/sessions/independent_b/go2uajSiBnE/stderr.log": "b4d35d18e694a03e2c7b06e8b0e3f0382634c66b75c618c7b8f512cf5662e6bb",
+    ".cache/rally250-joined-v1/admission.json": "2babb08fbf9cf5f7c31d74021646f86d8f1816ce06bb8dbe6cc6ee1f6c7fda39",
+    ".cache/rally250-joined-v1/aggregate.json": "f76b689df32d35d0d79c45cb13a7676c2398529d6ca988b797a0dbd5afe5fdc9",
+    ".cache/rally250-joined-v1/attempt.json": "2605dda6a7e5a79ca4ab3e107c6cf7bdfd6c4eb80237814954019305b604947a",
+    ".cache/rally250-joined-v1/context.json": "69a1f3c182dc7003a692009b0120a2727099fbd24eff3116eb2e044279f1260c",
+    ".cache/rally250-joined-v1/gate-process.json": "14b9f6304cab804ab4d545b0d9c6151479445d8788293d367bf3dc3066774516",
+    ".cache/rally250-joined-v1/gate-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".cache/rally250-joined-v1/gate-stdout.log": "c3f87d530f2c73acca1a0d662656f990da97dec667bf70c618e35e861a074a5c",
+    ".cache/rally250-joined-v1/joined-ledger.json": "cdf01c00d00134825d8dd095708dfabe1ca9aa562e34ab40b4257bfca179b40d",
+    ".cache/rally250-joined-v1/metadata-gate.json": "07226bef3703d0b3195c82090df8bf809eaba810c0909184ae73125683316c81",
+    ".cache/rally250-joined-v1/native-inputs.json": "b1b78440e5b7db4272d6af9e6a922ea15c23826fef73cc52464559b7a60cdbc6",
+    ".cache/rally250-joined-v1/native-process.json": "b2045e711692b01c11e0a7453d9436f98a916ea373b75f297d1128169ba92ce3",
+    ".cache/rally250-joined-v1/native-stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".cache/rally250-joined-v1/native-stdout.log": "d04fe54bbcb6d4b29f0881849551b66a2d14b4bb0da2a4b9dc4cae23e4dfde6d",
+    ".cache/rally250-joined-v1/terminal.json": "d17964ca18236f130943c256bb0f14d5bfd5dc24034772d655f357e0829b1e6e",
+    ".cache/rally250-native-v1/audit.json": "5809d7b45c9b2a84b79193aad632dbf904ca7b050fa4f3961d507dbea6f03737",
+    ".cache/rally250-native-v1/finish.json": "0c9ca14b9ac4bbbe1357ff28636c2261dfd4b594148165cab24ea1a979dca88a",
+    ".cache/rally250-native-v1/owner.json": "468cabea3737a73cee19afe72b740bae8f86a294adb0e9a46b2721dc037b885f",
+    ".cache/rally250-native-v1/stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    ".cache/rally250-native-v1/stdout.log": "467f5fb28c994d94caff07e4e32bfff6f8aa0169b1926573412a50e534c515af",
+    ".cache/rally250-pre-execution-grant-v1.json": "5bc0f68efbe4085a4ff8f1982670a25f050623de924222c7af88d1512025c725",
+    ".cache/rally250-timestamp-v1.json": "2a8711164776df5954ae57d8d1baba064d0edc7bf3002e353da8b2d211820637"
+  },
+  "denominators": {
+    "sources": 2,
+    "native_frames": 1532,
+    "sampled_frames": 53,
+    "unsampled_frames": 1479
+  },
+  "preserved_result": {
+    "complete_references": 0,
+    "all_requested_labels_supported_slots": 0,
+    "eligibility": {
+      "training_allowed": false,
+      "independent_test_allowed": false,
+      "model_deployment_allowed": false,
+      "dataset_redistribution_allowed": false
+    }
+  },
+  "historical_provenance": {
+    "native_execution_identities": 1014,
+    "coarse_execution_identities": 6,
+    "global_execution_identities": 1020,
+    "target_references": 256
+  },
+  "packing": {
+    "max_bytes": 9437184,
+    "max_images": 20,
+    "preceding_overlap_frames": 1,
+    "nearest_sample_tie": "lower_native_ordinal",
+    "lanes": [
+      "independent_a",
+      "independent_b",
+      "source_adjudication"
+    ]
+  },
+  "limits": {
+    "runtime_seconds": 14400,
+    "new_output_bytes": 536870912,
+    "cumulative_retained_bytes": 8589934592,
+    "new_scientific_sessions": 0,
+    "new_image_payload_bytes": 0,
+    "max_repair_rounds": 3,
+    "implicit_retries": 0,
+    "paid_services": false
+  },
+  "source_only_rubric": [
+    {
+      "topic": "scene_context",
+      "rule": "A separately authorized fresh independent source reading must examine contiguous whole-window native context, including camera changes and replay/non-play. Keep unresolved spans and do not interpolate sparse labels."
+    },
+    {
+      "topic": "physical_contact_identity",
+      "rule": "Use contiguous native evidence across overlapping chunk boundaries to state whether mentions refer to the same physical contact. Cite original occurrences and evidence ranges; no signature deduplication, majority vote, average timestamp or forced interval collapse."
+    },
+    {
+      "topic": "local_actor_support",
+      "rule": "Ground each contact in its accompanying document-local visual actor evidence. Cross-document or cross-view identity needs explicit new source correspondence; equal actor IDs, court positions and uniform descriptions cannot supply it."
+    },
+    {
+      "topic": "opening",
+      "rule": "Support an actual serve/contact and rally opening from source evidence. Missing opening evidence and start censoring remain unknown/partial; service preparation cannot define an exact contact."
+    },
+    {
+      "topic": "terminal",
+      "rule": "Support observable ground contact or terminal fault from original source. Retain inclusive uncertainty and end censoring when hidden. A last stroke, missing shuttle or stopped_play alone cannot define a precise ending."
+    },
+    {
+      "topic": "adjudication_and_acceptance",
+      "rule": "Fresh independent source evidence must resolve each cited conflict; retain unsupported family/side/actor/timing unknowns. Historical acceptance, predictions and reviewed annotations remain immutable. All new assessment needs a separate frozen task and specifically authorized payload/destination; this rubric supplies no dispatcher, image allowance or execution authority."
+    }
+  ],
+  "future_authority": "Planning only; actual assessment requires a separate frozen task, specifically authorized payload/destination and a fresh execution budget. No historical allowance or clock is renewed."
+}

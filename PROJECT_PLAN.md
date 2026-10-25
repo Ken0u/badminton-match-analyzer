@@ -43,6 +43,10 @@ sends zero new images and supplies no new resolved annotations. Consult its
 report and owning issue for verification and integration evidence.
 
 1. Freeze a separate source-review protocol joining temporal scene context to contiguous native contact evidence, locally supported actors and opening/terminal context. Distinguish repeated mentions from distinct physical contacts and retain inclusive uncertainty intervals, unknowns and the completed 0/2 result. Sparse scene agreement and exhaustive image coverage cannot certify a complete rally. The six-session #242 allowance is completed; it authorizes no further image dispatch, replacement assessor or reuse of an expired scientific clock.
+   The [#262 prospective review planner](docs/RALLY_REVIEW_PLAN_REPORT.md) prepares
+   exact native-frame/temporal-gallery batches and repeated-byte costs before
+   any new assessment authorization. It dispatches zero images and preserves
+   the original 1,532-frame/53-sample denominators and 0/2 scientific result.
 2. Establish independent original-media/clock correspondence and applicable source usage/provenance before native label comparison or training. #220 completed byte/ordinal publication accounting; its null bases deliberately withhold native comparison. Preserve the creator filename discrepancies, quarantines, unavailable cases, false eligibility flags and zero training-ready rows.
 3. Improve shuttle component recall and distractor separation using eligible source-aligned development supervision after resolving rights, original-match overlap and checkpoint membership. Freeze detector experiments before predictions; retain both rejected resolution/threshold results. Evaluate automatic scene context separately.
 4. Investigate player motion/occlusion misses, extra detections and within-view continuity with independently assessed evidence; expand to doubles and cross-camera identity without interpreting local track IDs as player names.
