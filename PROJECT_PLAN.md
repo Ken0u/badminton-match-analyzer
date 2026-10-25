@@ -50,6 +50,11 @@ report and owning issue for verification and integration evidence.
    proposed sessions / 10,576,441,872 proposed image bytes across
    three lanes. Actual new sessions/image bytes are zero; the historical 0/2
    scientific result and four false eligibility flags remain unchanged.
+   The [#270 document contract](docs/RALLY_REVIEW_CONTRACT_REPORT.md) checks
+   generated contiguous review structure, native coverage, raw own-stream hashes
+   and explicit document-local contact/actor correspondence. Structural completion
+   supplies no source judgment or scientific acceptance; actual new scientific
+   sessions/image bytes remain zero and the historical 0/2 result is unchanged.
 2. Establish independent original-media/clock correspondence and applicable source usage/provenance before native label comparison or training. #220 completed byte/ordinal publication accounting; its null bases deliberately withhold native comparison. Preserve the creator filename discrepancies, quarantines, unavailable cases, false eligibility flags and zero training-ready rows.
 3. Improve shuttle component recall and distractor separation using eligible source-aligned development supervision after resolving rights, original-match overlap and checkpoint membership. Freeze detector experiments before predictions; retain both rejected resolution/threshold results. Evaluate automatic scene context separately.
 4. Investigate player motion/occlusion misses, extra detections and within-view continuity with independently assessed evidence; expand to doubles and cross-camera identity without interpreting local track IDs as player names.
