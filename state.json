@@ -1454,6 +1454,15 @@
       "task_id": "290",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint295-tests-v1": {
+      "actor": "dootz1",
+      "at": 1792928701,
+      "epoch": 1,
+      "fingerprint": "6089046213e24a957c8933390eb86ef960aebd9651a6e1bbb3de6bcaad7a9252",
+      "status": "running",
+      "task_id": "295",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-continue-after290-next-v1": {
       "actor": "dootz1",
       "at": 1792927851,
@@ -24126,12 +24135,26 @@
       }
     },
     "295": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/goal-01a17154/tests295-red.log",
+          ".cache/goal-01a17154/tests295-green.log",
+          ".cache/goal-01a17154/tests295-focused.log",
+          ".cache/goal-01a17154/comparison295.json",
+          ".cache/goal-01a17154/tested295-before.json"
+        ],
+        "branch": "codex/issue-295-investigate-and-if-reproduced-with-gener",
+        "head": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
+        "remaining": "Full/static/source/process/text checks, final report/commit/PR, exact PR/main/controller and independently audited complete candidate delivery. Preserve other-host293, ungranted294, pending279, root/worktrees/environments/research and PROGRESS. No scientific/model operations; references0/2, eligibilityfalse.",
+        "summary": "Valid frozen baseline: all28 generated cases fail on unchanged production, including actual saved API/CLI singles/doubles. Minimal inclusive-interval/half-open-window overlap correction passes196 module tests and676 focused tests. Original two test-module ASTs remain unchanged after removing new functions. Stable point/disjoint/predicted/terminal/separate-window/VFR/cut/gap controls and original predictions, source metadata, timestamps and all saved revision documents/timestamps verify. Initial two-file formatting-only finding retained and corrected. Starting full verification with frozen executable/test hashes and actual interpreter lifetime monitoring."
+      },
+      "checkpoint_at": 1792928701,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
         "branch": "codex/issue-295-investigate-and-if-reproduced-with-gener",
         "epoch": 1,
-        "expires_at": 1792939026,
+        "expires_at": 1792939501,
         "granted_at": 1792928226,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
