@@ -121,6 +121,21 @@
       "task_id": "66",
       "verb": "next"
     },
+    "boundary-eval-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792890131,
+      "fingerprint": "f33eb9512710a4fb201b0b92af85744badf2edaacd943e698822890a6854ecfa",
+      "status": "ready",
+      "task_id": "256",
+      "verb": "plan"
+    },
+    "boundary-eval-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792890131,
+      "fingerprint": "9198336df9150d279776fc2e82a8ecd6aa724636e8f6e3009416ed7e30736d0e",
+      "status": "ok",
+      "verb": "register"
+    },
     "broadcast179-register-6f42d839a2": {
       "actor": "Ken0u",
       "at": 1792632986,
@@ -7746,6 +7761,14 @@
       "fingerprint": "187370ec398845368533f8c50477fe90e29d9b993efd5add67704df52f30934a",
       "status": "ready",
       "task_id": "254",
+      "verb": "plan"
+    },
+    "spec-256-7b603585cad4f043819164750b4499aff71ea415f004a70cc16b482854e78b8e": {
+      "actor": "Ken0u",
+      "at": 1792890131,
+      "fingerprint": "f586b5980639b4a11418bbbdc575a282cceafb1df4e6d750291be2abf5cc7bdb",
+      "status": "ready",
+      "task_id": "256",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -20215,6 +20238,72 @@
         "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c"
       }
     },
+    "256": {
+      "epoch": 0,
+      "planned_at": 1792890131,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all issue/PR history, current grants and reports. Preserve root edits, environments, datasets, research, annotations and deprecated PROGRESS.md. Depend on delivered254 and obtain one fresh committed isolated task grant. This is generated-only evaluation software, not completion of scientific62/66/67/71 or a new source assessment.",
+          "Add backwards-compatible ReviewWindow booleans serves_complete and rally_ends_complete, default false independently of contacts_complete. Old annotations must not silently gain boundary coverage. Preserve these declarations through save/reload/history/JSON export and UI editing, with separate clearly labeled controls. Never infer completeness from a serve, ending, last stroke, contact-complete flag or clip edge.",
+          "Implement a pure rally_evaluation module for saved stage-rallies artifacts. Bind video ID/hash, run range, current camera/scene/court context and native source timestamp sequence. Validate candidate IDs/kinds, inclusive bounds and source-time alignment; reject malformed/nonfinite/mismatched/stale inputs. Reference bounds use contact bounds for serves and terminal bounds for endings. Only reviewed/corrected relevant events count as references; predicted events never become truth. Preserve input objects unchanged.",
+          "For each kind independently require live exhaustive review windows fully covered by the run, with no conflicting reviewed scene. Preserve explicit skipped windows/reasons and all excluded event/candidate IDs. Empty eligible prediction sets count missed references, and eligible windows without reference events permit false-positive counts. No eligible windows yields undefined metrics, never zero errors. Do not match across unreviewed coverage gaps or camera/source-context discontinuities.",
+          "Report maximum-cardinality one-to-one representative-time matching at a fixed explicit tolerance on windows whose relevant reviewed event bounds are exact. If a relevant reference has uncertain inclusive bounds, retain that window and its unknown timing in coverage but exclude the entire window from point-timing metrics with an explicit reason; never turn an unknown reference time into an exact target. Separately report maximum-cardinality one-to-one inclusive interval compatibility over eligible uncertainty-bearing windows, retaining interval widths, matches and unmatched IDs. Interval compatibility is possible temporal support only, has no accuracy/F1 claim and cannot certify exact physical boundaries. Proposal representative times remain navigation frames when bounds are uncertain.",
+          "Add optional rallies_run_id to evaluation API and --rallies-run to the existing CLI. Load only registered completed same-video/stage runs and current native timestamps. Return rallies report with source/revision/run identity and both kinds. Existing contact/shuttle/recognition evaluation remains compatible. No evaluator runs inference or modifies annotations/predictions.",
+          "Editor measurement includes the selected rally run and displays separate serve/ending representative-timing and interval-support results, coverage/skipped reasons and uncertainty limitations; downloadable report contains the same lineage. Extend current report ownership/cancellation/ABA/mismatched-response guards to rally input changes. Same-input polling, unrelated player/segment changes and same-core ticks preserve valid reports. No automatic evaluation POST or retry. Regenerate actual OpenAPI/TypeScript contracts and deterministic static assets.",
+          "Use generated singles/doubles/VFR/negative/uncertain/empty/missing/stale/cut/gap/duplicate and greedy-matching counterexamples in pure, API/CLI, frontend and existing generated browser verification. Exercise completeness persistence and report display/download invalidation when rally inputs change. Do not read or transfer private scientific labels/images, run models, acquire data or reopen held-out predictions. Preserve failed attempts and verify fixture process lifetimes/cleanup before repeat.",
+          "Delegate disjoint backend evaluator/tests, schema/API/CLI integration/tests and editor UI/model work to task-owned agents with explicit file ownership; parent retains grant, controller/report races, generated contracts/assets, browser/docs verification and publication. Review remains optional under trusted require_agent_review=false; do not manufacture verdicts. Run focused then required full Python, frontend unit/type/contract/build/stage/browser, Ruff lint/format, formatting, dependency, repository UTF8/LF/JSON/local-link and diff checks on final source.",
+          "Document the feature, defaults, exact versus interval semantics, generated verification and scientific limitations in a new report and current bug-review row. Publish only granted paths on the granted branch, submit exact head/base/spec, let the controller integrate, and independently verify exact PR/main CI plus full public package/source/frontend/lock and both-image delivery. No manual merge, direct main push, raw coordination edits, CI retry/cancel/wake, model promotion, auth/policy/workflow/deployment/publishing changes or paid service.",
+          "Bound implementation to four hours from the fresh grant, 1GiB new generated outputs and three diagnosed repair rounds. No image/source transfer, new assessor, scientific-clock renewal, inference/training, new dependency or PROGRESS.md update. Complete references remain0/2 and all four research eligibility flags false; passing software checks do not establish badminton accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "254"
+        ],
+        "exclusions": [
+          "No scientific source/label assessment, original-rally gate relaxation, inference/model/default changes, automatic evaluation retry, new dependency, auth/security/workflow/deployment/publishing changes, paid service, manual merge or PROGRESS.md edits."
+        ],
+        "limits": {
+          "max_output_bytes": 1073741824,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Add source-clock-bound evaluation of saved experimental serve and rally-end proposals through CLI, API and the editor, with separately explicit exhaustive boundary review coverage and uncertainty-preserving reports.",
+        "paths": [
+          "backend/badminton/rally_evaluation.py",
+          "backend/badminton/schemas.py",
+          "backend/badminton/api.py",
+          "backend/badminton/cli.py",
+          "tests/test_rally_evaluation.py",
+          "tests/test_rally_evaluation_api.py",
+          "backend/frontend/src/api/generated/openapi.json",
+          "backend/frontend/src/api/generated/schema.ts",
+          "backend/frontend/src/editor/model.ts",
+          "backend/frontend/src/editor/controller.ts",
+          "backend/frontend/src/editor/EditorApp.tsx",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json",
+          "docs/RALLY_EVALUATION_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 80,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated pure matching/uncertainty/source-context tests; API/CLI and annotation persistence; frontend report ownership and browser workflows; all required checks.",
+          "Exact PR/main CI and independent complete public delivery; scientific references and eligibility remain unchanged."
+        ]
+      },
+      "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -23387,6 +23476,18 @@
       "host_id": "MSI",
       "registered_at": 1792632986,
       "session_id": "broadcast179-review-6f42d839a2"
+    },
+    "MSI/c36935dca7b147e08454839f993f5c88": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792890131,
+      "session_id": "c36935dca7b147e08454839f993f5c88"
     },
     "MSI/cc0ce1ab9d664201b48bec7d6108da04": {
       "actor": "Ken0u",
