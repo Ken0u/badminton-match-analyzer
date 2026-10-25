@@ -5889,6 +5889,21 @@
       "status": "ok",
       "verb": "register"
     },
+    "rally-comparison-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792916979,
+      "fingerprint": "6378d36a6a440262f67412c1f7417e3b391374d89e6ae7a22a65a6a0a4924b85",
+      "status": "ready",
+      "task_id": "282",
+      "verb": "plan"
+    },
+    "rally-comparison-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792916979,
+      "fingerprint": "b052b0540382065b69a6c48552d214589199c657783e6056ee4360727cdcc9f2",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally-contract-next-v1": {
       "actor": "Ken0u",
       "at": 1792906512,
@@ -8960,6 +8975,14 @@
       "fingerprint": "aa3461005fb360cf45b2acf492e030d5586de8aefcfdc10a99a0b56e760af320",
       "status": "ready",
       "task_id": "281",
+      "verb": "plan"
+    },
+    "spec-282-d1f4e10404ea342d02521ce260f3b7c4875000709ea1f2a84a98bbc01d386658": {
+      "actor": "Ken0u",
+      "at": 1792916979,
+      "fingerprint": "5d9f4e2178279519f2cd77b6ea18368e392cf6d24e9efa54fd72b36340a14eac",
+      "status": "ready",
+      "task_id": "282",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -22864,6 +22887,62 @@
       "spec_hash": "c7e6a51f45c9fe7fe60bb9145760b9c073c591b82f2439bb0dfbcc9f2988b10b",
       "status": "running"
     },
+    "282": {
+      "epoch": 0,
+      "planned_at": 1792916979,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Audit complete issue/PR history, delivered250/262/270/278, current main and active reservations before planning; obtain a fresh isolated code-only grant. Existing270 validates one chronological stream but has no cross-stream consumer for the prospective contract. Preserve historical250 joins, all original scientific evidence,0/2 reference result, all four false eligibility flags, deprecated PROGRESS/root edits and other-host281 import work.",
+          "Add a pure generated-tested comparator consuming the exact immutable plan bytes and explicit independent_a and independent_b original document byte lists, plus optional separate source_adjudication list. Reuse unchanged270 validate_stream for each lane, requiring exact shared selected source/clock/raw-plan/contract bindings and chronological native schedule. Preserve raw document hashes and all parsed variants, chain and correspondence diagnostics; reserialized identity, wrong lane/source/clock, malformed documents or wrong bundle selection must fail rather than be coerced.",
+          "Retain every expected native ordinal even for empty/missing prefixes or unavailable plans. Compare only directly shared per-frame camera-change, scene and contact observations; equal document-local camera_view, actor or event strings cannot establish global correspondence or physical event identity. Each lane preserves every overlap occurrence with qualified document/hash pointers. Missing, explicit unknown and mutually conflicting known/unknown overlap judgments remain distinct; do not use majority vote, overwrite duplicates or select the most favorable occurrence. Record all applicable flags alongside an explicit comparison status, with unambiguous denominator/count meanings.",
+          "For each comparable field/frame, report known A/B agreement only when both lanes have a single consistent known value across all occurrences; disagreement needs two consistent known unequal values. Unknown is not absence/negative and known agreement is not accuracy, assessor independence or expert truth. Keep optional adjudication observations separate, never replacing A/B or declaring conflicts resolved. Preserve all qualified event/actor/boundary variants and unsupported family/side/censoring/terminal-basis limitations without deduplicating, matching by IDs/overlap, inferring persistent identity, scoring contacts/families or accepting complete references. Assessor execution/provenance remains explicitly unavailable from these documents.",
+          "Expose an offline CLI with explicit plan, A/B document manifests, optional adjudication manifest, explicit bundle-source selection and private exclusive output. Reuse the existing ordinary JSON/path/read validation helpers unchanged; enforce individual limits plus combined128MiB input,4096 total documents and128MiB output before publication. Reject symlink/reparse/traversal/duplicates/nonfinite JSON, partial or changed reads and output collisions; preserve inputs/existing outputs. Stdout contains aggregate counts and limitations only, never private judgments, IDs, notes or paths. No image path, Store, network, credential, model or assessor access.",
+          "Add meaningful generated pure and actual CLI-subprocess tests for complete/prefix/empty/unavailable inputs; nonzero source offsets, clocks/orientations and source bundles; overlap agreement/conflict/unknown and cross-lane disagreement; optional adjudication and ID collisions; raw-byte/hash mutation, invalid chains/structure, limits/unsafe paths/output collision and input immutability. Demonstrate an unchanged full denominator and preserved distinct repeated event/actor variants. Test all supported scene/contact/camera states and explicit unavailable independence without mirroring implementation.",
+          "Run focused contract/planner/join/comparison and required full Python/Ruff/format/pip/repository UTF8/LF/JSON/local-link/diff checks using existing3.10venv and pinned fresh generated root/data. Retain stable final source/test hashes and independently observed terminal launcher/worker lifetimes, original failed attempts and three diagnosed repair-round bound. No expensive scientific inference or data acquisition.",
+          "Document the missing consumer, concrete generated comparison evidence, schema/CLI/denominator meanings and remaining source-review prerequisites in a focused report and current bug review. Publish only six granted paths through focused PR/exact CI/controller integration; independently verify exact merged-main tree and full public package/source/frontend/lock/both-image delivery, retaining all45 unchanged public protocol manifests. Existing scientific protocols,270 contract/CLI,262 plan and250 join remain byte-identical. No manual merge/main push/raw coordination edit/workflow retry/cancel/wake, policy/auth/workflow/dependency/default/model/label/deployment change.",
+          "Bound implementation to4h from fresh grant,512MiB new retained outputs and three diagnosed repair rounds. Actual new scientific inputs, labels, predictions, native packets/galleries/private plans, images, assessor sessions and image-transfer bytes are zero. Execute only generated fixtures, never the historical or proposed real schedule. This supplies prospective comparison and source-review questions, not scientific authorization, correct labels, model promotion or completion of62/66/67/71."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "250",
+          "262",
+          "270",
+          "278"
+        ],
+        "exclusions": [
+          "No actual scientific input/image/label/prediction/private-plan access, image transfer/assessor/inference/training/holdout, scientific-acceptance or existing-protocol change, production/UI/model/default/dependency/policy/auth/workflow/deployment change, paid service, manual merge or PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Compare prospectively supplied native rally review streams on their unchanged full source-frame denominator, retaining unknown/missing and overlap conflicts, original document-local events/actors and separate adjudication without manufacturing scientific truth.",
+        "paths": [
+          "backend/badminton/rally_review_comparison.py",
+          "scripts/compare_rally_review.py",
+          "tests/test_rally_review_comparison.py",
+          "tests/test_compare_rally_review.py",
+          "docs/RALLY_REVIEW_COMPARISON_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated pure and actual offline CLI comparisons with full native denominator, immutable original hashes/variants, explicit missing/unknown/overlap/cross-stream diagnostics and no scientific acceptance.",
+          "Focused/full required checks with stable source and terminal processes; exact PR/main/controller and independently verified complete public delivery with45 unchanged manifests."
+        ]
+      },
+      "spec_hash": "1f1299e2761de712ccf989ae9eda13f6bd21ce18746d7af43d28d4f837ed02e4",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -26123,6 +26202,18 @@
       "host_id": "MSI",
       "registered_at": 1792913505,
       "session_id": "8c83ed3322c44fa58e4743a23db98417"
+    },
+    "MSI/934e803e7ccc45c9a71d2460ce3c7f53": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792916979,
+      "session_id": "934e803e7ccc45c9a71d2460ce3c7f53"
     },
     "MSI/9b465dc1a2ba4999bd038162102f230c": {
       "actor": "Ken0u",
