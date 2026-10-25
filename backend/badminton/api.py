@@ -1016,7 +1016,7 @@ def create_app(
         }
         try:
             native_times = None
-            if body.contacts_run_id or body.recognition_run_id:
+            if body.contacts_run_id or body.recognition_run_id or body.shuttle_run_id:
                 try:
                     native_times = timestamps_for(data, video_id)
                 except (OSError, TypeError, ValueError) as exc:
@@ -1054,7 +1054,11 @@ def create_app(
             if body.shuttle_run_id:
                 artifact = load_run(video_id, body.shuttle_run_id, "shuttle")
                 result["shuttle"] = evaluate_shuttle(
-                    v, doc, artifact, body.tolerance_diagonal
+                    v,
+                    doc,
+                    artifact,
+                    body.tolerance_diagonal,
+                    native_timestamps=native_times,
                 )
                 result["shuttle"]["run_id"] = body.shuttle_run_id
         except ValueError as exc:

@@ -32,8 +32,8 @@ def _source_time(value, name):
     return value
 
 
-def _validate_contact_clock(video, annotations, candidates, times):
-    """Check original artifact times before coverage or context can exclude them."""
+def _validate_native_clock(video, times):
+    """Require one finite, ordered source timestamp for every native frame."""
     count = video.get("frame_count")
     if type(count) is not int or count < 1:
         raise ValueError("Source frame count must be a positive integer")
@@ -47,6 +47,12 @@ def _validate_contact_clock(video, annotations, candidates, times):
         _source_time(value, "Native source timestamp")
     if any(left >= right for left, right in pairwise(times)):
         raise ValueError("Native source timestamps must be strictly increasing")
+    return count
+
+
+def _validate_contact_clock(video, annotations, candidates, times):
+    """Check original artifact times before coverage or context can exclude them."""
+    count = _validate_native_clock(video, times)
 
     def check(item, *, reference=False):
         name = "Reviewed contact" if reference else "Contact candidate"
@@ -613,16 +619,51 @@ def evaluate_contacts(
     return result
 
 
-def evaluate_shuttle(video, annotations, shuttle_run, tolerance_diagonal=0.005):
+def _validate_shuttle_clock(run, times):
+    """Validate every original output row, including rows without manual labels."""
+    rows = run.get("frames")
+    if not isinstance(rows, Sequence) or isinstance(rows, (str, bytes, bytearray)):
+        raise ValueError("Shuttle prediction frames must contain native row objects")
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError(
+                "Shuttle prediction frames must contain native row objects"
+            )
+        frame = row.get("frame")
+        if type(frame) is not int or not run["start_frame"] <= frame < run["end_frame"]:
+            raise ValueError(
+                "Shuttle prediction frame must be an integer within its run"
+            )
+        timestamp = _source_time(row.get("time_s"), "Shuttle prediction time_s")
+        if abs(timestamp - times[frame]) > TIME_EPSILON_S:
+            raise ValueError(
+                f"Shuttle prediction time_s does not match native source frame {frame}"
+            )
+
+
+def evaluate_shuttle(
+    video, annotations, shuttle_run, tolerance_diagonal=0.005, *, native_timestamps=None
+):
     """Score explicitly labeled shuttle frames, not unlabeled tracking coverage.
 
     Human coordinates are normalized, model coordinates are source pixels. A
     visible prediction outside the localization tolerance counts as both a miss
     and a false detection. Missing output rows never count as true negatives.
+
+    A supplied complete native clock validates all original row frame/time pairs
+    before label filtering. Legacy pure calls retain unavailable clock status;
+    timestamps are never inferred from FPS or rewritten to fit a native frame.
     """
     if not math.isfinite(tolerance_diagonal) or not 0 < tolerance_diagonal <= 1:
         raise ValueError("Shuttle tolerance must be a finite fraction in (0, 1]")
+    if native_timestamps is not None:
+        _validate_native_clock(video, native_timestamps)
     result = _base(video, annotations, shuttle_run, "shuttle")
+    if native_timestamps is not None:
+        _validate_shuttle_clock(shuttle_run, native_timestamps)
+    result["prediction_clock_status"] = (
+        "validated" if native_timestamps is not None else "unavailable"
+    )
     start, end = shuttle_run["start_frame"], shuttle_run["end_frame"]
     width, height = video["width"], video["height"]
     diagonal = math.hypot(width, height)

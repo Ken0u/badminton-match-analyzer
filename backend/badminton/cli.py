@@ -583,7 +583,7 @@ def main():
                 "annotation_revision": annotations["revision"],
             }
             native_times = None
-            if args.contacts_run or args.recognition_run:
+            if args.contacts_run or args.recognition_run or args.shuttle_run:
                 try:
                     native_times = timestamps_for(DATA, args.video_id)
                 except (OSError, TypeError, ValueError) as exc:
@@ -624,6 +624,7 @@ def main():
                     load_evaluation_run(
                         store, args.video_id, args.shuttle_run, "shuttle"
                     ),
+                    native_timestamps=native_times,
                 )
             if args.output:
                 write_json(args.output, report)
