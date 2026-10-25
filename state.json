@@ -9664,6 +9664,14 @@
       "task_id": "301",
       "verb": "plan"
     },
+    "spec-303-d77eb51fbf274ddda87fb7e514497ce6b0491c1f58c2cc348259972cbfcdcb9b": {
+      "actor": "Ken0u",
+      "at": 1792949798,
+      "fingerprint": "f45575fcd1d34e1d37ff681ee820c83c18b6ff7bdeccc8c323d3d1bc9a88ffc3",
+      "status": "ready",
+      "task_id": "303",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -24870,6 +24878,57 @@
         "pr_number": 302,
         "spec_hash": "ba2c36f5dd8bea486c952835e69caebe6273dbb83b02fec173cace554d40ff2a"
       }
+    },
+    "303": {
+      "epoch": 0,
+      "planned_at": 1792949798,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Check complete open/closed issue and PR history, trusted guidance and authoritative coordination reservations. Preserve the generated four-case baseline, existing root edits/deprecated PROGRESS, environments, datasets and all research/application state. Depend on completed301 and obtain a fresh CPU grant in an isolated worktree before repository edits. This is distinct from173/293 shared iterator repairs and158 unsupported-playback UI recovery.",
+          "Use the existing canonical native frame reader for the exact-frame API and completely consume the single requested native range before encoding or returning JPEG. Reject a missing/substituted frame, missing/mismatched timestamp, premature exhaustion, stale orientation/dimensions and observable source mutation/disappearance during decode or normal media teardown. Do not merely next() an iterator that has not completed final validation, use positional fallback or decode a replacement neighbor. Preserve source error and decoder/teardown exception precedence.",
+          "Provide actionable existing HTTP error semantics for changed/inconsistent source inputs and unavailable media instead of a successful wrong-frame image. Preserve successful JPEG content/type/cache behavior, invalid index/video bounds, native VFR clocks, source origin, cardinal display rotation and valid seek preroll without decoding past the requested native range. Keep the existing read_frame helper compatibility unless changing it is separately granted; this task fixes the application endpoint through the canonical reader.",
+          "Add focused generated real-PyAV endpoint regressions proving failures before the repair and rejection afterward: omitted target/tail, shifted/missing PTS, source mutations during decode/close including same-size restored-mtime bytes and disappearance, orientation/dimension mismatch, and unchanged VFR/nonzero-origin/cardinal-rotation controls. Assert metadata, imported timestamps, annotations and prior predictions are not rewritten. Pin disposable generated root/data before imports, use no scientific sources, model libraries or Store job admission.",
+          "Change only backend/badminton/api.py, tests/test_exact_frame_api.py, docs/EXACT_FRAME_REVIEW_REPORT.md and docs/BUG_REVIEW.md. Document the endpoint contract and filesystem-observability, cache, post-validation timing and source-timestamp identity limits. Preserve all scientific unknowns, 0/2 complete references and four false eligibility flags; software source-integrity tests do not prove annotation accuracy.",
+          "Use existing Python3.10 environment for focused endpoint/native-video/import/orientation checks and full pytest, Ruff, format, pip, repository UTF8/LF/JSON/local-link and diff checks. Preserve failures, real process terminal evidence and at most three diagnosed repair rounds. Publish a focused PR, exact-head CI, controller merge, exact merged-main CI and independently audited complete public delivery with all46 protocol manifests and both image manifests/configs/descriptors. No manual merge/main push/raw coordination edits, workflow dispatch/retry/cancel or fabricated review.",
+          "Bound implementation to four hours from fresh grant and512MiB newly retained outputs. No scientific frames/labels/private review plans or image transfers/assessors, held-out scoring, source acquisition, inference/training, model/default/promotion changes, paid services, research Store mutation, authentication/workflow/policy/dependency/deployment changes or PROGRESS updates."
+        ],
+        "artifacts": {
+          "generated_failure_sha256": "d77b9f4102b29183a5493a487ba768cb55b04bf26e1f2d36120130155585f5d9"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "301"
+        ],
+        "exclusions": [
+          "No scientific inputs/assessment/image transfer, models/training/inference/promotion, source acquisition, research state, workflow/auth/policy/dependency/deployment changes, manual merge/main push/raw coordination or PROGRESS updates. No snapshot-isolation or invisible transient-change guarantees."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Serve an exact-frame review JPEG only after verifying its requested native frame identity, imported orientation/dimensions and unchanged source through normal decoder close.",
+        "paths": [
+          "backend/badminton/api.py",
+          "tests/test_exact_frame_api.py",
+          "docs/EXACT_FRAME_REVIEW_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 15,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated native-source endpoint regression failures before repair, exact identity/source-close error behavior and stable JPEG/clock/orientation controls afterward; focused and full standard checks.",
+          "Committed isolated grant, exact PR/main CI/controller integration and independent complete public artifact/image delivery before completion."
+        ]
+      },
+      "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
