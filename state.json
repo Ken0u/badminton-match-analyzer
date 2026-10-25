@@ -1297,6 +1297,15 @@
       "task_id": "284",
       "verb": "checkpoint"
     },
+    "goal-01a17154-check287-tests-v1": {
+      "actor": "dootz1",
+      "at": 1792922610,
+      "epoch": 1,
+      "fingerprint": "a3b2ab50b1a671c6d5b3d7fece122a5d9d02913e3a0bfd4b02407db9ca4ad978",
+      "status": "running",
+      "task_id": "287",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint266-temp-v1": {
       "actor": "dootz1",
       "at": 1792904733,
@@ -23365,12 +23374,28 @@
       }
     },
     "287": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/goal-01a17154/probe287-baseline.json",
+          ".cache/goal-01a17154/probe287-baseline-origin.json",
+          ".cache/goal-01a17154/probe287-repaired.json",
+          ".cache/goal-01a17154/tests287-red.log",
+          ".cache/goal-01a17154/tests287-green.log",
+          ".cache/goal-01a17154/tests287-green2.log",
+          ".cache/goal-01a17154/tested287-before.json"
+        ],
+        "branch": "codex/issue-287-investigate-and-if-reproduced-with-gener",
+        "head": "4426b2fea1835de0b1e9755f618ce26626cb1516",
+        "remaining": "Full/focused/static/text checks, finalreport/4filecommit/PR, exactPR/controller/main and complete candidate audits. No scientific inputs/model work;279 pending separate sensitive authorization;282/286 preserved.",
+        "summary": "Generated25direct/25actualStoreAPI baseline retained, final probe c7bf6add45c3e04ea15d42fffc9adb7109ae37c7f6521dfa5475259bd619e2c5. 24/25/30fps controls work;50/60/120fps/sparse/VFR actual7.5s origin/duplicate/history additions lost by old nine-row bounds. Consumer-only source-time endpoints and recursively validated history now restore eligible intervals, preserving exclusion cases and original source/perception/nonempty saved revision documents/timestamps. Retained initial15fail/94pass and repaired test-expectation failures honestly; expected nearest120fps navigation/tailcorroboration and farfixture corrected, no threshold changes. Starting fullsuite after finalfocused checks, frozen sourcehashes, exact wrapper/worker lifetime monitor and fresh short ignored temp."
+      },
+      "checkpoint_at": 1792922610,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "4426b2fea1835de0b1e9755f618ce26626cb1516",
         "branch": "codex/issue-287-investigate-and-if-reproduced-with-gener",
         "epoch": 1,
-        "expires_at": 1792932665,
+        "expires_at": 1792933410,
         "granted_at": 1792921865,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
