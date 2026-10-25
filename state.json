@@ -1503,6 +1503,14 @@
       "task_id": "271",
       "verb": "plan"
     },
+    "goal-01a17154-plan281-v1": {
+      "actor": "dootz1",
+      "at": 1792916007,
+      "fingerprint": "68c238fe8e724b2fd5e153555ddc7e3afc643ba4c9ca95ebb6f710b56815bee0",
+      "status": "running",
+      "task_id": "281",
+      "verb": "plan"
+    },
     "goal-01a17154-register-v1": {
       "actor": "dootz1",
       "at": 1792903074,
