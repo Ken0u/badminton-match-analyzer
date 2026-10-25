@@ -236,6 +236,15 @@
       "task_id": "256",
       "verb": "next"
     },
+    "boundary278-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792914214,
+      "epoch": 1,
+      "fingerprint": "ec6a13d8979e3aa7af39820c4e64a5ff13aa8bb841b1fb9e9c1be38219fd188e",
+      "status": "running",
+      "task_id": "278",
+      "verb": "checkpoint"
+    },
     "broadcast179-register-6f42d839a2": {
       "actor": "Ken0u",
       "at": 1792632986,
@@ -22525,12 +22534,24 @@
       }
     },
     "278": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/boundary-evidence-repro-v1.json",
+          ".cache/boundary278-check-focused-v1",
+          ".cache/boundary278-check-all-v1"
+        ],
+        "branch": "codex/issue-278-prevent-saved-serve-rally-end-proposals-",
+        "head_sha": "032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5",
+        "remaining": "Wait for the recorded full run to become terminal, preserve its expected two failures, correct the new assertions once, rerun focused/full checks on stable final source, finalize report and normal PR/exact CI/controller/public delivery.",
+        "summary": "Five-path local implementation excludes declared boundary evidence across camera/time/review barriers, preserves references and other eligible denominators, and reports legacy unavailable metadata. First generated focused run:786 passed/two added-test expectation failures, all original six reproductions and12 saved API/CLI cases pass. The two failures assume no point report beside an uncertain window, but a separate complete negative review range correctly retains an empty report. Application behavior must be preserved; only those expectations need correction. A full run was started before inspecting focused failures; it remains live on stable unchanged source and will finish without interruption before correcting the tests. Initial formatting-only check also preserved. No original scientific input/image/label/prediction access, model/inference or PROGRESS/collaborator edit."
+      },
+      "checkpoint_at": 1792914214,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "032f121d41924a47a5b4bc3a35a6bb0ed2bc36b5",
         "branch": "codex/issue-278-prevent-saved-serve-rally-end-proposals-",
         "epoch": 1,
-        "expires_at": 1792924511,
+        "expires_at": 1792925014,
         "granted_at": 1792913711,
         "host_id": "MSI",
         "session_id": "8c83ed3322c44fa58e4743a23db98417",
