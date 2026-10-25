@@ -145,6 +145,24 @@
       "task_id": "256",
       "verb": "checkpoint"
     },
+    "boundary256-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792891221,
+      "epoch": 1,
+      "fingerprint": "aed307c94f79f36dc26c3a9bcca6ca5571fee8ea05220030e326c87ea8c2ef3f",
+      "status": "running",
+      "task_id": "256",
+      "verb": "checkpoint"
+    },
+    "boundary256-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792891227,
+      "epoch": 1,
+      "fingerprint": "6eb816ba6f2e49d14076b6f4c83470825551dae02d2c8823e038929b0a531061",
+      "status": "review",
+      "task_id": "256",
+      "verb": "submit"
+    },
     "boundary256-targeted-next-v1": {
       "actor": "Ken0u",
       "at": 1792890272,
@@ -20270,18 +20288,19 @@
     "256": {
       "checkpoint": {
         "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
-        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/256#issuecomment-6391775799",
-        "head_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
-        "remaining": "Combined implementation review, focused/full verification, normal controller integration and independent delivery.",
-        "summary": "End-to-end boundary evaluation implementation is delegated across disjoint evaluator/tests, schema/API/CLI, and UI/model files. Parent extends report ownership, generated contracts, browser coverage and docs. No scientific inputs or images accessed, no model inference or new dependency. Independent review declarations default false; uncertain references remain separate from representative timing. Existing root edits, research and PROGRESS.md are preserved."
+        "evidence_sha256": "9113b8e3a3fcc8d477c1e2ea61b97b96578e3f11458e6a7b0cc6d20c7c66efc6",
+        "head_sha": "5e59a44de874ba2bcf710fd6a91c644a5580f5c6",
+        "pr_number": 257,
+        "remaining": "Exact PR/main CI, controller integration and independent complete public delivery.",
+        "summary": "Independent serve/ending completeness, native-clock evaluation, exact timing versus possible interval support, and editor stale-report fencing implemented in all17 granted paths. Generated checks:3226 Python passed,4optional skips;180 frontend;17 browser groups with complete cleanup. No scientific input/model/policy change. Local receipt SHA256 9113b8e3a3fcc8d477c1e2ea61b97b96578e3f11458e6a7b0cc6d20c7c66efc6."
       },
-      "checkpoint_at": 1792890550,
+      "checkpoint_at": 1792891221,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
         "branch": "codex/issue-256-add-source-clock-bound-evaluation-of-sav",
         "epoch": 1,
-        "expires_at": 1792901350,
+        "expires_at": 1792902021,
         "granted_at": 1792890272,
         "host_id": "MSI",
         "session_id": "c36935dca7b147e08454839f993f5c88",
@@ -20290,6 +20309,7 @@
       "epoch": 1,
       "planned_at": 1792890131,
       "planned_by": "Ken0u",
+      "pr_number": 257,
       "spec": {
         "acceptance": [
           "Search all issue/PR history, current grants and reports. Preserve root edits, environments, datasets, research, annotations and deprecated PROGRESS.md. Depend on delivered254 and obtain one fresh committed isolated task grant. This is generated-only evaluation software, not completion of scientific62/66/67/71 or a new source assessment.",
@@ -20350,7 +20370,13 @@
         ]
       },
       "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
+        "head_sha": "5e59a44de874ba2bcf710fd6a91c644a5580f5c6",
+        "pr_number": 257,
+        "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f"
+      }
     },
     "62": {
       "checkpoint": {
