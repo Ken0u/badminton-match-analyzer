@@ -592,6 +592,21 @@
       "status": "ok",
       "verb": "register"
     },
+    "contact-gap-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792903943,
+      "fingerprint": "054752334a54959132d30c91d7b7b0e24abf278f4bcfffd589edda4e0abc908d",
+      "status": "ready",
+      "task_id": "267",
+      "verb": "plan"
+    },
+    "contact-gap-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792903943,
+      "fingerprint": "34fb6157b9fa8e827c66c699f74065d29ad7b31c93e4faa11f0e00d928655ae8",
+      "status": "ok",
+      "verb": "register"
+    },
     "contact258-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792893404,
@@ -8290,6 +8305,14 @@
       "fingerprint": "672df8b9c91074887eabbdbcca4fc0e3b8c131565501a07456a14c58aba504be",
       "status": "ready",
       "task_id": "266",
+      "verb": "plan"
+    },
+    "spec-267-dae288c33953e82d6ee6f6089cc7e0dd732fd959fb870a83177709fa9ee44ce0": {
+      "actor": "Ken0u",
+      "at": 1792903943,
+      "fingerprint": "00bc7ba2a80c00ea3e00caac1095166353afbe4ea73dc0e3f8fca59490d8eafc",
+      "status": "ready",
+      "task_id": "267",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -21387,6 +21410,61 @@
       "spec_hash": "5488360ef460a832c842d5f409baa416752c52e7d3b01e4122d417b59421a93d",
       "status": "running"
     },
+    "267": {
+      "epoch": 0,
+      "planned_at": 1792903943,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Follow the approved regular bug-review roadmap after delivered264. Audit all issue/PR history and authoritative grants, including active266 on another host; reserve disjoint files only. Preserve original root edits, deprecated PROGRESS.md, environments, datasets, research, annotations, predictions and historical source evidence. Obtain a fresh committed code-only grant and isolated worktree before production edits.",
+          "Preserve the existing four-case generated reproduction on the delivered264 evaluator bytes: frame19 reference and frame20 candidate match across a0.11second native step and receive contact and complete-event/classification F1=1, despite the existing0.1second maximum input step. Both declared times correctly match the native clock; the0.04second continuous controls also match. No real scientific input or additional exclusive reproduction run is needed.",
+          "Use the existing optional validated native timestamp sequence to identify discontinuities with the contact producer maximum-step constant and an existing small floating-point comparison allowance. Split eligible reviewed comparison ranges at those native ordinals as well as applicable known camera cuts. Keep each original reviewed frame represented once and retain point references/proposals on both sides, so a before-gap reference and after-gap proposal count as missed/false without matching. Do not infer a replacement clock from FPS, renumber frames or hide unsupported regions.",
+          "Representative-time, tighter-tolerance and inclusive interval-support comparisons must share the separated source domains. Inclusive proposal uncertainty and half-open evidence context must lie inside one uninterrupted eligible range. Proposals crossing timestamp gaps are excluded with explicit distinct interval/evidence reasons and IDs; a navigation frame may not shorten or relocate its evidence. Preserve existing camera-cut precedence, scene/review exclusions, uncertainty handling and original prediction dictionaries.",
+          "Expose actual source timestamp-gap barrier ordinals distinctly from camera cuts in additive coverage metadata. Direct library calls without a native clock retain explicit unavailable clock validation and legacy comparison behavior without invented gaps; valid supplied clocks and existing source-hash rejection stay mandatory as in264. Recognition must continue consuming exact contact eligible IDs and matches, so source-gap exclusions cannot reappear as family/hitter/side/complete credit or false classifications. API/CLI already supply the registered clock; do not change their routes or clock ownership.",
+          "Meaningful generated pure regressions cover contacts/recognition, constant and VFR clocks with nonzero source origin, threshold below/at/above0.1seconds, a0.11gap within default0.12matching tolerance, multiple gaps, touching coverage windows, correct same-side matches, one-to-one matching, full reviewed-frame counts, empty negatives/missed/false outputs, unknown/assisted/abstained labels, uncertain references/proposals, inclusive boundary equality and half-open evidence ending at a gap. Cover camera and source gaps together, invalid-clock/hash rejection and no-clock compatibility without mutation.",
+          "Add registered generated API/CLI cases for before/after-gap false credit, matching controls, interval/evidence exclusions, combined contact/recognition requests and unchanged saved annotations/artifacts. Verify all native frames and missed/false denominators remain explicit, while no scientific media is decoded or labels consumed. Existing source-clock, source-hash, camera, recognition and rally evaluator regressions remain green; do not weaken or rewrite existing tests to accept the bug.",
+          "Run focused and full required Python, Ruff lint/format, pip consistency, repository UTF8/LF/JSON/local links and diff checks in disposable generated storage using the existing project virtual environment. Preserve actual failed attempts, final source/test stability and independently terminal process lifetimes. No new dependencies or native scientific inference.",
+          "Document the concrete before/after and unavailable-clock limitations in a focused report and current bug-review summary. Publish only granted paths on the granted branch with a focused PR and exact head/base/spec submission. Let the controller integrate, verify exact PR/main CI and independently verify complete public package/source/frontend/lock and both anonymous images before completion. Preserve other host source/static work; no manual merge, direct main push, workflow retry/cancel/wake or raw coordination edit.",
+          "Bound task to three hours from fresh grant,512MiB new outputs and three diagnosed repair rounds. No scientific image/label reading or transfer, new assessor, source download, real media decode/render, holdout access, inference/training/model/default change, policy/auth/workflow/deployment change, paid service or deprecated PROGRESS edit. Scientific references remain0/2 and all four eligibility flags false; accurate software accounting does not establish unseen full-match annotation accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "264"
+        ],
+        "exclusions": [
+          "No scientific data/assessment/image payload, inference, model/default/policy/auth/workflow/deployment/dependency change, paid service, manual merge or PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Keep saved contact and recognition comparison domains inside continuous native source time, retaining full reviewed-frame and missed/false denominators across timestamp discontinuities.",
+        "paths": [
+          "backend/badminton/evaluation.py",
+          "tests/test_contact_timestamp_evaluation.py",
+          "tests/test_contact_timestamp_evaluation_api.py",
+          "tests/test_evaluation.py",
+          "tests/test_recognition_evaluation.py",
+          "docs/CONTACT_TIMESTAMP_EVALUATION_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Preserved generated cross-gap baseline and source-discontinuity/denominator/compatibility regressions; required focused/full checks.",
+          "Exact PR/main CI, normal controller integration and independently verified complete public delivery; no new scientific claim."
+        ]
+      },
+      "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -24509,6 +24587,18 @@
       "host_id": "MSI",
       "registered_at": 1792547823,
       "session_id": "07727ebc-b884-496e-87ba-23c262d285a3"
+    },
+    "MSI/16dbb3112d1f4a4cb656dfac512bc201": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792903943,
+      "session_id": "16dbb3112d1f4a4cb656dfac512bc201"
     },
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
