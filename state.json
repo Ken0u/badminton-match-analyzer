@@ -24319,6 +24319,7 @@
       "status": "running"
     },
     "295": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40192583321",
       "checkpoint": {
         "artifacts": [
           ".cache/goal-01a17154/python295-final-verification.json",
@@ -24344,7 +24345,7 @@
         "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792930355,
