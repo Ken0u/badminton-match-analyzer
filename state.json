@@ -8034,6 +8034,26 @@
       "task_id": "138",
       "verb": "next"
     },
+    "roadmap-next-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792944597,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "47bbaeac2517f65270261eceefe272b81c049c3b",
+        "branch": "codex/issue-301-refresh-the-shared-project-plan-and-bug-",
+        "epoch": 1,
+        "expires_at": 1792955397,
+        "granted_at": 1792944597,
+        "host_id": "MSI",
+        "session_id": "ff1687e23a7941ada25b66448f327138",
+        "spec_hash": "ba2c36f5dd8bea486c952835e69caebe6273dbb83b02fec173cace554d40ff2a"
+      },
+      "epoch": 1,
+      "fingerprint": "3164284388718ae607b8bae68920dd7fab6197e05df8ff2404fa7bc9a04529b7",
+      "status": "granted",
+      "task_id": "301",
+      "verb": "next"
+    },
     "roadmap-next-plan-v1": {
       "actor": "Ken0u",
       "at": 1792944366,
@@ -24757,7 +24777,18 @@
       }
     },
     "301": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "47bbaeac2517f65270261eceefe272b81c049c3b",
+        "branch": "codex/issue-301-refresh-the-shared-project-plan-and-bug-",
+        "epoch": 1,
+        "expires_at": 1792955397,
+        "granted_at": 1792944597,
+        "host_id": "MSI",
+        "session_id": "ff1687e23a7941ada25b66448f327138",
+        "spec_hash": "ba2c36f5dd8bea486c952835e69caebe6273dbb83b02fec173cace554d40ff2a"
+      },
+      "epoch": 1,
       "planned_at": 1792944366,
       "planned_by": "Ken0u",
       "spec": {
@@ -24800,7 +24831,7 @@
         ]
       },
       "spec_hash": "ba2c36f5dd8bea486c952835e69caebe6273dbb83b02fec173cace554d40ff2a",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
