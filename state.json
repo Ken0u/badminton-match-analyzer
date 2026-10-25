@@ -5429,6 +5429,26 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "rally-contract-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792906512,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7259712d2a2f9b4825845c9e61c9823b7f146d83",
+        "branch": "codex/issue-270-provide-a-frozen-generated-input-tested-",
+        "epoch": 1,
+        "expires_at": 1792917312,
+        "granted_at": 1792906512,
+        "host_id": "MSI",
+        "session_id": "c66898df3c3f4ecb8b5e57a261278e6b",
+        "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda"
+      },
+      "epoch": 1,
+      "fingerprint": "1688304aad7769fa917772fb4fb22b1ac720d1becba380d93179505c0a50cedd",
+      "status": "granted",
+      "task_id": "270",
+      "verb": "next"
+    },
     "rally-contract-plan-v1": {
       "actor": "Ken0u",
       "at": 1792906328,
@@ -8424,6 +8444,14 @@
       "fingerprint": "00bc7ba2a80c00ea3e00caac1095166353afbe4ea73dc0e3f8fca59490d8eafc",
       "status": "ready",
       "task_id": "267",
+      "verb": "plan"
+    },
+    "spec-270-0d9311f906392c98a93c5ba70c44ff65cc49b52611dbcffddb45398b02969585": {
+      "actor": "Ken0u",
+      "at": 1792906512,
+      "fingerprint": "0b840a70eaec36d44a9e57cc8fe39891c5536aaf58d5f393e3b49f1a24c2bdb8",
+      "status": "ready",
+      "task_id": "270",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -21641,8 +21669,19 @@
       }
     },
     "270": {
-      "epoch": 0,
-      "planned_at": 1792906328,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7259712d2a2f9b4825845c9e61c9823b7f146d83",
+        "branch": "codex/issue-270-provide-a-frozen-generated-input-tested-",
+        "epoch": 1,
+        "expires_at": 1792917312,
+        "granted_at": 1792906512,
+        "host_id": "MSI",
+        "session_id": "c66898df3c3f4ecb8b5e57a261278e6b",
+        "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda"
+      },
+      "epoch": 1,
+      "planned_at": 1792906512,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
@@ -21697,7 +21736,7 @@
         ]
       },
       "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
