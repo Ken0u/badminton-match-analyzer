@@ -19958,6 +19958,7 @@
       }
     },
     "252": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40145737393",
       "checkpoint": {
         "branch": "codex/issue-252-keep-evaluation-displays-and-report-down",
         "evidence_sha256": "6daed602971c4fa1c52b142ed303c01d94eeecbd664873f3740b64dee731738a",
@@ -19979,7 +19980,7 @@
         "spec_hash": "63f1733c449b124bdf9612c63b1943a8a5990e661147c3e1a8175296003df1c4"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792886723,
