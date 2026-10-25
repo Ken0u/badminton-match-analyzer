@@ -5,7 +5,7 @@ gap between planned native review and the single-stream document validator.
 It retains the full native denominator, every overlap occurrence, explicit
 missing/unknown/conflicting readings and qualified document-local variants.
 Optional adjudication stays separate; agreement supplies no source truth or
-assessor independence. All 1,000 focused and 4,310 full Python tests pass, with
+assessor independence. All 1,000 focused and 4,346 full Python tests pass, with
 four optional full-suite skips, plus required lint/format, dependencies,
 repository and whitespace checks. Stable source/terminal-process evidence,
 the preserved interrupted run and exact delivery records belong on the owning

@@ -68,7 +68,7 @@ known/unknown/disagreeing and overlap-conflicting readings, optional adjudicatio
 qualified equal-ID variants, raw-byte chains, invalid inputs, file/read limits,
 private stdout and preservation of inputs/existing outputs. Subprocess tests
 record the actual original launcher/worker lifetimes before releasing startup.
-Final verification passes **1,000 focused / 4,310 full Python tests**, with four
+Final verification passes **1,000 focused / 4,346 full Python tests**, with four
 optional full-suite skips. Ruff lint/format, dependencies, repository
 UTF-8/LF/JSON/local links and whitespace checks pass. Executable/test bytes stayed
 unchanged throughout the final focused/full runs; all recorded launcher, worker
@@ -85,8 +85,10 @@ Two initial lint-only findings were preserved and corrected before testing.
 The original focused run also passed 1,000 tests. The interrupted first full run
 has no pytest completion or exit receipt and remains incomplete; all 184 recorded
 original test lifetimes were terminal, the checker command absent and source
-unchanged before rerunning. Final checks use the delivered nonoverlapping #281
-import-stability baseline, with all six owned file bytes preserved across rebase.
+unchanged before rerunning. The earlier passing full run retained 4,310 tests.
+Final checks include the delivered nonoverlapping #281 import-stability and
+#284 audio-alignment changes. All six owned file bytes were preserved across
+the earlier rebase and subsequent merge of main; published history is retained.
 
 Actual new scientific inputs, labels, predictions, assessor sessions and image
 bytes are zero. Existing #250/#262/#270 protocols and historical records remain
