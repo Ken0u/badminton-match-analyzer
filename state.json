@@ -910,6 +910,26 @@
       "task_id": "67",
       "verb": "release"
     },
+    "exact-frame-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792950206,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e980d1d607806a2b1072fd36d37b3bafafe7a816",
+        "branch": "codex/issue-303-serve-an-exact-frame-review-jpeg-only-af",
+        "epoch": 1,
+        "expires_at": 1792961006,
+        "granted_at": 1792950206,
+        "host_id": "MSI",
+        "session_id": "f9113478d9024d1ab2fb5b17099b0b68",
+        "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc"
+      },
+      "epoch": 1,
+      "fingerprint": "877f56ce487e30f51f0f8b7257a688954910eb75d1d79ff8059b1e8a7ade6096",
+      "status": "granted",
+      "task_id": "303",
+      "verb": "next"
+    },
     "exact-frame-plan-v1": {
       "actor": "Ken0u",
       "at": 1792950007,
@@ -24906,7 +24926,18 @@
       }
     },
     "303": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e980d1d607806a2b1072fd36d37b3bafafe7a816",
+        "branch": "codex/issue-303-serve-an-exact-frame-review-jpeg-only-af",
+        "epoch": 1,
+        "expires_at": 1792961006,
+        "granted_at": 1792950206,
+        "host_id": "MSI",
+        "session_id": "f9113478d9024d1ab2fb5b17099b0b68",
+        "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc"
+      },
+      "epoch": 1,
       "planned_at": 1792950007,
       "planned_by": "Ken0u",
       "spec": {
@@ -24954,7 +24985,7 @@
         ]
       },
       "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
