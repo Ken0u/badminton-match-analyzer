@@ -249,6 +249,9 @@ def _segments(players, shuttle, cuts, start, end, expected):
 def _motion(rows, diagonal):
     times = [r["time_s"] for r in rows]
     for i, row in enumerate(rows):
+        # A row's derived speed/quiet judgment also reads earlier observations.
+        # Keep these native dependencies separate from boundary timing bounds.
+        row["motion_start_frame"] = rows[max(0, i - 1)]["frame"]
         row["shuttle_speed"] = None
         if i and row["point"] is not None and rows[i - 1]["point"] is not None:
             row["shuttle_speed"] = (
@@ -263,6 +266,7 @@ def _motion(rows, diagonal):
             or not POSE_LAG_S * 0.7 <= times[i] - times[lag] <= POSE_LAG_S * 1.5
         ):
             continue
+        row["motion_start_frame"] = min(row["motion_start_frame"], rows[lag]["frame"])
         before = rows[lag]["people"]
         if not row["people"] or row["people"].keys() != before.keys():
             continue
@@ -340,6 +344,15 @@ def _candidate(kind, row, first, last, evidence, track_id=None):
         "needs_review": True,
         "evidence": evidence,
     }
+
+
+def _with_context(candidate, evidence_rows):
+    """Record a conservative half-open span of the actual native dependencies."""
+    candidate.update(
+        context_start_frame=min(row["motion_start_frame"] for row in evidence_rows),
+        context_end_frame=max(row["frame"] for row in evidence_rows) + 1,
+    )
+    return candidate
 
 
 def _moving(rows):
@@ -420,7 +433,7 @@ def _serve(rows, times, index, diagonal, annotations, video):
     possible_tracks = sorted({item[2] for item in nearby})
     if len(possible_tracks) > 1:
         tid = None
-    return _candidate(
+    candidate = _candidate(
         "serve",
         representative,
         launch[0],
@@ -441,6 +454,7 @@ def _serve(rows, times, index, diagonal, annotations, video):
         },
         tid,
     )
+    return _with_context(candidate, [*context, *departure, *launch])
 
 
 def _settling_fit(rows, times, row, settled, moving, diagonal):
@@ -454,7 +468,8 @@ def _settling_fit(rows, times, row, settled, moving, diagonal):
     fit = smooth @ np.linalg.lstsq(smooth, points, rcond=None)[0]
     smooth_error = float(np.sqrt(np.mean(np.sum((fit - points) ** 2, axis=1))))
     best = None
-    for knot in _window(rows, times, moving[-1]["time_s"] - 0.16, row["time_s"]):
+    knots = _window(rows, times, moving[-1]["time_s"] - 0.16, row["time_s"])
+    for knot in knots:
         t = ts - (knot["time_s"] - row["time_s"])
         if sum(t < 0) < 3 or sum(t >= 0) < 4:
             continue
@@ -479,6 +494,7 @@ def _settling_fit(rows, times, row, settled, moving, diagonal):
         "piecewise_rmse_px": round(best[0], 3),
         "quadratic_rmse_px": round(smooth_error, 3),
         "tail_speed_diagonals_per_s": round(best[2], 4),
+        "evidence_rows": [*samples, *knots],
     }
 
 
@@ -513,18 +529,22 @@ def _ending(rows, times, index, diagonal, annotations, video):
     if fit is None:
         return None
     followup = None
-    for anchor in _window(
+    followup_rows = []
+    anchors = _window(
         rows, times, row["time_s"], min(row["time_s"] + 1.20, times[-1] - QUIET_S)
-    ):
+    )
+    for anchor in anchors:
         context = _window(rows, times, anchor["time_s"], anchor["time_s"] + QUIET_S)
+        followup_rows.extend(context)
         if _quiet(context):
             followup = (anchor, context)
             break
     if followup is None:
         return None
     knot = fit.pop("knot")
+    fit_rows = fit.pop("evidence_rows")
     first = _window(rows, times, knot["time_s"] - 0.12, row["time_s"])[0]
-    return _candidate(
+    candidate = _candidate(
         "rally_end",
         knot,
         first,
@@ -542,6 +562,10 @@ def _ending(rows, times, index, diagonal, annotations, video):
             **fit,
             "meaning": "Observed settling unlike a smooth flight apex, followed by quieter full-player motion; terminal contact/fault remains unverified",
         },
+    )
+    return _with_context(
+        candidate,
+        [first, *incoming, *settled, *transition, *fit_rows, *anchors, *followup_rows],
     )
 
 
