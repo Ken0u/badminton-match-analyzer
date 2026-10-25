@@ -98,6 +98,15 @@ The broader generated-media regression selection passes **178 tests** across
 `test_orientation`, `test_playback`, `test_file_cache`, `test_video`,
 `test_video_frames` and `test_av_runtime`.
 
+The initial full Python suite passes **4,201 tests with four optional skips** in
+441.28 seconds on the repair before merging the unrelated rally-evaluation
+update. Exit is 0; both exact interpreter lifetimes were independently observed
+absent with no observation errors. The preserved log SHA-256 is
+`59947fd8c746e3275ea2b40d483dd01346a3867a7efae022f3afe5f6db4989b4`.
+The final submitted branch is refreshed against merged main
+`7d3cca2e749327583ec852538ba981c74762613d`; its full-suite and exact hosted
+verification are recorded separately on the owning issue.
+
 ## Limits
 
 These are validation points around decoding, not an immutable source snapshot or

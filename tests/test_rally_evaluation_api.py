@@ -454,3 +454,99 @@ def test_cli_reports_missing_input_without_launching_analysis(
     assert error.value.code == 2
     assert "--rallies-run" in capsys.readouterr().err or run_id == "missing"
     assert ctx.store.jobs(ctx.video["id"]) == []
+
+
+@pytest.mark.parametrize("consumer", ["api", "cli"])
+@pytest.mark.parametrize("kind,frame", [("serve", 2), ("rally_end", 9)])
+@pytest.mark.parametrize("barrier", ["camera_cut", "timestamp_gap", "review_gap"])
+def test_saved_boundary_evidence_barriers_preserve_references_and_original_inputs(
+    boundary_workspace, monkeypatch, capsys, consumer, kind, frame, barrier
+):
+    from badminton import cli
+
+    ctx = boundary_workspace
+    timestamps_path = ctx.data / ctx.video["id"] / "timestamps.json"
+    if barrier == "timestamp_gap":
+        ctx.times[frame:] = [time + 0.2 for time in ctx.times[frame:]]
+        write_json(timestamps_path, ctx.times)
+        ctx.video["duration_s"] += 0.2
+        ctx.store.register(ctx.video)
+    save_reference(ctx)
+    if barrier == "review_gap":
+        doc = ctx.store.annotations(ctx.video["id"]).model_dump()
+        template = doc["review_windows"][0]
+        doc["review_windows"] = [
+            template | {"id": "before", "start_frame": 0, "end_frame": frame - 1},
+            template | {"id": "after", "start_frame": frame, "end_frame": 12},
+        ]
+        ctx.store.save_annotations(ctx.video["id"], Annotations.model_validate(doc))
+    path, run = add_boundary_run(ctx)
+    target = next(item for item in run["candidates"] if item["kind"] == kind)
+    target.update(context_start_frame=frame - 1, context_end_frame=frame + 2)
+    if barrier == "camera_cut":
+        run["cut_frames"] = run["court_context"]["cut_frames"] = [frame]
+    write_json(path, run)
+    original = path.read_bytes()
+    source_before = (ctx.root / ctx.video["path"]).read_bytes()
+    clock_before = timestamps_path.read_bytes()
+    annotations_before = ctx.store.annotations(ctx.video["id"]).model_dump()
+    jobs_before = ctx.store.jobs(ctx.video["id"])
+    if consumer == "api":
+        with TestClient(create_app(ctx.root, ctx.data)) as client:
+            response = client.post(
+                f"/api/videos/{ctx.video['id']}/evaluate",
+                json={"rallies_run_id": "rallies-1"},
+            )
+        assert response.status_code == 200, response.text
+        report = response.json()["rallies"]
+    else:
+        output = ctx.root / "generated-evidence-report.json"
+        monkeypatch.setattr(cli, "ROOT", ctx.root)
+        monkeypatch.setattr(cli, "DATA", ctx.data)
+        monkeypatch.setattr(
+            sys,
+            "argv",
+            [
+                "badminton",
+                "evaluate",
+                ctx.video["id"],
+                "--rallies-run",
+                "rallies-1",
+                "--output",
+                str(output),
+            ],
+        )
+        cli.main()
+        printed = json.loads(capsys.readouterr().out)
+        assert json.loads(output.read_bytes()) == printed
+        report = printed["rallies"]
+    result = report["kinds"][kind]
+    metrics = result["representative_timing"]["metrics"]
+    assert (metrics["tp"], metrics["fp"], metrics["fn"], metrics["f1"]) == (0, 0, 1, 0)
+    assert result["interval_compatibility"]["matched_count"] == 0
+    assert result["interval_compatibility"]["reviewed_event_count"] == 1
+    coverage = result["coverage"]
+    assert coverage["reviewed_frames"] == (11 if barrier == "review_gap" else 12)
+    assert coverage["reviewed_events"] == 1 and coverage["evaluated_candidates"] == 0
+    assert coverage["excluded_event_ids"] == []
+    assert coverage["excluded_candidate_ids"] == [target["id"]]
+    excluded = coverage["candidate_evidence_context"]["excluded_candidates"]
+    assert excluded == [
+        {
+            "id": target["id"],
+            "reason": {
+                "camera_cut": "evidence_context_crosses_camera_cut",
+                "timestamp_gap": "evidence_context_crosses_source_timestamp_gap",
+                "review_gap": "evidence_context_outside_reviewed_coverage",
+            }[barrier],
+            "context_start_frame": frame - 1,
+            "context_end_frame": frame + 2,
+        }
+    ]
+    other = report["kinds"]["rally_end" if kind == "serve" else "serve"]
+    assert other["representative_timing"]["metrics"]["tp"] == 1
+    assert path.read_bytes() == original
+    assert (ctx.root / ctx.video["path"]).read_bytes() == source_before
+    assert timestamps_path.read_bytes() == clock_before
+    assert ctx.store.annotations(ctx.video["id"]).model_dump() == annotations_before
+    assert ctx.store.jobs(ctx.video["id"]) == jobs_before
