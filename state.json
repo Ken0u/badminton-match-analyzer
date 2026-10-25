@@ -9420,6 +9420,14 @@
       "task_id": "293",
       "verb": "plan"
     },
+    "spec-293-e0cb27deb75f1d39668e2fe09c2a8a88c7928d071844cf9e12502b3c5bf51a8f": {
+      "actor": "Ken0u",
+      "at": 1792927230,
+      "fingerprint": "17302226259dbd4f824d7f6700f39d94cb2ea370ef17ce6c4c23345fac26caae",
+      "status": "ready",
+      "task_id": "293",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -11085,6 +11093,14 @@
       "actor": "Ken0u",
       "at": 1792926771,
       "fingerprint": "57ff7cb1ce7a969a34b242876300c57081a105e25934b8da12ed02826a7020a2",
+      "status": "ready",
+      "task_id": "293",
+      "verb": "plan"
+    },
+    "video-stability-plan-v2": {
+      "actor": "Ken0u",
+      "at": 1792927230,
+      "fingerprint": "3ec1c729f2f42303e533890eb12c27595faaa30bc9d6fe7ded9db4f5166c663e",
       "status": "ready",
       "task_id": "293",
       "verb": "plan"
@@ -23923,11 +23939,11 @@
     },
     "293": {
       "epoch": 0,
-      "planned_at": 1792926771,
+      "planned_at": 1792927230,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
-          "Audit complete issue/PR history, current authoritative queue and all active reservations. Preserve generated four-case failure evidence and obtain an isolated code-only committed grant. This is distinct from delivered173 native coverage,243 cache invalidation,283 import publication and the other-host290 audio repair; preserve all of them and deprecated PROGRESS/root edits.",
+          "Audit complete issue/PR history, current authoritative queue and all active reservations. Preserve generated four-case failure evidence and obtain an isolated code-only committed grant. This is distinct from delivered173 native coverage,243 cache invalidation,281/PR283 import publication and the other-host290 audio repair; preserve all of them and deprecated PROGRESS/root edits.",
           "After successful full native iteration and normal media teardown, revalidate the registered source identity/digest with the existing cache-aware source resolver. Reject byte changes or disappearance/replacement using the existing appropriate source error contracts. Do not move FFmpeg restoration/teardown, validate only before teardown, compare only stale metadata or rehash every yielded frame.",
           "Keep original frame/PTS/orientation/range/completeness guards and intact-source output unchanged. Preserve decoder/consumer exception precedence, explicit partial early-close/cancellation behavior and no decoding past end-1. A streaming consumer may see provisional frames before exhaustion; this task does not add snapshot isolation, validate deliberately partial reads, detect hidden or fully restored transient changes, or guarantee against writes after final validation.",
           "Add generated real-PyAV regressions for during-decode and normal-teardown mutation, same-size/restored-mtime replacement, removal, nonzero VFR subranges/rotations, unchanged controls, early close and decoder/teardown failure precedence. Exercise the actual camera scan output path so changed-source reads cannot publish new output or overwrite a preserved existing output; original source metadata/timestamps/annotations remain unchanged. Tests use generated media and disposable Stores only, without models or scientific inputs.",
@@ -23944,7 +23960,7 @@
         "dependencies": [
           "173",
           "243",
-          "283",
+          "281",
           "288"
         ],
         "exclusions": [
@@ -23973,7 +23989,7 @@
           "Focused/full project checks, source/process stability, exact PR/main/controller and independently verified complete public delivery."
         ]
       },
-      "spec_hash": "a8bd4066c08f21c15542f5a47bc678eeecc46e3e134e7a2f1d6aa42a6dcd8fa7",
+      "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8",
       "status": "ready"
     },
     "62": {
