@@ -1229,6 +1229,15 @@
       "task_id": "271",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint271-v2": {
+      "actor": "dootz1",
+      "at": 1792908445,
+      "epoch": 1,
+      "fingerprint": "f1be5e7d5af36a5bf94c300bf940c1c266f63b378f6879e5cce018339bc1dbf8",
+      "status": "running",
+      "task_id": "271",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-v1": {
       "actor": "dootz1",
       "reason": "scope expansion cannot change task semantics",
@@ -21901,21 +21910,25 @@
       "checkpoint": {
         "artifacts": [
           ".cache/w271",
-          ".cache/goal-01a17154/resume271.json",
-          ".cache/goal-01a17154/delivery266.json"
+          ".cache/goal-01a17154/browser271-final-audit.json",
+          ".cache/goal-01a17154/editor271-audit.json",
+          ".cache/goal-01a17154/tested-source-hashes271-final.json",
+          ".cache/goal-01a17154/python271-verification.json",
+          ".cache/goal-01a17154/failed-export271-terminal.json"
         ],
         "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
-        "head": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
-        "remaining": "Run direct editor and full production/library/export matrix; inspect all mode receipts and complete cleanup. Required project checks, report, focused commit/PR/exact submission, controller PR/main and candidate verification.",
-        "summary": "Revalidated committed epoch-1 grant/spec, unpaused queue, exact baseline/main and preserved worktrees. Issue266 exact-main and complete candidate pass; independent wheel/sdist and both anonymous manifest audit posted on266. Scoped uncommitted test implementation extracts direct-editor actual-canvas regression into a shared source-hashed helper, appends an explicitly production-specific group after all17 unchanged frozen parity blocks/performance, and updates accounting to19=17+2. Continuous/cut/scene, manual marker, overlay toggles and original annotations/predictions are asserted. Locked npm dependencies installed; no runtime/scientific/workflow change."
+        "head": "80edd469f8fd9e3018450895895fd9258c6c5beb",
+        "pr_number": 274,
+        "remaining": "Finish combined-source full checks; push refreshed head and submit exact head/base/spec. Verify exact PR/mainCI, actual default-CI new case/artifact plus complete cleanup, controller integration and full package/both-image delivery. Goal stays active; no scientific accuracy/model promotion claim.",
+        "summary": "Scoped four-file implementation is committed and PR274 attached. Original local full suite3953 passed/4skipped; frontend200/stage3/process71+2skip, all required type/contract/stage/Ruff/pip/repository/whitespace checks pass. Direct editor18 and final production19/library8/export13 pass; independent audits confirm continuous/cut/scene path receipts, manual/toggle/data preservation, consumed helper hashes and terminal fixture/static/admission cleanup. Structural audit confirms all39 original check action bodies and fixture/protocol bytes unchanged. Preserved first export failure from Windows venv wrapper/worker PID mismatch and failed45s Store job; both exact lifetimes independently absent. Scope extension rejected for changed semantics; no admission repair applied. Equivalent direct existing venv-worker startup verified identical prefix/path/package provenance and runs unchanged assertions. Proposed separate273. Initial publication lacked local Git identity; reused prior verified authenticated dootz1 attribution; first empty remote branch and failed PR creation preserved. No force push. Main advanced with270, so normal merge refresh80edd469 now includes base0e5a17c; all3 executable test hashes unchanged, diff vs main exactly4granted files. Starting combined-source verification before submission."
       },
-      "checkpoint_at": 1792907531,
+      "checkpoint_at": 1792908445,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
         "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
         "epoch": 1,
-        "expires_at": 1792918331,
+        "expires_at": 1792919245,
         "granted_at": 1792907229,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
