@@ -1631,6 +1631,14 @@
       "task_id": "243",
       "verb": "invalidate-review"
     },
+    "invalidate-256-9cd8cab8a13b11c144271301b7056661d494d9f4-8cc22dd155fd2f0845691d343b4bbb40d9480c1b": {
+      "actor": "github-actions[bot]",
+      "at": 1792891921,
+      "fingerprint": "536dfafd2f3bb769337eb6bc837e5259b1d2027aca649b1c60d6154cb632ffaf",
+      "status": "running",
+      "task_id": "256",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -20310,6 +20318,7 @@
       "planned_at": 1792890131,
       "planned_by": "Ken0u",
       "pr_number": 257,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Search all issue/PR history, current grants and reports. Preserve root edits, environments, datasets, research, annotations and deprecated PROGRESS.md. Depend on delivered254 and obtain one fresh committed isolated task grant. This is generated-only evaluation software, not completion of scientific62/66/67/71 or a new source assessment.",
@@ -20370,7 +20379,7 @@
         ]
       },
       "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "8cc22dd155fd2f0845691d343b4bbb40d9480c1b",
         "head_sha": "5e59a44de874ba2bcf710fd6a91c644a5580f5c6",
