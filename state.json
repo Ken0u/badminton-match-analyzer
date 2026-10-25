@@ -9850,6 +9850,26 @@
       "task_id": "98",
       "verb": "plan"
     },
+    "tiling-next-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792933796,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e49b7fc0a96b056ae9ef32461a002041d79d698d",
+        "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
+        "epoch": 1,
+        "expires_at": 1792944596,
+        "granted_at": 1792933796,
+        "host_id": "MSI",
+        "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
+        "spec_hash": "dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a"
+      },
+      "epoch": 1,
+      "fingerprint": "6ed63aaebe16013a9446586bf76952a6b4098a27dda6b17e7d754255e9b2d833",
+      "status": "granted",
+      "task_id": "299",
+      "verb": "next"
+    },
     "tiling-next-plan-v1": {
       "actor": "Ken0u",
       "at": 1792933607,
@@ -24513,7 +24533,18 @@
       }
     },
     "299": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "e49b7fc0a96b056ae9ef32461a002041d79d698d",
+        "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
+        "epoch": 1,
+        "expires_at": 1792944596,
+        "granted_at": 1792933796,
+        "host_id": "MSI",
+        "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
+        "spec_hash": "dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a"
+      },
+      "epoch": 1,
       "planned_at": 1792933607,
       "planned_by": "Ken0u",
       "spec": {
@@ -24574,7 +24605,7 @@
         ]
       },
       "spec_hash": "dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
