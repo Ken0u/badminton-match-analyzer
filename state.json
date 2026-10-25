@@ -532,6 +532,21 @@
       "task_id": "235",
       "verb": "submit"
     },
+    "contact-context-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792893105,
+      "fingerprint": "67042ff6f768961d71d4785fa7c85fa29246be0174e913043c6c76e1d15aea8f",
+      "status": "ready",
+      "task_id": "258",
+      "verb": "plan"
+    },
+    "contact-context-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792893105,
+      "fingerprint": "7e6f571c28e793e29ed78f16ddc8eefc5261056b841799a1d196a1025f744833",
+      "status": "ok",
+      "verb": "register"
+    },
     "editor-report-plan-v1": {
       "actor": "Ken0u",
       "at": 1792885363,
@@ -7850,6 +7865,14 @@
       "fingerprint": "f586b5980639b4a11418bbbdc575a282cceafb1df4e6d750291be2abf5cc7bdb",
       "status": "ready",
       "task_id": "256",
+      "verb": "plan"
+    },
+    "spec-258-68b4a8873b174f5d9154c467b57f9c0716b0b259a711ffc71dc62c781516e0d1": {
+      "actor": "Ken0u",
+      "at": 1792893105,
+      "fingerprint": "c36e522f031b8829ff7ccb00ec04c163118319a97e452278742bc90b44b472bc",
+      "status": "ready",
+      "task_id": "258",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -20438,6 +20461,62 @@
         "spec_hash": "f2890b4ff5dbb1e3ac504793f5e647b66bd39697e39408f6f41d690ef082050f"
       }
     },
+    "258": {
+      "epoch": 0,
+      "planned_at": 1792893105,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Revalidate all issue/PR history, current main and grants; prioritize this reproduced measurement bug. Preserve root edits, deprecated PROGRESS.md, environments, datasets, research, reviewed annotations and saved predictions. Obtain a fresh committed code-only grant and isolated branch/worktree, dependent on delivered256. Preserve generated baseline reproduction SHA256 8210c8d697594e3fca6300aa57b398a06172abb76a8838328dd247d42381450e. This does not complete scientific62/66/67/71 or provide labels.",
+          "Reproduce current-main contact scoring crediting a frame19 reference against a frame20 proposal across known cut20 at a0.12s tolerance; retain evidence that it falsely returns TP1/F1=1. Demonstrate the inherited recognition family/hitter/complete-event effect with generated labels before fixing it. No private images, labels, heldout inputs, inference or model changes.",
+          "Within the pure contact evaluator validate and collect known camera cuts from run metadata and court_context plus explicit reviewed camera additions, respecting existing current-context staleness checks. Reject malformed/noninteger/out-of-source cut metadata and stale known camera/court context rather than silently producing scores. Do not mutate inputs. Keep existing sparse/legacy artifacts without cut metadata supported without asserting their context is independently verified; preserve source-time matching and no nominal-FPS assumptions.",
+          "Split eligible reviewed ranges at every applicable known camera cut after merging touching coverage, so maximum-cardinality/minimum-time-error matching, tighter-tolerance metrics and inclusive interval support never bridge a cut. Preserve reviewed-frame/event denominators: two sides of a cut still count unmatched references and false proposals, not dropped footage or forced matches. Gaps between review windows stay separate; same-view matching and deterministic tie behavior remain unchanged.",
+          "Exclude a proposal whose inclusive possible-contact bounds or declared half-open evidence context crosses a camera cut or reviewed coverage gap, instead of truncating it to the navigation frame. Preserve explicit excluded candidate IDs/reasons and counts. Retain existing uncertain-reference window exclusion, unknowns, partial-run and non-live coverage behavior; do not invent point truth, infer boundary completeness or relax the exhaustive-review gate. Excluded proposal context cannot become interval support or an incorrect false positive in downstream recognition.",
+          "Recognition evaluation must consume exactly the contact evaluators eligible prediction/reference domain and camera-separated matches, including scene/context exclusions, without converting excluded or unknown/assisted truth into false labels. A post-cut proposal cannot make a pre-cut family/side/hitter/complete tuple correct. Keep unanswered/missed and false outputs explicit. Preserve existing API/CLI report contracts except additive coverage metadata and existing source/revision/run lineage.",
+          "Implement only7 reserved paths. Delegate disjoint contact evaluator/tests and recognition evaluator/tests to task-owned agents with explicit ownership; parent owns generated API/CLI regression coverage, docs, whole-source review, verification and publication. No independent review verdict is required under configured require_agent_review=false, and none may be fabricated.",
+          "Generated tests cover singles/doubles, cuts from each supported metadata location, cuts at review/run edges, touching/gapped coverage, multiple cuts, exact/uncertain proposals and crossing evidence ranges, rejected malformed/stale metadata, predicted/reviewed/corrected references, empty negative/missed sets, input immutability and matching counterexamples. Exercise actual evaluation API and CLI on registered completed generated contact and recognition runs, using no model. Verify fixed metrics, coverage IDs and pure/API/CLI parity, source binding and unchanged saved artifacts.",
+          "Run focused then full Python, Ruff lint/format, pip consistency, repository UTF8/LF/JSON/local links and diff checks with root venv and pinned isolated generated directories. Existing frontend contracts/UI/assets remain unchanged; do not rerun unrelated heavy inference. Preserve all failed attempts and original fixture lifetime evidence before any repeat. Record exact source/code/input and generated receipt hashes; passing tests are software behavior only.",
+          "Document reproduced before/after, inherited recognition impact, known-versus-unavailable camera metadata, precise half-open coverage versus inclusive proposal rules, generated checks and scientific limitations. Publish only granted paths on the granted branch, submit exact head/base/spec to controller, verify exact PR/main CI and independent complete public package/source/frontend/lock and both-image delivery. No manual merge, direct main push, raw coordination edits, CI retry/cancel/wake, auth/policy/workflow/deployment/publishing changes, dependency or paid service.",
+          "Bound implementation to4hours from grant,1GiB new outputs including failed checks and downloaded evidence, and3diagnosed repair rounds. No new image transfer/viewing/assessment, source acquisition, native inference/training, private scientific labels or consumed holdout access, model/threshold/default/promotion or PROGRESS edits. Complete scientific references stay0/2; all4research eligibility flags false; correct full-match singles/doubles annotations remain unestablished."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "256"
+        ],
+        "exclusions": [
+          "No scientific image/label assessment or transfer, data acquisition, inference/training/model changes, full-rally gate relaxation, new dependency, auth/policy/workflow/deployment/publishing changes, paid service, manual merge or deprecated PROGRESS edits."
+        ],
+        "limits": {
+          "max_output_bytes": 1073741824,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Prevent contact and recognition evaluation from crediting matches across known source camera boundaries or from scoring proposal intervals/evidence spanning excluded context, preserving reviewed coverage and explicit exclusions.",
+        "paths": [
+          "backend/badminton/evaluation.py",
+          "backend/badminton/recognition_evaluation.py",
+          "tests/test_evaluation.py",
+          "tests/test_recognition_evaluation.py",
+          "tests/test_contact_camera_evaluation_api.py",
+          "docs/CONTACT_EVALUATION_CONTEXT_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated contact/recognition cross-cut baseline and corrected pure/API/CLI metrics/coverage with preserved unknowns and artifacts; full required Python/lint/format/dependency/repository checks.",
+          "Exact PR/main CI and normal controller integration plus independently verified complete public delivery; no scientific accuracy inferred."
+        ]
+      },
+      "spec_hash": "ad6aa9782780058b9df99bc98046ff37036d407ab5170fc50f560eba2a964ef6",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -23598,6 +23677,18 @@
       "host_id": "MSI",
       "registered_at": 1792499263,
       "session_id": "7e09f59c-76d7-4231-a7be-c9e40572234e"
+    },
+    "MSI/9b465dc1a2ba4999bd038162102f230c": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792893105,
+      "session_id": "9b465dc1a2ba4999bd038162102f230c"
     },
     "MSI/broadcast179-review-6f42d839a2": {
       "actor": "Ken0u",
