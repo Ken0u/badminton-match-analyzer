@@ -1081,6 +1081,20 @@
       "task_id": "93",
       "verb": "review-result"
     },
+    "goal-01a1714f-next": {
+      "actor": "dootz1",
+      "at": 1792902579,
+      "fingerprint": "8c4a85a9624261a84ac286ea6b0f74cab0e82a9d3ea9fcaf2632ca7f2056dbe1",
+      "status": "idle",
+      "verb": "next"
+    },
+    "goal-01a1714f-register": {
+      "actor": "dootz1",
+      "at": 1792902579,
+      "fingerprint": "70971a04d077e1c3fd120c3561a87b6e476c4aa820fd416efdf4d9f7f3a067c5",
+      "status": "ok",
+      "verb": "register"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -24225,6 +24239,18 @@
       "host_id": "LAPTOP-FVMV3PD6",
       "registered_at": 1792811424,
       "session_id": "cuda-ready-01a16bd6"
+    },
+    "LAPTOP-FVMV3PD6/goal-01a1714f": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "LAPTOP-FVMV3PD6",
+      "registered_at": 1792902579,
+      "session_id": "goal-01a1714f"
     },
     "LAPTOP-FVMV3PD6/roadmap-01a16c1a": {
       "actor": "dootz1",
