@@ -8437,6 +8437,21 @@
       "task_id": "97",
       "verb": "submit"
     },
+    "selection294-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792930286,
+      "fingerprint": "613e2f584b1126dde85c509d4b0acbbbb06e40e44c3d9637b4f665be73bd0954",
+      "status": "ready",
+      "task_id": "294",
+      "verb": "plan"
+    },
+    "selection294-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792930286,
+      "fingerprint": "41710c396a7b0150d91cfb8219ef478dd5cfe49657b58e6fdf4fc0258002631d",
+      "status": "ok",
+      "verb": "register"
+    },
     "shuttle139-review-v2-grant-cfd18714": {
       "actor": "Ken0u",
       "at": 1792485587,
@@ -9501,6 +9516,14 @@
       "fingerprint": "17302226259dbd4f824d7f6700f39d94cb2ea370ef17ce6c4c23345fac26caae",
       "status": "ready",
       "task_id": "293",
+      "verb": "plan"
+    },
+    "spec-294-896a2aca76029b5fb9699d4bbe56b863c37a9cac84b72ac46835a58a301c7eac": {
+      "actor": "dootz1",
+      "at": 1792930286,
+      "fingerprint": "ad355b07425d99c26b74f6e551f3942a9c6e3c263ce57e74812a7f2c5f7d5fa7",
+      "status": "ready",
+      "task_id": "294",
       "verb": "plan"
     },
     "spec-295-a1a6c97573229f514f48979cacd330ca1458e52084401d516cf0c473f91cd1d7": {
@@ -24185,6 +24208,61 @@
         "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8"
       }
     },
+    "294": {
+      "epoch": 0,
+      "planned_at": 1792930286,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Refresh current main, approved roadmap, bug review, collaboration/configuration, complete duplicate issue/PR history and active grants. Preserve delivered288/293, other-host295, proposed sensitive279 and all local research/environments/root edits/deprecated PROGRESS. Obtain a fresh committed routine code-only grant and isolated worktree before reproduction/implementation.",
+          "Original Windows host pregrant audit verifies two unchanged cached development perception/context sets from288: singles970dbd8adfe548d8 and doublesc406a1187130b845. Freeze the audit hash, four original run hashes/checkpoint metadata, source metadata, clocks, calibration/camera/scene context, catalog and opaque annotation-document hashes. Use only these immutable existing inputs for baseline/current proposal replay. No model loads, video decoding, image inspection/transfer, scientific-label reading, source acquisition or research Store writes. Missing evidence stops native publication without replacement.",
+          "Freeze generated singles/doubles serve/end cases in which valid declared selection_context_start_frame/selection_context_end_frame extend beyond the immediate motion context. Reproduce whether current proposals omit a consumed dependency and existing boundary evaluation grants unsupported interval credit. Include transitive history from the actual selector if available without loading models. Preserve baseline proof and immutable inputs; a negative investigation may deliver only a report.",
+          "If reproduced, conservatively include the complete declared selection dependencies of consumed shuttle observations and preceding-speed dependencies in paired half-open candidate evidence bounds. Preserve all original valid candidate fields/count/order/times/uncertainty/numerical evidence, thresholds and defaults; only evidence ranges change on valid extended-history cases. Absent legacy metadata keeps current semantics. Invalid, incomplete, out-of-range, missing, excluded, cut/scene/source-clock-crossing dependencies cannot supply proposal evidence; retain explicit validation failure or abstention rather than clip, silently bridge barriers, fabricate missing history or rewrite original artifacts. Inclusive boundary timing remains distinct.",
+          "Generated regressions cover singles/doubles, both kinds, constant/VFR/nonzero/high-rate clocks, paired and absent legacy fields, malformed types/reversed/future/out-of-input bounds, transitive bounds, both source ranges and native clock/cut/scene/missing barriers. Compare all previous fields under frozen baseline/current logic where evidence is eligible; affected invalid evidence may abstain. Preserve complete review/reference/excluded denominators and existing evaluator/matching policy.",
+          "Exercise actual generated Store saved proposals, API job/run and existing rally evaluation paths. Partial review covering only old evidence must not earn compatibility; complete eligible evidence remains usable. Verify source metadata/timestamps/annotations, input artifact bytes and old saved proposals unchanged. No API/schema/storage/evaluator changes. Record fresh cached baseline/current replay binding exact code/source/model-record/input hashes with explicit no-inference limitations for required native evidence.",
+          "Run focused rally/API/evaluation/scene/contact/recognition tests and required Python3.10 full/Ruff/format/pip/repository UTF8-LF/JSON/local-link/diff checks with existing environment, pinned disposable root/data and fresh short ignored temporary paths. Preserve failed attempts, executable/test before/after hashes, independently terminal actual launcher/worker/descendant lifetimes; timeout alone never permits restart.",
+          "Document actual before/after measurements, unchanged candidate controls, dependency arithmetic and cached-replay limitations. Publish exactly five granted paths via focused commit/PR, exact-head CI/configured review/controller integration, exact merged-main verification and independent complete public package/source/frontend/lock/45-manifest/both anonymous image-manifest audit. No manual merge/main push/raw coordination edit/workflow retry/cancel/wake.",
+          "Four hours from grant,512MiB new retained output,three diagnosed repair rounds,no paid service. No scientific assessment/labels/images/new inference/training/holdout/model promotion/deployment, auth/policy/workflow/dependency/native AV/storage/API/schema/evaluator changes or PROGRESS access/update. Scientific references remain0/2; all four eligibility flags false; downstream62/66/67/71 incomplete. Request scope before extra paths/resources."
+        ],
+        "artifacts": {
+          "development_cache_audit_sha256": "6794ae6f7592e2fb476a91aa63f2018d94481deec4eaf5433e6b5d88aa9f541b"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "288",
+          "293"
+        ],
+        "exclusions": [
+          "No scientific assessment or source acquisition, images/model execution, evaluation policy/default/threshold/timing change, research Store mutation, sensitive policy/dependency/deployment change or deprecated PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Investigate and preserve the declared transitive shuttle-selection evidence used by newly generated rally boundary proposals, keeping valid detection and timing fields unchanged.",
+        "paths": [
+          "backend/badminton/rallies.py",
+          "tests/test_rallies.py",
+          "tests/test_rally_api.py",
+          "tests/test_rally_selection_evidence.py",
+          "docs/RALLY_SELECTION_EVIDENCE_REPORT.md"
+        ],
+        "priority": 25,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated before/after full transitive selection evidence and unchanged valid candidate fields, actual saved Store/API/evaluation paths and unchanged original bytes.",
+          "Read-only frozen cached replay with exact source/checkpoint/input/code bindings; focused/full checks, observed terminal lifetimes, exact CI/controller/main and independently verified full public delivery."
+        ]
+      },
+      "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9",
+      "status": "ready"
+    },
     "295": {
       "checkpoint": {
         "artifacts": [
@@ -27391,6 +27469,18 @@
       "host_id": "MSI",
       "registered_at": 1792547823,
       "session_id": "07727ebc-b884-496e-87ba-23c262d285a3"
+    },
+    "MSI/0af5ed5dd5d7465d8169fa400eafea50": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "development_cache_audit_sha256": "6794ae6f7592e2fb476a91aa63f2018d94481deec4eaf5433e6b5d88aa9f541b"
+      },
+      "capabilities": [
+        "cpu"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792930286,
+      "session_id": "0af5ed5dd5d7465d8169fa400eafea50"
     },
     "MSI/0d88562017ab4d47ae7e5e55d460d7cd": {
       "actor": "Ken0u",
