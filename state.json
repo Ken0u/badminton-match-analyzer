@@ -6227,6 +6227,13 @@
       "task_id": "250",
       "verb": "next"
     },
+    "rally262-input-registration-v1": {
+      "actor": "Ken0u",
+      "at": 1792898457,
+      "fingerprint": "27eb5aa01ef67898a12426aeb74a704b2990765018f48d3719644ec0a511841c",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally262-next-v1": {
       "actor": "Ken0u",
       "at": 1792898314,
@@ -24084,14 +24091,17 @@
     },
     "MSI/7edc859bbd9747e0aa21c74ad1ad103d": {
       "actor": "Ken0u",
-      "artifacts": {},
+      "artifacts": {
+        "joined250-aggregate": "f76b689df32d35d0d79c45cb13a7676c2398529d6ca988b797a0dbd5afe5fdc9",
+        "joined250-ledger": "cdf01c00d00134825d8dd095708dfabe1ca9aa562e34ab40b4257bfca179b40d"
+      },
       "capabilities": [
         "cpu",
         "windows",
         "amd64"
       ],
       "host_id": "MSI",
-      "registered_at": 1792898153,
+      "registered_at": 1792898457,
       "session_id": "7edc859bbd9747e0aa21c74ad1ad103d"
     },
     "MSI/9b465dc1a2ba4999bd038162102f230c": {
