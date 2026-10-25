@@ -7201,6 +7201,15 @@
       "task_id": "282",
       "verb": "checkpoint"
     },
+    "rally282-checkpoint-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792920985,
+      "epoch": 1,
+      "fingerprint": "67ca47caef3a9cbc392d79f850e51e4e79649408cf6469333127dfafb72f6d13",
+      "status": "running",
+      "task_id": "282",
+      "verb": "checkpoint"
+    },
     "rally282-checkpoint-resumed-v1": {
       "actor": "Ken0u",
       "at": 1792920510,
@@ -7209,6 +7218,15 @@
       "status": "running",
       "task_id": "282",
       "verb": "checkpoint"
+    },
+    "rally282-submit-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792921067,
+      "epoch": 1,
+      "fingerprint": "ab8bd0ed381934000c043db3a7a5a300dd7f4d02af4ff9efab985dbbc6035697",
+      "status": "review",
+      "task_id": "282",
+      "verb": "submit"
     },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
@@ -23056,25 +23074,20 @@
     },
     "282": {
       "checkpoint": {
-        "artifacts": [
-          ".cache/rally282-interrupted-full-v1.json",
-          ".cache/rally282-working-base-v2.json",
-          ".cache/rally282-check-focused-v2",
-          ".cache/rally282-check-all-v2",
-          ".cache/rally282-generated-proof-v1.json"
-        ],
         "branch": "codex/issue-282-compare-prospectively-supplied-native-ra",
-        "head_sha": "3a022197096026bbba54bdf0d6d44750397d8299",
-        "remaining": "Wait for the same full-v2 checker to become terminal and inspect actual results/source/process evidence; then final actual-count docs, six-path commit/PR, exact CI/controller and independently verified full public delivery.",
-        "summary": "Resumed the same grant after interruption. Original full-v1 observation handle is absent; all184 recorded original test lifetimes are independently terminal, checker command absent, source unchanged, and no pytest completion/exit status exists. Preserved that run as incomplete without claiming success. Rebased unpublished commit74cafa8 over delivered nonoverlapping281 main ee9d6ca; all six owned file bytes unchanged. New focused-v2:1000 passed, all197 observed lifetimes terminal and source stable. Full-v2 now runs in a fresh directory; lint/format pass, pytest past30percent with no failures so far. Six generated proof scenarios preserve all native frames and original variants; separate adjudication does not change A/B counts. No scientific input/image/label/prediction/private-plan access, Store/model/assessor or image transfer. Original work and PROGRESS preserved."
+        "evidence_sha256": "070194fb6032ab433684d17ff5db4d80f1c3c8093c90acfe0900fea448348baa",
+        "head_sha": "7e7484dc223885baf9f086a48d9b60b6cc3b8951",
+        "pr_number": 286,
+        "remaining": "Exact PR/main CI, controller integration and independently verified full public wheel/source/frontend/lock/both-image delivery.",
+        "summary": "All 1000 focused/4310 full Python tests pass, 4 optional skips; all required checks pass. Six generated scenarios preserve full native coverage, original variants and separate adjudication. Stable final source and terminal lifetimes verified; scientific/image access zero. Local receipt SHA256 070194fb6032ab433684d17ff5db4d80f1c3c8093c90acfe0900fea448348baa."
       },
-      "checkpoint_at": 1792920510,
+      "checkpoint_at": 1792920985,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7d3cca2e749327583ec852538ba981c74762613d",
         "branch": "codex/issue-282-compare-prospectively-supplied-native-ra",
         "epoch": 1,
-        "expires_at": 1792931310,
+        "expires_at": 1792931785,
         "granted_at": 1792917162,
         "host_id": "MSI",
         "session_id": "934e803e7ccc45c9a71d2460ce3c7f53",
@@ -23083,6 +23096,7 @@
       "epoch": 1,
       "planned_at": 1792916979,
       "planned_by": "Ken0u",
+      "pr_number": 286,
       "spec": {
         "acceptance": [
           "Audit complete issue/PR history, delivered250/262/270/278, current main and active reservations before planning; obtain a fresh isolated code-only grant. Existing270 validates one chronological stream but has no cross-stream consumer for the prospective contract. Preserve historical250 joins, all original scientific evidence,0/2 reference result, all four false eligibility flags, deprecated PROGRESS/root edits and other-host281 import work.",
@@ -23133,7 +23147,13 @@
         ]
       },
       "spec_hash": "1f1299e2761de712ccf989ae9eda13f6bd21ce18746d7af43d28d4f837ed02e4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9",
+        "head_sha": "7e7484dc223885baf9f086a48d9b60b6cc3b8951",
+        "pr_number": 286,
+        "spec_hash": "1f1299e2761de712ccf989ae9eda13f6bd21ce18746d7af43d28d4f837ed02e4"
+      }
     },
     "284": {
       "checkpoint": {
