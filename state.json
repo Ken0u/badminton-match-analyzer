@@ -9885,6 +9885,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "tiling299-checkpoint-frozen-v1": {
+      "actor": "Ken0u",
+      "at": 1792935673,
+      "epoch": 1,
+      "fingerprint": "370191d22895726be358371d05e447432c6b0d2fc3b439ed5204aa989fb71a7e",
+      "status": "running",
+      "task_id": "299",
+      "verb": "checkpoint"
+    },
     "tiling299-checkpoint-implementation-v1": {
       "actor": "Ken0u",
       "at": 1792935032,
@@ -24544,16 +24553,19 @@
     "299": {
       "checkpoint": {
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
-        "remaining": "Finish exact-source full checks, commit/push tested code, freeze and publicly timestamp the immutable recipe, verify original-host process/Store state, then run control before any candidate. Complete final scoring/report/CI/controller/main/public delivery without promotion.",
-        "summary": "Implemented the fixed four-tile adapter and research provenance, strict optional protocol validation, historical physical-only control projection and independent complete selector replay. Original input graph still verifies60cases/50views/13499rows.171focused tests pass; initial full4602passed/four optional skips. Generated null-layout before/after proof preserved; final exact-source full check is running after the correction. No native model predictions or external image assessment/transfer have started. Existing root PROGRESS edits and research are preserved."
+        "experiment_sha256": "d2a848ad17b20314da8e723d3da213736202a471532bdf114c0b7837a31a4098",
+        "head_sha": "f6c26cb60d38809fdbac1b9365f80d114587997b",
+        "protocol_sha256": "23d5c71bf0cc69be6d5ca8f80184f7dff4dc74a548d23891d2557c4c3ee1445b",
+        "remaining": "Original-host prelaunch, unchanged control compatibility gate before candidate, raw terminal seal before interpretation, final aggregate report and exact CI/controller/main/independent public delivery.",
+        "summary": "Frozen **before native predictions**: source `f6c26cb60d38809fdbac1b9365f80d114587997b`, spec `dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a`, epoch1. Final local 4,605 Python tests pass/four optional skips,171 focused; required checks pass and 1998 independently observed lifetimes are terminal. All60 familiar cases/50 complete views/13499 native rows and original source/label/checkpoint/baseline graph verified. No external image transfer or new labels/training/default change."
       },
-      "checkpoint_at": 1792935032,
+      "checkpoint_at": 1792935673,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e49b7fc0a96b056ae9ef32461a002041d79d698d",
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
         "epoch": 1,
-        "expires_at": 1792945832,
+        "expires_at": 1792946473,
         "granted_at": 1792933796,
         "host_id": "MSI",
         "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
