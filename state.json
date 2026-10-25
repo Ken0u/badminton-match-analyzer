@@ -365,6 +365,26 @@
       "task_id": "309",
       "verb": "submit"
     },
+    "capacity-next-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792966631,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
+        "branch": "codex/issue-311-measure-whether-convolution-wide-synthet",
+        "epoch": 1,
+        "expires_at": 1792977431,
+        "granted_at": 1792966631,
+        "host_id": "MSI",
+        "session_id": "f415707f271945a68a71ac06d42abc41",
+        "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
+      },
+      "epoch": 1,
+      "fingerprint": "77da4ebbb165011b4115e495e2374365d9ce6a76857250cac0c17991f70d7521",
+      "status": "granted",
+      "task_id": "311",
+      "verb": "next"
+    },
     "capacity-next-plan-v1": {
       "actor": "Ken0u",
       "at": 1792966438,
@@ -25642,7 +25662,18 @@
       }
     },
     "311": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
+        "branch": "codex/issue-311-measure-whether-convolution-wide-synthet",
+        "epoch": 1,
+        "expires_at": 1792977431,
+        "granted_at": 1792966631,
+        "host_id": "MSI",
+        "session_id": "f415707f271945a68a71ac06d42abc41",
+        "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
+      },
+      "epoch": 1,
       "planned_at": 1792966438,
       "planned_by": "Ken0u",
       "spec": {
@@ -25709,7 +25740,7 @@
         ]
       },
       "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
