@@ -312,6 +312,21 @@
       "task_id": "179",
       "verb": "review-result"
     },
+    "camera-next-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792963198,
+      "fingerprint": "11e63f62d79a2765cad3bdc1ccb2a1b28aa7992c2d6cd9d50f4f5b2fd7285b20",
+      "status": "ready",
+      "task_id": "309",
+      "verb": "plan"
+    },
+    "camera-next-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792963198,
+      "fingerprint": "6a96f2e9e85b958ea2536b3006f1b81148b3c1994e6f73602a2d762171152dcb",
+      "status": "ok",
+      "verb": "register"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -9816,6 +9831,14 @@
       "fingerprint": "fe8f9d9075380d2643dcfca7ea2738a00bf8f416dc6c94d0383e8e47c14fafa3",
       "status": "ready",
       "task_id": "307",
+      "verb": "plan"
+    },
+    "spec-309-133d4f4e5930fdc6785d310063be926eab6dea23e2fdb9e8837a04ef9f63118e": {
+      "actor": "Ken0u",
+      "at": 1792963198,
+      "fingerprint": "1f19169ea5f9852542c3a34786e8a705e7cdb5186abbb357153a5f06b2bea183",
+      "status": "ready",
+      "task_id": "309",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -25448,6 +25471,57 @@
         "spec_hash": "6842fb40027d75e61465bb8f6b6112c4b51acff456351354d7c90a02601b3fa0"
       }
     },
+    "309": {
+      "epoch": 0,
+      "planned_at": 1792963198,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Continue approved Data and evaluation/Perception camera-quality milestone from #38/#39 after #307. Search complete issue/PR history and current grants; preserve original checkout edits, environments, datasets, processes, models, annotations, predictions and deprecated PROGRESS. Obtain a fresh committed code-only grant and isolated worktree before production edits.",
+          "Implement a pure evaluator for existing raw stage=segments artifacts and a versioned explicit review JSON document. Require matching nonempty source IDs and SHA256 identities on video/run/reference, complete finite nonnegative strictly increasing native timestamps, strict native frame/range/time types and unchanged20microsecond source-time tolerance. Validate all supplied original rows and review entries before eligibility filtering, including incomplete windows. Do not decode media, inspect scientific evidence or infer source truth from valid metadata.",
+          "Require uncorrected raw scans: reject reviewed/corrected overlay fields or reviewed=true boundaries; require unique sorted cut_frames and matching unique sorted boundaries with reasons visual_cut/timestamp_discontinuity and native time identity. Validate positive finite declared timestamp gap threshold and exact agreement of gap reasons with native step discontinuities within run interior. Keep gap boundaries out of visual camera metrics and report their complete count separately; do not treat a timestamp break as a visually proven edit.",
+          "Review schema1 binds source identity and nonoverlapping half-open native windows, unique IDs, explicit boolean cuts_complete and original cut records id/frame/time_s. Complete reviewed windows provide exhaustive positive and negative transition coverage only where both adjacent frames lie within the same window and run, excluding declared native gaps. Incomplete windows remain skipped with full counts; unreviewed/gap/edge references and predictions remain explicit excluded denominators. Never silently treat missing review as no cuts, merge adjacent windows, match across windows or use FPS as a source clock.",
+          "For eligible exact reference cuts compute one-to-one maximum-cardinality then minimum absolute native-time-error matching at explicit finite nonnegative tolerance_s(default0.12), separately per review window. Return TP/FP/FN/precision/recall/F1 and native-time errors with undefined ratios as null, missing/no-complete-coverage status explicit, retained all original/eligible/excluded counts and matched/unmatched IDs in private report. Exact references are input claims, not independently established truth; uncertain transitions require incomplete windows rather than fabricated exact timestamps. No camera/live/replay/rally/identity accuracy claim follows from generated tests.",
+          "Provide offline scripts/evaluate_camera.py with explicit --video/--timestamps/--run/--reference/--output and optional --tolerance-s. Reuse unchanged bounded ordinary JSON read/strict duplicate-nonfinite JSON rejection utilities. Bind hashes to captured input bytes, limit per-file16MiB/combined64MiB and exclusive result64MiB. Reject symlink/reparse paths and conflicting/existing outputs; validate before writing. Stdout contains aggregate status/counts/metrics only, detailed identities remain in private result; malformed input exits2 without input or existing output changes. No Store/credential/network/model use.",
+          "Meaningful generated pure and real CLI subprocess tests cover exact/offset/missed/extra cuts, competing one-to-one matches, VFR/nonzero clocks, timestamp gaps vs visual edits, window edges/adjacency/partial runs, incomplete/no review, negative-only windows, malformed hidden rows, source conflicts, corrected artifacts, strict types/times, duplicate/nonfinite JSON and preserved inputs/existing outputs. Run focused/full pytest and required Ruff/format/dependency/repository UTF8-LF/JSON/local-link/diff checks with existing virtualenv. Fixed source bytes throughout verification; preserve diagnosed failures and terminal process evidence.",
+          "Publish focused PR for normal exact-head CI/controller merge, verify merged-main and independently verify complete public source/wheel/frontend/lock/all47 protocol manifests and both anonymous image manifest/config/descriptors. Five paths only. No manual merge/main push, coordination writes, workflow retries/cancels/wakes, sensitive automation/auth/storage/dependency/deployment/default/schema changes. New scientific sessions/image payload/inference/training zero, no consumed holdout access or paid service. Keep0/2 complete scientific references and full annotation accuracy unproven."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "307"
+        ],
+        "exclusions": [
+          "No original scientific evidence/label access, source download, image transfer/assessor, detector/default/model/metric changes to existing evaluators, inference/training/promotion, app API/UI/storage edits, sensitive workflow/policy/auth/dependency/deployment changes or deprecated PROGRESS edits."
+        ],
+        "limits": {
+          "max_output_bytes": 2147483648,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Evaluate raw camera-cut detections against explicitly complete native-source review windows, retaining missing review and timestamp discontinuities separately without changing detection or accepting reviewed predictions as automatic output.",
+        "paths": [
+          "backend/badminton/camera_evaluation.py",
+          "scripts/evaluate_camera.py",
+          "tests/test_camera_evaluation.py",
+          "tests/test_camera_evaluation_cli.py",
+          "docs/CAMERA_EVALUATION_REPORT.md"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated pure/CLI camera detection scoring with strict native provenance and explicit full transition/review/excluded denominators.",
+          "Required focused/full checks, exact PR/main CI, controller integration and independent complete public delivery."
+        ]
+      },
+      "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -28790,6 +28864,19 @@
       "host_id": "MSI",
       "registered_at": 1792893105,
       "session_id": "9b465dc1a2ba4999bd038162102f230c"
+    },
+    "MSI/9f039f325d2a441b97eb51521ff283ef": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792963198,
+      "session_id": "9f039f325d2a441b97eb51521ff283ef"
     },
     "MSI/aac920ab35ff422abe970597d106ffb6": {
       "actor": "Ken0u",
