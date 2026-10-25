@@ -5557,6 +5557,26 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "public-protocol-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792909623,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
+        "branch": "codex/issue-275-make-public-source-distributions-contain",
+        "epoch": 1,
+        "expires_at": 1792920423,
+        "granted_at": 1792909623,
+        "host_id": "MSI",
+        "session_id": "7c82293f597c4220a41b086449a033b5",
+        "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41"
+      },
+      "epoch": 1,
+      "fingerprint": "c149bffb5c2d5e0e992c52cdfdb4920d02d68c6b73e86aaab5b968173bbed01b",
+      "status": "granted",
+      "task_id": "275",
+      "verb": "next"
+    },
     "public-protocol-plan-v1": {
       "actor": "Ken0u",
       "at": 1792909462,
@@ -22102,7 +22122,18 @@
       "status": "ready"
     },
     "275": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
+        "branch": "codex/issue-275-make-public-source-distributions-contain",
+        "epoch": 1,
+        "expires_at": 1792920423,
+        "granted_at": 1792909623,
+        "host_id": "MSI",
+        "session_id": "7c82293f597c4220a41b086449a033b5",
+        "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41"
+      },
+      "epoch": 1,
       "planned_at": 1792909462,
       "planned_by": "Ken0u",
       "spec": {
@@ -22151,7 +22182,7 @@
         ]
       },
       "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
