@@ -1,5 +1,21 @@
 # Bug review and implementation progress
 
+The [public-protocol packaging repair](PUBLIC_PROTOCOL_PACKAGING_REPORT.md)
+addresses an actual public source archive that included protocol-dependent tests
+but omitted all 45 tracked JSON manifests. Explicit source-file inclusion and
+exact archive membership/byte checks now reject missing, changed, duplicate or
+untracked data without adding protocols to the runtime wheel. All 53 focused
+and 4,184 full Python tests pass, with four optional full-suite skips, plus
+required lint/format, dependencies, repository and whitespace checks. Actual
+build/installed HTTP verification retains all 45 public files and excludes both
+generated private canaries; stable-source, terminal-lifetime and final delivery
+evidence is tracked on the owning issue. The initial monitoring-wrapper exit
+race and successful underlying consumer remain preserved separately. Further
+generated review caught a rootless extra data entry bypassing the release-directory
+checks; one consistent archive root and three real regressions now reject it.
+The added-test lint-only failure remains preserved. This changes source
+reproducibility, not scientific acceptance or annotation accuracy.
+
 The [source timestamp-gap evaluation repair](CONTACT_TIMESTAMP_EVALUATION_REPORT.md)
 addresses a generated frame-19/frame-20 match across a 0.11-second source gap
 that incorrectly earned contact, stroke-family and complete-event F1 1.0.
