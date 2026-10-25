@@ -9404,6 +9404,14 @@
       "task_id": "290",
       "verb": "plan"
     },
+    "spec-293-9ee9184632c30263b9cba535c6bc0bc1d449b4ac361979040eb063c3fe7db2d2": {
+      "actor": "Ken0u",
+      "at": 1792926771,
+      "fingerprint": "3f7065a9a9bd8b08b723a188dbadd9729903386bc1e66108a2bfd0e3680a1fee",
+      "status": "ready",
+      "task_id": "293",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -11049,6 +11057,21 @@
       "status": "done",
       "task_id": "97",
       "verb": "verify-main"
+    },
+    "video-stability-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792926771,
+      "fingerprint": "57ff7cb1ce7a969a34b242876300c57081a105e25934b8da12ed02826a7020a2",
+      "status": "ready",
+      "task_id": "293",
+      "verb": "plan"
+    },
+    "video-stability-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792926771,
+      "fingerprint": "d62742615a6b1902b1468cdbeb896430f88ff07ca14a900fc265afa3067aaa7c",
+      "status": "ok",
+      "verb": "register"
     },
     "windows-active-next-20261019-v1": {
       "actor": "Ken0u",
@@ -23869,6 +23892,61 @@
         "spec_hash": "36d40d8e8d3cef0f6f24649f6008dc711b99301da59820f146b73036af332043"
       }
     },
+    "293": {
+      "epoch": 0,
+      "planned_at": 1792926771,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Audit complete issue/PR history, current authoritative queue and all active reservations. Preserve generated four-case failure evidence and obtain an isolated code-only committed grant. This is distinct from delivered173 native coverage,243 cache invalidation,283 import publication and the other-host290 audio repair; preserve all of them and deprecated PROGRESS/root edits.",
+          "After successful full native iteration and normal media teardown, revalidate the registered source identity/digest with the existing cache-aware source resolver. Reject byte changes or disappearance/replacement using the existing appropriate source error contracts. Do not move FFmpeg restoration/teardown, validate only before teardown, compare only stale metadata or rehash every yielded frame.",
+          "Keep original frame/PTS/orientation/range/completeness guards and intact-source output unchanged. Preserve decoder/consumer exception precedence, explicit partial early-close/cancellation behavior and no decoding past end-1. A streaming consumer may see provisional frames before exhaustion; this task does not add snapshot isolation, validate deliberately partial reads, detect hidden or fully restored transient changes, or guarantee against writes after final validation.",
+          "Add generated real-PyAV regressions for during-decode and normal-teardown mutation, same-size/restored-mtime replacement, removal, nonzero VFR subranges/rotations, unchanged controls, early close and decoder/teardown failure precedence. Exercise the actual camera scan output path so changed-source reads cannot publish new output or overwrite a preserved existing output; original source metadata/timestamps/annotations remain unchanged. Tests use generated media and disposable Stores only, without models or scientific inputs.",
+          "Run focused video/native-frame/segments/ingest/orientation and full Python/Ruff/format/pip/repository UTF8/LF/JSON/local-link/diff checks using existing3.10venv, fresh pinned generated root/data and portable verified tools. Record stable executable/test hashes and independently terminal observed launcher/worker/descendant lifetimes; preserve failed attempts and at most3 diagnosed repair rounds.",
+          "Document failure/repair semantics and timing, partial-read and filesystem-observability limitations. Publish only five granted files via focused PR, exact CI and controller integration; verify exact merged main and full public package/source/frontend/lock/45-manifest/both-image delivery independently. No manual merge/main push/raw coordination edit/workflow retry/cancel/wake.",
+          "Bound to4h from grant and512MiB new retained outputs. No scientific frames/labels/private review plans, image transfer/assessor, source acquisition, inference/training, held-out scoring, model/default changes, research Store mutations, fee/service, auth/workflow/dependency/deployment changes or PROGRESS edits. Complete scientific references stay0/2 and all four eligibility flags false."
+        ],
+        "artifacts": {
+          "generated_failure_sha256": "481a5eab552a2bca55a8364476079f26825401f1d1b1dd12543fad722f065a55"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "173",
+          "243",
+          "283",
+          "288"
+        ],
+        "exclusions": [
+          "No scientific assessment/input/image transfer, model inference/training/promotion, timestamp/coordinate semantics change, partial-read validation, research-state changes, policy/auth/workflow/dependency/deployment edits or PROGRESS updates."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Reject observable source-byte changes during a fully consumed native video frame read, including normal decoder teardown, before downstream camera scans can publish a successful original-source artifact.",
+        "paths": [
+          "backend/badminton/video.py",
+          "tests/test_video_frames.py",
+          "tests/test_segments.py",
+          "docs/VIDEO_SOURCE_STABILITY_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated native-source mutations rejected after media teardown; real camera scans preserve prior outputs and intact-source frame/clock/orientation behavior.",
+          "Focused/full project checks, source/process stability, exact PR/main/controller and independently verified complete public delivery."
+        ]
+      },
+      "spec_hash": "a8bd4066c08f21c15542f5a47bc678eeecc46e3e134e7a2f1d6aa42a6dcd8fa7",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -27164,6 +27242,18 @@
       "host_id": "MSI",
       "registered_at": 1792893105,
       "session_id": "9b465dc1a2ba4999bd038162102f230c"
+    },
+    "MSI/aac920ab35ff422abe970597d106ffb6": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "generated_failure_sha256": "481a5eab552a2bca55a8364476079f26825401f1d1b1dd12543fad722f065a55"
+      },
+      "capabilities": [
+        "cpu"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792926771,
+      "session_id": "aac920ab35ff422abe970597d106ffb6"
     },
     "MSI/b80f2c05765e40ff9fa024c1530840f1": {
       "actor": "Ken0u",
