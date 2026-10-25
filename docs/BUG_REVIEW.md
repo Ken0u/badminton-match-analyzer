@@ -1,5 +1,17 @@
 # Bug review and implementation progress
 
+The [prospective review comparison](RALLY_REVIEW_COMPARISON_REPORT.md) fills the
+gap between planned native review and the single-stream document validator.
+It retains the full native denominator, every overlap occurrence, explicit
+missing/unknown/conflicting readings and qualified document-local variants.
+Optional adjudication stays separate; agreement supplies no source truth or
+assessor independence. All 1,000 focused and 4,346 full Python tests pass, with
+four optional full-suite skips, plus required lint/format, dependencies,
+repository and whitespace checks. Stable source/terminal-process evidence,
+the preserved interrupted run and exact delivery records belong on the owning
+issue. No scientific input or image transfer; complete references remain 0/2
+and all four eligibility flags false.
+
 The [boundary-evidence evaluation repair](BOUNDARY_EVIDENCE_EVALUATION_REPORT.md)
 addresses six generated serve/ending proposals that incorrectly received perfect
 timing and interval credit despite declared evidence crossing a camera cut,
