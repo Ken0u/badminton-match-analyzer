@@ -22345,6 +22345,7 @@
       }
     },
     "275": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40172505727",
       "checkpoint": {
         "branch": "codex/issue-275-make-public-source-distributions-contain",
         "evidence_sha256": "861bacc56553bca25fa350c16665f339d775f0168c124d69b969d22cdf409ed1",
@@ -22366,7 +22367,7 @@
         "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792912496,
