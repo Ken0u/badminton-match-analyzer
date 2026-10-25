@@ -1279,6 +1279,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "goal-01a17154-after290-next-v1": {
+      "actor": "dootz1",
+      "at": 1792927448,
+      "fingerprint": "24809c3adc13414ef903fefed464ed17d200ff6f62a4cdb4f5b13e071ee962c9",
+      "status": "idle",
+      "verb": "next"
+    },
     "goal-01a17154-check284-final-tests-v1": {
       "actor": "dootz1",
       "at": 1792920116,
@@ -11095,6 +11102,26 @@
       "at": 1792927019,
       "fingerprint": "f8f652bac8751506d8a7f29f9f1e619130d6da832aa2675efe947717fafb12d6",
       "status": "idle",
+      "verb": "next"
+    },
+    "video-stability-next-v2": {
+      "actor": "Ken0u",
+      "at": 1792927448,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
+        "branch": "codex/issue-293-reject-observable-source-byte-changes-du",
+        "epoch": 1,
+        "expires_at": 1792938248,
+        "granted_at": 1792927448,
+        "host_id": "MSI",
+        "session_id": "aac920ab35ff422abe970597d106ffb6",
+        "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8"
+      },
+      "epoch": 1,
+      "fingerprint": "39d98ed3b6ecb13c86312295eccfef4db9ced007a45021b3dc7a80ef307ff184",
+      "status": "granted",
+      "task_id": "293",
       "verb": "next"
     },
     "video-stability-plan-v1": {
@@ -23948,7 +23975,18 @@
       }
     },
     "293": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
+        "branch": "codex/issue-293-reject-observable-source-byte-changes-du",
+        "epoch": 1,
+        "expires_at": 1792938248,
+        "granted_at": 1792927448,
+        "host_id": "MSI",
+        "session_id": "aac920ab35ff422abe970597d106ffb6",
+        "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8"
+      },
+      "epoch": 1,
       "planned_at": 1792927230,
       "planned_by": "Ken0u",
       "spec": {
@@ -24000,7 +24038,7 @@
         ]
       },
       "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
