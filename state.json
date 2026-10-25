@@ -24086,6 +24086,7 @@
       }
     },
     "293": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40190902119",
       "checkpoint": {
         "branch": "codex/issue-293-reject-observable-source-byte-changes-du",
         "evidence_sha256": "dacaf8bb9b7a75f0586ebfafe49c9206ae8a1f2ae845b60ac4a09390ff950db0",
@@ -24107,7 +24108,7 @@
         "spec_hash": "9db7f7a055e967178084db8eb276f4fb7bf7a3f7bad757548b67b0dc334eb8d8"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792928887,
