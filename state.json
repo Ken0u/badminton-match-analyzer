@@ -954,6 +954,15 @@
       "task_id": "303",
       "verb": "checkpoint"
     },
+    "exact-frame303-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792951125,
+      "epoch": 1,
+      "fingerprint": "1bf85965dfe8bc47b8b6c43530ec6d5c38c76aa6f31f7cd40dd1fb331f8a0258",
+      "status": "review",
+      "task_id": "303",
+      "verb": "submit"
+    },
     "export-poll-plan-v1": {
       "actor": "Ken0u",
       "at": 1792878078,
@@ -24956,6 +24965,7 @@
       "epoch": 1,
       "planned_at": 1792950007,
       "planned_by": "Ken0u",
+      "pr_number": 304,
       "spec": {
         "acceptance": [
           "Check complete open/closed issue and PR history, trusted guidance and authoritative coordination reservations. Preserve the generated four-case baseline, existing root edits/deprecated PROGRESS, environments, datasets and all research/application state. Depend on completed301 and obtain a fresh CPU grant in an isolated worktree before repository edits. This is distinct from173/293 shared iterator repairs and158 unsupported-playback UI recovery.",
@@ -25001,7 +25011,13 @@
         ]
       },
       "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e980d1d607806a2b1072fd36d37b3bafafe7a816",
+        "head_sha": "ded02b00e8a5c41d5eeff0821b6388ac3772ffb0",
+        "pr_number": 304,
+        "spec_hash": "4db1dbdbff41844f61d5e09e3a76e469a34a3efe3675a574a6f22fc3aef9a1dc"
+      }
     },
     "62": {
       "checkpoint": {
