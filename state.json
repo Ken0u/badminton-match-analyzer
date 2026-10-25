@@ -1652,6 +1652,15 @@
       "task_id": "281",
       "verb": "submit"
     },
+    "goal-01a17154-submit284-v1": {
+      "actor": "dootz1",
+      "at": 1792920848,
+      "epoch": 1,
+      "fingerprint": "ff61ce68be98319f57e29356beafd1c0d313b6ce47485b620e267d69b6208e2b",
+      "status": "review",
+      "task_id": "284",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -23158,6 +23167,7 @@
       "epoch": 1,
       "planned_at": 1792919166,
       "planned_by": "dootz1",
+      "pr_number": 285,
       "spec": {
         "acceptance": [
           "Revalidate current main, owning issue/specification, all active grants/PRs and related audio37/contact-clock264/267/scene-context history before execution. Preserve completed281/283, other-host282, pending279workflow owner decision, root edits, all environments/data/research and deprecatedPROGRESS. Obtain a fresh committed routine code-only grant and isolated granted branch/worktree before any executable reproduction or edit. This proposal is not a grant.",
@@ -23202,7 +23212,13 @@
         ]
       },
       "spec_hash": "1a72d9b4e567409ba6d8828a53bc86bac70c8b60de623ee6e5863a9bca5352d4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "ee9d6ca4dadf8da7b85c96cee085ebf06f67fdd9",
+        "head_sha": "21ccec1d4d48de5f372cfcae613196a5d2d53492",
+        "pr_number": 285,
+        "spec_hash": "1a72d9b4e567409ba6d8828a53bc86bac70c8b60de623ee6e5863a9bca5352d4"
+      }
     },
     "62": {
       "checkpoint": {
