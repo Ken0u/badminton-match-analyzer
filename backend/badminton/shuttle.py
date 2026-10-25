@@ -260,11 +260,23 @@ def track_shuttle(
     input_size=(WIDTH, HEIGHT),
     heatmap_observer=None,
     spatial_layout=None,
+    research_checkpoint=None,
 ):
     input_size = validate_input_size(input_size)
     from .shuttle_tiling import predict_tiles, spatial_recipe
 
     spatial = spatial_recipe(spatial_layout, input_size)
+    research = None
+    if research_checkpoint is not None:
+        from .shuttle_adaptation import checkpoint_override
+
+        if input_size != (WIDTH, HEIGHT) or spatial_layout != "full":
+            raise ValueError(
+                "Research adaptation requires fixed full-frame default geometry"
+            )
+        research_weights, research_checksum, research = checkpoint_override(
+            research_checkpoint
+        )
     import torch
 
     from .vendor.tracknet_model import TrackNet
@@ -294,14 +306,17 @@ def track_shuttle(
         for scene in plain(annotations).get("scene_ranges", [])
         for boundary in (plain(scene)["start_frame"], plain(scene)["end_frame"])
     }
-    weights = WEIGHTS / "TrackNet_best.pt"
+    weights = research_weights if research is not None else WEIGHTS / "TrackNet_best.pt"
     if not weights.exists():
         raise RuntimeError(
             "Shuttle model missing. Run scripts/download_models.py --kind shuttle."
         )
     manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))["shuttle"]
     checksum = hashlib.sha256(weights.read_bytes()).hexdigest()
-    if not manifest or checksum != manifest["sha256"]:
+    if research is not None:
+        if checksum != research_checksum:
+            raise RuntimeError("Research checkpoint changed before loading")
+    elif not manifest or checksum != manifest["sha256"]:
         raise RuntimeError("Shuttle checkpoint does not match the model manifest")
     checkpoint = torch.load(weights, map_location="cpu", weights_only=True)
     params = checkpoint["param_dict"]
@@ -466,6 +481,13 @@ def track_shuttle(
                 model_windows=model_windows,
             )
         result = reviewed_run(result, annotations)
+        if research is not None:
+            # Recheck model/selection provenance before immutable result publication.
+            if checkpoint_override(research_checkpoint)[1:] != (checksum, research):
+                raise RuntimeError(
+                    "Research checkpoint provenance changed during inference"
+                )
+            result["research_adaptation"] = research
         write_json(output, result)
         return {k: v for k, v in result.items() if k != "frames"}
     finally:
