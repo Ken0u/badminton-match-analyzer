@@ -7381,6 +7381,15 @@
       "task_id": "282",
       "verb": "submit"
     },
+    "rally288-checkpoint-implementation-v1": {
+      "actor": "Ken0u",
+      "at": 1792924092,
+      "epoch": 1,
+      "fingerprint": "e84952baba7a20127eb1ac15c2f9b85aa911fe389cca43e6c7f604d0a20b0fe8",
+      "status": "running",
+      "task_id": "288",
+      "verb": "checkpoint"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -23557,12 +23566,21 @@
       }
     },
     "288": {
+      "checkpoint": {
+        "branch": "codex/issue-288-record-complete-native-frame-evidence-ra",
+        "head_sha": "8aa35420fdf89e2ec33cd7370e50d926f0bc681a",
+        "input_freeze_receipt": ".cache/rally288-input-freeze-v1.json",
+        "native_replay_receipt": ".cache/rally288-native-evidence-v2.json",
+        "remaining": "Complete full checks, generated baseline parity proof, report/docs, exact source PR submission/controller integration and independent public delivery.",
+        "summary": "Metadata-only full evidence ranges implemented. Read-only frozen replay of2 existing development cases/4 perception artifacts preserves every original proposal field and catalog/context/input/annotation bytes; no model inference/images. Final focused v2 passes449tests; initial focused v1 retained8new bounds-test failures/441passes, diagnosed followup search range and fixed context only. All prior receipts retained; lint/format pass. Full v1 running with stable source and recorded process identities."
+      },
+      "checkpoint_at": 1792924092,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8aa35420fdf89e2ec33cd7370e50d926f0bc681a",
         "branch": "codex/issue-288-record-complete-native-frame-evidence-ra",
         "epoch": 1,
-        "expires_at": 1792934603,
+        "expires_at": 1792934892,
         "granted_at": 1792923803,
         "host_id": "MSI",
         "session_id": "8693413d1ec0499d88d7a0ebed3da0e5",
