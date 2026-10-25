@@ -22910,6 +22910,7 @@
         "session_id": "goal-01a17154",
         "spec_hash": "c7e6a51f45c9fe7fe60bb9145760b9c073c591b82f2439bb0dfbcc9f2988b10b"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
