@@ -1590,6 +1590,15 @@
       "task_id": "273",
       "verb": "submit"
     },
+    "goal-01a17154-submit281-v1": {
+      "actor": "dootz1",
+      "at": 1792917738,
+      "epoch": 1,
+      "fingerprint": "da8282ca6f927b918fb2729ea9216856b59c4b31ff5cb23951a4118c102bcb7a",
+      "status": "review",
+      "task_id": "281",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -22871,6 +22880,7 @@
       "epoch": 1,
       "planned_at": 1792915764,
       "planned_by": "dootz1",
+      "pr_number": 283,
       "spec": {
         "acceptance": [
           "Audit current source, import history including103/173 and related media/cache integrity repairs, all open PRs and authoritative reservations. Preserve completed273/277 and other-host278/280, the separately gated279 workflow proposal, root edits, all worktrees/environments/research/source/annotations/predictions and deprecated PROGRESS. Obtain a committed separate code-only grant in an isolated granted branch before executable reproduction or editing. No original scientific input or image is accessed.",
@@ -22915,7 +22925,13 @@
         ]
       },
       "spec_hash": "c7e6a51f45c9fe7fe60bb9145760b9c073c591b82f2439bb0dfbcc9f2988b10b",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "7d3cca2e749327583ec852538ba981c74762613d",
+        "head_sha": "7e3fa49a4f7a88a2a6926914a60dee0f753de0e0",
+        "pr_number": 283,
+        "spec_hash": "c7e6a51f45c9fe7fe60bb9145760b9c073c591b82f2439bb0dfbcc9f2988b10b"
+      }
     },
     "282": {
       "claim": {
