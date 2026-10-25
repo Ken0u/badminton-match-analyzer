@@ -24315,6 +24315,7 @@
         "session_id": "0af5ed5dd5d7465d8169fa400eafea50",
         "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
