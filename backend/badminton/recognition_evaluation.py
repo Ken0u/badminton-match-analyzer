@@ -2,7 +2,7 @@
 
 from collections import Counter
 
-from .evaluation import _metrics, _uncertain_candidate, evaluate_contacts
+from .evaluation import _frame_bounds, _metrics, _uncertain_candidate, evaluate_contacts
 
 TARGET_FAMILIES = ("clear", "lift", "net", "drop", "smash", "drive")
 CLASSES = (*TARGET_FAMILIES, "other", "serve")
@@ -32,7 +32,9 @@ def _confusion_metrics(matrix, labels):
     }
 
 
-def evaluate_recognition(video, annotations, run, tolerance_s=0.12):
+def evaluate_recognition(
+    video, annotations, run, tolerance_s=0.12, *, native_timestamps=None
+):
     """Score independent reviewed contacts, explicitly conditioning on input times.
 
     Timing coverage and one-to-one matching follow the contact evaluator. Missing
@@ -45,6 +47,13 @@ def evaluate_recognition(video, annotations, run, tolerance_s=0.12):
         raise ValueError("Recognition artifact must match the source video and hash")
     candidates = []
     for candidate in run["candidates"]:
+        if native_timestamps is not None:
+            try:
+                _frame_bounds(candidate, video["frame_count"], "contact_")
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError(
+                    "Recognition candidate needs valid inclusive native source frame bounds"
+                ) from exc
         if candidate.get("status") not in ("predicted", "abstained"):
             raise ValueError(
                 "Recognition candidates require predicted/abstained status"
@@ -65,7 +74,13 @@ def evaluate_recognition(video, annotations, run, tolerance_s=0.12):
             }
         )
     contact_view = run | {"stage": "contacts", "candidates": candidates}
-    timing = evaluate_contacts(video, annotations, contact_view, tolerance_s)
+    timing = evaluate_contacts(
+        video,
+        annotations,
+        contact_view,
+        tolerance_s,
+        native_timestamps=native_timestamps,
+    )
     ranges = timing["coverage"]["frame_ranges"]
     # Contact eligibility includes complete interval/evidence context, not just
     # a navigation frame inside review coverage. Reusing that exact domain keeps
@@ -174,6 +189,7 @@ def evaluate_recognition(video, annotations, run, tolerance_s=0.12):
             "run_id",
             "run_start_frame",
             "run_end_frame",
+            "prediction_clock_status",
             "coverage",
             "tolerance_s",
         )

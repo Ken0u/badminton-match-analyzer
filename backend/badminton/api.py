@@ -1005,6 +1005,14 @@ def create_app(
             "annotation_revision": doc["revision"],
         }
         try:
+            native_times = None
+            if body.contacts_run_id or body.recognition_run_id:
+                try:
+                    native_times = timestamps_for(data, video_id)
+                except (OSError, TypeError, ValueError) as exc:
+                    raise ValueError(
+                        "Native source timestamp map is unavailable or malformed"
+                    ) from exc
             if body.rallies_run_id:
                 artifact = load_run(video_id, body.rallies_run_id, "rallies") | {
                     "run_id": body.rallies_run_id
@@ -1017,12 +1025,20 @@ def create_app(
                     video_id, body.recognition_run_id, "recognition"
                 ) | {"run_id": body.recognition_run_id}
                 result["recognition"] = evaluate_recognition(
-                    v, doc, artifact, body.tolerance_s
+                    v,
+                    doc,
+                    artifact,
+                    body.tolerance_s,
+                    native_timestamps=native_times,
                 )
             if body.contacts_run_id:
                 artifact = load_run(video_id, body.contacts_run_id, "contacts")
                 result["contacts"] = evaluate_contacts(
-                    v, doc, artifact, body.tolerance_s
+                    v,
+                    doc,
+                    artifact,
+                    body.tolerance_s,
+                    native_timestamps=native_times,
                 )
                 result["contacts"]["run_id"] = body.contacts_run_id
             if body.shuttle_run_id:
