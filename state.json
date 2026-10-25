@@ -8388,6 +8388,15 @@
       "task_id": "246",
       "verb": "next"
     },
+    "roadmap301-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792945036,
+      "epoch": 1,
+      "fingerprint": "68b923bddb6b24451e5f75aebe292c40f28dea71339f05dec163a5694b8c6100",
+      "status": "review",
+      "task_id": "301",
+      "verb": "submit"
+    },
     "roadmap97-base-refresh-checkpoint-v1": {
       "actor": "dootz1",
       "at": 1792468733,
@@ -24791,6 +24800,7 @@
       "epoch": 1,
       "planned_at": 1792944366,
       "planned_by": "Ken0u",
+      "pr_number": 302,
       "spec": {
         "acceptance": [
           "Revalidate current main, trusted guidance, complete issue/PR history, reports, coordination grants and actual completion/delivery receipts. Preserve all existing root edits, deprecated PROGRESS, environments, datasets and application/research state. Obtain a fresh routine CPU grant and isolated worktree before editing the two shared summary files.",
@@ -24831,7 +24841,13 @@
         ]
       },
       "spec_hash": "ba2c36f5dd8bea486c952835e69caebe6273dbb83b02fec173cace554d40ff2a",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "47bbaeac2517f65270261eceefe272b81c049c3b",
+        "head_sha": "674d3d98c7036ab25201e09c16f70d81b5279b35",
+        "pr_number": 302,
+        "spec_hash": "ba2c36f5dd8bea486c952835e69caebe6273dbb83b02fec173cace554d40ff2a"
+      }
     },
     "62": {
       "checkpoint": {
