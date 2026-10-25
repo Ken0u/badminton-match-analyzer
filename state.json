@@ -1829,6 +1829,15 @@
       "task_id": "290",
       "verb": "submit"
     },
+    "goal-01a17154-submit295-v1": {
+      "actor": "dootz1",
+      "at": 1792930025,
+      "epoch": 1,
+      "fingerprint": "9f92119a0ad9f4ed9e081ba091224347ef831ec918fbebd1de6a7e9dd87e39c5",
+      "status": "review",
+      "task_id": "295",
+      "verb": "submit"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -24204,6 +24213,7 @@
       "epoch": 1,
       "planned_at": 1792928015,
       "planned_by": "dootz1",
+      "pr_number": 297,
       "spec": {
         "acceptance": [
           "Refresh current main, PROJECT_PLAN, BUG_REVIEW, collaboration/configuration, all duplicate history and active grants/PRs. Preserve delivered290, the other-host293 reservation, ungranted294, pending sensitive279, root/completed worktrees/environments/research and deprecated PROGRESS. Reproduction and implementation require a fresh committed routine grant and its isolated branch with pinned application root/disposable data.",
@@ -24251,7 +24261,13 @@
         ]
       },
       "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e0e97a465fd5cd84d61d99c1bd9eaf92cca98424",
+        "head_sha": "1ad4b6cf89e46ca1f9744e493be4564dea3e606a",
+        "pr_number": 297,
+        "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9"
+      }
     },
     "62": {
       "checkpoint": {
