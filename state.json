@@ -5557,6 +5557,21 @@
       "task_id": "202",
       "verb": "submit"
     },
+    "public-protocol-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792909462,
+      "fingerprint": "bb1b174b16e06bf3b9067c52843f33f1fdaa22043f9e6b480cd3430e4b58c151",
+      "status": "ready",
+      "task_id": "275",
+      "verb": "plan"
+    },
+    "public-protocol-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792909462,
+      "fingerprint": "b185dee6f2bc56325187859945f1e317ceb0377a75043c0b153edb9f641a4c6d",
+      "status": "ok",
+      "verb": "register"
+    },
     "rally-contract-next-v1": {
       "actor": "Ken0u",
       "at": 1792906512,
@@ -8596,6 +8611,14 @@
       "fingerprint": "9d7535338392969a66035536d372eb6b87c7ab2cd187988554c06bb2ad903f28",
       "status": "ready",
       "task_id": "273",
+      "verb": "plan"
+    },
+    "spec-275-49083a6f6ff8b16fe23ca320fe674ca031b72d64327ee269d4c8da1a563d2bb9": {
+      "actor": "Ken0u",
+      "at": 1792909462,
+      "fingerprint": "8aa4ab09666e8d82edffed5631e08ef79189a3421535a669c47e5ff19657e4ca",
+      "status": "ready",
+      "task_id": "275",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -22078,6 +22101,58 @@
       "spec_hash": "d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24",
       "status": "ready"
     },
+    "275": {
+      "epoch": 0,
+      "planned_at": 1792909462,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Repair actual public source0e5a17c278e050e41c7993677c7cd8a43ca957eb candidate40167963093: source archive SHA154bcffe6eaff7745f3569da00f4b11fbd3ee46b624dd303c8a1b40d6b308733 omits45/45 tracked data/manifests JSON files while shipping tests that read them, including rally_review_contract_v1.json. Preserve source inventory evidence and historical successful package checks; those checks verified backend parity but did not require these public files.",
+          "Audit all history/current grants and obtain an isolated fresh code-only grant before edits. Reserve only five exact paths. Preserve root edits, deprecated PROGRESS, all environments/data/research/annotations/predictions and other-host271 repair/reservations.273 remains a separate Ready unclaimed dependent task; no attempt to duplicate its or271 ownership.",
+          "Update MANIFEST.in with explicit literal paths for the45 already Git-tracked public JSON manifests. Do not use data-directory wildcards, include untracked/local manifests, raw datasets/media/labels/weights/caches or alter any manifest content. Existing public tracked manifest bytes may be copied/hashed for source packaging only; do not interpret scientific records, inspect predictions, open original private corpora or change source eligibility. No runtime wheel, model/default/contract, visibility or publication-policy change.",
+          "Extend existing verify_package.py source-archive checks to derive the expected public-manifest set from authenticated checkout Git-tracked data/manifests JSON paths and require exact archive membership and source-byte parity. Reject missing/changed/duplicate or unsafe public manifest members and extra data files, symlink/link/traversal or nonordinary data entries. Maintain all existing backend wheel/source parity, frontend/lock metadata, private-state/raw-media guards, installed HTTP ownership checks and current CLI behavior. New manifests added later must cause a diagnostic when their source-distribution inclusion is forgotten.",
+          "Add meaningful generated package/archive regressions for valid exact public source manifests, missing/changed/duplicate entries, untracked JSON and nested/raw/private data, unsafe names/links, missing tracked source file and changed expectations. Keep backend wheel and metadata parity checks active and exercise the actual verify_archives consumer. Demonstrate the original published inventory omission and a real repaired isolated source build with seeded untracked/private canaries excluded; no source archive or file may be blindly extracted or executed.",
+          "Build and verify a real wheel/sdist with existing declared locked tooling in isolated output and a disposable installed environment, using the unchanged verify_package --build path and its real installed HTTP lifecycle. Compare all45 public manifest bytes to Git, verify zero extra data and unchanged wheel runtime/frontend/lock bytes, inspect stable final source and original/worker terminal lifetimes. No existing environment is synced/replaced. Generated archive tests use no scientific interpretation or application Store.",
+          "Run focused package/environment tests and all required project Python/Ruff/format/pip/repository UTF8/LF/JSON/local-link/diff checks using project3.10venv and fresh generated storage. Preserve failed attempts and original evidence. Append the concrete defect, actual repair verification and limitations to a focused report and current bug review without rewriting historical counts or inferring annotation accuracy.",
+          "Publish only granted source/test/report files through a focused PR and normal exact PR/main CI/controller integration; independently verify complete public wheel/source/frontend/lock/both-image delivery including all45 public manifests in the actual delivered source archive. No main push/manual merge/raw coordination edit/workflow retry/cancel/wake, auth/policy/workflow/deployment/dependency change, paid service or PROGRESS edit.",
+          "Bound implementation to4h from fresh grant,512MiB new retained outputs and three diagnosed repair rounds. Actual new scientific sessions/image bytes zero. No original private scientific input/label/image access, inference/training/holdout/model promotion. References remain0/2 and all four eligibility flags false; packaging reproducibility does not establish badminton accuracy or complete62/66/67/71."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "270"
+        ],
+        "exclusions": [
+          "No public manifest content, application/runtime wheel/model/default/schema, original private scientific input/label/image/inference, dependency/policy/auth/workflow/deployment change, untracked data inclusion, paid service, manual merge or deprecated PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Make public source distributions contain the exact tracked public protocol manifests needed by their included tests and documentation, while rejecting untracked/private data and preserving runtime wheel contents.",
+        "paths": [
+          "MANIFEST.in",
+          "scripts/verify_package.py",
+          "tests/test_public_protocol_package.py",
+          "docs/PUBLIC_PROTOCOL_PACKAGING_REPORT.md",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 15,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual published45-manifest omission and repaired source archive/canary exclusion; generated verify_archives negative/positive checks, real wheel/sdist/installed HTTP lifecycle and all required project checks.",
+          "Exact PR/main CI/controller integration and independent public package/source/frontend/lock/both-image delivery including exact45-manifest source parity."
+        ]
+      },
+      "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -25284,6 +25359,18 @@
       "host_id": "MSI",
       "registered_at": 1792895827,
       "session_id": "6bd9e2e585fe4cd79d59b2d1bada859e"
+    },
+    "MSI/7c82293f597c4220a41b086449a033b5": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792909462,
+      "session_id": "7c82293f597c4220a41b086449a033b5"
     },
     "MSI/7e09f59c-76d7-4231-a7be-c9e40572234e": {
       "actor": "Ken0u",
