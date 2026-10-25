@@ -90,5 +90,17 @@ onset. The fixture now selects the farthest actual source frame. All original
 logs and probe outputs remain retained; these expectation failures are not
 presented as additional production defects.
 
-Final focused/full/static verification and publication are pending. The owning
-issue records exact source revisions, process observations and delivery receipts.
+All 120 final direct/API audio tests pass. The first Python 3.10 full suite
+passed 4,350 tests with four optional skips in 450.62 seconds. After preserving
+that run and merging disjoint current main
+`8aa35420fdf89e2ec33cd7370e50d926f0bc681a`, final combined verification passed
+4,407 tests with four optional skips in 454.28 seconds. Both runs retain matching
+before/after executable/test hashes, independently observed absence of both
+original wrapper/worker lifetimes and zero observation errors. Ruff, formatting,
+dependency consistency, repository validation, UTF-8/LF, tracked JSON, report
+local links and whitespace checks pass. Only the four granted files differ
+from refreshed main.
+
+Exact PR/main checks, controller integration and complete candidate publication
+remain pending at this revision. The owning issue records exact source revisions,
+process observations and delivery receipts.
