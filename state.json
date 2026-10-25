@@ -414,11 +414,29 @@
       "task_id": "264",
       "verb": "checkpoint"
     },
+    "clock264-checkpoint-v3": {
+      "actor": "Ken0u",
+      "at": 1792902624,
+      "epoch": 1,
+      "fingerprint": "db15475ec49a5a24f79b95ae2053815e5a1122ab5e692ad1829e15fa7e960f39",
+      "status": "running",
+      "task_id": "264",
+      "verb": "checkpoint"
+    },
     "clock264-submit-v2": {
       "actor": "Ken0u",
       "at": 1792902070,
       "epoch": 1,
       "fingerprint": "6717017f06bacda8b04df4c4188a39714102fb3b45c0aceaa84be14fbd0e22d5",
+      "status": "review",
+      "task_id": "264",
+      "verb": "submit"
+    },
+    "clock264-submit-v3": {
+      "actor": "Ken0u",
+      "at": 1792902763,
+      "epoch": 1,
+      "fingerprint": "79f05dda8b569772e14509aef00ef45ae34910babf88132776f2354760f36c9d",
       "status": "review",
       "task_id": "264",
       "verb": "submit"
@@ -21117,19 +21135,18 @@
     "264": {
       "checkpoint": {
         "branch": "codex/issue-264-reject-contact-and-recognition-evaluatio",
-        "evidence_sha256": "d41f1a90eba5a023f737757c352c2e95e31f934a2e4d64ee78ddeb7368fc1c0b",
-        "head_sha": "297f01f0a7bea3aa58c3587552e4ff5f1f729f73",
+        "head_sha": "96ff7da8742ab33dc4735ecacf0e6f6cf5b632ef",
         "pr_number": 265,
-        "remaining": "Exact PR/main CI, controller integration and independently verified complete public delivery.",
-        "summary": "Native-clock/time identity validated before contact and recognition scoring; unavailable pure compatibility is explicit. 647 focused/3831 full Python tests pass, four optional skips, required checks pass. Local receipt SHA256 d41f1a90eba5a023f737757c352c2e95e31f934a2e4d64ee78ddeb7368fc1c0b."
+        "remaining": "Exact final-head/main CI, controller integration and full independent public delivery.",
+        "summary": "Final source-order review correction preserves source-hash rejection before parsing;650focused/3834fulltests pass,4optional skips. First head/checks and draft fence preserved. Local receipt SHA256 8cdb2b5719755f295348a4cc3cfcc3aab272bbecc1437253455fe8a5b01629f3"
       },
-      "checkpoint_at": 1792902063,
+      "checkpoint_at": 1792902624,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7939da84c308c5696c6e4df438edeeff2f0d9b20",
         "branch": "codex/issue-264-reject-contact-and-recognition-evaluatio",
         "epoch": 1,
-        "expires_at": 1792912863,
+        "expires_at": 1792913424,
         "granted_at": 1792901173,
         "host_id": "MSI",
         "session_id": "b80f2c05765e40ff9fa024c1530840f1",
@@ -21194,10 +21211,10 @@
         ]
       },
       "spec_hash": "1f16636d3c1ba7d3e8a1e292be18e6dddfd55edcc66a7f5e99ac8ede561a003c",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "7939da84c308c5696c6e4df438edeeff2f0d9b20",
-        "head_sha": "297f01f0a7bea3aa58c3587552e4ff5f1f729f73",
+        "head_sha": "96ff7da8742ab33dc4735ecacf0e6f6cf5b632ef",
         "pr_number": 265,
         "spec_hash": "1f16636d3c1ba7d3e8a1e292be18e6dddfd55edcc66a7f5e99ac8ede561a003c"
       }
