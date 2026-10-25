@@ -21813,6 +21813,7 @@
       }
     },
     "270": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40167963093",
       "checkpoint": {
         "branch": "codex/issue-270-provide-a-frozen-generated-input-tested-",
         "evidence_sha256": "b09f6ab829e6aabbdf0ea81064319282513e5aa8d9d8c31ef4849cceaf9cf7a1",
@@ -21834,7 +21835,7 @@
         "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792908009,
