@@ -692,6 +692,24 @@
       "task_id": "270",
       "verb": "checkpoint"
     },
+    "contract270-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792907704,
+      "epoch": 1,
+      "fingerprint": "9e47f62fc2840d9dd98e80bb1cf3e098e57bd19d45b624b3ea5a5a20753fb455",
+      "status": "running",
+      "task_id": "270",
+      "verb": "checkpoint"
+    },
+    "contract270-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792907768,
+      "epoch": 1,
+      "fingerprint": "853e701ba3051b5b8dd1625631d5d47e652d0a558261bd99629350d93437ccd0",
+      "status": "review",
+      "task_id": "270",
+      "verb": "submit"
+    },
     "editor-report-plan-v1": {
       "actor": "Ken0u",
       "at": 1792885363,
@@ -21758,17 +21776,19 @@
     "270": {
       "checkpoint": {
         "branch": "codex/issue-270-provide-a-frozen-generated-input-tested-",
-        "head_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
-        "remaining": "Final core handoff, protocol/CLI/focused/full verification, exact PR/main and independent public delivery.",
-        "summary": "Current genuine #270 epoch1 implementation: isolated parent branch was fast-forwarded before edits to already controller-merged disjoint PR269/main e47f9ff; original grant base7259712 retained in local working-base receipt. No collaborator source was modified. Bounded core owns only new pure validator/test in a second isolated worktree; core142 generated tests and focused lint/format pass, with initial lint-only failure preserved. Parent offline CLI, generated subprocess CLI tests, focused report and current roadmap pointer are written; parent lint/format pass. Contract raw plan/document identity, complete native/overlap schedule, document-local event/actor variants, explicit correspondence and incomplete/unknown denominators remain structural only. No original scientific input, image, label, private plan, assessor, Store, model, network client or acceptance consumer is read/changed. Remaining: final core handoff, public manifest parity, CLI/focused/full checks and stable-source/process receipts, then normal PR/exact CI/controller/main and independent public delivery. Original root edits and deprecated PROGRESS preserved; historical references0/2/four false flags unchanged."
+        "evidence_sha256": "b09f6ab829e6aabbdf0ea81064319282513e5aa8d9d8c31ef4849cceaf9cf7a1",
+        "head_sha": "c9a614389fea203dfe4acd03a9ca338658937c80",
+        "pr_number": 272,
+        "remaining": "Exact PR/main CI, controller integration and independently verified complete public delivery.",
+        "summary": "Generated-only contiguous review structural contract and offline CLI verified: 1034 focused/4143 full Python tests pass, 4 full skips; required checks pass. Final source and terminal process lifetimes verified; zero scientific inputs/sessions/image bytes. Local verification SHA256 b09f6ab829e6aabbdf0ea81064319282513e5aa8d9d8c31ef4849cceaf9cf7a1."
       },
-      "checkpoint_at": 1792907064,
+      "checkpoint_at": 1792907704,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7259712d2a2f9b4825845c9e61c9823b7f146d83",
         "branch": "codex/issue-270-provide-a-frozen-generated-input-tested-",
         "epoch": 1,
-        "expires_at": 1792917864,
+        "expires_at": 1792918504,
         "granted_at": 1792906512,
         "host_id": "MSI",
         "session_id": "c66898df3c3f4ecb8b5e57a261278e6b",
@@ -21777,6 +21797,7 @@
       "epoch": 1,
       "planned_at": 1792906512,
       "planned_by": "Ken0u",
+      "pr_number": 272,
       "spec": {
         "acceptance": [
           "Follow approved Data and evaluation priority1 after fully delivered262/267. Audit all issue/PR history and grants; preserve root edits, deprecated PROGRESS, environments/data/research/annotations/predictions and other-host266 frontend/static work. Obtain a fresh code-only grant and isolated worktree before production edits. Reserve only the seven exact paths; no original scientific metadata or labels are consumed.",
@@ -21830,7 +21851,13 @@
         ]
       },
       "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
+        "head_sha": "c9a614389fea203dfe4acd03a9ca338658937c80",
+        "pr_number": 272,
+        "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda"
+      }
     },
     "271": {
       "checkpoint": {
