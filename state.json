@@ -9912,6 +9912,12 @@
       "task_id": "299",
       "verb": "checkpoint"
     },
+    "tiling299-extend-package-v1": {
+      "actor": "Ken0u",
+      "reason": "scope expansion cannot change task semantics",
+      "status": "rejected",
+      "verb": "extend-scope"
+    },
     "verify-101-9d7ee10b6bf474993b4781abdc533ebfdca751e8-False": {
       "actor": "github-actions[bot]",
       "at": 1792537003,
