@@ -1,6 +1,14 @@
 {
   "paused": false,
   "receipts": {
+    "actor-after252-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792886860,
+      "fingerprint": "cb290e113f90dda0c365f279ec38887c151174dc9a7b8a831a0adb36f4ad3e0c",
+      "status": "ready",
+      "task_id": "254",
+      "verb": "plan"
+    },
     "adopt-003628c8dcaecb68b1f14319cad228db61bf5c092e5028caeb9297739a68b42e": {
       "actor": "github-actions[bot]",
       "at": 1792454159,
@@ -7662,6 +7670,14 @@
       "fingerprint": "3ce010d07252fa81645948c6ed353466aa5df32e39d695120498a891d1c43e31",
       "status": "ready",
       "task_id": "252",
+      "verb": "plan"
+    },
+    "spec-254-79a34d9e75e8128e5a1d5967cba2a6948025a4d2c783d50db130a8939b9b4e6c": {
+      "actor": "Ken0u",
+      "at": 1792886860,
+      "fingerprint": "187370ec398845368533f8c50477fe90e29d9b993efd5add67704df52f30934a",
+      "status": "ready",
+      "task_id": "254",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -20017,6 +20033,56 @@
         "pr_number": 253,
         "spec_hash": "63f1733c449b124bdf9612c63b1943a8a5990e661147c3e1a8175296003df1c4"
       }
+    },
+    "254": {
+      "epoch": 0,
+      "planned_at": 1792886860,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issues, active PRs and coordination grants to avoid duplicate work. Preserve root edits, environments, datasets, research, annotations and deprecated PROGRESS.md. Depend on fully delivered252 and use a fresh committed task grant with an isolated worktree.",
+          "Preserve generated baseline actor-after252-repro-v1: load old analysis with Actor A for reused player run, then successfully refresh replacement analyses whose identities field is absent or empty. The old Actor A overlay remains eligible even though the current plan has no identity result. Bind baseline controller bytes to trusted main and retain both outcomes. No source images, labels or model inference are involved.",
+          "Limit production changes to editor controller state derivation and deterministic generated assets. Derive provisional actors from the current successful analysis identity response, using an empty actor list when no usable identity run is supplied or the identity run requires a context rerun. Do not carry actors forward from another manifest. Preserve valid unchanged identity results, per-run/frame overlay filtering, source selection/view fences, manual assignments, saved truth, raw predictions and current report ownership guards.",
+          "Add generated regression cases for identities absent, empty, null or missing/empty run ID, a context-stale identity run, and a new valid identity result. Exercise reused player-run IDs across analysis manifests and stable same-plan polls. Preserve ignored-abort/late-error view and source-selection guards; do not automatically retry requests or recompute identity links.",
+          "Run focused generated frontend regressions, frontend unit/type/contract/build/stage and existing generated editor browser checks; run required Python suite, Ruff lint/format, pip, repository UTF8/LF/JSON/local-link and diff checks once on the final source. Verify fixture process cleanup and retain any failures. Update the current bug-review summary only; historical evidence remains unchanged.",
+          "Publish a focused PR on the granted branch and submit exact head/base/spec for normal controller integration. Verify exact PR and merged-main CI and complete public package/source/frontend/lock and both anonymous image delivery. No manual merge, direct main push, raw coordination write, CI retries/cancels/wakes or fabricated approval. Software verification does not establish annotation accuracy; complete rally references stay0/2 and all four research eligibility flags stay false.",
+          "Bound implementation to three hours from the fresh grant, 512MiB new generated outputs and three repair rounds. No new dependencies, image/source transfer, scientific assessment, GPU jobs, training/model promotion, paid services, security/auth/workflow/deployment/publishing changes or PROGRESS.md edits."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "252"
+        ],
+        "exclusions": [
+          "No new source/image assessment, backend inference or identity algorithm change, scientific label edits, automatic request retry, policy/auth/workflow/deployment/publishing changes, paid services, manual merge or deprecated PROGRESS.md edits."
+        ],
+        "limits": {
+          "max_output_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Clear provisional linked actor hints when the current successfully loaded analysis no longer supplies a usable identity run, preserving current supported links and reviewed assignments.",
+        "paths": [
+          "backend/frontend/src/editor/controller.ts",
+          "backend/frontend/tests/editor.test.mjs",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json",
+          "docs/BUG_REVIEW.md"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Preserved generated baseline and passing actor-hint ownership regressions; required frontend, editor-browser and repository checks.",
+          "Exact PR/main CI, normal controller integration and independently verified public delivery."
+        ]
+      },
+      "spec_hash": "ee688b39b56c1b1c367b9112a734e63d9402133054f31ac2c502981ea6258b9c",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
