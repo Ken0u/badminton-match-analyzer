@@ -1643,6 +1643,26 @@
       "task_id": "273",
       "verb": "next"
     },
+    "goal-01a17154-next295-v1": {
+      "actor": "dootz1",
+      "at": 1792928226,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
+        "branch": "codex/issue-295-investigate-and-if-reproduced-with-gener",
+        "epoch": 1,
+        "expires_at": 1792939026,
+        "granted_at": 1792928226,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9"
+      },
+      "epoch": 1,
+      "fingerprint": "a8ccd408e66cdfc6e2985ce9bcab2deef81365952ae8785510d876cfafcf148c",
+      "status": "granted",
+      "task_id": "295",
+      "verb": "next"
+    },
     "goal-01a17154-plan266-v1": {
       "actor": "dootz1",
       "reason": "spec fields must match the version 1 task contract",
@@ -24079,7 +24099,18 @@
       "status": "running"
     },
     "295": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "f0668edb663e5fa07bc3e8b4e426c892e0e7c2c7",
+        "branch": "codex/issue-295-investigate-and-if-reproduced-with-gener",
+        "epoch": 1,
+        "expires_at": 1792939026,
+        "granted_at": 1792928226,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9"
+      },
+      "epoch": 1,
       "planned_at": 1792928015,
       "planned_by": "dootz1",
       "spec": {
@@ -24129,7 +24160,7 @@
         ]
       },
       "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
