@@ -9588,6 +9588,14 @@
       "task_id": "295",
       "verb": "plan"
     },
+    "spec-299-29fa813c6f178ab44b2422ff44765feb608d799db7b1f86368fc8efce477581c": {
+      "actor": "Ken0u",
+      "at": 1792933607,
+      "fingerprint": "fb80836de81096862276162fe5fe986c542a8dfe1b1d3d9d19941351fab48a24",
+      "status": "ready",
+      "task_id": "299",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -9841,6 +9849,21 @@
       "status": "needs_human",
       "task_id": "98",
       "verb": "plan"
+    },
+    "tiling-next-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792933607,
+      "fingerprint": "3e71a832c4e4d01a85ac130a3aa90e6d85a3f79c068f63440d5c3561f0116f2e",
+      "status": "ready",
+      "task_id": "299",
+      "verb": "plan"
+    },
+    "tiling-next-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792933607,
+      "fingerprint": "0d8f231741fc88a46d614ccb475d33d2c08c3c484777450587c99745c8e92098",
+      "status": "ok",
+      "verb": "register"
     },
     "verify-101-9d7ee10b6bf474993b4781abdc533ebfdca751e8-False": {
       "actor": "github-actions[bot]",
@@ -24489,6 +24512,70 @@
         "spec_hash": "6f86c0da5f3f5a621475980a025cdea25be89049b2ec2eaf4b275563f82395e9"
       }
     },
+    "299": {
+      "epoch": 0,
+      "planned_at": 1792933607,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Refresh trusted main, roadmap/guidance/bug reports, complete issue/PR history and authoritative grants. Preserve delivered294/295, root edits/deprecated PROGRESS and all existing environments/research. Obtain a fresh committed routine GPU grant and isolated worktree before implementation or predictions. Original-host metadata-only prerequisite seals the same source inventory/packet/labels/baseline/checkpoint,50 complete camera views/13499 rows, no active shared Store jobs; no model/media opened during planning.",
+          "Before any predictions freeze and publicly timestamp exactly two variants and all protocol/code/runtime/input/view/model hashes. Control is unchanged512x288 full frame. Candidate resizes source RGB and the complete-view native median background independently to768x432 with existing Pillow behavior, takes exactly four512x288 crops at xy(0,0),(256,0),(0,144),(256,144), runs existing length8 concat TrackNet independently per tile sequentially at CUDAfloat16, and max-fuses tile heatmaps onto768x432 before unchanged temporal weighted ensemble/component extraction/selector. No full-frame candidate mixture, padding/edge weighting, threshold tuning, alternate crop geometry or result-driven variant. Fixed threshold0.5; no interpolation or repaired points.",
+          "Add an explicit research-only optional keyword with full-frame default; invalid layout/size combinations fail before model/media work. Preserve default pixels, model-call order/results and native coordinates, every source frame/PTS/orientation, camera separation/background/ensemble/reset/selection history and original app truth. Record tile geometry/fusion and actual model input dimensions separately from heatmap canvas. No product/API/UI/configuration option or model/default promotion.",
+          "Reuse the existing exclusive/resumable resolution experiment runner and original complete-view/input audits. Control must reproduce original frame/PTS/camera and all physical point/component/visibility/confidence/selection fields before any candidate inference/scoring. Confidence alone has absolute tolerance1e-5,relative0. Because current main adds dependency provenance absent in historical runs, only an explicitly frozen projection may omit exactly selection_context_start_frame,selection_context_end_frame,selection_context_frames,selection_context_excluded from both comparison points; never omit other fields. Validate current complete transitive selection context independently on every control/candidate row and preserve/report the exact projection and all mismatches. Legacy resolution protocol keeps its stricter existing gate unchanged. Mismatch preserves artifacts and blocks candidate inference/scoring; no substituted baseline or additional attempt without diagnosed cause.",
+          "Use genuine queue GPU reservation plus real original data/processed Store run_local_job admission. Verify process PID/creation/cwd/command, Store status and artifacts before each launch/resume; timeout alone never establishes exit. Pin original root/shared data/weights before imports, initialize torchvision before threaded PyAV and retain native FFmpeg restoration. No competing heavy job, source/label/weight/cache overwrite or unrelated process stop/restart. All new outputs exclusive ignored; preserve process/Store/admission/failure/terminal receipts and independently audit original lifetimes.",
+          "Process both variants over all50 original complete target camera/background views, not cropped target neighborhoods. Retain all60 cases/25 localizable/7 supported negatives/28 unknown, unavailable states and overlapping difficulty/source/selection groups. Seal raw terminal outputs externally before candidate interpretation. Publish visibility/localization TP/FP/FN/TN, displacement as FP+FN, coordinate error and frozen radial-uncertainty bounds, observed-component presence versus ranking failures, actual output/model-call accounting, elapsed time and peak GPU allocation. Fixed tolerance0.005 source diagonal. This is familiar agent-labeled development evidence, not held-out or expert truth. More localizations with added false observations/displacements is insufficient for advancement; a negative/incompatible result is valid. Keep65 open and all four eligibility flags false.",
+          "Generated regressions exercise actual four-tile tensors/background alignment/overlap max mapping/model-call accounting, native source coordinates/VFR/orientation/temporal padding/cut/scene resets, unchanged default behavior, invalid/NaN/wrong-shape heatmaps/layouts/protocols, exact provenance/recipe tamper refusal, new control projection only versus strict legacy behavior, transitive metadata validation, exclusive seals/resume/admission and complete unknown/unavailable denominators. Run focused and required full Python/Ruff/format/pip/repository UTF8-LF/JSON/local-link/diff checks with existing environment/disposable pinned roots. Record exact native consumer bytes and final-head native evidence. Publish only granted files via exact PR/main CI/controller integration and independently verify complete public package/source/frontend/lock/all46 manifest/both image descriptors. No manual merge/main push/raw coordination edits/workflow retry/cancel/wake.",
+          "Bound to4h from grant,1GiB retained new outputs,three diagnosed repair rounds and no paid service. No new sources/downloads/image transfer or assessor session/training/consumed holdout63 metadata or inputs/label changes/model installation or promotion/deployment/auth/policy/workflow/dependency/storage/schema/evaluator/nativeAV changes. Do not access/update deprecated PROGRESS. References remain0/2;66/67/71 remain incomplete. Missing prerequisite stops comparable native execution without replacement; request scope before extra paths/resources."
+        ],
+        "artifacts": {
+          "readiness-audit": "3779bc70a93ee145d96fa2aa3fdb76493cdcaa60cfd65fc05f485dfe710284d0",
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+          "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+          "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+        },
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "141",
+          "204",
+          "294"
+        ],
+        "exclusions": [
+          "No application option/default/threshold change, tuning beyond the single fixed recipe, scientific label changes, image transfer, new source/model/download/training/holdout/promotion, sensitive automation/deployment change, paid service or deprecated PROGRESS access/update."
+        ],
+        "limits": {
+          "max_output_bytes": 1073741824,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Compare one prospectively fixed overlapping-tile TrackNet inference recipe against the unchanged full-frame default on the existing familiar singles/doubles shuttle development packet; preserve application defaults and reject unsupported promotion.",
+        "paths": [
+          "backend/badminton/shuttle.py",
+          "backend/badminton/shuttle_tiling.py",
+          "backend/badminton/shuttle_resolution.py",
+          "tests/test_shuttle_tiling.py",
+          "tests/test_shuttle_resolution.py",
+          "data/manifests/shuttle_tiling_protocol_v1.json",
+          "docs/SHUTTLE_TILING_REPORT.md"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Prospective exact recipe freeze and full control compatibility before candidate inference; every original case/group/unknown retained; actual native shared admission/process/Store and immutable input/output receipts.",
+          "Focused/full required checks, exact source CI/controller integration and independent full public delivery; no model/default/eligibility promotion."
+        ]
+      },
+      "spec_hash": "dd5b344ebd61fb3f2737c749c5e370111862054748cefbdf53da918d8753bc4a",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli",
@@ -27928,6 +28015,26 @@
       "host_id": "MSI",
       "registered_at": 1792543788,
       "session_id": "f17becf5129f4035af82b3cbb973914f"
+    },
+    "MSI/f17f985d05bf4a7586132fcdbddfcfd2": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "readiness-audit": "3779bc70a93ee145d96fa2aa3fdb76493cdcaa60cfd65fc05f485dfe710284d0",
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs",
+        "cuda"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792933607,
+      "session_id": "f17f985d05bf4a7586132fcdbddfcfd2"
     },
     "MSI/guidance213-msi-20261023-v1": {
       "actor": "Ken0u",
