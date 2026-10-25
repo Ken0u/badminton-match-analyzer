@@ -1262,6 +1262,15 @@
       "task_id": "271",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint273-v1": {
+      "actor": "dootz1",
+      "at": 1792910795,
+      "epoch": 1,
+      "fingerprint": "094123d14aa7b60aecb1e8552e99c35cd3a29cf5691b41a1451b1864d7125f86",
+      "status": "running",
+      "task_id": "273",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
@@ -22147,12 +22156,25 @@
       }
     },
     "273": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/w273",
+          ".cache/goal-01a17154/grant273-state.json",
+          ".cache/goal-01a17154/failed-export271-terminal.json",
+          ".cache/goal-01a17154/task271-delivery-final.json"
+        ],
+        "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
+        "head": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
+        "remaining": "Reproduce original normal-venv admission failure, verify original disposable worker/launcher/Store terminal without restart; implement only four granted test/report paths, meaningful injected/actual regressions, required checks and controller/exactCI/public delivery. Four-hour and512MiB limits start at fresh grant1792910590; three repair rounds. No science/runtime/policy changes.",
+        "summary": "Fresh epoch1 grant revalidated at committed coordination fd48037; Ken0u spec d82f67867ebb5fe9be030b396735e81856aa4d948104be9ae8742993fa614f24 unchanged, baseline d739114. New isolated clean worktree .cache/w273 on exact granted branch. Related181/187/194/197/198 history and original271 failure/terminal proof reviewed; shared fixtureOwnership/fixtureProcessProbe will remain byte-identical. Prior271 delivery fully audited, controller done/delivery_pending false/candidate40169957374. No273 tracked edits yet. Normal original Windows3.10venv selected with __PYVENV_LAUNCHER__ unset; preparing cached declared Node dependencies and unchanged generated export baseline. Initial fetch expected remote branch but grant only names local branch; fetched baseline and created correct isolated branch without remote mutation."
+      },
+      "checkpoint_at": 1792910795,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
         "branch": "codex/issue-273-repair-generated-export-admission-fixtur",
         "epoch": 1,
-        "expires_at": 1792921390,
+        "expires_at": 1792921595,
         "granted_at": 1792910590,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
