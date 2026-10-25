@@ -1113,6 +1113,20 @@
       "status": "ok",
       "verb": "register"
     },
+    "goal-01a17154-next-v1": {
+      "actor": "dootz1",
+      "at": 1792903074,
+      "fingerprint": "f2073bb59539062853423e3bf5f7be3f0445e6b42ff058a4013059b6a4ba414d",
+      "status": "idle",
+      "verb": "next"
+    },
+    "goal-01a17154-register-v1": {
+      "actor": "dootz1",
+      "at": 1792903074,
+      "fingerprint": "44e26855c8f72406e9c3d83b6befe74b9de9de4c38bb8ffb5017b354a32635a1",
+      "status": "ok",
+      "verb": "register"
+    },
     "guidance-unresolved-owner-authorize-v1": {
       "actor": "Ken0u",
       "at": 1792789817,
@@ -24277,6 +24291,18 @@
       "host_id": "LAPTOP-FVMV3PD6",
       "registered_at": 1792902579,
       "session_id": "goal-01a1714f"
+    },
+    "LAPTOP-FVMV3PD6/goal-01a17154": {
+      "actor": "dootz1",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "LAPTOP-FVMV3PD6",
+      "registered_at": 1792903074,
+      "session_id": "goal-01a17154"
     },
     "LAPTOP-FVMV3PD6/roadmap-01a16c1a": {
       "actor": "dootz1",
