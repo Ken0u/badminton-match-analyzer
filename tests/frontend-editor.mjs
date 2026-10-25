@@ -70,6 +70,22 @@ const releases = [],
   routeEvents = [];
 const p95 = (values) =>
   [...values].sort((a, b) => a - b)[Math.ceil(values.length * 0.95) - 1];
+function orientedQuadrants(rgb) {
+  const [green, yellow, red, blue] = rgb;
+  const dominant = (pixel, channel) =>
+    pixel.every(
+      (value, index) => index === channel || pixel[channel] > value + 100,
+    );
+  assert.ok(dominant(green, 1), "Top-left quadrant must be green");
+  assert.ok(
+    yellow[0] > yellow[2] + 100 &&
+      yellow[1] > yellow[2] + 100 &&
+      Math.abs(yellow[0] - yellow[1]) < 25,
+    "Top-right yellow must retain both red and green above blue",
+  );
+  assert.ok(dominant(red, 0), "Bottom-left quadrant must be red");
+  assert.ok(dominant(blue, 2), "Bottom-right quadrant must be blue");
+}
 async function check(name, action) {
   const start = Date.now();
   try {
@@ -443,6 +459,36 @@ try {
   });
 
   await check("source-clock", async () => {
+    // Equal source red/green values can round either way after codec/JPEG
+    // conversion. Validate yellow's two channels, rather than an argmax tie.
+    const colors = [
+      [20, 219, 32],
+      [217, 218, 28],
+      [229, 29, 16],
+      [28, 18, 229],
+    ];
+    for (const yellow of [
+      [217, 218, 28],
+      [218, 217, 28],
+      [220, 220, 20],
+    ])
+      assert.doesNotThrow(() =>
+        orientedQuadrants([colors[0], yellow, ...colors.slice(2)]),
+      );
+    for (const yellow of [
+      [230, 20, 20],
+      [20, 230, 20],
+      [100, 100, 100],
+    ])
+      assert.throws(() =>
+        orientedQuadrants([colors[0], yellow, ...colors.slice(2)]),
+      );
+    for (let first = 0; first < 4; first++)
+      for (let second = first + 1; second < 4; second++) {
+        const swapped = [...colors];
+        [swapped[first], swapped[second]] = [swapped[second], swapped[first]];
+        assert.throws(() => orientedQuadrants(swapped));
+      }
     await selected(oriented);
     const root = `/api/videos/${oriented.id}`;
     const before = await api(root + "/annotations");
@@ -520,10 +566,7 @@ try {
           ) < 25,
           "Proxy/native oriented quadrant mismatch",
         );
-    assert.deepEqual(
-      pixels.native.map((rgb) => rgb.indexOf(Math.max(...rgb))),
-      [1, 0, 0, 2],
-    );
+    orientedQuadrants(pixels.native);
     await write("oriented-pixel-comparison.json", pixels);
     await page.screenshot({
       path: path.join(evidence, "oriented-proxy.png"),
@@ -906,6 +949,41 @@ try {
     assert.equal(report.annotation_revision, doc.revision);
     assert.equal(report.video_sha256, seeded.rally.sha256);
     assert.equal(report.shuttle.coverage.labeled_frames, 2);
+    let evaluationPosts = 0;
+    const countEvaluation = (request) => {
+      if (
+        request.method() === "POST" &&
+        new URL(request.url()).pathname.endsWith("/evaluate")
+      )
+        evaluationPosts++;
+    };
+    page.on("request", countEvaluation);
+    const jobsRoute = "**/api/jobs";
+    const removeEvaluatedRun = async (route) => {
+      const response = await route.fetch();
+      const jobs = await response.json();
+      assert.ok(jobs.some((job) => job.id === report.shuttle.run_id));
+      await route.fulfill({
+        response,
+        json: jobs.filter((job) => job.id !== report.shuttle.run_id),
+      });
+    };
+    await page.route(jobsRoute, removeEvaluatedRun);
+    try {
+      await page.locator("#download-evaluation").waitFor({ state: "hidden" });
+      assert.doesNotMatch(
+        await page.locator("#evaluation-results").textContent(),
+        /Saved revision/,
+      );
+      assert.equal(
+        evaluationPosts,
+        0,
+        "Input replacement must not automatically evaluate again",
+      );
+    } finally {
+      await page.unroute(jobsRoute, removeEvaluatedRun);
+      page.off("request", countEvaluation);
+    }
     assert.deepEqual(
       await Promise.all(
         rawPredictionPaths.map(async (p) => sha256(await fs.readFile(p))),
@@ -916,6 +994,7 @@ try {
       visiblePoint: visible,
       unknownWindowPreserved: true,
       evaluationRevision: report.annotation_revision,
+      obsoleteReportAndDownloadCleared: true,
       coverage: report.shuttle.coverage,
     };
   });

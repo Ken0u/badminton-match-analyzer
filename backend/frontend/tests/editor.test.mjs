@@ -751,3 +751,411 @@ test("first analysis publication follows seeks while initial derived reads are p
         );
       }
 });
+
+// All inputs below are generated. Deferred transports deliberately ignore abort
+// so response ownership must hold even when cancellation cannot stop a reply.
+async function evaluationFixture({ analysis = false } = {}) {
+  const { createEditorController } =
+    await import("../.test-build/editor/controller.js");
+  const previousFetch = globalThis.fetch,
+    previousWindow = globalThis.window;
+  const annotation = parseDocument({
+    mode: "singles",
+    revision: 2,
+    players: [{ id: "P1", name: "Generated", team: "T1" }],
+  });
+  const stages = [
+    "players",
+    "shuttle",
+    "contacts",
+    "recognition",
+    "rallies",
+    "segments",
+  ];
+  const versions = Object.fromEntries(stages.map((stage) => [stage, 0]));
+  const missing = new Set(),
+    queued = [],
+    requests = [];
+  let playbackReady = false;
+  const runId = (stage, part = "manual") =>
+    `${stage}-${versions[stage]}-${part}`;
+  const video = (id) => ({
+    id,
+    name: id,
+    mode: "singles",
+    duration_s: 1,
+    frame_count: 10,
+    width: 64,
+    height: 32,
+    fps: 10,
+  });
+  const analysisJob = (id) => ({
+    id: `analysis-${id}`,
+    video_id: id,
+    kind: "analysis",
+    status: "completed",
+    progress: 1,
+  });
+  const jobs = (id) => [
+    ...(analysis ? [analysisJob(id)] : []),
+    ...["manual", ...(analysis ? [0, 1] : [])].flatMap((part) =>
+      stages
+        .filter((stage) => !missing.has(stage))
+        .map((stage) => ({
+          id: runId(stage, part),
+          video_id: id,
+          kind: stage,
+          status: "completed",
+          progress: 1,
+          analysis_key: part === "manual" ? null : `analysis-${id}`,
+          summary: {
+            player_run_id: runId("players", part),
+            shuttle_run_id: runId("shuttle", part),
+          },
+        })),
+    ),
+  ];
+  globalThis.window = {
+    confirm: () => true,
+    setInterval: () => 1,
+    clearInterval() {},
+  };
+  globalThis.fetch = async (url, options = {}) => {
+    const p = String(url).split("?")[0],
+      id = p.match(/\/api\/videos\/([^/]+)/)?.[1] ?? "generated";
+    let value;
+    if (p.endsWith("/evaluate")) {
+      const body = JSON.parse(options.body),
+        number = requests.length + 1;
+      requests.push({ id, body });
+      value = {
+        video_id: id,
+        video_sha256: "a".repeat(64),
+        annotation_revision: annotation.revision,
+        measurement: number,
+      };
+      for (const stage of ["contacts", "shuttle", "recognition"])
+        if (body[`${stage}_run_id`])
+          value[stage] = {
+            run_id: body[`${stage}_run_id`],
+            metrics: { f1: 0.9 },
+          };
+      const next = queued.shift();
+      if (next) {
+        next.entered.resolve();
+        await next.release.promise;
+        if (next.failure) throw Error("Obsolete evaluation transport failed");
+        if (next.mutate) value = next.mutate(value);
+      }
+    } else if (p === "/api/videos")
+      value = [video("generated"), video("other")];
+    else if (p === "/api/jobs")
+      value = [...jobs("generated"), ...jobs("other")];
+    else if (p.endsWith("/annotations")) {
+      if (options.method === "PUT")
+        Object.assign(annotation, JSON.parse(options.body), {
+          revision: annotation.revision + 1,
+        });
+      value = annotation;
+    } else if (p.endsWith("/timestamps"))
+      value = Array.from({ length: 10 }, (_, i) => i / 10);
+    else if (p.includes("/analysis/"))
+      value = {
+        job: analysisJob(id),
+        state: "completed",
+        requires_processing_rerun: false,
+        recipe: { context_signature: contextSignature(annotation, 0, 10) },
+        parts: [0, 1].map((index) => ({
+          window: {
+            index,
+            core_start_frame: index * 5,
+            core_end_frame: (index + 1) * 5,
+          },
+          stages: Object.fromEntries(
+            stages.map((stage) => [stage, { run_id: runId(stage, index) }]),
+          ),
+        })),
+      };
+    else if (p.includes("/runs/"))
+      value = { start_frame: 0, end_frame: 10, frames: [] };
+    else if (p.endsWith("/playback"))
+      value = playbackReady
+        ? { status: "ready", url: `/api/videos/${id}/playback/media` }
+        : { status: "missing", url: null };
+    else if (options.method === "POST") value = { id: "generated-command" };
+    else value = video(id);
+    return new Response(JSON.stringify(value));
+  };
+  const c = createEditorController(),
+    stop = c.start();
+  await c.select("generated");
+  return {
+    c,
+    versions,
+    missing,
+    requests,
+    runId,
+    playbackReady() {
+      playbackReady = true;
+    },
+    pending(options = {}) {
+      const item = { entered: deferred(), release: deferred(), ...options };
+      queued.push(item);
+      return item;
+    },
+    dispose: stop,
+    close() {
+      for (const item of queued) item.release.resolve();
+      stop();
+      globalThis.fetch = previousFetch;
+      if (previousWindow === undefined) delete globalThis.window;
+      else globalThis.window = previousWindow;
+    },
+  };
+}
+
+test("evaluation reports follow each evaluated run replacement and removal without another POST", async (t) => {
+  for (const stage of ["contacts", "shuttle", "recognition"])
+    for (const change of ["replace", "remove"])
+      await t.test(`${stage}: ${change}`, async () => {
+        const f = await evaluationFixture();
+        try {
+          await f.c.evaluate();
+          assert.equal(f.c.snapshot().report[stage].run_id, f.runId(stage));
+          if (change === "replace") f.versions[stage]++;
+          else f.missing.add(stage);
+          await f.c.refresh();
+          assert.equal(f.c.snapshot().report, null);
+          assert.equal(
+            f.requests.length,
+            1,
+            "Input changes must never trigger an evaluation POST",
+          );
+        } finally {
+          f.close();
+        }
+      });
+});
+
+test("evaluation survives identical polling, same-core frame ticks and unrelated results", async () => {
+  const f = await evaluationFixture({ analysis: true });
+  try {
+    await f.c.evaluate();
+    const report = f.c.snapshot().report;
+    f.c.setFrame(2);
+    await f.c.refresh();
+    assert.equal(f.c.snapshot().report, report);
+    for (const stage of ["players", "rallies", "segments"]) f.versions[stage]++;
+    f.playbackReady();
+    await f.c.refresh();
+    assert.equal(f.c.snapshot().report, report);
+    assert.equal(
+      f.c.snapshot().playbackUrl,
+      "/api/videos/generated/playback/media",
+    );
+    assert.equal(f.requests.length, 1);
+  } finally {
+    f.close();
+  }
+});
+
+test("changed inputs and ABA replacements fence late evaluation successes and errors", async (t) => {
+  for (const stage of ["contacts", "shuttle", "recognition"])
+    for (const failure of [false, true])
+      await t.test(
+        `${stage}: late ${failure ? "error" : "success"}`,
+        async () => {
+          const f = await evaluationFixture();
+          const held = f.pending({ failure });
+          try {
+            const evaluating = f.c.evaluate();
+            await held.entered.promise;
+            f.versions[stage]++;
+            await f.c.refresh();
+            f.versions[stage]--;
+            await f.c.refresh();
+            f.c.notice("Current input feedback");
+            held.release.resolve();
+            await evaluating;
+            assert.equal(f.c.snapshot().report, null);
+            assert.equal(f.c.snapshot().notice, "Current input feedback");
+            assert.equal(f.c.snapshot().error, false);
+            assert.equal(f.requests.length, 1);
+          } finally {
+            held.release.resolve();
+            f.close();
+          }
+        },
+      );
+});
+
+test("review core, manual mode and processing transitions remove completed evaluation reports", async (t) => {
+  for (const action of ["review", "cross-core", "leave", "track", "process"])
+    await t.test(action, async () => {
+      const f = await evaluationFixture({ analysis: true });
+      try {
+        await f.c.evaluate();
+        assert.ok(f.c.snapshot().report);
+        if (action === "review") f.c.reviewPart(1);
+        else if (action === "cross-core") f.c.setFrame(6);
+        else if (action === "leave") f.c.leave();
+        else if (action === "track")
+          f.c.track("players", { duration: 1, model: "small", auto: true });
+        else
+          f.c.process({
+            player_model: "small",
+            auto_calibrate: true,
+            recognize: true,
+          });
+        assert.equal(
+          f.c.snapshot().report,
+          null,
+          "No stale report may remain during current-view loading",
+        );
+        await f.c.refresh();
+        assert.equal(f.c.snapshot().report, null);
+        assert.equal(f.requests.length, 1);
+      } finally {
+        f.close();
+      }
+    });
+});
+
+test("new edits and saved revisions fence prior evaluations without losing the draft", async () => {
+  const f = await evaluationFixture();
+  const held = f.pending();
+  try {
+    const evaluating = f.c.evaluate();
+    await held.entered.promise;
+    f.c.edit((d) => ({
+      ...d,
+      players: d.players.map((p) => ({ ...p, name: "Newest edit" })),
+    }));
+    assert.equal(f.c.snapshot().report, null);
+    await f.c.save();
+    assert.equal(f.c.drafts.getSnapshot().revision, 3);
+    assert.equal(f.c.drafts.getSnapshot().value.players[0].name, "Newest edit");
+    assert.equal(f.c.drafts.getSnapshot().dirty, false);
+    held.release.resolve();
+    await evaluating;
+    assert.equal(f.c.snapshot().report, null);
+    await f.c.evaluate();
+    assert.equal(f.c.snapshot().report.annotation_revision, 3);
+    f.c.edit((d) => ({
+      ...d,
+      players: d.players.map((p) => ({ ...p, name: "Later edit" })),
+    }));
+    assert.equal(f.c.snapshot().report, null);
+    assert.equal(f.requests.length, 2);
+  } finally {
+    held.release.resolve();
+    f.close();
+  }
+});
+
+test("only the newest explicit evaluation can publish a report or an error", async (t) => {
+  for (const failure of [false, true])
+    await t.test(failure ? "old error" : "old success", async () => {
+      const f = await evaluationFixture(),
+        held = f.pending({ failure });
+      try {
+        const first = f.c.evaluate();
+        await held.entered.promise;
+        await f.c.evaluate();
+        assert.equal(f.c.snapshot().report.measurement, 2);
+        f.c.notice("Newest explicit evaluation");
+        held.release.resolve();
+        await first;
+        assert.equal(f.c.snapshot().report.measurement, 2);
+        assert.equal(f.c.snapshot().notice, "Newest explicit evaluation");
+        assert.equal(f.c.snapshot().error, false);
+        assert.equal(f.requests.length, 2);
+      } finally {
+        held.release.resolve();
+        f.close();
+      }
+    });
+});
+
+test("source selection and disposal fence late evaluation replies", async (t) => {
+  for (const action of ["select", "dispose"])
+    for (const failure of [false, true])
+      await t.test(`${action}: ${failure ? "error" : "success"}`, async () => {
+        const f = await evaluationFixture(),
+          held = f.pending({ failure });
+        try {
+          const evaluating = f.c.evaluate();
+          await held.entered.promise;
+          if (action === "select") {
+            await f.c.select("other");
+            f.c.notice("Current source feedback");
+          } else f.dispose();
+          const current = f.c.snapshot();
+          held.release.resolve();
+          await evaluating;
+          assert.deepEqual(f.c.snapshot(), current);
+          assert.equal(f.c.snapshot().report, null);
+          assert.equal(f.requests.length, 1);
+        } finally {
+          held.release.resolve();
+          f.close();
+        }
+      });
+});
+
+test("evaluation responses fail closed for mismatched source, revision and requested runs", async (t) => {
+  const changes = [
+    ["source", (r) => ({ ...r, video_id: "other" })],
+    [
+      "revision",
+      (r) => ({ ...r, annotation_revision: r.annotation_revision + 1 }),
+    ],
+    ...["contacts", "shuttle", "recognition"].map((stage) => [
+      stage,
+      (r) => ({ ...r, [stage]: { ...r[stage], run_id: "unrequested" } }),
+    ]),
+    [
+      "missing requested result",
+      (r) => {
+        delete r.shuttle;
+        return r;
+      },
+    ],
+  ];
+  for (const [name, mutate] of changes)
+    await t.test(name, async () => {
+      const f = await evaluationFixture(),
+        held = f.pending({ mutate });
+      try {
+        const evaluating = f.c.evaluate();
+        await held.entered.promise;
+        held.release.resolve();
+        await evaluating;
+        assert.equal(f.c.snapshot().report, null);
+        assert.equal(f.c.snapshot().error, true);
+        assert.equal(f.requests.length, 1);
+      } finally {
+        held.release.resolve();
+        f.close();
+      }
+    });
+  await t.test("unexpected result category", async () => {
+    const f = await evaluationFixture();
+    f.missing.add("recognition");
+    await f.c.refresh();
+    const held = f.pending({
+      mutate: (r) => ({ ...r, recognition: { run_id: "unrequested" } }),
+    });
+    try {
+      const evaluating = f.c.evaluate();
+      await held.entered.promise;
+      held.release.resolve();
+      await evaluating;
+      assert.equal(f.c.snapshot().report, null);
+      assert.equal(f.c.snapshot().error, true);
+    } finally {
+      held.release.resolve();
+      f.close();
+    }
+  });
+});
