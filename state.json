@@ -1478,6 +1478,26 @@
       "task_id": "287",
       "verb": "next"
     },
+    "goal-01a17154-next-after287-v1": {
+      "actor": "dootz1",
+      "at": 1792924786,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "4cb27902f80d4b51e728bd55faf977667523cdf9",
+        "branch": "codex/issue-290-investigate-and-if-reproduced-with-gener",
+        "epoch": 1,
+        "expires_at": 1792935586,
+        "granted_at": 1792924786,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "36d40d8e8d3cef0f6f24649f6008dc711b99301da59820f146b73036af332043"
+      },
+      "epoch": 1,
+      "fingerprint": "13e28d3ebce485676ee091d178096a3c07b5bc15bda634013881773459949c67",
+      "status": "granted",
+      "task_id": "290",
+      "verb": "next"
+    },
     "goal-01a17154-next-audio284-v1": {
       "actor": "dootz1",
       "at": 1792919166,
@@ -23667,7 +23687,18 @@
       "status": "running"
     },
     "290": {
-      "epoch": 0,
+      "claim": {
+        "actor": "dootz1",
+        "baseline_sha": "4cb27902f80d4b51e728bd55faf977667523cdf9",
+        "branch": "codex/issue-290-investigate-and-if-reproduced-with-gener",
+        "epoch": 1,
+        "expires_at": 1792935586,
+        "granted_at": 1792924786,
+        "host_id": "LAPTOP-FVMV3PD6",
+        "session_id": "goal-01a17154",
+        "spec_hash": "36d40d8e8d3cef0f6f24649f6008dc711b99301da59820f146b73036af332043"
+      },
+      "epoch": 1,
       "planned_at": 1792924594,
       "planned_by": "dootz1",
       "spec": {
@@ -23715,7 +23746,7 @@
         ]
       },
       "spec_hash": "36d40d8e8d3cef0f6f24649f6008dc711b99301da59820f146b73036af332043",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
