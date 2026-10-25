@@ -9885,6 +9885,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "tiling299-checkpoint-implementation-v1": {
+      "actor": "Ken0u",
+      "at": 1792935032,
+      "epoch": 1,
+      "fingerprint": "0acabe14d0268d72b715117cb10f31ee62f22a2d5cf8b6016ce4265f0e8b87e0",
+      "status": "running",
+      "task_id": "299",
+      "verb": "checkpoint"
+    },
     "verify-101-9d7ee10b6bf474993b4781abdc533ebfdca751e8-False": {
       "actor": "github-actions[bot]",
       "at": 1792537003,
@@ -24533,12 +24542,18 @@
       }
     },
     "299": {
+      "checkpoint": {
+        "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
+        "remaining": "Finish exact-source full checks, commit/push tested code, freeze and publicly timestamp the immutable recipe, verify original-host process/Store state, then run control before any candidate. Complete final scoring/report/CI/controller/main/public delivery without promotion.",
+        "summary": "Implemented the fixed four-tile adapter and research provenance, strict optional protocol validation, historical physical-only control projection and independent complete selector replay. Original input graph still verifies60cases/50views/13499rows.171focused tests pass; initial full4602passed/four optional skips. Generated null-layout before/after proof preserved; final exact-source full check is running after the correction. No native model predictions or external image assessment/transfer have started. Existing root PROGRESS edits and research are preserved."
+      },
+      "checkpoint_at": 1792935032,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "e49b7fc0a96b056ae9ef32461a002041d79d698d",
         "branch": "codex/issue-299-compare-one-prospectively-fixed-overlapp",
         "epoch": 1,
-        "expires_at": 1792944596,
+        "expires_at": 1792945832,
         "granted_at": 1792933796,
         "host_id": "MSI",
         "session_id": "f17f985d05bf4a7586132fcdbddfcfd2",
