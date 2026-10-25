@@ -1,5 +1,18 @@
 # Bug review and implementation progress
 
+The [saved boundary evaluator](RALLY_EVALUATION_REPORT.md) adds separately
+declared serve/ending review coverage and guards against treating contact
+completeness or uncertain boundary intervals as exact timing truth. It binds
+saved proposals to source clocks and current context, keeps gaps/cuts separate,
+preserves exclusions and distinguishes representative-time scores from possible
+interval support. The editor includes rally inputs in report ownership and
+clears obsolete results/downloads without another evaluation request. Generated
+verification passes 3,226 Python tests (four optional skips), 180 frontend tests
+and all 17 generated editor browser groups, with complete fixture cleanup.
+Type/contract/build/stage, Ruff, formatting, dependencies and repository checks
+pass. Scientific limits are recorded in the report; no new source assessment,
+inference or model promotion is involved.
+
 Current status reviewed October 24, 2026 (UTC). Historical measurements and failures remain below; their test counts describe those increments, not today's suite.
 
 The application, React review/export tools and resumable full-source processing are delivered. Automatic full-match annotation correctness remains unproven. [Both host pilots and active rollout](https://github.com/Ken0u/badminton-match-analyzer/issues/80#issuecomment-6268644934) are complete, using GitHub Free controller enforcement. Candidates match the public repository; the Project stays private. [Latest verified assessment delivery](https://github.com/Ken0u/badminton-match-analyzer/issues/242#issuecomment-6389782093) covers source `9668be831014820e0a4e620f3c277032a04a39c5`, all 12 exact PR/main jobs on first attempts, 89 runtime files with package/source/frontend/lock parity and both anonymous public image manifests/configs. Descriptor HEAD availability does not prove image layer bytes, runtime behavior or image/source parity. Nothing automatically upgrades a running app or certifies badminton accuracy.

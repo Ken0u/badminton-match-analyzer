@@ -182,11 +182,13 @@ export function parseDocument(v: unknown): Document {
   for (const r of objects(d.review_windows)) {
     if (!str(r.id)) throw Error("Invalid reviewed clip id");
     member(r.scene ?? "unknown", ["live", "replay", "unknown"], "review scene");
-    if (
-      r.contacts_complete !== undefined &&
-      typeof r.contacts_complete !== "boolean"
-    )
-      throw Error("Invalid contact coverage");
+    for (const key of [
+      "contacts_complete",
+      "serves_complete",
+      "rally_ends_complete",
+    ])
+      if (r[key] !== undefined && typeof r[key] !== "boolean")
+        throw Error("Invalid reviewed clip completeness");
   }
   for (const a of objects(d.track_assignments)) {
     if (!str(a.run_id) || !str(a.player_id)) throw Error("Invalid assignment");

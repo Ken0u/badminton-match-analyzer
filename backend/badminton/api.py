@@ -121,6 +121,7 @@ class EvaluationRequest(StrictModel):
     contacts_run_id: str | None = None
     shuttle_run_id: str | None = None
     recognition_run_id: str | None = None
+    rallies_run_id: str | None = None
     tolerance_s: float = Field(default=0.12, gt=0, le=1, allow_inf_nan=False)
     tolerance_diagonal: float = Field(default=0.005, gt=0, le=0.1, allow_inf_nan=False)
 
@@ -981,13 +982,19 @@ def create_app(
     @app.post("/api/videos/{video_id}/evaluate")
     def evaluate(video_id: str, body: EvaluationRequest):
         from .evaluation import evaluate_contacts, evaluate_shuttle
+        from .rally_evaluation import evaluate_rallies
         from .recognition_evaluation import evaluate_recognition
 
         if not any(
-            (body.contacts_run_id, body.shuttle_run_id, body.recognition_run_id)
+            (
+                body.contacts_run_id,
+                body.shuttle_run_id,
+                body.recognition_run_id,
+                body.rallies_run_id,
+            )
         ):
             raise HTTPException(
-                422, "Choose a contact, shuttle, or recognition run to evaluate"
+                422, "Choose a contact, shuttle, recognition, or rally run to evaluate"
             )
         v = store.video(video_id)
         source(v)
@@ -998,6 +1005,13 @@ def create_app(
             "annotation_revision": doc["revision"],
         }
         try:
+            if body.rallies_run_id:
+                artifact = load_run(video_id, body.rallies_run_id, "rallies") | {
+                    "run_id": body.rallies_run_id
+                }
+                result["rallies"] = evaluate_rallies(
+                    v, doc, artifact, timestamps_for(data, video_id), body.tolerance_s
+                )
             if body.recognition_run_id:
                 artifact = load_run(
                     video_id, body.recognition_run_id, "recognition"

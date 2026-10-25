@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "input_fingerprint": "sha256:f77175d7d4f989748d947595480d4fce86b38988209dacec8ca6d0682312355c",
+  "input_fingerprint": "sha256:c248d02f94c52b0ff869ddc7121b4209efad366d5d012709084a0f39c75c6498",
   "inputs": {
     ".node-version": "68ca3fba3b7e864770cb61aeb306d4bd4354b68ab4dd38450860c5d823e42a53",
     "backend/frontend/index.html": "bc21de002d9459b6bff3d63ce245438503732614dc8cc9448826c871ee1f793c",
@@ -10,16 +10,16 @@
     "backend/frontend/scripts/test.mjs": "b4941179984c09438025bdd01a846e21bd5e68da0738d3c08907e8cb2fcf3b1b",
     "backend/frontend/src/App.tsx": "30eb2c9a2b9bd38cd2cb56920721dac750891b8b6cc8196dd259617a8a274694",
     "backend/frontend/src/api/client.ts": "16acdc332e22a973af9a0c533d5d1f62101765cac79a752ad51fb3446a907f08",
-    "backend/frontend/src/api/generated/openapi.json": "41ffb372458af1f37088ae339ebbd11f169c144682057fcc97ae5467dc4756eb",
-    "backend/frontend/src/api/generated/schema.ts": "7553ab387e67927b1dae028ec455adc0d370bd807d44d2e288e67c2fcb0c98c1",
-    "backend/frontend/src/editor/EditorApp.tsx": "0bd44904bc3e04d7cff8633dc7fc1a1df201944fd157fccbe9a159a6675eac3a",
+    "backend/frontend/src/api/generated/openapi.json": "f06a6ee58b2a5640a00b9126fdad16d5227057c23499c78b1c06ad71f2c0482f",
+    "backend/frontend/src/api/generated/schema.ts": "319704173674008465d8de8e3552deb9280aaa17b8ee7ba547a0564065421e80",
+    "backend/frontend/src/editor/EditorApp.tsx": "55395a480413ad84e7d6cf8fc88829062abf6ba906432aecda4f93ac4f396906",
     "backend/frontend/src/editor/Playback.tsx": "7b34baf9c26900674c7f6900fb5ed8821abf992d4b97b1c7c70bd2ab35100278",
-    "backend/frontend/src/editor/controller.ts": "0820f48b936396baa272d2978cecbd8af171196466ed9c7c93f5253a7fe53166",
+    "backend/frontend/src/editor/controller.ts": "294d0b3a3aab21eaec445c1f7066b2a5e5d98d69ef254409b19e70136280db92",
     "backend/frontend/src/editor/editor.css": "b17fea625a64243fe0cc9f6f07c899aa87c4b7c8bae1057df1dfcecca26e474e",
     "backend/frontend/src/editor/exports/ExportPanel.tsx": "6246302c66cf350074222438de949da561d1f7180eac0dc2a8bb95b58e475446",
     "backend/frontend/src/editor/exports/controller.ts": "5e33440888b08511cf97a1be405ffee3fc3bacfabd28361593bbd3fc9e058633",
     "backend/frontend/src/editor/exports/model.ts": "cdb5a6d7fea8ac4ad94bd6df65cde10fe4cbacf00e47228e4162b6bdef0a7dfb",
-    "backend/frontend/src/editor/model.ts": "30b77ee317cbfd98d742c26c594ee2780bf08a8200d9bcd2e19a86c2af14f999",
+    "backend/frontend/src/editor/model.ts": "066bc27b56843f7c14a8f591e9ae912ae81a58f73c44ffee84c4b4cbebbd628c",
     "backend/frontend/src/foundation.tsx": "ddc181bebe3f38a5912c615c08fba600bf2eff147b69a2d4d311846e51c43135",
     "backend/frontend/src/library/LibraryApp.tsx": "b71bae559544ed5c9f08c47e195b4ab7cab9933f916037fe5ac46fd14601437c",
     "backend/frontend/src/library/controller.ts": "b7f7e5f3b9a643ac4ea7ea2625c272186abe1db03416c967a5848db3f3ffbacb",
@@ -40,7 +40,7 @@
   },
   "assets": {
     "THIRD_PARTY_NOTICES.txt": "711200ed091dc3a2714bfe95bd803097f004ac1ab71c1cd6c8b1226466aef609",
-    "app.js": "3dfe3713059fe426a12fe8e70fa887a57905255d033cf2b3269dea5eadfe734d",
+    "app.js": "6958247f65245722478f9485ffc1799308be891083e751604947eeaf1f6035bd",
     "index.html": "f7092d0e8e1c8702e5aaa13ba61427a0da4c22539c25bc2388d7caf6764b3789",
     "style.css": "3024e012dbf84bd8dd888bf6583beb3037a62776f08bda10e53d56cc51020395"
   }

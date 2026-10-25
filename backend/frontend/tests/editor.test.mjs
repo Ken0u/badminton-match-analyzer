@@ -1063,7 +1063,7 @@ async function evaluationFixture({ analysis = false } = {}) {
         annotation_revision: annotation.revision,
         measurement: number,
       };
-      for (const stage of ["contacts", "shuttle", "recognition"])
+      for (const stage of ["contacts", "shuttle", "recognition", "rallies"])
         if (body[`${stage}_run_id`])
           value[stage] = {
             run_id: body[`${stage}_run_id`],
@@ -1144,7 +1144,7 @@ async function evaluationFixture({ analysis = false } = {}) {
 }
 
 test("evaluation reports follow each evaluated run replacement and removal without another POST", async (t) => {
-  for (const stage of ["contacts", "shuttle", "recognition"])
+  for (const stage of ["contacts", "shuttle", "recognition", "rallies"])
     for (const change of ["replace", "remove"])
       await t.test(`${stage}: ${change}`, async () => {
         const f = await evaluationFixture();
@@ -1174,7 +1174,7 @@ test("evaluation survives identical polling, same-core frame ticks and unrelated
     f.c.setFrame(2);
     await f.c.refresh();
     assert.equal(f.c.snapshot().report, report);
-    for (const stage of ["players", "rallies", "segments"]) f.versions[stage]++;
+    for (const stage of ["players", "segments"]) f.versions[stage]++;
     f.playbackReady();
     await f.c.refresh();
     assert.equal(f.c.snapshot().report, report);
@@ -1189,7 +1189,7 @@ test("evaluation survives identical polling, same-core frame ticks and unrelated
 });
 
 test("changed inputs and ABA replacements fence late evaluation successes and errors", async (t) => {
-  for (const stage of ["contacts", "shuttle", "recognition"])
+  for (const stage of ["contacts", "shuttle", "recognition", "rallies"])
     for (const failure of [false, true])
       await t.test(
         `${stage}: late ${failure ? "error" : "success"}`,
@@ -1339,7 +1339,7 @@ test("evaluation responses fail closed for mismatched source, revision and reque
       "revision",
       (r) => ({ ...r, annotation_revision: r.annotation_revision + 1 }),
     ],
-    ...["contacts", "shuttle", "recognition"].map((stage) => [
+    ...["contacts", "shuttle", "recognition", "rallies"].map((stage) => [
       stage,
       (r) => ({ ...r, [stage]: { ...r[stage], run_id: "unrequested" } }),
     ]),
@@ -1387,4 +1387,49 @@ test("evaluation responses fail closed for mismatched source, revision and reque
       f.close();
     }
   });
+});
+
+test("review coverage parsing preserves independent boundary declarations and rejects malformed flags", () => {
+  const source = doc();
+  source.review_windows = [
+    {
+      id: "boundary",
+      start_frame: 0,
+      end_frame: 10,
+      scene: "live",
+      contacts_complete: false,
+      serves_complete: true,
+      rally_ends_complete: false,
+    },
+  ];
+  const parsed = parseDocument(source);
+  assert.equal(parsed.review_windows[0].contacts_complete, false);
+  assert.equal(parsed.review_windows[0].serves_complete, true);
+  assert.equal(parsed.review_windows[0].rally_ends_complete, false);
+  for (const serves of [false, true])
+    for (const endings of [false, true]) {
+      const changed = structuredClone(source);
+      changed.review_windows[0].serves_complete = serves;
+      changed.review_windows[0].rally_ends_complete = endings;
+      const result = parseDocument(changed).review_windows[0];
+      assert.equal(result.serves_complete, serves);
+      assert.equal(result.rally_ends_complete, endings);
+      assert.equal(result.contacts_complete, false);
+    }
+  const legacy = structuredClone(source);
+  delete legacy.review_windows[0].serves_complete;
+  delete legacy.review_windows[0].rally_ends_complete;
+  const oldWindow = parseDocument(legacy).review_windows[0];
+  assert.equal(oldWindow.serves_complete, undefined);
+  assert.equal(oldWindow.rally_ends_complete, undefined);
+  for (const flag of [
+    "contacts_complete",
+    "serves_complete",
+    "rally_ends_complete",
+  ])
+    for (const invalid of [null, 0, 1, "true", {}]) {
+      const changed = structuredClone(source);
+      changed.review_windows[0][flag] = invalid;
+      assert.throws(() => parseDocument(changed));
+    }
 });

@@ -127,6 +127,8 @@ class FrameRange(StrictModel):
 class ReviewWindow(FrameRange):
     id: str = Field(min_length=1, max_length=64)
     contacts_complete: bool = False
+    serves_complete: bool = False
+    rally_ends_complete: bool = False
     scene: Literal["live", "replay", "unknown"] = "unknown"
     notes: str = Field(default="", max_length=2000)
 
