@@ -1,5 +1,7 @@
 import hashlib
+import os
 import wave
+from contextlib import contextmanager
 from fractions import Fraction
 from types import SimpleNamespace
 
@@ -135,3 +137,191 @@ def test_audio_spans_are_not_concatenated_across_bad_timestamps(
     assert result["peaks"] == []
     if discontinuity == "missing_pts":
         assert result["untimed_frames"] == 1
+
+
+@pytest.mark.parametrize("kind", ["pcm", "missing", "value_error", "ffmpeg_error"])
+@pytest.mark.parametrize(
+    "mutation", ["stable", "decode", "close", "restored_mtime", "removed"]
+)
+def test_acoustic_results_require_source_stability_through_media_close(
+    tmp_path, monkeypatch, kind, mutation
+):
+    path = tmp_path / "generated-source"
+    path.write_bytes(b"generated immutable input")
+    video = source(path)
+    before = path.stat()
+    pcm = av.AudioFrame.from_ndarray(np.zeros((1, RATE), np.float32), "fltp", "mono")
+    pcm.sample_rate, pcm.time_base, pcm.pts = RATE, Fraction(1, RATE), 0
+    failure = (
+        ValueError("generated corrupt audio")
+        if kind == "value_error"
+        else av.error.InvalidDataError(1, "generated unsupported audio")
+    )
+
+    def change():
+        if mutation == "removed":
+            path.unlink()
+        else:
+            path.write_bytes(b"X" * before.st_size)
+            if mutation == "restored_mtime":
+                os.utime(path, ns=(before.st_atime_ns, before.st_mtime_ns))
+
+    class Container:
+        streams = SimpleNamespace(
+            audio=[]
+            if kind == "missing"
+            else [SimpleNamespace(index=0, time_base=Fraction(1, RATE))]
+        )
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            if mutation in ("close", "restored_mtime", "removed") or (
+                kind == "missing" and mutation == "decode"
+            ):
+                change()
+
+        def seek(self, *_args, **_kwargs):
+            pass
+
+        def decode(self, _stream):
+            if mutation == "decode":
+                change()
+            if kind in ("value_error", "ffmpeg_error"):
+                raise failure
+            yield pcm
+
+    monkeypatch.setattr(av, "open", lambda *_: Container())
+    if mutation != "stable":
+        with pytest.raises(
+            FileNotFoundError if mutation == "removed" else SourceChangedError
+        ):
+            extract_audio_cues(video, tmp_path, 0, 1)
+    else:
+        result = extract_audio_cues(video, tmp_path, 0, 1)
+        assert result["status"] == (
+            "available"
+            if kind == "pcm"
+            else "missing"
+            if kind == "missing"
+            else "unavailable"
+        )
+        assert result["peaks"] == []
+        if kind in ("value_error", "ffmpeg_error"):
+            assert result["reason"] == type(failure).__name__
+
+
+@pytest.mark.parametrize("where", ["seek", "decode", "close"])
+def test_unexpected_audio_io_error_keeps_the_initiating_exception(
+    tmp_path, monkeypatch, where
+):
+    path = tmp_path / "generated-source"
+    path.write_bytes(b"generated original")
+    video = source(path)
+    error = OSError("generated initiating I/O failure")
+
+    def fail():
+        path.write_bytes(b"generated changed")
+        raise error
+
+    class Container:
+        streams = SimpleNamespace(
+            audio=[SimpleNamespace(index=0, time_base=Fraction(1, RATE))]
+        )
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            if where == "close":
+                fail()
+
+        def seek(self, *_args, **_kwargs):
+            if where == "seek":
+                fail()
+
+        def decode(self, _stream):
+            if where == "decode":
+                fail()
+            return iter(())
+
+    monkeypatch.setattr(av, "open", lambda *_: Container())
+    with pytest.raises(OSError) as caught:
+        extract_audio_cues(video, tmp_path, 0, 1)
+    assert caught.value is error
+
+
+def test_changed_file_during_final_validation_keeps_source_error(tmp_path, monkeypatch):
+    import badminton.video as video_module
+    from badminton.file_cache import FileChangedError
+
+    path = tmp_path / "generated-source"
+    path.write_bytes(b"generated original")
+    video = source(path)
+    digest = video_module.file_digest
+    calls = []
+    error = FileChangedError("generated concurrent source read")
+
+    def changed_digest(target):
+        calls.append(target)
+        if len(calls) == 2:
+            raise error
+        return digest(target)
+
+    class Container:
+        streams = SimpleNamespace(audio=[])
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            pass
+
+    monkeypatch.setattr(video_module, "file_digest", changed_digest)
+    monkeypatch.setattr(av, "open", lambda *_: Container())
+    with pytest.raises(SourceChangedError) as caught:
+        extract_audio_cues(video, tmp_path, 0, 1)
+    assert caught.value.__cause__ is error
+    assert calls == [path, path]
+
+
+@pytest.mark.parametrize("kind", ["pcm", "silent_video"])
+def test_real_generated_media_mutation_after_native_close_is_rejected(
+    tmp_path, monkeypatch, kind
+):
+    path = tmp_path / ("generated.wav" if kind == "pcm" else "silent.mp4")
+    if kind == "pcm":
+        with wave.open(str(path), "wb") as output:
+            output.setnchannels(1)
+            output.setsampwidth(2)
+            output.setframerate(RATE)
+            output.writeframes(np.zeros(RATE, np.int16).tobytes())
+    else:
+        with av.open(str(path), "w") as output:
+            stream = output.add_stream("mpeg4", rate=25)
+            stream.width, stream.height, stream.pix_fmt = 64, 48, "yuv420p"
+            for index in range(5):
+                frame = av.VideoFrame.from_ndarray(
+                    np.zeros((48, 64, 3), np.uint8), "rgb24"
+                )
+                frame.pts = index
+                for packet in stream.encode(frame):
+                    output.mux(packet)
+            for packet in stream.encode():
+                output.mux(packet)
+    video = source(path)
+    native_open = av.open
+    closed = []
+
+    @contextmanager
+    def changed_after_close(*args, **kwargs):
+        with native_open(*args, **kwargs) as container:
+            yield container
+        closed.append(True)
+        path.write_bytes(b"changed after actual native media close")
+
+    monkeypatch.setattr(av, "open", changed_after_close)
+    with pytest.raises(SourceChangedError):
+        extract_audio_cues(video, tmp_path, 0, 0.2)
+    assert closed == [True]

@@ -56,6 +56,17 @@ def transient_peaks(samples, start_s, rate=RATE):
 
 
 def extract_audio_cues(video, root, start_s, end_s):
+    """Validate source bytes again after optional extraction and media teardown.
+
+    Normal missing/unavailable results still require the imported source.
+    Unexpected decoder or I/O errors retain their initiating exception.
+    """
+    result = _extract_audio_cues(video, root, start_s, end_s)
+    resolve_source(video, root)
+    return result
+
+
+def _extract_audio_cues(video, root, start_s, end_s):
     """Decode at most a baseline window; missing/unusable audio is explicit.
 
     Audio PTS is rebased by the imported *video* origin. Resampling preserves

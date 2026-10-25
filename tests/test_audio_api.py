@@ -2,7 +2,11 @@ import copy
 import hashlib
 import json
 import time
+from fractions import Fraction
+from types import SimpleNamespace
 
+import av
+import numpy as np
 import pytest
 from badminton.api import create_app
 from badminton.storage import Store
@@ -133,6 +137,158 @@ def test_audio_request_requires_pose_and_rejects_unknown_flags(catalog):
             == 422
         )
     assert len(store.jobs()) == 2
+
+
+@pytest.mark.parametrize("kind", ["pcm", "missing", "corrupt"])
+@pytest.mark.parametrize(
+    "mutation", ["stable", "decode", "close", "removed", "visual_only"]
+)
+def test_actual_audio_job_rejects_source_changes_without_publishing_or_editing_truth(
+    catalog, monkeypatch, kind, mutation
+):
+    from badminton.audio import RATE
+    from badminton.contacts import propose_contacts
+    from badminton.schemas import Event
+
+    root, data, store, video = catalog
+    original_documents = {}
+    runs = {}
+    for stage in ("shuttle", "players"):
+        path = data / video["id"] / "runs" / f"{stage}.json"
+        run = json.loads(path.read_bytes())
+        run["frames"] = []
+        for index in range(25):
+            row = {"frame": index, "time_s": index * 0.04}
+            if stage == "shuttle":
+                row["shuttle"] = {
+                    "visible": True,
+                    "x": 300 + 200 * abs(index * 0.04 - 0.48),
+                    "y": 200,
+                    "repaired": False,
+                }
+            else:
+                row["players"] = [
+                    {"track_id": 7, "box": [280, 180, 380, 320], "keypoints": []}
+                ]
+            run["frames"].append(row)
+        write_json(path, run)
+        runs[stage] = run
+        original_documents[path] = path.read_bytes()
+    visual = propose_contacts(runs["shuttle"], runs["players"], video)
+    assert len(visual) == 1
+    old_prediction = data / video["id"] / "runs" / "original-contacts.json"
+    write_json(
+        old_prediction,
+        {"stage": "contacts", "video_id": video["id"], "candidates": visual},
+    )
+    original_documents[old_prediction] = old_prediction.read_bytes()
+    reviewed = store.annotations(video["id"])
+    reviewed.events.append(
+        Event(
+            id="preserved",
+            rally_id="R1",
+            kind="shot",
+            frame=12,
+            family="drop",
+            side="backhand",
+            status="corrected",
+        )
+    )
+    assert store.save_annotations(video["id"], reviewed).revision == 1
+
+    def revisions():
+        with store.connect() as db:
+            return db.execute(
+                "SELECT revision,document,saved_at FROM annotations ORDER BY revision"
+            ).fetchall()
+
+    original_revisions = revisions()
+    source = root / video["path"]
+    source_bytes = source.read_bytes()
+    opens = []
+    pcm = av.AudioFrame.from_ndarray(np.zeros((1, RATE), np.float32), "fltp", "mono")
+    pcm.sample_rate, pcm.time_base, pcm.pts = RATE, Fraction(1, RATE), 0
+
+    def change():
+        if mutation == "removed":
+            source.unlink()
+        else:
+            source.write_bytes(b"X" * len(source_bytes))
+
+    class Container:
+        streams = SimpleNamespace(
+            audio=[]
+            if kind == "missing"
+            else [SimpleNamespace(index=0, time_base=Fraction(1, RATE))]
+        )
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *_):
+            if mutation in ("close", "removed") or (
+                kind == "missing" and mutation == "decode"
+            ):
+                change()
+
+        def seek(self, *_args, **_kwargs):
+            pass
+
+        def decode(self, _stream):
+            if mutation == "decode":
+                change()
+            if kind == "corrupt":
+                raise av.error.InvalidDataError(1, "generated corrupt audio")
+            yield pcm
+
+    def open_generated(path):
+        assert path == str(source)
+        opens.append(path)
+        return Container()
+
+    # Keep the real extractor, source validator, media wrapper and proposal code.
+    monkeypatch.setattr(av, "open", open_generated)
+    with TestClient(create_app(root, data)) as client:
+        response = client.post(
+            f"/api/videos/{video['id']}/contacts",
+            json={
+                "shuttle_run_id": "shuttle",
+                "player_run_id": "players",
+                "include_audio": mutation != "visual_only",
+            },
+        )
+        assert response.status_code == 202, response.text
+        job = wait(store, response.json()["id"])
+        artifact = data / video["id"] / "runs" / f"{job['id']}.json"
+        if mutation in ("stable", "visual_only"):
+            assert job["status"] == "completed", job
+            result = json.loads(artifact.read_bytes())
+            assert result["candidates"] == visual
+            assert source.read_bytes() == source_bytes
+            if mutation == "visual_only":
+                assert not opens and "audio" not in result
+            else:
+                assert len(opens) == 1
+                assert (
+                    result["audio"]["status"]
+                    == {
+                        "pcm": "available",
+                        "missing": "missing",
+                        "corrupt": "unavailable",
+                    }[kind]
+                )
+        else:
+            assert job["status"] == "failed", job
+            assert not artifact.exists()
+            assert (
+                "source is unavailable" in job["message"]
+                if mutation == "removed"
+                else "source changed" in job["message"]
+            )
+    assert all(
+        path.read_bytes() == before for path, before in original_documents.items()
+    )
+    assert revisions() == original_revisions
 
 
 @pytest.mark.parametrize(
