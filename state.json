@@ -1454,6 +1454,13 @@
       "task_id": "290",
       "verb": "checkpoint"
     },
+    "goal-01a17154-continue-after290-next-v1": {
+      "actor": "dootz1",
+      "at": 1792927851,
+      "fingerprint": "37714991e97b1768483f579a35ecb87f12a9abdb0f5e62afa6ae0b7abd1cd554",
+      "status": "idle",
+      "verb": "next"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
