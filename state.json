@@ -396,6 +396,15 @@
       "task_id": "223",
       "verb": "submit"
     },
+    "clock264-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792901468,
+      "epoch": 1,
+      "fingerprint": "01ace6e680f3b84ff867b3a87415f67b7afa2a581a5483f7cba5ada9149371e4",
+      "status": "running",
+      "task_id": "264",
+      "verb": "checkpoint"
+    },
     "comparison221-baseline-v1": {
       "actor": "dootz1",
       "at": 1792819244,
@@ -21066,12 +21075,19 @@
       }
     },
     "264": {
+      "checkpoint": {
+        "branch": "codex/issue-264-reject-contact-and-recognition-evaluatio",
+        "head_sha": "7939da84c308c5696c6e4df438edeeff2f0d9b20",
+        "remaining": "Core integration, final focused/full checks and normal PR/main/public delivery.",
+        "summary": "#264 implementation checkpoint: preserved the four-case generated native-clock reproduction; current genuine epoch1/granted branch at baseline7939da84c308c5696c6e4df438edeeff2f0d9b20. Parent API/CLI source-clock wiring, generated API/CLI cases and focused report/bug-review changes are local in the isolated granted worktree. Bounded core evaluator/unit-test subtask runs in a separate isolated worktree with three-file ownership; parent retains grant and publication. Parent-owned lint/format checks pass. Remaining: integrate exact finished core bytes, focused/full required checks with process receipts, focused PR/exact CI/controller integration and full independent public delivery. No real scientific image/label access, inference, model/default/policy change, manual merge or workflow retry; original deprecated PROGRESS edit/data/research preserved. Scientific references0/2/all four eligibility flagsfalse; overall product objective unachieved."
+      },
+      "checkpoint_at": 1792901468,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7939da84c308c5696c6e4df438edeeff2f0d9b20",
         "branch": "codex/issue-264-reject-contact-and-recognition-evaluatio",
         "epoch": 1,
-        "expires_at": 1792911973,
+        "expires_at": 1792912268,
         "granted_at": 1792901173,
         "host_id": "MSI",
         "session_id": "b80f2c05765e40ff9fa024c1530840f1",
