@@ -5,3 +5,50 @@ recursive-include docs *.md *.json *.png
 recursive-include tests *.py *.mjs
 recursive-include .github *.yml *.json
 include Dockerfile .dockerignore .gitattributes .gitignore
+
+# Public, tracked protocol files only; never include local data by wildcard.
+include data/manifests/court_detector_development.json
+include data/manifests/heldout_contact_review.json
+include data/manifests/mac_player_audit_v1.json
+include data/manifests/mac_player_runtime_v1.json
+include data/manifests/new_singles_source_review.json
+include data/manifests/observed_stroke_context_evaluation.json
+include data/manifests/pilot_review.json
+include data/manifests/portable_stroke_training_v1.json
+include data/manifests/public_contact_review.json
+include data/manifests/r2_learning_evaluation.json
+include data/manifests/rally_boundary_review.json
+include data/manifests/rally_evidence_join_v1.json
+include data/manifests/rally_reference_diagnostics_v1.json
+include data/manifests/rally_reference_protocol_v1.json
+include data/manifests/rally_reference_protocol_v2.json
+include data/manifests/rally_reference_protocol_v3.json
+include data/manifests/rally_reference_protocol_v4.json
+include data/manifests/rally_reference_protocol_v5.json
+include data/manifests/rally_reference_protocol_v6.json
+include data/manifests/rally_review_contract_v1.json
+include data/manifests/rally_review_plan_v1.json
+include data/manifests/rally_temporal_context_v1.json
+include data/manifests/rally_temporal_context_v2.json
+include data/manifests/s2_media_anchor_review.json
+include data/manifests/s2_source_anchor_review.json
+include data/manifests/samples.json
+include data/manifests/scene_review.json
+include data/manifests/shuttle_broadcast_baseline_protocol_v1.json
+include data/manifests/shuttle_corpus_diagnostic_v1.json
+include data/manifests/shuttle_eligibility_audit_v1.json
+include data/manifests/shuttle_heatmap_protocol_v1.json
+include data/manifests/shuttle_label_comparison_protocol_v1.json
+include data/manifests/shuttle_label_revision_sources_v1.json
+include data/manifests/shuttle_localization_review.json
+include data/manifests/shuttle_resolution_protocol_v1.json
+include data/manifests/shuttle_review_packet_protocol_v1.json
+include data/manifests/shuttle_review_sources_v1.json
+include data/manifests/shuttle_source_assessment_protocol_v1.json
+include data/manifests/shuttle_source_assessment_protocol_v2.json
+include data/manifests/shuttle_supervision_sources_v1.json
+include data/manifests/shuttle_threshold_protocol_v1.json
+include data/manifests/shuttle_visibility_protocol_v1.json
+include data/manifests/source_alignment_pilot.json
+include data/manifests/source_camera_review.json
+include data/manifests/terminal_contact_review.json
