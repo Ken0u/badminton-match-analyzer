@@ -5612,6 +5612,24 @@
       "task_id": "275",
       "verb": "checkpoint"
     },
+    "protocol275-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792911217,
+      "epoch": 1,
+      "fingerprint": "2d9df1405ee38a50dde48ee0e15dedb699492ab0f2e07dfcce1c09d5e56db4cd",
+      "status": "running",
+      "task_id": "275",
+      "verb": "checkpoint"
+    },
+    "protocol275-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792911345,
+      "epoch": 1,
+      "fingerprint": "79434f27d77c99fae0bf8c914453ee93938e37cf68565c97c3133727beda8f5f",
+      "status": "review",
+      "task_id": "275",
+      "verb": "submit"
+    },
     "public-protocol-next-v1": {
       "actor": "Ken0u",
       "at": 1792909623,
@@ -22234,24 +22252,20 @@
     },
     "275": {
       "checkpoint": {
-        "artifacts": [
-          ".cache/protocol275-check-focused-v2",
-          ".cache/protocol275-check-all-v1",
-          ".cache/protocol275-built-v1",
-          ".cache/protocol275-built-v2"
-        ],
         "branch": "codex/issue-275-make-public-source-distributions-contain",
-        "head_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
-        "remaining": "Finish stable full suite, actual canary-exclusion/build/install and lifetime receipts; finalize report, focused PR and exact PR/main/controller/public-delivery verification.",
-        "summary": "Five granted paths implemented locally: 45 literal public manifest includes, exact Git/source-archive membership and byte verification, generated rejection regressions and focused report. 50 focused package/environment tests pass. Full checks in progress. Real wheel/sdist and installed HTTP consumer succeeded; first monitoring wrapper raced original process exit before saving final receipt. Original build log and HTTP receipt retained; both prior original/HTTP PIDs independently absent. Corrected wrapper repeating the check without product changes or process signals. No scientific access/image transfer, no PROGRESS edit or collaborator path changes."
+        "evidence_sha256": "107951d1cee9c2b5b5e8f69d2db3307d1dabe3b64d0013fdc0e922133fe4a72e",
+        "head_sha": "5322ec23a3b31d54bca0313d193e7027653e28bc",
+        "pr_number": 276,
+        "remaining": "Exact PR/main CI, controller integration and independently verified complete public source/wheel/frontend/lock/both-image delivery.",
+        "summary": "All50 focused/4181 full Python tests pass, four optional skips; required checks pass. Real build/installed HTTP verifies45 public manifests,93 runtime files and both canary exclusions. Stable final source and terminal lifetimes verified. Zero scientific/image access; local receipt SHA256 107951d1cee9c2b5b5e8f69d2db3307d1dabe3b64d0013fdc0e922133fe4a72e."
       },
-      "checkpoint_at": 1792910364,
+      "checkpoint_at": 1792911217,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "0e5a17c278e050e41c7993677c7cd8a43ca957eb",
         "branch": "codex/issue-275-make-public-source-distributions-contain",
         "epoch": 1,
-        "expires_at": 1792921164,
+        "expires_at": 1792922017,
         "granted_at": 1792909623,
         "host_id": "MSI",
         "session_id": "7c82293f597c4220a41b086449a033b5",
@@ -22260,6 +22274,7 @@
       "epoch": 1,
       "planned_at": 1792909462,
       "planned_by": "Ken0u",
+      "pr_number": 276,
       "spec": {
         "acceptance": [
           "Repair actual public source0e5a17c278e050e41c7993677c7cd8a43ca957eb candidate40167963093: source archive SHA154bcffe6eaff7745f3569da00f4b11fbd3ee46b624dd303c8a1b40d6b308733 omits45/45 tracked data/manifests JSON files while shipping tests that read them, including rally_review_contract_v1.json. Preserve source inventory evidence and historical successful package checks; those checks verified backend parity but did not require these public files.",
@@ -22306,7 +22321,13 @@
         ]
       },
       "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "d73911463a1ad15ca9be21d5dbfa255df3f3790f",
+        "head_sha": "5322ec23a3b31d54bca0313d193e7027653e28bc",
+        "pr_number": 276,
+        "spec_hash": "5e072d5d36db4623618e302bb682c9b33c15c9992529234468f995ac06ffed41"
+      }
     },
     "62": {
       "checkpoint": {
