@@ -192,6 +192,30 @@ def _court_position(point, frame, annotations, video):
     return None
 
 
+def _selection_context(row):
+    """Causal half-open component history, or legacy per-frame observation."""
+    point = row["shuttle"]
+    names = ("selection_context_start_frame", "selection_context_end_frame")
+    if not any(name in point for name in names):
+        return (
+            None
+            if point.get("selection_context_excluded")
+            else (
+                row["frame"],
+                row["frame"] + 1,
+            )
+        )
+    left, right = (point.get(name) for name in names)
+    if (
+        type(left) is not int
+        or type(right) is not int
+        or not 0 <= left <= row["frame"] < right == row["frame"] + 1
+        or point.get("selection_context_excluded")
+    ):
+        return None
+    return left, right
+
+
 def _segments(players, shuttle, cuts, start, end, expected):
     segments, current = [], []
     for frame in range(start, end):
@@ -237,12 +261,24 @@ def _segments(players, shuttle, cuts, start, end, expected):
                 else {},
                 "expected_players": expected,
                 "point": _point(flight),
+                "selection_context": _selection_context(flight),
                 "quiet": False,
                 "quiet_visible": False,
             }
         )
     if current:
         segments.append(current)
+    for rows in segments:
+        left, right = rows[0]["frame"], rows[-1]["frame"] + 1
+        for row in rows:
+            context = row["selection_context"]
+            row["selection_context_valid"] = (
+                context is not None and left <= context[0] < context[1] <= right
+            )
+            if not row["selection_context_valid"]:
+                # Do not use a selected point whose declared history crosses a
+                # missing/scene/cut/clock barrier or extends outside the inputs.
+                row["point"] = None
     return segments
 
 
@@ -252,8 +288,16 @@ def _motion(rows, diagonal):
         # A row's derived speed/quiet judgment also reads earlier observations.
         # Keep these native dependencies separate from boundary timing bounds.
         row["motion_start_frame"] = rows[max(0, i - 1)]["frame"]
+        row["motion_context_valid"] = row["selection_context_valid"] and (
+            not i or rows[i - 1]["selection_context_valid"]
+        )
+        row["shuttle_context"] = row["selection_context"]
         row["shuttle_speed"] = None
         if i and row["point"] is not None and rows[i - 1]["point"] is not None:
+            row["shuttle_context"] = (
+                min(row["selection_context"][0], rows[i - 1]["selection_context"][0]),
+                max(row["selection_context"][1], rows[i - 1]["selection_context"][1]),
+            )
             row["shuttle_speed"] = (
                 float(np.linalg.norm(row["point"] - rows[i - 1]["point"]))
                 / (times[i] - times[i - 1])
@@ -348,9 +392,16 @@ def _candidate(kind, row, first, last, evidence, track_id=None):
 
 def _with_context(candidate, evidence_rows):
     """Record a conservative half-open span of the actual native dependencies."""
+    if any(not row["motion_context_valid"] for row in evidence_rows):
+        return None
     candidate.update(
-        context_start_frame=min(row["motion_start_frame"] for row in evidence_rows),
-        context_end_frame=max(row["frame"] for row in evidence_rows) + 1,
+        context_start_frame=min(
+            min(row["motion_start_frame"], row["shuttle_context"][0])
+            for row in evidence_rows
+        ),
+        context_end_frame=max(
+            max(row["frame"] + 1, row["shuttle_context"][1]) for row in evidence_rows
+        ),
     )
     return candidate
 
