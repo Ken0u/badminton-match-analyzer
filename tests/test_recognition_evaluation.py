@@ -171,3 +171,149 @@ def test_wrong_source_hash_and_duplicate_prediction_ids_are_rejected_and_inputs_
     run["candidates"][1]["id"] = "p1"
     with pytest.raises(ValueError, match="unique"):
         evaluate_recognition(video, doc, run)
+
+
+def one_contact(mode="singles"):
+    video, doc, run = fixture()
+    video["mode"] = mode
+    doc["events"] = doc["events"][:1]
+    doc["events"][0].update(frame=20, time_s=0.8)
+    run["candidates"] = run["candidates"][:1]
+    run["candidates"][0].update(frame=20, time_s=0.8, side="forehand")
+    return video, doc, run
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize("status", ["reviewed", "corrected"])
+@pytest.mark.parametrize("cut_source", ["run", "court", "review"])
+def test_cross_camera_matches_cannot_credit_family_side_hitter_or_complete_event(
+    mode, status, cut_source
+):
+    video, doc, run = one_contact(mode)
+    doc["events"][0].update(frame=19, time_s=0.76, status=status)
+    if cut_source == "run":
+        run["cut_frames"] = [20]
+    elif cut_source == "court":
+        run["calibration_signature"] = []
+        run["court_context"] = {
+            "start_frame": 0,
+            "end_frame": 100,
+            "cut_frames": [20],
+        }
+    else:
+        doc["camera_corrections"] = [{"frame": 20, "is_cut": True}]
+    before = copy.deepcopy((video, doc, run))
+    result = evaluate_recognition(video, doc, run)
+    assert (video, doc, run) == before
+    assert result["coverage"]["frame_ranges"] == [[0, 20], [20, 100]]
+    assert result["coverage"]["reviewed_frames"] == 100
+    assert result["coverage"]["reviewed_event_ids"] == ["one"]
+    assert result["coverage"]["evaluated_candidate_ids"] == ["p1"]
+    drive = result["family"]["per_class"]["drive"]
+    assert (drive["tp"], drive["fp"], drive["fn"]) == (0, 1, 1)
+    assert result["family"]["confusion"]["drive"]["unanswered"] == 1
+    assert result["family"]["confusion"]["no_contact"]["drive"] == 1
+    assert result["side"]["confusion"]["forehand"]["unanswered"] == 1
+    assert result["hitter"]["correct_count"] == 0
+    assert result["hitter"]["known_contact_count"] == 1
+    assert result["hitter"]["accuracy_including_unanswered"] == 0
+    complete = result["complete_event"]
+    assert (complete["tp"], complete["fp"], complete["fn"]) == (0, 1, 1)
+    assert result["unmatched_candidate_ids"] == ["p1"]
+    assert result["matches"][0]["candidate_id"] is None
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+def test_same_camera_matching_keeps_family_side_hitter_and_complete_event(mode):
+    video, doc, run = one_contact(mode)
+    doc["events"][0].update(frame=21, time_s=0.84)
+    run["candidates"][0].update(frame=22, time_s=0.88)
+    run["cut_frames"] = [20]
+    result = evaluate_recognition(video, doc, run)
+    assert result["family"]["per_class"]["drive"]["f1"] == 1
+    assert result["side"]["confusion"]["forehand"]["forehand"] == 1
+    assert result["hitter"]["accuracy_including_unanswered"] == 1
+    assert result["complete_event"]["f1"] == 1
+    assert result["unmatched_candidate_ids"] == []
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize(
+    "excluded_context",
+    ["cut_interval", "cut_evidence", "gap_interval", "gap_evidence", "scene"],
+)
+def test_recognition_uses_exact_contact_domain_without_reintroducing_excluded_proposals(
+    mode, excluded_context
+):
+    video, doc, run = one_contact(mode)
+    candidate = run["candidates"][0]
+    if excluded_context.startswith("cut"):
+        run["cut_frames"] = [20]
+        if excluded_context == "cut_interval":
+            candidate.update(contact_start_frame=19, contact_end_frame=21)
+        else:
+            candidate.update(context_start_frame=19, context_end_frame=22)
+    elif excluded_context.startswith("gap"):
+        doc["review_windows"] = [
+            {**doc["review_windows"][0], "end_frame": 19},
+            {**doc["review_windows"][0], "id": "w2", "start_frame": 20},
+        ]
+        if excluded_context == "gap_interval":
+            candidate.update(contact_start_frame=18, contact_end_frame=21)
+        else:
+            candidate.update(context_start_frame=18, context_end_frame=22)
+    else:
+        doc["review_windows"][0].update(start_frame=20, end_frame=40)
+        doc["scene_ranges"] = [
+            {"id": "non-play", "start_frame": 18, "end_frame": 19, "scene": "non_play"}
+        ]
+        candidate.update(context_start_frame=18, context_end_frame=22)
+    before = copy.deepcopy((video, doc, run))
+    result = evaluate_recognition(video, doc, run)
+    assert (video, doc, run) == before
+    assert result["coverage"]["reviewed_event_ids"] == ["one"]
+    assert result["coverage"]["evaluated_candidate_ids"] == []
+    assert result["coverage"]["excluded_candidate_ids"] == ["p1"]
+    assert result["contact_inputs"] == {
+        "reviewed_event_targets": 0,
+        "proposal_targets": 0,
+    }
+    drive = result["family"]["per_class"]["drive"]
+    assert (drive["tp"], drive["fp"], drive["fn"]) == (0, 0, 1)
+    assert result["family"]["confusion"]["drive"]["unanswered"] == 1
+    assert result["family"]["confusion"]["no_contact"]["drive"] == 0
+    assert result["hitter"]["accuracy_including_unanswered"] == 0
+    complete = result["complete_event"]
+    assert (complete["tp"], complete["fp"], complete["fn"]) == (0, 0, 1)
+    assert result["unmatched_candidate_ids"] == []
+    assert result["unmatched_prediction_class_counts"] == {}
+
+
+@pytest.mark.parametrize("reference", ["unknown", "assisted"])
+def test_unknown_or_assisted_truth_stays_separate_from_excluded_prediction(reference):
+    video, doc, run = one_contact()
+    if reference == "unknown":
+        doc["events"][0]["family"] = "unknown"
+    else:
+        doc["events"][0]["classification_run_id"] = "prior-model"
+    run["cut_frames"] = [20]
+    run["candidates"].append(
+        {
+            **run["candidates"][0],
+            "id": "excluded",
+            "contact_start_frame": 19,
+            "contact_end_frame": 21,
+        }
+    )
+    result = evaluate_recognition(video, doc, run)
+    assert result["coverage"]["evaluated_candidate_ids"] == ["p1"]
+    assert result["coverage"]["excluded_candidate_ids"] == ["excluded"]
+    assert result["family"]["known_contact_count"] == 0
+    assert result["family"]["confusion"]["no_contact"]["drive"] == 0
+    assert result["complete_event"] is None
+    assert result["unmatched_candidate_ids"] == []
+    assert result["labels"][
+        "unknown_family_event_ids"
+        if reference == "unknown"
+        else "excluded_model_assisted_event_ids"
+    ] == ["one"]

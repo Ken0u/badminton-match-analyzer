@@ -1,5 +1,18 @@
 # Bug review and implementation progress
 
+The [contact evaluation context repair](CONTACT_EVALUATION_CONTEXT_REPORT.md)
+corrects a generated frame-19/frame-20 match across a known camera cut that
+previously reported contact F1 1.0 and credited recognition family/hitter/complete
+events. Evaluation now separates known camera views, retains missed/false
+denominators and explicitly excludes proposal intervals or evidence crossing
+cuts or review gaps. Recognition uses the same eligible IDs so exclusions cannot
+reappear as false classifications. Generated verification and the remaining
+scientific-reference limits are recorded in the report. Final local checks pass
+3,343 Python tests (four optional skips), including 139 focused tests, plus Ruff,
+formatting, dependencies, repository and whitespace checks. The first full run's
+source-timing limitation and initial CLI-fixture assertion failure are preserved;
+the final run verified unchanged source and terminal process lifetimes.
+
 The [saved boundary evaluator](RALLY_EVALUATION_REPORT.md) adds separately
 declared serve/ending review coverage and guards against treating contact
 completeness or uncertain boundary intervals as exact timing truth. It binds

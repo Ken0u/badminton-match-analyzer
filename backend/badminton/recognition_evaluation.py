@@ -67,18 +67,13 @@ def evaluate_recognition(video, annotations, run, tolerance_s=0.12):
     contact_view = run | {"stage": "contacts", "candidates": candidates}
     timing = evaluate_contacts(video, annotations, contact_view, tolerance_s)
     ranges = timing["coverage"]["frame_ranges"]
-
-    def included(frame):
-        return any(left <= frame < right for left, right in ranges)
-
-    events = {
-        e["id"]: e
-        for e in annotations["events"]
-        if e["kind"] in ("serve", "shot")
-        and e["status"] in ("reviewed", "corrected")
-        and included(e["frame"])
-    }
-    by_id = {c["id"]: c for c in candidates if included(c["frame"])}
+    # Contact eligibility includes complete interval/evidence context, not just
+    # a navigation frame inside review coverage. Reusing that exact domain keeps
+    # excluded proposals from reappearing as classification false positives.
+    event_ids = set(timing["coverage"]["reviewed_event_ids"])
+    candidate_ids = set(timing["coverage"]["evaluated_candidate_ids"])
+    events = {e["id"]: e for e in annotations["events"] if e["id"] in event_ids}
+    by_id = {c["id"]: c for c in candidates if c["id"] in candidate_ids}
     matches = {m["event_id"]: m["candidate_id"] for m in timing.get("matches", [])}
     matched_predictions = set(matches.values())
     matrix = {
