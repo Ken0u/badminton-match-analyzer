@@ -1366,6 +1366,15 @@
       "task_id": "273",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint281-baseline-v1": {
+      "actor": "dootz1",
+      "at": 1792916356,
+      "epoch": 1,
+      "fingerprint": "56739a2578c1bc4b6215b3bf1265c224a6b6948b24f86791b2c5c644f2a20c3f",
+      "status": "running",
+      "task_id": "281",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-extend271-native-v1": {
       "actor": "dootz1",
       "at": 1792908909,
@@ -22773,12 +22782,24 @@
       "status": "needs_human"
     },
     "281": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/w281/.cache/evidence/import281-baseline/result.json",
+          ".cache/goal-01a17154/repro281-baseline.log",
+          ".cache/goal-01a17154/repro281-baseline-process.json"
+        ],
+        "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
+        "head": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
+        "remaining": "Add generated failing regressions before minimal ingestion stable-digest/final-source-validation repair; preserve earlier published truth/provenance and source-clock/orientation controls. Focused/full required checks, source/process seals, exactPR/main/controller/public delivery. Scope stays4files;279 workflow approval remains separate and pending.",
+        "summary": "Unchanged baseline e48cbd9 actual generated media reproduces3 successful inconsistent imports: before decoder open, during decoded progress and existing-video reimport. All returned checksum disagrees with actual current source; existing downstream resolve_source raisesSourceChangedError. Reimport overwrites4 prior artifacts: timestamps, metadata, poster and sheet. Raw result/source bytes retained; original sourcecode hash e0440753db7cdbb80cac1102e1defac7138dff969c73553281cc50d9fd935d66. One baseline command exits0; both exact normalvenv interpreter lifetimes independently absent, no observation errors. No scientific source/image/label/prediction or inference accessed."
+      },
+      "checkpoint_at": 1792916356,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "e48cbd9beb806b6fa95f85fe42df02d499277c06",
         "branch": "codex/issue-281-investigate-and-when-reproduced-with-gen",
         "epoch": 1,
-        "expires_at": 1792926564,
+        "expires_at": 1792927156,
         "granted_at": 1792915764,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
