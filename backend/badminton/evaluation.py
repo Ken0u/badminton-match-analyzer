@@ -458,11 +458,11 @@ def evaluate_contacts(
     """
     if not math.isfinite(tolerance_s) or tolerance_s < 0:
         raise ValueError("Contact tolerance must be finite and nonnegative")
+    result = _base(video, annotations, contact_run, "contacts")
     if native_timestamps is not None:
         _validate_contact_clock(
             video, annotations, contact_run["candidates"], native_timestamps
         )
-    result = _base(video, annotations, contact_run, "contacts")
     result["prediction_clock_status"] = (
         "validated" if native_timestamps is not None else "unavailable"
     )

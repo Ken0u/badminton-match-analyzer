@@ -318,3 +318,14 @@ def test_recognition_keeps_unknown_assisted_abstention_and_missing_denominators(
     if label_kind in ("abstained", "missing"):
         assert checked["family"]["per_class"]["drive"]["fn"] == 1
         assert checked["complete_event"]["fn"] == 1
+
+
+@pytest.mark.parametrize("source_hash", [None, "0" * 64, "invalid"])
+def test_contact_source_hash_guard_precedes_native_clock_prediction_parsing(
+    source_hash,
+):
+    evaluator, video, annotations, run, times = generated()
+    run["video_sha256"] = source_hash
+    del run["candidates"]
+    with pytest.raises(ValueError, match="source hash"):
+        evaluator(video, annotations, run, native_timestamps=times)

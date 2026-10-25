@@ -63,15 +63,21 @@ clocks, representative/interval inconsistencies, missing/invalid clocks,
 no-label and excluded predictions, serialization tolerance, compatibility
 status, unchanged inputs and rejected-report preservation. Existing contact,
 source-hash, camera, recognition and rally evaluation checks remain required.
-All **647 focused checks** and **3,831 full Python tests** pass, with four
+All **650 focused checks** and **3,834 full Python tests** pass, with four
 optional skips. Ruff lint/format, dependency consistency, repository
 UTF-8/LF/JSON/local links and whitespace checks pass. Executable/test bytes
 remained unchanged during both verification runs; recorded process lifetimes
 were checked after exit. The core subtask's first attempt encountered a missing
 generated temporary-directory parent before one fixture setup; that directory
 was created without changing the existing test. Its initial lint failure and
-auxiliary shell inspection errors remain recorded. The final combined focused
-and full verification runs pass on their first attempts.
+auxiliary shell inspection errors remain recorded. An initial integrated run
+passed 647 focused and 3,831 full tests before final review caught a validation
+ordering regression: the new clock check could parse proposals before the
+existing source-hash guard. The PR was marked draft before integration, the
+source guard was restored ahead of clock validation, and three regression cases
+now require rejection of conflicting, null or malformed hashes before parsing
+missing proposals. Both verification rounds and the initial PR CI are preserved;
+the corrected focused/full runs pass without relaxing validation.
 Exact PR/main CI and public delivery receipts belong on the owning issue after
 controller integration.
 
