@@ -153,10 +153,16 @@ def test_api_contact_and_recognition_cannot_credit_across_camera_cut(workspace):
     assert report["video_sha256"] == ctx.video["sha256"]
     assert report["annotation_revision"] == ctx.doc["revision"]
     assert report["contacts"] == evaluate_contacts(
-        ctx.video, ctx.doc, ctx.runs["contacts"]
+        ctx.video,
+        ctx.doc,
+        ctx.runs["contacts"],
+        native_timestamps=[i * 0.04 for i in range(40)],
     )
     assert report["recognition"] == evaluate_recognition(
-        ctx.video, ctx.doc, ctx.runs["recognition"]
+        ctx.video,
+        ctx.doc,
+        ctx.runs["recognition"],
+        native_timestamps=[i * 0.04 for i in range(40)],
     )
     assert ctx.store.annotations(ctx.video["id"]).model_dump() == ctx.doc
     assert before == {key: path.read_bytes() for key, path in ctx.paths.items()}

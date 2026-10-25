@@ -582,6 +582,14 @@ def main():
                 "video_sha256": video["sha256"],
                 "annotation_revision": annotations["revision"],
             }
+            native_times = None
+            if args.contacts_run or args.recognition_run:
+                try:
+                    native_times = timestamps_for(DATA, args.video_id)
+                except (OSError, TypeError, ValueError) as exc:
+                    raise ValueError(
+                        "Native source timestamp map is unavailable or malformed"
+                    ) from exc
             if args.rallies_run:
                 report["rallies"] = evaluate_rallies(
                     video,
@@ -598,6 +606,7 @@ def main():
                     load_evaluation_run(
                         store, args.video_id, args.recognition_run, "recognition"
                     ),
+                    native_timestamps=native_times,
                 )
             if args.contacts_run:
                 report["contacts"] = evaluate_contacts(
@@ -606,6 +615,7 @@ def main():
                     load_evaluation_run(
                         store, args.video_id, args.contacts_run, "contacts"
                     ),
+                    native_timestamps=native_times,
                 )
             if args.shuttle_run:
                 report["shuttle"] = evaluate_shuttle(

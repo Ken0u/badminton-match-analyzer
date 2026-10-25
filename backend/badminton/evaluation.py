@@ -10,9 +10,77 @@ representative times, which are navigation locations for occlusion proposals.
 
 import math
 import re
+from collections.abc import Sequence
 from itertools import pairwise
+from numbers import Real
 
 from .scene_review import camera_review_signature, reviewed_contacts
+
+TIME_EPSILON_S = 0.00002
+
+
+def _source_time(value, name):
+    if not isinstance(value, Real) or isinstance(value, bool):
+        raise ValueError(f"{name} must be a finite nonnegative source time")
+    try:
+        valid = math.isfinite(value) and value >= 0
+    except (OverflowError, TypeError):
+        valid = False
+    if not valid:
+        raise ValueError(f"{name} must be a finite nonnegative source time")
+    return value
+
+
+def _validate_contact_clock(video, annotations, candidates, times):
+    """Check original artifact times before coverage or context can exclude them."""
+    count = video.get("frame_count")
+    if type(count) is not int or count < 1:
+        raise ValueError("Source frame count must be a positive integer")
+    if (
+        not isinstance(times, Sequence)
+        or isinstance(times, (str, bytes, bytearray))
+        or len(times) != count
+    ):
+        raise ValueError("Native source timestamps must cover every source frame")
+    for value in times:
+        _source_time(value, "Native source timestamp")
+    if any(left >= right for left, right in pairwise(times)):
+        raise ValueError("Native source timestamps must be strictly increasing")
+
+    def check(item, *, reference=False):
+        name = "Reviewed contact" if reference else "Contact candidate"
+        prefix = "contact_" if reference else ""
+        try:
+            left, right = _frame_bounds(item, count, prefix)
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ValueError(
+                f"{name} needs valid inclusive native source frame bounds"
+            ) from exc
+
+        def matches(key, frame):
+            value = _source_time(item.get(key), f"{name} {key}")
+            if abs(value - times[frame]) > TIME_EPSILON_S:
+                raise ValueError(
+                    f"{name} {key} does not match native source frame {frame}"
+                )
+
+        matches("time_s", item["frame"])
+        # Reference schemas normally omit interval times. Validate any supplied
+        # metadata without adding endpoints to legacy artifacts.
+        for time_prefix in ("", "contact_"):
+            for key, frame in (("start_time_s", left), ("end_time_s", right)):
+                key = time_prefix + key
+                if item.get(key) is not None:
+                    matches(key, frame)
+
+    for event in annotations.get("events", []):
+        if event.get("kind") in ("serve", "shot") and event.get("status") in (
+            "reviewed",
+            "corrected",
+        ):
+            check(event, reference=True)
+    for candidate in candidates:
+        check(candidate)
 
 
 def _base(video, annotations, run, stage):
@@ -372,7 +440,9 @@ def _contact_context_exclusion(item, ranges, cuts):
     return None
 
 
-def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
+def evaluate_contacts(
+    video, annotations, contact_run, tolerance_s=0.12, *, native_timestamps=None
+):
     """Score contacts only inside fully covered, exhaustive live review windows.
 
     Marking a few proposed hits as reviewed is insufficient: a review window must
@@ -381,10 +451,21 @@ def evaluate_contacts(video, annotations, contact_run, tolerance_s=0.12):
     Predicted annotation events and rally endings are never ground truth. A
     reviewed contact whose timing remains an interval invalidates its complete
     window until a reviewer adjudicates the contact frame.
+
+    A supplied complete native clock validates every reference/proposal time
+    before exclusions. Omitting it retains legacy scoring with unavailable
+    clock validation; artifact times are never rewritten or inferred from FPS.
     """
     if not math.isfinite(tolerance_s) or tolerance_s < 0:
         raise ValueError("Contact tolerance must be finite and nonnegative")
+    if native_timestamps is not None:
+        _validate_contact_clock(
+            video, annotations, contact_run["candidates"], native_timestamps
+        )
     result = _base(video, annotations, contact_run, "contacts")
+    result["prediction_clock_status"] = (
+        "validated" if native_timestamps is not None else "unavailable"
+    )
     start, end = contact_run["start_frame"], contact_run["end_frame"]
     cuts, camera_metadata, reviewed = _contact_camera_context(
         video, annotations, contact_run

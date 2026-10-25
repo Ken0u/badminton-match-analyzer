@@ -1,5 +1,17 @@
 # Bug review and implementation progress
 
+The [native-clock evaluation repair](EVALUATION_CLOCK_REPORT.md) addresses a
+generated API/CLI failure in which a frame-5 proposal claims frame 15's time and
+receives contact and drive-classification F1 1.0. Contact and recognition
+evaluation now compare declared representative and optional interval times to
+the registered native source clock before scoring. Invalid clocks or inconsistent
+times are rejected; compatible pure calls without a clock report unavailable
+validation. All 647 focused and 3,831 full Python tests pass, with four optional
+skips, plus Ruff lint/format, dependencies, repository and whitespace checks.
+Final executable/test bytes remained unchanged and recorded process lifetimes
+were checked after exit. Scientific complete references remain 0/2; this protects software
+measurements without establishing full-match annotation accuracy.
+
 The [evaluation source-hash repair](EVALUATION_SOURCE_REPORT.md) rejects
 contact and shuttle artifacts whose explicit source hash conflicts with the
 registered video or is malformed. Generated API/CLI reproductions previously
