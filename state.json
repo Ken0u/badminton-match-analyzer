@@ -9,6 +9,12 @@
       "task_id": "254",
       "verb": "plan"
     },
+    "actor254-targeted-next-v1": {
+      "actor": "Ken0u",
+      "reason": "worker registration does not match actor, host and session",
+      "status": "rejected",
+      "verb": "next"
+    },
     "adopt-003628c8dcaecb68b1f14319cad228db61bf5c092e5028caeb9297739a68b42e": {
       "actor": "github-actions[bot]",
       "at": 1792454159,
