@@ -312,6 +312,26 @@
       "task_id": "179",
       "verb": "review-result"
     },
+    "camera-next-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792963398,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "77a72cfc4aae6e5149bda4ffe770cbbc58135fee",
+        "branch": "codex/issue-309-evaluate-raw-camera-cut-detections-again",
+        "epoch": 1,
+        "expires_at": 1792974198,
+        "granted_at": 1792963398,
+        "host_id": "MSI",
+        "session_id": "9f039f325d2a441b97eb51521ff283ef",
+        "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b"
+      },
+      "epoch": 1,
+      "fingerprint": "69e8ca18fabe29cfb88546d54b426674a1afee6939c57ed4af92ef1f0a4403fc",
+      "status": "granted",
+      "task_id": "309",
+      "verb": "next"
+    },
     "camera-next-plan-v1": {
       "actor": "Ken0u",
       "at": 1792963198,
@@ -25472,7 +25492,18 @@
       }
     },
     "309": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "77a72cfc4aae6e5149bda4ffe770cbbc58135fee",
+        "branch": "codex/issue-309-evaluate-raw-camera-cut-detections-again",
+        "epoch": 1,
+        "expires_at": 1792974198,
+        "granted_at": 1792963398,
+        "host_id": "MSI",
+        "session_id": "9f039f325d2a441b97eb51521ff283ef",
+        "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b"
+      },
+      "epoch": 1,
       "planned_at": 1792963198,
       "planned_by": "Ken0u",
       "spec": {
@@ -25520,7 +25551,7 @@
         ]
       },
       "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
