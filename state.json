@@ -25534,6 +25534,7 @@
       }
     },
     "309": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40237898136",
       "checkpoint": {
         "branch": "codex/issue-309-evaluate-raw-camera-cut-detections-again",
         "head_sha": "77a72cfc4aae6e5149bda4ffe770cbbc58135fee",
@@ -25553,7 +25554,7 @@
         "spec_hash": "fef65be243728fc1945b7aa1f25c600c2c075ba2064c85c874462332acdf037b"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792964964,
