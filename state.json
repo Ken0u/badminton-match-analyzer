@@ -8445,6 +8445,26 @@
       "task_id": "97",
       "verb": "submit"
     },
+    "selection294-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792930495,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5e7ce0e36cf5d5caf394f5421fa2181b0b0b932c",
+        "branch": "codex/issue-294-investigate-and-preserve-the-declared-tr",
+        "epoch": 1,
+        "expires_at": 1792941295,
+        "granted_at": 1792930495,
+        "host_id": "MSI",
+        "session_id": "0af5ed5dd5d7465d8169fa400eafea50",
+        "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9"
+      },
+      "epoch": 1,
+      "fingerprint": "56598e7de9ee98c49fe9bb44d666af0bcc4bfea300706daa90ad41558eee620a",
+      "status": "granted",
+      "task_id": "294",
+      "verb": "next"
+    },
     "selection294-plan-v1": {
       "actor": "Ken0u",
       "at": 1792930286,
@@ -24225,7 +24245,18 @@
       }
     },
     "294": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5e7ce0e36cf5d5caf394f5421fa2181b0b0b932c",
+        "branch": "codex/issue-294-investigate-and-preserve-the-declared-tr",
+        "epoch": 1,
+        "expires_at": 1792941295,
+        "granted_at": 1792930495,
+        "host_id": "MSI",
+        "session_id": "0af5ed5dd5d7465d8169fa400eafea50",
+        "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9"
+      },
+      "epoch": 1,
       "planned_at": 1792930286,
       "planned_by": "Ken0u",
       "spec": {
@@ -24277,7 +24308,7 @@
         ]
       },
       "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9",
-      "status": "ready"
+      "status": "running"
     },
     "295": {
       "checkpoint": {
