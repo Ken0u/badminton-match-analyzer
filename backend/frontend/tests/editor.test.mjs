@@ -46,6 +46,235 @@ const doc = () =>
     ],
     shuttle_points: [],
   });
+async function actorFixture() {
+  const { createEditorController } =
+    await import("../.test-build/editor/controller.js");
+  const previousFetch = globalThis.fetch;
+  const annotation = parseDocument({
+    mode: "singles",
+    revision: 0,
+    players: [{ id: "p", name: "Generated", team: "T1" }],
+    track_assignments: [
+      {
+        run_id: "players",
+        track_id: 1,
+        player_id: "p",
+        start_frame: 0,
+        end_frame: 10,
+      },
+    ],
+  });
+  let source = "v",
+    manifest = "old",
+    identities = { run_id: "actors-old" },
+    stale = false,
+    hold = null;
+  const requests = [];
+  const video = (id) => ({
+    id,
+    name: "generated",
+    mode: "singles",
+    duration_s: 1,
+    frame_count: 10,
+    width: 64,
+    height: 32,
+    fps: 10,
+  });
+  const job = (id, kind, video_id = source) => ({
+    id,
+    video_id,
+    kind,
+    status: "completed",
+    progress: 1,
+    analysis_key: kind === "analysis" ? null : manifest,
+  });
+  const actor = (label) => ({
+    run_id: "players",
+    track_id: 1,
+    label,
+    linked_across_windows: true,
+    observation_ranges: [[0, 10]],
+  });
+  globalThis.fetch = async (url, options = {}) => {
+    const path = String(url).split("?")[0];
+    requests.push({ path, method: options.method ?? "GET" });
+    const id = path.split("/")[3];
+    let value;
+    if (path === "/api/videos") value = [video("v"), video("w")];
+    else if (path === "/api/jobs")
+      value = [job(manifest, "analysis"), job("players", "players")];
+    else if (path.endsWith("/annotations")) value = annotation;
+    else if (path.endsWith("/timestamps"))
+      value = Array.from({ length: 10 }, (_, i) => i / 10);
+    else if (path.includes("/analysis/"))
+      value = {
+        job: job(manifest, "analysis", id),
+        state: "completed",
+        requires_processing_rerun: false,
+        recipe: { context_signature: contextSignature(annotation, 0, 10) },
+        parts: [0, 1].map((index) => ({
+          window: {
+            index,
+            core_start_frame: index * 5,
+            core_end_frame: (index + 1) * 5,
+          },
+          stages: { players: { run_id: "players" } },
+        })),
+        ...(identities === undefined ? {} : { identities }),
+      };
+    else if (path.includes("/runs/actors-")) {
+      value = {
+        requires_context_rerun: stale,
+        tracks: [actor(path.endsWith("actors-new") ? "Actor B" : "Actor A")],
+      };
+      if (hold) {
+        const pending = hold;
+        hold = null;
+        pending.entered.resolve();
+        await pending.release.promise;
+        if (pending.fail) throw Error("Obsolete actor read failed");
+      }
+    } else if (path.endsWith("/runs/players"))
+      value = {
+        start_frame: 0,
+        end_frame: 10,
+        frames: [
+          {
+            frame: 0,
+            players: [{ track_id: 1, box: [1, 1, 20, 20], confidence: 0.9 }],
+          },
+        ],
+      };
+    else if (path.endsWith("/playback"))
+      value = { status: "missing", url: null };
+    else value = video(id);
+    return new Response(JSON.stringify(value));
+  };
+  const c = createEditorController();
+  await c.select(source);
+  return {
+    c,
+    annotation,
+    requests,
+    replace(next, options = {}) {
+      identities = next;
+      manifest = options.manifest ?? "replacement";
+      stale = options.stale ?? false;
+    },
+    source(id) {
+      source = id;
+    },
+    pending(fail = false) {
+      hold = { entered: deferred(), release: deferred(), fail };
+      return hold;
+    },
+    close() {
+      globalThis.fetch = previousFetch;
+    },
+  };
+}
+
+test("actor hints clear when the current manifest has no usable identity result", async (t) => {
+  for (const [name, identities, stale] of [
+    ["absent", undefined],
+    ["null", null],
+    ["empty", {}],
+    ["missing run ID", { linked_actor_count: 1 }],
+    ["empty run ID", { run_id: "" }],
+    ["stale identity context", { run_id: "actors-old" }, true],
+  ])
+    await t.test(name, async () => {
+      const f = await actorFixture();
+      try {
+        assert.equal(f.c.snapshot().actors[0].label, "Actor A");
+        const saved = structuredClone(f.c.drafts.getSnapshot().value);
+        f.replace(identities, { stale });
+        await f.c.refresh();
+        const s = f.c.snapshot();
+        assert.equal(s.plan.job.id, "replacement");
+        assert.equal(s.analysisEnabled, true);
+        assert.equal(
+          s.runs.players.id,
+          "players",
+          "Player stages may be reused across manifests",
+        );
+        assert.deepEqual(
+          s.actors,
+          [],
+          "The old actor label must no longer be eligible for the overlay",
+        );
+        assert.deepEqual(
+          f.c.drafts.getSnapshot().value,
+          saved,
+          "Reviewed assignments and saved truth survive",
+        );
+        assert.equal(f.c.drafts.getSnapshot().dirty, false);
+        assert.ok(
+          f.requests.every((r) => r.method.toUpperCase() === "GET"),
+          "Refreshing must never recompute links",
+        );
+      } finally {
+        f.close();
+      }
+    });
+});
+
+test("current actor hints survive stable polls and change only to the current identity result", async () => {
+  const f = await actorFixture();
+  try {
+    const actors = f.c.snapshot().actors;
+    await f.c.refresh();
+    assert.deepEqual(f.c.snapshot().actors, actors);
+    f.replace({ run_id: "actors-new" });
+    await f.c.refresh();
+    assert.equal(f.c.snapshot().actors[0].label, "Actor B");
+    await f.c.refresh();
+    assert.equal(f.c.snapshot().actors[0].label, "Actor B");
+  } finally {
+    f.close();
+  }
+});
+
+test("obsolete actor success and errors cannot cross view or source ownership", async (t) => {
+  for (const action of ["view", "source"])
+    for (const fail of [false, true])
+      await t.test(
+        `${action}: late ${fail ? "error" : "success"}`,
+        async () => {
+          const f = await actorFixture(),
+            held = f.pending(fail);
+          try {
+            const pending = f.c.refresh();
+            await held.entered.promise;
+            f.replace(undefined);
+            if (action === "source") {
+              f.source("w");
+              await f.c.select("w");
+            } else {
+              f.c.reviewPart(1);
+              await eventually(
+                () => f.c.snapshot().plan?.job.id === "replacement",
+                "Current view did not finish independently of the obsolete actor read",
+              );
+            }
+            assert.deepEqual(f.c.snapshot().actors, []);
+            held.release.resolve();
+            await pending;
+            assert.deepEqual(f.c.snapshot().actors, []);
+            assert.equal(f.c.snapshot().error, false);
+            assert.doesNotMatch(f.c.snapshot().notice, /Obsolete actor/);
+            assert.equal(
+              f.c.snapshot().video.id,
+              action === "source" ? "w" : "v",
+            );
+          } finally {
+            held.release.resolve();
+            f.close();
+          }
+        },
+      );
+});
+
 test("native timestamp clock preserves VFR, exact boundaries, and physical gaps", () => {
   const pts = [0, 0.04, 0.12, 0.68];
   assert.deepEqual(parseTimes(pts, 4), pts);

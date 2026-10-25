@@ -348,8 +348,10 @@ export function createEditorController() {
           if (!v || v.id !== owner.id) return null;
           let plan = s.plan,
             analysisEnabled = s.analysisEnabled,
-            partIndex = s.partIndex,
-            actors = s.actors;
+            partIndex = s.partIndex;
+          // Actor hints belong to this manifest's identity result. A new plan
+          // may reuse player runs before it has produced any identity links.
+          let actors: ObjectData[] = [];
           const analysis = jobs.find(
             (j) => j.video_id === v.id && j.kind === "analysis",
           );
