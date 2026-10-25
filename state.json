@@ -1157,6 +1157,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "goal-01a17154-checkpoint266-temp-v1": {
+      "actor": "dootz1",
+      "at": 1792904733,
+      "epoch": 1,
+      "fingerprint": "2f694c13342ee51c4519bb449b6b13df9cc519e412cc25f108822e5a0efb889a",
+      "status": "running",
+      "task_id": "266",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-checkpoint266-v1": {
       "actor": "dootz1",
       "at": 1792903748,
@@ -21372,21 +21381,25 @@
     "266": {
       "checkpoint": {
         "artifacts": [
-          ".cache/goal-01a17154/shuttle-trail-baseline.json",
-          ".cache/w266"
+          ".cache/w266",
+          ".cache/w266/.cache/pytest266.log",
+          ".cache/w266/.cache/pytest266-focused-g.log",
+          ".cache/w266/.cache/pytest266-final-i.log",
+          ".cache/goal-01a17154/short_tmp_pytest.py",
+          ".cache/goal-01a17154/tested-source-hashes.json"
         ],
         "branch": "codex/issue-266-keep-the-editor-shuttle-trail-inside-its",
         "head": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
-        "remaining": "Browser verification, contract rerun, required project checks, focused report, commit/PR/submission, controller CI/main/candidate delivery.",
-        "summary": "Uncommitted scoped repair implemented. Shared camera/gap cuts plus scene boundaries clip the overlay history to the current segment; invalid/missing observations break paths. All 200 frontend tests and type checks pass; build/stage parity passes. Generated recording-canvas browser cases added. Initial unused-import typecheck failure and missing contract-interpreter environment attempt preserved in tool outputs; import removed and existing interpreter explicitly selected. Starting browser and required Python/static checks; no scientific input/model access."
+        "remaining": "Finish the same full test run; verify frozen source hashes; update report with environmental attempts and final results; commit scoped files, push/create PR, submit exact head/base/spec; controller exact CI/main integration and candidate delivery.",
+        "summary": "Frozen scoped frontend repair still passes its 200 frontend tests and 18 actual-browser groups. Initial full Python run finished: 3826 passed, 4 skipped, 8 failed from Windows MAX_PATH in generated native-stub artifacts. Preserved all attempts. Extended paths conflicted with SQLite URI parsing; system temp lacked Git-ignored ancestry; short cache folder names alone remained too long. A local disposable test runner now combines short numbered folders in a fresh system-temp Git repository with a real ignore rule, preserving actual Git checks, all assertions and source. All 102 affected-module tests pass. Initial full-run wrapper collection failed to import scripts; matching python -m pytest cwd import semantics fixed the local wrapper. Full suite now running unchanged under command session 55239, log .cache/pytest266-final-i.log and XML .cache/pytest266-final-i.xml. No inference/training or scientific data used."
       },
-      "checkpoint_at": 1792903748,
+      "checkpoint_at": 1792904733,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
         "branch": "codex/issue-266-keep-the-editor-shuttle-trail-inside-its",
         "epoch": 1,
-        "expires_at": 1792914548,
+        "expires_at": 1792915533,
         "granted_at": 1792903431,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
