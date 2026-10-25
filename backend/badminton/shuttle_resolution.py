@@ -16,7 +16,18 @@ from uuid import uuid4
 import psutil
 
 from . import shuttle_validation as audit
-from .shuttle import validate_input_size
+from .shuttle import _ComponentSelector, validate_input_size
+from .shuttle_tiling import spatial_recipe
+
+PHYSICAL_PROJECTION = "physical_observations_v1"
+DEPENDENCY_FIELDS = frozenset(
+    (
+        "selection_context_start_frame",
+        "selection_context_end_frame",
+        "selection_context_frames",
+        "selection_context_excluded",
+    )
+)
 
 
 def publish(path, value):
@@ -102,11 +113,20 @@ def consumer_files(root):
     return {name: audit.seal(root, path) for name, path in sorted(paths.items())}
 
 
-def native_row(row):
-    return {
+def native_row(row, projection=None):
+    result = {
         key: row[key]
         for key in ("frame", "time_s", "camera_segment_start_frame", "shuttle")
     }
+    if projection is not None:
+        if projection != PHYSICAL_PROJECTION:
+            raise ValueError("Unknown control projection")
+        result["shuttle"] = {
+            key: value
+            for key, value in row["shuttle"].items()
+            if key not in DEPENDENCY_FIELDS
+        }
+    return result
 
 
 def plan_views(cases, evidence, runs):
@@ -216,6 +236,23 @@ def validate_protocol(protocol):
         raise ValueError("Only the fixed two-variant comparison protocol is supported")
     for size in protocol["variants"].values():
         validate_input_size(size)
+    layouts = protocol.get("spatial_layouts")
+    projection = protocol.get("control_projection")
+    if any(
+        key in protocol
+        for key in ("spatial_layouts", "control_projection", "candidate_spatial_recipe")
+    ):
+        if (
+            layouts != {"control": "full", "candidate": "overlap_2x2"}
+            or projection != PHYSICAL_PROJECTION
+            or audit.encoded(protocol.get("candidate_spatial_recipe"))
+            != audit.encoded(spatial_recipe("overlap_2x2", (768, 432)))
+            or protocol.get("control_gate", {}).get("omitted_dependency_fields")
+            != sorted(DEPENDENCY_FIELDS)
+        ):
+            raise ValueError(
+                "Only the fixed tiling layouts and physical projection are supported"
+            )
 
 
 def freeze_experiment(
@@ -352,7 +389,9 @@ def completed_view(output, variant, view, experiment_sha256):
     return entry, run
 
 
-def validate_research_run(run, view, variant, protocol, original, meta, times):
+def validate_research_run(
+    run, view, variant, protocol, original, meta, times, *, annotations=None
+):
     if (
         run.get("stage") != "shuttle"
         or run.get("video_id") != view["video_id"]
@@ -375,6 +414,24 @@ def validate_research_run(run, view, variant, protocol, original, meta, times):
         )
     ):
         raise ValueError("Research native model/source/camera recipe changed")
+    layout = protocol.get("spatial_layouts", {}).get(variant)
+    spatial = spatial_recipe(layout, protocol["variants"][variant])
+    if spatial is not None:
+        windows = max(
+            1, view["end_frame"] - view["start_frame"] - protocol["sequence_length"] + 1
+        )
+        if (
+            audit.encoded(run.get("spatial_inference")) != audit.encoded(spatial)
+            or type(run.get("model_windows")) is not int
+            or run["model_windows"] != windows
+            or type(run.get("model_calls")) is not int
+            or run["model_calls"] != windows * spatial["model_calls_per_window"]
+        ):
+            raise ValueError(
+                "Research spatial recipe or actual model-call accounting changed"
+            )
+    elif "spatial_inference" in run:
+        raise ValueError("Unexpected spatial recipe on legacy full-frame experiment")
     rows = audit.native_rows(run, meta, times, view)
     for row in rows:
         previous = original["frames"][row["frame"] - original["start_frame"]]
@@ -384,6 +441,11 @@ def validate_research_run(run, view, variant, protocol, original, meta, times):
         ):
             raise ValueError("Research camera identity changed")
         point = row["shuttle"]
+        if (
+            point["visible"]
+            and type(point.get("selection_context_excluded")) is not bool
+        ):
+            raise ValueError("Research selection exclusion flag must be boolean")
         if point.get("repaired") is not False:
             raise ValueError("Research output must remain observed, never repaired")
         if point["visible"] and (
@@ -393,7 +455,9 @@ def validate_research_run(run, view, variant, protocol, original, meta, times):
             <= point["selection_context_start_frame"]
             <= row["frame"]
             or point["selection_context_end_frame"] != row["frame"] + 1
-            or point.get("selection_context_excluded") is not False
+            or (
+                spatial is None and point.get("selection_context_excluded") is not False
+            )
         ):
             raise ValueError(
                 "Research selector history escaped its complete source view"
@@ -415,7 +479,10 @@ def validate_research_run(run, view, variant, protocol, original, meta, times):
                 if (
                     previous.get("visible") is not True
                     or previous.get("repaired") is not False
-                    or previous.get("selection_context_excluded") is not False
+                    or (
+                        spatial is None
+                        and previous.get("selection_context_excluded") is not False
+                    )
                     or type(previous.get("selection_context_start_frame")) is not int
                     or not view["start_frame"]
                     <= previous["selection_context_start_frame"]
@@ -427,11 +494,70 @@ def validate_research_run(run, view, variant, protocol, original, meta, times):
                 starts.append(previous["selection_context_start_frame"])
             if point["selection_context_start_frame"] != min(starts):
                 raise ValueError("Incomplete research predecessor ancestry")
+    if spatial is not None:
+        validate_selection_rows(rows, meta, annotations or {})
     return rows
 
 
+def validate_selection_rows(rows, meta, annotations):
+    """Independently replay current dependency metadata from raw components.
+
+    The physical historical control projection never exempts newly generated
+    dependency fields from this check, including their scene-exclusion flags.
+    """
+    from .scene_review import excluded_scene
+
+    selector = _ComponentSelector(meta["width"], meta["height"])
+    resets = {
+        boundary
+        for scene in annotations.get("scene_ranges", [])
+        for boundary in (scene["start_frame"], scene["end_frame"])
+    }
+    for row in rows:
+        if row["frame"] in resets:
+            selector.reset()
+        point = row["shuttle"]
+        raw = {
+            key: value for key, value in point.items() if key not in DEPENDENCY_FIELDS
+        }
+        if raw["visible"]:
+            candidates = raw.get("component_candidates", [])
+            if not candidates or any(
+                type(c.get("area_heatmap_pixels")) is not int
+                or c["area_heatmap_pixels"] <= 0
+                for c in candidates
+            ):
+                raise ValueError(
+                    "Incomplete observed-component geometry for selector replay"
+                )
+            primary = max(candidates, key=lambda c: c["area_heatmap_pixels"])
+            if raw.get("largest_component_id") != primary["id"]:
+                raise ValueError("Changed largest-component identity")
+            raw.update(
+                x=primary["x"],
+                y=primary["y"],
+                confidence=primary["confidence"],
+                selected_component_id=primary["id"],
+                selection_reason="largest_heatmap_component",
+            )
+        expected = selector.select(raw, row["frame"], row["time_s"])
+        if raw["visible"]:
+            expected["selection_context_excluded"] = (
+                excluded_scene(
+                    annotations,
+                    expected["selection_context_start_frame"],
+                    expected["selection_context_end_frame"],
+                )
+                is not None
+            )
+        if expected != point:
+            raise ValueError(
+                "Research selection output or dependency provenance differs from replay"
+            )
+
+
 def research_views(output, variant, experiment, experiment_sha256, protocol, inputs):
-    _, sources, _, _, runs, _ = inputs
+    _, sources, _, baseline, runs, _ = inputs
     result = {}
     for view in experiment["views"]:
         completed = completed_view(output, variant, view, experiment_sha256)
@@ -448,12 +574,15 @@ def research_views(output, variant, experiment, experiment_sha256, protocol, inp
             runs[(view["video_id"], view["core_index"])],
             meta,
             times,
+            annotations=baseline["evidence"]["catalogs"][view["video_id"]]["snapshot"][
+                "annotations"
+            ],
         )
         result[view["id"]] = completed
     return result
 
 
-def control_gate(output, experiment, expected_sha256, runs, tolerance):
+def control_gate(output, experiment, expected_sha256, runs, tolerance, projection=None):
     differences, seals = [], []
     for view in experiment["views"]:
         completed = completed_view(output, "control", view, expected_sha256)
@@ -473,18 +602,23 @@ def control_gate(output, experiment, expected_sha256, runs, tolerance):
         ):
             raise ValueError("Original view outputs changed")
         changed = compare_rows(
-            [native_row(row) for row in expected],
-            [native_row(row) for row in run["frames"]],
+            [native_row(row, projection) for row in expected],
+            [native_row(row, projection) for row in run["frames"]],
             tolerance,
         )
         differences.extend({"view": view["id"], "field": field} for field in changed)
         seals.append(entry["run"])
-    return {
+    result = {
         "experiment_sha256": expected_sha256,
         "compatible": not differences,
         "differences": differences,
         "control_runs": seals,
     }
+    if projection is not None:
+        result.update(
+            projection=projection, omitted_dependency_fields=sorted(DEPENDENCY_FIELDS)
+        )
+    return result
 
 
 def prior_attempt_proof(output, shared_data):
@@ -563,6 +697,7 @@ def run_variant(root, output, experiment_sha256, variant):
             experiment_sha256,
             runs,
             protocol["control_gate"]["confidence_absolute_tolerance"],
+            protocol.get("control_projection"),
         )
         if not gate["compatible"]:
             raise ValueError("Original 512 control mismatch blocks candidate inference")
@@ -636,6 +771,11 @@ def run_variant(root, output, experiment_sha256, variant):
                 annotations=annotations,
                 camera_scan=scan,
                 input_size=protocol["variants"][variant],
+                **(
+                    {"spatial_layout": protocol["spatial_layouts"][variant]}
+                    if "spatial_layouts" in protocol
+                    else {}
+                ),
             )
             run = audit.read_json(run_path.read_bytes())
             validate_research_run(
@@ -646,6 +786,7 @@ def run_variant(root, output, experiment_sha256, variant):
                 runs[(vid, view["core_index"])],
                 source,
                 times,
+                annotations=annotations,
             )
             completed = {
                 "experiment_sha256": experiment_sha256,
@@ -665,6 +806,7 @@ def run_variant(root, output, experiment_sha256, variant):
                 experiment_sha256,
                 runs,
                 protocol["control_gate"]["confidence_absolute_tolerance"],
+                protocol.get("control_projection"),
             )
             publish(attempt / "control-gate.json", result)
             return {
@@ -757,6 +899,7 @@ def evaluate_experiment(root, output, experiment_sha256, report_output):
             experiment_sha256,
             runs,
             protocol["control_gate"]["confidence_absolute_tolerance"],
+            protocol.get("control_projection"),
         )
     compatible = gate is not None and gate["compatible"]
     cases, truth = packet["cases"], labels["cases"]
@@ -813,6 +956,16 @@ def evaluate_experiment(root, output, experiment_sha256, report_output):
                 seals.append(completed[0]["run"])
         result["variants"][variant] = {
             "input_size": protocol["variants"][variant],
+            **(
+                {
+                    "spatial_inference": spatial_recipe(
+                        protocol["spatial_layouts"][variant],
+                        protocol["variants"][variant],
+                    )
+                }
+                if "spatial_layouts" in protocol
+                else {}
+            ),
             "complete_views": len(values),
             "total_views": len(experiment["views"]),
             "all_cases_retained": len(observations),
@@ -820,6 +973,18 @@ def evaluate_experiment(root, output, experiment_sha256, report_output):
             if compatible
             else None,
             "performance": {
+                **(
+                    {
+                        "model_calls": sum(
+                            value[1]["model_calls"] for value in values.values()
+                        ),
+                        "model_windows": sum(
+                            value[1]["model_windows"] for value in values.values()
+                        ),
+                    }
+                    if "spatial_layouts" in protocol
+                    else {}
+                ),
                 "native_view_frames": sum(
                     value[1]["processed_frames"] for value in values.values()
                 ),
