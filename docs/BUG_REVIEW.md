@@ -1,5 +1,19 @@
 # Bug review and implementation progress
 
+The [rally proposal evidence repair](RALLY_PROPOSAL_EVIDENCE_REPORT.md) records
+the wider source observations used for newly generated serve/end suggestions.
+Four generated singles/doubles cases previously earned interval credit under
+boundary-only review despite necessary outside poses. New half-open evidence
+ranges include pose-lag, previous-speed, quiet/flight/settling/follow-up context;
+the unchanged evaluator excludes all four unsupported matches while retaining
+their review/reference denominators. Full evidence retains all four matches.
+All original fields of 16 generated and two cached development proposals remain
+identical; original cached inputs/catalog/metadata/annotations stay unchanged.
+All 449 focused and 4,423 full Python tests pass, with four optional full-suite
+skips and required checks. Initial bounds-test failures, stable final source,
+terminal lifetimes, exact CI and public delivery evidence belong on the issue.
+No new inference/image assessment or accuracy claim; references remain 0/2.
+
 The [prospective review comparison](RALLY_REVIEW_COMPARISON_REPORT.md) fills the
 gap between planned native review and the single-stream document validator.
 It retains the full native denominator, every overlap occurrence, explicit
