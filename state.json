@@ -6227,6 +6227,26 @@
       "task_id": "250",
       "verb": "next"
     },
+    "rally262-input-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792898618,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c2c3c5a15b0b5c3a546057f2a50e0346cb75b089",
+        "branch": "codex/issue-262-produce-a-prospectively-frozen-provenanc",
+        "epoch": 1,
+        "expires_at": 1792909418,
+        "granted_at": 1792898618,
+        "host_id": "MSI",
+        "session_id": "7edc859bbd9747e0aa21c74ad1ad103d",
+        "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021"
+      },
+      "epoch": 1,
+      "fingerprint": "6f460efe8cf6f22da44be8e09e98b0e9ea64705e21557a21bbf667dce74343cb",
+      "status": "granted",
+      "task_id": "262",
+      "verb": "next"
+    },
     "rally262-input-registration-v1": {
       "actor": "Ken0u",
       "at": 1792898457,
@@ -20852,7 +20872,18 @@
       }
     },
     "262": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c2c3c5a15b0b5c3a546057f2a50e0346cb75b089",
+        "branch": "codex/issue-262-produce-a-prospectively-frozen-provenanc",
+        "epoch": 1,
+        "expires_at": 1792909418,
+        "granted_at": 1792898618,
+        "host_id": "MSI",
+        "session_id": "7edc859bbd9747e0aa21c74ad1ad103d",
+        "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021"
+      },
+      "epoch": 1,
       "planned_at": 1792898153,
       "planned_by": "Ken0u",
       "spec": {
@@ -20914,7 +20945,7 @@
         ]
       },
       "spec_hash": "4d86dceb4dc5d9a2cdc73b334d55205f17af6c0cea288ff0dd87744c1a93b021",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
