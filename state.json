@@ -1240,6 +1240,14 @@
       "task_id": "266",
       "verb": "plan"
     },
+    "goal-01a17154-plan271-v1": {
+      "actor": "dootz1",
+      "at": 1792906709,
+      "fingerprint": "f8bac67128d4779860f8e21303ceaca8bd9a9b8b88023df17ab733b2d963b01f",
+      "status": "ready",
+      "task_id": "271",
+      "verb": "plan"
+    },
     "goal-01a17154-register-v1": {
       "actor": "dootz1",
       "at": 1792903074,
@@ -8460,6 +8468,14 @@
       "fingerprint": "0b840a70eaec36d44a9e57cc8fe39891c5536aaf58d5f393e3b49f1a24c2bdb8",
       "status": "ready",
       "task_id": "270",
+      "verb": "plan"
+    },
+    "spec-271-21f25bb4780c0ae0b4b396429b49d10a075c6a2a617fc8bd222b503c539677f6": {
+      "actor": "dootz1",
+      "at": 1792906709,
+      "fingerprint": "039ce517eaf298300a67c28d9e1c06ac21d3bbdaa14e9b6d09faa4dbd1887479",
+      "status": "ready",
+      "task_id": "271",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -21759,6 +21775,54 @@
       },
       "spec_hash": "39fd233188fc2091cec63fd0b79eae6528fb153a57b5c539f6a0a298be54bbda",
       "status": "running"
+    },
+    "271": {
+      "epoch": 0,
+      "planned_at": 1792906709,
+      "planned_by": "dootz1",
+      "spec": {
+        "acceptance": [
+          "Revalidate issue266 controller integration/delivery, current main, duplicate issues, grants and scope before implementation. Obtain a committed isolated-worktree grant; preserve other edits, deprecated PROGRESS, original annotations/predictions, environments and research jobs.",
+          "Preserve the concrete coverage finding: issue266 local tests/frontend-editor.mjs executes shuttle-context-overlay, while exact-head CI run40165715562 tests/frontend-delivery.mjs reports18 production/parity,8 library and13 export groups without that check. Its20 new helper cases run in frontend unit CI; distinguish those from the actual canvas assertion. Preserve original266 source/recording-canvas baseline and successful local evidence.",
+          "Add the targeted generated recording-canvas assertion to the existing default production-delivery browser entry point without changing workflows or production runtime. Exercise the actual staged app with continuous, camera-cut and reviewed-scene-boundary responses. Continuous history retains its line; new contexts draw only the current point. Manual markers, overlay controls, saved annotation JSON and original prediction hashes remain unchanged. Share a narrowly scoped browser-test helper between direct editor and delivery suites if useful; preserve direct-suite coverage.",
+          "Preserve all17 frozen parity blocks and existing library/export groups, source-clock semantics, fixture ownership/cleanup and performance measurements. Append an explicitly named production-specific group and update the expected group inventory/accounting. Bind every newly consumed helper in the evidence hashes so result provenance matches the source actually executed. Do not weaken assertions, deadlines, failures, cleanup or frozen performance baselines.",
+          "Run the targeted actual-editor suite and complete default production-delivery matrix with generated disposable storage and existing environment. Preserve recording-canvas receipts proving all three modes plus manual-marker and original-data preservation; inspect complete terminal fixture/static-server cleanup. No scientific source, model, external video download or native inference is required.",
+          "Run frontend unit/type/contract and stage-parity checks plus required Python/Ruff/pip/repository/diff checks on final source. Document the local-versus-default-CI distinction and measured coverage in the existing focused report. Preserve failed attempts and exact source hashes; software UI checks do not establish badminton annotation accuracy.",
+          "Publish only scoped test/documentation files in a focused PR; submit exact head/base/spec for controller-managed integration. Verify all exact PR/main checks, inspect the default CI artifact for the new named canvas case and all existing groups/cleanup, and independently verify complete public package/both-image candidate delivery. No fabricated review or manual merge/main push."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "266"
+        ],
+        "exclusions": [
+          "No production runtime, model, dependency, application-truth, auth/policy/workflow/publishing changes; no real scientific image/label/model access, training/inference, new media or weight downloads, paid services, direct main push/manual merge, frozen-baseline weakening or PROGRESS edits."
+        ],
+        "limits": {
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Exercise the shuttle-overlay source-context regression in the default production-delivery browser suite.",
+        "paths": [
+          "tests/frontend-editor.mjs",
+          "tests/frontend-delivery.mjs",
+          "tests/shuttle-overlay-context.mjs",
+          "docs/SHUTTLE_OVERLAY_CONTEXT_REPORT.md"
+        ],
+        "priority": 45,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated actual-canvas before/after controls, full default browser matrix, unchanged data and terminal fixture evidence; focused and required project checks on final source.",
+          "Exact PR/main CI plus explicit new-case artifact inspection and complete public package/both-image delivery; no accuracy claim."
+        ]
+      },
+      "spec_hash": "614d9064e51e05fe333bdf7da1899b63c1b47671264d71331ef3ae3364532c36",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
