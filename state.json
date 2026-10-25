@@ -576,6 +576,15 @@
       "task_id": "258",
       "verb": "next"
     },
+    "contact258-verification-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792894049,
+      "epoch": 1,
+      "fingerprint": "942f8034eeadccf1f73c70161a82e667df3a1e04559106843b051aca686b0802",
+      "status": "running",
+      "task_id": "258",
+      "verb": "checkpoint"
+    },
     "editor-report-plan-v1": {
       "actor": "Ken0u",
       "at": 1792885363,
@@ -20493,18 +20502,18 @@
     "258": {
       "checkpoint": {
         "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
-        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/258#issuecomment-6392190889",
+        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/258#issuecomment-6392280859",
         "head_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
         "remaining": "Combined camera-context domain review, focused/full verification, controller integration and independent full public delivery.",
-        "summary": "Reproduced current-main false cross-camera contact and recognition credit using generated frames19/20 across cut20. Task-owned disjoint contact evaluator/tests and recognition evaluator/tests are underway; parent owns API/CLI regressions/docs/verification/publication. No scientific image or label accessed, no inference/dependency/model/policy changes. Root edits and PROGRESS remain preserved."
+        "summary": "Contact/recognition camera-context repair is implemented in7granted paths. Final139focused tests pass. First full run passed3341tests/4optional skips but a semantic source write overlapped launch by0.103seconds; exact import timing is unproven and that run is preserved without final-source verification credit. A fresh full run is live against unchanged source, including2additional API stale-cut regressions. No scientific data/labels/images/inference/model/policy changes. Root edits preserved."
       },
-      "checkpoint_at": 1792893404,
+      "checkpoint_at": 1792894049,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "3a35287f5d8991c08717d4ab31dec14b59e4d2fe",
         "branch": "codex/issue-258-prevent-contact-and-recognition-evaluati",
         "epoch": 1,
-        "expires_at": 1792904204,
+        "expires_at": 1792904849,
         "granted_at": 1792893261,
         "host_id": "MSI",
         "session_id": "9b465dc1a2ba4999bd038162102f230c",
