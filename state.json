@@ -1193,6 +1193,12 @@
       "task_id": "266",
       "verb": "checkpoint"
     },
+    "goal-01a17154-next-postsubmit-v1": {
+      "actor": "dootz1",
+      "reason": "host already owns work in this lane",
+      "status": "rejected",
+      "verb": "next"
+    },
     "goal-01a17154-next-v1": {
       "actor": "dootz1",
       "at": 1792903074,
