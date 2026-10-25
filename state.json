@@ -10030,6 +10030,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "synthetic305-checkpoint-control-v3": {
+      "actor": "Ken0u",
+      "at": 1792955460,
+      "epoch": 1,
+      "fingerprint": "867842fe938175958938312462f47197b1975caa10bf23fb4f3803c9d9041c5a",
+      "status": "running",
+      "task_id": "305",
+      "verb": "checkpoint"
+    },
     "synthetic305-checkpoint-frozen-v1": {
       "actor": "Ken0u",
       "at": 1792954962,
@@ -25107,19 +25116,18 @@
     "305": {
       "checkpoint": {
         "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
-        "experiment_sha256": "516ce8e313a1f84e2f116ef62776b3faea4cd12160767ff5be6f18651204d56a",
+        "evidence_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/305#issuecomment-6401940496",
         "head_sha": "c6bedf822f58433cfb8ffc55728c1d754fb68237",
-        "protocol_sha256": "f2f788d4b72359446d367786055b7e902f9b3240fb0229c62ce793d1f4ea6a2a",
-        "remaining": "Actual admitted training, selected-only synthetic test, unchanged complete-view control gate, candidate diagnostics with external raw-output commitment, final report, exact CI/controller/main and independent public delivery.",
-        "summary": "Tested sole synthetic-only adaptation and exact generator/training/selection/protocol/code/input seals publicly frozen before real checkpoint loading. 4658 full tests/four skips and154 focused pass, all required checks pass. Installed model/app truth/source eligibility unchanged; references0/2."
+        "remaining": "Finish fixed control/candidate/raw stages once; privately audit terminal/source/tensor/preservation receipts and publicly timestamp only raw-output hashes before real scoring; final aggregate report/exact CI/controller/main/full public delivery.",
+        "summary": "Fixed four-epoch synthetic training and one-shot test completed; validation selectedepoch4. Negative generated localization1/282 versus11/282 default,102/102 false observations on negatives for both. Unchanged full-view control live; process/admission identities verified privately. No tuning or promotion."
       },
-      "checkpoint_at": 1792954962,
+      "checkpoint_at": 1792955460,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "80de6792dc0f2a6c5442cc82131856072c891a49",
         "branch": "codex/issue-305-test-one-fixed-research-only-last-decode",
         "epoch": 1,
-        "expires_at": 1792965762,
+        "expires_at": 1792966260,
         "granted_at": 1792953762,
         "host_id": "MSI",
         "session_id": "38cb048544ad42769dddcd36b6f75292",
