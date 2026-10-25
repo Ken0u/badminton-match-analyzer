@@ -1143,6 +1143,24 @@
       "task_id": "267",
       "verb": "checkpoint"
     },
+    "gap267-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1792904942,
+      "epoch": 1,
+      "fingerprint": "774fbec56cf05135f7e89e5bd4f2b52c85921a8a24b4a4c9b9806641dde76071",
+      "status": "running",
+      "task_id": "267",
+      "verb": "checkpoint"
+    },
+    "gap267-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1792905063,
+      "epoch": 1,
+      "fingerprint": "49ed66c1b4d42a4f0220856ceb810fef80a1e8e9ddc839f66946f76149f2a41c",
+      "status": "review",
+      "task_id": "267",
+      "verb": "submit"
+    },
     "goal-01a1714f-next": {
       "actor": "dootz1",
       "at": 1792902579,
@@ -21455,17 +21473,19 @@
     "267": {
       "checkpoint": {
         "branch": "codex/issue-267-keep-saved-contact-and-recognition-compa",
-        "head_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
-        "remaining": "Finish full checks, final receipt/report, PR/exact CI/controller/main and independent public delivery.",
-        "summary": "Integrated the bounded two-file evaluator/pure-test subtask into the granted worktree. Native source timestamp barriers separate strict, tighter and interval comparison domains, retaining all reviewed frames and point missed/false denominators; crossing interval/evidence IDs have distinct exclusions. Registered generated singles/doubles API/CLI cases pass: 756 focused tests, unchanged saved input bytes. Full required checks now run in disposable generated storage with process/source receipts. The first full-check attempt stopped at Ruff RUF007 in the new API test; fixed with pairwise, preserving the failed attempt. Core initial expectation/regex failures remain preserved separately. No scientific inputs, images, inference, models, defaults, policy or other-host paths changed; deprecated PROGRESS and original root edits remain preserved. Scientific references remain 0/2 and four flags false."
+        "evidence_sha256": "460e8de1752c19965b276665fb352dd9b23f62a306920211794908f9eebd9f95",
+        "head_sha": "3fe82750bfe7b33875aa73d54ff1f02ac8d4db87",
+        "pr_number": 268,
+        "remaining": "Exact PR/main CI, controller integration and independently verified complete public delivery.",
+        "summary": "Native timestamp gaps now separate contact/recognition comparison domains without removing reviewed frames or point misses/false outputs. 756 focused/3953 full Python tests pass, four optional skips; required checks pass. Local verification SHA256 460e8de1752c19965b276665fb352dd9b23f62a306920211794908f9eebd9f95."
       },
-      "checkpoint_at": 1792904524,
+      "checkpoint_at": 1792904942,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
         "branch": "codex/issue-267-keep-saved-contact-and-recognition-compa",
         "epoch": 1,
-        "expires_at": 1792915324,
+        "expires_at": 1792915742,
         "granted_at": 1792904121,
         "host_id": "MSI",
         "session_id": "16dbb3112d1f4a4cb656dfac512bc201",
@@ -21474,6 +21494,7 @@
       "epoch": 1,
       "planned_at": 1792903943,
       "planned_by": "Ken0u",
+      "pr_number": 268,
       "spec": {
         "acceptance": [
           "Follow the approved regular bug-review roadmap after delivered264. Audit all issue/PR history and authoritative grants, including active266 on another host; reserve disjoint files only. Preserve original root edits, deprecated PROGRESS.md, environments, datasets, research, annotations, predictions and historical source evidence. Obtain a fresh committed code-only grant and isolated worktree before production edits.",
@@ -21523,7 +21544,13 @@
         ]
       },
       "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "head_sha": "3fe82750bfe7b33875aa73d54ff1f02ac8d4db87",
+        "pr_number": 268,
+        "spec_hash": "cb84e3510b22d03b6cd3d98a0d242296cc69c0433363d0804d553c8a6fe45686"
+      }
     },
     "62": {
       "checkpoint": {
