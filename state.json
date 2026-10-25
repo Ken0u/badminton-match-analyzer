@@ -20728,6 +20728,7 @@
       }
     },
     "260": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40156901834",
       "checkpoint": {
         "branch": "codex/issue-260-reject-explicit-conflicting-or-malformed",
         "evidence_sha256": "0fc478c0cacd5292b88f9fe0ba1d7cb699faf7076a05f68c7b79fa247e823765",
@@ -20749,7 +20750,7 @@
         "spec_hash": "71c9d5e2d2affb2f2a6d16ed8a424120c8bf9f8d5f372552e9fb70f2089e731a"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792897102,
