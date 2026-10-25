@@ -1202,6 +1202,15 @@
       "task_id": "266",
       "verb": "checkpoint"
     },
+    "goal-01a17154-checkpoint271-v1": {
+      "actor": "dootz1",
+      "at": 1792907531,
+      "epoch": 1,
+      "fingerprint": "085fc8da45277b9d0c96bc7f210636f538701aae1a77d23c46316de5876de177",
+      "status": "running",
+      "task_id": "271",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-next-postsubmit-v1": {
       "actor": "dootz1",
       "reason": "host already owns work in this lane",
@@ -21824,12 +21833,24 @@
       "status": "running"
     },
     "271": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/w271",
+          ".cache/goal-01a17154/resume271.json",
+          ".cache/goal-01a17154/delivery266.json"
+        ],
+        "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
+        "head": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
+        "remaining": "Run direct editor and full production/library/export matrix; inspect all mode receipts and complete cleanup. Required project checks, report, focused commit/PR/exact submission, controller PR/main and candidate verification.",
+        "summary": "Revalidated committed epoch-1 grant/spec, unpaused queue, exact baseline/main and preserved worktrees. Issue266 exact-main and complete candidate pass; independent wheel/sdist and both anonymous manifest audit posted on266. Scoped uncommitted test implementation extracts direct-editor actual-canvas regression into a shared source-hashed helper, appends an explicitly production-specific group after all17 unchanged frozen parity blocks/performance, and updates accounting to19=17+2. Continuous/cut/scene, manual marker, overlay toggles and original annotations/predictions are asserted. Locked npm dependencies installed; no runtime/scientific/workflow change."
+      },
+      "checkpoint_at": 1792907531,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "e47f9ff7c7d25c49f024dbb91b61cb5e6da60b13",
         "branch": "codex/issue-271-exercise-the-shuttle-overlay-source-cont",
         "epoch": 1,
-        "expires_at": 1792918029,
+        "expires_at": 1792918331,
         "granted_at": 1792907229,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
