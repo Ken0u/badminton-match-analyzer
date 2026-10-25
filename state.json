@@ -1229,6 +1229,12 @@
       "task_id": "271",
       "verb": "checkpoint"
     },
+    "goal-01a17154-extend271-v1": {
+      "actor": "dootz1",
+      "reason": "scope expansion cannot change task semantics",
+      "status": "rejected",
+      "verb": "extend-scope"
+    },
     "goal-01a17154-next-postsubmit-v1": {
       "actor": "dootz1",
       "reason": "host already owns work in this lane",
