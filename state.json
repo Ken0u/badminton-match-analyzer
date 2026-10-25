@@ -1113,6 +1113,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "goal-01a17154-checkpoint266-v1": {
+      "actor": "dootz1",
+      "at": 1792903748,
+      "epoch": 1,
+      "fingerprint": "0ef6b84037bc18a7ae0c1123f5671cb6a6d62c65b4c8dc8d6ee3286bd8ab9f42",
+      "status": "running",
+      "task_id": "266",
+      "verb": "checkpoint"
+    },
     "goal-01a17154-next-v1": {
       "actor": "dootz1",
       "at": 1792903074,
@@ -21309,12 +21318,23 @@
       }
     },
     "266": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/goal-01a17154/shuttle-trail-baseline.json",
+          ".cache/w266"
+        ],
+        "branch": "codex/issue-266-keep-the-editor-shuttle-trail-inside-its",
+        "head": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
+        "remaining": "Browser verification, contract rerun, required project checks, focused report, commit/PR/submission, controller CI/main/candidate delivery.",
+        "summary": "Uncommitted scoped repair implemented. Shared camera/gap cuts plus scene boundaries clip the overlay history to the current segment; invalid/missing observations break paths. All 200 frontend tests and type checks pass; build/stage parity passes. Generated recording-canvas browser cases added. Initial unused-import typecheck failure and missing contract-interpreter environment attempt preserved in tool outputs; import removed and existing interpreter explicitly selected. Starting browser and required Python/static checks; no scientific input/model access."
+      },
+      "checkpoint_at": 1792903748,
       "claim": {
         "actor": "dootz1",
         "baseline_sha": "39bdbc6b5f38c3d9d3d0756e9617177de3ee14b3",
         "branch": "codex/issue-266-keep-the-editor-shuttle-trail-inside-its",
         "epoch": 1,
-        "expires_at": 1792914231,
+        "expires_at": 1792914548,
         "granted_at": 1792903431,
         "host_id": "LAPTOP-FVMV3PD6",
         "session_id": "goal-01a17154",
