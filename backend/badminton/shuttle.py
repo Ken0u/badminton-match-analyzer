@@ -259,8 +259,12 @@ def track_shuttle(
     *,
     input_size=(WIDTH, HEIGHT),
     heatmap_observer=None,
+    spatial_layout=None,
 ):
     input_size = validate_input_size(input_size)
+    from .shuttle_tiling import predict_tiles, spatial_recipe
+
+    spatial = spatial_recipe(spatial_layout, input_size)
     import torch
 
     from .vendor.tracknet_model import TrackNet
@@ -314,9 +318,11 @@ def track_shuttle(
     if device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
     rows = []
+    model_calls = model_windows = 0
     try:
 
-        def predict(images):
+        def predict_model(images):
+            nonlocal model_calls
             array = np.concatenate(
                 [np.moveaxis(img, -1, 0) for img in images], axis=0
             ).copy()
@@ -332,7 +338,16 @@ def track_shuttle(
                 else nullcontext()
             )
             with torch.inference_mode(), context:
-                return model(tensor)[0].float().cpu().numpy()
+                heat = model(tensor)[0].float().cpu().numpy()
+            model_calls += 1
+            return heat
+
+        def predict(images):
+            nonlocal model_windows
+            model_windows += 1
+            if spatial_layout == "overlap_2x2":
+                return predict_tiles(images, predict_model)
+            return predict_model(images)
 
         for segment in boundaries["camera_ranges"]:
             first, last = segment["start_frame"], segment["end_frame"]
@@ -444,6 +459,12 @@ def track_shuttle(
                 if key in boundaries
             }
         )
+        if spatial is not None:
+            result.update(
+                spatial_inference=spatial,
+                model_calls=model_calls,
+                model_windows=model_windows,
+            )
         result = reviewed_run(result, annotations)
         write_json(output, result)
         return {k: v for k, v in result.items() if k != "frames"}

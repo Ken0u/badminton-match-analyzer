@@ -48,6 +48,7 @@ include data/manifests/shuttle_source_assessment_protocol_v1.json
 include data/manifests/shuttle_source_assessment_protocol_v2.json
 include data/manifests/shuttle_supervision_sources_v1.json
 include data/manifests/shuttle_threshold_protocol_v1.json
+include data/manifests/shuttle_tiling_protocol_v1.json
 include data/manifests/shuttle_visibility_protocol_v1.json
 include data/manifests/source_alignment_pilot.json
 include data/manifests/source_camera_review.json
