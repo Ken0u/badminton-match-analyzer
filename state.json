@@ -24295,6 +24295,7 @@
       }
     },
     "294": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40195042092",
       "checkpoint": {
         "branch": "codex/issue-294-investigate-and-preserve-the-declared-tr",
         "evidence_sha256": "545babc4d4a1b3fdacae616faa5501b290bdf1303009515b20fb484f12972613",
@@ -24316,7 +24317,7 @@
         "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792932162,
