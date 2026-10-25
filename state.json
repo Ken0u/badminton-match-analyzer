@@ -8445,6 +8445,15 @@
       "task_id": "97",
       "verb": "submit"
     },
+    "selection294-checkpoint-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792931643,
+      "epoch": 1,
+      "fingerprint": "e4d918961b4f014f7758678c61c8a7b14cccf1a6990acd09714a6fc4a8858f26",
+      "status": "running",
+      "task_id": "294",
+      "verb": "checkpoint"
+    },
     "selection294-next-v1": {
       "actor": "Ken0u",
       "at": 1792930495,
@@ -8479,6 +8488,15 @@
       "fingerprint": "41710c396a7b0150d91cfb8219ef478dd5cfe49657b58e6fdf4fc0258002631d",
       "status": "ok",
       "verb": "register"
+    },
+    "selection294-submit-final-v1": {
+      "actor": "Ken0u",
+      "at": 1792931660,
+      "epoch": 1,
+      "fingerprint": "5c31bdab4fc5af894d8032ac60ae2770588bbef67070bf3955bf6ed57152cfd3",
+      "status": "review",
+      "task_id": "294",
+      "verb": "submit"
     },
     "shuttle139-review-v2-grant-cfd18714": {
       "actor": "Ken0u",
@@ -24253,12 +24271,21 @@
       }
     },
     "294": {
+      "checkpoint": {
+        "branch": "codex/issue-294-investigate-and-preserve-the-declared-tr",
+        "evidence_sha256": "545babc4d4a1b3fdacae616faa5501b290bdf1303009515b20fb484f12972613",
+        "head_sha": "62ecb8b5ed95a4546725bcde24a5f9da76fc8de8",
+        "pr_number": 298,
+        "remaining": "Exact PR/main CI, controller integration and independent full public delivery.",
+        "summary": "422 focused / 4574 full tests pass, four optional skips and required checks; four unsupported matches removed with full evidence controls and candidate fields preserved. Both cached development proposals and original input/catalog/annotation/clock seals unchanged. Final source and 969 terminal lifetimes verified. No images/inference/scientific scoring. Local receipt SHA256 545babc4d4a1b3fdacae616faa5501b290bdf1303009515b20fb484f12972613."
+      },
+      "checkpoint_at": 1792931643,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5e7ce0e36cf5d5caf394f5421fa2181b0b0b932c",
         "branch": "codex/issue-294-investigate-and-preserve-the-declared-tr",
         "epoch": 1,
-        "expires_at": 1792941295,
+        "expires_at": 1792942443,
         "granted_at": 1792930495,
         "host_id": "MSI",
         "session_id": "0af5ed5dd5d7465d8169fa400eafea50",
@@ -24267,6 +24294,7 @@
       "epoch": 1,
       "planned_at": 1792930286,
       "planned_by": "Ken0u",
+      "pr_number": 298,
       "spec": {
         "acceptance": [
           "Refresh current main, approved roadmap, bug review, collaboration/configuration, complete duplicate issue/PR history and active grants. Preserve delivered288/293, other-host295, proposed sensitive279 and all local research/environments/root edits/deprecated PROGRESS. Obtain a fresh committed routine code-only grant and isolated worktree before reproduction/implementation.",
@@ -24316,7 +24344,24 @@
         ]
       },
       "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "5e7ce0e36cf5d5caf394f5421fa2181b0b0b932c",
+        "head_sha": "62ecb8b5ed95a4546725bcde24a5f9da76fc8de8",
+        "native_evidence": {
+          "code_sha": "62ecb8b5ed95a4546725bcde24a5f9da76fc8de8",
+          "limitations": [
+            "Read-only cached development perception replay, not fresh video/model inference.",
+            "Model hashes bind recorded checkpoint metadata only; weights not loaded.",
+            "No independent scientific labels, localization or complete-match annotation accuracy established."
+          ],
+          "model_sha256": "6df8da66813b7c5f739ede5be52635f854ab29a9829149f46f347a3071916553",
+          "receipt_sha256": "a49c2a169de6f82e6eb230badabb7c5e81d8424a257c3b909780d47ba17abc67",
+          "source_sha256": "71597ec1a19362cf304a9f208001951be467d648960cecf12ba6afe8e46318a2"
+        },
+        "pr_number": 298,
+        "spec_hash": "5f1d7e657f63e90ca251bca4da12f370d8dea9d9a8e0c7d5c6e0b73d596212d9"
+      }
     },
     "295": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40192583321",
