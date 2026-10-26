@@ -1,11 +1,13 @@
 import json
 import threading
 import time
+from types import SimpleNamespace
 
 import pytest
 from badminton import pipeline
 from badminton.api import create_app
 from fastapi.testclient import TestClient
+from test_pipeline import mode_workspace, mutate_input
 from test_pipeline import workspace as workspace
 
 
@@ -158,3 +160,49 @@ def test_doubles_processing_records_unavailable_labels_instead_of_fake_recogniti
         run_id = plan["parts"][0]["stages"]["recognition"]["run_id"]
         run = client.get(f"/api/videos/doubles/runs/{run_id}").json()
         assert run["status"] == "unsupported" and run["candidates"] == []
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize("mutation", ["source", "timestamps", "context"])
+def test_api_cached_resume_exposes_changed_inputs_as_incomplete(
+    workspace, monkeypatch, mode, mutation
+):
+    ctx = mode_workspace(workspace, mode)
+    root, store, video, _, calls = ctx
+    with TestClient(create_app(root, store.data)) as client:
+        initial = client.post("/api/videos/test/analysis", json={})
+        assert initial.status_code == 202
+        assert wait(store, initial.json()["id"])["status"] == "completed"
+        originals = {
+            p: p.read_bytes()
+            for p in (store.data / video["id"] / "runs").glob("*.json")
+        }
+        calls.clear()
+        original = pipeline.process_match
+        changed = []
+        monkeypatch.setattr(pipeline, "time", SimpleNamespace(monotonic=lambda: 100))
+
+        def process(v, root, store, snapshot, job_id, progress, settings, **kwargs):
+            def report(value):
+                if not changed:
+                    mutate_input(ctx, mutation)
+                    changed.append(job_id)
+                progress(value)
+
+            return original(
+                v, root, store, snapshot, job_id, report, settings, **kwargs
+            )
+
+        monkeypatch.setattr(pipeline, "process_match", process)
+        response = client.post("/api/videos/test/analysis", json={})
+        assert response.status_code == 202
+        job_id = response.json()["id"]
+        job = wait(store, job_id)
+        state = "interrupted" if mutation == "context" else "failed"
+        assert job["status"] == state and "summary" not in job
+        loaded = client.get(f"/api/videos/test/analysis/{job_id}")
+        assert loaded.status_code == 200
+        plan = loaded.json()
+        assert plan["state"] == state and not plan["processing_complete"]
+        assert changed == [job_id] and calls == []
+        assert all(p.read_bytes() == raw for p, raw in originals.items())

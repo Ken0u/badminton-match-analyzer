@@ -253,24 +253,34 @@ def process_match(
     completed, reused = 0, 0
     total = 2 + len(windows) * len(STAGES)
     last_tick = -1
-    last_context_check = 0
+    last_input_check = 0
+
+    def check_inputs():
+        if store.job(job_id).get("cancel_requested"):
+            raise JobCancelled(
+                "Processing paused; completed stages are available to resume"
+            )
+        resolve_source(video, root)
+        if timestamps_for(store.data, video["id"]) != times:
+            raise ValueError("Source timestamps changed; request a new processing run")
+        if (
+            context_signature(store.annotations(video["id"]), 0, len(times))
+            != recipe["context_signature"]
+        ):
+            raise JobCancelled(
+                "Camera, scene or court context changed; resume processing with the current annotations"
+            )
 
     def report(value):
-        nonlocal last_tick, last_context_check
+        nonlocal last_tick, last_input_check
         if store.job(job_id).get("cancel_requested"):
             raise JobCancelled(
                 "Processing paused; completed stages are available to resume"
             )
         now = time.monotonic()
-        if now - last_context_check >= 1:
-            last_context_check = now
-            if (
-                context_signature(store.annotations(video["id"]), 0, len(times))
-                != recipe["context_signature"]
-            ):
-                raise JobCancelled(
-                    "Camera, scene or court context changed; resume processing with the current annotations"
-                )
+        if now - last_input_check >= 1:
+            last_input_check = now
+            check_inputs()
         tick = int(1000 * min(1, max(0, (completed + value) / total)))
         if tick != last_tick:
             last_tick = tick
@@ -279,6 +289,8 @@ def process_match(
     def stage(name, part, action):
         nonlocal completed, reused
         report(0)
+        # Fast cache resumes can finish between throttled progress checks.
+        check_inputs()
         index = part["window"]["index"] if part else -1
         dependencies = {}
         if name == "identities":
@@ -337,6 +349,7 @@ def process_match(
             ):
                 raise ValueError("Cached artifact registration changed")
             if registered is None:
+                check_inputs()
                 store.put_job(
                     {
                         "id": identifier,
@@ -410,6 +423,8 @@ def process_match(
                 for c in run.get("candidates", [])
             ):
                 raise ValueError("Proposal frames/times must lie in their source range")
+            # A producer's output is provisional until its inputs are rechecked.
+            check_inputs()
             run.update(
                 analysis_key=key,
                 analysis_stage_key=stage_key,
@@ -451,6 +466,7 @@ def process_match(
                 )
             }
             summary["checkpoint"] = checkpoint
+            check_inputs()
             store.put_job(
                 {
                     "id": identifier,
@@ -468,6 +484,7 @@ def process_match(
         plan["completed_stages"] = completed
         write_json(path, plan)
         report(0)
+        check_inputs()
         return run, identifier
 
     try:
@@ -629,6 +646,10 @@ def process_match(
             write_json(output, result)
 
         stage("identities", None, identities)
+        # Callers may cancel, edit context or fail even on the final callback.
+        # Publish completion only after that callback and a final input check.
+        progress(1)
+        check_inputs()
         plan.update(
             state="completed",
             active=None,
@@ -639,7 +660,6 @@ def process_match(
             meaning="Processing finished; all proposals and identities remain unverified. This is not full-match correctness.",
         )
         write_json(path, plan)
-        progress(1)
         return {
             "analysis_key": key,
             "parts": len(windows),
@@ -654,6 +674,8 @@ def process_match(
             if isinstance(error, KeyboardInterrupt | JobCancelled)
             else "failed",
             error=str(error),
+            processing_complete=False,
+            fully_annotated=False,
         )
         write_json(path, plan)
         raise
