@@ -6353,6 +6353,26 @@
       "task_id": "62",
       "verb": "human-approved"
     },
+    "post-capacity311-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792981935,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "df5251e72738fe764e3510fb09e328455188d67c",
+        "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
+        "epoch": 2,
+        "expires_at": 1792992735,
+        "granted_at": 1792981935,
+        "host_id": "MSI",
+        "session_id": "f415707f271945a68a71ac06d42abc41",
+        "spec_hash": "a5449ddc93b21763457148a3d85decc1d62f3ec4bc60dd83098a3b095d992e21"
+      },
+      "epoch": 2,
+      "fingerprint": "7e3498d0002cc693c2fa2d2ffd806a46df4151bc168635634aa2d12647597ded",
+      "status": "granted",
+      "task_id": "62",
+      "verb": "next"
+    },
     "post-shuttle204-next-v1": {
       "actor": "Ken0u",
       "at": 1792729799,
@@ -25910,7 +25930,18 @@
         "summary": "Original authorized first300-second source-only pilot is sealed and scientifically incomplete:0/2 complete references,2 unresolved slots,0 provisional candidates. Two genuine independent screening streams and separate fresh blind adjudication completed;9 original state disagreements; adjudication111 non-play,5 stopped-play,6 unknown.122 native overview PNGs;60 successful fresh sessions,3 preserved capacity failures;385 charged image memberships and340760009 charged bytes. Screening seal77696108428995481ad6163a4ef1c3901938a04a4e0c9fc51db9b6b62ea00239. No dense preparation, prediction/model access, training, inference or app-truth edits; all four eligibility flags remain false. Original worker Store completed and original lifetime independently absent; live launcher-child ancestry was not observed and is not claimed. All63 CLI and147 final verification lifetimes independently absent.52 focused tests;2206 full tests pass/four optional skips; required checks pass. Draft PR207 exact head39bbb9db15b96d258de4da4d17573a35c658f530 preserved, unmerged; all12 exact-head CI jobs passed on first attempt in39920183626 with independent revision/tree/scope audit. No submission or completion claimed. Private seals/audits remain under ignored rally62-source-only-v1 and rally62-final-source-audit-v1.json/rally62-final-local-state-v1.json/rally62-exact-pr-ci-verified-v1.json/rally62-handoff-audit-v1.json. Original output audit122130033 bytes including worktree; no new scientific outputs since.202 merged/main/delivery complete at38af56364dace02b0762a325bd71dee376b27c78. Prepared follow-up208 exact frozen hashc92632b56f60f7cf9def8b713d72ecfbff2506ed16c625fd7e849a2bb04cc5c3 is needs_human, not authorized/claimed/implemented. Await consolidated owner decision before original terminal release/transfer, new grant, extended900-second horizon or increased cumulative budgets/runtime. Preserve original claim/history/branch/PR/evidence; parent62 and66/67/71 remain incomplete. Immutable original task deadline1792751062 is unchanged by checkpoint renewal. Deprecated PROGRESS and preexisting edits preserved."
       },
       "checkpoint_at": 1792742897,
-      "epoch": 1,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "df5251e72738fe764e3510fb09e328455188d67c",
+        "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
+        "epoch": 2,
+        "expires_at": 1792992735,
+        "granted_at": 1792981935,
+        "host_id": "MSI",
+        "session_id": "f415707f271945a68a71ac06d42abc41",
+        "spec_hash": "a5449ddc93b21763457148a3d85decc1d62f3ec4bc60dd83098a3b095d992e21"
+      },
+      "epoch": 2,
       "history": [
         {
           "at": 1792745912,
@@ -26018,7 +26049,7 @@
         ]
       },
       "spec_hash": "a5449ddc93b21763457148a3d85decc1d62f3ec4bc60dd83098a3b095d992e21",
-      "status": "ready"
+      "status": "running"
     },
     "63": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/39321124329",
