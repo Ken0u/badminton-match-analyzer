@@ -491,6 +491,15 @@
       "task_id": "311",
       "verb": "checkpoint"
     },
+    "capacity313-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792989088,
+      "epoch": 1,
+      "fingerprint": "0f8a4f5ae8790f629f71e409a6e91e55dd8cff9fc1e82522392d6e8aaafd83fb",
+      "status": "running",
+      "task_id": "313",
+      "verb": "checkpoint"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -25985,12 +25994,27 @@
       }
     },
     "313": {
+      "checkpoint": {
+        "branch": "codex/issue-313-complete-only-the-unfinished-real-source",
+        "head_sha": "df5251e72738fe764e3510fb09e328455188d67c",
+        "immutable_deadline": 1792997456,
+        "local_source_sha256": {
+          "MANIFEST.in": "7af44bcc543c10feaebd647e2221d498298e216819a1f9a00f225626c4433af3",
+          "backend/badminton/shuttle_capacity_continuation.py": "803f1e5a48b5449803932e5e20bafbb2136f8ec266934ce27767fa3d2744cd62",
+          "data/manifests/shuttle_capacity_continuation_protocol_v1.json": "7b4dfb6a3d1054ccfdf5f5f4bdf4e1f7d73d1511ca3c9f84da99e943a0534857",
+          "docs/SHUTTLE_CAPACITY_CONTINUATION_REPORT.md": "5140e630c1cec4ff6861b4f4328c93af68ba9b3a8b5e202dabb9a7868d4b1288",
+          "scripts/continue_shuttle_capacity.py": "30b61c3ad92138bc8fdb69db6db548c46ae8d85f438dfe711f4e77e43f190595",
+          "tests/test_shuttle_capacity_continuation.py": "88dc25879742015098c003c3d091c57782e7e5a0d3e967820d52e31c5d778cbb"
+        },
+        "summary": "Implemented the six scoped continuation paths. Explicit predecessor experiment/84consumer/runtime/input/selection/18view bindings preserve expired311 clock and original interrupted Store/missing-terminal provenance. Exact CPU104-tensor audit gates remaining stages; full physical control comparison gates learned methods, exclusive raw/public seals gate sole60case diagnostics. Added generated tests for clocks/tampering/tensors/inherited views/process-Store proof/unknown and unavailable denominators. Initial interrupted focused run had partial log and independently absent lifetimes, not counted passing. Targeted checks diagnosed wrong test Store API and strengthened explicit consumer-byte validation. An intermediate222-test focused run passed but source-stability failed because further coverage was added during development; it is not final immutable verification. First full check underway; final checks will be rerun on fixed bytes after the partial physical-control guard addition. No native stage/model read/media decode/image transfer/training/test repetition or app truth change has occurred. Original313 deadline1792997456 unchanged. Next: final immutable checks, clean source commit/push, public prospective freeze, admitted tensor audit and remaining32control then two fixed50view variants; raw public seal before sole diagnostics, report/exactCI/controller/main/public delivery. References0/2; fullaccuracyunproven."
+      },
+      "checkpoint_at": 1792989088,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "df5251e72738fe764e3510fb09e328455188d67c",
         "branch": "codex/issue-313-complete-only-the-unfinished-real-source",
         "epoch": 1,
-        "expires_at": 1792993856,
+        "expires_at": 1792999888,
         "granted_at": 1792983056,
         "host_id": "MSI",
         "session_id": "a37c5a052a754079b91613f05298827b",
