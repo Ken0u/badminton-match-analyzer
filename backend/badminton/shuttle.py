@@ -268,7 +268,10 @@ def track_shuttle(
     spatial = spatial_recipe(spatial_layout, input_size)
     research = None
     if research_checkpoint is not None:
-        from .shuttle_adaptation import checkpoint_override
+        if isinstance(research_checkpoint, dict) and "study" in research_checkpoint:
+            from .shuttle_capacity import checkpoint_override
+        else:
+            from .shuttle_adaptation import checkpoint_override
 
         if input_size != (WIDTH, HEIGHT) or spatial_layout != "full":
             raise ValueError(

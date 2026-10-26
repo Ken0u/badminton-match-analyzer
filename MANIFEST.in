@@ -54,3 +54,4 @@ include data/manifests/shuttle_visibility_protocol_v1.json
 include data/manifests/source_alignment_pilot.json
 include data/manifests/source_camera_review.json
 include data/manifests/terminal_contact_review.json
+include data/manifests/shuttle_capacity_protocol_v1.json
