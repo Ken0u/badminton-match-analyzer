@@ -26554,6 +26554,7 @@
       }
     },
     "319": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40310452167",
       "checkpoint": {
         "branch": "codex/issue-319-establish-the-eth-shuttle-release-acquis",
         "evidence": [
@@ -26578,7 +26579,7 @@
         "spec_hash": "9c847870e395257da5df65030dbd3cb026e3e7f58f7c8123a475dbe34ebeb22d"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793011254,
