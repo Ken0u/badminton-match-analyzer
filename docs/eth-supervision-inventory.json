@@ -1,0 +1,4768 @@
+{
+  "schema_version": 1,
+  "task": 319,
+  "observed_date_utc": "2026-10-26",
+  "purpose": "Creator metadata qualification only; no scientific input bytes or training eligibility established.",
+  "creator_repository_commit": "745a82916e919313e6db319a12ea873082192666",
+  "dataset_root": "https://drive.google.com/drive/folders/1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+  "prior_root_observation": {
+    "url": "https://drive.google.com/embeddedfolderview?id=1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s#list",
+    "sha256": "b513e2f2f59c8f3316efd9a6bbc3ea06a24ac94c5a63cecf9a42eff8b1968d1f",
+    "bytes": 52758,
+    "phase": "preserved_post315_planning",
+    "entries": 73,
+    "folders": 36,
+    "distinct_from_granted_requests": true,
+    "same_body_as_granted_root": false
+  },
+  "request_accounting": {
+    "requests": 160,
+    "folder_responses": 151,
+    "creator_text_responses": 9,
+    "response_bytes": 17639849,
+    "maximum_response_bytes": 2019873,
+    "all_statuses_200": true,
+    "partial_bodies": 0,
+    "network_retries": 0,
+    "redirects_followed": 0,
+    "credentials_used": false,
+    "request_limit": 160,
+    "response_byte_limit": 2097152,
+    "total_body_byte_limit": 67108864,
+    "socket_timeout_seconds": 20,
+    "remaining_request_allowance": 0
+  },
+  "diagnostics": [
+    {
+      "phase": "initial_fetch",
+      "exit_code": 1,
+      "reason": "Two excluded COCO folders also matched the difficulty suffix; the root-shape guard stopped before any child request.",
+      "repair": "Explicitly exclude coco_ prefixes and reuse the verified root response without another request.",
+      "root_requests_across_attempts": 1,
+      "continuation_exit_code": 0
+    }
+  ],
+  "evidence": [
+    {
+      "index": 0,
+      "url": "https://drive.google.com/embeddedfolderview?id=1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s#list",
+      "kind": "folder",
+      "parent": null,
+      "at": 1793009516.3962688,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 52758,
+      "sha256": "ef4bb63e45229fba5e4407123eee608b09c451570b543f811a2f1f2594e84239",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 1,
+      "url": "https://api.github.com/repos/leggedrobotics/shuttle_detection/git/trees/745a82916e919313e6db319a12ea873082192666?recursive=1",
+      "kind": "creator-tree",
+      "parent": null,
+      "at": 1793009574.16227,
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 11108,
+      "sha256": "4a52bf9f1d198f09d5b84e34d91e361c5533c22932fe4108d630ab601bb4dcba",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 2,
+      "url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/README.md",
+      "kind": "creator-readme",
+      "parent": null,
+      "at": 1793009574.3927474,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 3786,
+      "sha256": "75ef5261e792e07e953e803648c9a8fea98b34bf881f448da84ceaf179d571a8",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 3,
+      "url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/LICENSE",
+      "kind": "creator-license",
+      "parent": null,
+      "at": 1793009574.56151,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 34523,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 4,
+      "url": "https://arxiv.org/html/2603.06691v2",
+      "kind": "creator-paper",
+      "parent": null,
+      "at": 1793009574.760198,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 351644,
+      "sha256": "495bad7f227bd513ceeaec6c4913e20bd0a524aac2ae47a7405171a4a93bdd85",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 5,
+      "url": "https://sites.google.com/leggedrobotics.com/shuttlecockfinder/startseite",
+      "kind": "creator-project",
+      "parent": null,
+      "at": 1793009574.8580961,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 145655,
+      "sha256": "5a6e61f2d72f4eba2c817ca4af8121424fcdb3e0b48e109e64736c77e9c02060",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 6,
+      "url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/src/shuttletrack/combine_datasets.py",
+      "kind": "creator-code",
+      "parent": null,
+      "at": 1793009575.175931,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 12639,
+      "sha256": "43f4241f21cc61a2a61c4c6bcfa5d5f60d3be3210525ca18d6eab80b98eb8b99",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 7,
+      "url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/src/shuttletrack/config.py",
+      "kind": "creator-code",
+      "parent": null,
+      "at": 1793009575.339069,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 2981,
+      "sha256": "c9808dc2ae4cdbdf4588d2b8a9644595f8096eae72ade98a3522aef1584ef9e4",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 8,
+      "url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/src/shuttletrack/convert_labels.py",
+      "kind": "creator-code",
+      "parent": null,
+      "at": 1793009575.4772875,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 6159,
+      "sha256": "d6e77314fa7cd1f315a19908b1436ca01d96fc41bdcf6a46b711434b6929966f",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 9,
+      "url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/src/shuttletrack/train.py",
+      "kind": "creator-code",
+      "parent": null,
+      "at": 1793009575.615894,
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 23315,
+      "sha256": "1e1be493386636dd71007e54bc6a37e07d20a1835342cef18109aa6fc3f33495",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 10,
+      "url": "https://drive.google.com/embeddedfolderview?id=1YRzsCmC0ssS2rapR7Y-OqoBUfBtQEZXy#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009575.7826636,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3548,
+      "sha256": "7feea00e9bf1052ab9b672ddc1916b9838de29c76ebbf7eabae022edf38e13ec",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 11,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ruSOhI9EpvKoxjhjSUdnCLr3o745vrSs#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009576.327508,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3548,
+      "sha256": "a083dcf1eeaa15eaef73d27fefcd61b9c349c7df6f2d8b174b2af9ca239d31a1",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 12,
+      "url": "https://drive.google.com/embeddedfolderview?id=16Mdc4sMvoSJRxxVKo0oPFJS-68gf0Qow#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009576.8740408,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3552,
+      "sha256": "2b9564d110e4b2700b09e9a641d2068e8bfb7794833d1e5b752aac4a879c7426",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 13,
+      "url": "https://drive.google.com/embeddedfolderview?id=1F6aln9kC_dbZ5k0Bsk3aMivF2vYuxDZh#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009577.3410816,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3548,
+      "sha256": "8e22e46a17fb10debaae9ce170c021321ea8e2a8339412a55d928378a3c8f05f",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 14,
+      "url": "https://drive.google.com/embeddedfolderview?id=1IC8GvZ0NHsow8w4vG3QJ13Ubx9hvKJrs#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009577.837401,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3550,
+      "sha256": "061340609116ced86b8af589226b062a368a144f2fd37dabbc6105491f7df7d5",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 15,
+      "url": "https://drive.google.com/embeddedfolderview?id=1kO-8ffPf0uFLzmTsOWC1fbFPNUyQLCcZ#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009578.3304355,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3550,
+      "sha256": "db348dc47e890ac3b9e01b56dec2ffab75bced05af927a406cfee37916cb7041",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 16,
+      "url": "https://drive.google.com/embeddedfolderview?id=1BJaRcLb5lz8k5YgXHfg8T5n_XjKuOpNN#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009578.895844,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3548,
+      "sha256": "08cad92725769ba7f0d1d9d38e14cfba5e9d23579b29f0e71d81d0db84441dda",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 17,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Zm0iZwrpL9-D-RC0g3O6KcGHolmAAB2M#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009579.4082859,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3548,
+      "sha256": "34e64ce8241ed9dc6bb362a20b894046926eb3323baeccb313dfc781a870dacf",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 18,
+      "url": "https://drive.google.com/embeddedfolderview?id=1hGsc2wFcJC7eoRirH_68g0CLKyZUcLOL#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009579.9104962,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3550,
+      "sha256": "8c45d9b28bed1c8e95f3ba49a7d9b4a4b7fd76b337559ca9d8e274dea7636574",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 19,
+      "url": "https://drive.google.com/embeddedfolderview?id=1xiMoSmPdeiVYJTuJgaLr0awGhDkb_EDl#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009580.5726497,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3548,
+      "sha256": "2ee8691d74f338cf81a45db48149afbb33adb5f5295455efaad85feffb0fd464",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 20,
+      "url": "https://drive.google.com/embeddedfolderview?id=1u3yvE8au3NTsocA0C01fI1_Jgnf24EnA#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009581.113136,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3550,
+      "sha256": "6ba6f50813d73c7c5d50363372aa824b076f043e26ad9a7e9ef43ebb1b924cff",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 21,
+      "url": "https://drive.google.com/embeddedfolderview?id=1x8tsV3-rUyz5pK9xJcUj0nq893qN0Gq1#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009581.6193225,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3550,
+      "sha256": "2869998971bbd32294d32874206afe2ff20dff4c3588e12cf2f1384746885d7d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 22,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Ihbo064zBo1YxFy-kW5HmYConm_qtgsq#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009582.2000575,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3547,
+      "sha256": "8bf600f41c38ec758fe8efad5595af5f9bb61957ae205f5b6847fdef5b991a4a",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 23,
+      "url": "https://drive.google.com/embeddedfolderview?id=1AXcm8qbMadScrFdbf0xkpgHE_JA0MWGh#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009582.7146902,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3549,
+      "sha256": "617324f97d63e9716a6bbb081aef6f9c42b91a1969b6c1f6d7e930023f4103f4",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 24,
+      "url": "https://drive.google.com/embeddedfolderview?id=1uGWDsTKt3uTSXUubxB0pEArCU-E8IHHd#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009583.263691,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3549,
+      "sha256": "c78944197a0db0e59ea078346fa9188361ecda036be944409635996b66a1e9b0",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 25,
+      "url": "https://drive.google.com/embeddedfolderview?id=1N9WTCOhgaqagNi2TnOpPqplkeELWePYu#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009583.7606597,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3547,
+      "sha256": "1f3184286eb6256e4a4690792f06698845f8a9a6fcbe0e28985e05c572e1d1f7",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 26,
+      "url": "https://drive.google.com/embeddedfolderview?id=1wtNvT_Lkgj_OElOjyJroRL89OOf5dfHk#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009584.368694,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3549,
+      "sha256": "786c2321dec212ac9f65880357161318788821f33151e5691a6e7d915d5f2b95",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 27,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Mf04Jf_xcrBv7Sc2eaoX7YuyxTDXjLva#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009584.8672478,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3549,
+      "sha256": "d6905c9fec16765ebd6450ee4c76998ce73778e5932c5ae7f6267846a0c2648c",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 28,
+      "url": "https://drive.google.com/embeddedfolderview?id=1puGiaJmekaeE9REYcJtFK9z3bnozvNlp#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009585.421095,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3547,
+      "sha256": "6c579f76c967b18c2ca1458f07223aac2122aa944b9a7f36c37e967e046ffb16",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 29,
+      "url": "https://drive.google.com/embeddedfolderview?id=1EUeCDk-E0HTkxxxpgC7PczrO_AYCGxh2#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009586.00774,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3549,
+      "sha256": "3f5828a1d4b02d25708d8caacd1cadcbea98d9dda5d34abb52ab739a92261e31",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 30,
+      "url": "https://drive.google.com/embeddedfolderview?id=10u2xu2aPK49fcFpK289WR8rucDLqddEV#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009586.493827,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3549,
+      "sha256": "52ab6a9584d1c3547336c4690ac9db5591ae571eeff254961d8de2234bfe44b4",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 31,
+      "url": "https://drive.google.com/embeddedfolderview?id=1_i1BQ8GpvAPqXjz3tyPV5Z1w3Aou9K37#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009587.0636213,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3551,
+      "sha256": "640debf5a7ae959302af589ed35287276f03490ccb5398dbcf1a80564d9fce20",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 32,
+      "url": "https://drive.google.com/embeddedfolderview?id=1vzgtm2TnTcWbPlihB2b4URoFipzFJI_G#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009587.623088,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3551,
+      "sha256": "436fb3c44aa6b9af40faa92dad19899ee12d179a753de7e6a2a86073ae238fa5",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 33,
+      "url": "https://drive.google.com/embeddedfolderview?id=1HRoIDAiitS6uqwvA5de4R-66Auq-D283#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009588.2321408,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3553,
+      "sha256": "28bc85250875c662ab37cbcec7c7cb8bc4089e76feaad6489580307e620df09d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 34,
+      "url": "https://drive.google.com/embeddedfolderview?id=16EcmbkglwOK8e09oPkQb6lwgYks2lIcV#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009588.71765,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3551,
+      "sha256": "b4d3361a9e31861f0af2d8c8c6a28c69079af94464595ab96a746b28535441bf",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 35,
+      "url": "https://drive.google.com/embeddedfolderview?id=1PHLVdWHU9RBhnHvJ-Ch7LI8ceszeN_xp#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009589.2335851,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3553,
+      "sha256": "5e37d64a0374950a811ed4e25de411c08591d8e16b713280568604c567e06d07",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 36,
+      "url": "https://drive.google.com/embeddedfolderview?id=1wV__U0m9mKJeXoAQiW3C5QQas6396qTa#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009589.7299466,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3553,
+      "sha256": "e89d569aae4939427fa19b89449a875271fc1704f4935d7e37d6e564b1b3fbe3",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 37,
+      "url": "https://drive.google.com/embeddedfolderview?id=1DaYR7rN-4y5mVAKdFrude7dW2x-iSiMU#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009590.3874714,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3561,
+      "sha256": "6e156bffaa3519b3219e5e5acac6f7cf16f29bf40944065dc7b65926c0917996",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 38,
+      "url": "https://drive.google.com/embeddedfolderview?id=1aIAF5K7GFSmqqe_h1pmgmNGPIOI41qgo#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009590.9566634,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3563,
+      "sha256": "27f8aed395d05970ea09ecb72eb0b5ee98dbdde9cda62500d55298540ab442aa",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 39,
+      "url": "https://drive.google.com/embeddedfolderview?id=12GA2bHGClOFftLQfg8LtEysfrcOHzzqe#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009591.4203503,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3563,
+      "sha256": "4341c7488785d55adbdc709e844ab8b1925a2bb7d30a33cd848fb9aa1a519106",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 40,
+      "url": "https://drive.google.com/embeddedfolderview?id=1WvflK9VoPUsweP40f1wOxlOAy4UjwMZL#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009591.9456916,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3561,
+      "sha256": "eae181c73ac97d4e6076004ca291d5142a420387815ba4ca524acbd195a6c761",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 41,
+      "url": "https://drive.google.com/embeddedfolderview?id=1LkgHP_9vQABrxSQ6ElJ070vpgS-28Q0M#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009592.411888,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3563,
+      "sha256": "c8913de08d89d12834e96e2ae9f1ed82d148432080677163e2141f464b0108c5",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 42,
+      "url": "https://drive.google.com/embeddedfolderview?id=1S5ReuBjob-xj0JDdiLAgXhudxu0mcJpo#list",
+      "kind": "folder",
+      "parent": "1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s",
+      "at": 1793009593.0034497,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3563,
+      "sha256": "cb629a20a0c1154a876ebc1e01d4de905e45d92a698731d7fcea4c5f666c97d5",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 43,
+      "url": "https://drive.google.com/embeddedfolderview?id=1v5lZvp1mkrgcQWhmzKDOUsLrJwf3OwXo#list",
+      "kind": "folder",
+      "parent": "1YRzsCmC0ssS2rapR7Y-OqoBUfBtQEZXy",
+      "at": 1793009593.5354323,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "c6c83753b42d8b49c036115ca3e589ba987db95a27c7635e1f26f62d127c1464",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 44,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Qnu10xCzpmXmfp7QnAdVod_wVgAe4LBh#list",
+      "kind": "folder",
+      "parent": "1YRzsCmC0ssS2rapR7Y-OqoBUfBtQEZXy",
+      "at": 1793009594.1673617,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "9705478cee540c5fa86677b80670fe5f576460e4ae458ac4bac96cff823fe279",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 45,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Wxkes_7nW9yBeriZUfiUbvXwUHbFppt-#list",
+      "kind": "folder",
+      "parent": "1ruSOhI9EpvKoxjhjSUdnCLr3o745vrSs",
+      "at": 1793009594.71261,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "97d06f0bfe2e75a6f34d058fc5f1b52c2f17700c5d8cd4cfab35263853569039",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 46,
+      "url": "https://drive.google.com/embeddedfolderview?id=1jd0eAMDdxX2nVrPVtB5VxtshAyFyzFkp#list",
+      "kind": "folder",
+      "parent": "1ruSOhI9EpvKoxjhjSUdnCLr3o745vrSs",
+      "at": 1793009595.2139177,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "1967e0c07b2dc8702e783d686df89a5855e361551655ed9f097c597c887937f7",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 47,
+      "url": "https://drive.google.com/embeddedfolderview?id=1pB35-NQDdSx2efMFi7ojB_bNqDKxO5z-#list",
+      "kind": "folder",
+      "parent": "16Mdc4sMvoSJRxxVKo0oPFJS-68gf0Qow",
+      "at": 1793009595.7059968,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "71a3e5bc81f46e11fddb9478a4b33f8977886a2803771a4d9d86599e2cdf2bf3",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 48,
+      "url": "https://drive.google.com/embeddedfolderview?id=144pImhMVst0SFgcrvMNaQ5AXOOC-e29F#list",
+      "kind": "folder",
+      "parent": "16Mdc4sMvoSJRxxVKo0oPFJS-68gf0Qow",
+      "at": 1793009596.1630218,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "6d18d5357bd8678fea1f9956aa9fd9e14e6cf07a6acf969d0d25f0f01eccce8d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 49,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ktf5C6W_4aHCQt_AmwwGyBDYL6w3eVK4#list",
+      "kind": "folder",
+      "parent": "1F6aln9kC_dbZ5k0Bsk3aMivF2vYuxDZh",
+      "at": 1793009596.9116125,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "2d59189a66aad5d6c5180bc7a904dbdba8686a9d25747973a77432f41f0b2f09",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 50,
+      "url": "https://drive.google.com/embeddedfolderview?id=16_Rjap0nFpKukz2wPM0RXkKmG6gXAaxn#list",
+      "kind": "folder",
+      "parent": "1F6aln9kC_dbZ5k0Bsk3aMivF2vYuxDZh",
+      "at": 1793009597.4260335,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "d1fb5dca3c0a5f60aaf8b8b8a5306cacbef16e3194a7a24cbcd1b82e912dec5e",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 51,
+      "url": "https://drive.google.com/embeddedfolderview?id=1px1WlGr2Xfvr0rKwCyh4Wj7spTnE5rgc#list",
+      "kind": "folder",
+      "parent": "1IC8GvZ0NHsow8w4vG3QJ13Ubx9hvKJrs",
+      "at": 1793009598.0067925,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "e1177d7fc44aebeccb26d53de40c79cc79614ba05695360b5164e8274610065d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 52,
+      "url": "https://drive.google.com/embeddedfolderview?id=171h-LgHvLM1uJdrAXc_Ztw6J9IkWFq6w#list",
+      "kind": "folder",
+      "parent": "1IC8GvZ0NHsow8w4vG3QJ13Ubx9hvKJrs",
+      "at": 1793009598.585263,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "29d35a9c806ea8d9a994b6fe8f35481315b84d8608d12db11a4670992baccde5",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 53,
+      "url": "https://drive.google.com/embeddedfolderview?id=1IkU-YL0p5zHbceBlSuWAhnuHhsPgoAtN#list",
+      "kind": "folder",
+      "parent": "1kO-8ffPf0uFLzmTsOWC1fbFPNUyQLCcZ",
+      "at": 1793009599.0393643,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "8a02d763a0cfc740e7ed9107b4c64b20f9a59158bc90bd6990636d3eb6ee317b",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 54,
+      "url": "https://drive.google.com/embeddedfolderview?id=1nXANI9OfWzpYNkGgql83QlWSiiLIUuaj#list",
+      "kind": "folder",
+      "parent": "1kO-8ffPf0uFLzmTsOWC1fbFPNUyQLCcZ",
+      "at": 1793009599.466569,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "e0cf678568a891a1ae978c41caccff127b2663aa999e12a8cdea29fc588c7fef",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 55,
+      "url": "https://drive.google.com/embeddedfolderview?id=1FqibA8T9JduA96XLPShlCqfXGxom92A7#list",
+      "kind": "folder",
+      "parent": "1BJaRcLb5lz8k5YgXHfg8T5n_XjKuOpNN",
+      "at": 1793009599.9078703,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "9fb2dd0d2619bf05f0668f95357afad45d6bffeac0403511e8e90aeae45fd1f1",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 56,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ZH_uabJuNq5EllquYkoiiTV8-7cktDSo#list",
+      "kind": "folder",
+      "parent": "1BJaRcLb5lz8k5YgXHfg8T5n_XjKuOpNN",
+      "at": 1793009600.39138,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "545ccbe7ca00a8081a07a1ef178c605182a201874eb5f07f40c730fe760c1f46",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 57,
+      "url": "https://drive.google.com/embeddedfolderview?id=1x519H87fkGiRMeXbENZ8e-PqAwAj_t3v#list",
+      "kind": "folder",
+      "parent": "1Zm0iZwrpL9-D-RC0g3O6KcGHolmAAB2M",
+      "at": 1793009600.8807733,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "26f5dee56356e956a76a971aba9290c8326f49deffee3e34bb1e352c640611bf",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 58,
+      "url": "https://drive.google.com/embeddedfolderview?id=1wmmFzpVgNUZfW-ovad7ZyI__dLoVcLDq#list",
+      "kind": "folder",
+      "parent": "1Zm0iZwrpL9-D-RC0g3O6KcGHolmAAB2M",
+      "at": 1793009601.5167003,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "a14438e25ff67c02e7579facc0fa5dd28465838a243855a92e5757d482dda626",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 59,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ai0spFcTvenheilA7lBRlsKa7oXhUk-w#list",
+      "kind": "folder",
+      "parent": "1hGsc2wFcJC7eoRirH_68g0CLKyZUcLOL",
+      "at": 1793009601.9993112,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "e2b76cb61657ff51d6b8b8f8e9e6fe4041e4fe9b7fdf3d457a837382e2700969",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 60,
+      "url": "https://drive.google.com/embeddedfolderview?id=1y2MAoi8lMX0hc-gGxJQbbYZrjHKPxURL#list",
+      "kind": "folder",
+      "parent": "1hGsc2wFcJC7eoRirH_68g0CLKyZUcLOL",
+      "at": 1793009602.5580213,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "39750257e048d21db814922d7304e7ad626548bfaaeef03a891cad2bad3e3e24",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 61,
+      "url": "https://drive.google.com/embeddedfolderview?id=15T5w70KVZ9A0GlYc09Tql9_Zq-iIa2CV#list",
+      "kind": "folder",
+      "parent": "1xiMoSmPdeiVYJTuJgaLr0awGhDkb_EDl",
+      "at": 1793009603.0998154,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "707610498e91a6dc69e846a0b558d01650148845aec81d1d47e77fcf78058b5d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 62,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Zc-W5mU_3lY9eRPMSAvM03Qf6tsoxnIf#list",
+      "kind": "folder",
+      "parent": "1xiMoSmPdeiVYJTuJgaLr0awGhDkb_EDl",
+      "at": 1793009603.6179683,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "c9ae88eb28816d61a49dbe7ff2f79684d64436b054a6daa90a53cc11c42bd260",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 63,
+      "url": "https://drive.google.com/embeddedfolderview?id=1YGY-OGNNb6u2LPBotVXRlQdqj0r9gSPZ#list",
+      "kind": "folder",
+      "parent": "1u3yvE8au3NTsocA0C01fI1_Jgnf24EnA",
+      "at": 1793009604.121539,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "bff832e377e9e55355389e33eb8401ea5d3e6016bb8595aa7e528c1f1ef885e3",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 64,
+      "url": "https://drive.google.com/embeddedfolderview?id=1lcuBH0ScSgq6yka3eF-zGrp4nCEw1ksg#list",
+      "kind": "folder",
+      "parent": "1u3yvE8au3NTsocA0C01fI1_Jgnf24EnA",
+      "at": 1793009604.6409533,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "8e90712f02ef7b34bcefc042d8fd8f2bc8dce88ebe0d0d4fe93b2419718fafea",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 65,
+      "url": "https://drive.google.com/embeddedfolderview?id=1L608gyB9_P7wYZEbwhpce4HsLpRr_sGp#list",
+      "kind": "folder",
+      "parent": "1x8tsV3-rUyz5pK9xJcUj0nq893qN0Gq1",
+      "at": 1793009605.171603,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "54030025edbc66b90062cc78f9888f882839d4136c06c8513f5a9771004c2e96",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 66,
+      "url": "https://drive.google.com/embeddedfolderview?id=1a2S2E-BcZKCLRyQ_-CtNlVwztHQJRwnp#list",
+      "kind": "folder",
+      "parent": "1x8tsV3-rUyz5pK9xJcUj0nq893qN0Gq1",
+      "at": 1793009606.3343673,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "01b9593033d5e4f285de014a4be6bf3554d4583c249e5ad551f1d59b16c43c60",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 67,
+      "url": "https://drive.google.com/embeddedfolderview?id=1UlE27VWnV096wDbQ9CoIvSRjCKgQkhvi#list",
+      "kind": "folder",
+      "parent": "1Ihbo064zBo1YxFy-kW5HmYConm_qtgsq",
+      "at": 1793009606.8424942,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "278ed70fb178d560041c7b361fe48ee68cf95a723bbb1ee6db0aec3ab26674fc",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 68,
+      "url": "https://drive.google.com/embeddedfolderview?id=1gwmamsZ96drWbDvwW0JrdMz8HFhPugtH#list",
+      "kind": "folder",
+      "parent": "1Ihbo064zBo1YxFy-kW5HmYConm_qtgsq",
+      "at": 1793009607.3039062,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "b83e53719bdc292083596bf1004673fc111668f407dc46b659fc12de18111c40",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 69,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ZyqZKGZxFPX6xRFG1OzBYa03PebXOMN5#list",
+      "kind": "folder",
+      "parent": "1AXcm8qbMadScrFdbf0xkpgHE_JA0MWGh",
+      "at": 1793009607.9780786,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "12203797487a21668c3710ee32c4c88fd4ad31a10f6773224616208ad9382ef2",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 70,
+      "url": "https://drive.google.com/embeddedfolderview?id=1qXCE8oZ_h0LI-pB_bxfq3n3fQ0d1vuQx#list",
+      "kind": "folder",
+      "parent": "1AXcm8qbMadScrFdbf0xkpgHE_JA0MWGh",
+      "at": 1793009608.4117813,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "8a290d34b3dfb8c5b048144b385c661706995b1c71280ea0a4eff006994a30e7",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 71,
+      "url": "https://drive.google.com/embeddedfolderview?id=1vblsmyNwQ1He_Pxgml16kCJs2dkSsiTl#list",
+      "kind": "folder",
+      "parent": "1uGWDsTKt3uTSXUubxB0pEArCU-E8IHHd",
+      "at": 1793009608.844705,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3542,
+      "sha256": "810458902127aacaccb8185007d68b09af2ad96ae94fb54de1a8f12623e4c737",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 72,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Eo21ATGUOKTH6Fo6B5jzBJ7D-LzZBBgU#list",
+      "kind": "folder",
+      "parent": "1uGWDsTKt3uTSXUubxB0pEArCU-E8IHHd",
+      "at": 1793009609.3272214,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "b0cfa63b1e03835b06b582a2c32a1094ba33a75ed82559a03245dd1e12df0437",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 73,
+      "url": "https://drive.google.com/embeddedfolderview?id=11W7tTRPfsn-xkuTeykp0RO1NB-PhFrE1#list",
+      "kind": "folder",
+      "parent": "1N9WTCOhgaqagNi2TnOpPqplkeELWePYu",
+      "at": 1793009609.75894,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "d029c745f99207c544dc946c612ee1e4671e86a342c555c6fc3c551544a04427",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 74,
+      "url": "https://drive.google.com/embeddedfolderview?id=1-Ry0irJkzYXKL1rkIY9b-Tpg7AqJc0hw#list",
+      "kind": "folder",
+      "parent": "1N9WTCOhgaqagNi2TnOpPqplkeELWePYu",
+      "at": 1793009610.3053539,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "5fd2f4d3e27bee21e06019af4d0012d3e39b5ca37aa2d7a11539cd25fe9e5767",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 75,
+      "url": "https://drive.google.com/embeddedfolderview?id=1BnlFSm7J3W_Ku2WGpiVeRQLeQGkEeqep#list",
+      "kind": "folder",
+      "parent": "1wtNvT_Lkgj_OElOjyJroRL89OOf5dfHk",
+      "at": 1793009610.8166265,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "475776ccf3c64563330a3dfca9d377cb35aad78b6cc91518b3ae5f861ea8b184",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 76,
+      "url": "https://drive.google.com/embeddedfolderview?id=1W4jv49nUm6sDRMckoNCNHhOIYShcENUw#list",
+      "kind": "folder",
+      "parent": "1wtNvT_Lkgj_OElOjyJroRL89OOf5dfHk",
+      "at": 1793009611.2624657,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "fac25b48deebba287414c2cf41294c7bbf4db17055cd8263b9e295fb0eedb22d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 77,
+      "url": "https://drive.google.com/embeddedfolderview?id=1UPaLPdPaRTq0dEe5pDcuEiuiRZIDIxhs#list",
+      "kind": "folder",
+      "parent": "1Mf04Jf_xcrBv7Sc2eaoX7YuyxTDXjLva",
+      "at": 1793009611.7597733,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "8a603cbddb8b288275241ddbfd5052586f5cfde2fbb2a2392e72e49ee11a9a57",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 78,
+      "url": "https://drive.google.com/embeddedfolderview?id=1slwK9CiD4c65lzRnjzvtgzhg1V3KxHYH#list",
+      "kind": "folder",
+      "parent": "1Mf04Jf_xcrBv7Sc2eaoX7YuyxTDXjLva",
+      "at": 1793009612.26048,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "91339b442d305cef073d1fc584213cd5080a370b4372bdcfb3c7f7d402d1f355",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 79,
+      "url": "https://drive.google.com/embeddedfolderview?id=1gwQf-eypBevh4HbHOSUd_qT57As1DUhq#list",
+      "kind": "folder",
+      "parent": "1puGiaJmekaeE9REYcJtFK9z3bnozvNlp",
+      "at": 1793009612.8712919,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "2a475444d394a7c0de4181b9fd047114f02dd0abfaa4a57e963313c133e2030b",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 80,
+      "url": "https://drive.google.com/embeddedfolderview?id=1aBx1JIfBz7LM8p7yW822TcKGv95bGqii#list",
+      "kind": "folder",
+      "parent": "1puGiaJmekaeE9REYcJtFK9z3bnozvNlp",
+      "at": 1793009613.3450334,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "189f21ab356fc8e3654cca9a008c97651821470a65cf3f6a459a765b20b38cf6",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 81,
+      "url": "https://drive.google.com/embeddedfolderview?id=1wYEIMbt1_pbDhH8iIMAZVWcCm8UxbcBO#list",
+      "kind": "folder",
+      "parent": "1EUeCDk-E0HTkxxxpgC7PczrO_AYCGxh2",
+      "at": 1793009613.7835908,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "2d605aa1d705dd99c1e0b8094f5a482fcc86c91b312c079e1425664adfafdd51",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 82,
+      "url": "https://drive.google.com/embeddedfolderview?id=1AFg-5Jy1xOJGPUiZFdEb8WFZas1vex1N#list",
+      "kind": "folder",
+      "parent": "1EUeCDk-E0HTkxxxpgC7PczrO_AYCGxh2",
+      "at": 1793009614.253646,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "949a018810c876bcd4370e977cb24a0a4c367738aa9e6f62bf0cff98e5f740ce",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 83,
+      "url": "https://drive.google.com/embeddedfolderview?id=1nORFlBMoo_ZIDLCLtUwRGwAnpyO-t7XK#list",
+      "kind": "folder",
+      "parent": "10u2xu2aPK49fcFpK289WR8rucDLqddEV",
+      "at": 1793009614.762641,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "e51c82d7196b50f9da5b2a5306539355a9b3b2d379518a97269f86b81da828b6",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 84,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ZyyVSWmYWZs_Izm6I53z8NSnX8Prxc7V#list",
+      "kind": "folder",
+      "parent": "10u2xu2aPK49fcFpK289WR8rucDLqddEV",
+      "at": 1793009615.2217674,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "43bd92cb921d6b5e00208efd145a80601c63cd49d3412505f6ec85e75c9b3617",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 85,
+      "url": "https://drive.google.com/embeddedfolderview?id=1byVAjKQDEWrmnq_PJSwnMcAxDvgDCZ0K#list",
+      "kind": "folder",
+      "parent": "1_i1BQ8GpvAPqXjz3tyPV5Z1w3Aou9K37",
+      "at": 1793009615.7450953,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "e60fcc30e8f8ea80bf7c0989d09b2fbfdc25d6cbfde817acbe2d8c2acfe9de2b",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 86,
+      "url": "https://drive.google.com/embeddedfolderview?id=1gizUQYJaO0ZwUog9DXLO0fI31tkWIr1d#list",
+      "kind": "folder",
+      "parent": "1_i1BQ8GpvAPqXjz3tyPV5Z1w3Aou9K37",
+      "at": 1793009616.2403722,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "b6ff92f196efc00c018f88d94a01ae02944ff0c48f1d9008d1e923706e9bf1f9",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 87,
+      "url": "https://drive.google.com/embeddedfolderview?id=1vZQ-VSHwIN0fFAk09__8tnu5SdIHwj9k#list",
+      "kind": "folder",
+      "parent": "1vzgtm2TnTcWbPlihB2b4URoFipzFJI_G",
+      "at": 1793009616.705437,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "65f2938f2c69139950c8c9a005061dd2f1e413ddf5ffedf9613067039fc7c3de",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 88,
+      "url": "https://drive.google.com/embeddedfolderview?id=1CM3jk4ra5KhPUqjfQuQY4Q7PV4eDCeGS#list",
+      "kind": "folder",
+      "parent": "1vzgtm2TnTcWbPlihB2b4URoFipzFJI_G",
+      "at": 1793009617.1726968,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "707aa02d89c765f6ef1cf22eac42243f20afd7784e6d0342cd5d945dd834942f",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 89,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ltQFWhSDEUgRaf4IfjFBBpWMV6FnfP6m#list",
+      "kind": "folder",
+      "parent": "1HRoIDAiitS6uqwvA5de4R-66Auq-D283",
+      "at": 1793009617.7286623,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "38a30b71eb8b47ea5dc0a0c2bd60d3830ea921f0e5d9fbf527d8b7615f9edde2",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 90,
+      "url": "https://drive.google.com/embeddedfolderview?id=1VBjwGoGnHZeL8qKRFsT-K7o4hLi4dva-#list",
+      "kind": "folder",
+      "parent": "1HRoIDAiitS6uqwvA5de4R-66Auq-D283",
+      "at": 1793009618.224781,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "5171e88988c09a2620e8a378a3328bdb9d03d103069161787223377cbbf03d68",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 91,
+      "url": "https://drive.google.com/embeddedfolderview?id=1gCyjBQh-vFSXCWOqYnkgarddUE2wTXFf#list",
+      "kind": "folder",
+      "parent": "16EcmbkglwOK8e09oPkQb6lwgYks2lIcV",
+      "at": 1793009618.7487488,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "dc9ab46af2e9ab5aef126ff0838da7c5bca8d89fe2b8fcda87706a9e900bf5c2",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 92,
+      "url": "https://drive.google.com/embeddedfolderview?id=12QGeA3sdnX5ImElKPHKDwGhjuI6OzexD#list",
+      "kind": "folder",
+      "parent": "16EcmbkglwOK8e09oPkQb6lwgYks2lIcV",
+      "at": 1793009619.2405927,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "33db41b9b5c858aa53988fde880587ecbaed5a3b9ef38cad7bfc31fe7c7263e1",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 93,
+      "url": "https://drive.google.com/embeddedfolderview?id=1CHZVWhZ5ChKxX_b-Kb1GT-bNo6m0k0QA#list",
+      "kind": "folder",
+      "parent": "1PHLVdWHU9RBhnHvJ-Ch7LI8ceszeN_xp",
+      "at": 1793009619.7436898,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "ab892af99a8038bbfe853c9962c43caf38aa7a5c8d0bd883d71ce38a39777177",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 94,
+      "url": "https://drive.google.com/embeddedfolderview?id=1nVvwvAjj_rMyONJZ58bC6Xn_q07lVNe_#list",
+      "kind": "folder",
+      "parent": "1PHLVdWHU9RBhnHvJ-Ch7LI8ceszeN_xp",
+      "at": 1793009620.248468,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "e6757f8e47bf14ab6f4f4c5e3870233532a2867dc7a8008bc16f7cee430ccc0d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 95,
+      "url": "https://drive.google.com/embeddedfolderview?id=1WxEUbRDEtCt3NELzkVNeniYCkiRUE2ot#list",
+      "kind": "folder",
+      "parent": "1wV__U0m9mKJeXoAQiW3C5QQas6396qTa",
+      "at": 1793009620.7807505,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "8bded88d1cbb65902049ae702d616ea1ece780fd5ce5b205f30faa2e413f3370",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 96,
+      "url": "https://drive.google.com/embeddedfolderview?id=14NChbqDVpu3g_1WtFqFrikUhoeC0Moh2#list",
+      "kind": "folder",
+      "parent": "1wV__U0m9mKJeXoAQiW3C5QQas6396qTa",
+      "at": 1793009621.3595352,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "88d2a9f471f44bf5eced92e330edd7984e7e6fdb46d5319d4dba17afe28710fd",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 97,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ZUAQtAfLyGjgdhrI3673_T8HcFymIlzD#list",
+      "kind": "folder",
+      "parent": "1DaYR7rN-4y5mVAKdFrude7dW2x-iSiMU",
+      "at": 1793009621.9192579,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "0c88d1653272a4c99f23f2a4497774956fc98547488941d11b78d0de0e6ddbad",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 98,
+      "url": "https://drive.google.com/embeddedfolderview?id=1MQ5aEcPzhSQkb9fLft7wGyRFo2qEJwWe#list",
+      "kind": "folder",
+      "parent": "1DaYR7rN-4y5mVAKdFrude7dW2x-iSiMU",
+      "at": 1793009622.350174,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "8b870e0124b27b16f4775c2f69514abceb8639795c9384442a5a15ec85dfbf3d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 99,
+      "url": "https://drive.google.com/embeddedfolderview?id=1RYP03_RGTUq_tcNU1F4mkLBB73xxcc49#list",
+      "kind": "folder",
+      "parent": "1aIAF5K7GFSmqqe_h1pmgmNGPIOI41qgo",
+      "at": 1793009622.9394188,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "01c8f952d74ef671812ce9b9aa120d07c812e7c612c9b6bcead3ace8ff23f67a",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 100,
+      "url": "https://drive.google.com/embeddedfolderview?id=1pDOXvY1bWltoLxkcQ-HimlptKvMXFLay#list",
+      "kind": "folder",
+      "parent": "1aIAF5K7GFSmqqe_h1pmgmNGPIOI41qgo",
+      "at": 1793009623.4228134,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "f718dadf0d5c291d97e945d248e0fa6c21b8dde119da2835b873585141ab1938",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 101,
+      "url": "https://drive.google.com/embeddedfolderview?id=1egquqlqdVet7sy_ecVA858lsEk_lvXaB#list",
+      "kind": "folder",
+      "parent": "12GA2bHGClOFftLQfg8LtEysfrcOHzzqe",
+      "at": 1793009623.9362833,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "8e3820e4e42f6d7ca011aca49c5e46004d03183fd2eaa3f7316e87a0efaf10b0",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 102,
+      "url": "https://drive.google.com/embeddedfolderview?id=1pbNh089dRo0eXEbKg9_S7RdN8ODwIHl2#list",
+      "kind": "folder",
+      "parent": "12GA2bHGClOFftLQfg8LtEysfrcOHzzqe",
+      "at": 1793009624.5028944,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "1b39498911a6995212793b03f6ff23846e0a81b0eceddb4274ff93b1370ea69c",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 103,
+      "url": "https://drive.google.com/embeddedfolderview?id=1tN4jsy7xcJPF23FD_xh0-vkBCvRycPIz#list",
+      "kind": "folder",
+      "parent": "1WvflK9VoPUsweP40f1wOxlOAy4UjwMZL",
+      "at": 1793009624.942894,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "69ad14da6d36afd0f001824694c24a0835f7ff5c69d298c374fa9c2327858200",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 104,
+      "url": "https://drive.google.com/embeddedfolderview?id=1EjRtH4jgDLM9JJI_wb_tZGbGMtQIdzL4#list",
+      "kind": "folder",
+      "parent": "1WvflK9VoPUsweP40f1wOxlOAy4UjwMZL",
+      "at": 1793009625.789659,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 3540,
+      "sha256": "95da3c6fe795967b9405fdb2d0b5ad0ebf427c3defdbea43671216d2494e4c6f",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 105,
+      "url": "https://drive.google.com/embeddedfolderview?id=11Xf2_m3p8cOdg-WKviyvCmy-UNAfeFAc#list",
+      "kind": "folder",
+      "parent": "1LkgHP_9vQABrxSQ6ElJ070vpgS-28Q0M",
+      "at": 1793009626.2333586,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "406c4563a5e24e351d4e16b095162ca554aacc4e16c0531e563acaeb0c3a3bce",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 106,
+      "url": "https://drive.google.com/embeddedfolderview?id=18UP3O5O-U3GjT5iV1SbOHcfnFVdTnT-2#list",
+      "kind": "folder",
+      "parent": "1LkgHP_9vQABrxSQ6ElJ070vpgS-28Q0M",
+      "at": 1793009626.734524,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "d2072a955602e1a6c15f5c5ec6e4eea29d6dddbf2d5c88a85692f59a9a9b8530",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 107,
+      "url": "https://drive.google.com/embeddedfolderview?id=1hjfNnxx5RnsEpyMoAJnLKDNENtfNx0Mj#list",
+      "kind": "folder",
+      "parent": "1S5ReuBjob-xj0JDdiLAgXhudxu0mcJpo",
+      "at": 1793009627.2699292,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "62655266dd38625c9bc0b574726c1de71f1717e909b5a37d1bc35610955522a2",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 108,
+      "url": "https://drive.google.com/embeddedfolderview?id=16zZjuYv6OOSixyzNQ5lnnKhF73AmYtts#list",
+      "kind": "folder",
+      "parent": "1S5ReuBjob-xj0JDdiLAgXhudxu0mcJpo",
+      "at": 1793009627.8004708,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2826,
+      "sha256": "4c74617fe065642444d8d090fd0ffa967a0e6ec2253208515aff08a4feefa714",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 109,
+      "url": "https://drive.google.com/embeddedfolderview?id=1OE0yUzzB2mD7ghOop535x13yI7Q_6EwG#list",
+      "kind": "folder",
+      "parent": "1v5lZvp1mkrgcQWhmzKDOUsLrJwf3OwXo",
+      "at": 1793009628.3085766,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1276263,
+      "sha256": "9d5cdc95594f3b24caea0d1d534720e11140b128a6ede84ca1da2ffa74dcaa33",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 110,
+      "url": "https://drive.google.com/embeddedfolderview?id=1UHqMDA3F5enJbST7oJbdnt-8hdMUC8Gd#list",
+      "kind": "folder",
+      "parent": "1v5lZvp1mkrgcQWhmzKDOUsLrJwf3OwXo",
+      "at": 1793009636.0499885,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "0319b73e2f6d1b9850511fa3e9c4ee63925bcf07a564f3daa6fa523d41f0910f",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 111,
+      "url": "https://drive.google.com/embeddedfolderview?id=1pWFp4vPaPWda3TCqH5CtcaTdoDh6KjWx#list",
+      "kind": "folder",
+      "parent": "1Qnu10xCzpmXmfp7QnAdVod_wVgAe4LBh",
+      "at": 1793009636.4982533,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1276156,
+      "sha256": "24246eea9c0d1e59d8921936f3714e4f0861c870483bb90d95b72fff107947c6",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 112,
+      "url": "https://drive.google.com/embeddedfolderview?id=1-Z6pT65DOF2iMV5pnNQY8x5D7fDkItJ8#list",
+      "kind": "folder",
+      "parent": "1Qnu10xCzpmXmfp7QnAdVod_wVgAe4LBh",
+      "at": 1793009640.4768527,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "0ab163a6303a64b65c3a3bc2dec6037d95fbb91740ce81f8ba0ff953e06bdbd7",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 113,
+      "url": "https://drive.google.com/embeddedfolderview?id=1pHbMaBnoyl58CoOtp0-xkdDdEWfthbFd#list",
+      "kind": "folder",
+      "parent": "1Wxkes_7nW9yBeriZUfiUbvXwUHbFppt-",
+      "at": 1793009641.0237868,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 135601,
+      "sha256": "23c2db9808ce22e70dc5850b1b2558a04a5bc9de877e460d007588b780ec7eb8",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 114,
+      "url": "https://drive.google.com/embeddedfolderview?id=1WtnvzyfBJ1UdKJ67Fy7zfpsxtJZxJHiY#list",
+      "kind": "folder",
+      "parent": "1Wxkes_7nW9yBeriZUfiUbvXwUHbFppt-",
+      "at": 1793009641.810246,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "9ba7b32ae754fb9fe34456cf9f49738a603f8eaab48d6bea9f5124cc39bbe503",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 115,
+      "url": "https://drive.google.com/embeddedfolderview?id=1SnEVwLnT1p3j-hZ17v2rgUFZa1mrrVtq#list",
+      "kind": "folder",
+      "parent": "1jd0eAMDdxX2nVrPVtB5VxtshAyFyzFkp",
+      "at": 1793009642.333146,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 135669,
+      "sha256": "0da7f5bf3989e70457b4e79c0505e81ececd608bdb99f68a4fe9e853c25307d0",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 116,
+      "url": "https://drive.google.com/embeddedfolderview?id=1OlsU6Gx7lVLxeSNzTrI0hcAN-Ce0pu7b#list",
+      "kind": "folder",
+      "parent": "1jd0eAMDdxX2nVrPVtB5VxtshAyFyzFkp",
+      "at": 1793009643.2517629,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "139a229d97a2ef0e9fe94802ed76c4ef9e28323cf6149b3f1e69662387053ac7",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 117,
+      "url": "https://drive.google.com/embeddedfolderview?id=1w07Foau6yCpqYAFmjEQNbXTlkOfQqVpj#list",
+      "kind": "folder",
+      "parent": "1pB35-NQDdSx2efMFi7ojB_bNqDKxO5z-",
+      "at": 1793009643.7548876,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 414728,
+      "sha256": "28e4c1cbfa18b40403114ff8481ca81cb4e811d45ae17e9fda39e36e4b62626b",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 118,
+      "url": "https://drive.google.com/embeddedfolderview?id=1hLzRYIhIbKCcciz4FZo2bzexBdnlBUc1#list",
+      "kind": "folder",
+      "parent": "1pB35-NQDdSx2efMFi7ojB_bNqDKxO5z-",
+      "at": 1793009645.2592585,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "59b7b7495c207c15c17706a1c27356edaea3e9c42b3896ac248d86d9985f8ac8",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 119,
+      "url": "https://drive.google.com/embeddedfolderview?id=1xI-__Omiz2LlMTTw9s4x8QWtuxa9uS0w#list",
+      "kind": "folder",
+      "parent": "144pImhMVst0SFgcrvMNaQ5AXOOC-e29F",
+      "at": 1793009645.689011,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 414744,
+      "sha256": "fe8a8f770e3662cd42f1fa5f823d2bb62b50e6e840dd56683327921e366ffc93",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 120,
+      "url": "https://drive.google.com/embeddedfolderview?id=1iIuY2zDS868U2Ox-qbEcZ6H4-N669CY7#list",
+      "kind": "folder",
+      "parent": "144pImhMVst0SFgcrvMNaQ5AXOOC-e29F",
+      "at": 1793009647.2623382,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "c2aa0292412bcd2d938943d48c6d65df5d7d1dc0b04bda714266103c767fdb87",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 121,
+      "url": "https://drive.google.com/embeddedfolderview?id=1h310wZDkmrNnFhN9HnypMnwgxyeZwzP2#list",
+      "kind": "folder",
+      "parent": "1ktf5C6W_4aHCQt_AmwwGyBDYL6w3eVK4",
+      "at": 1793009647.781048,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2019873,
+      "sha256": "534acdd7d9f822954aac47a1f73d03f5a570b606b398fd66e41effd22d456e2c",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 122,
+      "url": "https://drive.google.com/embeddedfolderview?id=1qHqWjoVU39QRc185G3ZsTmb53Vojh9iM#list",
+      "kind": "folder",
+      "parent": "1ktf5C6W_4aHCQt_AmwwGyBDYL6w3eVK4",
+      "at": 1793009654.5139072,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "b8b7d2397edd29c1974af334a35b5cbe6e2cd774f326435f7ec3cf69ff19e286",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 123,
+      "url": "https://drive.google.com/embeddedfolderview?id=1uYg0Ck5TA6kHuNbvxH_V_0IdmLRzM8GM#list",
+      "kind": "folder",
+      "parent": "16_Rjap0nFpKukz2wPM0RXkKmG6gXAaxn",
+      "at": 1793009655.0206418,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 2019712,
+      "sha256": "16dbd5f6608ada87bb1dc35d0980c54d60535419b739f1c65215b1649ddf4c89",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 124,
+      "url": "https://drive.google.com/embeddedfolderview?id=1eZJH29GI9PWYlFQfjbgvVICT3BYVgXuk#list",
+      "kind": "folder",
+      "parent": "16_Rjap0nFpKukz2wPM0RXkKmG6gXAaxn",
+      "at": 1793009661.861967,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "2e17b7bd3eb6a26bed8e34ffcc6847a05f868f35b6e32de73a1e3fba115bd380",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 125,
+      "url": "https://drive.google.com/embeddedfolderview?id=15b1lwUfDBtzQUAyCijPXLDgasG5DiIOR#list",
+      "kind": "folder",
+      "parent": "1px1WlGr2Xfvr0rKwCyh4Wj7spTnE5rgc",
+      "at": 1793009662.5030696,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 108673,
+      "sha256": "f4554e18e5d77f9d330338ff6c40a358fa4edb27a78cc6ebf09d973438691dd2",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 126,
+      "url": "https://drive.google.com/embeddedfolderview?id=1EA9mxu70hIl2iAgcajS1fyG0N0e0re6c#list",
+      "kind": "folder",
+      "parent": "1px1WlGr2Xfvr0rKwCyh4Wj7spTnE5rgc",
+      "at": 1793009663.2905428,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "1da148392b88040fda03c7f397feeb22f9e4aa8c52eadf2a61736e8d3ca4afc4",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 127,
+      "url": "https://drive.google.com/embeddedfolderview?id=1__xxDRdgk_yFghc6EH89V05lk4cnSvQZ#list",
+      "kind": "folder",
+      "parent": "171h-LgHvLM1uJdrAXc_Ztw6J9IkWFq6w",
+      "at": 1793009663.837374,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 108538,
+      "sha256": "ab34433c07c7950ae7f775f6fc117273f9c48253525e9a376e3b772ebc8b0d33",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 128,
+      "url": "https://drive.google.com/embeddedfolderview?id=16dSJp4jKRNo9Ae4iwELFd8EnAsLmBumP#list",
+      "kind": "folder",
+      "parent": "171h-LgHvLM1uJdrAXc_Ztw6J9IkWFq6w",
+      "at": 1793009664.7082977,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "d6dcae4dfde7ce58b3f7fd07421820eeed2f025f2fee160458c626815683dcfc",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 129,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ZlOOjp5YivD8GACyDiGtkRMPiBp2AsNB#list",
+      "kind": "folder",
+      "parent": "1IkU-YL0p5zHbceBlSuWAhnuHhsPgoAtN",
+      "at": 1793009665.2698145,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 580060,
+      "sha256": "36890860969d394af0ff47c613f20bcc92ee6b9362c974663c421fd7b7360222",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 130,
+      "url": "https://drive.google.com/embeddedfolderview?id=1sZUNyAN1w7uQoWlnoK4_aXBcMsqVVpOX#list",
+      "kind": "folder",
+      "parent": "1IkU-YL0p5zHbceBlSuWAhnuHhsPgoAtN",
+      "at": 1793009667.1633618,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "f195a4b02d836fad59707f17b6d9c8300f84b347b5f87be4d36bf467607247f9",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 131,
+      "url": "https://drive.google.com/embeddedfolderview?id=1YRxNNkKGxqB1H-4xUlfyOSnBK57iYbK8#list",
+      "kind": "folder",
+      "parent": "1nXANI9OfWzpYNkGgql83QlWSiiLIUuaj",
+      "at": 1793009667.756046,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 579944,
+      "sha256": "d7eb47e5e51b273e1c519fe705f6176c7a9d2aeda6b84c4a9d911b889a0912cf",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 132,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Cw1ohRmi7Pq4ZUEl5sL4Xxu2tZIIRi4Y#list",
+      "kind": "folder",
+      "parent": "1nXANI9OfWzpYNkGgql83QlWSiiLIUuaj",
+      "at": 1793009669.6167622,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "f51da7914f6c8e901465c29c6526cf726b1aa58f49de685948523b1728928d5e",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 133,
+      "url": "https://drive.google.com/embeddedfolderview?id=1OsXfEwPAcwdfhRu9BIXnH79_PGld-xgv#list",
+      "kind": "folder",
+      "parent": "1FqibA8T9JduA96XLPShlCqfXGxom92A7",
+      "at": 1793009670.194572,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1683290,
+      "sha256": "95cfe793654fa6d18afe21c65a9cb865425adcbc054ae02357e8c977ce842781",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 134,
+      "url": "https://drive.google.com/embeddedfolderview?id=15d6Dh5y38VCmAz1MJ-qTCt8e4lYKh4f4#list",
+      "kind": "folder",
+      "parent": "1FqibA8T9JduA96XLPShlCqfXGxom92A7",
+      "at": 1793009676.7400632,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "11245825e5fe4728779c0c12cc019acb96e20a2fb109e5fc21814e9cf82351a3",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 135,
+      "url": "https://drive.google.com/embeddedfolderview?id=1uV9Ft4ICSG-IbIrDgtLO3uJDs_RTOZ-Y#list",
+      "kind": "folder",
+      "parent": "1ZH_uabJuNq5EllquYkoiiTV8-7cktDSo",
+      "at": 1793009677.359437,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1683361,
+      "sha256": "75403ea15a1c659eb6e23479a523007dd816edb4a69914bed9c702612d66518f",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 136,
+      "url": "https://drive.google.com/embeddedfolderview?id=1PDI3IjVWH8_Cc4hujtY7-X-P8u9s8-uT#list",
+      "kind": "folder",
+      "parent": "1ZH_uabJuNq5EllquYkoiiTV8-7cktDSo",
+      "at": 1793009684.463027,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "06ad59d59c76d3f2a0cbbf8cd3a1b42fe7fa93f0dcd6a81e244c7b1bb9de4222",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 137,
+      "url": "https://drive.google.com/embeddedfolderview?id=13kjCxhaCr1BilnmaVfOW4jUNq7TUxWIt#list",
+      "kind": "folder",
+      "parent": "1x519H87fkGiRMeXbENZ8e-PqAwAj_t3v",
+      "at": 1793009685.1407506,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 45153,
+      "sha256": "9f6206948d057d439e55fe16b877886c9da86aaee40fed387e4b3040f7647cff",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 138,
+      "url": "https://drive.google.com/embeddedfolderview?id=1YC94rmEFOkUKCNdaqsialDThTW1wFBUb#list",
+      "kind": "folder",
+      "parent": "1x519H87fkGiRMeXbENZ8e-PqAwAj_t3v",
+      "at": 1793009685.9492428,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "16d8c9bff804e2a8c9fcaf49d82497f7936af037caa8eff35de75e06b819ae69",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 139,
+      "url": "https://drive.google.com/embeddedfolderview?id=1c1CM24-1zfjxRto1dwt-VEP4PC1a9pP1#list",
+      "kind": "folder",
+      "parent": "1wmmFzpVgNUZfW-ovad7ZyI__dLoVcLDq",
+      "at": 1793009686.5824227,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 45153,
+      "sha256": "c4124213788516cc04681c5f2498a99fba83bbb7a8e899967177c7b932ed1b40",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 140,
+      "url": "https://drive.google.com/embeddedfolderview?id=12tvP_-8PHnYEnaLzwStVVb6oeLu6DWQm#list",
+      "kind": "folder",
+      "parent": "1wmmFzpVgNUZfW-ovad7ZyI__dLoVcLDq",
+      "at": 1793009687.5043736,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "a99978da4b562a2bd08e3866148aeccc7a06ccc362aec307178db23a7ea039a5",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 141,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Yhdphfq3OrS76a8xmClPpGMW72NBHLyA#list",
+      "kind": "folder",
+      "parent": "1ai0spFcTvenheilA7lBRlsKa7oXhUk-w",
+      "at": 1793009688.2736912,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 261915,
+      "sha256": "4ec3e828f016d0c804d3ad5da425771c90451dbc2eaac57013323cd68e8dd1c5",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 142,
+      "url": "https://drive.google.com/embeddedfolderview?id=1QSBjvjhKUgTDmVW6o5sc8oYW_eX7Xedl#list",
+      "kind": "folder",
+      "parent": "1ai0spFcTvenheilA7lBRlsKa7oXhUk-w",
+      "at": 1793009689.6800334,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "4a5a1dfc6f5021eae9891f80524e7fd2fb5b2edc43e9065750fa632366bea085",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 143,
+      "url": "https://drive.google.com/embeddedfolderview?id=1dM7ztopuQ6Q9mJ3istgU-B6UCpXbzBSv#list",
+      "kind": "folder",
+      "parent": "1y2MAoi8lMX0hc-gGxJQbbYZrjHKPxURL",
+      "at": 1793009690.3368773,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 261865,
+      "sha256": "3ce229711ff33ab726cda52b521878bf244e443ed7c84ebc87ff40d2f8cde745",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 144,
+      "url": "https://drive.google.com/embeddedfolderview?id=1f2zs2ui-cf0p3Am8F9FwAiNaRn1Ah5fK#list",
+      "kind": "folder",
+      "parent": "1y2MAoi8lMX0hc-gGxJQbbYZrjHKPxURL",
+      "at": 1793009691.7413642,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "c1aabdd0f2ebaab6f8545261fdd63f655608bbb5ffbfd7c80c936469ac90c88d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 145,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ATKufEmwnwdg-YNkXYa11dDyc9I1Ol2C#list",
+      "kind": "folder",
+      "parent": "15T5w70KVZ9A0GlYc09Tql9_Zq-iIa2CV",
+      "at": 1793009692.4712996,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1197590,
+      "sha256": "3eb7c7f15724af7cfba442b8196e7b170d716f369225ee5fa9cb0b8c4e64617c",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 146,
+      "url": "https://drive.google.com/embeddedfolderview?id=1OQ_dsgARiDi6463QDVx_WTPWCH-cnVGf#list",
+      "kind": "folder",
+      "parent": "15T5w70KVZ9A0GlYc09Tql9_Zq-iIa2CV",
+      "at": 1793009697.5046265,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "9bfaf4da69610d544eeaacaed75d8214e84495a840c08772a3d9538eb4d6323d",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 147,
+      "url": "https://drive.google.com/embeddedfolderview?id=1ezU7BUEaQmQzgD8Q3vfwcPXzvyZ1dSYy#list",
+      "kind": "folder",
+      "parent": "1Zc-W5mU_3lY9eRPMSAvM03Qf6tsoxnIf",
+      "at": 1793009698.2107694,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1196805,
+      "sha256": "e7aa3e878bc8e327d322a40517f370474332f437960d5c7c7077a909d8361ccb",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 148,
+      "url": "https://drive.google.com/embeddedfolderview?id=1P1BuYsPdNB51U4LuWNRiKFXqUx1TUhWl#list",
+      "kind": "folder",
+      "parent": "1Zc-W5mU_3lY9eRPMSAvM03Qf6tsoxnIf",
+      "at": 1793009701.6694572,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "4f64da6f8045cd36ec6575eb954f20c2948b21ee09402e72219dce89d9812be8",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 149,
+      "url": "https://drive.google.com/embeddedfolderview?id=12ZsgFdaeosZHVfbH5Hg-Fj-oddhQGYgr#list",
+      "kind": "folder",
+      "parent": "1YGY-OGNNb6u2LPBotVXRlQdqj0r9gSPZ",
+      "at": 1793009702.539288,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 29273,
+      "sha256": "54425569dc261cf66e15a7f5230cb55b219f51c7ca5433e21f0ce5f566dc87ab",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 150,
+      "url": "https://drive.google.com/embeddedfolderview?id=12yREr9tI3asnkcC0T6iRYvZFupzl994w#list",
+      "kind": "folder",
+      "parent": "1YGY-OGNNb6u2LPBotVXRlQdqj0r9gSPZ",
+      "at": 1793009703.4255967,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "26e963dbc7f5f6bc6778687ba1a3d8d7e985761244aac9483ea533835687aa06",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 151,
+      "url": "https://drive.google.com/embeddedfolderview?id=1PbYZ_W3I_tNW42QdQzn5M6sKwUwIhML7#list",
+      "kind": "folder",
+      "parent": "1lcuBH0ScSgq6yka3eF-zGrp4nCEw1ksg",
+      "at": 1793009704.1776555,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 29273,
+      "sha256": "60a9daffa18849f0bcd269b9fe645567ce8637aa0b9d0c691c9d5cd536febfe3",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 152,
+      "url": "https://drive.google.com/embeddedfolderview?id=1_1q7V7zPAlqgTGRh7tADe2iUTNnXtkbW#list",
+      "kind": "folder",
+      "parent": "1lcuBH0ScSgq6yka3eF-zGrp4nCEw1ksg",
+      "at": 1793009705.189373,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "febf744ce7a9effbd19cb89c422ad9928efb33fc79256584c4cd41113b8b1fa4",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 153,
+      "url": "https://drive.google.com/embeddedfolderview?id=1vp-2ILRprEttMVhtoofDwNGq-NzbLcSB#list",
+      "kind": "folder",
+      "parent": "1L608gyB9_P7wYZEbwhpce4HsLpRr_sGp",
+      "at": 1793009705.9545355,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 86334,
+      "sha256": "568a98e0e6eda300812f0106abb3dfad6768225a11fedcaa67275763a970ebf9",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 154,
+      "url": "https://drive.google.com/embeddedfolderview?id=1Idxs9CBWP4KjvxqKWWRC6CX0-O4h44tR#list",
+      "kind": "folder",
+      "parent": "1L608gyB9_P7wYZEbwhpce4HsLpRr_sGp",
+      "at": 1793009706.8819644,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "0855ce37d7d19fb7e97694bb7ff7a0378db545aae23bf7d644c86ba3c7e17965",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 155,
+      "url": "https://drive.google.com/embeddedfolderview?id=1GiXyGAOEjnWqlpnzJogfHk4ImjGyl8ru#list",
+      "kind": "folder",
+      "parent": "1a2S2E-BcZKCLRyQ_-CtNlVwztHQJRwnp",
+      "at": 1793009707.6363404,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 86441,
+      "sha256": "ca11d65db8ba186edf07c13b321986786b82026a57b4961f746e27f0bd3494b2",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 156,
+      "url": "https://drive.google.com/embeddedfolderview?id=1PKOoxXF-7D7xZk38Hq6KJHP1LmSEVcsF#list",
+      "kind": "folder",
+      "parent": "1a2S2E-BcZKCLRyQ_-CtNlVwztHQJRwnp",
+      "at": 1793009708.6106493,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "27823a53701d1642baa2ff1c629e4e22c4626ed81d4b44282e5fcd84125bdc7e",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 157,
+      "url": "https://drive.google.com/embeddedfolderview?id=1DAm4imLF3IbvqX6y16hPHjEsBMX4cQkX#list",
+      "kind": "folder",
+      "parent": "1UlE27VWnV096wDbQ9CoIvSRjCKgQkhvi",
+      "at": 1793009709.4215307,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 483004,
+      "sha256": "e2a270489617523ae18f875d1ae0d76f4a916de3acdc37b1c17494311b34e62e",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 158,
+      "url": "https://drive.google.com/embeddedfolderview?id=1pirwYBw7QfeBqDugJTMaSjCBtPVKkZil#list",
+      "kind": "folder",
+      "parent": "1UlE27VWnV096wDbQ9CoIvSRjCKgQkhvi",
+      "at": 1793009711.7899106,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 1275,
+      "sha256": "464f099470a61b4ca36ccf0b5ef24dc8f59f620128dd59f722bc763f31b3ee14",
+      "complete": true,
+      "error": null
+    },
+    {
+      "index": 159,
+      "url": "https://drive.google.com/embeddedfolderview?id=1sFrrwaWqLogqwlkumFsK0N20mJ1dsr8E#list",
+      "kind": "folder",
+      "parent": "1gwmamsZ96drWbDvwW0JrdMz8HFhPugtH",
+      "at": 1793009712.581245,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 483123,
+      "sha256": "70b9f04b3a7f6806924945922a21c67f429408b1c13d031c7dd243b6a75eab0b",
+      "complete": true,
+      "error": null
+    }
+  ],
+  "coverage": {
+    "observed_root_entries": 73,
+    "observed_root_folders": 36,
+    "author_difficulty_folders": 33,
+    "declared_background_names": 11,
+    "queried_images_labels_containers": 66,
+    "advertised_leaf_folders": 132,
+    "queried_leaf_folders": 51,
+    "unqueried_leaf_folders": 81,
+    "fully_queried_variant_leaf_sets": 12,
+    "partially_queried_variant_leaf_sets": 1,
+    "unqueried_variant_leaf_sets": 20,
+    "image_train_lists_queried": 13,
+    "label_train_lists_queried": 13,
+    "val_lists_queried": 25,
+    "val_entries_observed": 0,
+    "image_names_observed": 10457,
+    "label_names_observed": 10458,
+    "paired_stems_observed": 10457,
+    "whole_release_census_verified": false,
+    "whole_release_image_count": null,
+    "whole_release_label_count": null
+  },
+  "excluded_root_folders": [
+    "coco_train_easy",
+    "coco_val_easy",
+    "old"
+  ],
+  "excluded_data": [
+    "COCO media and associated metadata configs",
+    "old subtree",
+    ".DS_Store content",
+    "sorting_progress.csv content"
+  ],
+  "excluded_subtree_requests": 0,
+  "groups": [
+    {
+      "name": "cab_1_easy",
+      "background": "cab_1",
+      "difficulty": "easy",
+      "id": "1YRzsCmC0ssS2rapR7Y-OqoBUfBtQEZXy",
+      "root_response_index": 10,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 109,
+          "entry_count": 1606,
+          "data_count": 1606,
+          "other_names": [],
+          "sorted_names_sha256": "d65ea4513e4551d55080c43f19e19849475328f7d0d601e6a6761602bf9d3f4b",
+          "first_names": [
+            "cab_1_00000.jpg",
+            "cab_1_00001.jpg",
+            "cab_1_00002.jpg"
+          ],
+          "last_names": [
+            "cab_1_04046.jpg",
+            "cab_1_04048.jpg",
+            "cab_1_04049.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 110,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 111,
+          "entry_count": 1606,
+          "data_count": 1606,
+          "other_names": [],
+          "sorted_names_sha256": "7203471144b53da3063522ff12d5efa2dd3796d5383cef6094c6b27bdadf76e8",
+          "first_names": [
+            "cab_1_00000.txt",
+            "cab_1_00001.txt",
+            "cab_1_00002.txt"
+          ],
+          "last_names": [
+            "cab_1_04046.txt",
+            "cab_1_04048.txt",
+            "cab_1_04049.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 112,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 1606,
+        "label_count": 1606,
+        "paired_stems": 1606,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "cab_1_hard",
+      "background": "cab_1",
+      "difficulty": "hard",
+      "id": "1ruSOhI9EpvKoxjhjSUdnCLr3o745vrSs",
+      "root_response_index": 11,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 113,
+          "entry_count": 169,
+          "data_count": 169,
+          "other_names": [],
+          "sorted_names_sha256": "aaa899c3412614ca109b87bb7ae6e27691a1424cc672b0acc2c4eacfa8e0e96b",
+          "first_names": [
+            "cab_1_00119.jpg",
+            "cab_1_00120.jpg",
+            "cab_1_00675.jpg"
+          ],
+          "last_names": [
+            "cab_1_03902.jpg",
+            "cab_1_04044.jpg",
+            "cab_1_04047.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 114,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 115,
+          "entry_count": 169,
+          "data_count": 169,
+          "other_names": [],
+          "sorted_names_sha256": "e8664a9c33bca86423a738ff7b987203d3f80dca226f6509c74dfa82d2efade3",
+          "first_names": [
+            "cab_1_00119.txt",
+            "cab_1_00120.txt",
+            "cab_1_00675.txt"
+          ],
+          "last_names": [
+            "cab_1_03902.txt",
+            "cab_1_04044.txt",
+            "cab_1_04047.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 116,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 169,
+        "label_count": 169,
+        "paired_stems": 169,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "cab_1_medium",
+      "background": "cab_1",
+      "difficulty": "medium",
+      "id": "16Mdc4sMvoSJRxxVKo0oPFJS-68gf0Qow",
+      "root_response_index": 12,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 117,
+          "entry_count": 521,
+          "data_count": 521,
+          "other_names": [],
+          "sorted_names_sha256": "b6639ed36edd5f7a063560a77a9b7de12fb8abd09f5240b76549e48355236d0e",
+          "first_names": [
+            "cab_1_00003.jpg",
+            "cab_1_00118.jpg",
+            "cab_1_00121.jpg"
+          ],
+          "last_names": [
+            "cab_1_04043.jpg",
+            "cab_1_04050.jpg",
+            "cab_1_04051.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 118,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 119,
+          "entry_count": 521,
+          "data_count": 521,
+          "other_names": [],
+          "sorted_names_sha256": "16f3323ec8823ba53946e705f19bccedc37f5f76797522a64075077596bd6928",
+          "first_names": [
+            "cab_1_00003.txt",
+            "cab_1_00118.txt",
+            "cab_1_00121.txt"
+          ],
+          "last_names": [
+            "cab_1_04043.txt",
+            "cab_1_04050.txt",
+            "cab_1_04051.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 120,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 521,
+        "label_count": 521,
+        "paired_stems": 521,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "cab_2_easy",
+      "background": "cab_2",
+      "difficulty": "easy",
+      "id": "1F6aln9kC_dbZ5k0Bsk3aMivF2vYuxDZh",
+      "root_response_index": 13,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 121,
+          "entry_count": 2543,
+          "data_count": 2543,
+          "other_names": [],
+          "sorted_names_sha256": "e43b40631d8549409cf95ce2fe26b9263772f0f99ffe0473e76666ae0f1daf2a",
+          "first_names": [
+            "cab_2_00000.jpg",
+            "cab_2_00001.jpg",
+            "cab_2_00002.jpg"
+          ],
+          "last_names": [
+            "cab_2_04869.jpg",
+            "cab_2_04870.jpg",
+            "cab_2_04871.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 122,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 123,
+          "entry_count": 2543,
+          "data_count": 2543,
+          "other_names": [],
+          "sorted_names_sha256": "5455a415236a59dd1a472f46aad1437e5cd0483b82f844e61829697d659a6bb8",
+          "first_names": [
+            "cab_2_00000.txt",
+            "cab_2_00001.txt",
+            "cab_2_00002.txt"
+          ],
+          "last_names": [
+            "cab_2_04869.txt",
+            "cab_2_04870.txt",
+            "cab_2_04871.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 124,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 2543,
+        "label_count": 2543,
+        "paired_stems": 2543,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "cab_2_hard",
+      "background": "cab_2",
+      "difficulty": "hard",
+      "id": "1IC8GvZ0NHsow8w4vG3QJ13Ubx9hvKJrs",
+      "root_response_index": 14,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 125,
+          "entry_count": 135,
+          "data_count": 135,
+          "other_names": [],
+          "sorted_names_sha256": "eb656365a4a13a57eef3fd74bbff108bff596a9533d17179d431b630c61fca41",
+          "first_names": [
+            "cab_2_00022.jpg",
+            "cab_2_00027.jpg",
+            "cab_2_00028.jpg"
+          ],
+          "last_names": [
+            "cab_2_04823.jpg",
+            "cab_2_04824.jpg",
+            "cab_2_04826.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 126,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 127,
+          "entry_count": 135,
+          "data_count": 135,
+          "other_names": [],
+          "sorted_names_sha256": "e97ba5997e6ba287309e84a41453a652b7a0aef473fdad788c3dbc05eacf485c",
+          "first_names": [
+            "cab_2_00022.txt",
+            "cab_2_00027.txt",
+            "cab_2_00028.txt"
+          ],
+          "last_names": [
+            "cab_2_04823.txt",
+            "cab_2_04824.txt",
+            "cab_2_04826.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 128,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 135,
+        "label_count": 135,
+        "paired_stems": 135,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "cab_2_medium",
+      "background": "cab_2",
+      "difficulty": "medium",
+      "id": "1kO-8ffPf0uFLzmTsOWC1fbFPNUyQLCcZ",
+      "root_response_index": 15,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 129,
+          "entry_count": 729,
+          "data_count": 728,
+          "other_names": [
+            ".DS_Store"
+          ],
+          "sorted_names_sha256": "8c5dc5f3196cf242fbc49360d2d3afd83c60804946dbd67cdcbc4475cf8347a8",
+          "first_names": [
+            "cab_2_00019.jpg",
+            "cab_2_00020.jpg",
+            "cab_2_00021.jpg"
+          ],
+          "last_names": [
+            "cab_2_04865.jpg",
+            "cab_2_04866.jpg",
+            "cab_2_04867.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 130,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 131,
+          "entry_count": 729,
+          "data_count": 729,
+          "other_names": [],
+          "sorted_names_sha256": "45925a4f9e291f44e390b6efe32fbeb745df0f3dbf3a3f2d76f8e7db00e32d76",
+          "first_names": [
+            "cab_2_00019.txt",
+            "cab_2_00020.txt",
+            "cab_2_00021.txt"
+          ],
+          "last_names": [
+            "cab_2_04865.txt",
+            "cab_2_04866.txt",
+            "cab_2_04867.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 132,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 728,
+        "label_count": 729,
+        "paired_stems": 728,
+        "images_without_label_name": [],
+        "labels_without_image_name": [
+          "cab_2_00164"
+        ],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "glc_1_easy",
+      "background": "glc_1",
+      "difficulty": "easy",
+      "id": "1BJaRcLb5lz8k5YgXHfg8T5n_XjKuOpNN",
+      "root_response_index": 16,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 133,
+          "entry_count": 2119,
+          "data_count": 2118,
+          "other_names": [
+            ".DS_Store"
+          ],
+          "sorted_names_sha256": "b776df15fc067b7cb0af2ccf9d094828a50d36962cd71793a7d074376b49b030",
+          "first_names": [
+            "glc_1_00000.jpg",
+            "glc_1_00001.jpg",
+            "glc_1_00002.jpg"
+          ],
+          "last_names": [
+            "glc_1_03254.jpg",
+            "glc_1_03255.jpg",
+            "glc_1_03256.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 134,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 135,
+          "entry_count": 2119,
+          "data_count": 2118,
+          "other_names": [
+            ".DS_Store"
+          ],
+          "sorted_names_sha256": "0f6034e4b3c149f6511925bdbf349b7639d4e5902b5a53e5a539ec95f4b3a5ae",
+          "first_names": [
+            "glc_1_00000.txt",
+            "glc_1_00001.txt",
+            "glc_1_00002.txt"
+          ],
+          "last_names": [
+            "glc_1_03254.txt",
+            "glc_1_03255.txt",
+            "glc_1_03256.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 136,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 2118,
+        "label_count": 2118,
+        "paired_stems": 2118,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "glc_1_hard",
+      "background": "glc_1",
+      "difficulty": "hard",
+      "id": "1Zm0iZwrpL9-D-RC0g3O6KcGHolmAAB2M",
+      "root_response_index": 17,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 137,
+          "entry_count": 55,
+          "data_count": 55,
+          "other_names": [],
+          "sorted_names_sha256": "cae7dcc7872f95951d00f0041e5dcca330c8e215cab2eff3e767abc892080f87",
+          "first_names": [
+            "glc_1_00029.jpg",
+            "glc_1_00030.jpg",
+            "glc_1_00033.jpg"
+          ],
+          "last_names": [
+            "glc_1_03164.jpg",
+            "glc_1_03165.jpg",
+            "glc_1_03219.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 138,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 139,
+          "entry_count": 55,
+          "data_count": 55,
+          "other_names": [],
+          "sorted_names_sha256": "58639ef3ed6b89e4534cc324f15bc86045ac77fefd8f76586427bec923b078ef",
+          "first_names": [
+            "glc_1_00029.txt",
+            "glc_1_00030.txt",
+            "glc_1_00033.txt"
+          ],
+          "last_names": [
+            "glc_1_03164.txt",
+            "glc_1_03165.txt",
+            "glc_1_03219.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 140,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 55,
+        "label_count": 55,
+        "paired_stems": 55,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "glc_1_medium",
+      "background": "glc_1",
+      "difficulty": "medium",
+      "id": "1hGsc2wFcJC7eoRirH_68g0CLKyZUcLOL",
+      "root_response_index": 18,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 141,
+          "entry_count": 328,
+          "data_count": 328,
+          "other_names": [],
+          "sorted_names_sha256": "10d3cc35c5626aed1dd2830ddd29e864906269b7e2e19d408f6de69452af669b",
+          "first_names": [
+            "glc_1_00026.jpg",
+            "glc_1_00028.jpg",
+            "glc_1_00031.jpg"
+          ],
+          "last_names": [
+            "glc_1_03188.jpg",
+            "glc_1_03189.jpg",
+            "glc_1_03224.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 142,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 143,
+          "entry_count": 328,
+          "data_count": 328,
+          "other_names": [],
+          "sorted_names_sha256": "f1b8822d239da2339cd42d97af2c3ac23b7154ebc4d180135eeb621e7a6ea64e",
+          "first_names": [
+            "glc_1_00026.txt",
+            "glc_1_00028.txt",
+            "glc_1_00031.txt"
+          ],
+          "last_names": [
+            "glc_1_03188.txt",
+            "glc_1_03189.txt",
+            "glc_1_03224.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 144,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 328,
+        "label_count": 328,
+        "paired_stems": 328,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "glc_2_easy",
+      "background": "glc_2",
+      "difficulty": "easy",
+      "id": "1xiMoSmPdeiVYJTuJgaLr0awGhDkb_EDl",
+      "root_response_index": 19,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 145,
+          "entry_count": 1507,
+          "data_count": 1506,
+          "other_names": [
+            ".DS_Store"
+          ],
+          "sorted_names_sha256": "b20502c2d4713faf9b45d66a63b6de3a9e08807b36098189838a03c30b079870",
+          "first_names": [
+            "glc_2_00000.jpg",
+            "glc_2_00001.jpg",
+            "glc_2_00002.jpg"
+          ],
+          "last_names": [
+            "glc_2_03719.jpg",
+            "glc_2_03720.jpg",
+            "glc_2_03721.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 146,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 147,
+          "entry_count": 1507,
+          "data_count": 1506,
+          "other_names": [
+            ".DS_Store"
+          ],
+          "sorted_names_sha256": "39b6ae0e46bd8b57d67c71cd94beea7085c7e97b08136fec00973fcb018a767f",
+          "first_names": [
+            "glc_2_00000.txt",
+            "glc_2_00001.txt",
+            "glc_2_00002.txt"
+          ],
+          "last_names": [
+            "glc_2_03719.txt",
+            "glc_2_03720.txt",
+            "glc_2_03721.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 148,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 1506,
+        "label_count": 1506,
+        "paired_stems": 1506,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "glc_2_hard",
+      "background": "glc_2",
+      "difficulty": "hard",
+      "id": "1u3yvE8au3NTsocA0C01fI1_Jgnf24EnA",
+      "root_response_index": 20,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 149,
+          "entry_count": 35,
+          "data_count": 35,
+          "other_names": [],
+          "sorted_names_sha256": "b6ddc423c5959a3a2b065796d944bd412b860579d48af82845dca3849c7637eb",
+          "first_names": [
+            "glc_2_00468.jpg",
+            "glc_2_00474.jpg",
+            "glc_2_00475.jpg"
+          ],
+          "last_names": [
+            "glc_2_02987.jpg",
+            "glc_2_02988.jpg",
+            "glc_2_03165.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 150,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 151,
+          "entry_count": 35,
+          "data_count": 35,
+          "other_names": [],
+          "sorted_names_sha256": "f2f21326995bb41e32f1e5431c894b6c12cde41d456813c8acba69249d511aa2",
+          "first_names": [
+            "glc_2_00468.txt",
+            "glc_2_00474.txt",
+            "glc_2_00475.txt"
+          ],
+          "last_names": [
+            "glc_2_02987.txt",
+            "glc_2_02988.txt",
+            "glc_2_03165.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 152,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 35,
+        "label_count": 35,
+        "paired_stems": 35,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "glc_2_medium",
+      "background": "glc_2",
+      "difficulty": "medium",
+      "id": "1x8tsV3-rUyz5pK9xJcUj0nq893qN0Gq1",
+      "root_response_index": 21,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 153,
+          "entry_count": 107,
+          "data_count": 107,
+          "other_names": [],
+          "sorted_names_sha256": "bea502b64c7e0e326eb4ff90340dacff52910865a10f32d2a585605f2ed87e7a",
+          "first_names": [
+            "glc_2_00025.jpg",
+            "glc_2_00026.jpg",
+            "glc_2_00028.jpg"
+          ],
+          "last_names": [
+            "glc_2_03679.jpg",
+            "glc_2_03680.jpg",
+            "glc_2_03686.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 154,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 155,
+          "entry_count": 107,
+          "data_count": 107,
+          "other_names": [],
+          "sorted_names_sha256": "77076145459d9ac94b9a6233f535916096f096a64007942b434515b6b87c1887",
+          "first_names": [
+            "glc_2_00025.txt",
+            "glc_2_00026.txt",
+            "glc_2_00028.txt"
+          ],
+          "last_names": [
+            "glc_2_03679.txt",
+            "glc_2_03680.txt",
+            "glc_2_03686.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": true,
+          "response": 156,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 107,
+        "label_count": 107,
+        "paired_stems": 107,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "ml_3_easy",
+      "background": "ml_3",
+      "difficulty": "easy",
+      "id": "1Ihbo064zBo1YxFy-kW5HmYConm_qtgsq",
+      "root_response_index": 22,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": true,
+          "response": 157,
+          "entry_count": 607,
+          "data_count": 606,
+          "other_names": [
+            ".DS_Store"
+          ],
+          "sorted_names_sha256": "438c1c36fd8baaaf82397fefc21a2a8c1448bec7ed07f38ee3db4cee803d1479",
+          "first_names": [
+            "ml_3_00020.jpg",
+            "ml_3_00021.jpg",
+            "ml_3_00027.jpg"
+          ],
+          "last_names": [
+            "ml_3_01605.jpg",
+            "ml_3_01606.jpg",
+            "ml_3_01607.jpg"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "images/val": {
+          "requested": true,
+          "response": 158,
+          "entry_count": 0,
+          "data_count": 0,
+          "other_names": [],
+          "sorted_names_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+          "first_names": [],
+          "last_names": [],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/train": {
+          "requested": true,
+          "response": 159,
+          "entry_count": 607,
+          "data_count": 606,
+          "other_names": [
+            ".DS_Store"
+          ],
+          "sorted_names_sha256": "c4f293773d95e17bcafa37dd746ca6c5dbcd6c2d4d5ed684ff249c9b0c6c486f",
+          "first_names": [
+            "ml_3_00020.txt",
+            "ml_3_00021.txt",
+            "ml_3_00027.txt"
+          ],
+          "last_names": [
+            "ml_3_01605.txt",
+            "ml_3_01606.txt",
+            "ml_3_01607.txt"
+          ],
+          "coverage_status": "queried_metadata_only"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": {
+        "image_count": 606,
+        "label_count": 606,
+        "paired_stems": 606,
+        "images_without_label_name": [],
+        "labels_without_image_name": [],
+        "image_duplicate_names": 0,
+        "label_duplicate_names": 0
+      }
+    },
+    {
+      "name": "ml_3_hard",
+      "background": "ml_3",
+      "difficulty": "hard",
+      "id": "1AXcm8qbMadScrFdbf0xkpgHE_JA0MWGh",
+      "root_response_index": 23,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ml_3_medium",
+      "background": "ml_3",
+      "difficulty": "medium",
+      "id": "1uGWDsTKt3uTSXUubxB0pEArCU-E8IHHd",
+      "root_response_index": 24,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ml_4_easy",
+      "background": "ml_4",
+      "difficulty": "easy",
+      "id": "1N9WTCOhgaqagNi2TnOpPqplkeELWePYu",
+      "root_response_index": 25,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ml_4_hard",
+      "background": "ml_4",
+      "difficulty": "hard",
+      "id": "1wtNvT_Lkgj_OElOjyJroRL89OOf5dfHk",
+      "root_response_index": 26,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ml_4_medium",
+      "background": "ml_4",
+      "difficulty": "medium",
+      "id": "1Mf04Jf_xcrBv7Sc2eaoX7YuyxTDXjLva",
+      "root_response_index": 27,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ml_6_easy",
+      "background": "ml_6",
+      "difficulty": "easy",
+      "id": "1puGiaJmekaeE9REYcJtFK9z3bnozvNlp",
+      "root_response_index": 28,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ml_6_hard",
+      "background": "ml_6",
+      "difficulty": "hard",
+      "id": "1EUeCDk-E0HTkxxxpgC7PczrO_AYCGxh2",
+      "root_response_index": 29,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ml_6_medium",
+      "background": "ml_6",
+      "difficulty": "medium",
+      "id": "10u2xu2aPK49fcFpK289WR8rucDLqddEV",
+      "root_response_index": 30,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ticino_1_easy",
+      "background": "ticino_1",
+      "difficulty": "easy",
+      "id": "1_i1BQ8GpvAPqXjz3tyPV5Z1w3Aou9K37",
+      "root_response_index": 31,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ticino_1_hard",
+      "background": "ticino_1",
+      "difficulty": "hard",
+      "id": "1vzgtm2TnTcWbPlihB2b4URoFipzFJI_G",
+      "root_response_index": 32,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ticino_1_medium",
+      "background": "ticino_1",
+      "difficulty": "medium",
+      "id": "1HRoIDAiitS6uqwvA5de4R-66Auq-D283",
+      "root_response_index": 33,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ticino_2_easy",
+      "background": "ticino_2",
+      "difficulty": "easy",
+      "id": "16EcmbkglwOK8e09oPkQb6lwgYks2lIcV",
+      "root_response_index": 34,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ticino_2_hard",
+      "background": "ticino_2",
+      "difficulty": "hard",
+      "id": "1PHLVdWHU9RBhnHvJ-Ch7LI8ceszeN_xp",
+      "root_response_index": 35,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "ticino_2_medium",
+      "background": "ticino_2",
+      "difficulty": "medium",
+      "id": "1wV__U0m9mKJeXoAQiW3C5QQas6396qTa",
+      "root_response_index": 36,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "uetlibergstrasse_1_easy",
+      "background": "uetlibergstrasse_1",
+      "difficulty": "easy",
+      "id": "1DaYR7rN-4y5mVAKdFrude7dW2x-iSiMU",
+      "root_response_index": 37,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "uetlibergstrasse_1_hard",
+      "background": "uetlibergstrasse_1",
+      "difficulty": "hard",
+      "id": "1aIAF5K7GFSmqqe_h1pmgmNGPIOI41qgo",
+      "root_response_index": 38,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "uetlibergstrasse_1_medium",
+      "background": "uetlibergstrasse_1",
+      "difficulty": "medium",
+      "id": "12GA2bHGClOFftLQfg8LtEysfrcOHzzqe",
+      "root_response_index": 39,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "uetlibergstrasse_2_easy",
+      "background": "uetlibergstrasse_2",
+      "difficulty": "easy",
+      "id": "1WvflK9VoPUsweP40f1wOxlOAy4UjwMZL",
+      "root_response_index": 40,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "uetlibergstrasse_2_hard",
+      "background": "uetlibergstrasse_2",
+      "difficulty": "hard",
+      "id": "1LkgHP_9vQABrxSQ6ElJ070vpgS-28Q0M",
+      "root_response_index": 41,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    },
+    {
+      "name": "uetlibergstrasse_2_medium",
+      "background": "uetlibergstrasse_2",
+      "difficulty": "medium",
+      "id": "1S5ReuBjob-xj0JDdiLAgXhudxu0mcJpo",
+      "root_response_index": 42,
+      "coupling_basis": "Creator conversion routes difficulty classes from the same named input; original source identity is unverified.",
+      "leaves": {
+        "images/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "images/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/train": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        },
+        "labels/val": {
+          "requested": false,
+          "response": null,
+          "entry_count": null,
+          "data_count": null,
+          "other_names": null,
+          "sorted_names_sha256": null,
+          "coverage_status": "not_requested_budget_exhausted"
+        }
+      },
+      "train_filename_pairing": null
+    }
+  ],
+  "backgrounds": [
+    {
+      "name": "cab_1",
+      "difficulty_leaf_lists_observed": 3,
+      "all_three_image_train_lists_observed": true,
+      "observed_image_names": 2296,
+      "repeated_names_across_difficulties": 0,
+      "matching_numeric_names": 2296,
+      "minimum_index": 0,
+      "maximum_index": 4051,
+      "unobserved_indices_between_extremes": 1756,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "cab_2",
+      "difficulty_leaf_lists_observed": 3,
+      "all_three_image_train_lists_observed": true,
+      "observed_image_names": 3406,
+      "repeated_names_across_difficulties": 0,
+      "matching_numeric_names": 3406,
+      "minimum_index": 0,
+      "maximum_index": 4871,
+      "unobserved_indices_between_extremes": 1466,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "glc_1",
+      "difficulty_leaf_lists_observed": 3,
+      "all_three_image_train_lists_observed": true,
+      "observed_image_names": 2501,
+      "repeated_names_across_difficulties": 0,
+      "matching_numeric_names": 2501,
+      "minimum_index": 0,
+      "maximum_index": 3256,
+      "unobserved_indices_between_extremes": 756,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "glc_2",
+      "difficulty_leaf_lists_observed": 3,
+      "all_three_image_train_lists_observed": true,
+      "observed_image_names": 1648,
+      "repeated_names_across_difficulties": 0,
+      "matching_numeric_names": 1648,
+      "minimum_index": 0,
+      "maximum_index": 3721,
+      "unobserved_indices_between_extremes": 2074,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "ml_3",
+      "difficulty_leaf_lists_observed": 1,
+      "all_three_image_train_lists_observed": false,
+      "observed_image_names": 606,
+      "repeated_names_across_difficulties": null,
+      "matching_numeric_names": 606,
+      "minimum_index": 20,
+      "maximum_index": 1607,
+      "unobserved_indices_between_extremes": null,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "ml_4",
+      "difficulty_leaf_lists_observed": 0,
+      "all_three_image_train_lists_observed": false,
+      "observed_image_names": null,
+      "repeated_names_across_difficulties": null,
+      "matching_numeric_names": null,
+      "minimum_index": null,
+      "maximum_index": null,
+      "unobserved_indices_between_extremes": null,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "ml_6",
+      "difficulty_leaf_lists_observed": 0,
+      "all_three_image_train_lists_observed": false,
+      "observed_image_names": null,
+      "repeated_names_across_difficulties": null,
+      "matching_numeric_names": null,
+      "minimum_index": null,
+      "maximum_index": null,
+      "unobserved_indices_between_extremes": null,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "ticino_1",
+      "difficulty_leaf_lists_observed": 0,
+      "all_three_image_train_lists_observed": false,
+      "observed_image_names": null,
+      "repeated_names_across_difficulties": null,
+      "matching_numeric_names": null,
+      "minimum_index": null,
+      "maximum_index": null,
+      "unobserved_indices_between_extremes": null,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "ticino_2",
+      "difficulty_leaf_lists_observed": 0,
+      "all_three_image_train_lists_observed": false,
+      "observed_image_names": null,
+      "repeated_names_across_difficulties": null,
+      "matching_numeric_names": null,
+      "minimum_index": null,
+      "maximum_index": null,
+      "unobserved_indices_between_extremes": null,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "uetlibergstrasse_1",
+      "difficulty_leaf_lists_observed": 0,
+      "all_three_image_train_lists_observed": false,
+      "observed_image_names": null,
+      "repeated_names_across_difficulties": null,
+      "matching_numeric_names": null,
+      "minimum_index": null,
+      "maximum_index": null,
+      "unobserved_indices_between_extremes": null,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    },
+    {
+      "name": "uetlibergstrasse_2",
+      "difficulty_leaf_lists_observed": 0,
+      "all_three_image_train_lists_observed": false,
+      "observed_image_names": null,
+      "repeated_names_across_difficulties": null,
+      "matching_numeric_names": null,
+      "minimum_index": null,
+      "maximum_index": null,
+      "unobserved_indices_between_extremes": null,
+      "original_recording_group_verified": false,
+      "native_clock_verified": false
+    }
+  ],
+  "remaining_folder_metadata": [
+    {
+      "id": "1x6u5saxErUO2bUMERAUo8n2kx2LnDY-c",
+      "parent": "1gwmamsZ96drWbDvwW0JrdMz8HFhPugtH",
+      "path": "processed/ml_3_easy/labels/val"
+    },
+    {
+      "id": "1mzGJNP65S1iJgk0ia-gDCGfuNr5iA25A",
+      "parent": "1ZyqZKGZxFPX6xRFG1OzBYa03PebXOMN5",
+      "path": "processed/ml_3_hard/images/train"
+    },
+    {
+      "id": "1jncsi1TQUI-yK_1BPGcdI6pvZjiF6IjC",
+      "parent": "1ZyqZKGZxFPX6xRFG1OzBYa03PebXOMN5",
+      "path": "processed/ml_3_hard/images/val"
+    },
+    {
+      "id": "1H2KWJ8Fv0PWXVtA23SG61eSnkAXv8lZF",
+      "parent": "1qXCE8oZ_h0LI-pB_bxfq3n3fQ0d1vuQx",
+      "path": "processed/ml_3_hard/labels/train"
+    },
+    {
+      "id": "1UBwnGyzJ05ppnO99Wm1G3zrlMjWafCiM",
+      "parent": "1qXCE8oZ_h0LI-pB_bxfq3n3fQ0d1vuQx",
+      "path": "processed/ml_3_hard/labels/val"
+    },
+    {
+      "id": "1qdKTrWgU5rEZ5NJSkoJy5h0jO7cs45bR",
+      "parent": "1vblsmyNwQ1He_Pxgml16kCJs2dkSsiTl",
+      "path": "processed/ml_3_medium/images/train"
+    },
+    {
+      "id": "1EfeLMmeveb2NQrrTIJv98ah4scz6Rj-8",
+      "parent": "1vblsmyNwQ1He_Pxgml16kCJs2dkSsiTl",
+      "path": "processed/ml_3_medium/images/val"
+    },
+    {
+      "id": "1mlZixMXkxDbRUgsVoonyinS3NuTkE7CD",
+      "parent": "1Eo21ATGUOKTH6Fo6B5jzBJ7D-LzZBBgU",
+      "path": "processed/ml_3_medium/labels/train"
+    },
+    {
+      "id": "1Gg1h68lxwfnN-fLyUBKbBnURFk-P-Xj-",
+      "parent": "1Eo21ATGUOKTH6Fo6B5jzBJ7D-LzZBBgU",
+      "path": "processed/ml_3_medium/labels/val"
+    },
+    {
+      "id": "11wt1KneCWzPKh3WvQDtFXHstTa3otKEK",
+      "parent": "11W7tTRPfsn-xkuTeykp0RO1NB-PhFrE1",
+      "path": "processed/ml_4_easy/images/train"
+    },
+    {
+      "id": "1YQXknYnyiJh8d6IB2j3jjnEWjBjH93YN",
+      "parent": "11W7tTRPfsn-xkuTeykp0RO1NB-PhFrE1",
+      "path": "processed/ml_4_easy/images/val"
+    },
+    {
+      "id": "11tA0EM1hMUc2kA83u2w3q_TWh7aIdKTJ",
+      "parent": "1-Ry0irJkzYXKL1rkIY9b-Tpg7AqJc0hw",
+      "path": "processed/ml_4_easy/labels/train"
+    },
+    {
+      "id": "16UrfRlPk2YOUuybrQSqdTVpxBe0yIHfp",
+      "parent": "1-Ry0irJkzYXKL1rkIY9b-Tpg7AqJc0hw",
+      "path": "processed/ml_4_easy/labels/val"
+    },
+    {
+      "id": "1XPq1Lunp2NEEAjcE-FjKvntCcGu0-l0R",
+      "parent": "1BnlFSm7J3W_Ku2WGpiVeRQLeQGkEeqep",
+      "path": "processed/ml_4_hard/images/train"
+    },
+    {
+      "id": "1JGEIE4Ne0RxXJaPcMdd_BxoVCn4veq5B",
+      "parent": "1BnlFSm7J3W_Ku2WGpiVeRQLeQGkEeqep",
+      "path": "processed/ml_4_hard/images/val"
+    },
+    {
+      "id": "10WyWAzRZzMjCgub46LVHSe9kIcg9IgNa",
+      "parent": "1W4jv49nUm6sDRMckoNCNHhOIYShcENUw",
+      "path": "processed/ml_4_hard/labels/train"
+    },
+    {
+      "id": "1xKscQFIGtduihwCU-pH2bMD43rbD9IiV",
+      "parent": "1W4jv49nUm6sDRMckoNCNHhOIYShcENUw",
+      "path": "processed/ml_4_hard/labels/val"
+    },
+    {
+      "id": "16aCXrE4zZIbeWerR9Xj7JrTeqXREo12c",
+      "parent": "1UPaLPdPaRTq0dEe5pDcuEiuiRZIDIxhs",
+      "path": "processed/ml_4_medium/images/train"
+    },
+    {
+      "id": "1l_aMuJApY2M-UbULPXd89XF1PEesI2W1",
+      "parent": "1UPaLPdPaRTq0dEe5pDcuEiuiRZIDIxhs",
+      "path": "processed/ml_4_medium/images/val"
+    },
+    {
+      "id": "1NY8h8OVam_jECDqqF-PMF-x8BgJUPSEk",
+      "parent": "1slwK9CiD4c65lzRnjzvtgzhg1V3KxHYH",
+      "path": "processed/ml_4_medium/labels/train"
+    },
+    {
+      "id": "17U4Vu3Eh5C7daXnTHiPF0o7fS7Edy9qi",
+      "parent": "1slwK9CiD4c65lzRnjzvtgzhg1V3KxHYH",
+      "path": "processed/ml_4_medium/labels/val"
+    },
+    {
+      "id": "1Y7BW4QvlNUW3s8V861dq_CQL5w7vbnDl",
+      "parent": "1gwQf-eypBevh4HbHOSUd_qT57As1DUhq",
+      "path": "processed/ml_6_easy/images/train"
+    },
+    {
+      "id": "1l1PqYIkhtOqV1RqHLaK9BTyBGlGZ1pb9",
+      "parent": "1gwQf-eypBevh4HbHOSUd_qT57As1DUhq",
+      "path": "processed/ml_6_easy/images/val"
+    },
+    {
+      "id": "1jNnTCSQBa3N99W2uhQXHjBSdLWWFa9pm",
+      "parent": "1aBx1JIfBz7LM8p7yW822TcKGv95bGqii",
+      "path": "processed/ml_6_easy/labels/train"
+    },
+    {
+      "id": "1UZuwLKraOhI88miNs1A8Lwle-glAaKNa",
+      "parent": "1aBx1JIfBz7LM8p7yW822TcKGv95bGqii",
+      "path": "processed/ml_6_easy/labels/val"
+    },
+    {
+      "id": "168GaDedwnJ6oVked0Ihc_ydoM0eAnAyi",
+      "parent": "1wYEIMbt1_pbDhH8iIMAZVWcCm8UxbcBO",
+      "path": "processed/ml_6_hard/images/train"
+    },
+    {
+      "id": "12ZoQtqgZOKzM701mJdKsLl0qPN6vQRlx",
+      "parent": "1wYEIMbt1_pbDhH8iIMAZVWcCm8UxbcBO",
+      "path": "processed/ml_6_hard/images/val"
+    },
+    {
+      "id": "1LtVqZtuYoZ3iD126SAozLQdpB9v8VxiU",
+      "parent": "1AFg-5Jy1xOJGPUiZFdEb8WFZas1vex1N",
+      "path": "processed/ml_6_hard/labels/train"
+    },
+    {
+      "id": "1_aHK1ttXFPPFxYidTq0M6tyIEVnr6Wcj",
+      "parent": "1AFg-5Jy1xOJGPUiZFdEb8WFZas1vex1N",
+      "path": "processed/ml_6_hard/labels/val"
+    },
+    {
+      "id": "1TnNEJ_KnEMt3pxh_RA5he6L-Bw-3NvQ3",
+      "parent": "1nORFlBMoo_ZIDLCLtUwRGwAnpyO-t7XK",
+      "path": "processed/ml_6_medium/images/train"
+    },
+    {
+      "id": "1YFDPQdvu_hEx1zGjc_Ln-6TPWZSZ9As3",
+      "parent": "1nORFlBMoo_ZIDLCLtUwRGwAnpyO-t7XK",
+      "path": "processed/ml_6_medium/images/val"
+    },
+    {
+      "id": "1ICgDGETc-_yHRgMSfdN-3nN4fa0j3i75",
+      "parent": "1ZyyVSWmYWZs_Izm6I53z8NSnX8Prxc7V",
+      "path": "processed/ml_6_medium/labels/train"
+    },
+    {
+      "id": "1J31ChQA2Hd2_OhtAtwUhfJ8WPfo2XS5q",
+      "parent": "1ZyyVSWmYWZs_Izm6I53z8NSnX8Prxc7V",
+      "path": "processed/ml_6_medium/labels/val"
+    },
+    {
+      "id": "1Tf7SYhUCTRgRPNJX8JzovLWYyjedHs4D",
+      "parent": "1byVAjKQDEWrmnq_PJSwnMcAxDvgDCZ0K",
+      "path": "processed/ticino_1_easy/images/train"
+    },
+    {
+      "id": "1DXqs5mXqcQJhHqkeTrMlKcEgkgngKDBo",
+      "parent": "1byVAjKQDEWrmnq_PJSwnMcAxDvgDCZ0K",
+      "path": "processed/ticino_1_easy/images/val"
+    },
+    {
+      "id": "1dk9d0Sl8t18UM0zXZk6Tf_YCEcy6fKbW",
+      "parent": "1gizUQYJaO0ZwUog9DXLO0fI31tkWIr1d",
+      "path": "processed/ticino_1_easy/labels/train"
+    },
+    {
+      "id": "1Y3Dt4kWTEHqSBpmU_eLAXAHFTfNkMoN3",
+      "parent": "1gizUQYJaO0ZwUog9DXLO0fI31tkWIr1d",
+      "path": "processed/ticino_1_easy/labels/val"
+    },
+    {
+      "id": "1FElSyAA9pvhlKLdRQtHBFYZaX37gdPKI",
+      "parent": "1vZQ-VSHwIN0fFAk09__8tnu5SdIHwj9k",
+      "path": "processed/ticino_1_hard/images/train"
+    },
+    {
+      "id": "1eg2cBedIJz2hXpWm4jotsWY66d-tTvok",
+      "parent": "1vZQ-VSHwIN0fFAk09__8tnu5SdIHwj9k",
+      "path": "processed/ticino_1_hard/images/val"
+    },
+    {
+      "id": "1FcivdwMkt3k5dRTIfKulwmtRVC1rJN6T",
+      "parent": "1CM3jk4ra5KhPUqjfQuQY4Q7PV4eDCeGS",
+      "path": "processed/ticino_1_hard/labels/train"
+    },
+    {
+      "id": "1iAQvLXAQoc3Llas9mkG48vN1tJXCPI_6",
+      "parent": "1CM3jk4ra5KhPUqjfQuQY4Q7PV4eDCeGS",
+      "path": "processed/ticino_1_hard/labels/val"
+    },
+    {
+      "id": "1YgQfGKkONMKKnF0OM2m230fFvzvAhVq-",
+      "parent": "1ltQFWhSDEUgRaf4IfjFBBpWMV6FnfP6m",
+      "path": "processed/ticino_1_medium/images/train"
+    },
+    {
+      "id": "1krSOiTVtGN8OIL0hzJgPzLdUMnRuT0Fb",
+      "parent": "1ltQFWhSDEUgRaf4IfjFBBpWMV6FnfP6m",
+      "path": "processed/ticino_1_medium/images/val"
+    },
+    {
+      "id": "1UcjZTRlzHSvFRoR3YgukIenCcUyaUpYN",
+      "parent": "1VBjwGoGnHZeL8qKRFsT-K7o4hLi4dva-",
+      "path": "processed/ticino_1_medium/labels/train"
+    },
+    {
+      "id": "1huwIvZh3QNSDwHKZD27wZ75tq8Stvv4q",
+      "parent": "1VBjwGoGnHZeL8qKRFsT-K7o4hLi4dva-",
+      "path": "processed/ticino_1_medium/labels/val"
+    },
+    {
+      "id": "1mxGfKnjl7F5RW7VevrZF1JORuFSzWuSE",
+      "parent": "1gCyjBQh-vFSXCWOqYnkgarddUE2wTXFf",
+      "path": "processed/ticino_2_easy/images/train"
+    },
+    {
+      "id": "10VKaddzfFJ4qqmQXuL1jlp9EoljMJ4ko",
+      "parent": "1gCyjBQh-vFSXCWOqYnkgarddUE2wTXFf",
+      "path": "processed/ticino_2_easy/images/val"
+    },
+    {
+      "id": "1Xdl40uY6d8bUNzBGr0Pvn24Uc9USDxkj",
+      "parent": "12QGeA3sdnX5ImElKPHKDwGhjuI6OzexD",
+      "path": "processed/ticino_2_easy/labels/train"
+    },
+    {
+      "id": "1vHxHZQQgqkDBcPj-Z3YQm5q3HgYJsaWO",
+      "parent": "12QGeA3sdnX5ImElKPHKDwGhjuI6OzexD",
+      "path": "processed/ticino_2_easy/labels/val"
+    },
+    {
+      "id": "1Ek4KkdIGIzqtHIbS72Fg1nrTWBCjU6uP",
+      "parent": "1CHZVWhZ5ChKxX_b-Kb1GT-bNo6m0k0QA",
+      "path": "processed/ticino_2_hard/images/train"
+    },
+    {
+      "id": "1y0AqGUHozI_mjS-lh8MphN-tq1CnQjog",
+      "parent": "1CHZVWhZ5ChKxX_b-Kb1GT-bNo6m0k0QA",
+      "path": "processed/ticino_2_hard/images/val"
+    },
+    {
+      "id": "1dtahBjprqD1YQBEo4__2QNuXDpqh4CZZ",
+      "parent": "1nVvwvAjj_rMyONJZ58bC6Xn_q07lVNe_",
+      "path": "processed/ticino_2_hard/labels/train"
+    },
+    {
+      "id": "1RNLM5WI4PueFGfX91UKDz-NqaBDXMJZW",
+      "parent": "1nVvwvAjj_rMyONJZ58bC6Xn_q07lVNe_",
+      "path": "processed/ticino_2_hard/labels/val"
+    },
+    {
+      "id": "1OVskgzew1XnUR-PsB7X3xeA7tg-tbNIX",
+      "parent": "1WxEUbRDEtCt3NELzkVNeniYCkiRUE2ot",
+      "path": "processed/ticino_2_medium/images/train"
+    },
+    {
+      "id": "1k62-qKpMatyPvJGj2E0fRfn4uOUzVxoh",
+      "parent": "1WxEUbRDEtCt3NELzkVNeniYCkiRUE2ot",
+      "path": "processed/ticino_2_medium/images/val"
+    },
+    {
+      "id": "1ys6oHO5LlLnNvHb0XQQ3RPWNFZyGPZ21",
+      "parent": "14NChbqDVpu3g_1WtFqFrikUhoeC0Moh2",
+      "path": "processed/ticino_2_medium/labels/train"
+    },
+    {
+      "id": "1mWR11cJmRQEzmAq0DYEg7F3IHFWUx0g0",
+      "parent": "14NChbqDVpu3g_1WtFqFrikUhoeC0Moh2",
+      "path": "processed/ticino_2_medium/labels/val"
+    },
+    {
+      "id": "16DYQrHPxhzNEdFE8bQIHlKb15twVst2Y",
+      "parent": "1ZUAQtAfLyGjgdhrI3673_T8HcFymIlzD",
+      "path": "processed/uetlibergstrasse_1_easy/images/train"
+    },
+    {
+      "id": "1Y_d8tNiVB47orV8KgtQsAARgw5ZP6fM8",
+      "parent": "1ZUAQtAfLyGjgdhrI3673_T8HcFymIlzD",
+      "path": "processed/uetlibergstrasse_1_easy/images/val"
+    },
+    {
+      "id": "1E2jNxkiykmBr7OTdcXIgsKKosjz-zd30",
+      "parent": "1MQ5aEcPzhSQkb9fLft7wGyRFo2qEJwWe",
+      "path": "processed/uetlibergstrasse_1_easy/labels/train"
+    },
+    {
+      "id": "1RfcGFHpvebxzNi_jhmPNsVzJS9Fxj4N3",
+      "parent": "1MQ5aEcPzhSQkb9fLft7wGyRFo2qEJwWe",
+      "path": "processed/uetlibergstrasse_1_easy/labels/val"
+    },
+    {
+      "id": "19UU25UAU1L8amCP7S4YSiMHPtMbKhRrY",
+      "parent": "1RYP03_RGTUq_tcNU1F4mkLBB73xxcc49",
+      "path": "processed/uetlibergstrasse_1_hard/images/train"
+    },
+    {
+      "id": "1GMB9Eb_O550u679Gdy21gpP6K7hXhHph",
+      "parent": "1RYP03_RGTUq_tcNU1F4mkLBB73xxcc49",
+      "path": "processed/uetlibergstrasse_1_hard/images/val"
+    },
+    {
+      "id": "1hcoVI7Su6aX5LNNM5VoR-8REsnLjGMO1",
+      "parent": "1pDOXvY1bWltoLxkcQ-HimlptKvMXFLay",
+      "path": "processed/uetlibergstrasse_1_hard/labels/train"
+    },
+    {
+      "id": "1tutJcod6Yl611cNFImwY41VGTqUmHOA0",
+      "parent": "1pDOXvY1bWltoLxkcQ-HimlptKvMXFLay",
+      "path": "processed/uetlibergstrasse_1_hard/labels/val"
+    },
+    {
+      "id": "1OR_snnRGyL71qd8S8mlEyD463U9XvCHW",
+      "parent": "1egquqlqdVet7sy_ecVA858lsEk_lvXaB",
+      "path": "processed/uetlibergstrasse_1_medium/images/train"
+    },
+    {
+      "id": "1LdZxI7oQaOYWUi8JDQ7jZq7TqeSKavwe",
+      "parent": "1egquqlqdVet7sy_ecVA858lsEk_lvXaB",
+      "path": "processed/uetlibergstrasse_1_medium/images/val"
+    },
+    {
+      "id": "115dqJCP9w8IDXwoINyLGxAb1GkRYLuoW",
+      "parent": "1pbNh089dRo0eXEbKg9_S7RdN8ODwIHl2",
+      "path": "processed/uetlibergstrasse_1_medium/labels/train"
+    },
+    {
+      "id": "1E1rEcsW2pS8CHIJokMobcVbWv4HO-hsU",
+      "parent": "1pbNh089dRo0eXEbKg9_S7RdN8ODwIHl2",
+      "path": "processed/uetlibergstrasse_1_medium/labels/val"
+    },
+    {
+      "id": "1ILVdCTDDywfyKDyD2CvetjYLXHpvFxp9",
+      "parent": "1tN4jsy7xcJPF23FD_xh0-vkBCvRycPIz",
+      "path": "processed/uetlibergstrasse_2_easy/images/train"
+    },
+    {
+      "id": "1ryd7ftbPIVMyaAJyA5eulPA6fRlYc3Tg",
+      "parent": "1tN4jsy7xcJPF23FD_xh0-vkBCvRycPIz",
+      "path": "processed/uetlibergstrasse_2_easy/images/val"
+    },
+    {
+      "id": "1mjNQxgkjsxZTg0Kq7Z3nGN-SUODF3FlE",
+      "parent": "1EjRtH4jgDLM9JJI_wb_tZGbGMtQIdzL4",
+      "path": "processed/uetlibergstrasse_2_easy/labels/train"
+    },
+    {
+      "id": "1qaS7M1pHWELI4covW7_4Fz3F1rRYDlYc",
+      "parent": "1EjRtH4jgDLM9JJI_wb_tZGbGMtQIdzL4",
+      "path": "processed/uetlibergstrasse_2_easy/labels/val"
+    },
+    {
+      "id": "1B2D3yBMzE7tDUHiXglY4V9ewPz_mvdAV",
+      "parent": "11Xf2_m3p8cOdg-WKviyvCmy-UNAfeFAc",
+      "path": "processed/uetlibergstrasse_2_hard/images/train"
+    },
+    {
+      "id": "1xpvSd10wvs4c3encB2Ady4dy-_0YrmCB",
+      "parent": "11Xf2_m3p8cOdg-WKviyvCmy-UNAfeFAc",
+      "path": "processed/uetlibergstrasse_2_hard/images/val"
+    },
+    {
+      "id": "1e1RvBAAum19p6UYUut_g7uVj_OXfX3OE",
+      "parent": "18UP3O5O-U3GjT5iV1SbOHcfnFVdTnT-2",
+      "path": "processed/uetlibergstrasse_2_hard/labels/train"
+    },
+    {
+      "id": "1WH0q2O56oU8iWjN4vGEgVCkcsd4-WMXz",
+      "parent": "18UP3O5O-U3GjT5iV1SbOHcfnFVdTnT-2",
+      "path": "processed/uetlibergstrasse_2_hard/labels/val"
+    },
+    {
+      "id": "1EX86QJmOmHHV5uB7BtXUhGuFA4RzMex4",
+      "parent": "1hjfNnxx5RnsEpyMoAJnLKDNENtfNx0Mj",
+      "path": "processed/uetlibergstrasse_2_medium/images/train"
+    },
+    {
+      "id": "1ZzTSN8zP01cLwfSkaw_jBcozbo755a4a",
+      "parent": "1hjfNnxx5RnsEpyMoAJnLKDNENtfNx0Mj",
+      "path": "processed/uetlibergstrasse_2_medium/images/val"
+    },
+    {
+      "id": "1XTglvj-fDaOwXzDjUGsN2p0vneCXIY1O",
+      "parent": "16zZjuYv6OOSixyzNQ5lnnKhF73AmYtts",
+      "path": "processed/uetlibergstrasse_2_medium/labels/train"
+    },
+    {
+      "id": "1Y00k1L9F2zqxzbb7KtNWkxZKAditbz77",
+      "parent": "16zZjuYv6OOSixyzNQ5lnnKhF73AmYtts",
+      "path": "processed/uetlibergstrasse_2_medium/labels/val"
+    }
+  ],
+  "observed_anomalies": [
+    {
+      "kind": "unpaired_label_filename",
+      "group": "cab_2_medium",
+      "label_stem": "cab_2_00164",
+      "image_listing_response": 129,
+      "label_listing_response": 131,
+      "image_name_seen_in_other_queried_cab2_difficulties": false,
+      "duplicate_label_seen_in_other_queried_cab2_difficulties": false,
+      "actual_file_contents_or_native_frame_absence_verified": false
+    }
+  ],
+  "creator_reported_acquisition": {
+    "paper": "https://arxiv.org/html/2603.06691v2",
+    "frames": 20510,
+    "backgrounds": 11,
+    "locations_in_methods_and_figure": 5,
+    "introduction_location_count_wording": 11,
+    "dimensions": [
+      1920,
+      1200
+    ],
+    "nominal_fps": 60,
+    "invisible_shuttle_frames_excluded": true,
+    "labels": "automatic bounding boxes followed by CVAT checking/correction; actual label quality not independently verified"
+  },
+  "creator_conversion_contract": {
+    "format": "YOLO single-class records expected by source code; no annotation rows inspected",
+    "class_zero": "shuttle",
+    "difficulty_variants_coupled": true,
+    "storage_train_is_independent_split": false,
+    "source_to_native_pts_mapping_emitted": false,
+    "default_config_validation_and_test_sources": [],
+    "combination_utility_splits_individual_files": true,
+    "combination_utility_proves_paper_holdout_recipe": false
+  },
+  "readiness": {
+    "acquisition_ready": false,
+    "applicable_dataset_media_terms": "not established in inspected sources",
+    "repository_license_statement": "Project AGPLv3 statement; external dataset/media scope unestablished",
+    "image_detection_suitability": "candidate only; label bytes, terms, original groups and domain transfer unresolved",
+    "temporal_training_suitability": "not established; filtered release and absent native-clock/source mapping",
+    "original_source_groups": "unverified; preserve all difficulty variants of each declared background together provisionally",
+    "cross_corpus_overlap": "unverified",
+    "upstream_pretraining_membership": "unverified",
+    "broadcast_transfer": "unverified"
+  },
+  "next_prerequisites": [
+    "Explicit applicable terms for the linked dataset/media before a scientific acquisition proposal.",
+    "A source-to-release map for acquisition groups and retained/omitted frames; exact source clocks before temporal/event uses.",
+    "A separately bounded acquisition would still need to retain unpaired/unavailable cases, verify actual bytes/schema, complete its required inventory and audit overlap. No acquisition budget is granted by this report."
+  ],
+  "scientific_state": {
+    "scientific_files_acquired": 0,
+    "annotation_rows_opened": 0,
+    "images_opened_or_transmitted": 0,
+    "scientific_inference_runs": 0,
+    "scientific_training_runs": 0,
+    "new_training_ready_rows": 0,
+    "model_promotions": 0,
+    "existing_eligibility_flags_changed": false,
+    "accepted_complete_rally_references": 0,
+    "required_complete_rally_references": 2
+  },
+  "limitations": [
+    "HTTP body completeness and parsed entries do not prove an exhaustive server-side listing or full release census.",
+    "Matching filenames and numeric suffixes do not prove content identity, original frame identity, native timing or independent physical events.",
+    "Unobserved numeric filename values are not absent-shuttle labels; invisible frames were author-reported as excluded.",
+    "No imported label values, pixel dimensions, coordinate normalization, model predictions or annotation quality were verified.",
+    "The raw metadata request budget is exhausted; 81 advertised leaves remain unqueried."
+  ]
+}
