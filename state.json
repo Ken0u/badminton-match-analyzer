@@ -438,6 +438,15 @@
       "task_id": "311",
       "verb": "recover"
     },
+    "capacity311-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792980356,
+      "epoch": 2,
+      "fingerprint": "2b9b3cc5886e916b42e79b5902b2edb7d05a42408921694fa9f4dfb8a2b758a4",
+      "status": "review",
+      "task_id": "311",
+      "verb": "submit"
+    },
     "capacity311-synthetic-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792968332,
@@ -25773,6 +25782,7 @@
       ],
       "planned_at": 1792966438,
       "planned_by": "Ken0u",
+      "pr_number": 312,
       "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
@@ -25838,7 +25848,27 @@
         ]
       },
       "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
+        "head_sha": "e35eb2b5509f0e2cfe64e33061a49e77f4a90363",
+        "native_evidence": {
+          "code_sha": "e35eb2b5509f0e2cfe64e33061a49e77f4a90363",
+          "limitations": [
+            "Real-source comparison incomplete:18/50control views5436/13499rows; full control gate not passed.",
+            "Both learned real-source variants unstarted; all60 familiar cases retained and none scored.",
+            "Fresh generated localization remains poor and all122 negatives false-detected; no method selected or promoted.",
+            "Training frozen-tensor receipts exist but no independent byte audit of trained selected checkpoints was reached.",
+            "Preserved original deadline; no native restart, holdout/old305 reopening, new image transfer or installed-default change.",
+            "Complete references0/2 and full automatic annotation accuracy unproven."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "6b72eea50c8fc10338944a6905f58d4c4b7cc4fa3542e1495ce69a7ab3a7c0f6",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 312,
+        "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
+      }
     },
     "62": {
       "checkpoint": {
