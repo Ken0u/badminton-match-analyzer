@@ -951,6 +951,26 @@
       "task_id": "258",
       "verb": "checkpoint"
     },
+    "contact321-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793012778,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "branch": "codex/issue-321-reject-inconsistent-perception-source-ha",
+        "epoch": 1,
+        "expires_at": 1793023578,
+        "granted_at": 1793012778,
+        "host_id": "MSI",
+        "session_id": "112268b487314730b95bbbbc8ccaf2f3",
+        "spec_hash": "14aaba4dd29d3621015c4fc375dfe7c6319230ca853d98134919d24489cd0a7b"
+      },
+      "epoch": 1,
+      "fingerprint": "d7d600ecb0cc7b7e78675e79c77313add4f2b9fcb97dc9f29167f5e69bad1093",
+      "status": "granted",
+      "task_id": "321",
+      "verb": "next"
+    },
     "contact321-register-v1": {
       "actor": "Ken0u",
       "at": 1793012549,
@@ -26660,7 +26680,18 @@
       }
     },
     "321": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "branch": "codex/issue-321-reject-inconsistent-perception-source-ha",
+        "epoch": 1,
+        "expires_at": 1793023578,
+        "granted_at": 1793012778,
+        "host_id": "MSI",
+        "session_id": "112268b487314730b95bbbbc8ccaf2f3",
+        "spec_hash": "14aaba4dd29d3621015c4fc375dfe7c6319230ca853d98134919d24489cd0a7b"
+      },
+      "epoch": 1,
       "planned_at": 1793012549,
       "planned_by": "Ken0u",
       "spec": {
@@ -26714,7 +26745,7 @@
         ]
       },
       "spec_hash": "14aaba4dd29d3621015c4fc375dfe7c6319230ca853d98134919d24489cd0a7b",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
