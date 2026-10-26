@@ -1079,6 +1079,13 @@
       "task_id": "321",
       "verb": "submit"
     },
+    "contact323-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793039984,
+      "fingerprint": "6cbd5fa9b8a8aeee592f34be526ecaaf4745e066f27c30cd7487e28f719ac83b",
+      "status": "ok",
+      "verb": "register"
+    },
     "contract270-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792907064,
@@ -10418,6 +10425,14 @@
       "fingerprint": "ec372024bf643a4a6252712d1ad435aec75e6264a791f1f2884264b5c9f9a0fc",
       "status": "ready",
       "task_id": "321",
+      "verb": "plan"
+    },
+    "spec-323-e3108928e5564c3f17c0b7a5553edda9cc1e5eb5a2bee3c130418222f8eac6a0": {
+      "actor": "Ken0u",
+      "at": 1793039984,
+      "fingerprint": "7d67348487fdd71f1bda7f07e18abe177c5697459aee0afce3c57ebbbde13b6c",
+      "status": "ready",
+      "task_id": "323",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -26865,7 +26880,7 @@
       "planned_at": 1793012549,
       "planned_by": "Ken0u",
       "pr_number": 322,
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "repair_rounds": 1,
       "review": {
         "actor": "Ken0u",
@@ -26974,7 +26989,7 @@
         ]
       },
       "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46",
-      "status": "ready",
+      "status": "blocked",
       "submission": {
         "base_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
         "head_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
@@ -26993,6 +27008,66 @@
         "pr_number": 322,
         "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46"
       }
+    },
+    "323": {
+      "epoch": 0,
+      "planned_at": 1793039984,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Revalidate all open/closed issue and PR history, main, coordination and original-host process/Store/artifact state. Original task321 deadline2026-10-26T14:06:18Z expired during automatic-approval service outage; do not renew it or claim it complete. Require committed terminal-proof release contact321-expired-release-v1, preserve original PR322/head33ea5a12129871ec436dd1d6033448e17a2fbd2c/branch, original grants/specifications, accepted review changes and failed CI40315690500/artifact. Link this continuation explicitly, close the superseded issue/PR without merge or branch deletion, then obtain fresh targeted grant/isolated worktree before implementation.",
+          "Transfer the exact eight-file reviewed change from33ea5a1 onto the fresh granted baseline, retaining all existing validation semantics: complete finite nonnegative strictly ordered native clock/count, run video/stage/range and declared hash checks, integral unique ordered row frames and finite native-aligned times within20microseconds. Reject bad original evidence before API enqueue or pipeline contact publication, without retiming/filtering it away. Preserve absent legacy hashes as unavailable, optional no-player/sparse/VFR input support and explicit unvalidated three-argument research-call compatibility. Do not read scientific inputs or predictions.",
+          "Address the actual independent P1: scripts/pipeline_ui_test_server.py installs a three-argument synthetic contacts callback while the updated pipeline passes native timestamps as a fourth. Accept/check the supplied source clock in that generated fixture while preserving its exact synthetic contact candidates. Do not remove production validation, change algorithm thresholds/defaults/models, weaken browser assertions or relax process ownership/cleanup/gates to accommodate the fixture.",
+          "Preserve generated native H264/API evidence:10invalid cases rejected before admission,2stable exact contacts unchanged, original input artifacts/annotations preserved. Bind new native_evidence to the new source head and explicitly explain deterministic-method recipe hash rather than neural weights. Reuse original generated/full/focused results only after exact covered production/test/input hashes match; if covered source changes, run the appropriate checks again. Never imply a prior run occurred at the new commit or scientific accuracy follows.",
+          "Run all three actual generated browser delivery modes (production, library, exports) using existing project venv, locked-compatible installed Node/Playwright tools, isolated task root/data, and owned fixtures. Preserve every failure and verify terminal fixture cleanup/process/Store evidence. No scientific inference, new media/weight/data acquisition or external image dispatch. Record actual passed groups and unavailable cases; do not fabricate a source assessment or reviewer verdict.",
+          "Run required Ruff/format/dependency/repository UTF8-LF/JSON/local-link/frontend provenance/diff checks on final bytes. Preserve original399focused,5121full/four opt-in skips and genuine independent20-case review results with their exact source limitations. Nine writable paths only; no policy/workflow/auth/storage/schema/frontend production/model changes. Update the contact-input report with successor issue, original expired clock and failures, actual repair and final verification limitations.",
+          "Publish a fresh linked PR through normal controller integration, addressing the carried changes finding with a genuinely changed source revision. Verify all12 required exact final-head CI jobs, exact merged-main checks, full tree parity and normal complete public delivery:source/wheel/frontend/lock, all49public manifests, nine task files,101runtime files and both anonymous image manifests/configs/descriptors. Never manually merge/push main, edit raw coordination, retry/cancel/wake CI or install/execute delivered artifacts. Prior failed CI remains preserved, not reclassified as successful.",
+          "Bound this separately frozen continuation to3hours from its fresh committed grant. Preserve original321 deadline and all elapsed outage evidence. Retained outputs across321 and this continuation together remain below512MiB; carry the prior diagnosed failures and accepted changes review, allow at most one further diagnosed repair round before escalation rather than reset the allowance. Existing root checkout/PROGRESS edit, environments, datasets, labels, predictions and research processes stay preserved. Complete scientific rally references remain0/2 and full product accuracy unproven."
+        ],
+        "artifacts": {
+          "generated-contact-input-reproduction": "3eba9b5034d170ea1356a3a7aec16386a30416afee2dfa78000218e3e3cb41bb"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "260",
+          "264",
+          "284",
+          "317",
+          "319"
+        ],
+        "exclusions": [
+          "No scientific acquisition/image transfer/assessment/inference/training/holdout access, model/default/eligibility promotion, paid service, policy/auth/workflow/storage/schema/deployment changes, raw coordination edit, manual merge/main push, CI retry/cancel/wake, branch deletion or PROGRESS edits."
+        ],
+        "limits": {
+          "max_cumulative_retained_bytes": 536870912,
+          "max_review_rounds": 1,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Deliver the preserved contact-input identity fix from expired task321/PR322 and repair its generated browser contact callback, retaining native validation, valid candidate parity and all original failure/review evidence.",
+        "paths": [
+          "backend/badminton/contacts.py",
+          "backend/badminton/api.py",
+          "backend/badminton/pipeline.py",
+          "tests/test_contacts.py",
+          "tests/test_contact_input_api.py",
+          "tests/test_pipeline.py",
+          "tests/test_audio_api.py",
+          "docs/CONTACT_INPUT_IDENTITY_REPORT.md",
+          "scripts/pipeline_ui_test_server.py"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated input rejection and exact valid candidate parity; all actual browser delivery modes; stable-source reused or fresh focused/full evidence explicitly attributed; required checks; exact final PR/main/controller/tree/public package/both-image verification. No annotation-accuracy inference."
+        ]
+      },
+      "spec_hash": "903e908771931f4144560fc2189be6194e52c9735f20e9ba702ed71abc43ef07",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
@@ -30603,6 +30678,20 @@
       "host_id": "MSI",
       "registered_at": 1792512779,
       "session_id": "db19e4c4f5434842914ececf7c903274"
+    },
+    "MSI/eb72e98be620454785c34ae24366c521": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "generated-contact-input-reproduction": "3eba9b5034d170ea1356a3a7aec16386a30416afee2dfa78000218e3e3cb41bb"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793039984,
+      "session_id": "eb72e98be620454785c34ae24366c521"
     },
     "MSI/f17becf5129f4035af82b3cbb973914f": {
       "actor": "Ken0u",
