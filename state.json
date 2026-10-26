@@ -960,6 +960,15 @@
       "task_id": "321",
       "verb": "checkpoint"
     },
+    "contact321-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1793013660,
+      "epoch": 1,
+      "fingerprint": "e74ed9ae5969f95bba860c37a751476c0d3a78616a040d94d4d8c306fabf1722",
+      "status": "running",
+      "task_id": "321",
+      "verb": "checkpoint"
+    },
     "contact321-extend-v1": {
       "actor": "Ken0u",
       "reason": "scope expansion cannot change task semantics",
@@ -26707,21 +26716,21 @@
       "checkpoint": {
         "branch": "codex/issue-321-reject-inconsistent-perception-source-ha",
         "evidence": [
-          ".cache/contact321-grant-v1.json",
+          ".cache/contact321-grant-v2.json",
+          ".cache/contact321-focused-v2.json",
           ".cache/contact321-native-v1/results.json",
-          ".cache/contact321-focused-v1.log",
           ".cache/CONTACT321_CURRENT.md"
         ],
         "head_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
-        "summary": "Implemented native contact input identity validation in seven granted paths. Baseline API94 expected failures/8passes; correct pipeline baseline6failures; original generated12-case reproduction preserved. Repaired generated video now rejects all10 inconsistent cases before admission;2stable contacts unchanged. First focused317passed/8older audio API expectations fail under stricter admission. No out-of-scope edit: requested paths-only test_audio_api.py expansion contact321-extend-v2; v1 also edited acceptance and must remain separately rejected. Original deadline14:06:18UTC unchanged. No scientific data/model work, original checkout/PROGRESS/data preserved. Full/final checks and normal PR/main/delivery pending."
+        "summary": "Expanded grant d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46 accepted (8paths). All399 focused tests pass after updating8old audio API admission expectations; original first317pass/8fail and rejected semantics-changing extension preserved. Native generated12case rerun rejects10inconsistent inputs and preserves2stable contacts. Starting full local tests and required checks on stable final executable bytes. Original14:06:18UTC hard deadline unchanged. No scientific input/model inference/training or promotion. PR/submission/main/public delivery pending."
       },
-      "checkpoint_at": 1793013470,
+      "checkpoint_at": 1793013660,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
         "branch": "codex/issue-321-reject-inconsistent-perception-source-ha",
         "epoch": 1,
-        "expires_at": 1793024270,
+        "expires_at": 1793024460,
         "granted_at": 1793012778,
         "host_id": "MSI",
         "session_id": "112268b487314730b95bbbbc8ccaf2f3",
