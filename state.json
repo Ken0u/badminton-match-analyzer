@@ -1079,6 +1079,26 @@
       "task_id": "321",
       "verb": "submit"
     },
+    "contact323-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793040287,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "branch": "codex/issue-323-deliver-the-preserved-contact-input-iden",
+        "epoch": 1,
+        "expires_at": 1793051087,
+        "granted_at": 1793040287,
+        "host_id": "MSI",
+        "session_id": "eb72e98be620454785c34ae24366c521",
+        "spec_hash": "903e908771931f4144560fc2189be6194e52c9735f20e9ba702ed71abc43ef07"
+      },
+      "epoch": 1,
+      "fingerprint": "e4dc3531e88996a6f88ad0c8b8087180b1b5adbdb36337f68c3481debd448517",
+      "status": "granted",
+      "task_id": "323",
+      "verb": "next"
+    },
     "contact323-register-v1": {
       "actor": "Ken0u",
       "at": 1793039984,
@@ -27010,7 +27030,18 @@
       }
     },
     "323": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "branch": "codex/issue-323-deliver-the-preserved-contact-input-iden",
+        "epoch": 1,
+        "expires_at": 1793051087,
+        "granted_at": 1793040287,
+        "host_id": "MSI",
+        "session_id": "eb72e98be620454785c34ae24366c521",
+        "spec_hash": "903e908771931f4144560fc2189be6194e52c9735f20e9ba702ed71abc43ef07"
+      },
+      "epoch": 1,
       "planned_at": 1793039984,
       "planned_by": "Ken0u",
       "spec": {
@@ -27067,7 +27098,7 @@
         ]
       },
       "spec_hash": "903e908771931f4144560fc2189be6194e52c9735f20e9ba702ed71abc43ef07",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
