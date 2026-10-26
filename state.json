@@ -26036,6 +26036,7 @@
       }
     },
     "313": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40279326289",
       "checkpoint": {
         "branch": "codex/issue-313-complete-only-the-unfinished-real-source",
         "control_gate_sha256": "f8f8c7d82e8eeb52e455c7f162de75e03ea62c1536ecb563c1692262a4497981",
@@ -26057,7 +26058,7 @@
         "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1792995175,
