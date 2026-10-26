@@ -6467,6 +6467,33 @@
       "task_id": "62",
       "verb": "human-approved"
     },
+    "pipeline317-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793002440,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "bf669b5332f4edc38634752664a4b00a1792250b",
+        "branch": "codex/issue-317-reject-newly-completed-or-cache-resumed-",
+        "epoch": 1,
+        "expires_at": 1793013240,
+        "granted_at": 1793002440,
+        "host_id": "MSI",
+        "session_id": "4d7ae7039b4e4da1b983ae11424d2c99",
+        "spec_hash": "28b2c091f1c564c2f229d7911eb9194209c8dc665ee3563ba0a2eb7d1474cc7b"
+      },
+      "epoch": 1,
+      "fingerprint": "972a765c6de2e86b22bede4de5cfd9112e82ec23a487c95c8b0b7c3b33796ac7",
+      "status": "granted",
+      "task_id": "317",
+      "verb": "next"
+    },
+    "pipeline317-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793002440,
+      "fingerprint": "95c429523fe0223fe17c1ea6de062505cd0376d79bc337e2676a6662efbb0ab3",
+      "status": "ok",
+      "verb": "register"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -10160,6 +10187,14 @@
       "fingerprint": "28f63d0e4eae7f6a4fe825d34b28db8216908734882b1407248697780982d6a6",
       "status": "ready",
       "task_id": "315",
+      "verb": "plan"
+    },
+    "spec-317-93f63c2b182d5f54f9cc806606c312d7fff7cefaa541902100dd42da24827462": {
+      "actor": "Ken0u",
+      "at": 1793002440,
+      "fingerprint": "54111ae1cdf960ac3ca5999d03dc4045aa2f17725cf46cb91f2c709d6f0e2859",
+      "status": "ready",
+      "task_id": "317",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -26308,6 +26343,70 @@
         "spec_hash": "d814d0b818f4df08255d452fa96ec535010011356461d5d941112dfe5bbef4fe"
       }
     },
+    "317": {
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "bf669b5332f4edc38634752664a4b00a1792250b",
+        "branch": "codex/issue-317-reject-newly-completed-or-cache-resumed-",
+        "epoch": 1,
+        "expires_at": 1793013240,
+        "granted_at": 1793002440,
+        "host_id": "MSI",
+        "session_id": "4d7ae7039b4e4da1b983ae11424d2c99",
+        "spec_hash": "28b2c091f1c564c2f229d7911eb9194209c8dc665ee3563ba0a2eb7d1474cc7b"
+      },
+      "epoch": 1,
+      "planned_at": 1793002440,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issue/PR history, current coordination, source/cache/native-read reports and original processes before implementation; related173/243/264/284/315. Existing generated preflight reproduces six stale successful cache resumes (source,clock,context for singles/doubles),each reusing17stages without inference. Preserve original checkout/PROGRESS edit, environments, datasets, annotations, predictions, research jobs and all failed diagnostic attempts. Obtain fresh committed targeted grant and isolated branch before tracked edits.",
+          "Revalidate the original video source through existing resolve_source/file-cache guarantees, exact loaded native timestamp values through timestamps_for, and unchanged inference-context signature at processing stage boundaries and before publishing successful completion. Do not rely solely on a once-per-second progress check for fast cache resumes. Preserve cancellation and new-context interruption semantics; a different source/clock must not complete using stale entry inputs. Detect changes made through the last progress callback before completion publication. Do not claim decoder snapshot isolation or detection of every transient/later write.",
+          "On a detected change or terminal progress/cancellation error leave the analysis plan/job failed or interrupted and processing_complete false,never a misleading completed summary. Preserve immutable completed stage artifacts and their bytes, originals/predictions and all reviewed context edits; do not delete or rewrite them to manufacture a rerun. Validate new stage input freshness before successful checkpoint registration/publication; retain existing exact recipe/source/frame/PTS/geometry/camera/scene/calibration context and overlap ownership.",
+          "Unchanged source/clock/context must retain cache-only resume with all17stages reused and no native/model calls, along with existing recognition-setting reuse, optional/doubles unsupported states, manual-label exclusion, cancellation/admission and full native frame coverage. Annotation changes that do not affect inference context must not spuriously invalidate processing. Use existing cache primitives without changing file_cache/storage/auth/schema/policy or model defaults.",
+          "Add meaningful generated regressions that fail on original pipeline: source and exact timestamp changes and inference-context edits after entry validation for both singles/doubles; mutation after the final progress callback; fresh-stage publication and plan false-completion on error/cancel; stable cache reuse and irrelevant manual-label changes. API regressions exercise actual admitted generated jobs and expose truthful terminal/incomplete state without real media, weights, inference or scientific input. Preserve initial fixture mode-registration diagnostic failure and subsequent six successful reproductions; generated work is not badminton accuracy evidence.",
+          "Exactly four writable paths: pipeline implementation, existing unit/API tests and a concise repair report. Pin BADMINTON_ROOT/DATA to disposable test state before imports, use original project venv; no heavy jobs/data resources or scientific native work. Run focused/full pytest and required Ruff/format/pip/repository UTF8-LF/JSON/local-link/diff checks on final stable executable bytes. Report actual failures and material limits; no source-image transfer, new data/model acquisition, consumed holdout access, training/predictions, eligibility change or model promotion; scientific references remain0/2.",
+          "Submit through normal controller with exact-head CI, verify merged-main checks and full tree parity, then independently verify normal public source/wheel/frontend/locks/all49public manifests and both anonymous image manifests/configs/descriptors without installing/executing them. No manual merge/main push/raw coordination changes, sensitive automation/auth/workflow/deployment/schema/default change, CI retry/cancel/wake, paid service or deprecated PROGRESS edits. Bound to3h from fresh grant,512MiB retained outputs and3diagnosed repair rounds; no silent scope expansion or clock renewal."
+        ],
+        "artifacts": {
+          "generated-context-reproduction": "71e1bdbe41579a5b7e3abd998eedbfeec1b943aef8c65a769ca08052d9e14e3e",
+          "generated-source-clock-reproduction": "f28136f40b4b85d11d0a11bf4700a290d9c45e5f4b7c933e5fac123feb085ec1"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "173",
+          "243",
+          "315"
+        ],
+        "exclusions": [
+          "No real-media/model/scientific data work, image transfer/assessor, heavy inference/training, model promotion, sensitive paths/auth/policy/workflow/deployment/storage/schema changes, manual merge, paid service or PROGRESS edits."
+        ],
+        "limits": {
+          "max_retained_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Reject newly completed or cache-resumed full-match processing whose source bytes, native timestamp values or inference context change after entry validation, retaining valid prior artifacts and reviewed edits.",
+        "paths": [
+          "backend/badminton/pipeline.py",
+          "tests/test_pipeline.py",
+          "tests/test_pipeline_api.py",
+          "docs/PIPELINE_INPUT_STABILITY_REPORT.md"
+        ],
+        "priority": 25,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Six original generated stale-success cases become rejected with immutable existing artifacts; final-callback/new-stage/API failures remain incomplete; stable resume/cache and unrelated annotation behavior preserved; focused/full and exact CI/main/public delivery."
+        ]
+      },
+      "spec_hash": "28b2c091f1c564c2f229d7911eb9194209c8dc665ee3563ba0a2eb7d1474cc7b",
+      "status": "running"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -29570,6 +29669,21 @@
       "host_id": "MSI",
       "registered_at": 1792953537,
       "session_id": "38cb048544ad42769dddcd36b6f75292"
+    },
+    "MSI/4d7ae7039b4e4da1b983ae11424d2c99": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "generated-context-reproduction": "71e1bdbe41579a5b7e3abd998eedbfeec1b943aef8c65a769ca08052d9e14e3e",
+        "generated-source-clock-reproduction": "f28136f40b4b85d11d0a11bf4700a290d9c45e5f4b7c933e5fac123feb085ec1"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793002440,
+      "session_id": "4d7ae7039b4e4da1b983ae11424d2c99"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
       "actor": "Ken0u",
