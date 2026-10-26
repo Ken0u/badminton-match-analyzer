@@ -978,6 +978,13 @@
       "task_id": "270",
       "verb": "submit"
     },
+    "discovery315-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792996998,
+      "fingerprint": "abaf3d3a81fa1f95c98d7247780116c58de49435f129f300b0d9dfd515ad3363",
+      "status": "ok",
+      "verb": "register"
+    },
     "editor-report-plan-v1": {
       "actor": "Ken0u",
       "at": 1792885363,
@@ -10108,6 +10115,14 @@
       "fingerprint": "8be3258e840694f190636eca1e1ff2417d9ae47cb0f959993176ad6ac324697a",
       "status": "ready",
       "task_id": "313",
+      "verb": "plan"
+    },
+    "spec-315-46313d34c7d86e25b69df8baf09e6fc5f3660986d3eadb7b101ab0f1c8ce5516": {
+      "actor": "Ken0u",
+      "at": 1792996998,
+      "fingerprint": "28f63d0e4eae7f6a4fe825d34b28db8216908734882b1407248697780982d6a6",
+      "status": "ready",
+      "task_id": "315",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -26158,6 +26173,61 @@
         "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d"
       }
     },
+    "315": {
+      "epoch": 0,
+      "planned_at": 1792996998,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issue and PR history, current coordination and trusted reports; relate this prerequisite to localization roadmap65 and source/evaluation milestones without duplicating completed218/220 or re-running313. Preserve original checkout/PROGRESS edit, environments, datasets, research processes, installed models, annotations and predictions. Obtain a genuine committed targeted grant and isolated worktree before tracked edits.",
+          "Produce a public machine-readable evidence inventory and concise report for five distinct primary-source candidates: ETH One-Shot shuttle2026, author-recorded Ko/Hew shuttle2022, Mathieu Cartron Roboflow shuttle v1, NIE service-detection related data2024, and Beihang Fine-Badminton Zenodo20292976. Distinguish the latter from existing iLearn Finebadminton20K. Preserve titles, authors, observed revisions/DOIs, requested/final URLs, status, exact successful response SHA256/byte size, publication claims versus observed metadata/listings, and bounded failures. No full external source text is committed.",
+          "Verify the ETH project-page Dataset link separately from its placeholder README download. Record only the observed public root listing, including background/difficulty groups and COCO/old folders without treating difficulty folders as independent source splits or claiming a recursive census. Distinguish repository AGPL software terms from unverified dataset/media terms; absence in the inspected material is not a global absence assertion. Record the Ko/Hew listing of four self-recorded videos without assuming linked data inherit repository MIT or contain labels.",
+          "Retain Cartron v1 published8053 count,640x640 stretch/auto-orient and published image partitions as assertions, not native clocks or original-match-separated splits. For NIE inspect only public landing/API metadata, actual advertised file inventory and explicit CC BY-NC terms; do not assume the service-study detector training corpus is distributed. For Fine-Badminton retain exact advertised archive6455837331bytes/MD5,10 released videos versus31 paper matches, source25fps resampling and interval-versus-contact semantics, and the metadata CC BY4 versus description noncommercial-academic restriction as unresolved competing evidence. No legal eligibility grant is fabricated.",
+          "For every candidate state access, annotation availability, original source grouping/native-clock correspondence, overlap/upstream membership and intended-use terms independently as established, reported or unresolved. Keep missing/ineligible cases explicit. Do not change any existing training_ready/eligibility flag, open historical305/63 scientific inputs or labels, reinterpret published intervals as contacts/rally endpoints, or claim complete-match accuracy. Historical complete scientific references remain0/2. A source with unmet requirements remains a non-executable follow-up, not an implicit acquisition/training authorization.",
+          "Bound new public text/JSON/HTML documentation and listing requests to at most20 responses,2MiB per response,32MiB cumulative body bytes and2h from the fresh grant. Preserve preflight snapshots and failures; no authentication to data providers, media/annotation/archive/model acquisition, source image transfer/assessor, remote code execution, heavy data/GPU work, training/predictions/model selection, paid service, or contact with external authors. No source listing is represented as complete when pagination/visibility is unresolved.",
+          "Update only the three granted documentation paths, adding a clearly dated incremental source-discovery note in PROJECT_PLAN without relabeling the historical October25 snapshot. Validate UTF8/LF, JSON structure/cross-references/count arithmetic, exact snapshot hashes/primary links, local Markdown links, focused existing documentation/package checks and required Ruff/format/pip/repository/diff checks. No runtime behavior changed; avoid implementation-mirroring tests. Preserve original failed attempts and checkpoint actual evidence on owning issue.",
+          "Submit a focused documentation PR through the existing controller with exact-head CI, verify merged-main checks and source-tree parity, then verify normal candidate delivery without changing publishing policy or running/upgrading artifacts. No manual merge, main push, raw coordination/policy/auth/workflow/deployment/schema/default changes, workflow retry/cancel/wake or deprecated PROGRESS update. Maximum three diagnosed repair rounds and512MiB new retained outputs including checks/delivery evidence. Keep the full product goal active and publish concrete next acquisition prerequisites, even if no source qualifies."
+        ],
+        "artifacts": {
+          "new-source-preflight": "f47008dc5a85eb7898d548820f7b3ec66bb53ee455de0b1aaf59fe7e80772776"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "218",
+          "220",
+          "313"
+        ],
+        "exclusions": [
+          "No scientific data/media/label/archive/weight download, assessment/image transfer, training/inference, promotion, app changes, sensitive policy/auth/workflow/deployment changes, external author messages, paid service, manual merge or deprecated PROGRESS edits."
+        ],
+        "limits": {
+          "max_new_text_bytes": 33554432,
+          "max_response_bytes": 2097152,
+          "max_retained_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 2,
+          "max_text_responses": 20,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Qualify newly discovered real-video shuttle and stroke supervision releases, preserving exact access/terms/provenance evidence and actionable acquisition prerequisites before further model experiments.",
+        "paths": [
+          "docs/SUPERVISION_SOURCE_DISCOVERY_REPORT.md",
+          "docs/supervision-source-discovery.json",
+          "PROJECT_PLAN.md"
+        ],
+        "priority": 90,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Primary-response byte hashes and bounded actual inventory; independently retained terms/access/source/clock/overlap unknowns; JSON/local-link/text and relevant existing checks; exact PR/main/controller and normal public candidate verification."
+        ]
+      },
+      "spec_hash": "d814d0b818f4df08255d452fa96ec535010011356461d5d941112dfe5bbef4fe",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -29450,6 +29520,20 @@
       "host_id": "MSI",
       "registered_at": 1792895827,
       "session_id": "6bd9e2e585fe4cd79d59b2d1bada859e"
+    },
+    "MSI/7116cde815a1483ba7d06f8b15ff2e00": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "new-source-preflight": "f47008dc5a85eb7898d548820f7b3ec66bb53ee455de0b1aaf59fe7e80772776"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792996998,
+      "session_id": "7116cde815a1483ba7d06f8b15ff2e00"
     },
     "MSI/7c82293f597c4220a41b086449a033b5": {
       "actor": "Ken0u",
