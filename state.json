@@ -969,6 +969,40 @@
       "task_id": "321",
       "verb": "checkpoint"
     },
+    "contact321-ci-review-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793014990,
+      "claim": {
+        "actor": "Ken0u",
+        "base_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "epoch": 1,
+        "expires_at": 1793025790,
+        "granted_at": 1793014990,
+        "head_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
+          "limitations": [
+            "Generated 25-frame H264 source and synthetic trajectories only; no research media or learned-model execution.",
+            "model_sha256 binds the canonical deterministic contact method/recipe, not a neural checkpoint.",
+            "Ten bad source/clock cases rejected and two stable contacts preserved; this proves input handling, not badminton annotation accuracy.",
+            "Existing unvalidated pure research calls remain explicit; missing legacy hashes remain unavailable."
+          ],
+          "model_sha256": "ad7712a259a8f515944dc083014c94ee12dde505abd98715c391be5ea2a46d57",
+          "receipt_sha256": "6d2355da31693f140f3bf58614dbc12591efdb9cd57dba9c97229a0776218811",
+          "source_sha256": "e6944e85d2a87d2e15b414ed9ce72ba0acb22e15299be6d60243df987102be90"
+        },
+        "pr_number": 322,
+        "review_epoch": 1,
+        "session_id": "contact321-ci-review-20261026",
+        "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46"
+      },
+      "epoch": 1,
+      "fingerprint": "4a3e9ba2af49e6e08a20837affa581a29501ada70aa292387f7ba643c2e81f5d",
+      "status": "granted",
+      "task_id": "321",
+      "verb": "review-next"
+    },
     "contact321-ci-review-register-v1": {
       "actor": "Ken0u",
       "at": 1793014780,
@@ -26756,6 +26790,32 @@
       "planned_at": 1793012549,
       "planned_by": "Ken0u",
       "pr_number": 322,
+      "review_claim": {
+        "actor": "Ken0u",
+        "base_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "epoch": 1,
+        "expires_at": 1793025790,
+        "granted_at": 1793014990,
+        "head_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
+        "host_id": "MSI",
+        "native_evidence": {
+          "code_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
+          "limitations": [
+            "Generated 25-frame H264 source and synthetic trajectories only; no research media or learned-model execution.",
+            "model_sha256 binds the canonical deterministic contact method/recipe, not a neural checkpoint.",
+            "Ten bad source/clock cases rejected and two stable contacts preserved; this proves input handling, not badminton annotation accuracy.",
+            "Existing unvalidated pure research calls remain explicit; missing legacy hashes remain unavailable."
+          ],
+          "model_sha256": "ad7712a259a8f515944dc083014c94ee12dde505abd98715c391be5ea2a46d57",
+          "receipt_sha256": "6d2355da31693f140f3bf58614dbc12591efdb9cd57dba9c97229a0776218811",
+          "source_sha256": "e6944e85d2a87d2e15b414ed9ce72ba0acb22e15299be6d60243df987102be90"
+        },
+        "pr_number": 322,
+        "review_epoch": 1,
+        "session_id": "contact321-ci-review-20261026",
+        "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46"
+      },
+      "review_epoch": 1,
       "spec": {
         "acceptance": [
           "Search all open/closed issue/PR history, committed coordination and related reports before claiming. Related #260/#264 validate evaluation and #284 validates optional acoustic support; this task validates visual proposal inputs before generation. Generated preflight on main4fa37eb completed12 admitted API cases: two stable controls and ten inconsistent timestamp/source-hash cases. Both modes publish frame12 at0.88s despite native0.48s when shuttle times shift; conflicting input hashes are also accepted. Preserve this evidence, original checkout/PROGRESS edit, all environments/data/labels/predictions/processes and completed #319 delivery. Obtain a fresh targeted committed grant and isolated worktree before tracked edits.",
