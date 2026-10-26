@@ -1,0 +1,44 @@
+{
+  "cases": 60,
+  "confidence_absolute_tolerance": 1e-05,
+  "confidence_relative_tolerance": 0,
+  "control_projection": "physical_observations_v1",
+  "device": "cuda:0",
+  "imported_control_rows": 5436,
+  "imported_control_views": 18,
+  "input_size": [
+    512,
+    288
+  ],
+  "limitations": [
+    "The predecessor remains interrupted with its original expired clock and missing worker terminal.",
+    "Inherited complete views are retained observations, not completed or fresh predecessor jobs.",
+    "No training, synthetic test, selection, image assessment or model promotion occurs here.",
+    "All familiar development cases and unknowns remain; complete scientific references are0/2.",
+    "Agreement with agent labels does not establish independent or full-match annotation accuracy."
+  ],
+  "localization_tolerance_diagonal": 0.005,
+  "name": "shuttle-capacity-continuation-v1",
+  "parent_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+  "precision": "float16",
+  "predecessor_deadline": 1792981031,
+  "predecessor_experiment_sha256": "780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3",
+  "preparation_sha256": "d8bd6326129d0bf175c98c07c777d24d08aa8da2c15a49fb18541263ff869e37",
+  "retained_bytes": 4294967296,
+  "rows": 13499,
+  "runtime_hours": 4,
+  "schema_version": 1,
+  "selected_sha256": {
+    "convolution": "2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833",
+    "decoder": "1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598"
+  },
+  "sequence_length": 8,
+  "tensor_count": 104,
+  "threshold": 0.5,
+  "truth_states": {
+    "not_visible": 7,
+    "unknown": 28,
+    "visible": 25
+  },
+  "views": 50
+}
