@@ -1010,6 +1010,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "contact321-ci-review-result-v1": {
+      "actor": "Ken0u",
+      "at": 1793015459,
+      "epoch": 1,
+      "fingerprint": "15126ebca9ff53e07b6eaaf57170adecd285e573acff831cff2d0353c2e8172b",
+      "status": "running",
+      "task_id": "321",
+      "verb": "review-result"
+    },
     "contact321-extend-v1": {
       "actor": "Ken0u",
       "reason": "scope expansion cannot change task semantics",
@@ -26790,14 +26799,30 @@
       "planned_at": 1793012549,
       "planned_by": "Ken0u",
       "pr_number": 322,
-      "review_claim": {
+      "repair_rounds": 1,
+      "review": {
         "actor": "Ken0u",
+        "at": 1793015459,
         "base_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
-        "epoch": 1,
-        "expires_at": 1793025790,
-        "granted_at": 1793014990,
+        "evidence": [
+          "Committed review grant at coordination 3789ac401d11f30d45062087a86c88ac39fd0586; task epoch 1, review epoch 1, accepted request contact321-ci-review-next-v1, exact head/base/spec echoed above.",
+          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40315690500/job/121547656506: independently read hosted log reports the three-versus-four-argument TypeError and exit 1 at 2026-10-26T11:33:42Z.",
+          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40315690500/job/121550907931: exact-head ci/gate failure; run API independently confirms completed failure for head 33ea5a12129871ec436dd1d6033448e17a2fbd2c.",
+          "Retained frontend-delivery.zip contains 29 entries and SHA256 bf9cfbc9e5ce193725fbb2f2d8950e71ad72e060184ae425c63ccb9d89fac7a5, matching the independently fetched hosted upload digest; checks.json identifies processing as failed with the same TypeError.",
+          "Private reviewer evidence .cache/contact321-ci-review-v1/evidence.json binds SHA256 for all eight scoped files and reproduces the inspected stub signature mismatch without importing fixture setup or executing inference.",
+          "Private reviewer log .cache/contact321-ci-review-v1/pytest.txt: root project Python 3.10 venv, exact-worktree PYTHONPATH, disposable BADMINTON_ROOT/DATA set before imports; tests/test_contact_input_api.py selected valid_contact_inputs or shifted_perception_clock: 20 passed, 82 deselected in 3.98s."
+        ],
+        "findings": [
+          "[P1] Repair the browser processing fixture for the new contact-call contract (backend/badminton/pipeline.py:540; scripts/pipeline_ui_test_server.py:185,241). The production pipeline now calls propose_contacts(shuttle, players, video, times), but prepare() installs its three-argument contacts stub into that same pipeline symbol. Consequently the required browser-import processing test fails with 'prepare.<locals>.contacts() takes 3 positional arguments but 4 were given', and ci/gate is failed on this exact head. This is independently confirmed by the hosted job log, its SHA256-matched frontend-delivery artifact, and an isolated call to the inspected stub. Obtain scope for the fixture, accept and check/use the supplied native timestamp map while preserving generated candidate behavior, and submit a new head whose normal required CI passes. Do not remove production native-clock validation to accommodate the stale stub."
+        ],
         "head_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
-        "host_id": "MSI",
+        "limitations": [
+          "Fresh independent read-only reviewer session contact321-ci-review-20261026 on MSI; no implementation edits, policy changes, manual merge, or CI retry/cancel/wake.",
+          "All eight scoped diffs and relevant callers were inspected. Targeted actual API tests passed 20 cases with 82 deselected; the reported 5121-test local full run was not repeated and does not supersede failed exact hosted CI.",
+          "No scientific input acquisition, model inference, training, held-out prediction access or model promotion. Generated provenance and software checks do not establish badminton annotation accuracy.",
+          "No additional blocker was found in the shared validator, admission ordering, sparse/legacy compatibility, candidate-preserving production algorithm, or source-bound pipeline cache behavior. This is bounded code review, not proof that every defect is absent.",
+          "The browser integration path was not rerun locally; its original hosted failure is preserved and independently corroborated by a bounded signature reproduction. Merged-main checks and delivery remain incomplete."
+        ],
         "native_evidence": {
           "code_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
           "limitations": [
@@ -26811,9 +26836,23 @@
           "source_sha256": "e6944e85d2a87d2e15b414ed9ce72ba0acb22e15299be6d60243df987102be90"
         },
         "pr_number": 322,
-        "review_epoch": 1,
+        "reviewed_files": [
+          "backend/badminton/api.py",
+          "backend/badminton/contacts.py",
+          "backend/badminton/pipeline.py",
+          "docs/CONTACT_INPUT_IDENTITY_REPORT.md",
+          "tests/test_audio_api.py",
+          "tests/test_contact_input_api.py",
+          "tests/test_contacts.py",
+          "tests/test_pipeline.py",
+          "scripts/pipeline_ui_test_server.py",
+          "scripts/benchmark_contacts.py",
+          "scripts/benchmark_audio_contacts.py",
+          "backend/badminton/scene_review.py"
+        ],
         "session_id": "contact321-ci-review-20261026",
-        "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46"
+        "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46",
+        "verdict": "changes"
       },
       "review_epoch": 1,
       "spec": {
@@ -26868,7 +26907,7 @@
         ]
       },
       "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
         "head_sha": "33ea5a12129871ec436dd1d6033448e17a2fbd2c",
