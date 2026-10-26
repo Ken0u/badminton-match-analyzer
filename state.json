@@ -1079,6 +1079,15 @@
       "task_id": "321",
       "verb": "submit"
     },
+    "contact323-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793040491,
+      "epoch": 1,
+      "fingerprint": "63b3bf1209da447c30fe920c9dce28266ed82abd2a039cc01b27390cce0069b1",
+      "status": "running",
+      "task_id": "323",
+      "verb": "checkpoint"
+    },
     "contact323-next-v1": {
       "actor": "Ken0u",
       "at": 1793040287,
@@ -27030,12 +27039,24 @@
       }
     },
     "323": {
+      "checkpoint": {
+        "branch": "codex/issue-323-deliver-the-preserved-contact-input-iden",
+        "evidence": [
+          ".cache/contact323-grant-v1.json",
+          ".cache/contact321-resumption-v1/",
+          ".cache/contact321-ci-review-v1/",
+          ".cache/CONTACT323_CURRENT.md"
+        ],
+        "head_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "summary": "Fresh epoch1 grant adopted, immutable deadline2026-10-26T21:44:47Z. Exact eight reviewed predecessor files transferred from33ea5a1; ninth path now repairs only the generated browser contacts callback to accept/check native times. Report preserves expired321clock, terminal-proof release, closed unmerged322, failed CI40315690500 and genuine changes review. Starting actual production/library/export browser modes on stable executable bytes. Original covered production/test hashes unchanged;5121full/four opt-in,399focused/native receipts are attributable predecessor evidence, not new runs. Cumulative512MiB and remaining repair allowance retained; no scientific input/inference/training or promotion."
+      },
+      "checkpoint_at": 1793040491,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
         "branch": "codex/issue-323-deliver-the-preserved-contact-input-iden",
         "epoch": 1,
-        "expires_at": 1793051087,
+        "expires_at": 1793051291,
         "granted_at": 1793040287,
         "host_id": "MSI",
         "session_id": "eb72e98be620454785c34ae24366c521",
