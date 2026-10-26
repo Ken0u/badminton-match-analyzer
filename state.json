@@ -409,6 +409,15 @@
       "task_id": "311",
       "verb": "checkpoint"
     },
+    "capacity311-interruption-recover-v1": {
+      "actor": "Ken0u",
+      "at": 1792979936,
+      "epoch": 1,
+      "fingerprint": "69cf9d58e186a50d25fc1bda18021d9e62e94c0b99c8071789ffb5f453254389",
+      "status": "ready",
+      "task_id": "311",
+      "verb": "recover"
+    },
     "capacity311-synthetic-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792968332,
@@ -25687,20 +25696,53 @@
         "summary": "Both fixed training stages completed with epoch4 independently selected by validation; both selection seals timestamped before fresh test opening. One complete synthetic test reports parent1/262,decoder0/262,convolution13/262 selected localization; all three have122/122 negative false observations. All384 frames/16 groups/method retained. No test-informed changes or model promotion. Independent group audit verifies160 fresh disjoint seeds, identical128 train/16 validation/16 test inputs and all8 checkpoint hashes. Real-source sequential chain is now reproducing the unchanged parent on50 complete views/13499rows before either learned method. Familiar60-case scoring remains unopened; no image transfer, old305/63 access or app truth change. Source 0d999657847913200042733ffe735156bf1922cc; experiment 780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3. Remaining raw/terminal verification and public seal before sole familiar diagnostics, aggregate report, exact CI/controller/main/public delivery. References0/2; accuracy unproven."
       },
       "checkpoint_at": 1792968332,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
-        "branch": "codex/issue-311-measure-whether-convolution-wide-synthet",
-        "epoch": 1,
-        "expires_at": 1792979132,
-        "granted_at": 1792966631,
-        "host_id": "MSI",
-        "session_id": "f415707f271945a68a71ac06d42abc41",
-        "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1792979936,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
+            "branch": "codex/issue-311-measure-whether-convolution-wide-synthet",
+            "epoch": 1,
+            "expires_at": 1792979132,
+            "granted_at": 1792966631,
+            "host_id": "MSI",
+            "session_id": "f415707f271945a68a71ac06d42abc41",
+            "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "complete_control_views": 18,
+              "no_familiar_scoring": true,
+              "observation_sha256": "5ef320e5e8232855b15ce59ae3368e594a8a907cf380161af03932473f9ccf0f",
+              "original_artifacts_unchanged": true,
+              "preserved_source_head": "0d999657847913200042733ffe735156bf1922cc",
+              "recovery_sha256": "64e96991cd7c69cc1ff583d7d3ccf9236d2cb1893ceb073620dde3795fd23521"
+            },
+            "host_id": "MSI",
+            "process": {
+              "all_observed_lifetimes_absent": true,
+              "command": "[\"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\worktrees\\\\capacity311-e1\\\\scripts\\\\compare_shuttle_capacity.py\", \"control\", \"--root\", \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\", \"--output\", \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\capacity311-experiment-v1\", \"--experiment-sha256\", \"780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3\"]",
+              "creation_time": 1792968278.785078,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\capacity311-e1",
+              "exited": true,
+              "pid": 16092
+            },
+            "store": {
+              "job_id": "a8465699a0d34c1a8976515d6137311a",
+              "receipt_sha256": "64e96991cd7c69cc1ff583d7d3ccf9236d2cb1893ceb073620dde3795fd23521",
+              "recovery_api": "Store.recover_jobs",
+              "status": "interrupted"
+            },
+            "terminal": true
+          },
+          "verb": "recover"
+        }
+      ],
       "planned_at": 1792966438,
       "planned_by": "Ken0u",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Continue approved localization roadmap65 after305/307/309. Audit complete issue/PR/grant history and current processes/Store. Previous305 decoder-only recipe failed its generated test and remains rejected, not rerun or retuned. This is a new separately frozen comparison, not renewal of any old clock. Preserve original edits, deprecated PROGRESS, environments, datasets, annotations, predictions, sources, installed checkpoints and research processes. Obtain genuine fresh original-host GPU/data grant and isolated worktree before edits/generation/model work.",
@@ -25765,7 +25807,7 @@
         ]
       },
       "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3",
-      "status": "running"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
