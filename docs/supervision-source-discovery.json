@@ -1,0 +1,472 @@
+{
+  "schema_version": 1,
+  "task": 315,
+  "observed_date_utc": "2026-10-26",
+  "purpose": "Source qualification only; no scientific inputs acquired or evaluated.",
+  "evidence": [
+    {
+      "id": "eth-commit",
+      "requested_url": "https://api.github.com/repos/leggedrobotics/shuttle_detection/commits/main",
+      "final_url": "https://api.github.com/repos/leggedrobotics/shuttle_detection/commits/main",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 26685,
+      "sha256": "5a94187a9be4b165e19c5e5333af50e15cb3e43b652cd7f027ecc30c6883d52b",
+      "observed_at": 1792997378.3834457,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "eth-readme",
+      "requested_url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/README.md",
+      "final_url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/README.md",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 3786,
+      "sha256": "75ef5261e792e07e953e803648c9a8fea98b34bf881f448da84ceaf179d571a8",
+      "observed_at": 1792997378.7844718,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "eth-license",
+      "requested_url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/LICENSE",
+      "final_url": "https://raw.githubusercontent.com/leggedrobotics/shuttle_detection/745a82916e919313e6db319a12ea873082192666/LICENSE",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 34523,
+      "sha256": "0d96a4ff68ad6d4b6f1f30f713b18d5184912ba8dd389f86aa7710db079abcb0",
+      "observed_at": 1792997379.0596397,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "ko-hew-commit",
+      "requested_url": "https://api.github.com/repos/astrochialinko/Badminton-Shuttlecock-Tracking/commits/main",
+      "final_url": "https://api.github.com/repos/astrochialinko/Badminton-Shuttlecock-Tracking/commits/main",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 5417,
+      "sha256": "6cf9bd0554a2039f755dfe368fc4d241d164480c2dbb0f5221f9a5724187f867",
+      "observed_at": 1792997379.2073512,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "ko-hew-readme",
+      "requested_url": "https://raw.githubusercontent.com/astrochialinko/Badminton-Shuttlecock-Tracking/adcb6d922a969a2b22f05f936bc546504fabda10/README.md",
+      "final_url": "https://raw.githubusercontent.com/astrochialinko/Badminton-Shuttlecock-Tracking/adcb6d922a969a2b22f05f936bc546504fabda10/README.md",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 6309,
+      "sha256": "16bc02def369f4712bd9f53931c3ca5069f0d2b05cb4daa5d3fde00332ce13f8",
+      "observed_at": 1792997379.6233728,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "ko-hew-license",
+      "requested_url": "https://raw.githubusercontent.com/astrochialinko/Badminton-Shuttlecock-Tracking/adcb6d922a969a2b22f05f936bc546504fabda10/LICENSE",
+      "final_url": "https://raw.githubusercontent.com/astrochialinko/Badminton-Shuttlecock-Tracking/adcb6d922a969a2b22f05f936bc546504fabda10/LICENSE",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "bytes": 1071,
+      "sha256": "9ddf123aff75cb1a56e2a08413c4a6a92fc62531932954f709185d6dedabc07b",
+      "observed_at": 1792997379.9836197,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "cartron-v1",
+      "requested_url": "https://universe.roboflow.com/mathieu-cartron/shuttlecock-cqzy3/dataset/1",
+      "final_url": "https://universe.roboflow.com/mathieu-cartron/shuttlecock-cqzy3/dataset/1",
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 5594,
+      "sha256": "a88868b59f79b96b0152bb26b84b1bf3826ea758b2d61b292103b3ed841abde2",
+      "observed_at": 1792997380.1581807,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "nie-dataset",
+      "requested_url": "https://researchdata.nie.edu.sg/api/datasets/:persistentId/?persistentId=doi:10.25340/R4/A2AE4H",
+      "final_url": "https://researchdata.nie.edu.sg/api/datasets/:persistentId/?persistentId=doi:10.25340/R4/A2AE4H",
+      "status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "bytes": 7842,
+      "sha256": "09a21accb95af27289a3ce3e5f66bc6e7df458f617a562931d52fe87e9223700",
+      "observed_at": 1792997407.7834578,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "fine-badminton-paper",
+      "requested_url": "https://arxiv.org/html/2605.23355v1",
+      "final_url": "https://arxiv.org/html/2605.23355v1",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 236466,
+      "sha256": "eefa42bf6f3a78f18f42ae06fd11adf48bf95717bbf37d6e42842e6c0885741e",
+      "observed_at": 1792997408.2345285,
+      "phase": "granted-document-inspection"
+    },
+    {
+      "id": "eth-project",
+      "requested_url": "https://sites.google.com/leggedrobotics.com/shuttlecockfinder/startseite",
+      "final_url": null,
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 145546,
+      "sha256": "e7cacd3b462ffed75d7ac2e547b4bcec574f2b0f152418c2d5a7c9bd03bdf328",
+      "observed_date_utc": "2026-10-26",
+      "phase": "read-only-planning"
+    },
+    {
+      "id": "eth-root-listing",
+      "requested_url": "https://drive.google.com/drive/folders/1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s?usp=sharing",
+      "final_url": "https://drive.google.com/drive/folders/1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s?usp=sharing",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 752673,
+      "sha256": "b53a60de3795dd78a80c8c0b4022dbcfd16d50a889064913b50e45c9c620179d",
+      "observed_date_utc": "2026-10-26",
+      "phase": "read-only-planning"
+    },
+    {
+      "id": "nie-landing",
+      "requested_url": "https://doi.org/10.25340/R4/A2AE4H",
+      "final_url": "https://researchdata.nie.edu.sg/dataset.xhtml?persistentId=doi:10.25340/R4/A2AE4H",
+      "status": 200,
+      "content_type": "text/html;charset=UTF-8",
+      "bytes": 177598,
+      "sha256": "5506a6c093b677cd205e676d7cc7d95accc01f8fb40086e683959fa35496f0be",
+      "observed_date_utc": "2026-10-26",
+      "phase": "read-only-planning"
+    },
+    {
+      "id": "ko-hew-root-listing",
+      "requested_url": "https://drive.google.com/drive/folders/1mNntqLRaQkIhUmLZPC19Yc7HXesgBrpQ?usp=share_link",
+      "final_url": "https://drive.google.com/drive/folders/1mNntqLRaQkIhUmLZPC19Yc7HXesgBrpQ?usp=share_link",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 341675,
+      "sha256": "d9e1fc27ca080c8cec922c143a72dbf778ca5b7eae9000bec3b3d888802d8ba7",
+      "observed_date_utc": "2026-10-26",
+      "phase": "read-only-planning"
+    },
+    {
+      "id": "fine-badminton-release",
+      "requested_url": "https://zenodo.org/api/records/20292976",
+      "final_url": null,
+      "status": null,
+      "content_type": null,
+      "bytes": 4933,
+      "sha256": "0d38e48f5acc3f9026e0fe404c5e56d0062b0f7f38c916d80f8d7b7281b12693",
+      "observed_date_utc": "2026-10-26",
+      "phase": "read-only-planning"
+    }
+  ],
+  "granted_request_accounting": {
+    "responses": 9,
+    "body_bytes": 327693,
+    "failed_responses": 1,
+    "retries": 0,
+    "maximum_responses": 20,
+    "maximum_response_bytes": 2097152,
+    "maximum_body_bytes": 33554432
+  },
+  "planning_response_accounting": {
+    "included_responses": 5,
+    "included_body_bytes": 1422425,
+    "scope": "Only five cited preserved planning responses; not all earlier discovery/search traffic."
+  },
+  "failures": [
+    {
+      "id": "cartron-v1",
+      "url": "https://universe.roboflow.com/mathieu-cartron/shuttlecock-cqzy3/dataset/1",
+      "observed_at": 1792997380.1581807,
+      "error_type": "HTTPError",
+      "message": "403 Client Error: Forbidden for url: https://universe.roboflow.com/mathieu-cartron/shuttlecock-cqzy3/dataset/1"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "eth-shuttle2026",
+      "title": "One-Shot Badminton Shuttle Detection for Mobile Robots",
+      "authors": [
+        "Florentin Dipner",
+        "William Talbot",
+        "Turcan Tuna",
+        "Andrei Cramariuc",
+        "Marco Hutter"
+      ],
+      "revision": "745a82916e919313e6db319a12ea873082192666",
+      "paper": "https://arxiv.org/abs/2603.06691v2",
+      "evidence": [
+        "eth-commit",
+        "eth-readme",
+        "eth-license",
+        "eth-project",
+        "eth-root-listing"
+      ],
+      "access": "public-root-listing-observed",
+      "annotation_availability": "author-reports-semi-automatic-labels;contents-not-acquired",
+      "reported": {
+        "frames": 20510,
+        "backgrounds": 11
+      },
+      "observed_root_folder_names": [
+        "cab_1_easy",
+        "cab_1_hard",
+        "cab_1_medium",
+        "cab_2_easy",
+        "cab_2_hard",
+        "cab_2_medium",
+        "coco_train_easy",
+        "coco_val_easy",
+        "glc_1_easy",
+        "glc_1_hard",
+        "glc_1_medium",
+        "glc_2_easy",
+        "glc_2_hard",
+        "glc_2_medium",
+        "ml_3_easy",
+        "ml_3_hard",
+        "ml_3_medium",
+        "ml_4_easy",
+        "ml_4_hard",
+        "ml_4_medium",
+        "ml_6_easy",
+        "ml_6_hard",
+        "ml_6_medium",
+        "old",
+        "ticino_1_easy",
+        "ticino_1_hard",
+        "ticino_1_medium",
+        "ticino_2_easy",
+        "ticino_2_hard",
+        "ticino_2_medium",
+        "uetlibergstrasse_1_easy",
+        "uetlibergstrasse_1_hard",
+        "uetlibergstrasse_1_medium",
+        "uetlibergstrasse_2_easy",
+        "uetlibergstrasse_2_hard",
+        "uetlibergstrasse_2_medium"
+      ],
+      "root_listing_is_complete": false,
+      "terms": {
+        "repository_software": "AGPL-3.0",
+        "dataset": "not-established-by-inspected-material",
+        "media": "not-established-by-inspected-material"
+      },
+      "qualification": {
+        "original_source_grouping": "unresolved",
+        "native_clock_correspondence": "unresolved",
+        "cross_corpus_overlap": "unresolved",
+        "upstream_checkpoint_membership": "unresolved",
+        "training_eligibility": "not-established",
+        "deployment_eligibility": "not-established"
+      },
+      "next_prerequisites": [
+        "Locate applicable dataset/media terms; distinguish author-collected groups from COCO/old folders.",
+        "Freeze exact file inventory, acquisition byte limits and original sequence grouping before download; preserve background/difficulty coupling."
+      ]
+    },
+    {
+      "id": "ko-hew2022",
+      "title": "Badminton Shuttlecock Tracking: self-recorded dataset",
+      "authors": [
+        "Chia-Lin Ko",
+        "Yuan Jea Hew"
+      ],
+      "revision": "adcb6d922a969a2b22f05f936bc546504fabda10",
+      "evidence": [
+        "ko-hew-commit",
+        "ko-hew-readme",
+        "ko-hew-license",
+        "ko-hew-root-listing"
+      ],
+      "access": "four-public-video-names-observed",
+      "annotation_availability": "not-exposed-in-inspected-root-listing",
+      "reported": {
+        "self_recorded_frames": 2098,
+        "mens_singles_recordings": 2,
+        "womens_singles_recordings": 2
+      },
+      "observed_video_names": [
+        "MS_side.mp4",
+        "MS_top.mp4",
+        "WS_side.mp4",
+        "WS_top.mp4"
+      ],
+      "root_listing_is_complete": false,
+      "terms": {
+        "repository_software": "MIT",
+        "dataset": "not-established-by-inspected-material",
+        "media": "not-established-by-inspected-material"
+      },
+      "qualification": {
+        "original_source_grouping": "unresolved",
+        "native_clock_correspondence": "unresolved",
+        "cross_corpus_overlap": "unresolved",
+        "upstream_checkpoint_membership": "unresolved",
+        "training_eligibility": "not-established",
+        "deployment_eligibility": "not-established"
+      },
+      "next_prerequisites": [
+        "Establish label availability and applicable recording/annotation terms.",
+        "Resolve whether top/side recordings show the same physical events before selecting source groups."
+      ]
+    },
+    {
+      "id": "cartron-shuttle-v1",
+      "title": "Shuttlecock",
+      "authors": [
+        "Mathieu Cartron"
+      ],
+      "revision": "Roboflow dataset version1,2022-02-14",
+      "primary_page": "https://universe.roboflow.com/mathieu-cartron/shuttlecock-cqzy3/dataset/1",
+      "evidence": [
+        "cartron-v1"
+      ],
+      "access": "web-reader-page-visible;direct-request403-preserved",
+      "annotation_availability": "public-page-reports-object-detection-annotations;export-not-acquired",
+      "page_reported": {
+        "images": 8053,
+        "train": 5617,
+        "validation": 1620,
+        "test": 816,
+        "auto_orient": true,
+        "resize": "stretch640x640",
+        "augmentations": "none",
+        "license": "CC BY4.0"
+      },
+      "page_claims_are_raw_snapshot_verified": false,
+      "terms": {
+        "dataset": "page-reported-CC-BY4.0;direct-body-unavailable",
+        "media": "original-source-rights-unresolved"
+      },
+      "qualification": {
+        "original_source_grouping": "unresolved",
+        "native_clock_correspondence": "unresolved",
+        "cross_corpus_overlap": "unresolved",
+        "upstream_checkpoint_membership": "unresolved",
+        "training_eligibility": "not-established",
+        "deployment_eligibility": "not-established"
+      },
+      "next_prerequisites": [
+        "Verify an allowed export path and its applicable terms without bypassing403; freeze exact export identity.",
+        "Resolve original videos/match groups, preprocessing and cross-corpus overlap; published partitions are not source-separated proof."
+      ]
+    },
+    {
+      "id": "nie-service2024",
+      "title": "Related Data for: Automated service height fault detection using computer vision and machine learning for badminton matches",
+      "authors": [
+        "Guo Liang Goh",
+        "Guo Dong Goh",
+        "Jing Wen Pan",
+        "Phillis Teng Soek Po",
+        "Pui Wah Kong"
+      ],
+      "revision": "doi:10.25340/R4/A2AE4H,version1.0",
+      "evidence": [
+        "nie-landing",
+        "nie-dataset"
+      ],
+      "access": "public-released-metadata-observed;no-data-file-acquired",
+      "annotation_availability": "advertised-release-is-judgement-table;no-image-training-corpus-advertised-in-version1.0",
+      "observed_files": [
+        {
+          "name": "Goh_Data_service judgement calls by human and system.tab",
+          "type": "text/tab-separated-values",
+          "bytes": 627,
+          "md5": "6a29134e444c5d9dd69a195862930370",
+          "restricted": false,
+          "original_name": "Goh_Data_service judgement calls by human and system.xlsx",
+          "original_bytes": 23444
+        }
+      ],
+      "terms": {
+        "released_table": "CC BY-NC4.0",
+        "detector_training_media_and_labels": "not-established;not-part-of-observed-file-list"
+      },
+      "qualification": {
+        "original_source_grouping": "unresolved",
+        "native_clock_correspondence": "unresolved",
+        "cross_corpus_overlap": "unresolved",
+        "upstream_checkpoint_membership": "unresolved",
+        "training_eligibility": "not-established",
+        "deployment_eligibility": "not-established"
+      },
+      "next_prerequisites": [
+        "Do not acquire the judgement table as shuttle-coordinate supervision.",
+        "A separate creator release with explicit training-image/annotation availability and applicable terms is required for that use."
+      ]
+    },
+    {
+      "id": "beihang-fine-badminton2026",
+      "title": "Fine-Badminton: A Fine-Grained Badminton Dataset for Temporal Action Localization",
+      "authors": [
+        "Tianyu Wang",
+        "Junjie Wu",
+        "Jingquan Gao",
+        "Shishuo Li"
+      ],
+      "revision": "doi:10.5281/zenodo.20292976,version1.0;arXiv2605.23355v1",
+      "evidence": [
+        "fine-badminton-release",
+        "fine-badminton-paper"
+      ],
+      "access": "open-release-metadata-observed;archive-not-acquired",
+      "annotation_availability": "release-reports-temporal-action-intervals;no-exact-contact-guarantee",
+      "reported": {
+        "released_matches": 10,
+        "released_frames": 980703,
+        "released_actions": 9817,
+        "classes": 29,
+        "paper_full_matches": 31,
+        "paper_full_actions": 27597,
+        "paper_resampled_fps": 25
+      },
+      "advertised_archive": {
+        "name": "Fine-Badminton.zip",
+        "bytes": 6455837331,
+        "checksum": "md5:cb3fcaca0ae9b08c564ac2a19ae4e7a0",
+        "url": "https://zenodo.org/api/records/20292976/files/Fine-Badminton.zip/content",
+        "downloaded": false
+      },
+      "terms": {
+        "metadata_license_id": "cc-by-4.0",
+        "description_restriction": "noncommercial-academic-research-only",
+        "original_media": "copyright-retained-by-original-content-owners",
+        "resolution": "unresolved;do-not-select-the-more-permissive-assertion"
+      },
+      "qualification": {
+        "original_source_grouping": "unresolved",
+        "native_clock_correspondence": "unresolved",
+        "cross_corpus_overlap": "unresolved",
+        "upstream_checkpoint_membership": "unresolved",
+        "training_eligibility": "not-established",
+        "deployment_eligibility": "not-established"
+      },
+      "next_prerequisites": [
+        "Resolve the release-metadata/description terms conflict for the intended use before acquisition.",
+        "Freeze source identity/overlap audit against existing iLearn20K,ShuttleSet,BFMD,AI-CUP and consumed holdouts without opening consumed predictions.",
+        "If eligible, acquire in a separately granted bounded task; retain source25fps resampling and action intervals without manufacturing contacts or rally endings."
+      ]
+    }
+  ],
+  "scientific_state": {
+    "new_training_ready_rows": 0,
+    "existing_eligibility_flags_changed": false,
+    "complete_rally_references": {
+      "accepted": 0,
+      "required": 2
+    },
+    "new_data_files_acquired": 0,
+    "new_image_transfers": 0,
+    "new_training_runs": 0,
+    "new_prediction_runs": 0,
+    "model_promoted": false
+  },
+  "limitations": [
+    "Metadata and author claims do not prove annotation correctness, original-media rights, event completeness or deployment eligibility.",
+    "Successful response SHA256 values seal observed bytes; dynamic pages may change.403 bytes seal the error page, not dataset contents.",
+    "Root listings are bounded observations, not recursive inventories; no hidden or unlisted contents inferred.",
+    "No candidate is made training-ready by this record."
+  ]
+}

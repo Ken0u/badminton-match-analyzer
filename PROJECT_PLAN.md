@@ -8,6 +8,16 @@ Scope update: half smash has been removed. The six target families are clear, li
 
 ## Current evidence and remaining work
 
+October 26 source-discovery increment: the [five-source qualification](docs/SUPERVISION_SOURCE_DISCOVERY_REPORT.md)
+locates ETH's actual dataset link outside its placeholder README, distinguishes
+an NIE judgement-table release from detector-training images, and preserves
+conflicting terms on a separate Beihang Fine-Badminton release. Public metadata
+and file listings supply acquisition prerequisites only: no new scientific data,
+training-ready rows, inference, training or model promotion. Terms, original-match
+grouping, overlap and native-clock correspondence still need resolution before
+separately granted acquisition. Complete scientific references remain 0/2.
+The October 25 snapshot below retains its original date and measurements.
+
 Snapshot updated October 25, 2026 (UTC), after verified delivery of #299 and the intervening source, evaluation and review-tool repairs. The upload/YouTube, review/export and resumable processing application is delivered. Correct automatic annotations throughout unseen singles and doubles matches remain unproven. The following are separate development measurements, not interchangeable accuracy benchmarks.
 
 | Area | Verified progress | Remaining limitation |
