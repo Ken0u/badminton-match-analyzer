@@ -951,6 +951,15 @@
       "task_id": "258",
       "verb": "checkpoint"
     },
+    "contact321-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793013470,
+      "epoch": 1,
+      "fingerprint": "1d1de0d331781a46f6c656366e5d19b9b27dc8d5707c3236c02dbbaf12b0078e",
+      "status": "running",
+      "task_id": "321",
+      "verb": "checkpoint"
+    },
     "contact321-extend-v1": {
       "actor": "Ken0u",
       "reason": "scope expansion cannot change task semantics",
@@ -26695,12 +26704,24 @@
       }
     },
     "321": {
+      "checkpoint": {
+        "branch": "codex/issue-321-reject-inconsistent-perception-source-ha",
+        "evidence": [
+          ".cache/contact321-grant-v1.json",
+          ".cache/contact321-native-v1/results.json",
+          ".cache/contact321-focused-v1.log",
+          ".cache/CONTACT321_CURRENT.md"
+        ],
+        "head_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "summary": "Implemented native contact input identity validation in seven granted paths. Baseline API94 expected failures/8passes; correct pipeline baseline6failures; original generated12-case reproduction preserved. Repaired generated video now rejects all10 inconsistent cases before admission;2stable contacts unchanged. First focused317passed/8older audio API expectations fail under stricter admission. No out-of-scope edit: requested paths-only test_audio_api.py expansion contact321-extend-v2; v1 also edited acceptance and must remain separately rejected. Original deadline14:06:18UTC unchanged. No scientific data/model work, original checkout/PROGRESS/data preserved. Full/final checks and normal PR/main/delivery pending."
+      },
+      "checkpoint_at": 1793013470,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
         "branch": "codex/issue-321-reject-inconsistent-perception-source-ha",
         "epoch": 1,
-        "expires_at": 1793023578,
+        "expires_at": 1793024270,
         "granted_at": 1793012778,
         "host_id": "MSI",
         "session_id": "112268b487314730b95bbbbc8ccaf2f3",
