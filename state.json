@@ -978,6 +978,26 @@
       "task_id": "270",
       "verb": "submit"
     },
+    "discovery315-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792997233,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4dad68057c1c3274154389a24217f513cc0ef2b4",
+        "branch": "codex/issue-315-qualify-newly-discovered-real-video-shut",
+        "epoch": 1,
+        "expires_at": 1793008033,
+        "granted_at": 1792997233,
+        "host_id": "MSI",
+        "session_id": "7116cde815a1483ba7d06f8b15ff2e00",
+        "spec_hash": "d814d0b818f4df08255d452fa96ec535010011356461d5d941112dfe5bbef4fe"
+      },
+      "epoch": 1,
+      "fingerprint": "d8ad7ff9378b2e742976c853f502aece47510ee91f916f0f60e156828f9fb15c",
+      "status": "granted",
+      "task_id": "315",
+      "verb": "next"
+    },
     "discovery315-register-v1": {
       "actor": "Ken0u",
       "at": 1792996998,
@@ -26174,7 +26194,18 @@
       }
     },
     "315": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4dad68057c1c3274154389a24217f513cc0ef2b4",
+        "branch": "codex/issue-315-qualify-newly-discovered-real-video-shut",
+        "epoch": 1,
+        "expires_at": 1793008033,
+        "granted_at": 1792997233,
+        "host_id": "MSI",
+        "session_id": "7116cde815a1483ba7d06f8b15ff2e00",
+        "spec_hash": "d814d0b818f4df08255d452fa96ec535010011356461d5d941112dfe5bbef4fe"
+      },
+      "epoch": 1,
       "planned_at": 1792996998,
       "planned_by": "Ken0u",
       "spec": {
@@ -26226,7 +26257,7 @@
         ]
       },
       "spec_hash": "d814d0b818f4df08255d452fa96ec535010011356461d5d941112dfe5bbef4fe",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
