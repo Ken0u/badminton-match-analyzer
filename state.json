@@ -1084,6 +1084,15 @@
       "task_id": "252",
       "verb": "next"
     },
+    "eth319-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793010326,
+      "epoch": 1,
+      "fingerprint": "31b97084b2a48da2a203dba46c16da6ce9833699ea3670e0edba155d26bea25a",
+      "status": "running",
+      "task_id": "319",
+      "verb": "checkpoint"
+    },
     "eth319-next-v1": {
       "actor": "Ken0u",
       "at": 1793009081,
@@ -26512,12 +26521,24 @@
       }
     },
     "319": {
+      "checkpoint": {
+        "branch": "codex/issue-319-establish-the-eth-shuttle-release-acquis",
+        "evidence": [
+          ".cache/eth319-metadata-v1/ledger.json",
+          ".cache/eth319-metadata-v1/remaining.json",
+          ".cache/eth319-initial-diagnostic-v1.json",
+          ".cache/ETH319_CURRENT.md"
+        ],
+        "head_sha": "fe1c64c47bbba2ddead7373695ea14d5a9b2d9bd",
+        "summary": "Metadata inventory has terminated at the original160-request limit:17,639,849 body bytes,151 folder pages/nine creator texts; zero scientific files. All33 difficulty roots and66 containers observed;51/132 leaves queried,81 explicitly unqueried. Initial COCO suffix-selection guard failure preserved; corrected continuation reused the root without a network retry. Independent source and HTML/count audits complete; rendered three scoped documents await final consistency and local checks. No acquisition readiness established: dataset/media terms and source/native correspondence unresolved; one orphan label filename retained. No scientific inference/training, image transfer, eligibility change or promotion. Original hard deadline13:04:41UTC unchanged."
+      },
+      "checkpoint_at": 1793010326,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "fe1c64c47bbba2ddead7373695ea14d5a9b2d9bd",
         "branch": "codex/issue-319-establish-the-eth-shuttle-release-acquis",
         "epoch": 1,
-        "expires_at": 1793019881,
+        "expires_at": 1793021126,
         "granted_at": 1793009081,
         "host_id": "MSI",
         "session_id": "a0e20690e39f41ec970e9114f79466bc",
