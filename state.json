@@ -25760,6 +25760,7 @@
         "session_id": "f415707f271945a68a71ac06d42abc41",
         "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 2,
       "history": [
