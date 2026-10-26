@@ -951,6 +951,13 @@
       "task_id": "258",
       "verb": "checkpoint"
     },
+    "contact321-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793012549,
+      "fingerprint": "b3f3c8d695b6a0f80a0cbe3d578058e74e715893bd84c5fed147a904a330e49e",
+      "status": "ok",
+      "verb": "register"
+    },
     "contract270-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792907064,
@@ -10282,6 +10289,14 @@
       "fingerprint": "dcfc48dc9395f1d94c04550a218c242d4e9a538008f5564f72dcd88d827ad525",
       "status": "ready",
       "task_id": "319",
+      "verb": "plan"
+    },
+    "spec-321-926b5e9d06b3a8ead4403177c1a9abd94b4c0156adefde81b6e161db26abffc8": {
+      "actor": "Ken0u",
+      "at": 1793012549,
+      "fingerprint": "ec372024bf643a4a6252712d1ad435aec75e6264a791f1f2884264b5c9f9a0fc",
+      "status": "ready",
+      "task_id": "321",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -26644,6 +26659,63 @@
         "spec_hash": "9c847870e395257da5df65030dbd3cb026e3e7f58f7c8123a475dbe34ebeb22d"
       }
     },
+    "321": {
+      "epoch": 0,
+      "planned_at": 1793012549,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issue/PR history, committed coordination and related reports before claiming. Related #260/#264 validate evaluation and #284 validates optional acoustic support; this task validates visual proposal inputs before generation. Generated preflight on main4fa37eb completed12 admitted API cases: two stable controls and ten inconsistent timestamp/source-hash cases. Both modes publish frame12 at0.88s despite native0.48s when shuttle times shift; conflicting input hashes are also accepted. Preserve this evidence, original checkout/PROGRESS edit, all environments/data/labels/predictions/processes and completed #319 delivery. Obtain a fresh targeted committed grant and isolated worktree before tracked edits.",
+          "Add a shared contact-input validation path that accepts the actual full native source timestamp map. Validate finite nonnegative strictly ordered native times/count, run video/stage identity and bounds, declared source hashes when present, and finite unique ordered integral row frame identities with times matching their native frames using the existing20microsecond tolerance. Explicit malformed/null/conflicting hashes must reject; an absent legacy hash stays unavailable rather than falsely verified. Do not silently retime, reorder, deduplicate or repair bad rows, shrink their denominator, or use scene exclusion to hide invalid original provenance.",
+          "Wire validation into actual API admission before a job/artifact is created and into contact generation used by whole-match processing with its loaded native timestamps. API invalid input returns actionable422; generated pipeline failure preserves original input/cached artifacts and reviewed annotations and cannot publish a successful contact result. Retain valid sparse player rows, optional no-player visual generation, different valid tracking windows, source gaps handled by existing proposal rules, scene/camera/calibration exclusions and default-off audio. Preserve existing unvalidated pure research-call compatibility explicitly without labeling it native-verified; no historical research inputs/predictions are rewritten.",
+          "New application contact artifacts bind the source hash and explicitly record native-clock validation and unavailable legacy input hash status where applicable. Preserve candidate IDs/timing/coordinates/scores/hints/uncertainty/evidence for valid unchanged inputs; no thresholds, family/side logic, model weights, defaults, native decoder behavior or automatic scientific eligibility changes. Existing source/camera/context stability and cache guarantees remain in force; do not claim atomic snapshot isolation or full annotation accuracy.",
+          "Add meaningful generated unit and actual Store/API regressions for both singles/doubles, shuttle-only/player-only/both shifted clocks, conflicting/malformed/null hashes, bad native clocks, invalid/duplicate/reversed/out-of-range row indices, mismatched run identity/stage/range, and malformed evidence outside scene eligibility. Positive controls include source-correct VFR clocks, valid sparse players, absent legacy hashes, no optional player, camera/scene/gap exclusions and exact valid candidate parity. Existing full-match tests plus targeted generated pipeline integration verify the shared validator is exercised without a scientific model run. Preserve expected baseline regression failures and any diagnosed failures; never fabricate a review or scientific accuracy claim.",
+          "Exactly seven writable paths: contacts.py, api.py, pipeline.py, test_contacts.py, new test_contact_input_api.py, test_pipeline.py and docs/CONTACT_INPUT_IDENTITY_REPORT.md. Pin disposable BADMINTON_ROOT/DATA before test imports; use existing project venv. Run focused and full pytest plus required Ruff/format/pip/repository UTF8-LF/JSON/local-link/frontend provenance/diff checks on final stable bytes. Any native evidence is generated video/source provenance with zero scientific model executions; report that limitation explicitly. No real-media/image/label/weight acquisition or external image transfer, held-out predictions, scientific training, model promotion, paid service or deprecated PROGRESS edits.",
+          "Submit through normal controller; verify exact PR/main checks, whole merged-tree parity and normal public delivery (source/wheel/frontend/lock, all49 public manifests, scoped files and both anonymous image manifests/configs/descriptors) without installing/executing delivered artifacts. No manual merge/main push/raw coordination edits, policy/auth/workflow/deployment/storage/schema changes or CI retry/cancel/wake. Bound to3hours from original fresh grant,512MiB retained outputs and3diagnosed repair rounds; never silently renew the clock. Complete references remain0/2 and product accuracy remains unproven."
+        ],
+        "artifacts": {
+          "generated-contact-input-reproduction": "3eba9b5034d170ea1356a3a7aec16386a30416afee2dfa78000218e3e3cb41bb"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "260",
+          "264",
+          "284",
+          "317",
+          "319"
+        ],
+        "exclusions": [
+          "No scientific input acquisition, image transfer/assessment, inference/training, consumed holdout access, eligibility/model/default promotion, sensitive policy/auth/workflow/storage/schema/deployment changes, manual merge, paid services or PROGRESS edits."
+        ],
+        "limits": {
+          "max_retained_bytes": 536870912,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Reject inconsistent perception source hashes, frame identities and native timestamps before publishing new visual contact proposals through the API or whole-match pipeline, while preserving valid sparse poses and original annotations/artifacts.",
+        "paths": [
+          "backend/badminton/contacts.py",
+          "backend/badminton/api.py",
+          "backend/badminton/pipeline.py",
+          "tests/test_contacts.py",
+          "tests/test_contact_input_api.py",
+          "tests/test_pipeline.py",
+          "docs/CONTACT_INPUT_IDENTITY_REPORT.md"
+        ],
+        "priority": 25,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated admitted API reproductions reject bad source/frame/time inputs before contact publication; stable and legacy/sparse controls preserve candidate parity. Focused/full local checks, exact CI/main, merged tree and full public delivery; zero new scientific accuracy claims."
+        ]
+      },
+      "spec_hash": "14aaba4dd29d3621015c4fc375dfe7c6319230ca853d98134919d24489cd0a7b",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -29829,6 +29901,20 @@
       "host_id": "MSI",
       "registered_at": 1792908909,
       "session_id": "0d88562017ab4d47ae7e5e55d460d7cd"
+    },
+    "MSI/112268b487314730b95bbbbc8ccaf2f3": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "generated-contact-input-reproduction": "3eba9b5034d170ea1356a3a7aec16386a30416afee2dfa78000218e3e3cb41bb"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793012549,
+      "session_id": "112268b487314730b95bbbbc8ccaf2f3"
     },
     "MSI/16dbb3112d1f4a4cb656dfac512bc201": {
       "actor": "Ken0u",
