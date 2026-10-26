@@ -6467,6 +6467,15 @@
       "task_id": "62",
       "verb": "human-approved"
     },
+    "pipeline317-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793004617,
+      "epoch": 1,
+      "fingerprint": "89d5f0f3d7154c68f8d95cc97fd11238cbb2cd57ef2a8a6f8d95b75f6779b362",
+      "status": "running",
+      "task_id": "317",
+      "verb": "checkpoint"
+    },
     "pipeline317-next-v1": {
       "actor": "Ken0u",
       "at": 1793002440,
@@ -26344,12 +26353,23 @@
       }
     },
     "317": {
+      "checkpoint": {
+        "branch": "codex/issue-317-reject-newly-completed-or-cache-resumed-",
+        "evidence": [
+          ".cache/pipeline317-baseline-tests-v1.log",
+          ".cache/pipeline317-focused-tests-v1.log"
+        ],
+        "head_sha": "bf669b5332f4edc38634752664a4b00a1792250b",
+        "runtime_deadline_utc": "2026-10-26T10:54:00Z",
+        "summary": "Generated regression-first verification: 23 failures and one irrelevant-edit control pass on original pipeline; repaired pipeline passes all 42 focused unit/API tests. Tracked implementation remains uncommitted in isolated pipeline317-e1 worktree, within the four frozen paths. Full verification and report next. No scientific work or external images; original checkout and PROGRESS edit preserved."
+      },
+      "checkpoint_at": 1793004617,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "bf669b5332f4edc38634752664a4b00a1792250b",
         "branch": "codex/issue-317-reject-newly-completed-or-cache-resumed-",
         "epoch": 1,
-        "expires_at": 1793013240,
+        "expires_at": 1793015417,
         "granted_at": 1793002440,
         "host_id": "MSI",
         "session_id": "4d7ae7039b4e4da1b983ae11424d2c99",
