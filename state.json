@@ -6503,6 +6503,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "pipeline317-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793005800,
+      "epoch": 1,
+      "fingerprint": "1545cb88d66deb9d2dfbe26900fcd5d04e786ea92a58cfb93d4994bd01cfa77d",
+      "status": "review",
+      "task_id": "317",
+      "verb": "submit"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -26378,6 +26387,7 @@
       "epoch": 1,
       "planned_at": 1793002440,
       "planned_by": "Ken0u",
+      "pr_number": 318,
       "spec": {
         "acceptance": [
           "Search all open/closed issue/PR history, current coordination, source/cache/native-read reports and original processes before implementation; related173/243/264/284/315. Existing generated preflight reproduces six stale successful cache resumes (source,clock,context for singles/doubles),each reusing17stages without inference. Preserve original checkout/PROGRESS edit, environments, datasets, annotations, predictions, research jobs and all failed diagnostic attempts. Obtain fresh committed targeted grant and isolated branch before tracked edits.",
@@ -26425,7 +26435,13 @@
         ]
       },
       "spec_hash": "28b2c091f1c564c2f229d7911eb9194209c8dc665ee3563ba0a2eb7d1474cc7b",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "bf669b5332f4edc38634752664a4b00a1792250b",
+        "head_sha": "69813752bbe9d953503c92488e490dca7a1b5fe9",
+        "pr_number": 318,
+        "spec_hash": "28b2c091f1c564c2f229d7911eb9194209c8dc665ee3563ba0a2eb7d1474cc7b"
+      }
     },
     "62": {
       "checkpoint": {
