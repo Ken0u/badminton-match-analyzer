@@ -951,6 +951,21 @@
       "task_id": "258",
       "verb": "checkpoint"
     },
+    "contact321-extend-v1": {
+      "actor": "Ken0u",
+      "reason": "scope expansion cannot change task semantics",
+      "status": "rejected",
+      "verb": "extend-scope"
+    },
+    "contact321-extend-v2": {
+      "actor": "Ken0u",
+      "at": 1793013316,
+      "epoch": 1,
+      "fingerprint": "e872f19e8150b544e9a4da897c12efe72354bd76076e9cbf2e823cbdcb291d75",
+      "status": "running",
+      "task_id": "321",
+      "verb": "extend-scope"
+    },
     "contact321-next-v1": {
       "actor": "Ken0u",
       "at": 1793012778,
@@ -26689,7 +26704,7 @@
         "granted_at": 1793012778,
         "host_id": "MSI",
         "session_id": "112268b487314730b95bbbbc8ccaf2f3",
-        "spec_hash": "14aaba4dd29d3621015c4fc375dfe7c6319230ca853d98134919d24489cd0a7b"
+        "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46"
       },
       "epoch": 1,
       "planned_at": 1793012549,
@@ -26735,6 +26750,7 @@
           "tests/test_contacts.py",
           "tests/test_contact_input_api.py",
           "tests/test_pipeline.py",
+          "tests/test_audio_api.py",
           "docs/CONTACT_INPUT_IDENTITY_REPORT.md"
         ],
         "priority": 25,
@@ -26744,7 +26760,7 @@
           "Generated admitted API reproductions reject bad source/frame/time inputs before contact publication; stable and legacy/sparse controls preserve candidate parity. Focused/full local checks, exact CI/main, merged tree and full public delivery; zero new scientific accuracy claims."
         ]
       },
-      "spec_hash": "14aaba4dd29d3621015c4fc375dfe7c6319230ca853d98134919d24489cd0a7b",
+      "spec_hash": "d5bf4ad546c6d08c14b2dc832cef13bc8d349d25cd2a59d082de31b079b15d46",
       "status": "running"
     },
     "62": {
