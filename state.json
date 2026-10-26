@@ -26386,6 +26386,7 @@
       }
     },
     "317": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40299675102",
       "checkpoint": {
         "branch": "codex/issue-317-reject-newly-completed-or-cache-resumed-",
         "evidence": [
@@ -26409,7 +26410,7 @@
         "spec_hash": "28b2c091f1c564c2f229d7911eb9194209c8dc665ee3563ba0a2eb7d1474cc7b"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793006338,
