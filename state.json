@@ -409,6 +409,26 @@
       "task_id": "311",
       "verb": "checkpoint"
     },
+    "capacity311-incomplete-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792980139,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
+        "branch": "codex/issue-311-measure-whether-convolution-wide-synthet-e2",
+        "epoch": 2,
+        "expires_at": 1792990939,
+        "granted_at": 1792980139,
+        "host_id": "MSI",
+        "session_id": "f415707f271945a68a71ac06d42abc41",
+        "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
+      },
+      "epoch": 2,
+      "fingerprint": "fa1f9f7c4baf4e150a11f48374a5ce0a31139bad5d88abee1741fdfcd8d928fe",
+      "status": "granted",
+      "task_id": "311",
+      "verb": "next"
+    },
     "capacity311-interruption-recover-v1": {
       "actor": "Ken0u",
       "at": 1792979936,
@@ -25696,7 +25716,18 @@
         "summary": "Both fixed training stages completed with epoch4 independently selected by validation; both selection seals timestamped before fresh test opening. One complete synthetic test reports parent1/262,decoder0/262,convolution13/262 selected localization; all three have122/122 negative false observations. All384 frames/16 groups/method retained. No test-informed changes or model promotion. Independent group audit verifies160 fresh disjoint seeds, identical128 train/16 validation/16 test inputs and all8 checkpoint hashes. Real-source sequential chain is now reproducing the unchanged parent on50 complete views/13499rows before either learned method. Familiar60-case scoring remains unopened; no image transfer, old305/63 access or app truth change. Source 0d999657847913200042733ffe735156bf1922cc; experiment 780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3. Remaining raw/terminal verification and public seal before sole familiar diagnostics, aggregate report, exact CI/controller/main/public delivery. References0/2; accuracy unproven."
       },
       "checkpoint_at": 1792968332,
-      "epoch": 1,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "0fa049ba033f12def7cc96f83ae45a1541c6edb1",
+        "branch": "codex/issue-311-measure-whether-convolution-wide-synthet-e2",
+        "epoch": 2,
+        "expires_at": 1792990939,
+        "granted_at": 1792980139,
+        "host_id": "MSI",
+        "session_id": "f415707f271945a68a71ac06d42abc41",
+        "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
+      },
+      "epoch": 2,
       "history": [
         {
           "at": 1792979936,
@@ -25807,7 +25838,7 @@
         ]
       },
       "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
