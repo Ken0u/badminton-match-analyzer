@@ -8,6 +8,15 @@ Scope update: half smash has been removed. The six target families are clear, li
 
 ## Current evidence and remaining work
 
+October 26 ETH inventory increment: the [source-specific inventory](docs/ETH_SUPERVISION_INVENTORY_REPORT.md)
+observes all 33 difficulty-folder structures and a bounded subset of leaf
+listings. It records one unpaired label filename, filtered-image index gaps,
+storage directories that do not establish independent splits, and unresolved
+dataset/media terms. The 160-request allowance is exhausted with 81 leaf pages
+unqueried; no scientific input or training-ready rows were acquired. Establish
+applicable terms and original-source/clock correspondence before separately
+granted acquisition or temporal training. Complete references remain 0/2.
+
 October 26 source-discovery increment: the [five-source qualification](docs/SUPERVISION_SOURCE_DISCOVERY_REPORT.md)
 locates ETH's actual dataset link outside its placeholder README, distinguishes
 an NIE judgement-table release from detector-training images, and preserves
