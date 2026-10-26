@@ -400,6 +400,26 @@
       "status": "ok",
       "verb": "register"
     },
+    "capacity-remaining-next-v1": {
+      "actor": "Ken0u",
+      "at": 1792983056,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "df5251e72738fe764e3510fb09e328455188d67c",
+        "branch": "codex/issue-313-complete-only-the-unfinished-real-source",
+        "epoch": 1,
+        "expires_at": 1792993856,
+        "granted_at": 1792983056,
+        "host_id": "MSI",
+        "session_id": "a37c5a052a754079b91613f05298827b",
+        "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d"
+      },
+      "epoch": 1,
+      "fingerprint": "47c5ecebbe2828f856931f1257da5b259b06962f8d1824cfec2b91eb4fc29aec",
+      "status": "granted",
+      "task_id": "313",
+      "verb": "next"
+    },
     "capacity-remaining-plan-v1": {
       "actor": "Ken0u",
       "at": 1792982667,
@@ -25965,7 +25985,18 @@
       }
     },
     "313": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "df5251e72738fe764e3510fb09e328455188d67c",
+        "branch": "codex/issue-313-complete-only-the-unfinished-real-source",
+        "epoch": 1,
+        "expires_at": 1792993856,
+        "granted_at": 1792983056,
+        "host_id": "MSI",
+        "session_id": "a37c5a052a754079b91613f05298827b",
+        "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d"
+      },
+      "epoch": 1,
       "planned_at": 1792982667,
       "planned_by": "Ken0u",
       "spec": {
@@ -26036,7 +26067,7 @@
         ]
       },
       "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
