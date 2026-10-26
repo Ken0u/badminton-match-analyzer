@@ -1084,6 +1084,26 @@
       "task_id": "252",
       "verb": "next"
     },
+    "eth319-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793009081,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "fe1c64c47bbba2ddead7373695ea14d5a9b2d9bd",
+        "branch": "codex/issue-319-establish-the-eth-shuttle-release-acquis",
+        "epoch": 1,
+        "expires_at": 1793019881,
+        "granted_at": 1793009081,
+        "host_id": "MSI",
+        "session_id": "a0e20690e39f41ec970e9114f79466bc",
+        "spec_hash": "9c847870e395257da5df65030dbd3cb026e3e7f58f7c8123a475dbe34ebeb22d"
+      },
+      "epoch": 1,
+      "fingerprint": "2f5397afc060da5fbc00bced20f5a611d33cbf0bffd19072312a60bf3ebbdaeb",
+      "status": "granted",
+      "task_id": "319",
+      "verb": "next"
+    },
     "eth319-register-v1": {
       "actor": "Ken0u",
       "at": 1793008820,
@@ -26492,7 +26512,18 @@
       }
     },
     "319": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "fe1c64c47bbba2ddead7373695ea14d5a9b2d9bd",
+        "branch": "codex/issue-319-establish-the-eth-shuttle-release-acquis",
+        "epoch": 1,
+        "expires_at": 1793019881,
+        "granted_at": 1793009081,
+        "host_id": "MSI",
+        "session_id": "a0e20690e39f41ec970e9114f79466bc",
+        "spec_hash": "9c847870e395257da5df65030dbd3cb026e3e7f58f7c8123a475dbe34ebeb22d"
+      },
+      "epoch": 1,
       "planned_at": 1793008820,
       "planned_by": "Ken0u",
       "spec": {
@@ -26541,7 +26572,7 @@
         ]
       },
       "spec_hash": "9c847870e395257da5df65030dbd3cb026e3e7f58f7c8123a475dbe34ebeb22d",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
