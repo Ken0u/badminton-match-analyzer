@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+from types import SimpleNamespace
 
 import pytest
 from badminton import pipeline
@@ -492,3 +493,198 @@ def test_pause_during_actor_linking_preserves_all_finished_perception(
     resumed = execute(workspace)
     assert resumed["completed_stages"] == 17 and resumed["reused_stages"] == 16
     assert calls == []
+
+
+def mode_workspace(workspace, mode):
+    root, store, video, times, calls = workspace
+    if mode == "doubles":
+        video = video | {"mode": mode}
+        store = Store(root / "doubles-data")
+        store.register(video)
+        write_json(store.data / video["id"] / "timestamps.json", times)
+    return root, store, video, times, calls
+
+
+def mutate_input(ctx, mutation):
+    root, store, video, times, _ = ctx
+    if mutation == "source":
+        (root / video["path"]).write_bytes(b"changed generated source after entry")
+    elif mutation == "timestamps":
+        # A sub-tolerance change still invalidates the exact clock recipe.
+        write_json(
+            store.data / video["id"] / "timestamps.json", [t + 1e-6 for t in times]
+        )
+    else:
+        doc = store.annotations(video["id"])
+        doc.camera_corrections = [CameraCorrection(frame=350, is_cut=False)]
+        store.save_annotations(video["id"], doc)
+
+
+def input_error(mutation):
+    return (
+        (JobCancelled, "context changed")
+        if mutation == "context"
+        else (ValueError, "changed")
+    )
+
+
+def execute_with_progress(ctx, callback):
+    root, store, video, _, _ = ctx
+
+    def task(job_id, progress):
+        def report(value):
+            callback(value, job_id)
+            progress(value)
+
+        return pipeline.process_match(
+            video, root, store, store.annotations(video["id"]), job_id, report, SETTINGS
+        )
+
+    return run_local_job(store, "analysis", video["id"], task)
+
+
+def assert_incomplete(store, job_id, state):
+    job = store.job(job_id)
+    assert job["status"] == state and "summary" not in job
+    plan = pipeline.read_plan(store, job["video_id"], job["details"]["analysis_key"])
+    assert plan["state"] == state and not plan["processing_complete"]
+    return plan
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize("mutation", ["source", "timestamps", "context"])
+def test_fast_resume_rejects_inputs_changed_after_entry(
+    workspace, monkeypatch, mode, mutation
+):
+    ctx = mode_workspace(workspace, mode)
+    _, store, video, _, calls = ctx
+    execute(ctx)
+    originals = {
+        p: p.read_bytes() for p in (store.data / video["id"] / "runs").glob("*.json")
+    }
+    calls.clear()
+    monkeypatch.setattr(pipeline, "time", SimpleNamespace(monotonic=lambda: 100))
+    changed = []
+
+    def progress(value, job_id):
+        if not changed:
+            mutate_input(ctx, mutation)
+            changed.append(job_id)
+
+    error, message = input_error(mutation)
+    with pytest.raises(error, match=message):
+        execute_with_progress(ctx, progress)
+    assert changed and calls == []
+    assert all(p.read_bytes() == raw for p, raw in originals.items())
+    assert_incomplete(
+        store, changed[0], "interrupted" if mutation == "context" else "failed"
+    )
+    if mutation == "context":
+        assert store.annotations(video["id"]).camera_corrections[0].is_cut is False
+
+
+@pytest.mark.parametrize(
+    "mutation", ["source", "timestamps", "context", "error", "cancel"]
+)
+def test_last_progress_callback_cannot_publish_false_completion(workspace, mutation):
+    _, store, _, _, _ = workspace
+    execute(workspace)
+    final = []
+    published_during_callback = []
+
+    def progress(value, job_id):
+        if value != 1:
+            return
+        final.append(job_id)
+        # The identities stage reports 100%, then the terminal callback runs.
+        if len(final) == 2:
+            path = next((store.data / "test" / "analysis").glob("*/manifest.json"))
+            published_during_callback.append(
+                json.loads(path.read_text(encoding="utf-8"))["processing_complete"]
+            )
+            if mutation == "error":
+                raise RuntimeError("terminal callback failed")
+            if mutation == "cancel":
+                store.request_cancel(job_id)
+            else:
+                mutate_input(workspace, mutation)
+
+    error, message = (
+        (RuntimeError, "terminal callback failed")
+        if mutation == "error"
+        else (JobCancelled, "paused")
+        if mutation == "cancel"
+        else input_error(mutation)
+    )
+    with pytest.raises(error, match=message):
+        execute_with_progress(workspace, progress)
+    assert len(final) == 2
+    assert published_during_callback == [False]
+    plan = assert_incomplete(
+        store,
+        final[-1],
+        "interrupted" if mutation in ("context", "cancel") else "failed",
+    )
+    assert plan["completed_stages"] == 17
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize("mutation", ["source", "timestamps", "context"])
+def test_fresh_stage_revalidates_before_checkpoint_publication(
+    workspace, monkeypatch, mode, mutation
+):
+    ctx = mode_workspace(workspace, mode)
+    _, store, _, _, calls = ctx
+    original = pipeline.track_players
+    produced = []
+
+    def changed(*args, **kwargs):
+        original(*args, **kwargs)
+        produced.append(args[8])
+        mutate_input(ctx, mutation)
+
+    monkeypatch.setattr(pipeline, "track_players", changed)
+    error, message = input_error(mutation)
+    with pytest.raises(error, match=message):
+        execute(ctx)
+    assert calls == [("segments", 0), ("players", 0)]
+    assert len(produced) == 1
+    assert "analysis_stage_key" not in json.loads(
+        produced[0].read_text(encoding="utf-8")
+    )
+    assert not any(j["kind"] == "players" for j in store.jobs())
+    job = next(j for j in store.jobs() if j["kind"] == "analysis")
+    plan = assert_incomplete(
+        store, job["id"], "interrupted" if mutation == "context" else "failed"
+    )
+    assert plan["completed_stages"] == 1 and plan["parts"][0]["stages"] == {}
+    assert store.job(plan["segments"]["run_id"])["status"] == "completed"
+
+
+def test_irrelevant_manual_edit_during_resume_preserves_reuse(workspace):
+    _, store, _, _, calls = workspace
+    execute(workspace)
+    calls.clear()
+    changed = []
+
+    def progress(value, job_id):
+        if not changed:
+            doc = store.annotations("test")
+            doc.events = [
+                Event(
+                    id="reviewed",
+                    rally_id="R1",
+                    kind="shot",
+                    family="smash",
+                    side="backhand",
+                    frame=1,
+                )
+            ]
+            store.save_annotations("test", doc)
+            changed.append(job_id)
+
+    result = execute_with_progress(workspace, progress)
+    assert (
+        result["processing_complete"] and result["reused_stages"] == 17 and calls == []
+    )
+    assert store.annotations("test").events[0].id == "reviewed"
