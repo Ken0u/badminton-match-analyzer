@@ -509,6 +509,15 @@
       "task_id": "313",
       "verb": "checkpoint"
     },
+    "capacity313-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1792994629,
+      "epoch": 1,
+      "fingerprint": "96c4c1da582dbacfc9157922956928e4c0a678a6bc46e14be0cafb503ad17982",
+      "status": "review",
+      "task_id": "313",
+      "verb": "submit"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -26026,6 +26035,7 @@
       "epoch": 1,
       "planned_at": 1792982667,
       "planned_by": "Ken0u",
+      "pr_number": 314,
       "spec": {
         "acceptance": [
           "Routine remaining phase under approved localization roadmap65 after fully delivered311/PR312 at df5251e72738fe764e3510fb09e328455188d67c. Search all issues/PRs/grants/history before implementation. The original311 four-hour clock ended1792981031 and its report remains scientifically incomplete. A new distinct task/grant bounds ONLY previously unfinished real diagnostics and selected-tensor byte audit; it does not retroactively renew311, rerun any completed study stage or reinterpret missing terminal evidence as success. Preserve all prior branches, reports, attempts, private ledgers, deprecated PROGRESS edit, environments, sources, models, annotations and predictions. Fresh grant before code/native work; original-host Store/process proof before every stage.",
@@ -26094,7 +26104,26 @@
         ]
       },
       "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "df5251e72738fe764e3510fb09e328455188d67c",
+        "head_sha": "c90f2c6fde84ebb5d22f20ed5808e15652e10b62",
+        "native_evidence": {
+          "code_sha": "c90f2c6fde84ebb5d22f20ed5808e15652e10b62",
+          "limitations": [
+            "Familiar-source development agreement against agent labels; no independent or full-match accuracy claim.",
+            "All 60 cases including 28 unknowns remain; all four source eligibility flags false and complete scientific references 0/2.",
+            "Original interrupted predecessor job and missing terminal remain; 18 inherited complete views are reused rather than fresh reruns.",
+            "No new training, synthetic test, selection, source-image transfer, installed-model/default change or promotion.",
+            "Exact hosted PR/main CI and independently verified complete public delivery remain separate requirements."
+          ],
+          "model_sha256": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "receipt_sha256": "05c635aa508881497b4639f338386a0428a3904f0cc2c48d41ffcc4b485adff0",
+          "source_sha256": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822"
+        },
+        "pr_number": 314,
+        "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d"
+      }
     },
     "62": {
       "checkpoint": {
