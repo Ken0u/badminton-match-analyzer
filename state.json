@@ -400,6 +400,21 @@
       "status": "ok",
       "verb": "register"
     },
+    "capacity-remaining-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1792982667,
+      "fingerprint": "644974868cc3f67eeba28d493fefd9e7cd915946b9f0ea7a655f5933a1b3a868",
+      "status": "ready",
+      "task_id": "313",
+      "verb": "plan"
+    },
+    "capacity-remaining-register-v1": {
+      "actor": "Ken0u",
+      "at": 1792982667,
+      "fingerprint": "87c72d3d5d6bb876fa67b8130abbf1ffeb59b2fe056648553620fe9e3c1a3041",
+      "status": "ok",
+      "verb": "register"
+    },
     "capacity311-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792967048,
@@ -10030,6 +10045,14 @@
       "fingerprint": "766ff6cfc6e3790aa1bb9f61cb72ef82e7819579a140fd90be282ae8b1ca5da8",
       "status": "ready",
       "task_id": "311",
+      "verb": "plan"
+    },
+    "spec-313-8f9209cde6d538084b1ccb7a51082c13d59d00d89108fc457852ff01a0204a66": {
+      "actor": "Ken0u",
+      "at": 1792982667,
+      "fingerprint": "8be3258e840694f190636eca1e1ff2417d9ae47cb0f959993176ad6ac324697a",
+      "status": "ready",
+      "task_id": "313",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -25941,6 +25964,80 @@
         "spec_hash": "9aacf5a897ff1e81dfa59566118abe335698995a1ebd305938be91c613937ef3"
       }
     },
+    "313": {
+      "epoch": 0,
+      "planned_at": 1792982667,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Routine remaining phase under approved localization roadmap65 after fully delivered311/PR312 at df5251e72738fe764e3510fb09e328455188d67c. Search all issues/PRs/grants/history before implementation. The original311 four-hour clock ended1792981031 and its report remains scientifically incomplete. A new distinct task/grant bounds ONLY previously unfinished real diagnostics and selected-tensor byte audit; it does not retroactively renew311, rerun any completed study stage or reinterpret missing terminal evidence as success. Preserve all prior branches, reports, attempts, private ledgers, deprecated PROGRESS edit, environments, sources, models, annotations and predictions. Fresh grant before code/native work; original-host Store/process proof before every stage.",
+          "Keep predecessor311 experiment780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3 and protocolb507610fef6183b9e1d80ab50ba923acaa2f89e87408912fb3c1b85b3a196389 byte-immutable and referenced by exact seals. Keep its two epoch4 validation selections and trained checkpoint bytes fixed: decoder1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598 and convolution2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833. Parentdf867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a unchanged. These exact311 selected inputs may be read; no historical305 selected checkpoint/test, consumed63 holdout, new generator pixels, synthetic training/validation/test predictions, epoch/recipe/threshold changes or model selection. Carry prior generated-test outcome only as a cited unchanged aggregate; do not reopen or repeat its test.",
+          "Implement a separately versioned continuation module/CLI/public protocol with an exclusive new output namespace and new-task deadline at most4h from its original committed grant. Never patch clocks, monkeypatch capacity311.load, rewrite predecessor experiment/consumer/selection/receipts, transplant provenance as fresh output, or relax expired predecessor validation globally. Freeze new protocol/source/runtime/input/predecessor-view bindings publicly before remaining native inference. Verify all84 predecessor consumer files and their copied originals against sealed bytes, plus current clean runtime and all new consumers. Any changed source/model/runtime/predecessor/membership/budget fences real execution and is reported incomplete; no substitution or fallback.",
+          "Before remaining inference, independently audit the two selected CPU state dictionaries against the original parent:104 exact names/shapes/dtypes, finite values, exactly four decoder and19 convolution eligible tensor changes, every other tensor including all BatchNorm affine/statistics byte-identical and matching recorded frozen hashes. Use genuine original Store admission and recorded original-host process/terminal provenance for this bounded heavy read; no forward, optimizer, generator, training, alternate weights or selected checkpoint installation. Failure fences candidates; preserve actual evidence. This new audit is not claimed to have occurred during311.",
+          "Reuse only the18 fully validated existing control-view receipts/5436 rows, retaining exact original run hashes, native PTS/camera/orientation/full-view-median/context and predecessor experiment lineage. Independently revalidate source, model, selector dependencies and partial physical projection before reuse. Original control job remains interrupted with absent original worker terminal; reused complete views are not described as a successfully completed original job or independently fresh reruns. Do not copy or rewrite original raw data. Run exactly the remaining32 control views/8063 rows under new admitted attempt(s). Require all50 original views/13499 rows to reproduce original physical_observations_v1 with exact native identity/component/visibility/selection geometry and confidence abs tolerance0.00001,relative0; omit exactly the four already-declared selector-dependency fields while independently validating their correct context on all old/new rows. Legacy strict controls remain unchanged. Any mismatch fences both learned variants and scoring.",
+          "Only after complete physical control reproduction, run each unchanged fixed311 decoder and convolution checkpoint once over all50 same complete original target camera/background views/13499 rows, with unchanged native512x288 full-view layout, float16 CUDA, actual overlapping ensemble/observed component selector and threshold0.5. Use existing research-only exact study/variant/selection binding; no arbitrary override or change to shuttle.py/default application enforcement. Keep all source identity/orientation/PTS/calibration expiry/cuts/scenes and full-view medians. Explicitly reuse only complete validated newly produced views after verified interruption within this task original clock; never silently repeat completed views or infer process exit from timeout/missing handle. No recipe, control, source or threshold substitution.",
+          "Seal all three complete raw-output indexes and truthful original/new terminal provenance publicly on the new owning issue BEFORE the sole familiar diagnostic. Verify both learned jobs and remaining-control job terminal/completed and independently absent, while retaining the original interrupted job/recovery as predecessor evidence. Retain exactly all60 familiar cases,25 localizable visible/seven supported negatives/28 unknown and every overlapping group, with unchanged normalized tolerance0.005, displacement FP+FN, radial uncertainty bounds, missing/negative denominators and all four eligibility flags false. Unknown never negative. Report all three fixed methods, paired transitions, unavailable cases, counts/costs/group support and limitations; no winner selection, family/side/identity/serve/end/full-match accuracy, statistical independence or model promotion. Complete scientific references remain0/2;65/62/66/67/71 remain incomplete.",
+          "All heavy/native work uses genuine current original-host GPU/data reservations AND original data/processed Store run_local_job admission, pin original BADMINTON_ROOT/DATA/weights before imports, clear credentials, initialize torchvision before threaded PyAV and preserve native FFmpeg logging restoration. Record/recheck exact PID/creation/cwd/command, Store status, durable artifacts, queue ownership epoch and immutable consumers before every transition. Preserve failed and interrupted attempts. No competing work, unrelated process control, isolated substitute Store, app truth overwrite, downloads, image transfer/assessor, new paid service, installed model/default/policy/auth/workflow/deployment/dependency/storage/schema/UI/API change or deprecated PROGRESS access/edits.",
+          "Meaningful disposable generated tests cover expired predecessor retention without clock bypass, exact selection/model/source/runtime/predecessor-view tamper rejection before decode, changed PTS/context/membership, imported18/new32 provenance and physical-control gating, frozen104-tensor CPU audit failure cases, one-shot raw sealing/scoring and exact60-case unknown/unavailable denominators, genuine admitted terminal/lifetime checks, exclusive outputs and byte/time limits. No generated case opens real scientific model/source files or claims badminton accuracy. Run focused/full pytest plus required Ruff/format/pip/repository UTF8-LF/JSON/link/diff checks; freeze executable bytes across final tests and native stages. Scope changes need a genuine grant first.",
+          "Exactly six writable paths. Add the new explicit public protocol include in MANIFEST.in while preserving all48 existing manifests. Publish reproducible research-only code and a distinct aggregate continuation report; do not rewrite311 historical report. Submit exact tested source through PR/controller only, exact PR/main CI and independently verify complete public source/wheel/frontend/locks/all49 protocol manifests and both anonymous image manifests/config/descriptors. No manual merge/main push/raw coordination edit or workflow retry/cancel/wake; descriptor HEADs are not layer-byte/runtime/source-parity proof. Completion may be a truthful bounded negative/incomplete outcome, never fabricated full correctness.",
+          "Bound remaining-phase implementation/testing/native work to4h from its original fresh committed grant and at most3 diagnosed repair rounds. Keep a cumulative4GiB retained-output limit including existing311 outputs, failed attempts, new worktree/tests and downloaded CI/build evidence; preserve prior receipts and do not reset the ledger. No additional image transfer/session/payload allowance. At source/process/control/audit/budget/deadline failure, preserve actual incomplete evidence and stop affected stages rather than extend clocks, repeat completed training/tests, shrink denominators, fabricate provenance or change scientific rules."
+        ],
+        "artifacts": {
+          "capacity311-convolution-checkpoint": "2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833",
+          "capacity311-convolution-selection": "acf50a4e63fef72310145650593e5eb136f9d6c023a944fe156499cffe0533db",
+          "capacity311-decoder-checkpoint": "1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598",
+          "capacity311-decoder-selection": "60dfcab0bfc3d9bb524b4ac53a5bb1b3d63bdcc835751e5b5d055149f9f08d0d",
+          "capacity311-delivery": "b213e02dcc948a67555845f6e45d7d9681b1d927ab16035eac3b29e84a2b3c2f",
+          "capacity311-experiment": "780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3",
+          "capacity311-incomplete-audit": "3a7f5f2b9bb1a1b313f75dd3b37f91ee70a5f4c4cc11e929f62efaf3bc98897e",
+          "capacity311-interruption-recovery": "64e96991cd7c69cc1ff583d7d3ccf9236d2cb1893ceb073620dde3795fd23521",
+          "capacity311-protocol": "b507610fef6183b9e1d80ab50ba923acaa2f89e87408912fb3c1b85b3a196389",
+          "remaining-readiness": "d8bd6326129d0bf175c98c07c777d24d08aa8da2c15a49fb18541263ff869e37",
+          "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+          "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+          "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+        },
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "311"
+        ],
+        "exclusions": [
+          "No new training/generator/test/selection, old305/63 access, image transfer/assessor/downloads, original-source tuning, model/default promotion, app/API/UI or sensitive automation/auth/deployment/dependency/storage/schema edits, manual merge, paid service or deprecated PROGRESS edits."
+        ],
+        "limits": {
+          "max_output_bytes": 4294967296,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Complete only the unfinished real-source diagnostics for the two fixed #311 validation-selected checkpoints, preserving its interrupted record and all original data without new training, synthetic test, image assessment or model promotion.",
+        "paths": [
+          "backend/badminton/shuttle_capacity_continuation.py",
+          "scripts/continue_shuttle_capacity.py",
+          "tests/test_shuttle_capacity_continuation.py",
+          "data/manifests/shuttle_capacity_continuation_protocol_v1.json",
+          "docs/SHUTTLE_CAPACITY_CONTINUATION_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary",
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Separately frozen remaining-only protocol, immutable311 inputs/18 inherited views, selected CPU tensor audit, genuine shared Store/GPU admission and complete original physical control before candidates.",
+          "Meaningful generated/focused/full checks, immutable executable/runtime seals, exact PR/main CI/controller integration and independent complete public delivery; retain diagnostic-only and incomplete states."
+        ]
+      },
+      "spec_hash": "6689ec0b377f6ecaf2f836bc7beebcb22695180ff6554c9aa5b0044bd5d5374d",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -29335,6 +29432,35 @@
       "host_id": "MSI",
       "registered_at": 1792963198,
       "session_id": "9f039f325d2a441b97eb51521ff283ef"
+    },
+    "MSI/a37c5a052a754079b91613f05298827b": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "capacity311-convolution-checkpoint": "2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833",
+        "capacity311-convolution-selection": "acf50a4e63fef72310145650593e5eb136f9d6c023a944fe156499cffe0533db",
+        "capacity311-decoder-checkpoint": "1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598",
+        "capacity311-decoder-selection": "60dfcab0bfc3d9bb524b4ac53a5bb1b3d63bdcc835751e5b5d055149f9f08d0d",
+        "capacity311-delivery": "b213e02dcc948a67555845f6e45d7d9681b1d927ab16035eac3b29e84a2b3c2f",
+        "capacity311-experiment": "780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3",
+        "capacity311-incomplete-audit": "3a7f5f2b9bb1a1b313f75dd3b37f91ee70a5f4c4cc11e929f62efaf3bc98897e",
+        "capacity311-interruption-recovery": "64e96991cd7c69cc1ff583d7d3ccf9236d2cb1893ceb073620dde3795fd23521",
+        "capacity311-protocol": "b507610fef6183b9e1d80ab50ba923acaa2f89e87408912fb3c1b85b3a196389",
+        "remaining-readiness": "d8bd6326129d0bf175c98c07c777d24d08aa8da2c15a49fb18541263ff869e37",
+        "shuttle-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "shuttle-development-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "shuttle-development-sources": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+        "shuttle-native-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs",
+        "cuda"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1792982667,
+      "session_id": "a37c5a052a754079b91613f05298827b"
     },
     "MSI/aac920ab35ff422abe970597d106ffb6": {
       "actor": "Ken0u",
