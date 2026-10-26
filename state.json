@@ -500,6 +500,15 @@
       "task_id": "313",
       "verb": "checkpoint"
     },
+    "capacity313-native-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1792991458,
+      "epoch": 1,
+      "fingerprint": "31fe93faf45d46ccf9ad18fc855b9f382504f4f91e6127a186b6ae89a969d1df",
+      "status": "running",
+      "task_id": "313",
+      "verb": "checkpoint"
+    },
     "ci-bootstrap200-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792721888,
@@ -25996,25 +26005,19 @@
     "313": {
       "checkpoint": {
         "branch": "codex/issue-313-complete-only-the-unfinished-real-source",
-        "head_sha": "df5251e72738fe764e3510fb09e328455188d67c",
+        "control_gate_sha256": "f8f8c7d82e8eeb52e455c7f162de75e03ea62c1536ecb563c1692262a4497981",
+        "head_sha": "0b2b029ce3914a153ca499c48a30ee291e74e85f",
         "immutable_deadline": 1792997456,
-        "local_source_sha256": {
-          "MANIFEST.in": "7af44bcc543c10feaebd647e2221d498298e216819a1f9a00f225626c4433af3",
-          "backend/badminton/shuttle_capacity_continuation.py": "803f1e5a48b5449803932e5e20bafbb2136f8ec266934ce27767fa3d2744cd62",
-          "data/manifests/shuttle_capacity_continuation_protocol_v1.json": "7b4dfb6a3d1054ccfdf5f5f4bdf4e1f7d73d1511ca3c9f84da99e943a0534857",
-          "docs/SHUTTLE_CAPACITY_CONTINUATION_REPORT.md": "5140e630c1cec4ff6861b4f4328c93af68ba9b3a8b5e202dabb9a7868d4b1288",
-          "scripts/continue_shuttle_capacity.py": "30b61c3ad92138bc8fdb69db6db548c46ae8d85f438dfe711f4e77e43f190595",
-          "tests/test_shuttle_capacity_continuation.py": "88dc25879742015098c003c3d091c57782e7e5a0d3e967820d52e31c5d778cbb"
-        },
-        "summary": "Implemented the six scoped continuation paths. Explicit predecessor experiment/84consumer/runtime/input/selection/18view bindings preserve expired311 clock and original interrupted Store/missing-terminal provenance. Exact CPU104-tensor audit gates remaining stages; full physical control comparison gates learned methods, exclusive raw/public seals gate sole60case diagnostics. Added generated tests for clocks/tampering/tensors/inherited views/process-Store proof/unknown and unavailable denominators. Initial interrupted focused run had partial log and independently absent lifetimes, not counted passing. Targeted checks diagnosed wrong test Store API and strengthened explicit consumer-byte validation. An intermediate222-test focused run passed but source-stability failed because further coverage was added during development; it is not final immutable verification. First full check underway; final checks will be rerun on fixed bytes after the partial physical-control guard addition. No native stage/model read/media decode/image transfer/training/test repetition or app truth change has occurred. Original313 deadline1792997456 unchanged. Next: final immutable checks, clean source commit/push, public prospective freeze, admitted tensor audit and remaining32control then two fixed50view variants; raw public seal before sole diagnostics, report/exactCI/controller/main/public delivery. References0/2; fullaccuracyunproven."
+        "summary": "Final fixed-byte verification passes: 4,944 full tests / four optional skips, 231 focused and required lint/format/dependency/repository/diff checks. Source `0b2b029ce3914a153ca499c48a30ee291e74e85f`. The admitted CPU audit verifies all 104 selected tensors per method: exactly four decoder and 19 convolution changes, with 100/85 byte-identical frozen tensors. Remaining control completed exactly 32 new views / 8,063 rows plus 18 inherited views / 5,436 rows; all 50 original physical views reproduce with zero differences. Actual control terminal return code 0 and all 75 observed lifetimes independently absent. Original interrupted predecessor job/missing terminal and expired clock remain unchanged. Decoder is running in the original sequential admitted chain; no duplicate/restart. Both full raw indexes and public seal must precede the sole familiar scoring. No training, synthetic-test repetition, image transfer, selection or promotion. Original #313 deadline 1792997456 remains immutable. All 60 cases and 28 unknowns retained; complete references 0/2 and full accuracy unproven.",
+        "tensor_audit_sha256": "b1cb459ae27fb8138389cde4675be4b72b716f6e719f174cfe75b5e997824602"
       },
-      "checkpoint_at": 1792989088,
+      "checkpoint_at": 1792991458,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "df5251e72738fe764e3510fb09e328455188d67c",
         "branch": "codex/issue-313-complete-only-the-unfinished-real-source",
         "epoch": 1,
-        "expires_at": 1792999888,
+        "expires_at": 1793002258,
         "granted_at": 1792983056,
         "host_id": "MSI",
         "session_id": "a37c5a052a754079b91613f05298827b",
