@@ -1005,6 +1005,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "discovery315-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793000069,
+      "epoch": 1,
+      "fingerprint": "13d0db2b9da3095e36f8561f5468700e21c0d81f07b9cc1973e7503332b8bd72",
+      "status": "review",
+      "task_id": "315",
+      "verb": "submit"
+    },
     "editor-report-plan-v1": {
       "actor": "Ken0u",
       "at": 1792885363,
@@ -26208,6 +26217,7 @@
       "epoch": 1,
       "planned_at": 1792996998,
       "planned_by": "Ken0u",
+      "pr_number": 316,
       "spec": {
         "acceptance": [
           "Search all open/closed issue and PR history, current coordination and trusted reports; relate this prerequisite to localization roadmap65 and source/evaluation milestones without duplicating completed218/220 or re-running313. Preserve original checkout/PROGRESS edit, environments, datasets, research processes, installed models, annotations and predictions. Obtain a genuine committed targeted grant and isolated worktree before tracked edits.",
@@ -26257,7 +26267,13 @@
         ]
       },
       "spec_hash": "d814d0b818f4df08255d452fa96ec535010011356461d5d941112dfe5bbef4fe",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4dad68057c1c3274154389a24217f513cc0ef2b4",
+        "head_sha": "56587899ceae41a7a6e5a34e2896cc1f94767550",
+        "pr_number": 316,
+        "spec_hash": "d814d0b818f4df08255d452fa96ec535010011356461d5d941112dfe5bbef4fe"
+      }
     },
     "62": {
       "checkpoint": {
