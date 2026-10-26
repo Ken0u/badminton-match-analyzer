@@ -134,6 +134,82 @@ def execute(ctx, settings=None):
     )
 
 
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+def test_pipeline_contacts_receive_native_clock_and_record_input_provenance(
+    workspace, monkeypatch, mode
+):
+    workspace = mode_workspace(workspace, mode)
+    _, store, video, times, _ = workspace
+    original = pipeline.propose_contacts
+    received = []
+
+    def inspect(shuttle, players, source, source_times=None):
+        received.append(source_times)
+        return (
+            original(shuttle, players, source)
+            if source_times is None
+            else original(shuttle, players, source, source_times)
+        )
+
+    monkeypatch.setattr(pipeline, "propose_contacts", inspect)
+    execute(workspace)
+    assert received and all(tuple(value) == tuple(times) for value in received)
+    for job in store.jobs(video["id"]):
+        if job["kind"] != "contacts":
+            continue
+        artifact = json.loads(
+            (store.data / video["id"] / "runs" / f"{job['id']}.json").read_bytes()
+        )
+        assert artifact["source_timestamps_validated"] is True
+        assert artifact["input_source_hash_status"] == {
+            "players": "matched",
+            "shuttle": "matched",
+        }
+
+
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+@pytest.mark.parametrize("mutation", ["clock", "hash"])
+def test_pipeline_rejects_bad_contact_inputs_before_publication(
+    workspace, monkeypatch, mode, mutation
+):
+    workspace = mode_workspace(workspace, mode)
+    _, store, video, _, _ = workspace
+    before = store.annotations(video["id"]).model_dump()
+    original = pipeline.propose_contacts
+    preserved = {}
+
+    def changed(shuttle, players, source, source_times=None):
+        for job in store.jobs(video["id"]):
+            if job["kind"] in ("players", "shuttle"):
+                path = store.data / video["id"] / "runs" / f"{job['id']}.json"
+                preserved[path] = path.read_bytes()
+        if mutation == "clock":
+            shuttle["frames"][0]["time_s"] += 0.4
+        else:
+            players["video_sha256"] = "0" * 64
+        return (
+            original(shuttle, players, source)
+            if source_times is None
+            else original(shuttle, players, source, source_times)
+        )
+
+    monkeypatch.setattr(pipeline, "propose_contacts", changed)
+    with pytest.raises(ValueError):
+        execute(workspace)
+    assert preserved and all(
+        path.read_bytes() == raw for path, raw in preserved.items()
+    )
+    assert store.annotations(video["id"]).model_dump() == before
+    assert not any(
+        job["kind"] == "contacts" and job["status"] == "completed"
+        for job in store.jobs()
+    )
+    assert not any(
+        json.loads(path.read_bytes()).get("stage") == "contacts"
+        for path in (store.data / video["id"] / "runs").glob("*.json")
+    )
+
+
 def test_source_windows_own_every_frame_once_and_keep_temporal_halos(workspace):
     _, _, video, times, _ = workspace
     windows = pipeline.plan_windows(video, times)

@@ -436,6 +436,24 @@ def test_generated_audio_job_uses_corresponding_source_rows(
                 "include_audio": True,
             },
         )
+        if case in {
+            "shifted_frames",
+            "shifted_times",
+            "duplicate",
+            "conflicting_duplicate",
+            "time_collision",
+            "missing_frame",
+        }:
+            assert response.status_code == 422, response.text
+            assert len(store.jobs()) == 2 and calls == []
+            assert set((data / video["id"] / "runs").glob("*.json")) == set(documents)
+            assert all(
+                path.read_bytes() == before for path, before in documents.items()
+            )
+            assert source.read_bytes() == source_bytes
+            assert store.annotations(video["id"]).model_dump_json() == annotation_bytes
+            assert saved_revisions() == revision_rows
+            return
         assert response.status_code == 202, response.text
         job = wait(store, response.json()["id"])
         assert job["status"] == "completed", job
@@ -547,6 +565,16 @@ def test_generated_audio_interval_api_preserves_source_bounds_and_review_context
                 "include_audio": True,
             },
         )
+        if case in {"bound_pose_mismatch", "bound_pose_duplicate"}:
+            assert response.status_code == 422, response.text
+            assert len(store.jobs()) == 2
+            assert set((data / video["id"] / "runs").glob("*.json")) == set(
+                original_bytes
+            )
+            assert revisions() == original_revisions
+            assert source.read_bytes() == source_bytes
+            assert all(path.read_bytes() == raw for path, raw in original_bytes.items())
+            return
         assert response.status_code == 202, response.text
         job = wait(store, response.json()["id"])
         assert job["status"] == "completed", job
