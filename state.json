@@ -969,6 +969,13 @@
       "task_id": "321",
       "verb": "checkpoint"
     },
+    "contact321-ci-review-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793014780,
+      "fingerprint": "bd9ab566f775c316b93b7a1081762b001d9d2403058f2b6358bba026a582f0d4",
+      "status": "ok",
+      "verb": "register"
+    },
     "contact321-extend-v1": {
       "actor": "Ken0u",
       "reason": "scope expansion cannot change task semantics",
@@ -30386,6 +30393,18 @@
       "host_id": "MSI",
       "registered_at": 1792485497,
       "session_id": "cfd18714-5a16-4720-811c-0bde1ada4c14"
+    },
+    "MSI/contact321-ci-review-20261026": {
+      "actor": "Ken0u",
+      "artifacts": {},
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793014780,
+      "session_id": "contact321-ci-review-20261026"
     },
     "MSI/d45693fd670e4a8f86a15dba76fc903d": {
       "actor": "Ken0u",
