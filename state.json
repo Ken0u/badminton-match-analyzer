@@ -1084,6 +1084,13 @@
       "task_id": "252",
       "verb": "next"
     },
+    "eth319-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793008820,
+      "fingerprint": "c2e63b1666b332684b957788fc4064ce89411fcb624114398ebd817c58869716",
+      "status": "ok",
+      "verb": "register"
+    },
     "evaluation-clock-next-v1": {
       "actor": "Ken0u",
       "at": 1792901173,
@@ -10221,6 +10228,14 @@
       "fingerprint": "54111ae1cdf960ac3ca5999d03dc4045aa2f17725cf46cb91f2c709d6f0e2859",
       "status": "ready",
       "task_id": "317",
+      "verb": "plan"
+    },
+    "spec-319-13045827d4dfd38e82cbc7c9821283d9ca0562f010a9d8a3720ca81225e0898c": {
+      "actor": "Ken0u",
+      "at": 1793008820,
+      "fingerprint": "dcfc48dc9395f1d94c04550a218c242d4e9a538008f5564f72dcd88d827ad525",
+      "status": "ready",
+      "task_id": "319",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -26476,6 +26491,58 @@
         "spec_hash": "28b2c091f1c564c2f229d7911eb9194209c8dc665ee3563ba0a2eb7d1474cc7b"
       }
     },
+    "319": {
+      "epoch": 0,
+      "planned_at": 1793008820,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search all open/closed issue and PR history, current coordination and prior reports before claiming. Preserve completed #313/#315/#317 evidence, all old experiments/holdouts, source/annotation/model artifacts, original checkout and deprecated PROGRESS edit. Obtain a fresh committed targeted grant and isolated branch before tracked changes; no generic next that could claim legacy #62.",
+          "Start from the exact public processed-data folder 1neBfC7-Fp-l53muxZiIbIET6lYH5xv9s and pinned creator repository 745a82916e919313e6db319a12ea873082192666. Record the preserved 73-entry/36-folder root snapshot separately from new observations. Inventory the 33 author background/difficulty folders, identify coupled variants, and explicitly exclude COCO, old, .DS_Store and sorting-progress data from candidate supervision. Follow only public folder metadata descendants within this root and creator-linked textual terms/source descriptions; do not follow media/image/annotation/weight download links.",
+          "Use metadata listings plus bounded creator README/LICENSE/COPYING/TERMS/DATASET_CARD files, paper HTML and code/config text to establish applicable dataset/media terms, source acquisition description, label format, declared splits, sequence/frame ordering and native-clock availability. Public Drive YAML dataset configurations may be read as metadata, but no per-frame annotation rows, images, videos, weights or training results are acquired. Repository software licensing, all-files-under-train directories, author-reported FPS and difficulty folders are not proof of data rights, independent groups or exact native clocks.",
+          "Retain raw response hashes/status/bytes/URLs, a deterministic inventory and actual request accounting. At most160 ordinary public metadata requests,2MiB per response and64MiB cumulative response bodies,20second request timeout,no automatic retries, credential use, access bypass or author messages. Preserve failures and partial/unavailable listings explicitly; stop the relevant branch on denial. Do not execute external code, crawl outside the declared ancestry or silently expand these budgets.",
+          "Document broadcast suitability and acquisition readiness separately from availability: egocentric camera-domain differences, corrected automatic-label provenance, potential source/variant overlap, unknown upstream pretraining membership and absent native correspondence remain explicit. Existing false eligibility flags and scientific references0/2 stay unchanged. Produce either a precisely bounded acquisition proposal supported by applicable terms and enough inventory, or a concrete remaining prerequisite; do not infer legal permission or scientific quality from public accessibility.",
+          "Write only docs/ETH_SUPERVISION_INVENTORY_REPORT.md, docs/eth-supervision-inventory.json and a concise linked PROJECT_PLAN.md increment. Commit aggregate/public source metadata only; raw fetched text stays ignored locally. Independently audit inventory parentage/counts/format/claims against actual retained responses. Run existing relevant package regressions plus required repository UTF8-LF/JSON/local-link/Ruff/format/pip/diff and package/frontend provenance checks; documentation changes require no redundant native/scientific execution.",
+          "Submit through normal controller and verify exact PR/main checks, full merged-tree parity and normal public source/wheel/frontend/lock/all49 public manifests/scoped documents plus both anonymous image manifests/configs/descriptors without installing/executing candidate artifacts. No manual merge, main push, raw coordination edits, CI retry/cancel/wake, paid service, scientific image transfer/assessment, inference/training, consumed holdout opening, model/default/eligibility promotion or sensitive auth/policy/workflow/deployment changes. Bound to3hours from the original fresh grant,256MiB retained outputs and3diagnosed repair rounds; never silently renew runtime."
+        ],
+        "artifacts": {
+          "creator-root-listing": "685772978f7c4702e80fa75628b9cb5983ddba15465b4735aa007e3d1ff6930f",
+          "source-qualification": "432fe346bd6285e59ee452a2804ebcc4e5463c3707b556bee77270ed47f4f27f"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "313",
+          "315",
+          "317"
+        ],
+        "exclusions": [
+          "No scientific media/labels/weights acquisition or image payload transfer; no training/inference/assessor, eligibility changes, promotion, external author contact, paid service, sensitive automation/auth/workflow/schema changes, manual merge or PROGRESS edits."
+        ],
+        "limits": {
+          "max_retained_bytes": 268435456,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Establish the ETH shuttle release acquisition prerequisites from creator-published terms, source descriptions and bounded folder/file metadata, distinguishing detection images from usable native temporal sequences and preserving unresolved eligibility.",
+        "paths": [
+          "docs/ETH_SUPERVISION_INVENTORY_REPORT.md",
+          "docs/eth-supervision-inventory.json",
+          "PROJECT_PLAN.md"
+        ],
+        "priority": 35,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual retained creator metadata and source-bound inventory establish acquisition prerequisites or retain one concrete unresolved prerequisite; no invented source groups, clock correspondence, terms or scientific accuracy; required local/exact CI/main/public delivery."
+        ]
+      },
+      "spec_hash": "9c847870e395257da5df65030dbd3cb026e3e7f58f7c8123a475dbe34ebeb22d",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -29899,6 +29966,21 @@
       "host_id": "MSI",
       "registered_at": 1792963198,
       "session_id": "9f039f325d2a441b97eb51521ff283ef"
+    },
+    "MSI/a0e20690e39f41ec970e9114f79466bc": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "creator-root-listing": "685772978f7c4702e80fa75628b9cb5983ddba15465b4735aa007e3d1ff6930f",
+        "source-qualification": "432fe346bd6285e59ee452a2804ebcc4e5463c3707b556bee77270ed47f4f27f"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793008820,
+      "session_id": "a0e20690e39f41ec970e9114f79466bc"
     },
     "MSI/a37c5a052a754079b91613f05298827b": {
       "actor": "Ken0u",
