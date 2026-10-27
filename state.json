@@ -28068,6 +28068,7 @@
       "epoch": 1,
       "planned_at": 1793126687,
       "planned_by": "Ken0u",
+      "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
           "Refresh current main, issues/PRs, active grants and the preserved macOS failure in run40502970976/job122185096620 on oldPR333source424a8589bc90dbb8dfaa7608474dacad81b51b8a. Retain its original failed gate/log and distinct other passing checks. Obtain a separate committed grant and isolated worktree; do not enlarge archival334 or infer an authorization to retry historicalCI.",
@@ -28106,7 +28107,7 @@
         ]
       },
       "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750",
-      "status": "running"
+      "status": "recovery_required"
     },
     "337": {
       "epoch": 0,
