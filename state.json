@@ -9405,6 +9405,26 @@
       "task_id": "332",
       "verb": "release"
     },
+    "selector332archive-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793125905,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "73dcb1799eb19b7489e0cf84c7654134c347f386",
+        "branch": "codex/issue-334-archive-the-deadline-expired-332-diagnos",
+        "epoch": 1,
+        "expires_at": 1793136705,
+        "granted_at": 1793125905,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08"
+      },
+      "epoch": 1,
+      "fingerprint": "1a549e0b3702d25fa37f24e1d8428190480e78dc39d4b964792ac2554309c5ee",
+      "status": "granted",
+      "task_id": "334",
+      "verb": "next"
+    },
     "selector332archive-register-v1": {
       "actor": "Ken0u",
       "at": 1793125686,
@@ -27810,7 +27830,18 @@
       "status": "blocked"
     },
     "334": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "73dcb1799eb19b7489e0cf84c7654134c347f386",
+        "branch": "codex/issue-334-archive-the-deadline-expired-332-diagnos",
+        "epoch": 1,
+        "expires_at": 1793136705,
+        "granted_at": 1793125905,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08"
+      },
+      "epoch": 1,
       "planned_at": 1793125686,
       "planned_by": "Ken0u",
       "spec": {
@@ -27883,7 +27914,7 @@
         ]
       },
       "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
