@@ -10729,6 +10729,14 @@
       "task_id": "335",
       "verb": "plan"
     },
+    "spec-337-a052cb67bdf3da4eba0923280e0321f78a2b6924b6e411c05a6b3150b69275df": {
+      "actor": "Ken0u",
+      "at": 1793127954,
+      "fingerprint": "895a8b7e08d42f1084c64ee36913c001c56a8948389ce23cd4c1d72a66ce32d3",
+      "status": "ready",
+      "task_id": "337",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -28010,6 +28018,67 @@
         ]
       },
       "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750",
+      "status": "ready"
+    },
+    "337": {
+      "epoch": 0,
+      "planned_at": 1793127954,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Refresh current main, all open/closed related issues and PRs, and authoritative coordination. Preserve delivered #334 and incomplete original #332/#333, every original source/output/consumer, app annotations, environments and prior failed evidence. Obtain a separate committed grant and isolated worktree before implementation or metadata inspection; this is not an extension of any expired research clock.",
+          "Freeze a public metadata-only audit protocol and exact consumer/input hashes before reading original context. Pin the unchanged #332 experiment, public continuation protocol, sealed familiar result, raw-index view inventory, source packet and baseline catalog snapshots through their already public hashes. Keep every one of the three methods, 50 views and 60 cases per method, original source/frame identity and all four false eligibility flags.",
+          "Project only run identity/start/end/camera_ranges/cut_frames metadata, baseline source identity/revision/scene_ranges metadata, and packet case ID/source/frame/view membership. Decoding the JSON containers needed for this projection is permitted, but do not inspect or use original coordinate/score/component/pose/contact/shot/visibility-label fields, consumed generated-test rows, checkpoint values or images. Do not perform fitting, selection, inference, evaluation, source annotation or new case selection. Use the existing sealed all-unavailable outcome only as a fixed diagnostic premise, never recompute accuracy.",
+          "For every retained view and case, distinguish missing/malformed camera coverage, missing/malformed scene metadata, uncovered live context, explicit replay/non-play/unknown exclusion, ambiguous coverage and eligible metadata. Match the exact archived eligible_segments behavior with generated equivalence checks; preserve cuts, half-open ranges, missing cases and unknown/ineligible outcomes. Determine whether rejection reflects absent review, a producer/consumer schema mismatch, explicit exclusion or an unresolved prerequisite. Do not infer that unlabelled footage is live, fabricate context, drop failed cases or weaken a guard.",
+          "Provide a reproducible metadata-only audit command with isolated output, source/hash mutation rejection, whitelist projection, no application Store writes and no model/media access. Record private per-view/case diagnostics locally; publish only source-level aggregate counts, frozen provenance and a plain explanation of the next required source-review or code-repair step. A newly discovered defect requires a separate scope rather than changing the frozen selector or archived result.",
+          "Use generated regression fixtures for exact producer metadata shapes, missing/malformed/overlapping coverage, cut boundaries, half-open intervals, unknown scenes, source mismatch and unavailable cases. Run focused and required full Python/Ruff/format/pip/repository/JSON/link/diff checks with verified portable media tools in disposable storage. Publish through exact PR CI, normal controller integration, merged-main checks and public package/source/manifests/images verification. No manual merge, historical CI retry/cancel/wake, model/default promotion or claim of improved badminton accuracy. Complete independent rally references remain 0/2."
+        ],
+        "artifacts": {
+          "baseline-context-container": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+          "familiar-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+          "original-experiment": "be75300db6e3d12568f3a2195ffe699ab5e47c600f7e995f38a5c1eea3988044",
+          "original-public-protocol": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
+          "raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+          "sealed-familiar-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971"
+        },
+        "capabilities": [
+          "review-inputs"
+        ],
+        "dependencies": [
+          "334",
+          "335"
+        ],
+        "exclusions": [
+          "No original image/video transfer or assessment, media acquisition/decode, neural inference, optimization, selector/evaluator execution, consumed-test row inspection, original label/coordinate/score use, guard or threshold change, new reference labels, research-clock or predecessor-budget reset, app truth/default/eligibility/model changes, auth/policy/workflow/dependency changes, paid services, destructive cleanup, manual merge, raw coordination edits or PROGRESS updates."
+        ],
+        "limits": {
+          "max_new_scientific_attempts": 0,
+          "max_output_bytes": 536870912,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 6,
+          "metadata_only": true,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Explain the complete source-context rejection of the archived familiar shuttle comparison using frozen metadata, without changing guards or running another experiment.",
+        "paths": [
+          "backend/badminton/shuttle_context_audit.py",
+          "scripts/audit_shuttle_context.py",
+          "tests/test_shuttle_context_audit.py",
+          "data/manifests/shuttle_context_audit_protocol_v1.json",
+          "docs/SHUTTLE_CONTEXT_AUDIT_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 80,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Frozen metadata-only projection and exact guard-equivalence diagnostics for all views/cases, original artifacts unchanged, generated regression and full required checks, exact CI/controller/main and complete public delivery; no new scientific accuracy measurement."
+        ]
+      },
+      "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195",
       "status": "ready"
     },
     "62": {
