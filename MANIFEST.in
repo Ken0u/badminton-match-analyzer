@@ -56,3 +56,4 @@ include data/manifests/source_camera_review.json
 include data/manifests/terminal_contact_review.json
 include data/manifests/shuttle_capacity_protocol_v1.json
 include data/manifests/shuttle_capacity_continuation_protocol_v1.json
+include data/manifests/shuttle_selection_protocol_v1.json
