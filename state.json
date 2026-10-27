@@ -27456,6 +27456,7 @@
       }
     },
     "330": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40495289332",
       "checkpoint": {
         "branch": "codex/issue-330-test-whether-a-separately-trained-observ-e2",
         "evidence": [
@@ -27480,7 +27481,7 @@
         "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 2,
       "history": [
         {
