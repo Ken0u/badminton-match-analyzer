@@ -27888,6 +27888,7 @@
       "status": "blocked"
     },
     "334": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40567604073",
       "checkpoint": {
         "audit_sha256": "e17ff8d8e8c428aa733022a92fbd3c76890d9719d064991f40394e566d04f84a",
         "branch": "codex/issue-334-archive-the-deadline-expired-332-diagnos",
@@ -27919,7 +27920,7 @@
         "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793128044,
