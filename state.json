@@ -9278,6 +9278,13 @@
       "task_id": "294",
       "verb": "submit"
     },
+    "selector330-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793063442,
+      "fingerprint": "b98be4216af902b859608deff52f55cf1a33f7cd362e41a7a441a3f5a2cdaad4",
+      "status": "ok",
+      "verb": "register"
+    },
     "shuttle-clock-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792960457,
@@ -10523,6 +10530,14 @@
       "fingerprint": "359bf66b19b08f42bf53459206002d592372e98f09614ef29401502c12305dfe",
       "status": "ready",
       "task_id": "327",
+      "verb": "plan"
+    },
+    "spec-330-047ec23b9047c38492f0662fe5b4aab70cc746d9ca54213794b7b403ef0d3918": {
+      "actor": "Ken0u",
+      "at": 1793063442,
+      "fingerprint": "d880c8a9fe6de995cb7923b4795da7bac922474319b3fbed4cdeead88aaba252",
+      "status": "ready",
+      "task_id": "330",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -27340,6 +27355,82 @@
         "spec_hash": "e91db24852a114abc5f0c75e791d96348570be5181f3fcb7e9444ae1b9fd8322"
       }
     },
+    "330": {
+      "epoch": 0,
+      "planned_at": 1793063442,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Inspect current issue/PR history, committed queue and shared Store; preserve completed #305/#311/#313 experiments, all consumed tests, installed model bytes and app annotations/predictions. Obtain a fresh targeted GPU/data grant and isolated worktree. #329 is an unrelated preserved observer incident and is not a workflow repair grant. Do not reopen #63 or old generated test outputs, repeat original training, dispatch images or change source eligibility.",
+          "Freeze the public protocol, full executable consumer hashes, environment, exact three existing checkpoint/selection hashes and new seed namespace before native model inference or familiar-output/label reads. Use a separately versioned copy of the owned #311 procedural generator with namespace synthetic-shuttle-selection-v1, 128 train / 16 validation / 32 test groups, 24 frames each, 512x288 and source clock frame/30. Verify every seed differs from historical #305/#311 namespaces and groups are unique across splits. Preserve complete-source groups and all negative/occluded frames. Generate no fresh test pixels/labels/outputs until all three fitted scorers and validation thresholds are sealed publicly.",
+          "Keep the parent, decoder epoch-4 and convolution epoch-4 checkpoints unchanged and report all three, with no checkpoint/winner selection. Use their existing eight-frame background-concat models, full-group uint8 median, CUDA float16 and actual overlapping ensemble/component extraction at threshold 0.5. Produce one complete raw candidate stream per model/group for the 144 train/validation groups, retaining the exact unchanged current selector as baseline. Load at most one neural model at a time; no neural optimizer or changed weights. Preserve exact input/background hashes and all candidate coordinates, confidence, boxes and original selected points. This is generated inference followed by training a small scorer, not real-media training.",
+          "Implement one fixed 14-feature component representation: confidence, log1p area, heatmap-normalized box width and height, log box aspect, area/box-area density, log1p candidate count, nearest previous/next candidate speeds in source-diagonals/second, norm of the difference between those two velocity vectors, previous/next availability flags and previous/next log((current_area+1)/(neighbor_area+1)). Nearest spatial candidate ties use component ID. Use only immediately adjacent native frames within 0.10 seconds and the same camera/eligible-scene segment; no crossing cuts, excluded scenes, missing rows or invalid clocks. Missing neighbors supply zero numeric values and explicit flags. Clip features to [-20,20]. Candidate coordinates are never interpolated or moved. Keep source support ranges explicit, including both neighbor frames actually used.",
+          "Fit one independent scorer for each fixed checkpoint using only its new generated training groups. A candidate is positive only within 0.005 source diagonals of a visible generated target; every candidate on a negative frame is negative. Standardize using training means/std with floor 0.000001, and fit zero-initialized class-balanced logistic regression for exactly 500 full-batch gradient steps, learning rate 0.1, L2 coefficient 0.01 excluding the intercept, sigmoid logits clipped to [-30,30]. Training without both classes is explicitly unavailable, not fabricated. For each frame select the highest probability observed candidate, component-ID ties; abstain below threshold. On validation only choose among 0.1 through 0.9 by maximum localization F1, then fewer localization false positives, then higher threshold. All frames and missed observations remain in denominators. Keep original observed confidence separately from classifier probability.",
+          "After all three fits/thresholds and immutable code are publicly sealed, open the new 32-group/768-frame test exactly once. Run all three unchanged neural checkpoints on the same inputs, comparing the old selector with its corresponding fitted scorer. Preserve unavailable methods, complete negatives, displacement FP+FN, component-oracle recall, selected localization, visibility, errors, paired transitions and costs. Do not tune, select a winning neural checkpoint, replace failed groups, shrink denominators or repeat/tune on this test. Verify identical generated input hashes across methods and all prior/scorer hashes unchanged before accepting results.",
+          "Only after frozen generated testing, replay the exact sealed #313 raw component observations for all three methods, all 50 original views / 13499 rows per method and all 60 familiar cases (25 visible, 7 negatives, 28 unknown). Use the public-sealed raw index and all referenced original/inherited view hashes; no new native real-media inference, source replacement, new labels or external image assessment. Preserve original source/native clock/geometry/camera/scene support and unavailable provenance; never connect neighbors across exclusions or unverified context. Reproduce the original baseline metrics before comparing learned selectors. Retain all unknowns unscored and all four eligibility flags false. Familiar results are development diagnostics and must not tune the scorer or establish independent accuracy. If preserved data cannot establish a required context, keep that case unavailable with the full denominator rather than infer support.",
+          "All heavy generation/inference/fitting/evaluation runs use the real original shared Store through run_local_job and committed Windows GPU/data reservations. Pin BADMINTON_ROOT/DATA/weights before imports, initialize torchvision before any threaded PyAV work, and preserve existing media shutdown. Record PID/creation/cwd/command, Store job IDs, exclusive stage outputs, original deadlines, hashes and terminal artifacts. Check current ownership, process identity and durable artifacts before resumption; observation timeout is not process death. Preserve failed attempts. Resume only verified complete per-group caches within the original clock; never restart completed stages or open the test twice.",
+          "Exactly nine writable paths. Add the explicit new public manifest include while preserving all 49 existing manifests. Tests must meaningfully cover source split separation, candidate identity/nonfinite/clock/boundary failures, temporal-support masks, no coordinate fabrication, training-only normalization and threshold selection, no-class/unavailable outcomes, complete negative/displacement denominators, atomic one-shot test gating, source/checkpoint/protocol/consumer tampering, shared-Store admission and immutable outputs. Run focused/full Python tests and required Ruff/format/pip/repository/JSON/link/diff checks before frozen scientific runs; scientific code changes invalidate affected seals and require honest handling of opened tests. No edits to the application selector, APIs, UI, installed models, dependencies, workflows, auth/storage/schema/deployment or PROGRESS.",
+          "Report every planned method and stage, negative/incomplete outcomes and limitations. Success as a localization experiment requires improved held-out generated localization F1 without increased negative false detections relative to the corresponding baseline, plus the full unchanged-denominator familiar diagnostic; synthetic success alone never authorizes promotion. Publish tested reproducible research code and aggregate report only through normal exact-head PR/controller/main verification and complete public package/manifest/image delivery. No manual merge, raw coordination edits, CI retries/cancellations/wakes, paid service or scientific image transfer. Complete scientific rally references remain 0/2 and the full product goal remains unproven.",
+          "Bound implementation, local scientific work and hosted delivery to 12 hours from the first committed grant, including service/hosted waits, with at most 3 diagnosed repair rounds and 4 GiB new retained outputs. Prior #305/#311/#313 bytes are preserved in their own completed ledgers; no copying/deleting them to reset limits. Record borrowed immutable input sizes separately from new output bytes. The scientific run starts only with enough remaining time for all declared stages. No clock renewal, hidden replacement protocol, new source/weight downloads, paid service or changed app truth. If a stage fails or reaches limits, preserve its actual incomplete outcome and stop dependent work."
+        ],
+        "artifacts": {
+          "capacity-continuation-completion": "1bfbdf4d148a6086a08bc49c175c86f5afeb2c83726f6489d5e66f3fc9b316c1",
+          "capacity-continuation-experiment": "c15ae687689784f4bd9d05bcbd3747b89286925c861298db7f09c090657c39e5",
+          "capacity-experiment": "780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3",
+          "capacity-raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+          "convolution-checkpoint": "2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833",
+          "convolution-selection": "acf50a4e63fef72310145650593e5eb136f9d6c023a944fe156499cffe0533db",
+          "decoder-checkpoint": "1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598",
+          "decoder-selection": "60dfcab0bfc3d9bb524b4ac53a5bb1b3d63bdcc835751e5b5d055149f9f08d0d",
+          "familiar-source-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+          "familiar-source-inventory": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+          "familiar-source-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+          "familiar-source-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+          "parent-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a"
+        },
+        "capabilities": [
+          "cuda",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "313",
+          "327"
+        ],
+        "exclusions": [
+          "No neural-weight training, installed model/default promotion, original-source tuning, consumed test/holdout reopening, new source/image/label acquisition or transfer, external assessor, paid service, application/API/UI changes, policy/auth/workflow/dependency/storage/schema/deployment changes, manual merge or CI retry/cancel/wake, destructive cleanup or PROGRESS edits."
+        ],
+        "limits": {
+          "max_output_bytes": 4294967296,
+          "max_review_rounds": 3,
+          "max_runtime_hours": 12,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Test whether a separately trained observed-component scorer with abstention improves selected shuttle localization and negative discrimination over the unchanged selector, using fresh generated source groups and a subsequent fixed familiar-source cached diagnostic. Deliver research code and honest results, without application/model promotion.",
+        "paths": [
+          "backend/badminton/shuttle_selection.py",
+          "backend/badminton/shuttle_selection_study.py",
+          "backend/badminton/shuttle_selection_synthetic.py",
+          "scripts/study_shuttle_selection.py",
+          "tests/test_shuttle_selection.py",
+          "tests/test_shuttle_selection_study.py",
+          "data/manifests/shuttle_selection_protocol_v1.json",
+          "docs/SHUTTLE_SELECTION_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 100,
+        "resources": [
+          "gpu:windows-primary",
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "New source-group-separated generated training/validation/test; fixed scorer and threshold selection before test; full cached familiar diagnostic with unknowns/negatives and unchanged defaults; meaningful regression/full checks and exact controller/main/public delivery."
+        ]
+      },
+      "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -30646,6 +30737,34 @@
       "host_id": "MSI",
       "registered_at": 1793002440,
       "session_id": "4d7ae7039b4e4da1b983ae11424d2c99"
+    },
+    "MSI/5cc34f2c210f4bbfab2009dd2e8da0b8": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "capacity-continuation-completion": "1bfbdf4d148a6086a08bc49c175c86f5afeb2c83726f6489d5e66f3fc9b316c1",
+        "capacity-continuation-experiment": "c15ae687689784f4bd9d05bcbd3747b89286925c861298db7f09c090657c39e5",
+        "capacity-experiment": "780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3",
+        "capacity-raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+        "convolution-checkpoint": "2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833",
+        "convolution-selection": "acf50a4e63fef72310145650593e5eb136f9d6c023a944fe156499cffe0533db",
+        "decoder-checkpoint": "1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598",
+        "decoder-selection": "60dfcab0bfc3d9bb524b4ac53a5bb1b3d63bdcc835751e5b5d055149f9f08d0d",
+        "familiar-source-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "familiar-source-inventory": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+        "familiar-source-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "familiar-source-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+        "parent-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "cuda",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793063442,
+      "session_id": "5cc34f2c210f4bbfab2009dd2e8da0b8"
     },
     "MSI/64a866d3b0a648e78d0fc6837481003e": {
       "actor": "Ken0u",
