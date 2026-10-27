@@ -18,7 +18,7 @@ from .actor_linking import link_player_runs
 from .calibration_context import court_run_context
 from .config import WEIGHTS
 from .contacts import METHOD as CONTACT_METHOD
-from .contacts import proposal_recipe, propose_contacts
+from .contacts import proposal_recipe, propose_contacts, validate_contact_inputs
 from .jobs import JobCancelled
 from .rallies import context_signature, generate_rallies
 from .recognition import recognition_targets, recognize_strokes
@@ -534,11 +534,15 @@ def process_match(
             )
 
             def contacts(output, callback):
-                candidates = propose_contacts(shuttle, players, video)
+                input_provenance = validate_contact_inputs(
+                    video, shuttle, players, times
+                )
+                candidates = propose_contacts(shuttle, players, video, times)
                 result = {
                     "schema_version": 1,
                     "stage": "contacts",
                     "video_id": video["id"],
+                    **input_provenance,
                     "video_sha256": video["sha256"],
                     "start_frame": first,
                     "end_frame": last,

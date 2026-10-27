@@ -730,7 +730,12 @@ def create_app(
 
     @app.post("/api/videos/{video_id}/contacts", status_code=202)
     def contacts(video_id: str, body: ContactsRequest):
-        from .contacts import METHOD, proposal_recipe, propose_contacts
+        from .contacts import (
+            METHOD,
+            proposal_recipe,
+            propose_contacts,
+            validate_contact_inputs,
+        )
         from .scene_review import camera_review_signature, reviewed_run
 
         v = store.video(video_id)
@@ -743,6 +748,15 @@ def create_app(
         )
         if body.include_audio and player_run is None:
             raise HTTPException(422, "Audio support needs a player/pose run")
+        try:
+            times = timestamps_for(data, video_id)
+            input_provenance = validate_contact_inputs(
+                v, shuttle_run, player_run, times
+            )
+        except (OSError, TypeError, ValueError) as exc:
+            raise HTTPException(
+                422, f"Contact inputs do not match the native source: {exc}"
+            ) from exc
         snapshot = store.annotations(video_id)
         shuttle_run = reviewed_run(shuttle_run, snapshot)
         player_run = reviewed_run(player_run, snapshot) if player_run else None
@@ -755,13 +769,12 @@ def create_app(
             )
 
         def task(job_id, progress):
-            candidates = propose_contacts(shuttle_run, player_run, v)
+            candidates = propose_contacts(shuttle_run, player_run, v, times)
             audio = None
             if body.include_audio:
                 from .audio import extract_audio_cues
                 from .audio_contacts import add_audio_support
 
-                times = timestamps_for(data, video_id)
                 start, end = shuttle_run["start_frame"], shuttle_run["end_frame"]
                 validate_range(v, times, start, end)
                 end_s = times[end] if end < len(times) else v["duration_s"]
@@ -773,6 +786,8 @@ def create_app(
                 "schema_version": 1,
                 "stage": "contacts",
                 "video_id": video_id,
+                "video_sha256": v["sha256"],
+                **input_provenance,
                 "shuttle_run_id": body.shuttle_run_id,
                 "player_run_id": body.player_run_id,
                 "start_frame": shuttle_run["start_frame"],

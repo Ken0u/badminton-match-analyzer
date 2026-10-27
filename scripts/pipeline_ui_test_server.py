@@ -182,7 +182,11 @@ def prepare(root, data):
         write_json(output, result)
         callback(1)
 
-    def contacts(flight, _players, _video):
+    def contacts(flight, _players, _video, source_times=None):
+        if source_times is not None and source_times != times:
+            raise ValueError(
+                "Generated contact fixture requires its native source clock"
+            )
         return [
             {
                 "id": f"qa-contact-{f}",

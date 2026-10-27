@@ -8,6 +8,9 @@ Scores rank heuristic evidence and are not calibrated probabilities.
 import bisect
 import itertools
 import math
+import re
+from collections.abc import Mapping, Sequence
+from numbers import Real
 
 import numpy as np
 
@@ -21,6 +24,99 @@ MAX_FLANK_S = 0.20
 MIN_WRIST_SAMPLES = 3
 WRIST_REACH_DIAGONALS = 0.10
 WRIST_REACH_BODY_DIAGONALS = 0.6
+SOURCE_TIME_TOLERANCE_S = 0.00002
+
+
+def validate_contact_inputs(video, shuttle_run, player_run, source_times):
+    """Check original perception identity before filtering or proposing contacts.
+
+    Missing legacy source hashes remain unavailable. Sparse observations remain
+    sparse: this validates their identity without creating or repairing rows.
+    """
+    count = video.get("frame_count")
+    if type(count) is not int or count < 1:
+        raise ValueError("Source frame count must be a positive integer")
+
+    def finite_time(value):
+        try:
+            return (
+                isinstance(value, Real)
+                and not isinstance(value, bool)
+                and math.isfinite(value)
+                and value >= 0
+            )
+        except (OverflowError, TypeError):
+            return False
+
+    if (
+        not isinstance(source_times, Sequence)
+        or isinstance(source_times, str | bytes | bytearray)
+        or len(source_times) != count
+        or not all(finite_time(value) for value in source_times)
+        or any(a >= b for a, b in itertools.pairwise(source_times))
+    ):
+        raise ValueError(
+            "Native source timestamps must be finite, ordered and cover every frame"
+        )
+    source_hash = video.get("sha256")
+    if not isinstance(source_hash, str) or not re.fullmatch(
+        r"[0-9a-fA-F]{64}", source_hash
+    ):
+        raise ValueError("Source video must have a valid SHA256 hash")
+    statuses = {"shuttle": "unavailable", "players": "not_requested"}
+    for stage, run in (("shuttle", shuttle_run), ("players", player_run)):
+        if stage == "players" and run is None:
+            continue
+        if (
+            not isinstance(run, Mapping)
+            or run.get("stage") != stage
+            or run.get("video_id") != video.get("id")
+        ):
+            raise ValueError(f"Expected a {stage} run for this video")
+        statuses[stage] = "unavailable"
+        if "video_sha256" in run:
+            declared = run["video_sha256"]
+            if not isinstance(declared, str) or not re.fullmatch(
+                r"[0-9a-fA-F]{64}", declared
+            ):
+                raise ValueError(f"{stage} source hash must be a valid SHA256 hash")
+            if declared.lower() != source_hash.lower():
+                raise ValueError(f"{stage} source hash does not match this video")
+            statuses[stage] = "matched"
+        start, end = run.get("start_frame"), run.get("end_frame")
+        if (
+            type(start) is not int
+            or type(end) is not int
+            or not 0 <= start < end <= count
+        ):
+            raise ValueError(f"{stage} range must lie within the source video")
+        rows = run.get("frames")
+        if not isinstance(rows, Sequence) or isinstance(rows, str | bytes | bytearray):
+            raise ValueError(f"{stage} must contain a sequence of perception frames")
+        previous_frame, previous_time = -1, -1
+        for row in rows:
+            if not isinstance(row, Mapping):
+                raise ValueError(f"{stage} perception frame must be a record")
+            frame, timestamp = row.get("frame"), row.get("time_s")
+            if (
+                type(frame) is not int
+                or not start <= frame < end
+                or frame <= previous_frame
+                or not finite_time(timestamp)
+                or timestamp <= previous_time
+            ):
+                raise ValueError(
+                    f"{stage} frames/timestamps must be finite, ordered, unique and within their range"
+                )
+            if abs(timestamp - source_times[frame]) > SOURCE_TIME_TOLERANCE_S:
+                raise ValueError(
+                    f"{stage} timestamp does not match native source frame {frame}"
+                )
+            previous_frame, previous_time = frame, timestamp
+    return {
+        "source_timestamps_validated": True,
+        "input_source_hash_status": statuses,
+    }
 
 
 def proposal_recipe():
@@ -462,7 +558,11 @@ def _candidate(
     }
 
 
-def propose_contacts(shuttle_run, player_run, video):
+def propose_contacts(shuttle_run, player_run, video, source_times=None):
+    # Historical pure research callers can omit the native map. Application
+    # callers supply it; the unvalidated path makes no native-identity claim.
+    if source_times is not None:
+        validate_contact_inputs(video, shuttle_run, player_run, source_times)
     rows = shuttle_run["frames"]
     players = (
         sorted(player_run["frames"], key=lambda row: row["time_s"])
