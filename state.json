@@ -9441,6 +9441,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "selector332archive-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793127426,
+      "epoch": 1,
+      "fingerprint": "28a7149b95d11fb379dbfe3231ca71df3c7788b6605750a73c25dd8181e35525",
+      "status": "review",
+      "task_id": "334",
+      "verb": "submit"
+    },
     "shuttle-clock-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792960457,
@@ -27880,6 +27889,7 @@
       "epoch": 1,
       "planned_at": 1793125686,
       "planned_by": "Ken0u",
+      "pr_number": 336,
       "spec": {
         "acceptance": [
           "Refresh all issue/PR history, exact main, coordination and physical terminal proof. Preserve #332 draft PR #333/source424a8589bc90dbb8dfaa7608474dacad81b51b8a, frozen specification/clock, all original consumers/worktrees and outputs. Release its expired resource claim through the documented authenticated terminal-proof command, then close its issue/PR with an explicit incomplete-deadline transfer record. Do not mark #332 successful or infer a new research allowance from this archival task. Obtain a separate committed grant/isolated worktree before source or scientific-result reporting work.",
@@ -27950,7 +27960,13 @@
         ]
       },
       "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "73dcb1799eb19b7489e0cf84c7654134c347f386",
+        "head_sha": "5a77d116037d9129709038071e4ff5bd07d6dbb4",
+        "pr_number": 336,
+        "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08"
+      }
     },
     "335": {
       "epoch": 0,
