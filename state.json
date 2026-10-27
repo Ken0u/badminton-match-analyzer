@@ -1124,6 +1124,13 @@
       "status": "ok",
       "verb": "register"
     },
+    "contact327-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793060805,
+      "fingerprint": "01159eef87377ea281ce6bf3ce051eb28204585f43b001f577ff1563d414c86f",
+      "status": "ok",
+      "verb": "register"
+    },
     "contract270-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792907064,
@@ -10471,6 +10478,14 @@
       "fingerprint": "7d67348487fdd71f1bda7f07e18abe177c5697459aee0afce3c57ebbbde13b6c",
       "status": "ready",
       "task_id": "323",
+      "verb": "plan"
+    },
+    "spec-327-0e18798bdb332410e051dc1a71d011c34dd44251ff9e0b13f30a80991b180a97": {
+      "actor": "Ken0u",
+      "at": 1793060805,
+      "fingerprint": "359bf66b19b08f42bf53459206002d592372e98f09614ef29401502c12305dfe",
+      "status": "ready",
+      "task_id": "327",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -27114,7 +27129,7 @@
       ],
       "planned_at": 1793039984,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "Revalidate all open/closed issue and PR history, main, coordination and original-host process/Store/artifact state. Original task321 deadline2026-10-26T14:06:18Z expired during automatic-approval service outage; do not renew it or claim it complete. Require committed terminal-proof release contact321-expired-release-v1, preserve original PR322/head33ea5a12129871ec436dd1d6033448e17a2fbd2c/branch, original grants/specifications, accepted review changes and failed CI40315690500/artifact. Link this continuation explicitly, close the superseded issue/PR without merge or branch deletion, then obtain fresh targeted grant/isolated worktree before implementation.",
@@ -27169,6 +27184,67 @@
         ]
       },
       "spec_hash": "903e908771931f4144560fc2189be6194e52c9735f20e9ba702ed71abc43ef07",
+      "status": "blocked"
+    },
+    "327": {
+      "epoch": 0,
+      "planned_at": 1793060805,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Inspect all issue/PR history, current main and coordination. Require committed original-host terminal-proof release contact323-expired-release-v1 before claiming. Preserve original321 deadline14:06:18UTC and323 deadline21:44:47UTC October26, failed CI40315690500, closed unmergedPR322, genuine changes-review finding and all original local source/test/process evidence. This publication-only phase is separately frozen because approval-service outages prevented all323commit/push attempts; neither old clock is renewed and neither predecessor is declared complete.",
+          "Obtain a fresh targeted committed grant and isolated worktree at unchanged baseline4fa37eb004e24eaa3a75d305a87fb651bb0fade7. Copy only the nine exact preserved files whose manifest SHA256 is cf3df93dd88701f3d03f6c157fef323bdd74363dd4ddf12c94a973bc6e90708b; verify each actual file against final323scoped hashes and original working tree. Do not change implementation, tests or the dated report. Preserve original323staged/unstaged changes and all earlier branches. If source/base mismatch prevents exact transfer, stop for a separately scoped resolution rather than silently rewrite verified code.",
+          "Revalidate the actual evidence chain: original321full5121passed/four opt-in skips,399focused passes, generated25frameH264API10bad cases rejected/two exact stable controls, and independent20case review. Repaired323browser logs/receipts prove19production/eightlibrary/13export groups including processing, all three complete cleanups and original runner/fixture lifetime absence. Reuse these results only with exact covered source/input/base/receipt hashes; describe them as retained runs, not executions at the new commit. No scientific input/image transfer/inference/training/model promotion.",
+          "The frozen code validates source hashes and full native clocks before API admission or pipeline contact publication, preserves sparse/VFR/legacy/no-player behavior, and repairs only the synthetic browser callback contract. Do not relax validation, assertions, cleanup/process ownership, CI gates, unknown labels or accuracy limitations. Existing inputs/annotations/predictions and original root checkout/edit/environments remain preserved.",
+          "Run fresh required Ruff/format/dependency/repository UTF8-LF/JSON/local-link/frontend provenance/diff checks on the exact transferred files; bind final native_evidence to the committed head with deterministic recipe hash and explicit generated/evidence-reuse limitations. A source-only local helper audit is not formal code approval. No fabricated reviewer verdict or scientific accuracy claim.",
+          "Open a new linked PR and submit through the normal controller. Preserve the original changes finding and verify it is addressed by the exact frozen fixture change and retained actual browser proof. Require all12 exact final-head CI jobs, latest matching exact-source successful workflow, controller policy success, merged-main checks, complete Git-tree parity and full public source/wheel/frontend/lock/49manifest/nine-task-file/101runtime/both-anonymous-image delivery. Do not install/execute delivered artifacts, manually merge/push main, retry/cancel/wake CI or edit raw coordination.",
+          "This bounded publication phase has12hours from its first fresh committed grant, including hosted waits and approval outages; no extension of321/323clocks or additional implementation/scientific runtime is implied. Keep cumulative retained outputs across321,323andthisphase below512MiB. Carry original diagnosed failures and the remaining one-round repair allowance without reset; new source defects require separately scoped work, not hidden edits here. Checkpoint before yielding; if blocked, preserve exact source/evidence and stop at the new deadline. No paid services, auth/workflow/policy/storage/schema/deployment/model/default changes or PROGRESS edits.",
+          "Close323 as superseded with an explicit transfer record after release. Preserve its local branch, uncommitted bytes and receipts; the new owning issue holds publication and final delivery checkpoints. Complete references remain0/2 and full-match annotation accuracy remains unproven regardless of software delivery."
+        ],
+        "artifacts": {
+          "verified-contact-checks": "8af3a3c76e57c1aafdaa84a2f5076a91bff32545f049c427c84338cd3f3e2280",
+          "verified-contact-source-manifest": "cf3df93dd88701f3d03f6c157fef323bdd74363dd4ddf12c94a973bc6e90708b"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "260",
+          "264",
+          "284",
+          "317",
+          "319"
+        ],
+        "exclusions": [
+          "No further tracked-byte changes beyond exact transfer, scientific source/data/weight/image acquisition or transfer, inference/training/holdout use, model/default/eligibility promotion, policy/auth/workflow/storage/schema/deployment change, paid service, destructive cleanup/branch deletion, manual merge/main push, raw coordination write, CI retry/cancel/wake or PROGRESS edits."
+        ],
+        "limits": {
+          "max_cumulative_retained_bytes": 536870912,
+          "max_review_rounds": 1,
+          "max_runtime_hours": 12,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Publish the already verified nine-file contact-input identity and browser-fixture repair from task323, then verify exact controller integration and complete public delivery without further implementation changes.",
+        "paths": [
+          "backend/badminton/contacts.py",
+          "backend/badminton/api.py",
+          "backend/badminton/pipeline.py",
+          "tests/test_contacts.py",
+          "tests/test_contact_input_api.py",
+          "tests/test_pipeline.py",
+          "tests/test_audio_api.py",
+          "docs/CONTACT_INPUT_IDENTITY_REPORT.md",
+          "scripts/pipeline_ui_test_server.py"
+        ],
+        "priority": 15,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Exact preserved nine-file source and retained evidence hash chain, fresh required repository checks, latest exact CI/main/controller/full-tree/public delivery. No scientific accuracy inference or fabricated review."
+        ]
+      },
+      "spec_hash": "e91db24852a114abc5f0c75e791d96348570be5181f3fcb7e9444ae1b9fd8322",
       "status": "ready"
     },
     "62": {
@@ -30370,6 +30446,21 @@
       "host_id": "MSI",
       "registered_at": 1793012549,
       "session_id": "112268b487314730b95bbbbc8ccaf2f3"
+    },
+    "MSI/15ac7eaf495744c89ecf9e64d3b70f83": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "verified-contact-checks": "8af3a3c76e57c1aafdaa84a2f5076a91bff32545f049c427c84338cd3f3e2280",
+        "verified-contact-source-manifest": "cf3df93dd88701f3d03f6c157fef323bdd74363dd4ddf12c94a973bc6e90708b"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793060805,
+      "session_id": "15ac7eaf495744c89ecf9e64d3b70f83"
     },
     "MSI/16dbb3112d1f4a4cb656dfac512bc201": {
       "actor": "Ken0u",
