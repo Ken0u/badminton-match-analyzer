@@ -27240,6 +27240,7 @@
       "status": "blocked"
     },
     "327": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40429416923",
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
@@ -27252,7 +27253,7 @@
         "spec_hash": "e91db24852a114abc5f0c75e791d96348570be5181f3fcb7e9444ae1b9fd8322"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793061816,
