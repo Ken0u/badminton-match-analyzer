@@ -938,6 +938,134 @@ def test_source_views_bind_metadata_geometry_and_exact_native_pts(
             study.validate_source_views(tmp_path, packet, views)
 
 
+def familiar_disposable(root, monkeypatch, module):
+    """Generated cached rows with known visible/negative/unknown denominators."""
+    output = root / "original"
+    fits, public, seal = fitted_receipts(output)
+    put(
+        output / "test.json",
+        {
+            "experiment_sha256": "experiment",
+            "fits_sha256": public["fits_sha256"],
+            "variants": {variant: {} for variant in module.VARIANTS},
+        },
+    )
+    cases, labels = [], []
+    for frame, state in enumerate(("visible", "not_visible", "unknown")):
+        case = {
+            "id": f"generated-{frame}",
+            "video_id": "generated",
+            "frame": frame,
+            "width": 512,
+            "height": 288,
+        }
+        cases.append(case)
+        labels.append(
+            {
+                "id": case["id"],
+                "disagreement": {"state": False},
+                "label": {
+                    "id": case["id"],
+                    "state": state,
+                    "x": 1.0 if state == "visible" else None,
+                    "y": 1.0 if state == "visible" else None,
+                    "uncertainty_px": 0.1 if state == "visible" else None,
+                    "reason": "Generated disposable observation",
+                    "difficulty": ["unresolved"],
+                    "context_cut": False,
+                },
+            }
+        )
+    scenes = [{"start_frame": 0, "end_frame": 3, "scene": "live"}]
+    inputs = {}
+    values = {
+        "familiar-source-packet": {"cases": cases},
+        "familiar-source-labels": {"cases": labels},
+        "familiar-source-baseline": {
+            "evidence": {
+                "catalogs": {
+                    "generated": {"snapshot": {"annotations": {"scene_ranges": scenes}}}
+                }
+            }
+        },
+    }
+    for name, value in values.items():
+        path = root / "nested/packet" / (name + ".json")
+        put(path, value)
+        inputs[name] = module.audit.seal(root, path)
+    view = {
+        "id": "generated-view",
+        "video_id": "generated",
+        "start_frame": 0,
+        "end_frame": 3,
+        "case_ids": [case["id"] for case in cases],
+    }
+    run = {
+        "start_frame": 0,
+        "end_frame": 3,
+        "processed_frames": 3,
+        "camera_ranges": [{"start_frame": 0, "end_frame": 3}],
+        "cut_frames": [],
+        "frames": [row(frame) for frame in range(3)],
+    }
+    views = {v: {view["id"]: (view, run)} for v in module.VARIANTS}
+    monkeypatch.setattr(module, "cached_views", lambda *args: views)
+    monkeypatch.setattr(module, "validate_source_views", lambda *args: None)
+
+    def baseline(value, protocol, variant):
+        metrics = value["all"]["metrics"]
+        assert metrics["cases"] == 3 and metrics["truth_states"]["unknown"] == 1
+        assert metrics["localization"]["fn"] == metrics["localization"]["tn"] == 1
+
+    monkeypatch.setattr(module, "validate_baseline", baseline)
+    monkeypatch.setattr(module, "completed_stage", lambda *args: "completed")
+    protocol = {
+        "input_artifacts": inputs,
+        "familiar": {
+            "cases": 3,
+            "truth_states": {"visible": 1, "not_visible": 1, "unknown": 1},
+        },
+        "limitations": ["Generated fixture, not scientific source data"],
+    }
+    monkeypatch.setattr(
+        module,
+        "admission",
+        lambda root, output, expected, stage, function: function(
+            {}, protocol, root / "attempt", lambda progress: None
+        ),
+    )
+    return output, fits, public, seal, protocol
+
+
+def test_extracted_familiar_helper_preserves_entry_point_results(tmp_path, monkeypatch):
+    output, fits, public, seal, protocol = familiar_disposable(
+        tmp_path, monkeypatch, study
+    )
+    original = study.familiar(tmp_path, output, "experiment", seal)
+    direct_output = tmp_path / "separate-continuation"
+    direct_output.mkdir()
+    direct = study.familiar_diagnostic(
+        tmp_path,
+        direct_output,
+        "experiment",
+        fits,
+        public,
+        protocol,
+        lambda progress: None,
+        public_seal_sha256=seal,
+        fit_output=output,
+        fit_experiment_sha256="experiment",
+    )
+    assert original == direct
+    for name in (
+        "familiar-opened.json",
+        "familiar.json",
+        *(f"familiar-selected-{variant}.json" for variant in study.VARIANTS),
+    ):
+        assert (output / name).read_bytes() == (direct_output / name).read_bytes()
+    assert direct["cases"] == 3 and direct["unknown"] == 1
+
+
 def sized_file(path, size):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(b"x" * size)
