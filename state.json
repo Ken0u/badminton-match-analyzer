@@ -9352,6 +9352,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "selector330-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793098809,
+      "epoch": 2,
+      "fingerprint": "c13e4b490cc1df38e261b442f8f79ad9f769eb4af3e2aecf13a7d0dce6633c5d",
+      "status": "review",
+      "task_id": "330",
+      "verb": "submit"
+    },
     "shuttle-clock-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792960457,
@@ -27502,6 +27511,7 @@
       ],
       "planned_at": 1793063442,
       "planned_by": "Ken0u",
+      "pr_number": 331,
       "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
@@ -27573,7 +27583,13 @@
         ]
       },
       "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "aa8e53b33ab462bc5316065e0287a064a6f0fa81",
+        "head_sha": "ab4de517f7ffc757602b86c3f0f57008968735a7",
+        "pr_number": 331,
+        "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4"
+      }
     },
     "62": {
       "checkpoint": {
