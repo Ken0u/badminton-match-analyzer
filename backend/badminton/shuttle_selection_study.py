@@ -982,7 +982,8 @@ def familiar(root, output, expected, public_seal_sha256):
         baseline = audit.read_json(
             audit.sealed_bytes(root, inputs["familiar-source-baseline"])
         )
-        validate_source_views(root, packet, views)
+        packet_root = audit.sealed_path(root, inputs["familiar-source-packet"]).parent
+        validate_source_views(packet_root, packet, views)
         cases = packet["cases"]
         if (
             len(cases) != protocol["familiar"]["cases"]

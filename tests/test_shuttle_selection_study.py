@@ -773,6 +773,55 @@ def test_familiar_refuses_unadmitted_test_before_reading_familiar_inputs(
     assert not (tmp_path / "familiar-opened.json").exists()
 
 
+def test_familiar_dispatch_resolves_provenance_from_nested_packet(
+    tmp_path, monkeypatch
+):
+    _, public, seal = fitted_receipts(tmp_path)
+    put(
+        tmp_path / "test.json",
+        {
+            "experiment_sha256": "experiment",
+            "fits_sha256": public["fits_sha256"],
+            "variants": {variant: {} for variant in study.VARIANTS},
+        },
+    )
+    monkeypatch.setattr(study, "completed_stage", lambda *args: "completed")
+    packet_root = tmp_path / "nested/source-packet"
+    metadata = packet_root / "provenance/source/metadata.json"
+    put(metadata, {"id": "disposable-source"})
+    packet = {"source_inputs": {"metadata": study.audit.seal(packet_root, metadata)}}
+    packet_path = packet_root / "packet.json"
+    put(packet_path, packet)
+    inputs = {"familiar-source-packet": study.audit.seal(tmp_path, packet_path)}
+    for name in ("familiar-source-labels", "familiar-source-baseline"):
+        path = tmp_path / (name + ".json")
+        put(path, {})
+        inputs[name] = study.audit.seal(tmp_path, path)
+    monkeypatch.setattr(study, "cached_views", lambda *args: {})
+    monkeypatch.setattr(
+        study,
+        "admission",
+        lambda root, output, expected, stage, function: function(
+            {}, {"input_artifacts": inputs}, tmp_path, lambda progress: None
+        ),
+    )
+
+    class ProvenanceVerified(Exception):
+        pass
+
+    def validate(root, value, views):
+        assert root == packet_root
+        assert study.audit.read_json(
+            study.audit.sealed_bytes(root, value["source_inputs"]["metadata"])
+        ) == {"id": "disposable-source"}
+        raise ProvenanceVerified
+
+    monkeypatch.setattr(study, "validate_source_views", validate)
+    with pytest.raises(ProvenanceVerified):
+        study.familiar(tmp_path, tmp_path, "experiment", seal)
+    assert not (tmp_path / "familiar-opened.json").exists()
+
+
 def test_failed_fit_preserves_opening_marker_and_never_silently_retrains(
     tmp_path, monkeypatch
 ):
