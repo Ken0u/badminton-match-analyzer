@@ -6745,6 +6745,15 @@
       "task_id": "62",
       "verb": "next"
     },
+    "observer335-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793130244,
+      "epoch": 1,
+      "fingerprint": "9cfe0d30e7d39520ba69155ed5aec48ef579c7c6f40396931f5db03ee6ccf767",
+      "status": "running",
+      "task_id": "335",
+      "verb": "checkpoint"
+    },
     "observer335-next-v1": {
       "actor": "Ken0u",
       "at": 1793129287,
@@ -28030,12 +28039,27 @@
       }
     },
     "335": {
+      "checkpoint": {
+        "branch": "codex/issue-335-repair-the-disposable-comparison-cli-tes",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/335#issuecomment-6451876684",
+        "file_hashes": {
+          "docs/RALLY_REVIEW_COMPARISON_REPORT.md": "d0796ad05cfa135013347a2e79b38a83148306071cc656d13198c27a3547859f",
+          "tests/test_compare_rally_review.py": "b61e14df1a9343990cee2c065c9cea412275a0de9c20d0043ee7054831d7937b"
+        },
+        "head_sha": "7bc86dad931e4d9dc35178a2b189ef78dfadc1e2",
+        "progress": "Generated startup denial reproduced; 120 focused pass; 46 actual lifetimes terminal; full checks next. No science or process-signal changes.",
+        "uncommitted_granted_paths": [
+          "tests/test_compare_rally_review.py",
+          "docs/RALLY_REVIEW_COMPARISON_REPORT.md"
+        ]
+      },
+      "checkpoint_at": 1793130244,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7bc86dad931e4d9dc35178a2b189ef78dfadc1e2",
         "branch": "codex/issue-335-repair-the-disposable-comparison-cli-tes",
         "epoch": 1,
-        "expires_at": 1793140087,
+        "expires_at": 1793141044,
         "granted_at": 1793129287,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
