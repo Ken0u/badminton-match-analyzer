@@ -9405,6 +9405,15 @@
       "task_id": "332",
       "verb": "release"
     },
+    "selector332archive-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793126305,
+      "epoch": 1,
+      "fingerprint": "efe7b719598dc3aabb94bbf549d565c68911b22d8e6f2d20c7e75ba1e4b8b5ce",
+      "status": "running",
+      "task_id": "334",
+      "verb": "checkpoint"
+    },
     "selector332archive-next-v1": {
       "actor": "Ken0u",
       "at": 1793125905,
@@ -27830,12 +27839,31 @@
       "status": "blocked"
     },
     "334": {
+      "checkpoint": {
+        "audit_sha256": "e17ff8d8e8c428aa733022a92fbd3c76890d9719d064991f40394e566d04f84a",
+        "branch": "codex/issue-334-archive-the-deadline-expired-332-diagnos",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/334#issuecomment-6450528745",
+        "head_sha": "73dcb1799eb19b7489e0cf84c7654134c347f386",
+        "progress": "Archive only: seven original source files exact,132result-group arithmetic checks, original deadline incomplete, all learned60/60unavailable; fresh checks live; no scientific execution or researchclock reset.",
+        "report_sha256": "59b99e30660f4c9b64688a9391bfe4e172b1b9a5b991a8b3283489dd790229b4",
+        "uncommitted_granted_paths": [
+          "backend/badminton/shuttle_selection_study.py",
+          "backend/badminton/shuttle_selection_continuation.py",
+          "scripts/continue_shuttle_selection.py",
+          "tests/test_shuttle_selection_study.py",
+          "tests/test_shuttle_selection_continuation.py",
+          "data/manifests/shuttle_selection_continuation_protocol_v1.json",
+          "docs/SHUTTLE_SELECTION_CONTINUATION_REPORT.md",
+          "MANIFEST.in"
+        ]
+      },
+      "checkpoint_at": 1793126305,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "73dcb1799eb19b7489e0cf84c7654134c347f386",
         "branch": "codex/issue-334-archive-the-deadline-expired-332-diagnos",
         "epoch": 1,
-        "expires_at": 1793136705,
+        "expires_at": 1793137105,
         "granted_at": 1793125905,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
