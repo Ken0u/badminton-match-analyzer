@@ -1,4 +1,5 @@
 import copy
+import hashlib
 
 import numpy as np
 import pytest
@@ -35,6 +36,172 @@ def scene(turn=True, missing=False, far=False):
             }
         )
     return {"frames": rows}, {"frames": player_rows}, {"width": 640, "height": 360}
+
+
+def native_scene():
+    shuttle, players, video = scene()
+    video.update(
+        id="native-test",
+        sha256=hashlib.sha256(b"generated source").hexdigest(),
+        frame_count=25,
+        duration_s=1,
+    )
+    for run, stage in ((shuttle, "shuttle"), (players, "players")):
+        run.update(
+            video_id=video["id"],
+            stage=stage,
+            start_frame=0,
+            end_frame=25,
+            video_sha256=video["sha256"],
+        )
+    return shuttle, players, video, [i * 0.04 for i in range(25)]
+
+
+def test_native_contact_validation_preserves_candidates_and_original_inputs():
+    from badminton.contacts import validate_contact_inputs
+
+    shuttle, players, video, times = native_scene()
+    before = copy.deepcopy((shuttle, players, video, times))
+    assert propose_contacts(shuttle, players, video, times) == propose_contacts(
+        shuttle, players, video
+    )
+    assert validate_contact_inputs(video, shuttle, players, times) == {
+        "source_timestamps_validated": True,
+        "input_source_hash_status": {"shuttle": "matched", "players": "matched"},
+    }
+    assert (shuttle, players, video, times) == before
+
+
+@pytest.mark.parametrize("stage", [0, 1])
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "clock",
+        "hash",
+        "null_hash",
+        "hash_syntax",
+        "duplicate",
+        "reverse",
+        "negative",
+        "outside",
+        "fractional",
+        "boolean",
+        "missing_time",
+        "nan",
+        "infinite",
+        "bool_time",
+        "wrong_video",
+        "wrong_stage",
+        "range",
+    ],
+)
+def test_native_contact_validation_rejects_original_bad_perception(stage, mutation):
+    inputs = native_scene()
+    run = inputs[stage]
+    if mutation == "clock":
+        for row in run["frames"]:
+            row["time_s"] += 0.4
+    elif mutation in ("hash", "null_hash", "hash_syntax"):
+        run["video_sha256"] = {
+            "hash": "0" * 64,
+            "null_hash": None,
+            "hash_syntax": "broken",
+        }[mutation]
+    elif mutation == "duplicate":
+        run["frames"].insert(0, copy.deepcopy(run["frames"][0]))
+    elif mutation == "reverse":
+        run["frames"].reverse()
+    elif mutation in ("negative", "outside", "fractional", "boolean"):
+        run["frames"][0]["frame"] = {
+            "negative": -1,
+            "outside": 25,
+            "fractional": 0.5,
+            "boolean": False,
+        }[mutation]
+    elif mutation == "missing_time":
+        del run["frames"][0]["time_s"]
+    elif mutation in ("nan", "infinite", "bool_time"):
+        run["frames"][0]["time_s"] = {
+            "nan": float("nan"),
+            "infinite": float("inf"),
+            "bool_time": False,
+        }[mutation]
+    elif mutation == "wrong_video":
+        run["video_id"] = "other"
+    elif mutation == "wrong_stage":
+        run["stage"] = "contacts"
+    else:
+        run["start_frame"] = 1
+    # Even evidence marked non-play must be checked before any filtering.
+    run["frames"][0]["scene"] = "non_play"
+    with pytest.raises(ValueError):
+        propose_contacts(*inputs)
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    ["short", "duplicate", "reverse", "negative", "nan", "bool", "string", "none"],
+)
+def test_contact_generation_requires_a_complete_valid_native_clock(mutation):
+    shuttle, players, video, times = native_scene()
+    if mutation == "short":
+        times.pop()
+    elif mutation == "duplicate":
+        times[1] = times[0]
+    elif mutation == "reverse":
+        times.reverse()
+    elif mutation in ("negative", "nan", "bool"):
+        times[0] = {"negative": -1, "nan": float("nan"), "bool": False}[mutation]
+    elif mutation == "string":
+        times = "invalid"
+    else:
+        # A validator call cannot mark a missing clock as verified.
+        from badminton.contacts import validate_contact_inputs
+
+        with pytest.raises(ValueError):
+            validate_contact_inputs(video, shuttle, players, None)
+        return
+    with pytest.raises(ValueError):
+        propose_contacts(shuttle, players, video, times)
+
+
+def test_contact_clock_tolerance_is_absolute_and_legacy_hashes_are_unavailable():
+    from badminton.contacts import validate_contact_inputs
+
+    shuttle, players, video, times = native_scene()
+    times = [t + 100000 for t in times]
+    for run in (shuttle, players):
+        del run["video_sha256"]
+        for row in run["frames"]:
+            row["time_s"] = times[row["frame"]] + 0.00001
+    metadata = validate_contact_inputs(video, shuttle, players, times)
+    assert metadata["input_source_hash_status"] == {
+        "shuttle": "unavailable",
+        "players": "unavailable",
+    }
+    shuttle["frames"][0]["time_s"] += 0.001
+    with pytest.raises(ValueError, match="timestamp"):
+        validate_contact_inputs(video, shuttle, players, times)
+
+
+def test_valid_sparse_players_and_absent_optional_players_remain_supported():
+    from badminton.contacts import validate_contact_inputs
+
+    shuttle, players, video, times = native_scene()
+    players["frames"] = players["frames"][3:22:3]
+    players.update(start_frame=3, end_frame=22)
+    assert propose_contacts(shuttle, players, video, times) == propose_contacts(
+        shuttle, players, video
+    )
+    assert propose_contacts(shuttle, None, video, times) == propose_contacts(
+        shuttle, None, video
+    )
+    assert (
+        validate_contact_inputs(video, shuttle, None, times)[
+            "input_source_hash_status"
+        ]["players"]
+        == "not_requested"
+    )
 
 
 def test_contact_proposal_is_a_timed_unreviewed_hint():
