@@ -10624,6 +10624,14 @@
       "task_id": "330",
       "verb": "plan"
     },
+    "spec-332-d6c74b7bb51f14912673612963bdd11ba26cf27826c8134dfc21768287226821": {
+      "actor": "Ken0u",
+      "at": 1793100523,
+      "fingerprint": "930e1381e3f58ce0c54e4b3da19d2863b3a332a7a539113e38f2bd6b3780700e",
+      "status": "ready",
+      "task_id": "332",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -27623,6 +27631,87 @@
         "pr_number": 331,
         "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4"
       }
+    },
+    "332": {
+      "epoch": 0,
+      "planned_at": 1793100523,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Refresh current issues/PRs, grants and shared Store before claiming. Require #330 integrated, exact main checks and full public delivery verified. Obtain a new targeted grant/isolated worktree; this is a separately frozen remaining-only consumer, not a rerun of #330. Preserve original application annotations, videos, installed models, old source/consumer worktrees, all prior experiments and their clocks/results/failures. Do not use unrelated #329 as repair authority.",
+          "Extract the existing familiar cached read/validate/select/score recipe into a reusable research helper without changing any feature, scorer, threshold, baseline, metric or native/source-context semantics. Keep the original familiar stage/API behavior and nested-packet regression. Do not modify generator, neural inference, fitting, selection/normalization or generated-test functions. Tests must compare recipe behavior on disposable inputs before and after extraction.",
+          "Implement a separate continuation module/CLI with public metadata protocol. Pin the exact delivered #330 tree and original experiment, fits, generated-test completion receipt, public experiment/fit seals, failed familiar admission/terminal, raw-index and every inherited source/run/metadata/timestamp input hash. Read only generated completion/provenance and fixed fits; do not parse generated test rows/predictions or any older consumed test. Verify all original sources and frozen consumers remain exact, and all four original Store jobs are terminal (three completed, familiar failed) with matching absent original process lifetimes.",
+          "Before familiar input reads, publicly freeze full new executable consumer/runtime/protocol/input hashes and original terminal evidence. Preserve the original experiment deadline 2026-10-27 13:14:15 UTC / epoch 1793106855 and original 01:14:15 grant; hard-stop this continuation including implementation, science and hosted delivery at that SAME deadline. A new task grant/lease must never reset the research clock. If too little time remains to complete all stages, do not launch science; preserve actual incomplete status. At most one continuation scientific attempt and two additional diagnosed repair rounds, within original three-round ceiling.",
+          "Charge every retained #330 and continuation artifact, failed attempt, disposable-check output and worktree together against the original cumulative 4 GiB cap; report borrowed immutable inputs separately. Count all continuation paths explicitly and never copy/delete predecessor evidence to reset budgets. Use distinct output/admission/opening/result/cost/terminal paths so no original failure or output is overwritten. Refuse mutated inputs, expired clocks, exhausted budgets, live predecessor jobs, repeated opening or missing completion evidence.",
+          "Run cached CPU scoring only through actual original shared Store run_local_job with root/data/weights pinned before configuration imports and genuine current reservation/ownership. No checkpoint loading, neural model inference, optimizer, generated pixel creation, original video decoding, media/image/label acquisition or transfer, or assessor session. Preserve PID/creation/cwd/command and admitted Store identity, costs and actual worker/launcher terminals. Observation timeout never establishes process exit.",
+          "Keep all three unchanged scorers and validation thresholds (control 0.5, decoder 0.5, convolution 0.6), all 50 original views / 13499 native rows per method and all 60 original cases (25 visible, seven negative, 28 unknown). Validate packet-relative metadata, original native PTS/display/source identities, scene/camera partitions and reviewed live context. Reproduce every original baseline confusion/component count before learned comparison. Unknown truth stays unscored; missing/ineligible context stays explicitly unavailable in the full denominator. Never bridge unsupported neighbors, fabricate points, replace views or omit failed cases.",
+          "Report every method and unavailable/negative outcome, full visibility/localization confusions, component oracle, errors, paired outcomes, costs, hashes and the preserved #330 failure. Do not choose a checkpoint winner, refit, retune or inspect generated-test rows. This is previously inspected familiar development evidence, not independent real accuracy. All four source eligibility flags remain false, complete scientific references remain 0/2, and no app/default/model promotion is authorized.",
+          "Exactly eight writable paths. Add the explicit new public manifest include while retaining all 50 existing manifest files. Meaningful disposable tests cover recipe parity, nested packet provenance, predecessor source/input/runtime/fit/public-seal/terminal tampering, one-shot attempts, shared Store admission, unknown/unavailable/full denominators, original hard clock and cumulative budgets. Run focused/full Python plus Ruff, format, pip, repository/JSON/link and diff checks before freeze. Publish code/aggregate report only through exact-head PR CI, controller merge, exact main checks and complete public source/wheel/manifests/images delivery. No routine manual merge or CI retry/cancel/wake. If any scientific stage fails or reaches limits, preserve failure and stop dependent work."
+        ],
+        "artifacts": {
+          "capacity-continuation-completion": "1bfbdf4d148a6086a08bc49c175c86f5afeb2c83726f6489d5e66f3fc9b316c1",
+          "capacity-continuation-experiment": "c15ae687689784f4bd9d05bcbd3747b89286925c861298db7f09c090657c39e5",
+          "capacity-experiment": "780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3",
+          "capacity-raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+          "convolution-checkpoint": "2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833",
+          "convolution-selection": "acf50a4e63fef72310145650593e5eb136f9d6c023a944fe156499cffe0533db",
+          "decoder-checkpoint": "1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598",
+          "decoder-selection": "60dfcab0bfc3d9bb524b4ac53a5bb1b3d63bdcc835751e5b5d055149f9f08d0d",
+          "familiar-source-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+          "familiar-source-inventory": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+          "familiar-source-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+          "familiar-source-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+          "parent-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+          "selection-experiment": "73cb4577be8638045bafcb61a852fe2e52e29971869729898a964531e42a35d0",
+          "selection-experiment-public-seal": "f72ee02ccf184f7a9d9f8401b144dce0a716e61f15d084900ba3e33c114b6fb8",
+          "selection-fit-public-seal": "97ecb361eca681890493bcc06f17fc956f85425ee385748f482efdb3dc1da86e",
+          "selection-fits": "61a2f32f846f4916bbf32afd882aeb4ff36e142dd1fb67051066e5918a9fccaa",
+          "selection-preservation-proof": "7ef23098fbff2680346cda6ebc4000a3f01eb0c34378dfc5cc1e4fbf8a2cc9e9",
+          "selection-publication-study-source": "3ba520eafd367a0e306026b7e644d840bcbb57da7251f470e2f4e4240610bce2",
+          "selection-test-completion": "0d1f89d51ba40d67efc72846fed0adb2f5a0090b51a2813315859fa379ea2cb2"
+        },
+        "capabilities": [
+          "review-inputs"
+        ],
+        "dependencies": [
+          "330"
+        ],
+        "exclusions": [
+          "No #330 scientific-stage rerun, generated-test row/prediction reopening, fitting/threshold/winner changes, neural inference or training, new source/media/label/image acquisition or transfer, external assessor/paid service, eligibility/promotion/app/API/UI/default edits, policy/auth/workflow/dependency/storage/schema/deployment changes, manual merge/CI retry/cancel/wake, raw coordination edits, destructive cleanup or PROGRESS edits."
+        ],
+        "limits": {
+          "cumulative_includes_task_330": true,
+          "immutable_original_deadline": 1793106855,
+          "max_output_bytes": 4294967296,
+          "max_review_rounds": 2,
+          "max_runtime_hours": 2,
+          "max_scientific_attempts": 1,
+          "original_granted_at": 1793063655,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Complete only the omitted familiar-source observed-component scoring diagnostic from #330, preserving its failed attempt and consumed generated test, all fixed scorers and all original source eligibility, without promotion.",
+        "paths": [
+          "backend/badminton/shuttle_selection_study.py",
+          "backend/badminton/shuttle_selection_continuation.py",
+          "scripts/continue_shuttle_selection.py",
+          "tests/test_shuttle_selection_study.py",
+          "tests/test_shuttle_selection_continuation.py",
+          "data/manifests/shuttle_selection_continuation_protocol_v1.json",
+          "docs/SHUTTLE_SELECTION_CONTINUATION_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 100,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "One fully frozen familiar-only cached diagnostic with original coefficients, baseline reproduction and unchanged complete denominators; no generated-test content or inference; preserve original failure/deadline/cumulative cap; focused/full required checks and exact controller/main/full public delivery."
+        ]
+      },
+      "spec_hash": "e8bca6bf5a898b1bbd766f63cbb2ad24208269e9f283334d84d88b04b803ab23",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
