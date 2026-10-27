@@ -10712,6 +10712,14 @@
       "task_id": "334",
       "verb": "plan"
     },
+    "spec-335-4020b791c87f5026d4792a75e080c6c211fac54b7eef9aec9f4b0f297e6198d2": {
+      "actor": "Ken0u",
+      "at": 1793126687,
+      "fingerprint": "5418ad523f4d27a17c3011a46ac104bac68c6623d5d8bbb0993015b5a0764907",
+      "status": "ready",
+      "task_id": "335",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -27943,6 +27951,50 @@
       },
       "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08",
       "status": "running"
+    },
+    "335": {
+      "epoch": 0,
+      "planned_at": 1793126687,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Refresh current main, issues/PRs, active grants and the preserved macOS failure in run40502970976/job122185096620 on oldPR333source424a8589bc90dbb8dfaa7608474dacad81b51b8a. Retain its original failed gate/log and distinct other passing checks. Obtain a separate committed grant and isolated worktree; do not enlarge archival334 or infer an authorization to retry historicalCI.",
+          "Diagnose tests/test_compare_rally_review.py invoke/observe call path where child.cmdline raises psutil.AccessDenied from sysctl(KERN_PROCARGS2). The existing observer catches only NoSuchProcess. Distinguish startup-gate identity verification from later observation; do not claim the original cause, process exit or CLI correctness from the generic exception alone. Preserve the original hosted lifetime as unknown unless actual authoritative terminal proof exists.",
+          "Change only the disposable test observer and tests needed for that observer. Keep nonce-bound startup PID/creation/cwd/command verification, original child/process ownership, real stdout/stderr/output preservation, terminal return code and independent original-lifetime absence checks. An unavailable observation must remain explicit, never interpreted as exit or identity match. Do not weaken timeout/signal/ownership assertions, skip tests on macOS, suppress arbitrary errors or alter production comparison code/Store/schema.",
+          "Use generated injected AccessDenied before/after verified startup and actual subprocess cases to prove original failure and corrected behavior, including genuine process exit/PID reuse and unobservable still-live identities. All processes/data must be disposable; no original research jobs, private images/labels or datasets accessed. Preserve receipts and no credentials/private payloads in stdout.",
+          "Run focused observer/compare tests, full required Python/Ruff/format/pip/repository/JSON/link/diff checks and exact fresh Linux/Windows/macOSCI. Normal controller integration, merged-main checks and full public delivery remain required. No historical workflow retry/cancel/wake or manual merge. Report original failure and validation limits honestly; app accuracy is unchanged."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "334"
+        ],
+        "exclusions": [
+          "No workflow/policy/auth/dependency changes, production process/cleanup/comparison changes, weaker or skipped tests, fabricated exit/identity proof, original research/video/image/label/GPU access, paid service, destructive cleanup, historical CI retry/cancel/wake, manual merge, raw coordination edit or PROGRESS edit."
+        ],
+        "limits": {
+          "max_output_bytes": 268435456,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Repair the disposable comparison-CLI test observer when macOS denies process command-line observation, preserving startup identity verification and independently established terminal lifetimes.",
+        "paths": [
+          "tests/test_compare_rally_review.py",
+          "docs/RALLY_REVIEW_COMPARISON_REPORT.md"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated denial/lifetime regressions and real disposable CLI/startup/terminal evidence; focused/full required checks, exact fresh nativeCI, controller/main/fullpublicdelivery; original failed run preserved without retry."
+        ]
+      },
+      "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
