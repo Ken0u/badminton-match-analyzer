@@ -254,6 +254,7 @@ def budget(root):
         "selector-planning*",
         "selector-preflight*",
         "selector-remaining*",
+        "selectorremaining*",
         "selector332*",
         "SELECTOR332*",
     ):

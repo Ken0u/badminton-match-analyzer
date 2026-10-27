@@ -199,13 +199,14 @@ def test_budget_counts_original_new_and_preserved_worktrees_without_double_charg
     sized_file(tmp_path / ".cache/selector-plan-old/d.bin", 13)
     sized_file(tmp_path / ".cache/selector-planning-v1/overlap.bin", 31)
     sized_file(tmp_path / ".cache/selector-preflight-old/e.bin", 17)
+    sized_file(tmp_path / ".cache/selectorremaining-experiment-v1/consumer/i.bin", 37)
     sized_file(tmp_path / ".cache/worktrees/selector330-e1/f.bin", 19)
     sized_file(tmp_path / ".cache/worktrees/selectorremaining-e1/g.bin", 23)
     sized_file(tmp_path / ".cache/worktrees/selector332-test/h.bin", 29)
     sized_file(tmp_path / ".cache/unrelated/borrowed.bin", 100)
     result = study.budget(tmp_path)
-    assert result["bytes"] == 158
-    assert result["files"] == 10
+    assert result["bytes"] == 195
+    assert result["files"] == 11
     assert result["limit_bytes"] == 4294967296
 
 
