@@ -1151,6 +1151,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "contact327-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793061253,
+      "epoch": 1,
+      "fingerprint": "2b08d48e1663ea9d5c7f9c8d112a92819f8132a86410ce9b2e456723d3691a2e",
+      "status": "review",
+      "task_id": "327",
+      "verb": "submit"
+    },
     "contract270-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792907064,
@@ -27221,6 +27230,7 @@
       "epoch": 1,
       "planned_at": 1793060805,
       "planned_by": "Ken0u",
+      "pr_number": 328,
       "spec": {
         "acceptance": [
           "Inspect all issue/PR history, current main and coordination. Require committed original-host terminal-proof release contact323-expired-release-v1 before claiming. Preserve original321 deadline14:06:18UTC and323 deadline21:44:47UTC October26, failed CI40315690500, closed unmergedPR322, genuine changes-review finding and all original local source/test/process evidence. This publication-only phase is separately frozen because approval-service outages prevented all323commit/push attempts; neither old clock is renewed and neither predecessor is declared complete.",
@@ -27276,7 +27286,26 @@
         ]
       },
       "spec_hash": "e91db24852a114abc5f0c75e791d96348570be5181f3fcb7e9444ae1b9fd8322",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4fa37eb004e24eaa3a75d305a87fb651bb0fade7",
+        "head_sha": "124013b3814e81a9b08d727a03c5e30df6cb23d2",
+        "native_evidence": {
+          "code_sha": "124013b3814e81a9b08d727a03c5e30df6cb23d2",
+          "limitations": [
+            "Generated 25-frame H264 source and synthetic trajectories only; no research media or learned-model execution.",
+            "model_sha256 binds the canonical deterministic contact method/recipe, not a neural checkpoint.",
+            "Ten bad source/clock cases rejected and two stable contacts preserved; this proves input handling, not badminton annotation accuracy.",
+            "Existing unvalidated pure research calls remain explicit; missing legacy hashes remain unavailable.",
+            "All #321 native/full/focused and #323 browser results are retained runs reused only after exact baseline/covered production/test/fixture hash checks. None is represented as freshly executed at the #327 commit."
+          ],
+          "model_sha256": "ad7712a259a8f515944dc083014c94ee12dde505abd98715c391be5ea2a46d57",
+          "receipt_sha256": "5457146006899311c0432070af3fe0a69f5ba15b48d8e0377b77dd4df2d61cab",
+          "source_sha256": "e6944e85d2a87d2e15b414ed9ce72ba0acb22e15299be6d60243df987102be90"
+        },
+        "pr_number": 328,
+        "spec_hash": "e91db24852a114abc5f0c75e791d96348570be5181f3fcb7e9444ae1b9fd8322"
+      }
     },
     "62": {
       "checkpoint": {
