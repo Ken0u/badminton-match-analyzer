@@ -953,6 +953,143 @@ def cached_views(root, protocol):
     return results
 
 
+def familiar_diagnostic(
+    root,
+    output,
+    expected,
+    fits,
+    public,
+    protocol,
+    progress,
+    *,
+    public_seal_sha256,
+    fit_output=None,
+    fit_experiment_sha256=None,
+):
+    """Replay the fixed cached recipe; keep inherited fits and outputs separate."""
+    inputs = protocol["input_artifacts"]
+    views = cached_views(root, protocol)
+    packet = audit.read_json(audit.sealed_bytes(root, inputs["familiar-source-packet"]))
+    labels = audit.read_json(audit.sealed_bytes(root, inputs["familiar-source-labels"]))
+    baseline = audit.read_json(
+        audit.sealed_bytes(root, inputs["familiar-source-baseline"])
+    )
+    packet_root = audit.sealed_path(root, inputs["familiar-source-packet"]).parent
+    validate_source_views(packet_root, packet, views)
+    cases = packet["cases"]
+    if (
+        len(cases) != protocol["familiar"]["cases"]
+        or dict(Counter(c["label"]["state"] for c in labels["cases"]))
+        != protocol["familiar"]["truth_states"]
+    ):
+        raise ValueError("Familiar cases, unknowns or negative denominator changed")
+    publish(
+        output / "familiar-opened.json",
+        {
+            "experiment_sha256": expected,
+            "fits_sha256": public["fits_sha256"],
+            "test_sha256": audit.file_hash((fit_output or output) / "test.json"),
+        },
+    )
+    results = {}
+    for index, variant in enumerate(VARIANTS):
+        observations, selected_observations = {}, {}
+        selected_views = []
+        for view, run in views[variant].values():
+            members = [c for c in cases if c["id"] in view["case_ids"]]
+            if not members or len({(c["width"], c["height"]) for c in members}) != 1:
+                raise ValueError("Missing or inconsistent native display geometry")
+            width, height = members[0]["width"], members[0]["height"]
+            annotations = baseline["evidence"]["catalogs"][view["video_id"]][
+                "snapshot"
+            ]["annotations"]
+            rows = select_fitted(
+                run["frames"],
+                fits["variants"][variant],
+                width,
+                height,
+                segments=eligible_segments(run, annotations),
+            )
+            selected_views.append({"view": view, "rows": rows})
+            for case in members:
+                offset = case["frame"] - view["start_frame"]
+                if case["id"] in observations or not 0 <= offset < len(rows):
+                    raise ValueError("Duplicate or out-of-view familiar case")
+                observations[case["id"]] = {
+                    "available": True,
+                    "point": run["frames"][offset]["shuttle"],
+                    "reason": None,
+                }
+                row = rows[offset]
+                selected_observations[case["id"]] = {
+                    "available": row["selection_available"],
+                    "point": row["shuttle"],
+                    "reason": row["selection_unavailable_reason"],
+                }
+        original = existing.grouped_scores(cases, labels["cases"], observations)
+        validate_baseline(original, protocol, variant)
+        learned = existing.grouped_scores(cases, labels["cases"], selected_observations)
+        pairs = Counter(
+            (a["outcome"], b["outcome"])
+            for a, b in zip(
+                original["all"]["metrics"]["frames"],
+                learned["all"]["metrics"]["frames"],
+            )
+        )
+        results[variant] = {
+            "baseline": original,
+            "selected": learned,
+            "paired_transitions": {
+                a + " -> " + b: n for (a, b), n in sorted(pairs.items())
+            },
+            "views": len(views[variant]),
+            "native_rows": sum(
+                run["processed_frames"] for _, run in views[variant].values()
+            ),
+        }
+        publish(
+            output / f"familiar-selected-{variant}.json",
+            {"experiment_sha256": expected, "views": selected_views},
+        )
+        progress((index + 1) / len(VARIANTS))
+    if (
+        sealed_fits(
+            fit_output or output,
+            fit_experiment_sha256 or expected,
+            public_seal_sha256,
+        )[0]
+        != fits
+    ):
+        raise ValueError("Fitted methods changed during familiar diagnostics")
+    publish(
+        output / "familiar.json",
+        {
+            "experiment_sha256": expected,
+            "fits_sha256": public["fits_sha256"],
+            "variants": results,
+            "complete_references": "0/2",
+            "promoted": False,
+            "new_native_inference": False,
+            "eligibility_changed": False,
+            "eligibility": dict.fromkeys(
+                (
+                    "training_allowed",
+                    "independent_test_allowed",
+                    "model_deployment_allowed",
+                    "dataset_redistribution_allowed",
+                ),
+                False,
+            ),
+            "limitations": protocol["limitations"],
+        },
+    )
+    return {
+        "familiar_sha256": audit.file_hash(output / "familiar.json"),
+        "cases": len(cases),
+        "unknown": protocol["familiar"]["truth_states"]["unknown"],
+    }
+
+
 def familiar(root, output, expected, public_seal_sha256):
     if (output / "familiar-opened.json").exists() or (
         output / "familiar.json"
@@ -971,129 +1108,16 @@ def familiar(root, output, expected, public_seal_sha256):
         )
 
     def task(_experiment, protocol, _attempt, progress):
-        inputs = protocol["input_artifacts"]
-        views = cached_views(root, protocol)
-        packet = audit.read_json(
-            audit.sealed_bytes(root, inputs["familiar-source-packet"])
+        return familiar_diagnostic(
+            root,
+            output,
+            expected,
+            fits,
+            public,
+            protocol,
+            progress,
+            public_seal_sha256=public_seal_sha256,
         )
-        labels = audit.read_json(
-            audit.sealed_bytes(root, inputs["familiar-source-labels"])
-        )
-        baseline = audit.read_json(
-            audit.sealed_bytes(root, inputs["familiar-source-baseline"])
-        )
-        packet_root = audit.sealed_path(root, inputs["familiar-source-packet"]).parent
-        validate_source_views(packet_root, packet, views)
-        cases = packet["cases"]
-        if (
-            len(cases) != protocol["familiar"]["cases"]
-            or dict(Counter(c["label"]["state"] for c in labels["cases"]))
-            != protocol["familiar"]["truth_states"]
-        ):
-            raise ValueError("Familiar cases, unknowns or negative denominator changed")
-        publish(
-            output / "familiar-opened.json",
-            {
-                "experiment_sha256": expected,
-                "fits_sha256": public["fits_sha256"],
-                "test_sha256": audit.file_hash(output / "test.json"),
-            },
-        )
-        results = {}
-        for index, variant in enumerate(VARIANTS):
-            observations, selected_observations = {}, {}
-            selected_views = []
-            for view, run in views[variant].values():
-                members = [c for c in cases if c["id"] in view["case_ids"]]
-                if (
-                    not members
-                    or len({(c["width"], c["height"]) for c in members}) != 1
-                ):
-                    raise ValueError("Missing or inconsistent native display geometry")
-                width, height = members[0]["width"], members[0]["height"]
-                annotations = baseline["evidence"]["catalogs"][view["video_id"]][
-                    "snapshot"
-                ]["annotations"]
-                rows = select_fitted(
-                    run["frames"],
-                    fits["variants"][variant],
-                    width,
-                    height,
-                    segments=eligible_segments(run, annotations),
-                )
-                selected_views.append({"view": view, "rows": rows})
-                for case in members:
-                    offset = case["frame"] - view["start_frame"]
-                    if case["id"] in observations or not 0 <= offset < len(rows):
-                        raise ValueError("Duplicate or out-of-view familiar case")
-                    observations[case["id"]] = {
-                        "available": True,
-                        "point": run["frames"][offset]["shuttle"],
-                        "reason": None,
-                    }
-                    row = rows[offset]
-                    selected_observations[case["id"]] = {
-                        "available": row["selection_available"],
-                        "point": row["shuttle"],
-                        "reason": row["selection_unavailable_reason"],
-                    }
-            original = existing.grouped_scores(cases, labels["cases"], observations)
-            validate_baseline(original, protocol, variant)
-            learned = existing.grouped_scores(
-                cases, labels["cases"], selected_observations
-            )
-            pairs = Counter(
-                (a["outcome"], b["outcome"])
-                for a, b in zip(
-                    original["all"]["metrics"]["frames"],
-                    learned["all"]["metrics"]["frames"],
-                )
-            )
-            results[variant] = {
-                "baseline": original,
-                "selected": learned,
-                "paired_transitions": {
-                    a + " -> " + b: n for (a, b), n in sorted(pairs.items())
-                },
-                "views": len(views[variant]),
-                "native_rows": sum(
-                    run["processed_frames"] for _, run in views[variant].values()
-                ),
-            }
-            publish(
-                output / f"familiar-selected-{variant}.json",
-                {"experiment_sha256": expected, "views": selected_views},
-            )
-            progress((index + 1) / len(VARIANTS))
-        if sealed_fits(output, expected, public_seal_sha256)[0] != fits:
-            raise ValueError("Fitted methods changed during familiar diagnostics")
-        publish(
-            output / "familiar.json",
-            {
-                "experiment_sha256": expected,
-                "fits_sha256": public["fits_sha256"],
-                "variants": results,
-                "complete_references": "0/2",
-                "promoted": False,
-                "new_native_inference": False,
-                "eligibility_changed": False,
-                "eligibility": dict.fromkeys(
-                    (
-                        "training_allowed",
-                        "independent_test_allowed",
-                        "model_deployment_allowed",
-                        "dataset_redistribution_allowed",
-                    ),
-                    False,
-                ),
-                "limitations": protocol["limitations"],
-            },
-        )
-        return {
-            "familiar_sha256": audit.file_hash(output / "familiar.json"),
-            "cases": len(cases),
-            "unknown": protocol["familiar"]["truth_states"]["unknown"],
-        }
 
     return admission(root, output, expected, "familiar", task)
 
