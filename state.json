@@ -9278,6 +9278,26 @@
       "task_id": "294",
       "verb": "submit"
     },
+    "selector330-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793063655,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "aa8e53b33ab462bc5316065e0287a064a6f0fa81",
+        "branch": "codex/issue-330-test-whether-a-separately-trained-observ",
+        "epoch": 1,
+        "expires_at": 1793074455,
+        "granted_at": 1793063655,
+        "host_id": "MSI",
+        "session_id": "5cc34f2c210f4bbfab2009dd2e8da0b8",
+        "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4"
+      },
+      "epoch": 1,
+      "fingerprint": "91e3d280528c20bd9ce9a34decbe903a89288b32980e82016fed3e3b5323abd4",
+      "status": "granted",
+      "task_id": "330",
+      "verb": "next"
+    },
     "selector330-register-v1": {
       "actor": "Ken0u",
       "at": 1793063442,
@@ -27356,7 +27376,18 @@
       }
     },
     "330": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "aa8e53b33ab462bc5316065e0287a064a6f0fa81",
+        "branch": "codex/issue-330-test-whether-a-separately-trained-observ",
+        "epoch": 1,
+        "expires_at": 1793074455,
+        "granted_at": 1793063655,
+        "host_id": "MSI",
+        "session_id": "5cc34f2c210f4bbfab2009dd2e8da0b8",
+        "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4"
+      },
+      "epoch": 1,
       "planned_at": 1793063442,
       "planned_by": "Ken0u",
       "spec": {
@@ -27429,7 +27460,7 @@
         ]
       },
       "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
