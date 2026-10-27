@@ -9405,6 +9405,13 @@
       "task_id": "332",
       "verb": "release"
     },
+    "selector332archive-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793125686,
+      "fingerprint": "e218ba793194b64882bb01c9bb3059ddc7894bc2e2f8f5b8ec0384b1ad36474b",
+      "status": "ok",
+      "verb": "register"
+    },
     "shuttle-clock-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792960457,
@@ -10666,6 +10673,14 @@
       "fingerprint": "930e1381e3f58ce0c54e4b3da19d2863b3a332a7a539113e38f2bd6b3780700e",
       "status": "ready",
       "task_id": "332",
+      "verb": "plan"
+    },
+    "spec-334-227863d0d4feb4ec5be4a0ca88d54e6646af160b1e0fb1e9438f6efab1be7c51": {
+      "actor": "Ken0u",
+      "at": 1793125686,
+      "fingerprint": "35647c105671647c7f9e15b3ccd3487defb0511e66a339c9fb6a76bb090ac6f5",
+      "status": "ready",
+      "task_id": "334",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -27716,7 +27731,7 @@
       ],
       "planned_at": 1793100523,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "Refresh current issues/PRs, grants and shared Store before claiming. Require #330 integrated, exact main checks and full public delivery verified. Obtain a new targeted grant/isolated worktree; this is a separately frozen remaining-only consumer, not a rerun of #330. Preserve original application annotations, videos, installed models, old source/consumer worktrees, all prior experiments and their clocks/results/failures. Do not use unrelated #329 as repair authority.",
@@ -27792,6 +27807,82 @@
         ]
       },
       "spec_hash": "e8bca6bf5a898b1bbd766f63cbb2ad24208269e9f283334d84d88b04b803ab23",
+      "status": "blocked"
+    },
+    "334": {
+      "epoch": 0,
+      "planned_at": 1793125686,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Refresh all issue/PR history, exact main, coordination and physical terminal proof. Preserve #332 draft PR #333/source424a8589bc90dbb8dfaa7608474dacad81b51b8a, frozen specification/clock, all original consumers/worktrees and outputs. Release its expired resource claim through the documented authenticated terminal-proof command, then close its issue/PR with an explicit incomplete-deadline transfer record. Do not mark #332 successful or infer a new research allowance from this archival task. Obtain a separate committed grant/isolated worktree before source or scientific-result reporting work.",
+          "The immutable original research/delivery deadline remains2026-10-27 13:14:15UTC, epoch1793106855. Cached worker launcher ended0 at1793104650.9004729 before that deadline, but verification/report/CI/controller/public delivery were not complete by it. Preserve that missed deadline as an incomplete protocol outcome. This task authorizes archival validation/publication only; its working lease/runtime never renews or reopens the original scientific clock.",
+          "Copy exactly the seven non-report task paths from tested original PR333 head424a8589bc90dbb8dfaa7608474dacad81b51b8a into the fresh granted branch. Byte-verify all seven against that Git tree, original public seal and checks-v4 receipt. Preserve the original fixed-recipe before/after parity proof and diagnosed pre-opening output-budget prefix regression. Make no functional source, protocol, model, feature, scorer, threshold, baseline or metric changes. If new code defects are found, preserve findings and propose a separate bounded task instead of repairing them in this archive.",
+          "After publicly pinning the existing result/consumer/input/terminal hashes in this archive specification, read only the already-written familiar.json result and aggregate/per-case outcome fields needed to audit report arithmetic. Independently recompute visibility/localization/unknown/unavailable counts and paired transitions from that sealed result. Hash original labels, cached observations, consumed generated-test files and model inputs as opaque bytes for preservation; never parse their rows or rerun any selector/evaluator/fitter. No new scientific output is authorized.",
+          "Report all three unchanged methods with original50views/13499native rows and60cases each,25visible/sevennegative/28unknown. Preserve all unavailable/negative outcomes, confusion/component/error/paired summaries and original #330 failure. Clearly distinguish before-deadline worker completion from missed complete-protocol/delivery deadline. Do not choose a winner or retune. This remains previously inspected familiar development evidence; references0/2, all four eligibility flagsfalse, full automatic accuracy unproven, no promotion.",
+          "Read-only original-host preservation verifies launcher/worker PID+creation/cwd/command absence, actual Store terminal status and zero active jobs, source/frozen-copy/input hashes, existing app annotations/videos and original checkout/PROGRESS edit. Preserve all prior failed/unused/partial evidence. Charge every #330/#332/archive retained artifact and worktree together against the SAME cumulative4GiBcap; count archive names explicitly, keep borrowed immutable inputs separate and never delete/relocate evidence or reset the budget.",
+          "Use original workstation virtualenv and isolated test root/data. Run existing focused/full Python tests with verified portable FFmpeg/Node PATH and required Ruff,format,pip,repository/JSON/link/diff checks on exact archive source. Generated fixtures are permitted; original video decoding, checkpoint loading, GPU/CPU model inference, optimization, image generation/assessment/transfer, new source/media/label acquisition, paid services or runtime changes are forbidden.",
+          "Publish only source/public protocol and aggregate report through a fresh exact-head PR, required CI, normal controller integration, exact merged-main CI and full public source/wheel/51manifests/twoimages delivery. Preserve oldPR333 and its branch/evidence as closed history; no manual merge, CI retry/cancel/wake or raw coordination edits. Final archive completion does not complete #332 protocol or the full product goal."
+        ],
+        "artifacts": {
+          "archived-experiment": "be75300db6e3d12568f3a2195ffe699ab5e47c600f7e995f38a5c1eea3988044",
+          "archived-expiry-preservation": "61529e961cedfade0b27034644ca0336fe99ea9e7e4204be6fba3d8dbc3728e9",
+          "archived-extraction-parity": "94109e44712a308b7cfecc8e69556315e57f38026465aec17359efaeef5103b0",
+          "archived-launcher-terminal": "567c7648062f15f35d2f44314c7351d406081157d5b231f9975e076238ceef89",
+          "archived-original-deadline-protocol": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
+          "archived-public-seal": "290463c4d3190c2aa4d9ec3fb2856aa7a5e3e44fc8cd3aca832bd881ff7a14a1",
+          "archived-required-checks": "60351ffdc53ea55ca6f9fbaf000b65e105cd7ef52972533d71fd349e4c32b8f4",
+          "archived-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971",
+          "source-0": "a493f86a507509fa70fbad36c8bb644b9a5c1183746338ec59367d4f8385c1ad",
+          "source-1": "3e82b4e29fd4dd813e3526700487aa90192d7db0227d81e763f8a53b340239d9",
+          "source-2": "d7c41f74b18decc9109287dc907a00fcdf36616a96a3bc73178837eed881df45",
+          "source-3": "05dd894b7b5a666f4a310a60c2b01b0ade306c285dd0da745c0c4ca18c4f8361",
+          "source-4": "d4aef57ec9b6993b597444a8f8aab3009cbab2b4932f5e40ba8be5b4fcef77da",
+          "source-5": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
+          "source-7": "161e4068ca7c1e5df6ff56eb91e3a93e96093046ddc6ef33f2bbb1482b6b33c6"
+        },
+        "capabilities": [
+          "review-inputs"
+        ],
+        "dependencies": [
+          "330"
+        ],
+        "exclusions": [
+          "No scientific-stage execution/retry/freeze, clock or cumulative-budget reset, original label/run/generated-test-row parsing, selection/fitting/evaluation, model/media/image transfer/acquisition, neural inference/training, functional-source/protocol/metric change, winner/threshold change, eligibility/app/API/UI/default/model promotion, auth/policy/workflow/dependency/schema/deployment changes, paid service, destructive cleanup, manual merge/CI retry/cancel/wake, raw coordination edits or PROGRESS edits."
+        ],
+        "limits": {
+          "archive_only": true,
+          "cumulative_includes_tasks_330_and_332": true,
+          "max_new_scientific_attempts": 0,
+          "max_output_bytes": 4294967296,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "original_research_clock_remains_expired": true,
+          "original_research_deadline": 1793106855,
+          "paid_services": false
+        },
+        "milestone": "Perception",
+        "outcome": "Archive the deadline-expired #332 diagnostic and publish its already-tested fixed cached-consumer code plus an honest aggregate report, without restarting or extending any research experiment.",
+        "paths": [
+          "backend/badminton/shuttle_selection_study.py",
+          "backend/badminton/shuttle_selection_continuation.py",
+          "scripts/continue_shuttle_selection.py",
+          "tests/test_shuttle_selection_study.py",
+          "tests/test_shuttle_selection_continuation.py",
+          "data/manifests/shuttle_selection_continuation_protocol_v1.json",
+          "docs/SHUTTLE_SELECTION_CONTINUATION_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 100,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Exact copied tested-source hashes; sealed-result arithmetic audit only; immutable original missed deadline and terminal/preservation proof; cumulative inherited cap; focused/full required checks, exact controller/main CI and complete public delivery."
+        ]
+      },
+      "spec_hash": "b981fc308624a28f097b6cb66f5a85a2a73c6da26c62af5164e59aafe6cf9a08",
       "status": "ready"
     },
     "62": {
@@ -31449,6 +31540,35 @@
       "host_id": "MSI",
       "registered_at": 1793014780,
       "session_id": "contact321-ci-review-20261026"
+    },
+    "MSI/d1a16595edd7434185d81366f95e8828": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "archived-experiment": "be75300db6e3d12568f3a2195ffe699ab5e47c600f7e995f38a5c1eea3988044",
+        "archived-expiry-preservation": "61529e961cedfade0b27034644ca0336fe99ea9e7e4204be6fba3d8dbc3728e9",
+        "archived-extraction-parity": "94109e44712a308b7cfecc8e69556315e57f38026465aec17359efaeef5103b0",
+        "archived-launcher-terminal": "567c7648062f15f35d2f44314c7351d406081157d5b231f9975e076238ceef89",
+        "archived-original-deadline-protocol": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
+        "archived-public-seal": "290463c4d3190c2aa4d9ec3fb2856aa7a5e3e44fc8cd3aca832bd881ff7a14a1",
+        "archived-required-checks": "60351ffdc53ea55ca6f9fbaf000b65e105cd7ef52972533d71fd349e4c32b8f4",
+        "archived-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971",
+        "source-0": "a493f86a507509fa70fbad36c8bb644b9a5c1183746338ec59367d4f8385c1ad",
+        "source-1": "3e82b4e29fd4dd813e3526700487aa90192d7db0227d81e763f8a53b340239d9",
+        "source-2": "d7c41f74b18decc9109287dc907a00fcdf36616a96a3bc73178837eed881df45",
+        "source-3": "05dd894b7b5a666f4a310a60c2b01b0ade306c285dd0da745c0c4ca18c4f8361",
+        "source-4": "d4aef57ec9b6993b597444a8f8aab3009cbab2b4932f5e40ba8be5b4fcef77da",
+        "source-5": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
+        "source-7": "161e4068ca7c1e5df6ff56eb91e3a93e96093046ddc6ef33f2bbb1482b6b33c6"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793125686,
+      "session_id": "d1a16595edd7434185d81366f95e8828"
     },
     "MSI/d45693fd670e4a8f86a15dba76fc903d": {
       "actor": "Ken0u",
