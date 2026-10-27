@@ -9369,6 +9369,13 @@
       "task_id": "330",
       "verb": "submit"
     },
+    "selector332-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793100757,
+      "fingerprint": "8d8d2a57c79f0d70e28b9f4c34744e7c02d3b2d2ecd20b6e3b219bafee9361a5",
+      "status": "ok",
+      "verb": "register"
+    },
     "shuttle-clock-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792960457,
@@ -31004,6 +31011,41 @@
       "host_id": "MSI",
       "registered_at": 1792953537,
       "session_id": "38cb048544ad42769dddcd36b6f75292"
+    },
+    "MSI/41083a6a9835411f9c9ec81caf25fd74": {
+      "actor": "Ken0u",
+      "artifacts": {
+        "capacity-continuation-completion": "1bfbdf4d148a6086a08bc49c175c86f5afeb2c83726f6489d5e66f3fc9b316c1",
+        "capacity-continuation-experiment": "c15ae687689784f4bd9d05bcbd3747b89286925c861298db7f09c090657c39e5",
+        "capacity-experiment": "780374cc379534d853680bafa0159bcad7d6ee5783f942a616a9dd00a40d40f3",
+        "capacity-raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+        "convolution-checkpoint": "2c65087f1849bc0a22740aa48c252b5cfd92a175693f08f18350c639082d4833",
+        "convolution-selection": "acf50a4e63fef72310145650593e5eb136f9d6c023a944fe156499cffe0533db",
+        "decoder-checkpoint": "1506668b947a90f2d3cff79ef23a480aa97c9aed1a802fcffec9df6e8bb42598",
+        "decoder-selection": "60dfcab0bfc3d9bb524b4ac53a5bb1b3d63bdcc835751e5b5d055149f9f08d0d",
+        "familiar-source-baseline": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "familiar-source-inventory": "273e0749d148e952ad1fb0534363b3971e2584702f834ad2084c59e632990822",
+        "familiar-source-labels": "fd25029ae49891f544989cdbfa20e5077571c1048c960e2d77ddee1fe7abd158",
+        "familiar-source-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+        "parent-checkpoint": "df867641a02712b021f04548ff4b1208ddfdb47f629ab2094ceb978667e83b1a",
+        "selection-experiment": "73cb4577be8638045bafcb61a852fe2e52e29971869729898a964531e42a35d0",
+        "selection-experiment-public-seal": "f72ee02ccf184f7a9d9f8401b144dce0a716e61f15d084900ba3e33c114b6fb8",
+        "selection-fit-public-seal": "97ecb361eca681890493bcc06f17fc956f85425ee385748f482efdb3dc1da86e",
+        "selection-fits": "61a2f32f846f4916bbf32afd882aeb4ff36e142dd1fb67051066e5918a9fccaa",
+        "selection-preservation-proof": "7ef23098fbff2680346cda6ebc4000a3f01eb0c34378dfc5cc1e4fbf8a2cc9e9",
+        "selection-publication-study-source": "3ba520eafd367a0e306026b7e644d840bcbb57da7251f470e2f4e4240610bce2",
+        "selection-test-completion": "0d1f89d51ba40d67efc72846fed0adb2f5a0090b51a2813315859fa379ea2cb2"
+      },
+      "capabilities": [
+        "cpu",
+        "windows",
+        "amd64",
+        "cuda",
+        "review-inputs"
+      ],
+      "host_id": "MSI",
+      "registered_at": 1793100757,
+      "session_id": "41083a6a9835411f9c9ec81caf25fd74"
     },
     "MSI/4d7ae7039b4e4da1b983ae11424d2c99": {
       "actor": "Ken0u",
