@@ -27411,6 +27411,7 @@
       "epoch": 1,
       "planned_at": 1793063442,
       "planned_by": "Ken0u",
+      "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
           "Inspect current issue/PR history, committed queue and shared Store; preserve completed #305/#311/#313 experiments, all consumed tests, installed model bytes and app annotations/predictions. Obtain a fresh targeted GPU/data grant and isolated worktree. #329 is an unrelated preserved observer incident and is not a workflow repair grant. Do not reopen #63 or old generated test outputs, repeat original training, dispatch images or change source eligibility.",
@@ -27481,7 +27482,7 @@
         ]
       },
       "spec_hash": "d3e9b76089a07fd04433d8e322e4f7163a0d6960f282a99010ab02e8e986bed4",
-      "status": "running"
+      "status": "recovery_required"
     },
     "62": {
       "checkpoint": {
