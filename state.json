@@ -28019,6 +28019,7 @@
         "session_id": "d1a16595edd7434185d81366f95e8828",
         "spec_hash": "d0b1000477ec32eae1ee8e35a16f73da804d2cc8b3a3a51cbc9c20c3e323b239"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
