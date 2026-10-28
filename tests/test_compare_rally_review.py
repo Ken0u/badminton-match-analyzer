@@ -62,7 +62,119 @@ def arguments(tmp_path, *, adjudication=False):
     )
 
 
-def invoke(tmp_path, *extra, adjudication=False):
+class CLIProcessObserver:
+    """Keep denied observations distinct from identity and terminal evidence."""
+
+    def __init__(self, process_factory=None):
+        self.process_factory = process_factory or psutil.Process
+        self.identities = {}
+        self.unavailable = {}
+
+    def read(self, process, field, phase):
+        if field == "children":
+            return process.children(recursive=True)
+        return getattr(process, field)()
+
+    def denied(self, pid, created, field, phase):
+        key = (pid, created, field, phase)
+        item = self.unavailable.setdefault(
+            key,
+            {
+                "pid": pid,
+                "created": created,
+                "field": field,
+                "phase": phase,
+                "status": "unavailable",
+                "count": 0,
+            },
+        )
+        item["count"] += 1
+
+    def remember(self, process, phase):
+        try:
+            created = self.read(process, "create_time", phase)
+        except psutil.AccessDenied:
+            self.identities.setdefault(
+                (process.pid, None), {"pid": process.pid, "created": None}
+            )
+            self.denied(process.pid, None, "create_time", phase)
+            return
+        except psutil.NoSuchProcess:
+            return
+        identity = self.identities.setdefault(
+            (process.pid, created), {"pid": process.pid, "created": created}
+        )
+        try:
+            cwd = self.read(process, "cwd", phase)
+        except psutil.AccessDenied:
+            self.denied(process.pid, created, "cwd", phase)
+            return
+        except psutil.NoSuchProcess:
+            return
+        try:
+            command = self.read(process, "cmdline", phase)
+        except psutil.AccessDenied:
+            self.denied(process.pid, created, "cmdline", phase)
+            return
+        except psutil.NoSuchProcess:
+            return
+        identity.update(cwd=cwd, command=command)
+
+    def observe(self, process, phase):
+        try:
+            owner = self.process_factory(process.pid)
+        except psutil.AccessDenied:
+            self.identities.setdefault(
+                (process.pid, None), {"pid": process.pid, "created": None}
+            )
+            self.denied(process.pid, None, "process", phase)
+            return
+        except psutil.NoSuchProcess:
+            return
+        self.remember(owner, phase)
+        try:
+            children = self.read(owner, "children", phase)
+        except psutil.AccessDenied:
+            self.denied(owner.pid, None, "children", phase)
+            return
+        except psutil.NoSuchProcess:
+            return
+        for child in children:
+            self.remember(child, phase)
+
+    def startup_identity(self, record, nonce, gated):
+        assert record["nonce"] == nonce
+        identity = self.identities.get((record["pid"], record["created"]))
+        if identity is None or not {"cwd", "command"} <= identity.keys():
+            return None
+        assert identity["command"] == record["command"]
+        assert identity["command"][1:] == gated[1:]
+        assert (
+            Path(record["cwd"]).resolve() == Path(identity["cwd"]).resolve() == CHECKOUT
+        )
+        return dict(identity)
+
+    def verify_terminal(self):
+        for identity in self.identities.values():
+            try:
+                process = self.process_factory(identity["pid"])
+                current = self.read(process, "create_time", "terminal")
+                absent = (
+                    current != identity["created"]
+                    if identity["created"] is not None
+                    else None
+                )
+            except psutil.NoSuchProcess:
+                absent = True
+            except psutil.AccessDenied:
+                absent = None
+                self.denied(
+                    identity["pid"], identity["created"], "create_time", "terminal"
+                )
+            identity["independently_absent_lifetime"] = absent
+
+
+def invoke(tmp_path, *extra, adjudication=False, observer=None):
     env = {
         key: value
         for key, value in os.environ.items()
@@ -106,44 +218,28 @@ def invoke(tmp_path, *extra, adjudication=False):
     gate.write_text(CLI_STARTUP_GATE, encoding="utf-8", newline="\n")
     nonce = uuid4().hex
     gated = [command[0], str(gate), str(startup), nonce, *command[1:]]
-    identities = {}
-
-    def observe(process):
-        try:
-            owner = psutil.Process(process.pid)
-            for child in [owner, *owner.children(recursive=True)]:
-                try:
-                    identity = {
-                        "pid": child.pid,
-                        "created": child.create_time(),
-                        "cwd": child.cwd(),
-                        "command": child.cmdline(),
-                    }
-                    identities[(child.pid, identity["created"])] = identity
-                except psutil.NoSuchProcess:
-                    pass
-        except psutil.NoSuchProcess:
-            pass
+    observer = observer if observer is not None else CLIProcessObserver()
+    identities = observer.identities
 
     stdout, stderr = directory / "stdout.log", directory / "stderr.log"
-    startup_error, verified = None, False
+    startup_error, verified, startup_identity = None, False, None
     with stdout.open("wb") as out, stderr.open("wb") as err:
         process = subprocess.Popen(
             gated, cwd=CHECKOUT, env=env, stdin=subprocess.PIPE, stdout=out, stderr=err
         )
         try:
             deadline = time.monotonic() + 10
-            while not startup.exists():
-                observe(process)
-                assert process.poll() is None and time.monotonic() < deadline
+            while startup_identity is None:
+                assert process.poll() is None and time.monotonic() < deadline, (
+                    "Startup identity unavailable before release"
+                )
+                observer.observe(process, "startup")
+                if startup.exists():
+                    record = json.loads(startup.read_bytes())
+                    startup_identity = observer.startup_identity(record, nonce, gated)
+                if startup_identity is not None:
+                    break
                 time.sleep(0.01)
-            record = json.loads(startup.read_bytes())
-            observe(process)
-            identity = identities[(record["pid"], record["created"])]
-            assert record["nonce"] == nonce
-            assert identity["command"] == record["command"]
-            assert identity["command"][1:] == gated[1:]
-            assert Path(identity["cwd"]).resolve() == CHECKOUT
             verified = True
             process.stdin.write(b"\n")
             process.stdin.flush()
@@ -155,29 +251,25 @@ def invoke(tmp_path, *extra, adjudication=False):
             except BrokenPipeError:
                 pass
         while process.poll() is None:
-            observe(process)
+            observer.observe(process, "running")
             time.sleep(0.01)
         code = process.wait()
-    for identity in identities.values():
-        try:
-            identity["independently_absent_lifetime"] = (
-                psutil.Process(identity["pid"]).create_time() != identity["created"]
-            )
-        except psutil.NoSuchProcess:
-            identity["independently_absent_lifetime"] = True
+    observer.verify_terminal()
     (directory / "receipt.json").write_bytes(
         contract.encode_json(
             {
                 "command": command,
                 "startup_verified": verified,
+                "startup_identity": startup_identity,
+                "unavailable_observations": list(observer.unavailable.values()),
                 "returncode": code,
                 "identities": list(identities.values()),
             }
         )
     )
     assert identities and all(
-        i["independently_absent_lifetime"] for i in identities.values()
-    )
+        i["independently_absent_lifetime"] is True for i in identities.values()
+    ), "Original process lifetime unavailable or still live"
     if startup_error:
         raise startup_error
     assert verified
@@ -388,3 +480,281 @@ def test_actual_bounded_reader_rejects_partial_or_changed_document_reads(
     assert target.read_bytes() == original + (
         b"\n" if mode == "external_change" else b""
     )
+
+
+def test_actual_cli_survives_transient_prestartup_command_denial(tmp_path, monkeypatch):
+    workspace(tmp_path)
+    command_line = psutil.Process.cmdline
+    calls = []
+
+    def denied_once(process):
+        calls.append(process.pid)
+        # Deny before any complete startup identity can release the gate.
+        if len(calls) == 1:
+            raise psutil.AccessDenied(process.pid)
+        return command_line(process)
+
+    monkeypatch.setattr(psutil.Process, "cmdline", denied_once)
+    code, stdout, stderr = invoke(tmp_path)
+    assert code == 0, stderr
+    assert json.loads(stdout)["expected_native_frames"] == 9
+    receipt = json.loads(next(tmp_path.glob("process-*/receipt.json")).read_bytes())
+    assert receipt["startup_verified"] and receipt["returncode"] == 0
+    assert any(
+        item["field"] == "cmdline" and item["phase"] == "startup"
+        for item in receipt["unavailable_observations"]
+    )
+    assert all(i["independently_absent_lifetime"] for i in receipt["identities"])
+
+
+def observed_process(*, pid=41, created=123.0):
+    return SimpleNamespace(
+        pid=pid,
+        create_time=lambda: created,
+        cwd=lambda: str(CHECKOUT),
+        cmdline=lambda: ["generated-python", "gate.py", "startup.json", "nonce"],
+        children=lambda recursive: [],
+    )
+
+
+@pytest.mark.parametrize(
+    "field", ["process", "create_time", "cwd", "cmdline", "children"]
+)
+def test_denied_observation_never_establishes_process_exit_or_identity(field):
+    process = observed_process()
+
+    def factory(pid):
+        if field == "process":
+            raise psutil.AccessDenied(pid)
+        return process
+
+    observer = CLIProcessObserver(factory)
+    read = observer.read
+
+    def denied(actual, name, phase):
+        if phase == "startup" and name == field:
+            raise psutil.AccessDenied(actual.pid)
+        return read(actual, name, phase)
+
+    observer.read = denied
+    observer.observe(process, "startup")
+    assert any(item["field"] == field for item in observer.unavailable.values())
+    assert not any(
+        "independently_absent_lifetime" in i for i in observer.identities.values()
+    )
+    record = {
+        "pid": process.pid,
+        "created": process.create_time(),
+        "nonce": "nonce",
+        "command": process.cmdline(),
+        "cwd": process.cwd(),
+    }
+    identity = observer.startup_identity(record, "nonce", process.cmdline())
+    assert (identity is not None) is (field == "children")
+    observer.verify_terminal()
+    assert all(
+        i["independently_absent_lifetime"] is not True
+        for i in observer.identities.values()
+    )
+
+
+@pytest.mark.parametrize("outcome", ["gone", "reused", "same", "denied"])
+@pytest.mark.parametrize("created", [None, 123.0])
+def test_terminal_proof_distinguishes_absence_reuse_live_and_unavailable(
+    outcome, created
+):
+    process = observed_process(created=456.0 if outcome == "reused" else 123.0)
+
+    def factory(pid):
+        if outcome == "gone":
+            raise psutil.NoSuchProcess(pid)
+        if outcome == "denied":
+            raise psutil.AccessDenied(pid)
+        return process
+
+    observer = CLIProcessObserver(factory)
+    observer.identities[(process.pid, created)] = {
+        "pid": process.pid,
+        "created": created,
+    }
+    observer.verify_terminal()
+    identity = observer.identities[(process.pid, created)]
+    expected = (
+        True
+        if outcome == "gone"
+        else (None if outcome == "denied" or created is None else outcome == "reused")
+    )
+    assert identity["independently_absent_lifetime"] is expected
+    assert bool(observer.unavailable) is (outcome == "denied")
+
+
+@pytest.mark.parametrize("mutation", ["nonce", "pid", "created", "command", "cwd"])
+def test_startup_never_releases_for_mismatched_binding(mutation):
+    process = observed_process()
+    observer = CLIProcessObserver(lambda pid: process)
+    observer.observe(process, "startup")
+    record = {
+        "pid": process.pid,
+        "created": process.create_time(),
+        "nonce": "nonce",
+        "command": process.cmdline(),
+        "cwd": process.cwd(),
+    }
+    record[mutation] = {
+        "nonce": "different",
+        "pid": 99,
+        "created": 999.0,
+        "command": ["different"],
+        "cwd": str(CHECKOUT.parent),
+    }[mutation]
+    if mutation in ("pid", "created"):
+        assert observer.startup_identity(record, "nonce", process.cmdline()) is None
+    else:
+        with pytest.raises(AssertionError):
+            observer.startup_identity(record, "nonce", process.cmdline())
+
+
+def test_observer_preserves_lifetime_and_rejects_unexpected_errors():
+    process = observed_process()
+    observer = CLIProcessObserver(lambda pid: process)
+    observer.observe(process, "startup")
+    original = dict(observer.identities[(process.pid, process.create_time())])
+
+    def denied():
+        raise psutil.AccessDenied(process.pid)
+
+    process.cmdline = denied
+    observer.observe(process, "running")
+    assert observer.identities[(process.pid, process.create_time())] == original
+
+    def unexpected():
+        raise RuntimeError("generated unexpected observation failure")
+
+    process.cmdline = unexpected
+    with pytest.raises(RuntimeError, match="unexpected observation"):
+        observer.observe(process, "running")
+
+
+def test_actual_cli_persistent_startup_denial_fails_closed(tmp_path, monkeypatch):
+    workspace(tmp_path)
+
+    def denied(process):
+        raise psutil.AccessDenied(process.pid)
+
+    monkeypatch.setattr(psutil.Process, "cmdline", denied)
+    with pytest.raises(AssertionError, match="Startup identity unavailable"):
+        invoke(tmp_path)
+    receipt = json.loads(next(tmp_path.glob("process-*/receipt.json")).read_bytes())
+    assert not receipt["startup_verified"] and receipt["startup_identity"] is None
+    assert receipt["returncode"] != 0 and not (tmp_path / "comparison.json").exists()
+    assert all(
+        i["independently_absent_lifetime"] is True for i in receipt["identities"]
+    )
+    assert receipt["unavailable_observations"]
+
+
+def test_actual_cli_denial_after_verified_startup_retains_original_evidence(
+    tmp_path, monkeypatch
+):
+    workspace(tmp_path)
+    released = tmp_path / "post-startup-observed"
+    # A generated rendezvous after the unchanged nonce gate makes the race
+    # deterministic. The original CLI runs only after the denied observation.
+    gate = CLI_STARTUP_GATE.replace(
+        "runpy.run_path(sys.argv[0], run_name='__main__')",
+        "import time\n"
+        f"released = Path({str(released)!r})\n"
+        "until = time.monotonic() + 10\n"
+        "while not released.exists():\n"
+        "    if time.monotonic() >= until:\n"
+        "        raise SystemExit('Generated runtime observation not reached')\n"
+        "    time.sleep(0.01)\n"
+        "runpy.run_path(sys.argv[0], run_name='__main__')",
+    )
+    monkeypatch.setitem(globals(), "CLI_STARTUP_GATE", gate)
+    observer = CLIProcessObserver()
+    read = observer.read
+
+    def denied_running(process, field, phase):
+        if phase == "running" and field == "cmdline":
+            released.touch(exist_ok=True)
+            raise psutil.AccessDenied(process.pid)
+        return read(process, field, phase)
+
+    observer.read = denied_running
+    code, stdout, stderr = invoke(tmp_path, observer=observer)
+    assert code == 0, stderr
+    assert json.loads(stdout)["expected_native_frames"] == 9
+    receipt = json.loads(next(tmp_path.glob("process-*/receipt.json")).read_bytes())
+    assert receipt["startup_verified"] and receipt["startup_identity"]["command"]
+    assert all(
+        i["independently_absent_lifetime"] is True for i in receipt["identities"]
+    )
+    assert any(
+        i["phase"] == "running" and i["field"] == "cmdline"
+        for i in receipt["unavailable_observations"]
+    )
+
+
+def test_actual_cli_cannot_accept_returncode_zero_with_unavailable_terminal_proof(
+    tmp_path,
+):
+    workspace(tmp_path)
+
+    class DeniedTerminal(CLIProcessObserver):
+        def verify_terminal(self):
+            original = self.process_factory
+
+            def denied(pid):
+                raise psutil.AccessDenied(pid)
+
+            self.process_factory = denied
+            try:
+                super().verify_terminal()
+            finally:
+                self.process_factory = original
+
+    with pytest.raises(AssertionError, match="Original process lifetime unavailable"):
+        invoke(tmp_path, observer=DeniedTerminal())
+    receipt = json.loads(next(tmp_path.glob("process-*/receipt.json")).read_bytes())
+    assert receipt["startup_verified"] and receipt["returncode"] == 0
+    assert all(
+        i["independently_absent_lifetime"] is None for i in receipt["identities"]
+    )
+    assert any(i["phase"] == "terminal" for i in receipt["unavailable_observations"])
+    # Independent cleanup observation is distinct from the deliberately denied
+    # observer's unknown receipt, and never signals or restarts a child.
+    cleanup = []
+    for identity in receipt["identities"]:
+        try:
+            absent = (
+                psutil.Process(identity["pid"]).create_time() != identity["created"]
+            )
+        except psutil.NoSuchProcess:
+            absent = True
+        cleanup.append(
+            {"pid": identity["pid"], "created": identity["created"], "absent": absent}
+        )
+    (tmp_path / "independent-cleanup.json").write_bytes(contract.encode_json(cleanup))
+    assert all(item["absent"] for item in cleanup)
+
+
+def test_actual_cli_preserves_unexpected_observation_error(tmp_path):
+    workspace(tmp_path)
+    observer = CLIProcessObserver()
+    read = observer.read
+
+    def unexpected(process, field, phase):
+        if field == "cmdline" and phase == "startup":
+            raise RuntimeError("generated unexpected observation failure")
+        return read(process, field, phase)
+
+    observer.read = unexpected
+    with pytest.raises(RuntimeError, match="unexpected observation"):
+        invoke(tmp_path, observer=observer)
+    receipt = json.loads(next(tmp_path.glob("process-*/receipt.json")).read_bytes())
+    assert not receipt["startup_verified"] and receipt["returncode"] != 0
+    assert all(
+        i["independently_absent_lifetime"] is True for i in receipt["identities"]
+    )
+    assert not (tmp_path / "comparison.json").exists()
