@@ -60,7 +60,54 @@ limitations only. No referenced image is opened; there is no Store, network,
 credential, assessor or model access. Real scientific use requires its own
 granted and, where applicable, explicitly authorized source-review protocol.
 
-## Verification and limits
+## Disposable process observation repair
+
+[Issue #335](https://github.com/Ken0u/badminton-match-analyzer/issues/335)
+repairs only the generated CLI test observer. The preserved
+[macOS job](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40502970976/job/122185096620)
+failed before startup verification when `psutil.Process.cmdline()` raised
+`AccessDenied` from `sysctl(KERN_PROCARGS2)`. Its original source, failed gate and
+logs remain preserved; no historical job was retried. The traceback identifies
+the denied observation, not its underlying OS cause or the complete original
+hosted process lifetime. Those historical uncertainties remain unresolved.
+
+The disposable observer now records denied process, creation time, working
+directory, command and descendant observations explicitly. A denial establishes
+neither identity nor exit. It retains observed lifetimes even when full metadata
+is unavailable and preserves earlier complete observations. Before releasing the
+real CLI, its unchanged ten-second startup window still requires independently
+observed PID, creation time, command and working directory to match the child's
+nonce-bound startup record. Missing evidence keeps the gate closed; persistent
+denial fails without executing the comparison consumer. The matched startup
+identity remains separately recorded after later observations.
+
+The same original `Popen` object supplies the real terminal return code and
+stdout/stderr files. Final verification independently checks every recorded
+original lifetime. An absent PID or a different known creation time establishes
+that lifetime's absence; denied creation-time evidence remains unknown, and the
+same live lifetime fails. An unknown original creation time cannot gain absence
+credit merely because a currently observable PID has some creation time. Even
+exit code zero cannot turn unavailable terminal evidence into acceptance.
+Arbitrary observation errors remain errors. No signal, timeout, production
+comparison code, shared startup-gate source, Store or workflow behavior changes.
+
+All **120 focused tests pass**, including actual generated CLI executions,
+temporary and persistent startup denials, a deterministic observation denial
+after verified startup, nonce/PID/creation/command/directory mismatches, genuine
+exit and PID reuse, live and unavailable terminal states, and unexpected errors.
+The transient startup denial occurs on the first command-line read, before any
+complete startup identity can release the gate, regardless of scheduling.
+The new regression first reproduced the original startup exception. The generated
+post-startup rendezvous preserves the nonce gate and exercises the real unchanged
+CLI after observation. Deliberately unavailable terminal receipts remain unknown;
+separate actual cleanup observations are retained rather than rewriting them.
+Complete descendant discovery is not inferred from an unavailable observation.
+Exact full-suite, lint/dependency/repository, fresh platform CI, controller/main
+and public-delivery receipts are recorded on #335. These checks use generated
+inputs only; no original images, scientific labels, models or research jobs are
+accessed. Application annotation accuracy is unchanged.
+
+## Original #282 verification and limits
 
 Generated pure and actual CLI-subprocess tests exercise complete/prefix/empty
 and unavailable inputs, source offsets/clocks/orientations and bundle selection,
