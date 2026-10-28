@@ -6857,6 +6857,41 @@
       "task_id": "62",
       "verb": "next"
     },
+    "observer329-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793164414,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "65cc7450eb017e2380e3a3dcc1f8084ded72aa40",
+        "branch": "codex/issue-329-diagnose-the-preserved-completion-observ",
+        "epoch": 1,
+        "expires_at": 1793175214,
+        "granted_at": 1793164414,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "d0b1000477ec32eae1ee8e35a16f73da804d2cc8b3a3a51cbc9c20c3e323b239"
+      },
+      "epoch": 1,
+      "fingerprint": "6d9537ecedcaf29be36d4e0dc1b2599dbfdf2d3250b276a8e93ef32785eb3ee3",
+      "status": "granted",
+      "task_id": "329",
+      "verb": "next"
+    },
+    "observer329-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793164414,
+      "fingerprint": "faa73e5989cef7d56c4e530d4f832c127c9be1ae719d13637ee7ac23add1e761",
+      "status": "ready",
+      "task_id": "329",
+      "verb": "plan"
+    },
+    "observer329-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793164414,
+      "fingerprint": "62e620fa121a046bd4b38ecfa6504482f499a11119ea7796566c817aa8b62bcf",
+      "status": "ok",
+      "verb": "register"
+    },
     "observer335-checkpoint-e3-v1": {
       "actor": "Ken0u",
       "at": 1793151212,
@@ -10954,6 +10989,14 @@
       "fingerprint": "359bf66b19b08f42bf53459206002d592372e98f09614ef29401502c12305dfe",
       "status": "ready",
       "task_id": "327",
+      "verb": "plan"
+    },
+    "spec-329-42204a85ff6c6b6f589b42a7eb9cbcc4c6ebd84763fffb01007e0ea157bf5fa2": {
+      "actor": "Ken0u",
+      "at": 1793164414,
+      "fingerprint": "79edae0e7124c1f5b512a56bfefc277f952ca0502641800ced3c0db5e4c0a9c6",
+      "status": "ready",
+      "task_id": "329",
       "verb": "plan"
     },
     "spec-330-047ec23b9047c38492f0662fe5b4aab70cc746d9ca54213794b7b403ef0d3918": {
@@ -27899,6 +27942,62 @@
         "spec_hash": "e91db24852a114abc5f0c75e791d96348570be5181f3fcb7e9444ae1b9fd8322"
       }
     },
+    "329": {
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "65cc7450eb017e2380e3a3dcc1f8084ded72aa40",
+        "branch": "codex/issue-329-diagnose-the-preserved-completion-observ",
+        "epoch": 1,
+        "expires_at": 1793175214,
+        "granted_at": 1793164414,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "d0b1000477ec32eae1ee8e35a16f73da804d2cc8b3a3a51cbc9c20c3e323b239"
+      },
+      "epoch": 1,
+      "planned_at": 1793164414,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Continue existing incident329 rather than creating a duplicate. Recheck all issue/PR history and current coordination, run queue doctor, register this session and obtain a committed code-only grant and isolated worktree before diagnosis implementation. Preserve all original edits, processes, environments, source artifacts, failures and deprecated PROGRESS.",
+          "Bind original failed observer40428267444/job121939384627, exact source aa8e53b33ab462bc5316065e0287a064a6f0fa81, coordination832301e88cabd77d3ba803b4ffaa57f01bc64815, successful main CI40428251332, original masked-log/run-metadata hashes and original observer source. Retrieve only read-only public GitHub run/job/event/coordination history and existing masked logs; never retrieve or print credentials.",
+          "Trace all reachable ValueError sources against immutable original inputs. Replay pure validation/selection with an offline transport that rejects every mutation and records exact failures; controlled synthetic counterexamples remain separate from actual historical observations. Never call live observe/launch, dispatch workflows, retry/cancel jobs, edit coordination, accept verification or alter task327. Bound metadata reads to120 requests and newly retained files to128MiB.",
+          "Publish one reproducible aggregate diagnosis report with exact source/state/log hashes, observed chronology, proven and unproven hypotheses, offline reproduction commands/results, current task327 delivery status and any narrowly specified repair prerequisite. State explicitly when the historical API payload is unavailable and cause remains unknown; a reproduced possible race does not prove the historical cause. Include no credentials, raw coordination/process identities, research labels, source images or private Project data.",
+          "Change only the report. Validate repository Markdown links, UTF8/LF, JSON references and git diff. No artificial unit tests for prose; run relevant existing observer tests if an offline scenario exercises their behavior. Publish via exact PR CI, normal controller integration, merged-main checks and independently verified complete public package/image delivery. No automation/policy/security changes, manual merge, paid services, research image transfer, scientific inference/training or accuracy claim. Complete independent rally references remain0/2."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "327"
+        ],
+        "exclusions": [
+          "No runtime/configuration/workflow/auth/security/retry-policy changes; no historical retry/cancel/manual controller wake, raw state writes, manual merge, credential access, image assessment/transfer, data/model access, source decode, inference/training/promotion, app installation or PROGRESS changes."
+        ],
+        "limits": {
+          "max_api_requests": 120,
+          "max_output_bytes": 134217728,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 3,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Diagnose the preserved completion-observer failure for task327 using immutable source/state and read-only run history, distinguishing demonstrated defects from unavailable historical observations.",
+        "paths": [
+          "docs/COMPLETION_OBSERVER_DIAGNOSIS_REPORT.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Immutable-input/read-only history and offline mutation-refusing validation replays; explicitly distinguish possible failures from demonstrated historical cause.",
+          "Report/repository/link/UTF8-LF/diff checks, relevant existing tests, exact PR/controller/main CI and complete public delivery."
+        ]
+      },
+      "spec_hash": "d0b1000477ec32eae1ee8e35a16f73da804d2cc8b3a3a51cbc9c20c3e323b239",
+      "status": "running"
+    },
     "330": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40495289332",
       "checkpoint": {
@@ -32322,7 +32421,7 @@
         "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1793158166,
+      "registered_at": 1793164414,
       "session_id": "d1a16595edd7434185d81366f95e8828"
     },
     "MSI/d45693fd670e4a8f86a15dba76fc903d": {
