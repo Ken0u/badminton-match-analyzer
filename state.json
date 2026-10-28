@@ -28128,6 +28128,7 @@
         "session_id": "d1a16595edd7434185d81366f95e8828",
         "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 3,
       "history": [
