@@ -1160,6 +1160,13 @@
       "task_id": "327",
       "verb": "submit"
     },
+    "context337-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793153803,
+      "fingerprint": "6229057ca5448311a9f164a20fc70213125cd53a9cd0444fe1e5e38d87774a20",
+      "status": "ok",
+      "verb": "register"
+    },
     "contract270-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792907064,
@@ -31948,6 +31955,12 @@
         "archived-public-seal": "290463c4d3190c2aa4d9ec3fb2856aa7a5e3e44fc8cd3aca832bd881ff7a14a1",
         "archived-required-checks": "60351ffdc53ea55ca6f9fbaf000b65e105cd7ef52972533d71fd349e4c32b8f4",
         "archived-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971",
+        "baseline-context-container": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "familiar-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+        "original-experiment": "be75300db6e3d12568f3a2195ffe699ab5e47c600f7e995f38a5c1eea3988044",
+        "original-public-protocol": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
+        "raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+        "sealed-familiar-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971",
         "source-0": "a493f86a507509fa70fbad36c8bb644b9a5c1183746338ec59367d4f8385c1ad",
         "source-1": "3e82b4e29fd4dd813e3526700487aa90192d7db0227d81e763f8a53b340239d9",
         "source-2": "d7c41f74b18decc9109287dc907a00fcdf36616a96a3bc73178837eed881df45",
@@ -31963,7 +31976,7 @@
         "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1793125686,
+      "registered_at": 1793153803,
       "session_id": "d1a16595edd7434185d81366f95e8828"
     },
     "MSI/d45693fd670e4a8f86a15dba76fc903d": {
