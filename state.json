@@ -6812,6 +6812,15 @@
       "task_id": "335",
       "verb": "next"
     },
+    "observer335-submit-e3-v1": {
+      "actor": "Ken0u",
+      "at": 1793151819,
+      "epoch": 3,
+      "fingerprint": "7e899d05a4ef7cce2b5ae6c70889367dd0c2da8adf960703e31e4bb2a2336fa2",
+      "status": "review",
+      "task_id": "335",
+      "verb": "submit"
+    },
     "owner-project202-approval-v1": {
       "actor": "Ken0u",
       "at": 1792734634,
@@ -28130,6 +28139,7 @@
       ],
       "planned_at": 1793126687,
       "planned_by": "Ken0u",
+      "pr_number": 338,
       "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
@@ -28169,7 +28179,13 @@
         ]
       },
       "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "7bc86dad931e4d9dc35178a2b189ef78dfadc1e2",
+        "head_sha": "6e0827410beb3bf6d9e93a937444cedf8a31fb68",
+        "pr_number": 338,
+        "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750"
+      }
     },
     "337": {
       "epoch": 0,
