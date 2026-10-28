@@ -1641,6 +1641,14 @@
       "task_id": "98",
       "verb": "fence-external-merge"
     },
+    "familiar-scene-preparation-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793157408,
+      "fingerprint": "bcd4972a84e2185480fda2e29914f606c752835c920325bc79039a7f461a809e",
+      "status": "ready",
+      "task_id": "340",
+      "verb": "plan"
+    },
     "fixture181-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792635128,
@@ -10907,6 +10915,14 @@
       "fingerprint": "895a8b7e08d42f1084c64ee36913c001c56a8948389ce23cd4c1d72a66ce32d3",
       "status": "ready",
       "task_id": "337",
+      "verb": "plan"
+    },
+    "spec-340-046ccce93fe5d35f8a41e877fab900d4742b829f025c76425ca4757a91611afe": {
+      "actor": "Ken0u",
+      "at": 1793157408,
+      "fingerprint": "5d6b0745b0074cce3ea1663c3469aa9c4d2c94da07597c889000e82b44a2bb07",
+      "status": "ready",
+      "task_id": "340",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -28399,6 +28415,71 @@
         "pr_number": 339,
         "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195"
       }
+    },
+    "340": {
+      "epoch": 0,
+      "planned_at": 1793157408,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Continue #337 and the #65 Perception/Data and evaluation prerequisite. Search all open/closed issues, PRs, reports and coordination; distinguish these supplied familiar-source windows from #242/#245/#262 BWF rally work. Preserve original #139/#332/#334 evidence, every model/result/annotation, root edits, environments and deprecated PROGRESS. Obtain a separate committed grant and isolated worktree before implementation or source decode.",
+          "Freeze a public preparation protocol and tested producer hashes before source decode. Bind the original two supplied source SHA256 values, the new private metadata-only 50-view/60-case inventory SHA256, corrected #337 diagnostics and protocol hashes. All methods share the identical original view inventory. Retain every native frame occurrence in every view, view/source/case membership, duplicates, gaps, exclusions and unknowns; expected 13,499 frame occurrences and 870 16-cell sheets. No original scientific label, coordinate, score, component, pose, contact, shot, consumed generated-test row, checkpoint or model inspection.",
+          "Use only original local source media, verify whole-file hashes before/after and exact native frame/PTS/time-base/orientation identity with existing media runtime. Pin real BADMINTON_ROOT/DATA before configuration imports and admit preparation through real shared run_local_job/Store; preserve verified process lifetime, Store and durable artifact evidence. No isolated Store may authorize competing work. Decode using preserved av_runtime logging restoration and existing safe media conventions; no model or neural stage runs.",
+          "Prepare private chronological contact sheets containing every native frame in each view exactly once per occurrence, 4x4 tiles at 320x180 inside source-aspect-preserving cells, fixed JPEG quality80/subsampling0 with explicit native frame and PTS captions. Partial sheets contain explicit empty cells rather than invented frames. Preserve cut/partition boundaries and view separation. These derived thumbnails support future coarse scene review only; any insufficient detail must remain unknown and require a later authorized native-source check. Do not certify continuous scene coverage from sparse samples or generate scene/contact/rally/identity labels.",
+          "Provide reproducible freeze/prepare/audit commands with exclusive ignored output, strict JSON/source/path validation, frozen hash checks and immutable protocol/producer/inputs. Keep image bytes, per-frame manifests and private inventory local; public stdout/report only aggregate counts, hashes, formats and cost. Audit actual decoded coverage, source PTS/orientation, tile memberships, image hashes/dimensions, byte limits and terminal Store/process evidence independently after preparation exits. Missing/invalid frames and infeasible packing stay explicit and cannot be dropped or counted as reviewed.",
+          "Pack actual resulting sheet bytes prospectively at at most6MiB and20 images per session for two independent original passes, with one preceding sheet overlap within a view counted again against both payload and inspected-image limits. Keep all per-view/case/frame denominators and duplicated bytes. Calculate exact original-pass session/image bytes and a separate bounded adjudication reserve; state feasibility without starting any assessor, executing an external CLI or transferring any source/derived image. A future assessment needs its own frozen task, actual destination and explicit limits; this task creates no new assessment authority or research-clock extension.",
+          "Generated tests cover exact native/VFR/nonzero clocks, orientation/aspect preservation, every-frame coverage, cut/view separation, partial sheets, overlap and duplicate byte accounting, missing frames, infeasible single-image/batch plans, source mutations, tampering, symlink/reparse paths, existing output preservation, Store admission and terminal evidence. Use project virtualenv and verified portable tools; required focused/full pytest, Ruff/format, pip/repository UTF8-LF/JSON/links/diff checks. Publish six granted paths through exact PR CI, normal controller integration, merged-main checks and complete public source/wheel/frontend/lock/manifests/images verification. No manual merge, historical retry/cancel/wake or model/default/eligibility change; complete independent rally references remain0/2 and automatic accuracy unproven."
+        ],
+        "artifacts": {
+          "context-audit-diagnostics": "9a088cc000e140a5769ba50c3e81182508a35e6ce293946f13f659a65f0ee831",
+          "context-audit-protocol": "4b174c0a9ada57232df4b671da10417e824452cb83398059883b2ea05920e759",
+          "familiar-scene-inventory": "7eac866bdde970c58e21d994696df421c0f0b61102fb74ce5f40e469ccef84c0",
+          "familiar-source-doubles": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+          "familiar-source-singles": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f"
+        },
+        "capabilities": [
+          "cpu",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "337"
+        ],
+        "exclusions": [
+          "No scientific source assessment, external image transfer, external assessment CLI, source download/replacement, old label/coordinate/prediction/checkpoint inspection, inference/fitting/training/evaluation, consumed holdout access, guard/app truth/default/model/eligibility changes, sensitive auth/policy/workflow/dependency/deployment changes, paid services, destructive cleanup, manual merge, raw coordination writes or PROGRESS updates."
+        ],
+        "limits": {
+          "max_assessor_sessions": 0,
+          "max_image_transfer_bytes": 0,
+          "max_new_scientific_attempts": 0,
+          "max_output_bytes": 2147483648,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 6,
+          "paid_services": false,
+          "prospective_session_max_bytes": 6291456,
+          "prospective_session_max_images": 20
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Prepare exhaustive source-only scene galleries and an actual-byte-costed independent review schedule for all 50 familiar shuttle windows, preserving native identity and all 60 cases before any new assessment.",
+        "paths": [
+          "backend/badminton/shuttle_scene_preparation.py",
+          "scripts/prepare_shuttle_scene_review.py",
+          "tests/test_shuttle_scene_preparation.py",
+          "data/manifests/shuttle_scene_preparation_protocol_v1.json",
+          "docs/SHUTTLE_SCENE_PREPARATION_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 80,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Exhaustive source-frame/PTS/orientation gallery preparation and independently audited actual byte-costed blind review plan; zero new assessments or image transfer.",
+          "Generated regressions, full required checks, exact PR/controller/main and complete public delivery; all scientific eligibility and0/2 reference status unchanged."
+        ]
+      },
+      "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
