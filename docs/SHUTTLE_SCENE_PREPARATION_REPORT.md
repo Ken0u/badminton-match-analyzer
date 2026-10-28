@@ -64,6 +64,58 @@ Generated tests cover VFR/nonzero clocks, four display rotations, aspect
 preservation, every-frame coverage, source/camera partitions, partial sheets,
 overlap byte accounting, infeasible packing, source/metadata mutation, strict
 JSON and safe paths, exclusive output, shared admission, terminal process
-evidence and ownership revocation. Full software checks and actual-source
-preparation/audit are pending at this pre-decode checkpoint. Exact PR CI,
-controller integration, merged-main checks and public delivery remain required.
+evidence and ownership revocation. All 49 focused tests are included in the
+full result: **5,465 passed / four optional skips**. Ruff, formatting, dependency,
+repository/JSON/link/UTF-8-LF and diff checks pass. The tested producer was
+committed and its hashes published before original source decode.
+
+## Actual preparation and audit: October 28, 2026
+
+Both original media hashes remain unchanged. Sequential decoding covers all
+24,171 original source frames (12,023 singles and 12,148 doubles), retaining all
+**50 views / 60 cases / 13,499 frame occurrences / 870 JPEG sheets**. The 421
+unused cells are marked empty. No case or duplicate frame occurrence is dropped.
+Each sheet is 1280x864 with 4x4 source-aspect-preserving 320x180 cells and captions.
+
+| Audited item | Result |
+| --- | ---: |
+| Unique derived image bytes | 315,622,932 |
+| Retained output bytes, including manifests and terminal receipts | 325,100,421 |
+| Sessions per prospective pass | 75 |
+| Image occurrences per pass, including overlaps | 895 |
+| Repeated overlap images per pass | 25 |
+| Image payload bytes per pass, including overlaps | 325,618,950 |
+| Sessions for two independent original passes | 150 |
+| Image payload bytes for those two passes | 651,237,900 |
+| Separate one-pass adjudication reserve: sessions | 75 |
+| Separate adjudication reserve: image payload bytes | 325,618,950 |
+| New assessor sessions / image bytes transferred | 0 / 0 |
+
+The actual-byte schedule is feasible under both frozen session caps. The reserve
+is a prospective ceiling, not permission to start assessment. All original
+contexts, results and expired scientific clocks remain preserved.
+
+Preparation and audit each completed through real shared Store admission. The
+separate audit verified preparation-process absence and original Store completion,
+independently decoded every native source clock/orientation, checked all image
+hashes/formats/dimensions and exact tile memberships, and recomputed the complete
+packing/aggregate. Both stage process lifetimes are now absent with completed
+Store records. This is software/provenance evidence; no one has reviewed the
+scenes in this task, and neither coarse-scene accuracy nor continuous live play
+has been established.
+
+Public provenance: protocol SHA256 `77f9bd3f5c77dba491d5fef594e08499255b428ee976e7aed3f025d90743022d`;
+gallery-manifest SHA256 `89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37`;
+prospective-plan SHA256 `87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2`;
+aggregate SHA256 `c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c`;
+audit-verification SHA256 `c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2`.
+The hashed private artifacts and images are not included in the repository or
+candidate packages. Reproduction requires the original permitted inputs and a
+fresh grant; a clone supplies code and public protocol only.
+
+Next: obtain separately frozen authority for two independent coarse scene passes
+and bounded adjudication of these actual images. Until such source evidence is
+accepted, retain unknown/excluded context and the archived scientific rejection.
+Exact PR CI, controller integration, merged-main checks and complete public
+delivery remain required for this implementation. No running application or
+model is automatically upgraded.
