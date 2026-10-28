@@ -9440,6 +9440,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "scene340-tested-freeze-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793160315,
+      "epoch": 1,
+      "fingerprint": "41148006d2cf78bef951aa6d42a4d8b34e998f8270525d158de50c283975f3f4",
+      "status": "running",
+      "task_id": "340",
+      "verb": "checkpoint"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -28455,12 +28464,26 @@
       }
     },
     "340": {
+      "checkpoint": {
+        "branch": "codex/issue-340-prepare-exhaustive-source-only-scene-gal",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/340#issuecomment-6460374186",
+        "head_sha": "59db5b2bcd85d7b27878f34190a9bf0dc40f23fa",
+        "producer_sha256": {
+          "MANIFEST.in": "2a0d5149b45c503c5b4802e24580938e0b2c0aeb1471de93fedc716c5f14f24d",
+          "backend/badminton/shuttle_scene_preparation.py": "92a0c78a2368d316f3dfb8fb1e4719a142712b38e9ae1770e4cd6e426321d466",
+          "data/manifests/shuttle_scene_preparation_protocol_v1.json": "77f9bd3f5c77dba491d5fef594e08499255b428ee976e7aed3f025d90743022d",
+          "scripts/prepare_shuttle_scene_review.py": "409ccd046f9cd486359f7fe34acc9b8de63da5dfd510e284bc9f1d836684bcad",
+          "tests/test_shuttle_scene_preparation.py": "ff43dd001d797bcf8b72fb8f2c88bb9d3dfd25f9a86c4ec87957f3c271f5dc8c"
+        },
+        "progress": "#1 tested-freeze checkpoint at `59db5b2bcd85d7b27878f34190a9bf0dc40f23fa`. Full generated software checks: 5465 passed / 4 optional skips; Ruff, format, dependencies, repository/JSON/links/LF and diff checks pass. Producer, protocol and helper hashes are frozen; 50 views / 60 cases / 13,499 native frame occurrences / 870 sheets remain the required denominator. No original source decode or new image assessment/transfer has started. Next: exclusive shared-Store preparation, then a separate post-exit source-clock/image/packing audit. Images/manifests remain local; no semantic labels, model inference/training, external image transfer or accuracy claim. Eligibility stays false and complete references remain 0/2. Exact PR CI, controller integration, merged-main checks and complete public delivery remain required."
+      },
+      "checkpoint_at": 1793160315,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4dd81eebc5c2f2291645bc33d1b93703fbf4b06e",
         "branch": "codex/issue-340-prepare-exhaustive-source-only-scene-gal",
         "epoch": 1,
-        "expires_at": 1793169179,
+        "expires_at": 1793171115,
         "granted_at": 1793158379,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
