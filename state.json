@@ -1160,6 +1160,15 @@
       "task_id": "327",
       "verb": "submit"
     },
+    "context337-freeze-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793154338,
+      "epoch": 1,
+      "fingerprint": "5ec5e3b141fe6d21c02e364efef0fc2a22d7aeab1ec9db143b8e9e41bb1435e2",
+      "status": "running",
+      "task_id": "337",
+      "verb": "checkpoint"
+    },
     "context337-next-v1": {
       "actor": "Ken0u",
       "at": 1793154027,
@@ -28248,12 +28257,20 @@
       }
     },
     "337": {
+      "checkpoint": {
+        "branch": "codex/issue-337-explain-the-complete-source-context-reje",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/337#issuecomment-6458964241",
+        "head_sha": "09d9828ebb7e4f9d7d3c185574c4738b610dd6ca",
+        "progress": "Public metadata-only protocol and archived consumer/input hashes frozen before any original projection; implementation and generated regressions next; no new scientific attempt.",
+        "protocol_sha256": "4b174c0a9ada57232df4b671da10417e824452cb83398059883b2ea05920e759"
+      },
+      "checkpoint_at": 1793154338,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9b49c1e6a358dad4e616d1b38e5131d07c0d2734",
         "branch": "codex/issue-337-explain-the-complete-source-context-reje",
         "epoch": 1,
-        "expires_at": 1793164827,
+        "expires_at": 1793165138,
         "granted_at": 1793154027,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
