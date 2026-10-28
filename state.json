@@ -28523,6 +28523,7 @@
       }
     },
     "340": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40635230565",
       "checkpoint": {
         "branch": "codex/issue-340-prepare-exhaustive-source-only-scene-gal",
         "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/340#issuecomment-6460452529",
@@ -28549,7 +28550,7 @@
         "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793162754,
