@@ -49,7 +49,6 @@ def metadata():
         "video": {"id": SOURCE, "sha256": SHA},
         "revision": 2,
         "annotations": {
-            "video_id": SOURCE,
             "revision": 2,
             "scene_ranges": [interval(scene="live")],
         },
@@ -282,12 +281,15 @@ def test_missing_scene_preserves_independent_camera_diagnosis(cameras, flag):
 
 
 @pytest.mark.parametrize(
-    "mutation", ("source", "revision", "bool_revision", "run_extent")
+    "mutation",
+    ("source", "annotation_source", "revision", "bool_revision", "run_extent"),
 )
 def test_conflicting_source_or_revision_never_gets_eligibility(mutation):
     view, run, snapshot = metadata()
     if mutation == "source":
         run["video_sha256"] = "b" * 64
+    elif mutation == "annotation_source":
+        snapshot["annotations"]["video_id"] = "conflicting_source"
     elif mutation == "revision":
         snapshot["revision"] += 1
     elif mutation == "bool_revision":
@@ -301,6 +303,32 @@ def test_conflicting_source_or_revision_never_gets_eligibility(mutation):
     )
     assert not result["eligible_metadata"] and not case["eligible_metadata"]
     assert "eligible_metadata" not in case["flags"]
+
+
+def test_actual_annotation_schema_without_embedded_video_id_remains_source_bound():
+    from badminton.schemas import Annotations
+
+    assert "video_id" not in Annotations.model_fields
+    view, run, snapshot = metadata()
+    annotations = Annotations.model_validate(
+        {
+            "revision": 2,
+            "mode": "singles",
+            "players": [
+                {"id": "A", "name": "A", "team": "T1"},
+                {"id": "B", "name": "B", "team": "T2"},
+            ],
+            "scene_ranges": [{"id": "live-range", **interval(scene="live")}],
+        }
+    ).model_dump(mode="json")
+    snapshot["annotations"] = annotations
+    projected = audit.project_snapshot(snapshot)
+    result = audit.inspect_view(view, run, projected)
+    assert result["eligible_metadata"]
+    assert result["flags"] == ["eligible_metadata"]
+    snapshot["video"]["id"] = "other_source"
+    result = audit.inspect_view(view, run, audit.project_snapshot(snapshot))
+    assert not result["eligible_metadata"] and "source_mismatch" in result["flags"]
 
 
 @pytest.mark.parametrize("duplicate_within", (False, True))

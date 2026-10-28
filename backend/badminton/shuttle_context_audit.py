@@ -219,7 +219,11 @@ def inspect_view(view, run, snapshot):
         and run.get("video_sha256") == video["sha256"]
         and run.get("stage") == "shuttle"
         and isinstance(annotations, dict)
-        and annotations.get("video_id") == view["video_id"]
+        # Annotations is keyed by the catalog's video_id; its document schema
+        # has no video_id member. If a container supplies one, it must agree.
+        and (
+            "video_id" not in annotations or annotations["video_id"] == view["video_id"]
+        )
         and type(snapshot.get("revision")) is int
         and type(annotations.get("revision")) is int
         and annotations.get("revision") == snapshot["revision"]
