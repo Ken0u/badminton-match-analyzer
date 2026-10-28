@@ -1,0 +1,164 @@
+{
+  "archived_consumer_source": "7bc86dad931e4d9dc35178a2b189ef78dfadc1e2",
+  "classification": {
+    "aggregation": "per-method/source full-denominator view and case counts; flags are non-additive; preserve missing, malformed, ambiguous and unknown cases",
+    "eligible": "exactly one covering camera and exactly one covering live scene, with no overlapping non-live scene, matching the archived guard",
+    "flags": [
+      "missing_run_metadata",
+      "malformed_run_metadata",
+      "source_mismatch",
+      "missing_camera_metadata",
+      "malformed_camera_metadata",
+      "missing_scene_metadata",
+      "malformed_scene_metadata",
+      "uncovered_camera_context",
+      "uncovered_live_context",
+      "explicit_replay_exclusion",
+      "explicit_non_play_exclusion",
+      "explicit_unknown_exclusion",
+      "ambiguous_camera_coverage",
+      "ambiguous_live_coverage",
+      "missing_view_membership",
+      "ambiguous_view_membership",
+      "eligible_metadata"
+    ],
+    "ranges": "native frame half-open intervals; cut and range boundaries retained",
+    "scenes": [
+      "live",
+      "replay",
+      "non_play",
+      "unknown"
+    ]
+  },
+  "consumer_file_sha256": {
+    "backend/badminton/scene_review.py": "5c96b5ec647ca3bd80004a5726dc69336fa970226da103180bf2d2893c00d41e",
+    "backend/badminton/segments.py": "bdd77aca66a8fd4b5d7146e7be560de24e0598a05ed2825100d80b560c40eac6",
+    "backend/badminton/shuttle_capacity_continuation.py": "803f1e5a48b5449803932e5e20bafbb2136f8ec266934ce27767fa3d2744cd62",
+    "backend/badminton/shuttle_selection_study.py": "a493f86a507509fa70fbad36c8bb644b9a5c1183746338ec59367d4f8385c1ad",
+    "backend/badminton/shuttle_validation.py": "80f1db0bc2ce340f541205ac711aaafe5ef43956074ba9e024701f82237d7c30"
+  },
+  "consumer_function_sha256": {
+    "scene_review.py:excluded_scene": "51538cae5694cbfe36f36bfe4bf209d5dda61c8f990ee0679cd1b08dccb15de1",
+    "shuttle_selection_study.py:eligible_segments": "169a8f0fd080be13cfa1aa1fadfe782e2717de12509246ac9e03b91a923fad24"
+  },
+  "denominators": {
+    "cases_per_method": 60,
+    "methods": [
+      "control",
+      "decoder",
+      "convolution"
+    ],
+    "views_per_method": 50
+  },
+  "eligibility": {
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "training_allowed": false
+  },
+  "fixed_diagnostic_premise": {
+    "new_accuracy_measurement": false,
+    "reason": "unverified_or_excluded_source_context",
+    "unavailable_cases_per_method": 60
+  },
+  "forbidden_fields_and_actions": [
+    "original coordinates/scores/components/poses/contacts/shots/visibility labels",
+    "consumed generated-test rows",
+    "checkpoint values or weights",
+    "source media or images",
+    "selector/evaluator execution",
+    "fitting or inference",
+    "annotation/default/model/guard changes",
+    "application Store access or writes"
+  ],
+  "input_sha256": {
+    "baseline-context-container": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+    "familiar-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+    "original-experiment": "be75300db6e3d12568f3a2195ffe699ab5e47c600f7e995f38a5c1eea3988044",
+    "original-public-protocol": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
+    "raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+    "sealed-familiar-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971"
+  },
+  "limitations": [
+    "Metadata cannot establish visible live play, correct annotations or independent source review.",
+    "An unlabelled interval is never converted into live evidence.",
+    "The archived unavailable result and expired scientific clocks remain unchanged.",
+    "Complete independent rally references remain 0/2."
+  ],
+  "limits": {
+    "max_json_bytes": 33554432,
+    "max_new_scientific_attempts": 0,
+    "max_output_bytes": 536870912,
+    "metadata_only": true
+  },
+  "name": "frozen-shuttle-source-context-audit-v1",
+  "projection": {
+    "annotations": [
+      "video_id",
+      "revision",
+      "scene_ranges"
+    ],
+    "baseline_snapshot": [
+      "video",
+      "revision",
+      "annotations"
+    ],
+    "camera_range": [
+      "start_frame",
+      "end_frame"
+    ],
+    "file_descriptor": [
+      "path",
+      "sha256"
+    ],
+    "packet_case": [
+      "id",
+      "video_id",
+      "frame"
+    ],
+    "raw_index_reference": [
+      "origin",
+      "run",
+      "receipt"
+    ],
+    "receipt": [
+      "view",
+      "run"
+    ],
+    "run": [
+      "id",
+      "video_id",
+      "video_sha256",
+      "stage",
+      "start_frame",
+      "end_frame",
+      "camera_ranges",
+      "cut_frames"
+    ],
+    "scene_range": [
+      "start_frame",
+      "end_frame",
+      "scene"
+    ],
+    "video": [
+      "id",
+      "sha256"
+    ],
+    "view": [
+      "id",
+      "video_id",
+      "start_frame",
+      "end_frame",
+      "case_ids"
+    ]
+  },
+  "schema_version": 1,
+  "task": 337,
+  "verification": [
+    "generated exact archived-guard equivalence checks",
+    "strict input hashes and source-mutation rejection",
+    "whitelist projection and private per-view/case outputs",
+    "no original scientific rows in stdout or public aggregates",
+    "required full software checks and normal controller/main/public delivery"
+  ]
+}
