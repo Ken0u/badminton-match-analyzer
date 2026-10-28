@@ -69,7 +69,7 @@ full result: **5,465 passed / four optional skips**. Ruff, formatting, dependenc
 repository/JSON/link/UTF-8-LF and diff checks pass. The tested producer was
 committed and its hashes published before original source decode.
 
-## Actual preparation and audit: October 28, 2026
+## Original preparation and audit: October 28, 2026
 
 Both original media hashes remain unchanged. Sequential decoding covers all
 24,171 original source frames (12,023 singles and 12,148 doubles), retaining all
@@ -119,3 +119,26 @@ accepted, retain unknown/excluded context and the archived scientific rejection.
 Exact PR CI, controller integration, merged-main checks and complete public
 delivery remain required for this implementation. No running application or
 model is automatically upgraded.
+
+## Windows Python 3.12 hash-guard repair
+
+The first PR CI attempt passed both Linux Python jobs, macOS native, browser,
+package and container checks, but Windows native failed four generated tests
+while hashing newly encoded fixture files. The guard compared open-handle
+`fstat()` change time with pathname `stat()` creation time. These APIs can expose
+different timestamp semantics on Windows Python 3.12 even for unchanged bytes;
+the application's existing file-cache implementation already documents this
+platform difference. The repaired guard compares metadata from opened handles
+for both the original stream and current pathname. Device, inode, size, write
+time and change time all remain checked; a mismatch still rejects the input.
+
+The original producer is preserved at commit
+`6146c8cd0d7ad4f0ee886643688cb6e19e07d91b`, alongside its unchanged frozen
+context, outputs and successful Python 3.10 preparation/audit. Those historical
+receipts are not rewritten or attributed to the repaired producer. No decoder,
+renderer, packing algorithm, protocol, source or scientific result changes.
+Three new regressions cover differing pathname/handle timestamp semantics,
+pathname replacement and changed handle metadata. All **52 focused tests pass
+on both Python 3.10 and 3.12.14**. Final full-suite verification and exact revised
+PR CI remain pending at this repair checkpoint. The failed first run is retained;
+no historical CI retry or native gallery regeneration is requested.

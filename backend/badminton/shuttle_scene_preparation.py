@@ -45,7 +45,11 @@ def file_hash(path):
         for block in iter(lambda: stream.read(1024**2), b""):
             result.update(block)
         after = os.fstat(stream.fileno())
-    current = Path(path).stat()
+        # Windows Python 3.12 can expose change time through fstat but creation
+        # time through Path.stat. Compare handles to handles, preserving all
+        # identity/version fields instead of dropping the change-time guard.
+        with Path(path).open("rb") as named:
+            current = os.fstat(named.fileno())
     keys = ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")
     require(
         all(
