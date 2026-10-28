@@ -1223,6 +1223,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "context337-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793156436,
+      "epoch": 1,
+      "fingerprint": "d73ed164d9c7176c6b1cfffab634efe81423927b9a7851f4ec07ea5c5e7eff1c",
+      "status": "review",
+      "task_id": "337",
+      "verb": "submit"
+    },
     "contract270-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792907064,
@@ -28305,6 +28314,7 @@
       "epoch": 1,
       "planned_at": 1793127954,
       "planned_by": "Ken0u",
+      "pr_number": 339,
       "spec": {
         "acceptance": [
           "Refresh current main, all open/closed related issues and PRs, and authoritative coordination. Preserve delivered #334 and incomplete original #332/#333, every original source/output/consumer, app annotations, environments and prior failed evidence. Obtain a separate committed grant and isolated worktree before implementation or metadata inspection; this is not an extension of any expired research clock.",
@@ -28360,7 +28370,13 @@
         ]
       },
       "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "9b49c1e6a358dad4e616d1b38e5131d07c0d2734",
+        "head_sha": "ef96b6a480c4855618306a666b59735dddc5fd39",
+        "pr_number": 339,
+        "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195"
+      }
     },
     "62": {
       "checkpoint": {
