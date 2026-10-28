@@ -9413,6 +9413,13 @@
       "task_id": "97",
       "verb": "submit"
     },
+    "scene340-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793158166,
+      "fingerprint": "1a2090ab441903f30d58db86195aa739d6be0bd36da72552d45d673e49ea0aa0",
+      "status": "ok",
+      "verb": "register"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -32160,7 +32167,12 @@
         "archived-required-checks": "60351ffdc53ea55ca6f9fbaf000b65e105cd7ef52972533d71fd349e4c32b8f4",
         "archived-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971",
         "baseline-context-container": "915f678fa2b5577dff37811ba92ff9077c300eefc788fcab2873c12c2ffc6f64",
+        "context-audit-diagnostics": "9a088cc000e140a5769ba50c3e81182508a35e6ce293946f13f659a65f0ee831",
+        "context-audit-protocol": "4b174c0a9ada57232df4b671da10417e824452cb83398059883b2ea05920e759",
         "familiar-packet": "3b22c07a3592728b6aa17e7d7c28f0089a8820b1373ace1289796d2e99e5466d",
+        "familiar-scene-inventory": "7eac866bdde970c58e21d994696df421c0f0b61102fb74ce5f40e469ccef84c0",
+        "familiar-source-doubles": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+        "familiar-source-singles": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f",
         "original-experiment": "be75300db6e3d12568f3a2195ffe699ab5e47c600f7e995f38a5c1eea3988044",
         "original-public-protocol": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
         "raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
@@ -32180,7 +32192,7 @@
         "review-inputs"
       ],
       "host_id": "MSI",
-      "registered_at": 1793153803,
+      "registered_at": 1793158166,
       "session_id": "d1a16595edd7434185d81366f95e8828"
     },
     "MSI/d45693fd670e4a8f86a15dba76fc903d": {
