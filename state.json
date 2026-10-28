@@ -28333,6 +28333,7 @@
       }
     },
     "337": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40626272038",
       "checkpoint": {
         "branch": "codex/issue-337-explain-the-complete-source-context-reje",
         "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/337#issuecomment-6459342865",
@@ -28352,7 +28353,7 @@
         "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793156993,
