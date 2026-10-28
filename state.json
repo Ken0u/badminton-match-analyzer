@@ -9413,6 +9413,26 @@
       "task_id": "97",
       "verb": "submit"
     },
+    "scene340-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793158379,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4dd81eebc5c2f2291645bc33d1b93703fbf4b06e",
+        "branch": "codex/issue-340-prepare-exhaustive-source-only-scene-gal",
+        "epoch": 1,
+        "expires_at": 1793169179,
+        "granted_at": 1793158379,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4"
+      },
+      "epoch": 1,
+      "fingerprint": "035e97e157737060b073249711613d78986e6bed4d19c053e15e669d1212d09b",
+      "status": "granted",
+      "task_id": "340",
+      "verb": "next"
+    },
     "scene340-register-v1": {
       "actor": "Ken0u",
       "at": 1793158166,
@@ -28435,7 +28455,18 @@
       }
     },
     "340": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4dd81eebc5c2f2291645bc33d1b93703fbf4b06e",
+        "branch": "codex/issue-340-prepare-exhaustive-source-only-scene-gal",
+        "epoch": 1,
+        "expires_at": 1793169179,
+        "granted_at": 1793158379,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4"
+      },
+      "epoch": 1,
       "planned_at": 1793157408,
       "planned_by": "Ken0u",
       "spec": {
@@ -28497,7 +28528,7 @@
         ]
       },
       "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
