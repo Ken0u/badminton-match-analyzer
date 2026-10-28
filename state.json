@@ -6754,6 +6754,15 @@
       "task_id": "335",
       "verb": "checkpoint"
     },
+    "observer335-code-recovery-v1": {
+      "actor": "Ken0u",
+      "at": 1793150790,
+      "epoch": 2,
+      "fingerprint": "227c41426df344aca4f4d1403d4683cb08832d24db7097fcd1a0faa747d8ca7e",
+      "status": "ready",
+      "task_id": "335",
+      "verb": "recover"
+    },
     "observer335-next-v1": {
       "actor": "Ken0u",
       "at": 1793129287,
@@ -28040,32 +28049,55 @@
     },
     "335": {
       "checkpoint": {
+        "artifact_receipts": [
+          ".cache/observer335-interruption-preservation.json",
+          ".cache/observer335-checks-v1/verification.json",
+          ".cache/observer335-focused-v2/verification.json",
+          ".cache/observer335-checks-v2/"
+        ],
         "branch": "codex/issue-335-repair-the-disposable-comparison-cli-tes",
-        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/335#issuecomment-6451876684",
+        "epoch_1_deadline": 1793143687,
         "file_hashes": {
-          "docs/RALLY_REVIEW_COMPARISON_REPORT.md": "d0796ad05cfa135013347a2e79b38a83148306071cc656d13198c27a3547859f",
-          "tests/test_compare_rally_review.py": "b61e14df1a9343990cee2c065c9cea412275a0de9c20d0043ee7054831d7937b"
+          "docs/RALLY_REVIEW_COMPARISON_REPORT.md": "b216322957ee5364ffda79d407018f1cf6f91e6eaa695033620e341a330ae32c",
+          "tests/test_compare_rally_review.py": "dbd6bc5a834e6a7f95dd0c6566d23bbf06d649153274c1aa00a0546caf1a5147"
         },
-        "head_sha": "7bc86dad931e4d9dc35178a2b189ef78dfadc1e2",
-        "progress": "Generated startup denial reproduced; 120 focused pass; 46 actual lifetimes terminal; full checks next. No science or process-signal changes.",
-        "uncommitted_granted_paths": [
-          "tests/test_compare_rally_review.py",
-          "docs/RALLY_REVIEW_COMPARISON_REPORT.md"
-        ]
+        "head_sha": "450e7a6eef53fd9456ff01f56e2772c346baa463",
+        "progress": "Epoch 1 runtime and lease expired during chat interruption. Preserve exact two-file repair; 120 final focused tests and static checks pass. Earlier pre-final full suite passed 5386/4 skips; final full suite is interrupted near 12 percent, without terminal return code or completion receipt. Three recorded disposable lifetimes independently absent now. No original scientific inputs/processes, historical CI retry or manual merge. Request code-only archival recovery; no execution resumes before a fresh committed grant."
       },
       "checkpoint_at": 1793130244,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "7bc86dad931e4d9dc35178a2b189ef78dfadc1e2",
-        "branch": "codex/issue-335-repair-the-disposable-comparison-cli-tes",
-        "epoch": 1,
-        "expires_at": 1793141044,
-        "granted_at": 1793129287,
-        "host_id": "MSI",
-        "session_id": "d1a16595edd7434185d81366f95e8828",
-        "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750"
-      },
-      "epoch": 1,
+      "epoch": 2,
+      "history": [
+        {
+          "at": 1793150790,
+          "checkpoint": {
+            "artifact_receipts": [
+              ".cache/observer335-interruption-preservation.json",
+              ".cache/observer335-checks-v1/verification.json",
+              ".cache/observer335-focused-v2/verification.json",
+              ".cache/observer335-checks-v2/"
+            ],
+            "branch": "codex/issue-335-repair-the-disposable-comparison-cli-tes",
+            "epoch_1_deadline": 1793143687,
+            "file_hashes": {
+              "docs/RALLY_REVIEW_COMPARISON_REPORT.md": "b216322957ee5364ffda79d407018f1cf6f91e6eaa695033620e341a330ae32c",
+              "tests/test_compare_rally_review.py": "dbd6bc5a834e6a7f95dd0c6566d23bbf06d649153274c1aa00a0546caf1a5147"
+            },
+            "head_sha": "450e7a6eef53fd9456ff01f56e2772c346baa463",
+            "progress": "Epoch 1 runtime and lease expired during chat interruption. Preserve exact two-file repair; 120 final focused tests and static checks pass. Earlier pre-final full suite passed 5386/4 skips; final full suite is interrupted near 12 percent, without terminal return code or completion receipt. Three recorded disposable lifetimes independently absent now. No original scientific inputs/processes, historical CI retry or manual merge. Request code-only archival recovery; no execution resumes before a fresh committed grant."
+          },
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "7bc86dad931e4d9dc35178a2b189ef78dfadc1e2",
+            "branch": "codex/issue-335-repair-the-disposable-comparison-cli-tes",
+            "epoch": 1,
+            "expires_at": 1793141044,
+            "granted_at": 1793129287,
+            "host_id": "MSI",
+            "session_id": "d1a16595edd7434185d81366f95e8828",
+            "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750"
+          }
+        }
+      ],
       "planned_at": 1793126687,
       "planned_by": "Ken0u",
       "reason": "implementation lease expired; reservations retained",
@@ -28107,7 +28139,7 @@
         ]
       },
       "spec_hash": "a618714fbea2b53dbca0509c01d973719df1d9d513eb5661e6c6841e8e635750",
-      "status": "recovery_required"
+      "status": "ready"
     },
     "337": {
       "epoch": 0,
