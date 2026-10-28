@@ -1,0 +1,122 @@
+{
+  "artifacts": {
+    "context-audit-diagnostics": "9a088cc000e140a5769ba50c3e81182508a35e6ce293946f13f659a65f0ee831",
+    "context-audit-protocol": "4b174c0a9ada57232df4b671da10417e824452cb83398059883b2ea05920e759",
+    "familiar-scene-inventory": "7eac866bdde970c58e21d994696df421c0f0b61102fb74ce5f40e469ccef84c0",
+    "familiar-source-doubles": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd",
+    "familiar-source-singles": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f"
+  },
+  "denominators": {
+    "cases": 60,
+    "frame_occurrences": 13499,
+    "sheets": 870,
+    "views": 50
+  },
+  "eligibility": {
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "training_allowed": false
+  },
+  "future_review_contract": {
+    "authorization": "No assessment destination is configured and no images may be transferred by this preparation tool. Actual derived bytes and destination need a separate frozen authorized assessment task.",
+    "boundaries": "Label uncertainty and camera partitions explicitly; frame coverage does not establish review completeness or rally/contact timing.",
+    "independence": "Two future passes receive only source images, frame/PTS/view identities and a fixed rubric; neither sees other-pass or historical semantic labels/predictions.",
+    "labels": [
+      "live",
+      "replay",
+      "non_play",
+      "unknown"
+    ],
+    "purpose": "Prospective coarse live/replay/non_play/unknown scene context only; not accepted truth.",
+    "uncertainty": "Insufficient thumbnail detail, missing coverage or unresolved boundaries stay unknown and require separately authorized native-source adjudication."
+  },
+  "helper_sha256": {
+    "backend/badminton/av_runtime.py": "5fcf262abb1ad592dca39181457401b9e1e2286799d06b4af7a5300bbd2293e2",
+    "backend/badminton/config.py": "41b35396e042ba7f76da66cd7a42a54c92ac177131b26ccb41efde160b3f0448",
+    "backend/badminton/jobs.py": "85e0318dfa81afcaa2b450c782e1311c99c984a937096b301364900be334ce2f",
+    "backend/badminton/orientation.py": "17a2bf76f92f0530c6e5deda39ce1a0b80df6be49499d763d4fe79822a4db146",
+    "backend/badminton/schemas.py": "afedd1d4c98797fc8e2d75b50851eea202d9a9e38f11d9b7cae936ee466bfbd7",
+    "backend/badminton/shuttle_context_audit.py": "f9506df041625bfea3178aae1278441fea9391c3132c7690915ca795c8456a2b",
+    "backend/badminton/storage.py": "715966911128707853a4394b67b76f1823a4c79ff85c9ba5b7590a1b7aff4024"
+  },
+  "input_policy": [
+    "Only the frozen projected inventory and context diagnostics plus the two original source media are consumed.",
+    "No original visibility/coordinate/score/component/pose/contact/shot labels, predictions, checkpoints or consumed generated-test rows are read.",
+    "Source bytes, native PTS/time bases, enumeration, orientation, camera context partitions and every view/case occurrence remain bound."
+  ],
+  "limitations": [
+    "Every native frame is represented at reduced resolution, without certifying visible scene detail or source review.",
+    "All original contexts/results/deadlines remain preserved; no scientific run or accuracy evaluation occurs.",
+    "Complete independent rally references remain0/2 and full automatic match accuracy is unproven."
+  ],
+  "limits": {
+    "max_assessor_sessions": 0,
+    "max_image_transfer_bytes": 0,
+    "max_new_scientific_attempts": 0,
+    "max_output_bytes": 2147483648,
+    "max_runtime_hours": 6,
+    "paid_services": false
+  },
+  "name": "frozen-familiar-source-scene-preparation-v1",
+  "packing": {
+    "adjudication_reserve_passes": 1,
+    "independent_passes": 2,
+    "max_bytes": 6291456,
+    "max_images": 20,
+    "overlap_sheets_within_view": 1
+  },
+  "partition_policy": [
+    "Every view is separate; chronological sheets retain every native frame occurrence in up to16 cells.",
+    "Cells name their original context partition and its first native frame; a sheet can contain a marked partition boundary.",
+    "Context partition boundaries are preserved source metadata, not independently reviewed visual edits or scene labels.",
+    "No context, scene exclusion, live label or truth is inferred across a partition, a timestamp discontinuity or missing input."
+  ],
+  "render": {
+    "caption_height": 36,
+    "columns": 4,
+    "fit": "contain original aspect with black padding",
+    "format": "JPEG",
+    "optimize": false,
+    "quality": 80,
+    "rows": 4,
+    "subsampling": 0,
+    "tile": [
+      320,
+      180
+    ]
+  },
+  "schema_version": 1,
+  "sources": [
+    {
+      "artifact": "familiar-source-singles",
+      "display_size": [
+        1280,
+        720
+      ],
+      "frame_count": 12023,
+      "id": "970dbd8adfe548d8",
+      "rotation": 0,
+      "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f"
+    },
+    {
+      "artifact": "familiar-source-doubles",
+      "display_size": [
+        1280,
+        720
+      ],
+      "frame_count": 12148,
+      "id": "c406a1187130b845",
+      "rotation": 0,
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd"
+    }
+  ],
+  "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4",
+  "task": 340,
+  "verification": [
+    "Freeze tested producer/helper/protocol/input hashes before original decode; exclusive attempts and actual shared Store admission.",
+    "Generated exact mapping/orientation/cuts/coverage/packing/admission/source-mutation regressions, then full required software checks.",
+    "Separate post-exit audit verifies original process absence/Store completion, image hashes and actual source clocks by independent sequential decode.",
+    "Only aggregate report/provenance published; code/protocol through normal PR/controller/main/public delivery."
+  ]
+}
