@@ -12857,6 +12857,14 @@
       "task_id": "337",
       "verb": "verify-main"
     },
+    "verify-337-4dd81eebc5c2f2291645bc33d1b93703fbf4b06e-True": {
+      "actor": "github-actions[bot]",
+      "at": 1793157713,
+      "fingerprint": "f6ec19b27e77888a3c875892ce63e23dfc24025c5770edf2570aeb572868f1e3",
+      "status": "done",
+      "task_id": "337",
+      "verb": "verify-main"
+    },
     "verify-63-246d14ff84424951adaf5ce10f5a27c2bda96f8a-False": {
       "actor": "github-actions[bot]",
       "at": 1792424939,
@@ -28343,6 +28351,7 @@
         "session_id": "d1a16595edd7434185d81366f95e8828",
         "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195"
       },
+      "delivery_pending": true,
       "epoch": 1,
       "integration": {
         "at": 1793156993,
@@ -28408,7 +28417,7 @@
         ]
       },
       "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195",
-      "status": "verifying_main",
+      "status": "done",
       "submission": {
         "base_sha": "9b49c1e6a358dad4e616d1b38e5131d07c0d2734",
         "head_sha": "ef96b6a480c4855618306a666b59735dddc5fd39",
