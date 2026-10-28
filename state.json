@@ -1160,6 +1160,26 @@
       "task_id": "327",
       "verb": "submit"
     },
+    "context337-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793154027,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "9b49c1e6a358dad4e616d1b38e5131d07c0d2734",
+        "branch": "codex/issue-337-explain-the-complete-source-context-reje",
+        "epoch": 1,
+        "expires_at": 1793164827,
+        "granted_at": 1793154027,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195"
+      },
+      "epoch": 1,
+      "fingerprint": "505e9f60ea641f38eb9bcfcc6e49cc7eb424746d52eb12f682de0ed88bc02bab",
+      "status": "granted",
+      "task_id": "337",
+      "verb": "next"
+    },
     "context337-register-v1": {
       "actor": "Ken0u",
       "at": 1793153803,
@@ -28228,7 +28248,18 @@
       }
     },
     "337": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "9b49c1e6a358dad4e616d1b38e5131d07c0d2734",
+        "branch": "codex/issue-337-explain-the-complete-source-context-reje",
+        "epoch": 1,
+        "expires_at": 1793164827,
+        "granted_at": 1793154027,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195"
+      },
+      "epoch": 1,
       "planned_at": 1793127954,
       "planned_by": "Ken0u",
       "spec": {
@@ -28286,7 +28317,7 @@
         ]
       },
       "spec_hash": "a6f79bad0442c3b60b442e3c36044004168448b5419e7480ddca1defb58d2195",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
