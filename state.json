@@ -3527,6 +3527,14 @@
       "task_id": "282",
       "verb": "invalidate-review"
     },
+    "invalidate-340-fcfbcd3887ac282d4a8ff4990736b28b65a87878-4dd81eebc5c2f2291645bc33d1b93703fbf4b06e": {
+      "actor": "github-actions[bot]",
+      "at": 1793162246,
+      "fingerprint": "44ab23c847a6f2bd06b70c1f59a67535b582d664967c168f0e7fe3867df96f41",
+      "status": "running",
+      "task_id": "340",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -28511,6 +28519,7 @@
       "planned_at": 1793157408,
       "planned_by": "Ken0u",
       "pr_number": 341,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Continue #337 and the #65 Perception/Data and evaluation prerequisite. Search all open/closed issues, PRs, reports and coordination; distinguish these supplied familiar-source windows from #242/#245/#262 BWF rally work. Preserve original #139/#332/#334 evidence, every model/result/annotation, root edits, environments and deprecated PROGRESS. Obtain a separate committed grant and isolated worktree before implementation or source decode.",
@@ -28570,7 +28579,7 @@
         ]
       },
       "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "4dd81eebc5c2f2291645bc33d1b93703fbf4b06e",
         "head_sha": "6146c8cd0d7ad4f0ee886643688cb6e19e07d91b",
