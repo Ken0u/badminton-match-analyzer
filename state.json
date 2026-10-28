@@ -1160,6 +1160,15 @@
       "task_id": "327",
       "verb": "submit"
     },
+    "context337-diagnosis-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1793155650,
+      "epoch": 1,
+      "fingerprint": "51e0d0eb63ffeb18048e43a89b7fec020761713e67fa4401543139ccf60635cc",
+      "status": "running",
+      "task_id": "337",
+      "verb": "checkpoint"
+    },
     "context337-freeze-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793154338,
@@ -28268,17 +28277,17 @@
     "337": {
       "checkpoint": {
         "branch": "codex/issue-337-explain-the-complete-source-context-reje",
-        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/337#issuecomment-6459227778",
-        "head_sha": "a0505cee5a4bd458f5c65c5557a1a608f77dde29",
-        "progress": "28 generated tests and 360 exact guard combinations pass; code/protocol frozen before original metadata projection."
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/337#issuecomment-6459281265",
+        "head_sha": "906170c4f4854f75ac3544b6a78dc5804d59cba0",
+        "progress": "Both sources have empty scene lists; conservative audit schema assumption corrected with real-schema regression; 30 focused tests pass; original results/inputs preserved."
       },
-      "checkpoint_at": 1793155435,
+      "checkpoint_at": 1793155650,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "9b49c1e6a358dad4e616d1b38e5131d07c0d2734",
         "branch": "codex/issue-337-explain-the-complete-source-context-reje",
         "epoch": 1,
-        "expires_at": 1793166235,
+        "expires_at": 1793166450,
         "granted_at": 1793154027,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
