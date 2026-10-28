@@ -58,3 +58,4 @@ include data/manifests/shuttle_capacity_protocol_v1.json
 include data/manifests/shuttle_capacity_continuation_protocol_v1.json
 include data/manifests/shuttle_selection_protocol_v1.json
 include data/manifests/shuttle_selection_continuation_protocol_v1.json
+include data/manifests/shuttle_context_audit_protocol_v1.json
