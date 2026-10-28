@@ -58,7 +58,7 @@ frozen task specifying actual payload, destination and limits. Thumbnail detail
 may be insufficient; unknown scenes and boundaries then need native-source
 adjudication rather than inferred labels.
 
-## Verification checkpoint
+## Original producer verification checkpoint
 
 Generated tests cover VFR/nonzero clocks, four display rotations, aspect
 preservation, every-frame coverage, source/camera partitions, partial sheets,
@@ -139,6 +139,13 @@ receipts are not rewritten or attributed to the repaired producer. No decoder,
 renderer, packing algorithm, protocol, source or scientific result changes.
 Three new regressions cover differing pathname/handle timestamp semantics,
 pathname replacement and changed handle metadata. All **52 focused tests pass
-on both Python 3.10 and 3.12.14**. Final full-suite verification and exact revised
-PR CI remain pending at this repair checkpoint. The failed first run is retained;
-no historical CI retry or native gallery regeneration is requested.
+on both Python 3.10 and 3.12.14**. The repaired full suite passes **5,468 tests /
+four optional skips**, with Ruff, formatting, dependency, repository/JSON/link/LF
+and diff checks passing. A generated Python 3.12.14 reproduction confirms the
+pathname/handle change-time mismatch in three unchanged files. The repaired
+guard also verifies both original media and other bound inputs, all 870 derived
+images and the original manifest/plan/aggregate bytes on both Python versions.
+An AST comparison confirms the hash function is the only producer logic change.
+Exact revised PR CI, controller integration, merged-main verification and public
+delivery remain required. The failed first run is retained; no historical CI
+retry or native gallery regeneration is requested.
