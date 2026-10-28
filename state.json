@@ -6865,6 +6865,15 @@
       "task_id": "62",
       "verb": "next"
     },
+    "observer329-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793164972,
+      "epoch": 1,
+      "fingerprint": "6f2dd44b9aaf0c3c1c48a8c18a0fe2f56c474dbdcc3bbec7ab8b27ee570df04d",
+      "status": "running",
+      "task_id": "329",
+      "verb": "checkpoint"
+    },
     "observer329-next-v1": {
       "actor": "Ken0u",
       "at": 1793164414,
@@ -6899,6 +6908,15 @@
       "fingerprint": "62e620fa121a046bd4b38ecfa6504482f499a11119ea7796566c817aa8b62bcf",
       "status": "ok",
       "verb": "register"
+    },
+    "observer329-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793164978,
+      "epoch": 1,
+      "fingerprint": "706aa18ef0a6d6e7b5a6de27005944a6fd948cb95d4c38719e17aa4125e8265d",
+      "status": "review",
+      "task_id": "329",
+      "verb": "submit"
     },
     "observer335-checkpoint-e3-v1": {
       "actor": "Ken0u",
@@ -27959,12 +27977,19 @@
       }
     },
     "329": {
+      "checkpoint": {
+        "branch": "codex/issue-329-diagnose-the-preserved-completion-observ",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/329#issuecomment-6461369430",
+        "head_sha": "362d9b396f39f55f9b36203cf9b0d6c029fb8a4f",
+        "progress": "Read-only diagnosis complete; historical cause unresolved; 72 existing tests and seven offline scenarios pass; report-only PR awaiting exact CI/controller/main/public delivery."
+      },
+      "checkpoint_at": 1793164972,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "65cc7450eb017e2380e3a3dcc1f8084ded72aa40",
         "branch": "codex/issue-329-diagnose-the-preserved-completion-observ",
         "epoch": 1,
-        "expires_at": 1793175214,
+        "expires_at": 1793175772,
         "granted_at": 1793164414,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
@@ -27973,6 +27998,7 @@
       "epoch": 1,
       "planned_at": 1793164414,
       "planned_by": "Ken0u",
+      "pr_number": 343,
       "spec": {
         "acceptance": [
           "Continue existing incident329 rather than creating a duplicate. Recheck all issue/PR history and current coordination, run queue doctor, register this session and obtain a committed code-only grant and isolated worktree before diagnosis implementation. Preserve all original edits, processes, environments, source artifacts, failures and deprecated PROGRESS.",
@@ -28012,7 +28038,13 @@
         ]
       },
       "spec_hash": "d0b1000477ec32eae1ee8e35a16f73da804d2cc8b3a3a51cbc9c20c3e323b239",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "65cc7450eb017e2380e3a3dcc1f8084ded72aa40",
+        "head_sha": "362d9b396f39f55f9b36203cf9b0d6c029fb8a4f",
+        "pr_number": 343,
+        "spec_hash": "d0b1000477ec32eae1ee8e35a16f73da804d2cc8b3a3a51cbc9c20c3e323b239"
+      }
     },
     "330": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40495289332",
