@@ -9466,6 +9466,15 @@
       "task_id": "340",
       "verb": "submit"
     },
+    "scene340-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1793162405,
+      "epoch": 1,
+      "fingerprint": "db7be646d2ee3d45c9f932fe4cd4e4317fe5c2def671fcc38d86d3dbd7bfa8d8",
+      "status": "review",
+      "task_id": "340",
+      "verb": "submit"
+    },
     "scene340-tested-freeze-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793160315,
@@ -28579,10 +28588,10 @@
         ]
       },
       "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "4dd81eebc5c2f2291645bc33d1b93703fbf4b06e",
-        "head_sha": "6146c8cd0d7ad4f0ee886643688cb6e19e07d91b",
+        "head_sha": "fcfbcd3887ac282d4a8ff4990736b28b65a87878",
         "pr_number": 341,
         "spec_hash": "c7514e99c5298c060d6a3053e5fa888daea6ae561fa57a004b033ca385b790a4"
       }
