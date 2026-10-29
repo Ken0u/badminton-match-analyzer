@@ -6872,6 +6872,15 @@
       "task_id": "345",
       "verb": "next"
     },
+    "minicourt345-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793313753,
+      "epoch": 1,
+      "fingerprint": "4dca0d5fd0ad6342193322a47a0d6ac90a9ba5c297f8c2b5fad466cfe7a2ff0b",
+      "status": "review",
+      "task_id": "345",
+      "verb": "submit"
+    },
     "msi-confirmed-cuda-capability-v1": {
       "actor": "Ken0u",
       "at": 1792731805,
@@ -29437,6 +29446,7 @@
       "epoch": 1,
       "planned_at": 1793307612,
       "planned_by": "Ken0u",
+      "pr_number": 348,
       "spec": {
         "acceptance": [
           "Read the delivered independent design review and search current issue/PR/controller history before claiming. Use a committed isolated grant after software task344 completes; preserve original research attempts, models, labels, source media, environments and PROGRESS edits. Copy no code, assets, prose or weights from the reference repository.",
@@ -29484,7 +29494,13 @@
         ]
       },
       "spec_hash": "bbc79a500c6f94874af29f8525114e2319fb0abc69bb0e4407eaa8decf5ab42d",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "d7dadc28329871c74948fd04712e220b7d3ed464",
+        "head_sha": "034f104da5eaa16945bab498134e7794696d9cc7",
+        "pr_number": 348,
+        "spec_hash": "bbc79a500c6f94874af29f8525114e2319fb0abc69bb0e4407eaa8decf5ab42d"
+      }
     },
     "62": {
       "checkpoint": {
