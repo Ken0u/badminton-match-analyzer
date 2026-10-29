@@ -29493,6 +29493,7 @@
         "session_id": "d1a16595edd7434185d81366f95e8828",
         "spec_hash": "09b6b2451806297ef574e155b6dc9ef22f6641f9f6a9c1f03646ebe74b7430d3"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
