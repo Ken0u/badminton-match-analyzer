@@ -89,5 +89,11 @@ Local receipts are `.cache/minicourt345-checks-v1/verification.json`,
 these ignored artifacts are not supplied by a clone. Exact PR/controller/main
 verification and complete public delivery remain pending at this checkpoint.
 The owning issue records final delivery receipts.
+The first hosted run, `40967880440`, caught omitted generated runtime assets:
+source tests/build passed, while asset parity, package and container checks
+correctly rejected the old shipped bundle/manifest. Those original logs and
+source `034f104da5eaa16945bab498134e7794696d9cc7` are preserved. The bounded
+repair requests three additional generated paths through the normal scope
+extension before staging them; no source tests or parity checks are relaxed.
 No native inference, scientific assessment, training or model promotion is part
 of this task. Complete automatic full-match annotation remains unproven.
