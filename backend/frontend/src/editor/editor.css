@@ -142,6 +142,90 @@
   width: 100%;
   overflow: hidden;
 }
+.editor-app .playback-view {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 184px;
+  align-items: start;
+  gap: 14px;
+}
+.editor-app .mini-court {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid #47604f;
+  border-radius: 6px;
+  background: #172b21;
+  font-size: 12px;
+}
+.editor-app .mini-court summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.editor-app .mini-court output {
+  display: block;
+  margin-top: 8px;
+  color: #d5e8d8;
+}
+.editor-app #mini-court-map {
+  display: block;
+  width: 100%;
+  max-height: 280px;
+  margin: 6px auto;
+}
+.editor-app .court-surface {
+  fill: #215943;
+  stroke: #eef6e9;
+  stroke-width: 1.3;
+}
+.editor-app .court-lines {
+  fill: none;
+  stroke: #d6e9da;
+  stroke-width: 1;
+}
+.editor-app [data-mode="singles"] .doubles-service {
+  display: none;
+}
+.editor-app .court-net {
+  stroke: #eef6e9;
+  stroke-width: 2.5;
+}
+.editor-app .court-end-label {
+  fill: #c9ddcf;
+  font-size: 11px;
+}
+.editor-app .court-player circle {
+  fill: #d3f7b8;
+  stroke: #14251b;
+  stroke-width: 2;
+}
+.editor-app .court-player.provisional circle {
+  fill: #ffd379;
+  stroke-dasharray: 3 2;
+}
+.editor-app .court-player.unassigned circle {
+  fill: #d3dfdc;
+  stroke-dasharray: 2 2;
+}
+.editor-app .court-player text {
+  fill: #14251b;
+  font-size: 10px;
+  font-weight: 700;
+}
+.editor-app #mini-court-legend {
+  padding-left: 22px;
+  overflow-wrap: anywhere;
+}
+.editor-app #mini-court-note {
+  margin: 8px 0;
+}
+@media (max-width: 1250px) {
+  .editor-app .playback-view {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .editor-app #mini-court-map {
+    max-height: 230px;
+    max-width: 184px;
+  }
+}
 .editor-app #stage video,
 .editor-app #stage img,
 .editor-app #stage canvas {
