@@ -9561,6 +9561,14 @@
       "task_id": "340",
       "verb": "checkpoint"
     },
+    "scene342-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1793243143,
+      "fingerprint": "861c5a8f4f633779efbc87170427500f81faca805be19459f4b7d1d1ba4d5854",
+      "status": "ready",
+      "task_id": "342",
+      "verb": "human-approved"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -28811,8 +28819,14 @@
     },
     "342": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1793243143,
+        "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc"
+      },
       "planned_at": 1793164703,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Continue delivered340/337 and the65 prerequisite; recheck all issue/PR/report history and authoritative coordination before claiming. Preserve every original annotation, prediction, model, failed attempt/deadline, environment and deprecated PROGRESS. Obtain explicit configured-owner authorization of this exact frozen payload/destination/limits, a committed fresh grant and isolated worktree. No authority is inherited from BWF242 or preparation340.",
@@ -28876,7 +28890,7 @@
         ]
       },
       "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
