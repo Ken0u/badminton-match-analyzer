@@ -6843,6 +6843,15 @@
       "task_id": "345",
       "verb": "checkpoint"
     },
+    "minicourt345-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1793312844,
+      "epoch": 1,
+      "fingerprint": "6d8282c6f6efa2b3d164022ece4111c1985788647417a91bc1e7be90dce97ae5",
+      "status": "running",
+      "task_id": "345",
+      "verb": "checkpoint"
+    },
     "minicourt345-claim-v1": {
       "actor": "Ken0u",
       "at": 1793311962,
@@ -29401,25 +29410,25 @@
     "345": {
       "checkpoint": {
         "branch": "codex/issue-345-add-an-independently-implemented-source-",
-        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/345#issuecomment-6509660217",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/345#issuecomment-6509815033",
         "head_sha": "d7dadc28329871c74948fd04712e220b7d3ed464",
         "producer_sha256": {
-          "backend/frontend/src/editor/Playback.tsx": "fd1eb236c3f799c679a36f30c5584577a07d7f6d14cf7ca99be178b9936f8e5a",
-          "backend/frontend/src/editor/court.ts": "2ea75537c53c2db04747e06bbf67b6aa8ac14884314ee9021bb9195a6207200a",
+          "backend/frontend/src/editor/Playback.tsx": "5acb995b611ea2ffad27680782832cffd55d87048ce4ebfa44954cc7899729f6",
+          "backend/frontend/src/editor/court.ts": "415329478b9d644e3341555a89e658af1e14f24b91e8d4c6e3a410428a51694d",
           "backend/frontend/src/editor/editor.css": "f506527e2cf1a82073a81530ef4c2f07362b93ec1c9069163f2781c41a09394c",
-          "backend/frontend/tests/editor.test.mjs": "8894eb7bd41f9934c10fb9889ea43589cc0c328c41f8acd0689dcdbd3bc9cf20",
+          "backend/frontend/tests/editor.test.mjs": "41db7cdadb4a68c11cc5dc74c9e2fb4ec178348643a818fb5ac1ddd66903b910",
           "docs/MINI_COURT_REPORT.md": "72c72328a211e4c5cb697b925e5896b42db097fc1b6378b55a4ed454f2960566",
           "tests/frontend-editor.mjs": "c109da54689860f926e094910b552c12a86e56328398b4f9779723a329421347"
         },
-        "progress": "233 frontend tests, typecheck and build pass; generated browser checks prepared; no source inference or truth edits"
+        "progress": "234 frontend tests and lightweight checks pass; new mini-court browser group passes; baseline boundary fixture mismatch reproduced; full Python suite running"
       },
-      "checkpoint_at": 1793312445,
+      "checkpoint_at": 1793312844,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "d7dadc28329871c74948fd04712e220b7d3ed464",
         "branch": "codex/issue-345-add-an-independently-implemented-source-",
         "epoch": 1,
-        "expires_at": 1793323245,
+        "expires_at": 1793323644,
         "granted_at": 1793311962,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
