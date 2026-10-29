@@ -10,7 +10,9 @@ All times are source PTS; proposed inclusive bounds are uncertain review ranges.
 import bisect
 import itertools
 import math
+from collections.abc import Sequence
 from copy import deepcopy
+from numbers import Real
 
 import cv2
 import numpy as np
@@ -32,6 +34,35 @@ MOVING_DIAGONALS_PER_S = 0.08
 STILL_RADIUS_DIAGONALS = 0.005
 MAX_FRAME_STEP_S = 0.10
 TERMINAL_COURT_MARGIN = 0.12
+
+
+def _valid_timestamp(value):
+    try:
+        return (
+            isinstance(value, Real)
+            and not isinstance(value, bool)
+            and math.isfinite(value)
+            and value >= 0
+        )
+    except (OverflowError, TypeError):
+        return False
+
+
+def _validate_source_clock(video, times):
+    count = video.get("frame_count")
+    if (
+        type(count) is not int
+        or count < 1
+        or not isinstance(times, Sequence)
+        or isinstance(times, str | bytes | bytearray)
+        or len(times) != count
+        or not all(_valid_timestamp(value) for value in times)
+        or any(a >= b for a, b in itertools.pairwise(times))
+    ):
+        raise ValueError(
+            "Native source timestamps must be finite, nonnegative, strictly ordered "
+            "and cover every source frame"
+        )
 
 
 def context_signature(annotations, start, end):
@@ -83,9 +114,7 @@ def _index(run, video, stage):
     if any(
         type(row["frame"]) is not int
         or not start <= row["frame"] < end
-        or not isinstance(row.get("time_s"), int | float)
-        or not math.isfinite(row["time_s"])
-        or row["time_s"] < 0
+        or not _valid_timestamp(row.get("time_s"))
         for row in frames
     ) or any(
         a["frame"] >= b["frame"] or a["time_s"] >= b["time_s"]
@@ -623,12 +652,14 @@ def _ending(rows, times, index, diagonal, annotations, video):
 def validate_rally_inputs(
     video, player_run, shuttle_run, annotations, source_times=None
 ):
+    if source_times is not None:
+        _validate_source_clock(video, source_times)
     player_run = reviewed_run(player_run, annotations)
     shuttle_run = reviewed_run(shuttle_run, annotations)
     players = _index(player_run, video, "players")
     shuttle = _index(shuttle_run, video, "shuttle")
     if source_times is not None:
-        if len(source_times) != video["frame_count"] or any(
+        if any(
             abs(row["time_s"] - source_times[row["frame"]]) > 0.00002
             for run in (player_run, shuttle_run)
             for row in run["frames"]
