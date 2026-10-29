@@ -9633,6 +9633,15 @@
       "task_id": "344",
       "verb": "next"
     },
+    "scene344-implementation-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793307362,
+      "epoch": 1,
+      "fingerprint": "152736e2052550bcec54f992fc879f36a03f3a2ab88ece8b809713097f002adc",
+      "status": "running",
+      "task_id": "344",
+      "verb": "checkpoint"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -29016,12 +29025,27 @@
       "status": "ready"
     },
     "344": {
+      "checkpoint": {
+        "branch": "codex/issue-344-deliver-preserved-source-scene-review-so",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/344#issuecomment-6508127086",
+        "producer_sha256": {
+          "MANIFEST.in": "ce5fbc948d64750b840c1de4fcb2458c3351c07e3d3972547cf06ba8c6599338",
+          "backend/badminton/shuttle_scene_review.py": "1d91aee84c87d9c4cfa7464a782723d0f3b542d302ab5eb61e5f354133978f14",
+          "data/manifests/shuttle_scene_review_protocol_v1.json": "1391b13aae6213c167f96544097e071252ec2cea894c092212610128c3c67448",
+          "docs/SHUTTLE_SCENE_REVIEW_REPORT.md": "0b8afe8faaf16121f45afce220c44bc7a656e1e960195c21a8c613f7a0b12a08",
+          "docs/VISIONAI_DESIGN_REVIEW.md": "04f324540d822d9c6a284d296488b1cdc49a0542169487afe854f347c55e60a3",
+          "scripts/review_shuttle_scenes.py": "106b2f599e9df676615d50d3e0829304c0a28f28041fff56fcb02af9ed51800f",
+          "tests/test_shuttle_scene_review.py": "563c407b2ff627414d171505599743c76025437fa1431dd043b6e4c1f995f242"
+        },
+        "progress": "128 focused tests and lightweight required checks pass; full generated suite running; zero science/images; prepared validator and bounded collector preserved."
+      },
+      "checkpoint_at": 1793307362,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
         "branch": "codex/issue-344-deliver-preserved-source-scene-review-so",
         "epoch": 1,
-        "expires_at": 1793317671,
+        "expires_at": 1793318162,
         "granted_at": 1793306871,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
