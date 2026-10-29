@@ -9680,6 +9680,15 @@
       "task_id": "344",
       "verb": "checkpoint"
     },
+    "scene344-repair-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793310064,
+      "epoch": 2,
+      "fingerprint": "773d8c5c4e649abd3686be46cb735fd5f47670f5da83c9502f12f680ad0e72b3",
+      "status": "review",
+      "task_id": "344",
+      "verb": "submit"
+    },
     "scene344-submit-v1": {
       "actor": "Ken0u",
       "at": 1793308046,
@@ -29268,7 +29277,7 @@
       ],
       "planned_at": 1793306871,
       "planned_by": "Ken0u",
-      "pr_number": 346,
+      "pr_number": 347,
       "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
@@ -29319,11 +29328,11 @@
         ]
       },
       "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
-        "head_sha": "02f168aa8eae310649135ef4899aa25f91354839",
-        "pr_number": 346,
+        "head_sha": "d494e9c00e05610bb097017e745fad069757b7b8",
+        "pr_number": 347,
         "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
       }
     },
