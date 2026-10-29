@@ -6898,6 +6898,15 @@
       "task_id": "345",
       "verb": "submit"
     },
+    "minicourt345-submit-v2": {
+      "actor": "Ken0u",
+      "at": 1793314672,
+      "epoch": 1,
+      "fingerprint": "6e45eeac51943ee8cecd4f1683701f2eb32d3c898bf3aa02e9092d635cd0a15f",
+      "status": "review",
+      "task_id": "345",
+      "verb": "submit"
+    },
     "msi-confirmed-cuda-capability-v1": {
       "actor": "Ken0u",
       "at": 1792731805,
@@ -29515,12 +29524,12 @@
         ]
       },
       "spec_hash": "09b6b2451806297ef574e155b6dc9ef22f6641f9f6a9c1f03646ebe74b7430d3",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "d7dadc28329871c74948fd04712e220b7d3ed464",
-        "head_sha": "034f104da5eaa16945bab498134e7794696d9cc7",
+        "head_sha": "c84deae8c358e46fe22064a77e44d12d2ec09ea4",
         "pr_number": 348,
-        "spec_hash": "bbc79a500c6f94874af29f8525114e2319fb0abc69bb0e4407eaa8decf5ab42d"
+        "spec_hash": "09b6b2451806297ef574e155b6dc9ef22f6641f9f6a9c1f03646ebe74b7430d3"
       }
     },
     "62": {
