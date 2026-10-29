@@ -9642,6 +9642,15 @@
       "task_id": "344",
       "verb": "checkpoint"
     },
+    "scene344-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793308046,
+      "epoch": 1,
+      "fingerprint": "43f9c9f892a1853069b556198a9c97e8ca6021f26e7a339909c33347d5e4cb3c",
+      "status": "review",
+      "task_id": "344",
+      "verb": "submit"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -29070,6 +29079,7 @@
       "epoch": 1,
       "planned_at": 1793306871,
       "planned_by": "Ken0u",
+      "pr_number": 346,
       "spec": {
         "acceptance": [
           "Preserve expired #342, original deadline, source inputs, zero-session/zero-image-byte result, local commits and exact 5585-pass receipt. Reuse its six tested software files under the fresh committed software-only grant; no assessment or inference starts and no scientific budget or deadline is reset.",
@@ -29119,7 +29129,13 @@
         ]
       },
       "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+        "head_sha": "02f168aa8eae310649135ef4899aa25f91354839",
+        "pr_number": 346,
+        "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
+      }
     },
     "345": {
       "epoch": 0,
