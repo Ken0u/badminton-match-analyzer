@@ -780,6 +780,215 @@ try {
     rawPredictionPaths.map(async (p) => sha256(await fs.readFile(p))),
   );
 
+  await check("mini-court", async () => {
+    await exact(10);
+    await page.waitForFunction(
+      () =>
+        document.querySelectorAll("#mini-court-map .court-player").length === 2,
+    );
+    const before = await api(rallyRoot + "/annotations");
+    const native = await api(rallyRoot + "/runs/qa-players");
+    assert.equal(
+      await page.locator("#mini-court-map").getAttribute("data-frame"),
+      "10",
+    );
+    assert.equal(
+      await page.locator("#mini-court-map").getAttribute("data-video"),
+      seeded.rally.id,
+    );
+    assert.match(
+      await page.locator("#mini-court-note").textContent(),
+      /estimates.*unresolved/,
+    );
+    const metadataRoute = `**${rallyRoot}`;
+    const annotationsRoute = `**${rallyRoot}/annotations`;
+    const playersRoute = `**${rallyRoot}/runs/qa-players`;
+    let excluded = null,
+      cut = false;
+    const metadataHandler = async (route) => {
+      const response = await route.fetch();
+      await route.fulfill({
+        response,
+        json: { ...(await response.json()), mode: "doubles" },
+      });
+    };
+    const annotationsHandler = async (route) => {
+      if (route.request().method() !== "GET") return continueOwnedRoute(route);
+      await route.fulfill({
+        json: {
+          ...before,
+          mode: "doubles",
+          players: [
+            ...before.players,
+            { id: "C", name: "Third", team: "T1", handedness: "unknown" },
+            { id: "D", name: "Fourth", team: "T2", handedness: "unknown" },
+          ],
+          camera_corrections: cut
+            ? [...before.camera_corrections, { frame: 9, is_cut: true }]
+            : before.camera_corrections,
+          scene_ranges: excluded
+            ? [
+                {
+                  id: "mini-context",
+                  start_frame: 0,
+                  end_frame: 100,
+                  scene: excluded,
+                },
+              ]
+            : before.scene_ranges,
+        },
+      });
+    };
+    const playersHandler = async (route) => {
+      const frames = native.frames.map((row) => ({
+        ...row,
+        players: [
+          ...row.players,
+          {
+            ...row.players[0],
+            track_id: 20,
+            box: row.players[0].box.map((n, i) => (i % 2 === 0 ? n + 150 : n)),
+          },
+          {
+            ...row.players[1],
+            track_id: 21,
+            box: row.players[1].box.map((n, i) => (i % 2 === 0 ? n - 150 : n)),
+          },
+        ],
+      }));
+      await route.fulfill({ json: { ...native, frames } });
+    };
+    await page.route(metadataRoute, metadataHandler);
+    await page.route(annotationsRoute, annotationsHandler);
+    await page.route(playersRoute, playersHandler);
+    try {
+      await reloadSelected(seeded.rally);
+      await exact(10);
+      await page.waitForFunction(
+        () =>
+          document.querySelectorAll("#mini-court-map .court-player").length ===
+          4,
+      );
+      assert.equal(
+        await page.locator("#mini-court-map").getAttribute("data-mode"),
+        "doubles",
+      );
+      assert.equal(await page.locator("#mini-court-legend li").count(), 4);
+      await page.screenshot({
+        path: path.join(evidence, "mini-court-desktop.png"),
+        fullPage: true,
+      });
+      for (const frame of [5, 19, 30]) {
+        await exact(frame);
+        assert.equal(
+          await page.locator("#mini-court-map").getAttribute("data-frame"),
+          String(frame),
+        );
+        const points = await page
+          .locator("#mini-court-map .court-player")
+          .evaluateAll((nodes) =>
+            nodes.map((n) => ({
+              x: Number(n.dataset.courtX),
+              y: Number(n.dataset.courtY),
+            })),
+          );
+        assert.equal(points.length, 4);
+        assert.ok(
+          points.every((p) => Number.isFinite(p.x) && Number.isFinite(p.y)),
+        );
+      }
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.locator("#mini-court summary").focus();
+      await page.keyboard.press("Enter");
+      assert.equal(
+        await page.locator("#mini-court").evaluate((e) => e.open),
+        false,
+      );
+      await page.keyboard.press("Space");
+      assert.equal(
+        await page.locator("#mini-court").evaluate((e) => e.open),
+        true,
+      );
+      assert.ok(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= window.innerWidth,
+        ),
+      );
+      await page.screenshot({
+        path: path.join(evidence, "mini-court-mobile.png"),
+        fullPage: true,
+      });
+      for (const scene of ["replay", "non_play"]) {
+        excluded = scene;
+        await reloadSelected(seeded.rally);
+        await exact(10);
+        assert.equal(
+          await page.locator("#mini-court-map .court-player").count(),
+          0,
+        );
+        assert.match(
+          await page.locator("#mini-court-note").textContent(),
+          /live player map unavailable/,
+        );
+      }
+      excluded = null;
+      cut = true;
+      await reloadSelected(seeded.rally);
+      await exact(10);
+      assert.equal(
+        await page.locator("#mini-court-map .court-player").count(),
+        0,
+      );
+      assert.match(
+        await page.locator("#mini-court-note").textContent(),
+        /calibration|context changed/,
+      );
+      await selected(oriented);
+      await exact(3);
+      assert.equal(
+        await page.locator("#mini-court-map .court-player").count(),
+        0,
+      );
+      assert.equal(
+        await page.locator("#mini-court-map").getAttribute("data-frame"),
+        "3",
+      );
+      assert.equal(
+        await page.locator("#mini-court-map").getAttribute("data-video"),
+        oriented.id,
+      );
+    } finally {
+      await page.unroute(metadataRoute, metadataHandler);
+      await page.unroute(annotationsRoute, annotationsHandler);
+      await page.unroute(playersRoute, playersHandler);
+      await page.setViewportSize(protocol.viewport);
+      await reloadSelected(seeded.rally);
+    }
+    await exact(10);
+    await page.waitForFunction(
+      () =>
+        document.querySelectorAll("#mini-court-map .court-player").length === 2,
+    );
+    assert.deepEqual(await api(rallyRoot + "/annotations"), before);
+    assert.deepEqual(
+      await Promise.all(
+        rawPredictionPaths.map(async (p) => sha256(await fs.readFile(p))),
+      ),
+      predictionHashes,
+    );
+    return {
+      singles: 2,
+      doubles: 4,
+      sourceFrameSynchronized: true,
+      excludedScenes: ["replay", "non_play"],
+      expiredCalibrationCleared: true,
+      unknownSceneExplicit: true,
+      mobileWidth: 390,
+      keyboardToggle: true,
+      originalTruthAndPredictionsPreserved: true,
+    };
+  });
+
   await check("rallies", async () => {
     await page.waitForFunction(
       () => !document.querySelector("#suggest-rallies").disabled,
@@ -1000,10 +1209,10 @@ try {
     );
     await page.locator("#evaluate").click();
     await page.locator("#download-evaluation").waitFor({ state: "visible" });
-    const report = JSON.parse(
+    let report = JSON.parse(
       await download("#download-evaluation", "evaluation.json"),
     );
-    const doc = await api(rallyRoot + "/annotations");
+    let doc = await api(rallyRoot + "/annotations");
     assert.equal(report.annotation_revision, doc.revision);
     assert.equal(report.video_sha256, seeded.rally.sha256);
     assert.equal(report.shuttle.coverage.labeled_frames, 2);
@@ -1014,10 +1223,55 @@ try {
       const result = report.rallies.kinds[kind];
       assert.equal(result.status, "needs_exact_boundary_timing");
       assert.equal(result.representative_timing, null);
-      assert.equal(result.interval_compatibility.matched_count, 1);
+      assert.equal(result.interval_compatibility.matched_count, 0);
       assert.equal(result.interval_compatibility.reviewed_event_count, 1);
+      assert.equal(result.interval_compatibility.candidate_count, 0);
+      assert.deepEqual(
+        result.coverage.candidate_evidence_context.excluded_candidates.map(
+          (c) => c.reason,
+        ),
+        ["evidence_context_outside_reviewed_coverage"],
+      );
       assert.ok(result.coverage.point_timing_skipped_windows.length);
     }
+    // Cover the original proposals' full evidence before expecting compatibility.
+    // Preserve the earlier unknown-window revision and failed eligibility report.
+    await page
+      .locator(`[data-remove-review="${unknown.review_windows[0].id}"]`)
+      .click();
+    await page.locator(`[data-remove-review="${boundaryWindow.id}"]`).click();
+    await page.locator("#review-start").fill("0");
+    await page.locator("#review-end").fill("80");
+    await page.locator("#review-scene").selectOption("live");
+    await page.locator("#review-complete").uncheck();
+    await page.locator("#review-serves-complete").check();
+    await page.locator("#review-rally-ends-complete").check();
+    await page.locator("#add-review").click();
+    await save();
+    await page.locator("#evaluate").click();
+    await page.locator("#download-evaluation").waitFor({ state: "visible" });
+    report = JSON.parse(
+      await download("#download-evaluation", "evaluation-full-context.json"),
+    );
+    doc = await api(rallyRoot + "/annotations");
+    assert.equal(report.annotation_revision, doc.revision);
+    for (const kind of ["serve", "rally_end"]) {
+      const result = report.rallies.kinds[kind];
+      assert.equal(result.status, "needs_exact_boundary_timing");
+      assert.equal(result.representative_timing, null);
+      assert.equal(result.interval_compatibility.matched_count, 1);
+      assert.equal(result.interval_compatibility.reviewed_event_count, 1);
+      assert.equal(result.interval_compatibility.candidate_count, 1);
+      assert.deepEqual(
+        result.coverage.candidate_evidence_context.excluded_candidates,
+        [],
+      );
+      assert.ok(result.coverage.point_timing_skipped_windows.length);
+    }
+    assert.deepEqual(
+      (await api(rallyRoot + `/revisions/${unknown.revision}`)).review_windows,
+      unknown.review_windows,
+    );
     await page.locator("#evaluation-serve").waitFor();
     await page.locator("#evaluation-rally-end").waitFor();
     assert.match(
@@ -1064,6 +1318,18 @@ try {
         rawPredictionPaths.map(async (p) => sha256(await fs.readFile(p))),
       ),
       predictionHashes,
+    );
+    // Restore this group's original coverage for the later export assertions.
+    // The full-context evaluation and historical unknown revision stay retained.
+    const latest = await api(rallyRoot + "/annotations");
+    await api(rallyRoot + "/annotations", {
+      method: "PUT",
+      data: { ...latest, review_windows: boundaryDocument.review_windows },
+    });
+    await reloadSelected(seeded.rally);
+    assert.deepEqual(
+      (await api(rallyRoot + "/annotations")).review_windows,
+      boundaryDocument.review_windows,
     );
     return {
       visiblePoint: visible,

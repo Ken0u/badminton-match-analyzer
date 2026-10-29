@@ -13,6 +13,7 @@ import {
   courtSignature,
 } from "./model.js";
 import type { Point } from "./model.js";
+import { playerCourtView } from "./court.js";
 export interface PlaybackActions {
   seek: (frame: number) => void;
   toggle: () => void;
@@ -42,7 +43,12 @@ export const Playback = memo(function Playback({
     loading = useRef<HTMLDivElement>(null),
     playButton = useRef<HTMLButtonElement>(null),
     courtStatus = useRef<HTMLElement>(null),
-    labelStatus = useRef<HTMLElement>(null);
+    labelStatus = useRef<HTMLElement>(null),
+    miniCourt = useRef<SVGSVGElement>(null),
+    miniPlayers = useRef<SVGGElement>(null),
+    miniLegend = useRef<HTMLOListElement>(null),
+    miniNote = useRef<HTMLParagraphElement>(null),
+    miniFrame = useRef<HTMLOutputElement>(null);
   const config = useRef({ onPoint, corners, showTracks, showShuttle });
   config.current = { onPoint, corners, showTracks, showShuttle };
   const source = useRef(""),
@@ -55,7 +61,8 @@ export const Playback = memo(function Playback({
       img = image.current!,
       ctx = canvas.current!.getContext("2d")!;
     let disposed = false,
-      rvfc: number | null = null;
+      rvfc: number | null = null,
+      miniSignature = "";
     function current() {
       return controller.playback.getSnapshot().sourceFrame ?? 0;
     }
@@ -112,6 +119,75 @@ export const Playback = memo(function Playback({
     function draw() {
       const s = controller.snapshot(),
         d = controller.drafts.getSnapshot()?.value;
+      const view = playerCourtView({
+        doc: d ?? null,
+        run: s.runs.players?.run ?? null,
+        runId: s.runs.players?.id ?? null,
+        videoId: s.video?.id ?? null,
+        frame: controller.playback.getSnapshot().sourceFrame,
+        width: s.video?.width ?? 0,
+        height: s.video?.height ?? 0,
+        times: s.times,
+        fps: s.video?.fps ?? 0,
+        editing: config.current.corners !== null,
+        actors: s.actors,
+        actorHintsValid: s.analysisEnabled && !controller.planStale(),
+      });
+      miniFrame.current!.textContent =
+        view.frame === null ? "No source frame" : `Source frame ${view.frame}`;
+      miniCourt.current!.dataset.frame =
+        view.frame === null ? "" : String(view.frame);
+      miniCourt.current!.dataset.video = s.video?.id ?? "";
+      miniCourt.current!.dataset.mode = view.mode;
+      miniCourt.current!.setAttribute(
+        "aria-label",
+        `${view.mode === "doubles" ? "Doubles" : "Singles"} court · ${view.players.length} estimated player positions · ${view.frame === null ? "no frame" : `source frame ${view.frame}`}`,
+      );
+      const signature = JSON.stringify([
+        view.players,
+        view.note,
+        view.mode,
+        s.video?.id,
+      ]);
+      if (signature !== miniSignature) {
+        miniSignature = signature;
+        miniNote.current!.textContent = view.note;
+        miniPlayers.current!.replaceChildren();
+        miniLegend.current!.replaceChildren();
+        for (const [index, p] of view.players.entries()) {
+          const group = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g",
+          );
+          group.setAttribute(
+            "transform",
+            `translate(${p.x * 122} ${p.y * 268})`,
+          );
+          group.setAttribute("class", `court-player ${p.identity}`);
+          group.dataset.track = p.track;
+          group.dataset.identity = p.identity;
+          group.dataset.courtX = String(p.x);
+          group.dataset.courtY = String(p.y);
+          const circle = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "circle",
+          );
+          circle.setAttribute("r", "8");
+          const text = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "text",
+          );
+          text.setAttribute("text-anchor", "middle");
+          text.setAttribute("dy", ".35em");
+          text.textContent = String(index + 1);
+          group.append(circle, text);
+          miniPlayers.current!.append(group);
+          const item = document.createElement("li");
+          item.textContent = `${p.label} · ${p.identity === "reviewed" ? "assigned" : p.identity}`;
+          item.dataset.identity = p.identity;
+          miniLegend.current!.append(item);
+        }
+      }
       if (!s.video || !d) return;
       const f = current(),
         w = s.video.width,
@@ -465,37 +541,108 @@ export const Playback = memo(function Playback({
   }, [controller, corners, showTracks, showShuttle]);
   return (
     <>
-      <div
-        id="stage"
-        style={{
-          aspectRatio: `${controller.snapshot().video?.width ?? 16}/${controller.snapshot().video?.height ?? 9}`,
-        }}
-      >
-        <video id="video" ref={video} playsInline preload="metadata" />
-        <img id="exact-frame" ref={image} alt="Exact source frame" hidden />
-        <canvas
-          id="overlay"
-          ref={canvas}
-          aria-label="Court calibration and player tracking overlay"
-          onClick={(e) => {
-            const r = e.currentTarget.getBoundingClientRect();
-            config.current.onPoint(
-              {
-                x: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)),
-                y: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)),
-              },
-              actions.current?.exactReady() ?? false,
-            );
+      <div className="playback-view">
+        <div
+          id="stage"
+          style={{
+            aspectRatio: `${controller.snapshot().video?.width ?? 16}/${controller.snapshot().video?.height ?? 9}`,
           }}
-        />
-        <div id="calibration-hint" hidden={corners === null}>
-          {corners !== null
-            ? `${corners.length + 1} / 4 · ${["Far left", "Far right", "Near right", "Near left"][corners.length]} corner`
-            : ""}
+        >
+          <video id="video" ref={video} playsInline preload="metadata" />
+          <img id="exact-frame" ref={image} alt="Exact source frame" hidden />
+          <canvas
+            id="overlay"
+            ref={canvas}
+            aria-label="Court calibration and player tracking overlay"
+            onClick={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              config.current.onPoint(
+                {
+                  x: Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)),
+                  y: Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)),
+                },
+                actions.current?.exactReady() ?? false,
+              );
+            }}
+          />
+          <div id="calibration-hint" hidden={corners === null}>
+            {corners !== null
+              ? `${corners.length + 1} / 4 · ${["Far left", "Far right", "Near right", "Near left"][corners.length]} corner`
+              : ""}
+          </div>
+          <div id="frame-loading" ref={loading} role="status" hidden>
+            Loading source frame…
+          </div>
         </div>
-        <div id="frame-loading" ref={loading} role="status" hidden>
-          Loading source frame…
-        </div>
+        <details id="mini-court" className="mini-court" open>
+          <summary
+            onKeyDown={(event) => {
+              // Keep native toggle/navigation keys out of the editor shortcuts.
+              // Modified shortcuts (for example Ctrl/Cmd-S) still reach the editor.
+              if (!event.ctrlKey && !event.metaKey && !event.altKey)
+                event.stopPropagation();
+            }}
+          >
+            Player mini-court
+          </summary>
+          <output id="mini-court-frame" ref={miniFrame}>
+            No source frame
+          </output>
+          <svg
+            id="mini-court-map"
+            ref={miniCourt}
+            viewBox="-31 -33 184 334"
+            role="img"
+            aria-label="Player court positions"
+          >
+            <text
+              x="61"
+              y="-16"
+              textAnchor="middle"
+              className="court-end-label"
+            >
+              Far end
+            </text>
+            <rect
+              x="0"
+              y="0"
+              width="122"
+              height="268"
+              className="court-surface"
+            />
+            <path
+              d="M9.2 0V268 M112.8 0V268 M0 94.4H122 M0 173.6H122 M61 0V94.4 M61 173.6V268"
+              className="court-lines"
+            />
+            <path
+              d="M0 15.2H122 M0 252.8H122"
+              className="court-lines doubles-service"
+            />
+            <path d="M-5 134H127" className="court-net" />
+            <g ref={miniPlayers} aria-hidden="true" />
+            <text
+              x="61"
+              y="291"
+              textAnchor="middle"
+              className="court-end-label"
+            >
+              Near end
+            </text>
+          </svg>
+          <p id="mini-court-note" ref={miniNote}>
+            Choose a video to view player positions.
+          </p>
+          <ol
+            id="mini-court-legend"
+            ref={miniLegend}
+            aria-label="Player position legend"
+          />
+          <small>
+            Numbers match the legend. Dashed markers have provisional or
+            unassigned identities. Positions estimate the feet from player
+            boxes.
+          </small>
+        </details>
       </div>
       <div className="transport">
         <button

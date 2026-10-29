@@ -1575,3 +1575,289 @@ test("review coverage parsing preserves independent boundary declarations and re
       assert.throws(() => parseDocument(changed));
     }
 });
+
+// Generated court geometry and native-frame context; no source-video truth.
+const { courtProjection, projectCourtPoint, playerCourtView } =
+  await import("../.test-build/editor/court.js");
+const unitCorners = () => [
+  { x: 0, y: 0 },
+  { x: 1, y: 0 },
+  { x: 1, y: 1 },
+  { x: 0, y: 1 },
+];
+const closePoint = (actual, expected) => {
+  assert.ok(actual);
+  assert.ok(
+    Math.hypot(actual.x - expected.x, actual.y - expected.y) < 1e-7,
+    JSON.stringify({ actual, expected }),
+  );
+};
+test("court projection independently recovers perspective and rotated display grids", () => {
+  for (const forward of [
+    [1, 0, 0, 0, 1, 0, 0, 0, 1],
+    [0.7, 0.12, 0.1, 0.02, 0.7, 0.05, 0.1, 0.15, 1],
+    [0, -0.8, 0.9, 0.8, 0, 0.1, 0, 0, 1],
+    [-0.8, 0, 0.9, 0, 0.8, 0.1, 0, 0, 1],
+  ]) {
+    const apply = ({ x, y }) => {
+      const d = forward[6] * x + forward[7] * y + forward[8];
+      return {
+        x: (forward[0] * x + forward[1] * y + forward[2]) / d,
+        y: (forward[3] * x + forward[4] * y + forward[5]) / d,
+      };
+    };
+    const matrix = courtProjection(unitCorners().map(apply));
+    assert.ok(matrix);
+    for (let x = 0; x <= 1; x += 0.125)
+      for (let y = 0; y <= 1; y += 0.125)
+        closePoint(projectCourtPoint(matrix, apply({ x, y })), { x, y });
+  }
+});
+for (const [name, corners] of [
+  ["missing", null],
+  ["incomplete", unitCorners().slice(0, 3)],
+  ["nonfinite", [{ x: NaN, y: 0 }, ...unitCorners().slice(1)]],
+  ["missing coordinate", [{ y: 0 }, ...unitCorners().slice(1)]],
+  [
+    "crossed",
+    [unitCorners()[0], unitCorners()[2], unitCorners()[1], unitCorners()[3]],
+  ],
+  [
+    "repeated",
+    [unitCorners()[0], unitCorners()[0], unitCorners()[2], unitCorners()[3]],
+  ],
+  [
+    "concave",
+    [
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 0.3, y: 0.2 },
+      { x: 0, y: 1 },
+    ],
+  ],
+  [
+    "near-collinear",
+    [
+      { x: 0, y: 0 },
+      { x: 1, y: 0 },
+      { x: 1, y: 1e-9 },
+      { x: 0, y: 1e-9 },
+    ],
+  ],
+  ["outside source", [{ x: -0.1, y: 0 }, ...unitCorners().slice(1)]],
+])
+  test(`court geometry rejects ${name}`, () =>
+    assert.equal(courtProjection(corners), null));
+test("court projection retains the court side of the projective horizon", () => {
+  const corners = [
+    { x: 0.4, y: 0.3 },
+    { x: 0.6, y: 0.3 },
+    { x: 0.9, y: 0.9 },
+    { x: 0.1, y: 0.9 },
+  ];
+  const matrix = courtProjection(corners);
+  assert.ok(matrix);
+  corners.forEach((p, i) =>
+    closePoint(projectCourtPoint(matrix, p), unitCorners()[i]),
+  );
+  assert.equal(projectCourtPoint(matrix, { x: 0.5, y: 0 }), null);
+  assert.equal(projectCourtPoint(matrix, { x: 0.5, y: 0.1 }), null);
+});
+test("court projection rejects invalid points and projective horizon without clamping", () => {
+  const matrix = courtProjection(unitCorners());
+  for (const point of [
+    null,
+    { x: NaN, y: 0 },
+    { x: 0, y: Infinity },
+    { x: "0", y: 0 },
+  ])
+    assert.equal(projectCourtPoint(matrix, point), null);
+  assert.equal(
+    projectCourtPoint([1, 0, 0, 0, 1, 0, 1, 0, 1], { x: -1, y: 0.5 }),
+    null,
+  );
+  closePoint(projectCourtPoint(matrix, { x: 1.1, y: 0.5 }), { x: 1.1, y: 0.5 });
+});
+function courtFixture(mode = "singles") {
+  const labels = doc();
+  labels.mode = mode;
+  labels.calibrations = [
+    { start_frame: 0, end_frame: 20, corners: unitCorners() },
+  ];
+  labels.scene_ranges = [
+    { id: "live", start_frame: 0, end_frame: 20, scene: "live" },
+  ];
+  const run = parseRun({
+    video_id: "source",
+    start_frame: 0,
+    end_frame: 20,
+    cut_frames: [],
+    frames: Array.from({ length: 20 }, (_, frame) => ({
+      frame,
+      calibration_valid: true,
+      players: Array.from(
+        { length: mode === "doubles" ? 4 : 2 },
+        (_, track_id) => ({
+          track_id,
+          box: [100 + track_id * 180, 100, 200 + track_id * 180, 300 + frame],
+        }),
+      ),
+    })),
+  });
+  run.calibration_signature = courtSignature(labels, run, 0, 20);
+  return {
+    doc: labels,
+    run,
+    runId: "players",
+    videoId: "source",
+    frame: 5,
+    width: 1000,
+    height: 600,
+    times: Array.from({ length: 20 }, (_, i) =>
+      i < 4 ? i * 0.04 : 0.16 + (i - 4) * 0.06,
+    ),
+    fps: 25,
+    editing: false,
+    actors: [],
+    actorHintsValid: true,
+  };
+}
+test("mini-court supports four doubles positions and VFR source-frame seeking", () => {
+  const input = courtFixture("doubles"),
+    before = structuredClone(input);
+  const a = playerCourtView(input);
+  assert.equal(a.players.length, 4);
+  assert.equal(a.mode, "doubles");
+  closePoint(a.players[0], { x: 0.15, y: 305 / 600 });
+  assert.ok(a.players.every((p) => p.identity === "unassigned"));
+  const b = playerCourtView({ ...input, frame: 9 });
+  closePoint(b.players[0], { x: 0.15, y: 309 / 600 });
+  assert.deepEqual(input, before);
+});
+test("mini-court uses reviewed identity only in its actual run/frame range", () => {
+  const f = courtFixture();
+  f.doc.track_assignments = [
+    {
+      run_id: "players",
+      track_id: 0,
+      player_id: "P1",
+      start_frame: 5,
+      end_frame: 7,
+    },
+  ];
+  assert.equal(playerCourtView(f).players[0].identity, "reviewed");
+  assert.match(playerCourtView(f).players[0].label, /First.*P1.*T1/);
+  for (const frame of [4, 7])
+    assert.equal(
+      playerCourtView({ ...f, frame }).players[0].identity,
+      "unassigned",
+    );
+  assert.equal(
+    playerCourtView({ ...f, runId: "other" }).players[0].identity,
+    "unassigned",
+  );
+  f.run.frames[5].players[0].player_id = "P1";
+  f.doc.track_assignments = [];
+  assert.equal(
+    playerCourtView(f).players[0].identity,
+    "unassigned",
+    "cached inferred id is not reviewed truth",
+  );
+});
+test("mini-court provisional actors require current plan and eligible observation range", () => {
+  const f = courtFixture();
+  f.actors = [
+    {
+      run_id: "players",
+      track_id: 0,
+      linked_across_windows: true,
+      label: "Actor A",
+      observation_ranges: [[5, 7]],
+    },
+  ];
+  assert.equal(playerCourtView(f).players[0].identity, "provisional");
+  assert.match(playerCourtView(f).players[0].label, /Actor A\?/);
+  assert.equal(
+    playerCourtView({ ...f, frame: 7 }).players[0].identity,
+    "unassigned",
+  );
+  assert.equal(
+    playerCourtView({ ...f, actorHintsValid: false }).players[0].identity,
+    "unassigned",
+  );
+});
+for (const [name, mutation] of [
+  ["video cleared", (f) => (f.videoId = null)],
+  ["frame cleared", (f) => (f.frame = null)],
+  ["window loading", (f) => (f.run = null)],
+  ["wrong source", (f) => (f.run.video_id = "other")],
+  ["frame outside run", (f) => (f.frame = 20)],
+  [
+    "native frame absent",
+    (f) => (f.run.frames = f.run.frames.filter((r) => r.frame !== 5)),
+  ],
+  ["rerun required", (f) => (f.run.requires_tracking_rerun = true)],
+  ["court editing", (f) => (f.editing = true)],
+  ["changed corners", (f) => (f.doc.calibrations[0].corners[0].x = 0.1)],
+  [
+    "camera correction",
+    (f) => (f.doc.camera_corrections = [{ frame: 4, is_cut: true }]),
+  ],
+  ["automatic cut expires calibration", (f) => (f.run.cut_frames = [4])],
+  [
+    "native clock gap expires calibration",
+    (f) => (f.times = f.times.map((t, i) => t + (i >= 4 ? 1 : 0))),
+  ],
+  [
+    "native row rejects calibration",
+    (f) => (f.run.frames[5].calibration_valid = false),
+  ],
+  ["invalid display size", (f) => (f.width = NaN)],
+])
+  test(`mini-court clears positions when ${name}`, () => {
+    const f = courtFixture();
+    mutation(f);
+    assert.deepEqual(playerCourtView(f).players, []);
+  });
+for (const scene of ["replay", "non_play", "unknown"])
+  test(`mini-court retains ${scene} semantics`, () => {
+    const f = courtFixture();
+    f.doc.scene_ranges[0].scene = scene;
+    const v = playerCourtView(f);
+    assert.equal(v.scene, scene);
+    if (scene === "unknown") {
+      assert.equal(v.players.length, 2);
+      assert.match(v.note, /unresolved/);
+    } else {
+      assert.equal(v.players.length, 0);
+      assert.match(v.note, /unavailable/);
+    }
+  });
+test("mini-court distinguishes automatic geometry and preserves unsupported observations", () => {
+  const f = courtFixture();
+  f.run.automatic_calibrations = f.doc.calibrations;
+  f.doc.calibrations = [];
+  f.run.calibration_signature = courtSignature(f.doc, f.run, 0, 20);
+  assert.equal(playerCourtView(f).automatic, true);
+  assert.match(playerCourtView(f).note, /unreviewed/);
+  f.run.frames[5].players[0].box = [0, 0, 100, NaN];
+  const v = playerCourtView(f);
+  assert.equal(v.players.length, 1);
+  assert.equal(v.unavailable, 1);
+});
+test("duplicate track ids cannot establish reviewed or provisional player identities", () => {
+  const f = courtFixture();
+  f.run.frames[5].players[1].track_id = 0;
+  f.doc.track_assignments = [
+    {
+      run_id: "players",
+      track_id: 0,
+      player_id: "P1",
+      start_frame: 0,
+      end_frame: 20,
+    },
+  ];
+  assert.ok(
+    playerCourtView(f).players.every((p) => p.identity === "unassigned"),
+  );
+});
