@@ -9633,6 +9633,26 @@
       "task_id": "344",
       "verb": "next"
     },
+    "scene344-first-portability-repair-claim-v1": {
+      "actor": "Ken0u",
+      "at": 1793308809,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+        "branch": "codex/issue-344-deliver-preserved-source-scene-review-so-e2",
+        "epoch": 2,
+        "expires_at": 1793319609,
+        "granted_at": 1793308809,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
+      },
+      "epoch": 2,
+      "fingerprint": "40eeafc76dc425b7139179749b3e6187a00ac440291ba3aa4b8f6bb8b79820ae",
+      "status": "granted",
+      "task_id": "344",
+      "verb": "next"
+    },
     "scene344-first-portability-repair-release-v1": {
       "actor": "Ken0u",
       "at": 1793308553,
@@ -29074,7 +29094,18 @@
         "progress": "128 focused tests and lightweight required checks pass; full generated suite running; zero science/images; prepared validator and bounded collector preserved."
       },
       "checkpoint_at": 1793307362,
-      "epoch": 1,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+        "branch": "codex/issue-344-deliver-preserved-source-scene-review-so-e2",
+        "epoch": 2,
+        "expires_at": 1793319609,
+        "granted_at": 1793308809,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
+      },
+      "epoch": 2,
       "history": [
         {
           "at": 1793308553,
@@ -29276,7 +29307,7 @@
         ]
       },
       "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7",
-      "status": "ready",
+      "status": "running",
       "submission": {
         "base_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
         "head_sha": "02f168aa8eae310649135ef4899aa25f91354839",
