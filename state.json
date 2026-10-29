@@ -3567,6 +3567,14 @@
       "task_id": "340",
       "verb": "invalidate-review"
     },
+    "invalidate-345-84bf69461c6fc59fac15ce5d8ffa59aa615acfe6-d7dadc28329871c74948fd04712e220b7d3ed464": {
+      "actor": "github-actions[bot]",
+      "at": 1793314038,
+      "fingerprint": "c9075dd4ce6aa4dc75ff2b959cf9cba9c1917fd3f8e881fd5a27ec7f121bf918",
+      "status": "running",
+      "task_id": "345",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -29447,6 +29455,7 @@
       "planned_at": 1793307612,
       "planned_by": "Ken0u",
       "pr_number": 348,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Read the delivered independent design review and search current issue/PR/controller history before claiming. Use a committed isolated grant after software task344 completes; preserve original research attempts, models, labels, source media, environments and PROGRESS edits. Copy no code, assets, prose or weights from the reference repository.",
@@ -29494,7 +29503,7 @@
         ]
       },
       "spec_hash": "bbc79a500c6f94874af29f8525114e2319fb0abc69bb0e4407eaa8decf5ab42d",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "d7dadc28329871c74948fd04712e220b7d3ed464",
         "head_sha": "034f104da5eaa16945bab498134e7794696d9cc7",
