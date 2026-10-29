@@ -9605,6 +9605,34 @@
       "status": "ok",
       "verb": "register"
     },
+    "scene342-software-successor-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793306871,
+      "fingerprint": "a07a166542c8429e7752832fa2082d61aef90362d1adf4191567e88c325d0960",
+      "status": "ready",
+      "task_id": "344",
+      "verb": "plan"
+    },
+    "scene344-claim-v1": {
+      "actor": "Ken0u",
+      "at": 1793306871,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+        "branch": "codex/issue-344-deliver-preserved-source-scene-review-so",
+        "epoch": 1,
+        "expires_at": 1793317671,
+        "granted_at": 1793306871,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
+      },
+      "epoch": 1,
+      "fingerprint": "402f059c22ba6f7e1551cc8144df9178aeb0d785a3d52848514de8260f074f76",
+      "status": "granted",
+      "task_id": "344",
+      "verb": "next"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -11131,6 +11159,14 @@
       "fingerprint": "63fc83d9043242665cc73e0da360bf6461126e1bf83b756926ba30844f668f5a",
       "status": "needs_human",
       "task_id": "342",
+      "verb": "plan"
+    },
+    "spec-344-5eb81962585c157c3299259cb2f7dac8a3d93f56a23a6b2daef79dc84d506f19": {
+      "actor": "Ken0u",
+      "at": 1793306871,
+      "fingerprint": "d136d8c5fc4282a84267eff7006b14e4589789bae917199dddf507cec813db88",
+      "status": "ready",
+      "task_id": "344",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -28978,6 +29014,72 @@
       },
       "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc",
       "status": "ready"
+    },
+    "344": {
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+        "branch": "codex/issue-344-deliver-preserved-source-scene-review-so",
+        "epoch": 1,
+        "expires_at": 1793317671,
+        "granted_at": 1793306871,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
+      },
+      "epoch": 1,
+      "planned_at": 1793306871,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve expired #342, original deadline, source inputs, zero-session/zero-image-byte result, local commits and exact 5585-pass receipt. Reuse its six tested software files under the fresh committed software-only grant; no assessment or inference starts and no scientific budget or deadline is reset.",
+          "Reproduce the prepared collector shutdown failure with generated subprocesses: parent exit with inherited pipes, stalled stdin, reader/log errors and bounded stop. Replace unbounded stdin writes, process waits and thread joins with a bounded collector that retains immutable failure receipts, verifies every signalled PID/lifetime/cwd/command, and never claims an unobserved process terminal. Unknown or live descendants fence further dispatch; timeouts do not authorize replacements.",
+          "Keep original source-only reading validation, full cell/overlap/unknown denominators, independent assessor requirements, payload accounting, source/native clocks, exclusive outputs, Store admission and fail-closed ownership checks. Preserve successful generated clean execution and reject malformed/tool-bearing or incomplete outputs. Do not weaken source-context eligibility or event acceptance.",
+          "Update the aggregate report to state that #342 expired before any freeze/assessment/Store job and that this successor delivers software only. Include actual focused/full checks and distinguish generated lifecycle proof from source-label or model accuracy. Complete independent rally references remain 0/2; future image assessment needs a separately authorized runtime and committed grant.",
+          "Commit an original design comparison of requested Badminton-VisionAI at a17e47251b971aa7fda6d60d0424ffb3887030b6. Propose synchronized mini-court, PTS-weighted player heatmaps, canonical-event shot profiles, rally navigation and review-aware reports with concrete acceptance checks. Cite source URLs, distinguish documented features from inspected implementation, and copy no reference code, assets, weights or prose.",
+          "Run meaningful generated regression and full required project checks using the project venv. Publish the focused branch/PR through exact-head CI and normal controller integration; verify merged main and complete public delivery. No manual merge, workflow/security/dependency/default-model changes or PROGRESS edits."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "340",
+          "337"
+        ],
+        "exclusions": [
+          "No original image/video/semantic-label access, generation, download or external transfer; no assessor sessions, source truth edits, research job, inference, training, model promotion, paid service, scientific retry, new runtime allowance for #342, coordination bypass or manual merge.",
+          "No dashboard feature implementation in this repair; the reference comparison supplies a bounded follow-up design only. Preserve existing root checkout, environments, datasets, models, annotations and PROGRESS changes."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 1073741824,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Deliver preserved source-scene review software with bounded subprocess collection and honest unexecuted assessment reporting; record independent product ideas from the requested reference repository.",
+        "paths": [
+          "backend/badminton/shuttle_scene_review.py",
+          "scripts/review_shuttle_scenes.py",
+          "tests/test_shuttle_scene_review.py",
+          "data/manifests/shuttle_scene_review_protocol_v1.json",
+          "docs/SHUTTLE_SCENE_REVIEW_REPORT.md",
+          "docs/VISIONAI_DESIGN_REVIEW.md",
+          "MANIFEST.in"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Real generated subprocess regressions for bounded collection, unchanged successful source-only schema validation, full required software checks, exact CI/controller/main and complete public delivery. No source assessment or annotation-accuracy claim."
+        ]
+      },
+      "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7",
+      "status": "running"
     },
     "62": {
       "checkpoint": {
