@@ -8660,6 +8660,15 @@
       "task_id": "288",
       "verb": "submit"
     },
+    "rally350-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793316929,
+      "epoch": 1,
+      "fingerprint": "9c93388e6a8933fde454cec309f38aab3d2ac0f6cab45e192783f91e9bc8f642",
+      "status": "running",
+      "task_id": "350",
+      "verb": "checkpoint"
+    },
     "rally350-next-v1": {
       "actor": "Ken0u",
       "at": 1793316615,
@@ -9814,6 +9823,14 @@
       "status": "review",
       "task_id": "344",
       "verb": "submit"
+    },
+    "scene349-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1793317027,
+      "fingerprint": "148fc3afa15f6626841bfbc6259085c4d51114fff065dcc84a308cd42651dda0",
+      "status": "ready",
+      "task_id": "349",
+      "verb": "human-approved"
     },
     "scene349-plan-v1": {
       "actor": "Ken0u",
@@ -29619,8 +29636,14 @@
     },
     "349": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1793317027,
+        "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
+      },
       "planned_at": 1793316336,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Continue completed340/344 and the65 prerequisite. Search all issue/PR/report/controller history before claiming. Preserve expired342 at its original grant/deadline with zero sessions/bytes/jobs, preserved branches/patches and terminal proof; never reopen its runtime. Obtain fresh configured-owner authorization of this exact frozen image payload/destination/limits, a new committed grant and isolated worktree before implementation or scientific dispatch. All original annotations, predictions, models, environments, historical clocks and deprecated PROGRESS edits remain preserved. This task does not authorize279 or any historical retry.",
@@ -29684,15 +29707,27 @@
         ]
       },
       "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97",
-      "status": "needs_human"
+      "status": "ready"
     },
     "350": {
+      "checkpoint": {
+        "branch": "codex/issue-350-reject-malformed-or-nonfinite-native-tim",
+        "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/350#issuecomment-6511051967",
+        "head_sha": "738f39c9c084bb36cbab37121cfd4d3523bb7cd6",
+        "producer_sha256": {
+          "backend/badminton/rallies.py": "d87d6cff54fb0f1ca214fcbb045b455b99298be0792afbc8a01abd000d0a7b01",
+          "docs/RALLY_SOURCE_CLOCK_REPORT.md": "4efa16edf77628fb1e5007eed9d732cc497d12bfb48dfefb2d3a3c6324f64007",
+          "tests/test_rally_source_clock.py": "57a335971001b2deee8b7607faf2aa49a0344cd6a0ae30502cb2e8755b7231be"
+        },
+        "progress": "Baseline bypass reproduced; initial188 focused pass; generated native parity pass; required full checks next"
+      },
+      "checkpoint_at": 1793316929,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "738f39c9c084bb36cbab37121cfd4d3523bb7cd6",
         "branch": "codex/issue-350-reject-malformed-or-nonfinite-native-tim",
         "epoch": 1,
-        "expires_at": 1793327415,
+        "expires_at": 1793327729,
         "granted_at": 1793316615,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
