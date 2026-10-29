@@ -9589,6 +9589,15 @@
       "task_id": "342",
       "verb": "next"
     },
+    "scene342-expired-recovery-v1": {
+      "actor": "Ken0u",
+      "at": 1793306625,
+      "epoch": 1,
+      "fingerprint": "c3b684ef2956bcdd29861f285d47516c00263850aa6f2539bb2bbba4512f9364",
+      "status": "ready",
+      "task_id": "342",
+      "verb": "recover"
+    },
     "scene342-register-v1": {
       "actor": "Ken0u",
       "at": 1793243392,
@@ -28845,18 +28854,57 @@
       }
     },
     "342": {
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
-        "branch": "codex/issue-342-independently-assess-coarse-scene-contex",
-        "epoch": 1,
-        "expires_at": 1793254192,
-        "granted_at": 1793243392,
-        "host_id": "MSI",
-        "session_id": "d1a16595edd7434185d81366f95e8828",
-        "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1793306625,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+            "branch": "codex/issue-342-independently-assess-coarse-scene-contex",
+            "epoch": 1,
+            "expires_at": 1793254192,
+            "granted_at": 1793243392,
+            "host_id": "MSI",
+            "session_id": "d1a16595edd7434185d81366f95e8828",
+            "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "checks_sha256": "9fc8aeef25e7f86b577024904c0b117a171b71648591290a1a308f478c49288e",
+              "image_bytes": 0,
+              "image_sessions": 0,
+              "preserved_head": "977a81a4a7a3c836f98ea43f12006c1262a4db2b",
+              "preserved_patch_sha256": "6d7746129439257148a0e9c9657eb6712b3764ac0f015bed3b496e9f71e7dc6c",
+              "revalidated_at": 1793306607.9190128,
+              "source_preserved": true,
+              "verified_files": {
+                "MANIFEST.in": "ce5fbc948d64750b840c1de4fcb2458c3351c07e3d3972547cf06ba8c6599338",
+                "backend/badminton/shuttle_scene_review.py": "1d91aee84c87d9c4cfa7464a782723d0f3b542d302ab5eb61e5f354133978f14",
+                "data/manifests/shuttle_scene_review_protocol_v1.json": "1391b13aae6213c167f96544097e071252ec2cea894c092212610128c3c67448",
+                "docs/SHUTTLE_SCENE_REVIEW_REPORT.md": "9c2e08413d6db67dd3258be29bccdd206a01c6d868b021f48aa437642795b3c0",
+                "scripts/review_shuttle_scenes.py": "6784ff1efc8a06d03186f5abf4bc3c8583c8f33fef670a430e7a79c563ab732a",
+                "tests/test_shuttle_scene_review.py": "99ecf758a0ff8f1b56926042b3c1a90a7de509320551b617a6dd79e43c11a88e"
+              }
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "[\"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.venv\\\\Scripts\\\\python.exe\", \"-B\", \"-m\", \"pytest\", \"-q\", \"--basetemp\", \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\scene342-checks-v1\\\\temp\", \"--junitxml\", \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\scene342-checks-v1\\\\full.xml\"]",
+              "creation_time": 1793244822.3719108,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene342-e1",
+              "exited": true,
+              "pid": 1572
+            },
+            "store": {
+              "science_output_absent": true,
+              "status": "no_job",
+              "task_store_jobs": 0
+            },
+            "terminal": true
+          },
+          "verb": "recover"
+        }
+      ],
       "human_approval": {
         "actor": "Ken0u",
         "at": 1793243143,
@@ -28864,7 +28912,7 @@
       },
       "planned_at": 1793164703,
       "planned_by": "Ken0u",
-      "reason": "implementation lease expired; reservations retained",
+      "reason": "released after terminal proof",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -28929,7 +28977,7 @@
         ]
       },
       "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc",
-      "status": "recovery_required"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
