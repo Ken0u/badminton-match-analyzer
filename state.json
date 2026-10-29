@@ -9569,6 +9569,33 @@
       "task_id": "342",
       "verb": "human-approved"
     },
+    "scene342-claim-v1": {
+      "actor": "Ken0u",
+      "at": 1793243392,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+        "branch": "codex/issue-342-independently-assess-coarse-scene-contex",
+        "epoch": 1,
+        "expires_at": 1793254192,
+        "granted_at": 1793243392,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc"
+      },
+      "epoch": 1,
+      "fingerprint": "3a49652dcb9218d959a3a73d8b65bb1557f5f9d334c5320d6f489e9232847237",
+      "status": "granted",
+      "task_id": "342",
+      "verb": "next"
+    },
+    "scene342-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793243392,
+      "fingerprint": "a2f4e4f9629072413301d57a36234a8a540634c6d864a3acc7206d29c070e5dd",
+      "status": "ok",
+      "verb": "register"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -28818,7 +28845,18 @@
       }
     },
     "342": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+        "branch": "codex/issue-342-independently-assess-coarse-scene-contex",
+        "epoch": 1,
+        "expires_at": 1793254192,
+        "granted_at": 1793243392,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1793243143,
@@ -28890,7 +28928,7 @@
         ]
       },
       "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
@@ -32569,6 +32607,11 @@
         "original-experiment": "be75300db6e3d12568f3a2195ffe699ab5e47c600f7e995f38a5c1eea3988044",
         "original-public-protocol": "834891e59c851f3841e7e6e0037d8181691cab5f6a6122a61fe9d0c0f4bbf005",
         "raw-index": "a0a383d3df756f0095d0025b414385d8294aa77df5fb286d69a174d377daa4df",
+        "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
+        "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
+        "scene-context": "17bbb33f3cd501af65b8982080fbf73756a3f22991f863bf1e5c2e2880a40c5f",
+        "scene-gallery": "89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37",
+        "scene-plan": "87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2",
         "sealed-familiar-result": "0bfeec21581f436ca830edf6d9dfacc7989962925ccf6eaa5471cd644a76b971",
         "source-0": "a493f86a507509fa70fbad36c8bb644b9a5c1183746338ec59367d4f8385c1ad",
         "source-1": "3e82b4e29fd4dd813e3526700487aa90192d7db0227d81e763f8a53b340239d9",
@@ -32579,13 +32622,13 @@
         "source-7": "161e4068ca7c1e5df6ff56eb91e3a93e96093046ddc6ef33f2bbb1482b6b33c6"
       },
       "capabilities": [
-        "cpu",
-        "windows",
         "amd64",
-        "review-inputs"
+        "cpu",
+        "review-inputs",
+        "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1793164414,
+      "registered_at": 1793243392,
       "session_id": "d1a16595edd7434185d81366f95e8828"
     },
     "MSI/d45693fd670e4a8f86a15dba76fc903d": {
