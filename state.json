@@ -28864,6 +28864,7 @@
       },
       "planned_at": 1793164703,
       "planned_by": "Ken0u",
+      "reason": "implementation lease expired; reservations retained",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -28928,7 +28929,7 @@
         ]
       },
       "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc",
-      "status": "running"
+      "status": "recovery_required"
     },
     "62": {
       "checkpoint": {
