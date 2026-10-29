@@ -9633,6 +9633,15 @@
       "task_id": "344",
       "verb": "next"
     },
+    "scene344-first-portability-repair-release-v1": {
+      "actor": "Ken0u",
+      "at": 1793308553,
+      "epoch": 1,
+      "fingerprint": "93a04bcf2657cce9892fb82714d16d5abf7fc893c740dadd5eb0235712c7ff6f",
+      "status": "ready",
+      "task_id": "344",
+      "verb": "release"
+    },
     "scene344-implementation-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793307362,
@@ -29065,21 +29074,159 @@
         "progress": "128 focused tests and lightweight required checks pass; full generated suite running; zero science/images; prepared validator and bounded collector preserved."
       },
       "checkpoint_at": 1793307362,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
-        "branch": "codex/issue-344-deliver-preserved-source-scene-review-so",
-        "epoch": 1,
-        "expires_at": 1793318162,
-        "granted_at": 1793306871,
-        "host_id": "MSI",
-        "session_id": "d1a16595edd7434185d81366f95e8828",
-        "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1793308553,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
+            "branch": "codex/issue-344-deliver-preserved-source-scene-review-so",
+            "epoch": 1,
+            "expires_at": 1793318162,
+            "granted_at": 1793306871,
+            "host_id": "MSI",
+            "session_id": "d1a16595edd7434185d81366f95e8828",
+            "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "all_seven_check_processes": [
+                {
+                  "command": [
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe",
+                    "-B",
+                    "-m",
+                    "pip",
+                    "check"
+                  ],
+                  "created": 1793307289.757721,
+                  "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+                  "pid": 1652,
+                  "terminal": "original_absent"
+                },
+                {
+                  "command": [
+                    "git",
+                    "diff",
+                    "HEAD",
+                    "--check"
+                  ],
+                  "created": 1793307289.7584417,
+                  "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+                  "pid": 19856,
+                  "terminal": "original_absent"
+                },
+                {
+                  "command": [
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe",
+                    "-B",
+                    "-m",
+                    "pytest",
+                    "-q",
+                    "tests/test_shuttle_scene_review.py",
+                    "--basetemp",
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\scene344-checks-v1\\focused-temp"
+                  ],
+                  "created": 1793307289.7562563,
+                  "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+                  "pid": 4472,
+                  "terminal": "original_absent"
+                },
+                {
+                  "command": [
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe",
+                    "-B",
+                    "-m",
+                    "ruff",
+                    "format",
+                    "--check",
+                    "backend",
+                    "tests",
+                    "scripts"
+                  ],
+                  "created": 1793307289.7571757,
+                  "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+                  "pid": 3692,
+                  "terminal": "original_absent"
+                },
+                {
+                  "command": [
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe",
+                    "-B",
+                    "-m",
+                    "pytest",
+                    "-q",
+                    "--basetemp",
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\scene344-checks-v1\\temp",
+                    "--junitxml",
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\scene344-checks-v1\\full.xml"
+                  ],
+                  "created": 1793307289.7586236,
+                  "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+                  "pid": 18844,
+                  "terminal": "original_absent"
+                },
+                {
+                  "command": [
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe",
+                    "-B",
+                    "scripts/verify_repository.py"
+                  ],
+                  "created": 1793307289.7581143,
+                  "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+                  "pid": 2708,
+                  "terminal": "original_absent"
+                },
+                {
+                  "command": [
+                    "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe",
+                    "-B",
+                    "-m",
+                    "ruff",
+                    "check",
+                    "backend",
+                    "tests",
+                    "scripts"
+                  ],
+                  "created": 1793307289.7568345,
+                  "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+                  "pid": 19876,
+                  "terminal": "original_absent"
+                }
+              ],
+              "ci_run": 40954952514,
+              "failure_artifacts": [
+                "native-macos-14-failure",
+                "python-3.10-failure"
+              ],
+              "head": "02f168aa8eae310649135ef4899aa25f91354839",
+              "original_deadline": 1793321271,
+              "pr": 346,
+              "reason": "Release and reacquire through the normal queue for the first software portability repair; preserve exact failed CI and original task deadline"
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "[\"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.venv\\\\Scripts\\\\python.exe\", \"-B\", \"-m\", \"pytest\", \"-q\", \"--basetemp\", \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\scene344-checks-v1\\\\temp\", \"--junitxml\", \"C:\\\\Users\\\\enkra\\\\Documents\\\\Projects\\\\badminton-match-analyzer\\\\.cache\\\\scene344-checks-v1\\\\full.xml\"]",
+              "creation_time": 1793307289.7586236,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\scene344-e1",
+              "exited": true,
+              "observation": "original_absent",
+              "pid": 18844
+            },
+            "store": {
+              "reason": "Software-only task; zero assessor or research Store jobs started",
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1793306871,
       "planned_by": "Ken0u",
       "pr_number": 346,
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Preserve expired #342, original deadline, source inputs, zero-session/zero-image-byte result, local commits and exact 5585-pass receipt. Reuse its six tested software files under the fresh committed software-only grant; no assessment or inference starts and no scientific budget or deadline is reset.",
@@ -29129,7 +29276,7 @@
         ]
       },
       "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7",
-      "status": "review",
+      "status": "ready",
       "submission": {
         "base_sha": "d2a1e0121b011d22deca143d1b5395feed2b30c9",
         "head_sha": "02f168aa8eae310649135ef4899aa25f91354839",
