@@ -28973,7 +28973,7 @@
       },
       "planned_at": 1793164703,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -29038,7 +29038,7 @@
         ]
       },
       "spec_hash": "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc",
-      "status": "ready"
+      "status": "blocked"
     },
     "344": {
       "checkpoint": {
