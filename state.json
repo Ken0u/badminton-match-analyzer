@@ -29467,6 +29467,7 @@
       }
     },
     "345": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40971862224",
       "checkpoint": {
         "branch": "codex/issue-345-add-an-independently-implemented-source-",
         "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/345#issuecomment-6509815033",
@@ -29494,7 +29495,7 @@
         "spec_hash": "09b6b2451806297ef574e155b6dc9ef22f6641f9f6a9c1f03646ebe74b7430d3"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793315233,
