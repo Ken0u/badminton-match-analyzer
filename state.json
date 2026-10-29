@@ -29150,6 +29150,7 @@
         "session_id": "d1a16595edd7434185d81366f95e8828",
         "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 2,
       "history": [
