@@ -95,5 +95,11 @@ correctly rejected the old shipped bundle/manifest. Those original logs and
 source `034f104da5eaa16945bab498134e7794696d9cc7` are preserved. The bounded
 repair requests three additional generated paths through the normal scope
 extension before staging them; no source tests or parity checks are relaxed.
+The committed extension retains epoch 1 and the original deadline, adding only
+`backend/badminton/static/app.js`, `style.css` and `build-manifest.json`.
+Expanded specification: `09b6b2451806297ef574e155b6dc9ef22f6641f9f6a9c1f03646ebe74b7430d3`.
+The generated shipped files now match the production build, and all three
+delivery/staging regressions pass. These files contain our own compiled frontend;
+they introduce no dependency, reference-repository content or model change.
 No native inference, scientific assessment, training or model promotion is part
 of this task. Complete automatic full-match annotation remains unproven.
