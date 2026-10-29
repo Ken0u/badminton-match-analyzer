@@ -122,3 +122,39 @@ not been created; the corrected disposable directory preserves that failure
 separately. Final full checks and exact PR/controller/main/public-delivery
 evidence belong on [#344](https://github.com/Ken0u/badminton-match-analyzer/issues/344).
 Software execution does not establish source-scene or badminton accuracy.
+
+### First hosted portability repair
+
+The original submitted source `02f168aa8eae310649135ef4899aa25f91354839`
+failed exact-head CI run `40954952514`: the Mac native job failed three
+generated collector cases and Ubuntu Python 3.10 failed the clean file-input
+case. Ten verification jobs passed, including native Windows and Python 3.12.
+The failed logs and JUnit records are preserved; no historical CI retry or
+check relaxation was used. Normal terminal-proof release and a committed
+epoch-2 software grant permit this first repair without resetting #344's
+original runtime deadline or authorizing scientific execution.
+
+A deterministic generated regression reproduces a process exiting between
+`poll()` and an identity read: empty exit-time fields previously caused a false
+identity mismatch after a successful process. The collector now reaps its exact
+`Popen` handle after the read before comparing a still-live identity. Live
+mismatches remain failures, and signalling still independently verifies PID,
+creation time, working directory and command. A separate generated check
+preserves that refusal behavior.
+
+A second before-control limits reads to 1,024 bytes, representing a small
+available pipe buffer. The old loop slept after every block, reading only
+50,176 bytes in 3.157 seconds before timeout instead of reaching the output
+cap. The repaired loop sleeps only when no data progresses, while retaining
+bounded reads, per-iteration deadline/overflow checks and the original process
+observation cadence. A real generated small-read overflow regression now
+passes without raising the timeout or changing the output cap.
+
+Generated child programs also announce interpreter readiness and wait until
+their initial identity is captured before executing their test body. This
+separates launcher startup from collector lifecycle assertions on platforms
+whose Python launcher execs another interpreter. Production identities are
+never rewritten to accept an exec or changed command. Failure assertions retain
+their complete generated receipts for hosted diagnosis. All 131 focused checks
+pass locally; required full and hosted exact-source verification remain separate
+delivery requirements recorded on the owning issue.

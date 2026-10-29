@@ -1188,27 +1188,56 @@ def collect_generated(
 ):
     prompt = tmp_path / "generated-input.txt"
     prompt.write_bytes(message)
+    ready, release = tmp_path / "generated-ready", tmp_path / "generated-release"
+    bootstrap = "\n".join(
+        [
+            "import time; from pathlib import Path",
+            f"Path({str(ready)!r}).write_bytes(b'ready')",
+            "began=time.monotonic()",
+            f"while not Path({str(release)!r}).exists():",
+            " if time.monotonic()-began>5: raise TimeoutError('generated handshake')",
+            " time.sleep(.005)",
+            f"exec({code!r})",
+        ]
+    )
     with prompt.open("rb") as incoming:
         child = subprocess.Popen(
-            [sys.executable, "-c", code],
+            [sys.executable, "-c", bootstrap],
             cwd=tmp_path,
             stdin=subprocess.PIPE if pipe else incoming,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
         )
-    began = time.monotonic()
+    original_identity = module.identity
+
+    def release_after_identity(process=None):
+        row = original_identity(process)
+        if not release.exists():
+            release.write_bytes(b"start")
+        return row
+
     try:
+        initialized = time.monotonic()
+        while not ready.exists() and child.poll() is None:
+            assert time.monotonic() - initialized < 5, "Generated startup timed out"
+            time.sleep(0.005)
+        assert ready.exists(), "Generated interpreter exited before initialization"
+        # macOS Python launchers can exec the framework interpreter during
+        # startup. Observe the stable test program before releasing its body.
+        module.identity = release_after_identity
+        began = time.monotonic()
         receipt = module.collect(
             child, message.decode(), tmp_path, time.time() + 120 + run_seconds
         )
-        assert time.monotonic() - began < 4
+        assert time.monotonic() - began < 4, receipt
         return receipt
     finally:
+        module.identity = original_identity
         # Every generated program self-exits within 2.5 seconds; observe the
         # exact Popen handle without overriding an intentionally refused signal.
         if child.poll() is None:
-            child.wait(timeout=3)
+            child.wait(timeout=8)  # Includes a failed startup handshake.
 
 
 def test_cli_real_file_input_avoids_stalled_pipe_and_preserves_output(tmp_path):
@@ -1219,7 +1248,7 @@ def test_cli_real_file_input_avoids_stalled_pipe_and_preserves_output(tmp_path):
         "import sys,time; time.sleep(.15); print(len(sys.stdin.buffer.read()),flush=True)",
         message=b"x" * (256 * 1024),
     )
-    assert receipt["exit_code"] == 0 and not receipt["bounded_stop"]
+    assert receipt["exit_code"] == 0 and not receipt["bounded_stop"], receipt
     assert receipt["stdin_error"] is None and receipt["pipes_reached_eof"]
     assert receipt["collection_errors"] == []
     assert receipt["all_observed_processes_absent"]
@@ -1257,7 +1286,7 @@ def test_cli_real_parent_exit_does_not_wait_for_descendant_pipe_eof(tmp_path):
         "time.sleep(.4)",
     )
     assert receipt["bounded_stop"]
-    assert len(receipt["observed_lifetimes"]) >= 2
+    assert len(receipt["observed_lifetimes"]) >= 2, receipt
     assert (tmp_path / "bounded-stop.json").is_file()
     with pytest.raises(ValueError, match="cleanly"):
         module.event_identity(tmp_path, receipt)
@@ -1302,9 +1331,17 @@ def test_cli_real_collection_error_has_receipt_and_no_unbounded_wait(
         assert (tmp_path / "events.jsonl").read_bytes() == b"preserved"
 
 
-def test_cli_real_output_overflow_preserves_cap_and_rejects_attempt(tmp_path):
+@pytest.mark.parametrize("small_reads", [False, True])
+def test_cli_real_output_overflow_preserves_cap_and_rejects_attempt(
+    tmp_path, monkeypatch, small_reads
+):
     module = cli_module()
     module.COLLECT_STOP_GRACE = 0.5
+    if small_reads:
+        original_read = module.os.read
+        monkeypatch.setattr(
+            module.os, "read", lambda fd, size: original_read(fd, min(size, 1024))
+        )
     receipt = collect_generated(
         module,
         tmp_path,
@@ -1313,10 +1350,55 @@ def test_cli_real_output_overflow_preserves_cap_and_rejects_attempt(tmp_path):
         run_seconds=3,
     )
     assert receipt["bounded_stop"]
-    assert receipt["stdout"]["truncated"]
+    assert receipt["stdout"]["truncated"], receipt
     assert (tmp_path / "events.jsonl").stat().st_size == 2 * 1024**2
     with pytest.raises(ValueError, match="cleanly"):
         module.event_identity(tmp_path, receipt)
+
+
+def test_cli_exit_during_identity_read_is_reaped_before_comparison(
+    tmp_path, monkeypatch
+):
+    module = cli_module()
+    original_identity = module.identity
+    calls = []
+
+    def exit_during_read(process=None):
+        row = original_identity(process)
+        calls.append(True)
+        if len(calls) == 2:
+            process.wait(timeout=2)
+            # POSIX can expose empty command/cwd fields during process exit.
+            return {**row, "command": [], "cwd": ""}
+        return row
+
+    monkeypatch.setattr(module, "identity", exit_during_read)
+    receipt = collect_generated(
+        module, tmp_path, "import time; time.sleep(.1); print('complete',flush=True)"
+    )
+    assert receipt["exit_code"] == 0 and not receipt["bounded_stop"], receipt
+    assert receipt["collection_errors"] == []
+    assert receipt["pipes_reached_eof"] and receipt["all_observed_processes_absent"]
+    assert (tmp_path / "events.jsonl").read_bytes().strip() == b"complete"
+
+
+def test_cli_live_identity_mismatch_still_refuses_signals(tmp_path, monkeypatch):
+    module = cli_module()
+    module.COLLECT_STOP_GRACE = 0.2
+    original_identity = module.identity
+    calls = []
+
+    def changed_live(process=None):
+        row = original_identity(process)
+        calls.append(True)
+        return {**row, "command": ["changed"]} if len(calls) > 1 else row
+
+    monkeypatch.setattr(module, "identity", changed_live)
+    receipt = collect_generated(module, tmp_path, "import time; time.sleep(.4)")
+    assert receipt["bounded_stop"] and receipt["collection_errors"]
+    assert module.STOP.is_set()
+    signals = module.read(tmp_path / "bounded-stop.json")["signals"]
+    assert signals and all(s["result"] == "unverified_ValueError" for s in signals)
 
 
 def test_cli_unresolved_pipe_fences_next_dispatch_even_after_parent_exit(

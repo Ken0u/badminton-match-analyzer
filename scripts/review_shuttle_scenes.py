@@ -542,6 +542,7 @@ def collect(child, message, folder, deadline):
     stopping = False
     stop_until = None
     parent_ended = None
+    next_observation = 0.0
     run_until = time.monotonic() + max(0.0, deadline - 120 - time.time())
 
     def signal_observed():
@@ -563,19 +564,32 @@ def collect(child, message, folder, deadline):
                 if code is not None and parent_ended is None:
                     parent_ended = now
                 try:
-                    if code is None:
+                    if code is None and now >= next_observation:
+                        next_observation = now + COLLECT_POLL
                         parent = psutil.Process(child.pid)
-                        require(
-                            identity(parent) == start, "CLI process identity changed"
-                        )
-                        for process in parent.children(recursive=True):
-                            try:
-                                row = identity(process)
-                                observed.setdefault((row["pid"], row["created"]), row)
-                            except psutil.NoSuchProcess:
-                                pass
+                        current_identity = identity(parent)
+                        # POSIX may expose empty fields while exiting between
+                        # poll and identity reads. Reap that exact Popen handle
+                        # before comparing; live mismatches still fail closed.
+                        if child.poll() is None:
+                            require(
+                                current_identity == start,
+                                "CLI process identity changed",
+                            )
+                            for process in parent.children(recursive=True):
+                                try:
+                                    row = identity(process)
+                                    observed.setdefault(
+                                        (row["pid"], row["created"]), row
+                                    )
+                                except psutil.NoSuchProcess:
+                                    pass
                 except psutil.NoSuchProcess:
                     pass
+                except psutil.Error:
+                    if child.poll() is None:
+                        raise
+                progressed = False
                 for index, (stream, _, result, limit) in enumerate(streams):
                     if eof[index]:
                         continue
@@ -585,6 +599,7 @@ def collect(child, message, folder, deadline):
                     if block == b"":
                         eof[index] = True
                         continue
+                    progressed = True
                     hashes[index].update(block)
                     if counts[index] < limit:
                         logs[index].write(block[: limit - counts[index]])
@@ -607,7 +622,11 @@ def collect(child, message, folder, deadline):
                     signal_observed()
                 if stopping and now >= stop_until:
                     break
-                time.sleep(COLLECT_POLL)
+                # Small POSIX pipe buffers must not impose one sleep per block.
+                # Deadline/overflow checks still run on every bounded read;
+                # process observation retains the same polling cadence.
+                if not progressed:
+                    time.sleep(COLLECT_POLL)
     except Exception as exc:
         errors.append(type(exc).__name__)
         stopping = True
