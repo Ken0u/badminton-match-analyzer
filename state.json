@@ -29121,6 +29121,7 @@
       "status": "blocked"
     },
     "344": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40963013775",
       "checkpoint": {
         "branch": "codex/issue-344-deliver-preserved-source-scene-review-so-e2",
         "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/344#issuecomment-6508719771",
@@ -29151,7 +29152,7 @@
         "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 2,
       "history": [
         {
