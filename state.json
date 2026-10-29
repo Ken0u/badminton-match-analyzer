@@ -11178,6 +11178,14 @@
       "task_id": "344",
       "verb": "plan"
     },
+    "spec-345-51a1cedf3903c62bcaa55cbfc607823bac0df75f959aa5dcd52c233b3852739a": {
+      "actor": "Ken0u",
+      "at": 1793307612,
+      "fingerprint": "5ac7e533f5f5905d1720026d220f3ed5296ab0bc44d0906075085d2833b5f094",
+      "status": "ready",
+      "task_id": "345",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -13418,6 +13426,14 @@
       "status": "review",
       "task_id": "293",
       "verb": "submit"
+    },
+    "visionai-minicourt-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793307612,
+      "fingerprint": "bfd7e87d88c64e7f6c7e15aeab5b2ffcc17ebf79847a7ba1c12ef66c75de6409",
+      "status": "ready",
+      "task_id": "345",
+      "verb": "plan"
     },
     "windows-active-next-20261019-v1": {
       "actor": "Ken0u",
@@ -29104,6 +29120,59 @@
       },
       "spec_hash": "4be63338821bc342336580b34b9f75f435ebee6c2596be492bb19b1191fa46f7",
       "status": "running"
+    },
+    "345": {
+      "epoch": 0,
+      "planned_at": 1793307612,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Read the delivered independent design review and search current issue/PR/controller history before claiming. Use a committed isolated grant after software task344 completes; preserve original research attempts, models, labels, source media, environments and PROGRESS edits. Copy no code, assets, prose or weights from the reference repository.",
+          "Add a compact accessible court diagram synchronized with the current native source frame in the existing editor. Use the existing player run and calibration context, source display orientation and singles/doubles geometry. Seek, pause, playback, video changes, window changes and draft corrections must update or clear it without stale positions or additional inference.",
+          "Implement finite, validated court-plane projection of explicitly estimated player foot anchors. Reject incomplete, degenerate, self-intersecting or unstable quadrilaterals and nonfinite inputs; hide unsupported projections with a useful empty state. Reuse current camera/calibration/source-context invalidation semantics and never retain a projection across an expired calibration or cut. Automatically proposed geometry and approximate box-foot anchors remain visibly unreviewed estimates.",
+          "Display reviewed player/team labels only within their actual assignment ranges; retain unassigned tracks and provisional actor uncertainty. Support four simultaneous doubles players and end changes without inferring persistent identity from court side or tracker number. Explicit replay/non-play views must not be presented as live-player analytics; unreviewed scene context remains visibly unresolved. Draw no airborne-shuttle court projection or invented coordinate.",
+          "Provide a readable legend and toggle with keyboard and screen-reader support. The diagram must remain usable on narrow mobile layouts and large desktop playback, without obstructing court-corner editing or worsening frame stepping. Do not add speed, power, movement-distance, coaching or accuracy claims.",
+          "Add meaningful geometry/context regression tests and generated browser coverage for singles/doubles, stale calibration after cuts and edits, unknown identities/scenes, VFR seeking and clearing on video/window changes. Verify frame-to-diagram synchronization, existing overlay/editor behavior and mobile layout. Run required Python/frontend/browser/repository checks and normal exact PR/controller/main verification with complete public delivery. Document implemented behavior and accuracy limits."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "344"
+        ],
+        "exclusions": [
+          "No reference-source copying, external inference service, new dependencies, source image transfer, native inference/training, research restart, annotation writes or model promotion.",
+          "No homographic airborne-shuttle speed/3D claims, automatic persistent-identity assignment, heatmap/report implementation, workflow/auth/security/deployment changes, manual merge or PROGRESS edits."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 1073741824,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 6,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Add an independently implemented source-synchronized mini-court for player positions beside the existing video review player, inspired by the requested Badminton-VisionAI feature review.",
+        "paths": [
+          "backend/frontend/src/editor/court.ts",
+          "backend/frontend/src/editor/Playback.tsx",
+          "backend/frontend/src/editor/editor.css",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs",
+          "docs/MINI_COURT_REPORT.md"
+        ],
+        "priority": 90,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated geometry/context and real browser integration checks plus required full Python/frontend/browser/repository checks. Exact CI/controller/main and complete public delivery. No badminton-accuracy inference from UI tests."
+        ]
+      },
+      "spec_hash": "bbc79a500c6f94874af29f8525114e2319fb0abc69bb0e4407eaa8decf5ab42d",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
