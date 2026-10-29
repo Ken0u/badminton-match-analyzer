@@ -8660,6 +8660,34 @@
       "task_id": "288",
       "verb": "submit"
     },
+    "rally350-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793316615,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "738f39c9c084bb36cbab37121cfd4d3523bb7cd6",
+        "branch": "codex/issue-350-reject-malformed-or-nonfinite-native-tim",
+        "epoch": 1,
+        "expires_at": 1793327415,
+        "granted_at": 1793316615,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "70155cb4797a8f059ee29dab6a2f24d486912c26c6baf8cde482cd4577b83e52"
+      },
+      "epoch": 1,
+      "fingerprint": "7d2dcbf4bb17ecce609581701c0497c004964ec573061fe25ec5a904dc8f9f69",
+      "status": "granted",
+      "task_id": "350",
+      "verb": "next"
+    },
+    "rally350-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793316615,
+      "fingerprint": "8721f975beb35bfc1143d5fe9bfecd0b3b4736acf3c7f7eaa7edce4dae3fa9ba",
+      "status": "ready",
+      "task_id": "350",
+      "verb": "plan"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -11345,6 +11373,14 @@
       "fingerprint": "290a79ba2d8de241c58494cd03d911a75287d157eb209dfc7e5ebfe12a44d1f4",
       "status": "needs_human",
       "task_id": "349",
+      "verb": "plan"
+    },
+    "spec-350-3a3e3c09e172d5ba0da5e02a2b8a8fdfcea2186f610b1f739cf13c822c42871a": {
+      "actor": "Ken0u",
+      "at": 1793316615,
+      "fingerprint": "3c3dc60862eff1d3d24acb8c5139714dc20596b47f267739af122a404d354179",
+      "status": "ready",
+      "task_id": "350",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -29649,6 +29685,66 @@
       },
       "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97",
       "status": "needs_human"
+    },
+    "350": {
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "738f39c9c084bb36cbab37121cfd4d3523bb7cd6",
+        "branch": "codex/issue-350-reject-malformed-or-nonfinite-native-tim",
+        "epoch": 1,
+        "expires_at": 1793327415,
+        "granted_at": 1793316615,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "70155cb4797a8f059ee29dab6a2f24d486912c26c6baf8cde482cd4577b83e52"
+      },
+      "epoch": 1,
+      "planned_at": 1793316615,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve original checkout/PROGRESS edits, datasets, model weights, reviewed annotations, raw predictions, all expired research clocks and pending349 image authorization. Use a committed isolated routine grant; this task transfers zero images and performs no native model inference or training.",
+          "Reproduce the generated singles/doubles and real generated-media API bypass on main738f39c9c084bb36cbab37121cfd4d3523bb7cd6: source clock NaN at frame25 still yields two candidates, API202/completed and source_timestamps_validated=true. Preserve the before receipt and generated-only artifacts.",
+          "When source_times is supplied, validate the whole native table before filtering/geometry/motion: a numeric sequence covering exactly the positive integer source frame count, finite nonnegative nonboolean timestamps, strictly increasing order, and correct row-to-native timestamp correspondence. Invalid/unobserved clock entries cannot bypass validation through NaN arithmetic or sparse/windowed runs. Convert invalid clock types/values into ValueError so existing API handling returns422 before any queued job or output artifact.",
+          "Keep the source_times=None legacy research path available and explicitly unvalidated; valid constant/VFR/nonzero-origin clocks, sparse perception inputs, original source/model hashes, camera/scene/calibration guards, uncertain candidate intervals and saved labels remain unchanged. Reject boolean/nonfinite/overflowing perception timestamps without inventing or repairing values. Do not alter heuristic thresholds, source clocks or confidence claims.",
+          "Add meaningful generated regressions that fail on the baseline, including NaN/inf/negative/bool/nonnumeric/overflowing/duplicate/decreasing/incomplete/wrong-shaped clocks, malformed entries outside observed ranges, valid VFR/gaps and explicit no-clock behavior. Test API rejection before job admission, direct generator refusal before output writes, and valid native decoded-fixture proposal parity. Preserve original job/run/annotation/clock bytes in mutation cases except deliberate disposable test inputs.",
+          "Run focused and all required project checks. Supply exact source/recipe/code-bound native evidence using only generated decoded media and deterministic synthetic perception; model_sha256 explicitly binds the heuristic recipe, not a learned checkpoint. Publish the aggregate report and exact-head PR through normal controller/main verification and complete public delivery. Do not claim improved badminton accuracy from input-integrity tests."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "345"
+        ],
+        "exclusions": [
+          "No new scientific images/source assessment, real dataset/model/holdout access, inference/training, annotation writes, recipe/default tuning, model promotion, new dependencies, workflow/security/auth/deployment changes, paid service, CI retry, manual merge, raw coordination edit or PROGRESS changes."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 2147483648,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 6,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Reject malformed or nonfinite native timestamp tables before rally job admission and publication, preserving all valid proposal values and the explicit legacy no-clock path.",
+        "paths": [
+          "backend/badminton/rallies.py",
+          "tests/test_rally_source_clock.py",
+          "docs/RALLY_SOURCE_CLOCK_REPORT.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Baseline generated bypass; focused/full required checks; generated decoded source/heuristic/code-bound receipt; exact PR/main CI, controller merge and independent public package/image verification."
+        ]
+      },
+      "spec_hash": "70155cb4797a8f059ee29dab6a2f24d486912c26c6baf8cde482cd4577b83e52",
+      "status": "running"
     },
     "62": {
       "checkpoint": {
