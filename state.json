@@ -8697,6 +8697,15 @@
       "task_id": "350",
       "verb": "plan"
     },
+    "rally350-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793317739,
+      "epoch": 1,
+      "fingerprint": "4273ee491368f109a0f3c1ea1de1cfa4ba2b97a57675db69ab51152d2a3c77cb",
+      "status": "review",
+      "task_id": "350",
+      "verb": "submit"
+    },
     "rally62-final-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792742897,
@@ -29736,6 +29745,7 @@
       "epoch": 1,
       "planned_at": 1793316615,
       "planned_by": "Ken0u",
+      "pr_number": 351,
       "spec": {
         "acceptance": [
           "Preserve original checkout/PROGRESS edits, datasets, model weights, reviewed annotations, raw predictions, all expired research clocks and pending349 image authorization. Use a committed isolated routine grant; this task transfers zero images and performs no native model inference or training.",
@@ -29779,7 +29789,24 @@
         ]
       },
       "spec_hash": "70155cb4797a8f059ee29dab6a2f24d486912c26c6baf8cde482cd4577b83e52",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "738f39c9c084bb36cbab37121cfd4d3523bb7cd6",
+        "head_sha": "13d2f7ee2a351bd7dcef44b57e94072371cd82fb",
+        "native_evidence": {
+          "code_sha": "13d2f7ee2a351bd7dcef44b57e94072371cd82fb",
+          "limitations": [
+            "Generated H264 source and synthetic player/shuttle observations only.",
+            "The recipe hash binds deterministic heuristic settings; no learned model was executed.",
+            "Valid output parity and invalid-input rejection establish software behavior, not badminton accuracy."
+          ],
+          "model_sha256": "2e65aa7f66d6b280a8142ef6708de742c1ed80245caf475eee0a632b97a2687f",
+          "receipt_sha256": "a0dc5b31868dd3de6259e2421bc501dad80c0228811fb5cbe179b4b9af2c693f",
+          "source_sha256": "da8991459cd1f03192f2f3fa24f194e4b26db3dfa749b8721ba2971ae5246371"
+        },
+        "pr_number": 351,
+        "spec_hash": "70155cb4797a8f059ee29dab6a2f24d486912c26c6baf8cde482cd4577b83e52"
+      }
     },
     "62": {
       "checkpoint": {
