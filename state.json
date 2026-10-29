@@ -9787,6 +9787,14 @@
       "task_id": "344",
       "verb": "submit"
     },
+    "scene349-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793316336,
+      "fingerprint": "aae0ac147d23cb219dfb9cdaa4ab9b21f7ee239be31c7a781f5da8f682c7f5fc",
+      "status": "needs_human",
+      "task_id": "349",
+      "verb": "plan"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -11329,6 +11337,14 @@
       "fingerprint": "5ac7e533f5f5905d1720026d220f3ed5296ab0bc44d0906075085d2833b5f094",
       "status": "ready",
       "task_id": "345",
+      "verb": "plan"
+    },
+    "spec-349-bdc023435678bd6c66700aad5fd0e5c1386da4a4e95a63937db73ffe30b8d906": {
+      "actor": "Ken0u",
+      "at": 1793316336,
+      "fingerprint": "290a79ba2d8de241c58494cd03d911a75287d157eb209dfc7e5ebfe12a44d1f4",
+      "status": "needs_human",
+      "task_id": "349",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -29564,6 +29580,75 @@
         "pr_number": 348,
         "spec_hash": "09b6b2451806297ef574e155b6dc9ef22f6641f9f6a9c1f03646ebe74b7430d3"
       }
+    },
+    "349": {
+      "epoch": 0,
+      "planned_at": 1793316336,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Continue completed340/344 and the65 prerequisite. Search all issue/PR/report/controller history before claiming. Preserve expired342 at its original grant/deadline with zero sessions/bytes/jobs, preserved branches/patches and terminal proof; never reopen its runtime. Obtain fresh configured-owner authorization of this exact frozen image payload/destination/limits, a new committed grant and isolated worktree before implementation or scientific dispatch. All original annotations, predictions, models, environments, historical clocks and deprecated PROGRESS edits remain preserved. This task does not authorize279 or any historical retry.",
+          "Use only the existing audited870 JPEG sheets from the two supplied singles/doubles videos, exactly bound to gallery89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37, plan87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2 and original source hashes970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f/c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd. Verify all original manifest/image/source hashes without opening old semantic labels or model outputs; do not regenerate, substitute, enlarge or download images. Keep every50-view/60-case/13499-native-frame-occurrence denominator and explicit duplicated views/occurrences.",
+          "Freeze and publish the source-only assessment protocol, exact tested consumer/invoker/prompt/output-schema hashes, blind membership schedule and independent-stream/adjudication rules before any image dispatch. Each native cell needs an explicit reviewed classification or unknown/unavailable support. Define live/replay/non-play/unknown and transition uncertainty; distinguish camera metadata partitions from verified edits and visible court from live play. Thumbnail limitations must remain explicit, with unresolved native-source detail carried forward rather than inferred.",
+          "The only externally dispatched payload is the870 unchanged1280x864 chronological4x4 JPEG sheets, minimal blind source/frame/PTS/hash/caption/protocol context and that stream own prior continuity notes, through the existing ChatGPT-authenticated Codex CLI. No new paid API/service, provider/model change, public image upload, raw source video, account credential, old source label, prediction, coordinate, component, pose, tracker ID or other-stream assessment enters an original assessor. Separate blind original assessor processes/sessions with durable session identities; a parent-written second reading is forbidden. Keep all images/raw readings/session/process records private.",
+          "Execute exactly the audited75 sessions per original lane, at most6MiB/20 images per fresh session with the planned one-sheet within-view overlap. Two originals cost150 sessions/651237900 image bytes. Failures consume session and image budgets; no automatic replacement sessions. At most75 separate fresh adjudication sessions and325618950 additional image bytes may inspect only the same planned sheets needed for conflicts/unknowns. Total ceilings225sessions/976856850imagebytes. Record attempted payload costs before launch, actual terminal process identity, raw immutable outputs/failures, exact image coverage, all overlaps and budget balances. Never restart on observation timeout; revalidate actual process lifetime before interpreting a failure.",
+          "Run the two original streams genuinely independently, retaining every raw reading and contradiction before comparison. Only after both streams are durably sealed may a separate fresh adjudicator receive source images with conflicting source-only claims; it must record its own source reasons and retain insufficient-detail unknowns. No majority vote, consensus-only erasure or reinterpretation of unknown as non-play/live. An agreed scene reading is independent agent evidence, not expert gold truth or full native contact/identity annotation.",
+          "Use real shared Store admission and data:windows-primary reservation for assessment orchestration, with original root/data pinned before imports, exclusive ignored outputs and independently verified terminal process/Store seals. No isolated Store, competing research process, model input access, inference/training or application truth write. Preserve source/native clocks/orientation, every image and previous source annotation/prediction hash; verify after completion. Any unavailable input or insufficient budget retains the full denominator and an incomplete result.",
+          "Reuse delivered344 scientific validation and portable bounded subprocess collection from main738f39c9c084bb36cbab37121cfd4d3523bb7cd6. Only five paths may change: update the existing CLI for the new exact task/spec/protocol and distinct retained-output prefixes, add a new immutable v2 public protocol and aggregate continuation report, update meaningful generated CLI regressions and add the new public protocol to MANIFEST.in. Do not overwrite the original v1 protocol/report or weaken original guards. Reject stale342 grants, old timestamps/output roots, mismatched payloads and expired current ownership. Freeze/publish the exact tested consumer/prompt/schema/schedule hashes before any image dispatch. Reuse unchanged already passing baseline checks where justified, run all focused changed-source checks and the required final project checks, and retain every failed software/scientific attempt. Publish only code, public protocols and aggregate results through exact PR/controller/main verification and complete public delivery; never publish images/raw readings/session/process records. No shuttle-accuracy score follows until a separately frozen diagnostic. Session labels and original assessment text stay private.",
+          "Bound new retained outputs including checks/failures/downloaded build evidence to2GiB and all successor work to8hours from its fresh committed grant. Retain old340/342/344 outputs and clocks separately; these consume no successor session allowance and cannot be relabeled as new assessments. At most two automatic software repair rounds; no scientific replacements beyond the fixed225-session schedule. Reserve150 originals and at most75 adjudications before launch with cumulative ceilings976856850imagebytes,6MiB/20images per session and at most two simultaneous original CLI processes. If time, output, session or image capacity is insufficient, stop with every denominator intact and preserve the incomplete result. All four eligibility flags stay false; complete independent rally references remain0/2. No inference, training or model promotion, no paid service or manual merge."
+        ],
+        "artifacts": {
+          "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
+          "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
+          "scene-context": "17bbb33f3cd501af65b8982080fbf73756a3f22991f863bf1e5c2e2880a40c5f",
+          "scene-gallery": "89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37",
+          "scene-plan": "87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "340",
+          "344"
+        ],
+        "exclusions": [
+          "No BWF source assessment, new source/native-image generation/download, hidden-label/model/prediction/holdout access, scientific retry/replacement, native shuttle/contact/shot/player-identity labels, application truth/default/guard changes, training/inference/model promotion, raw public redistribution, credentials, paid services, workflow/auth/security/dependency/deployment changes, manual merge, raw coordination writes or PROGRESS changes."
+        ],
+        "limits": {
+          "max_adjudication_sessions": 75,
+          "max_assessor_sessions": 225,
+          "max_image_payload_bytes": 976856850,
+          "max_original_sessions": 150,
+          "max_output_bytes": 2147483648,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 8,
+          "paid_services": false,
+          "session_max_image_bytes": 6291456,
+          "session_max_images": 20
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Complete two independent coarse scene-assessment streams and bounded source adjudication on the unchanged 870 prepared familiar-source sheets using the delivered portable runner; retain all 60 cases, missing evidence and unknowns.",
+        "paths": [
+          "scripts/review_shuttle_scenes.py",
+          "tests/test_shuttle_scene_review.py",
+          "data/manifests/shuttle_scene_review_protocol_v2.json",
+          "docs/SHUTTLE_SCENE_CONTINUATION_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 50,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Exact frozen source/gallery coverage and payload budgets; two genuinely independent original streams, separate source-based adjudication and preserved unknown/conflict/terminal evidence.",
+          "Meaningful generated and full required software checks; exact PR/controller/main and complete public delivery. Scene labels do not establish contact/rally/identity/shot correctness or0/2 completion."
+        ]
+      },
+      "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
