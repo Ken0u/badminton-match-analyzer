@@ -29743,6 +29743,7 @@
       "status": "ready"
     },
     "350": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40978008484",
       "checkpoint": {
         "branch": "codex/issue-350-reject-malformed-or-nonfinite-native-tim",
         "evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/350#issuecomment-6511051967",
@@ -29767,7 +29768,7 @@
         "spec_hash": "70155cb4797a8f059ee29dab6a2f24d486912c26c6baf8cde482cd4577b83e52"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793318326,
