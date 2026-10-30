@@ -9849,6 +9849,26 @@
       "task_id": "349",
       "verb": "human-approved"
     },
+    "scene349-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793319488,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b3dcc298f460121ff3bac05f96bcfb65c7e5632c",
+        "branch": "codex/issue-349-complete-two-independent-coarse-scene-as",
+        "epoch": 1,
+        "expires_at": 1793330288,
+        "granted_at": 1793319488,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
+      },
+      "epoch": 1,
+      "fingerprint": "f40bb647a64c43ad3fa00ba0a7ced1c210054b92fa3031b64c42af37b636cea7",
+      "status": "granted",
+      "task_id": "349",
+      "verb": "next"
+    },
     "scene349-plan-v1": {
       "actor": "Ken0u",
       "at": 1793316336,
@@ -29668,7 +29688,18 @@
       }
     },
     "349": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b3dcc298f460121ff3bac05f96bcfb65c7e5632c",
+        "branch": "codex/issue-349-complete-two-independent-coarse-scene-as",
+        "epoch": 1,
+        "expires_at": 1793330288,
+        "granted_at": 1793319488,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1793317027,
@@ -29740,7 +29771,7 @@
         ]
       },
       "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97",
-      "status": "ready"
+      "status": "running"
     },
     "350": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40978008484",
