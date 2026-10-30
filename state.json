@@ -9967,6 +9967,15 @@
       "task_id": "353",
       "verb": "next"
     },
+    "scene353-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793403364,
+      "epoch": 1,
+      "fingerprint": "c64a326b6fbf66f31ed61f1d88094a564e4a7f75fdda6243c0f599505e4c3fc8",
+      "status": "review",
+      "task_id": "353",
+      "verb": "submit"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30034,6 +30043,7 @@
       "epoch": 1,
       "planned_at": 1793336929,
       "planned_by": "Ken0u",
+      "pr_number": 354,
       "spec": {
         "acceptance": [
           "Preserve the original checkout/PROGRESS edit, all datasets/environments/weights/annotations/predictions, the349 grant/deadline, seven charged attempts and full incomplete denominator. This is a software-only follow-up to349/344/342: zero scientific sessions, zero image payload, no source readings, replacements, continuation, inference or training. Obtain a new committed isolated routine grant before implementation.",
@@ -30077,7 +30087,13 @@
         ]
       },
       "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "73125dce68394e2338ca4a364434dfe628e19180",
+        "head_sha": "8f92d123bd248c74dc4b01981997877655db214a",
+        "pr_number": 354,
+        "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554"
+      }
     },
     "62": {
       "checkpoint": {
