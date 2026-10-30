@@ -636,7 +636,12 @@ def collect(child, message, folder, deadline):
         stopping = True
         signal_observed()
         # No blocking wait or pipe-reader thread survives an I/O/identity error.
-        end = time.monotonic() + COLLECT_STOP_GRACE
+        end = (
+            stop_until
+            if stop_until is not None
+            else time.monotonic() + COLLECT_STOP_GRACE
+        )
+        stop_until = end
         while child.poll() is None and time.monotonic() < end:
             time.sleep(COLLECT_POLL)
     finally:
@@ -651,13 +656,32 @@ def collect(child, message, folder, deadline):
             stream.close()
         if child.stdin is not None:
             child.stdin.close()
-    absent = True
-    for row in observed.values():
-        try:
-            require_absent(row)
-        except (psutil.Error, ValueError) as exc:
-            absent = False
-            errors.append("terminal_" + type(exc).__name__)
+    # Reobserve only these frozen lifetimes, without signals or a new cleanup
+    # allowance. Parent exit/EOF can precede OS lifetime visibility settling.
+    terminal_until = min(
+        run_until + COLLECT_STOP_GRACE,
+        stop_until
+        if stop_until is not None
+        else (parent_ended if parent_ended is not None else time.monotonic())
+        + COLLECT_STOP_GRACE,
+    )
+    terminal_observations = []
+    while True:
+        unresolved = []
+        for row in observed.values():
+            try:
+                require_absent(row)
+            except (psutil.Error, ValueError) as exc:
+                unresolved.append(
+                    {"process": row, "error": type(exc).__name__, "message": str(exc)}
+                )
+        terminal_observations.append({"at": time.time(), "unresolved": unresolved})
+        absent = not unresolved
+        remaining = terminal_until - time.monotonic()
+        if absent or not all(eof) or child.poll() is None or remaining <= 0:
+            errors.extend("terminal_" + row["error"] for row in unresolved)
+            break
+        time.sleep(min(COLLECT_POLL, remaining))
     complete = absent and all(eof) and child.poll() is not None
     if not complete or errors:
         STOP.set()
@@ -673,6 +697,7 @@ def collect(child, message, folder, deadline):
         "stdin_error": stdin_error,
         "bounded_stop": stopping,
         "all_observed_processes_absent": absent,
+        "terminal_observations": terminal_observations,
         "pipes_reached_eof": all(eof),
         "collection_errors": errors,
     }
@@ -790,25 +815,31 @@ def execute(args, context, batch, lane, prior_note="", claims=None):
         for path in paths:
             command.extend(("--image", str(path)))
         command.append("-")
-        write(
-            folder / "invocation.json",
-            {
-                "command": command,
-                "prompt_sha256": shared.digest(message.encode()),
-                "schema_sha256": shared.file_hash(folder / "schema.json"),
-            },
-        )
         env = {k: v for k, v in os.environ.items() if k not in CREDENTIALS}
         with (folder / "prompt.txt").open("rb") as prompt_input:
-            child = subprocess.Popen(
-                command,
-                cwd=sandbox,
-                env=env,
-                stdin=prompt_input,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
-            )
+            # Serialize the final fence check and launch with fatal-lane fencing.
+            # A reservation already charged remains evidence even if fenced here.
+            with LOCK:
+                require(
+                    not STOP.is_set(), "Another assessor lifetime requires observation"
+                )
+                write(
+                    folder / "invocation.json",
+                    {
+                        "command": command,
+                        "prompt_sha256": shared.digest(message.encode()),
+                        "schema_sha256": shared.file_hash(folder / "schema.json"),
+                    },
+                )
+                child = subprocess.Popen(
+                    command,
+                    cwd=sandbox,
+                    env=env,
+                    stdin=prompt_input,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    creationflags=subprocess.CREATE_NO_WINDOW if os.name == "nt" else 0,
+                )
         receipt = collect(child, message, folder, context["deadline"])
         write(folder / "finish.json", receipt)
         result["thread_id"] = event_identity(folder, receipt)
@@ -846,6 +877,7 @@ def execute(args, context, batch, lane, prior_note="", claims=None):
 def lane_run(args, context, schedule, lane):
     results, note, previous_view = [], "", None
     for batch in schedule:
+        require(not STOP.is_set(), "Another assessor lifetime requires observation")
         if previous_view != batch["view_index"]:
             note = ""
         result = execute(args, context, batch, lane, note)
@@ -880,12 +912,30 @@ def originals(args):
     )
 
     def calculate(progress):
+        failures = []
+
+        def guarded_lane(lane):
+            try:
+                return lane_run(args, context, schedule, lane)
+            except Exception as exc:
+                with LOCK:
+                    if not failures:
+                        failures.append(exc)
+                    STOP.set()
+                raise
+
         with ThreadPoolExecutor(max_workers=2) as executor:
-            futures = [
-                executor.submit(lane_run, args, context, schedule, lane)
-                for lane in LANES
-            ]
-            lanes = [future.result() for future in futures]
+            futures = [executor.submit(guarded_lane, lane) for lane in LANES]
+            lanes = []
+            for future in futures:
+                try:
+                    lanes.append(future.result())
+                except Exception:
+                    # Observe the other already launched lane before propagating
+                    # the first fatal cause, even when it was the second future.
+                    pass
+        if failures:
+            raise failures[0]
         comparison = review.compare_lanes(schedule, *lanes)
         write(args.output / "comparison-original.json", comparison)
         seal = {
