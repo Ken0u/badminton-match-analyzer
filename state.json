@@ -9913,6 +9913,15 @@
       "task_id": "349",
       "verb": "checkpoint"
     },
+    "scene349-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793336680,
+      "epoch": 1,
+      "fingerprint": "8ad52a70109e8af7b63d1329434934402de19b6e17099c0a0728f46090b1cc55",
+      "status": "review",
+      "task_id": "349",
+      "verb": "submit"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -29748,6 +29757,7 @@
       },
       "planned_at": 1793316336,
       "planned_by": "Ken0u",
+      "pr_number": 352,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -29812,7 +29822,13 @@
         ]
       },
       "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "b3dcc298f460121ff3bac05f96bcfb65c7e5632c",
+        "head_sha": "26d8f80041fdec9e7e3f03ba738eb8b2ecadf748",
+        "pr_number": 352,
+        "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
+      }
     },
     "350": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/40978008484",
