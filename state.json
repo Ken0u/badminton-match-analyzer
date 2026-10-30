@@ -9938,6 +9938,15 @@
       "task_id": "349",
       "verb": "submit"
     },
+    "scene353-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793402537,
+      "epoch": 1,
+      "fingerprint": "967ce8e9be1da96f7fe97eb3388e20ba3b34ad85b37cc60f36e028fd717f5c7d",
+      "status": "running",
+      "task_id": "353",
+      "verb": "checkpoint"
+    },
     "scene353-next-v1": {
       "actor": "Ken0u",
       "at": 1793402162,
@@ -29999,12 +30008,24 @@
       }
     },
     "353": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/scene353-before-v1/verification.json",
+          ".cache/scene353-regressions-before-v1.log",
+          ".cache/scene353-regressions-before-v2/results.xml",
+          ".cache/scene353-focused-v1/results.xml"
+        ],
+        "branch": "codex/issue-353-stop-further-original-scene-session-disp",
+        "head_sha": "73125dce68394e2338ca4a364434dfe628e19180",
+        "summary": "Generated baseline reproduced both gaps. Synchronized fatal-lane controls show subsequent fake batches; actual generated subprocess collector takes a single terminal absence observation. First repair implemented within three granted paths; focused checks running. Zero scientific sessions, image payload, Store access, inference or training. Preserve #349 incomplete evidence and fixed #353 deadline 1793416562."
+      },
+      "checkpoint_at": 1793402537,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "73125dce68394e2338ca4a364434dfe628e19180",
         "branch": "codex/issue-353-stop-further-original-scene-session-disp",
         "epoch": 1,
-        "expires_at": 1793412962,
+        "expires_at": 1793413337,
         "granted_at": 1793402162,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
