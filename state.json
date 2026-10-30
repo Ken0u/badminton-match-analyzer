@@ -9913,6 +9913,14 @@
       "task_id": "349",
       "verb": "checkpoint"
     },
+    "scene349-software-followup-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793336929,
+      "fingerprint": "daaebef24c13c0866a373259a141cd4d3655d37cc940c294a8922022a33fd749",
+      "status": "ready",
+      "task_id": "353",
+      "verb": "plan"
+    },
     "scene349-submit-v1": {
       "actor": "Ken0u",
       "at": 1793336680,
@@ -11480,6 +11488,14 @@
       "fingerprint": "3c3dc60862eff1d3d24acb8c5139714dc20596b47f267739af122a404d354179",
       "status": "ready",
       "task_id": "350",
+      "verb": "plan"
+    },
+    "spec-353-e8b80a139e7ea747ace6aeafae7fc3802416853466a99f057e0accafaae83665": {
+      "actor": "Ken0u",
+      "at": 1793336929,
+      "fingerprint": "cc754d6e44eb097d0f98a99e25ff37a98054dde434245dcbba775beec39a0ba8",
+      "status": "ready",
+      "task_id": "353",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -29928,6 +29944,55 @@
         "pr_number": 351,
         "spec_hash": "70155cb4797a8f059ee29dab6a2f24d486912c26c6baf8cde482cd4577b83e52"
       }
+    },
+    "353": {
+      "epoch": 0,
+      "planned_at": 1793336929,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve the original checkout/PROGRESS edit, all datasets/environments/weights/annotations/predictions, the349 grant/deadline, seven charged attempts and full incomplete denominator. This is a software-only follow-up to349/344/342: zero scientific sessions, zero image payload, no source readings, replacements, continuation, inference or training. Obtain a new committed isolated routine grant before implementation.",
+          "Search all open/closed issue/PR/task/report history; reuse349 private incomplete audit, original traceback, failed/unchanged-source passing generated check receipts and terminal seals as evidence. Reproduce fatal-lane continuation deterministically with generated metadata, synchronized fake assessors and no real CLI/image/Store. Before control must demonstrate that one fatal original lane leaves the other launching later scheduled sessions.",
+          "On an unexpected fatal original-lane error, set the existing stop fence before another scheduled session can launch. Let an already launched assessor finish or undergo the existing bounded collector cleanup; do not infer its exit, fabricate a result, replace/retry a session or discard original evidence. Preserve the original exception and any partial metadata. All scientific fresh-ownership, exact-spec/protocol/source, budget, blind-stream, immutable-reservation, terminal-Store and before-adjudication checks remain unchanged.",
+          "Reproduce the clean-parent/EOF terminal-observation gap with deterministic generated lifetime observations and real short subprocess controls. After exact parent exit and pipe completion, observe the same frozen recorded lifetimes within an existing bounded cleanup allowance before declaring all absent. A transient unproved observation may be observed again; an actually live, mismatched or unobservable lifetime at the bound must fail closed and fence further dispatch. No PID/creation-time/cwd/command requirement may be weakened, no new PID accepted as the old process, and no assessor process may be restarted. Preserve the original runtime deadline and signal rules; no timeout increase or test-assertion relaxation.",
+          "Add meaningful generated regressions for fatal errors before reservation/launch, an active other lane, no subsequent launches, retained completed/failed attempt evidence, transient and persistent terminal states, access/identity mismatches, inherited pipes and exact elapsed/output bounds. Keep the scientific validator/backend unchanged and keep the CLI bound to the old349 scope; this grant must not make a scientific invocation eligible.",
+          "Complete focused and required full project checks on final executable/test source, preserve every failure and report the original operational cause and actual repair limits. Build only reproducible code, generated regressions and aggregate report. Publish through exact PR/controller/main CI and complete public delivery, with no CI retry or manual merge authorized. Software checks and these repairs do not establish independent labels, complete references or model accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "349"
+        ],
+        "exclusions": [
+          "No image transfer, scientific retry/replacement/continuation, native source or semantic-label/model/prediction/holdout access, inference/training/promotion, application truth changes, dataset/weight changes, eligibility/denominator/threshold/protocol/authorization changes, relaxed ownership or identity checks, new dependencies, workflow/auth/security/deployment policy changes, paid service, historical CI retry, manual merge, raw coordination write or PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 1073741824,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Stop further original scene-session dispatch promptly after a fatal lane error, and use bounded repeated observation of the same recorded process lifetimes before a clean terminal decision; preserve strict failure evidence and every scientific guard.",
+        "paths": [
+          "scripts/review_shuttle_scenes.py",
+          "tests/test_shuttle_scene_review.py",
+          "docs/SHUTTLE_SCENE_RUNNER_FAILURE_REPORT.md"
+        ],
+        "priority": 20,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Deterministic generated before/after fatal-lane and terminal-observation controls; real generated subprocess lifecycle tests; full required checks; exact PR/controller/main and complete public delivery. Zero scientific dispatch and preserved349 incomplete evidence."
+        ]
+      },
+      "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
