@@ -9967,6 +9967,14 @@
       "task_id": "353",
       "verb": "next"
     },
+    "scene353-runner-followup-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793403624,
+      "fingerprint": "d9b4898fcc0e8ad0275eb6e7cf78eccfd70fa97c240d35cdc8311391a6e95d65",
+      "status": "needs_human",
+      "task_id": "355",
+      "verb": "plan"
+    },
     "scene353-submit-v1": {
       "actor": "Ken0u",
       "at": 1793403364,
@@ -11542,6 +11550,14 @@
       "fingerprint": "cc754d6e44eb097d0f98a99e25ff37a98054dde434245dcbba775beec39a0ba8",
       "status": "ready",
       "task_id": "353",
+      "verb": "plan"
+    },
+    "spec-355-3ccd8cc8105eff4bf0122a032f0e11efae3904eceeb5f40cbc4fc43f2d8ccfe6": {
+      "actor": "Ken0u",
+      "at": 1793403624,
+      "fingerprint": "f5590d03e9c6b574b40410294dfdcf81fd5f0273b025408a0587e6400d52490a",
+      "status": "needs_human",
+      "task_id": "355",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -30094,6 +30110,54 @@
         "pr_number": 354,
         "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554"
       }
+    },
+    "355": {
+      "epoch": 0,
+      "planned_at": 1793403624,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve original checkout/PROGRESS edits, all scientific evidence and PR354 source/run history. Obtain explicit configured-owner authorization of this frozen workflow task and a committed isolated grant before implementation.",
+          "Search all open/closed issue/PR/task/report history and preserve GitHub run41145428910 job124369351515 cancellation annotation: scheduled macOS14 brownout, no runner allocated and no steps executed. Verify the official actions/runner-images issue13518 notice and standard macos15 availability; do not use larger or paid runner labels.",
+          "Change only the native CI matrix macos-14 entry to macos-15. Retain windows-2022, all native commands, Python versions, time limits, full test groups, signatures, dependency lock, required gates, permissions and controller integration. Do not weaken checks, alter retry rules or add bypass conditions.",
+          "Add focused structural regressions for standard supported macOS15 and unchanged Windows coverage, complete native commands and fail-closed gate dependencies. Validate workflow syntax, existing protocol checks and required full project checks. Report actual hosted macOS15 native results after exact PR/controller/main CI and public delivery.",
+          "Use the normal controller for merge and verify exact submitted/merged source. No scientific sessions/image transfer/source reading/Store work/inference/training/promotion, paid service, historical CI retry or manual merge. Zero image payload and sessions; no old scientific/runtime allowance reclaimed."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "353"
+        ],
+        "exclusions": [
+          "No other workflow/deployment/auth/permission/retry/timeout/check changes, paid runner/service, historical run retry, manual merge, scientific data/model/truth access or PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 1073741824,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Migrate the required standard macOS native CI job from retiring macos-14 to supported macos-15, retaining the complete native checks and exact-source integration policy.",
+        "paths": [
+          ".github/workflows/ci.yml",
+          "tests/test_ci_runner.py",
+          "docs/CI_RUNNER_REPORT.md"
+        ],
+        "priority": 5,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Structural workflow coverage and unchanged native/gate controls; full required checks; all exact PR/main jobs including standard macos15 native job; complete public delivery."
+        ]
+      },
+      "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
