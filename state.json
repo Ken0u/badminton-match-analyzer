@@ -29773,6 +29773,7 @@
       }
     },
     "349": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41008430738",
       "checkpoint": {
         "branch": "codex/issue-349-complete-two-independent-coarse-scene-as",
         "progress": "Authorized source-only scene assessment remains in progress. Original independent readings/failures and all input evidence are preserved; no training or promotion."
@@ -29790,7 +29791,7 @@
         "spec_hash": "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
