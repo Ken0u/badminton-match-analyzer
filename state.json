@@ -9938,6 +9938,26 @@
       "task_id": "349",
       "verb": "submit"
     },
+    "scene353-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793402162,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "73125dce68394e2338ca4a364434dfe628e19180",
+        "branch": "codex/issue-353-stop-further-original-scene-session-disp",
+        "epoch": 1,
+        "expires_at": 1793412962,
+        "granted_at": 1793402162,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554"
+      },
+      "epoch": 1,
+      "fingerprint": "4a24d8e9294816e627aa93e7d849eb5388113f1ea34d1774a1dfe7676ce70a26",
+      "status": "granted",
+      "task_id": "353",
+      "verb": "next"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -29979,7 +29999,18 @@
       }
     },
     "353": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "73125dce68394e2338ca4a364434dfe628e19180",
+        "branch": "codex/issue-353-stop-further-original-scene-session-disp",
+        "epoch": 1,
+        "expires_at": 1793412962,
+        "granted_at": 1793402162,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554"
+      },
+      "epoch": 1,
       "planned_at": 1793336929,
       "planned_by": "Ken0u",
       "spec": {
@@ -30025,7 +30056,7 @@
         ]
       },
       "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
