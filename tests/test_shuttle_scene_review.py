@@ -587,7 +587,7 @@ def cli_module():
 
 def cli_args(tmp_path):
     (tmp_path / ".cache/worktrees").mkdir(parents=True)
-    output = tmp_path / ".cache/scene342-generated"
+    output = tmp_path / ".cache/scene349-generated"
     output.mkdir()
     return SimpleNamespace(
         root=tmp_path,
@@ -617,11 +617,12 @@ def ownership_fixture(module, args):
         "human_approval": {"spec_hash": module.SPEC_HASH},
     }
     grant = {
+        "task_number": 349,
         "task": copy.deepcopy(task),
         "session_id": claim["session_id"],
         "deadline": claim["granted_at"] + 28800,
     }
-    live = {"at": now, "paused": False, "task": task}
+    live = {"at": now, "paused": False, "task_number": 349, "task": task}
     module.write(args.ownership, live)
     return grant, live, now
 
@@ -681,6 +682,89 @@ def test_cli_renewal_does_not_extend_original_deadline(tmp_path):
     args.ownership.write_bytes(preparation.encode(live))
     with pytest.raises(ValueError, match="expired"):
         module.ownership(args, grant, now=grant["deadline"])
+
+
+@pytest.mark.parametrize("field", ["grant", "observation", "missing", "old_spec"])
+def test_continuation_rejects_predecessor_ownership(tmp_path, field):
+    module, args = cli_module(), cli_args(tmp_path)
+    grant, live, now = ownership_fixture(module, args)
+    if field == "grant":
+        grant["task_number"] = 342
+    elif field == "observation":
+        live["task_number"] = 342
+    elif field == "missing":
+        del grant["task_number"]
+    else:
+        old = "ff97c5c627bd2d1b77e22ea417a3f76a3a926602d92e542a8816f759880f23cc"
+        grant["task"]["claim"]["spec_hash"] = old
+        live["task"]["claim"]["spec_hash"] = old
+        live["task"]["human_approval"]["spec_hash"] = old
+    args.ownership.write_bytes(preparation.encode(live))
+    with pytest.raises(ValueError):
+        module.ownership(args, grant, now=now)
+
+
+def test_continuation_accepts_only_new_public_protocol():
+    module = cli_module()
+    checkout = Path(__file__).resolve().parents[1]
+    module.validate_protocol(module.read(checkout / module.PROTOCOL))
+    predecessor = checkout / "data/manifests/shuttle_scene_review_protocol_v1.json"
+    with pytest.raises(ValueError, match="Wrong frozen task"):
+        module.validate_protocol(module.read(predecessor))
+
+
+@pytest.mark.parametrize("change", ["old_issue", "old_time", "late", "author", "hash"])
+def test_continuation_rejects_old_or_unbound_timestamp(tmp_path, change):
+    module = cli_module()
+    args = SimpleNamespace(timestamp=tmp_path / "stamp.json", context_sha256="a" * 64)
+    context = {
+        "grant": {"task": {"claim": {"actor": "generated"}}},
+        "frozen_at": 100,
+        "deadline": 300,
+        "source_commit": "b" * 40,
+    }
+    stamp = {
+        "created_at": "1970-01-01T00:03:20Z",
+        "user": {"login": "generated"},
+        "html_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/349#issuecomment-1",
+        "body": args.context_sha256 + " " + context["source_commit"],
+    }
+    args.timestamp.write_bytes(preparation.encode(stamp))
+    module.published(args, context)
+    if change == "old_issue":
+        stamp["html_url"] = stamp["html_url"].replace("349#", "342#")
+    elif change == "old_time":
+        stamp["created_at"] = "1970-01-01T00:00:10Z"
+    elif change == "late":
+        stamp["created_at"] = "1970-01-01T00:05:00Z"
+    elif change == "author":
+        stamp["user"]["login"] = "different"
+    else:
+        stamp["body"] = "old context and source"
+    args.timestamp.write_bytes(preparation.encode(stamp))
+    with pytest.raises(ValueError, match="prospective"):
+        module.published(args, context)
+
+
+@pytest.mark.parametrize(
+    "relative",
+    [".cache/scene342-output", ".cache/other/scene349-output", "scene349-output"],
+)
+def test_continuation_refuses_unaccounted_output_roots(tmp_path, relative):
+    module = cli_module()
+    module.validate_output(tmp_path, tmp_path / ".cache/scene349-output")
+    with pytest.raises(ValueError, match="Task-private"):
+        module.validate_output(tmp_path, tmp_path / relative)
+
+
+def test_continuation_preserves_and_excludes_old_retained_evidence(tmp_path):
+    module, args = cli_module(), cli_args(tmp_path)
+    (args.output / "new.log").write_bytes(b"new")
+    predecessor = tmp_path / ".cache/scene342-output"
+    predecessor.mkdir()
+    (predecessor / "old.log").write_bytes(b"old preserved evidence")
+    assert module.task_bytes(tmp_path) == 3
+    assert (predecessor / "old.log").read_bytes() == b"old preserved evidence"
 
 
 def test_cli_reservation_is_durable_and_failed_attempt_cannot_be_replaced(tmp_path):
@@ -751,7 +835,7 @@ def test_cli_reservation_rejects_unapproved_lanes_and_reused_session(tmp_path):
 def test_cli_counts_failed_outputs_and_checks_retained_parent(tmp_path, monkeypatch):
     module, args = cli_module(), cli_args(tmp_path)
     (args.output / "failed.log").write_bytes(b"x" * 13)
-    worktree = tmp_path / ".cache/worktrees/scene342-generated"
+    worktree = tmp_path / ".cache/worktrees/scene349-generated"
     worktree.mkdir()
     (worktree / "generated.txt").write_bytes(b"y" * 7)
     assert module.task_bytes(tmp_path) == 20
