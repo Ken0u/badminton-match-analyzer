@@ -32,8 +32,8 @@ import prepare_shuttle_scene_review as preparation  # noqa: E402
 from badminton import shuttle_scene_preparation as shared  # noqa: E402
 from badminton import shuttle_scene_review as review  # noqa: E402
 
-PROTOCOL = "data/manifests/shuttle_scene_review_protocol_v2.json"
-SPEC_HASH = "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
+PROTOCOL = "data/manifests/shuttle_scene_review_protocol_v3.json"
+SPEC_HASH = "bc196890b261e169047b847ce06acaa6b64045648d7bfa085f1aa122979c917a"
 LANES = ("independent_a", "independent_b")
 CREDENTIALS = (*preparation.CREDENTIALS, "CODEX_THREAD_ID", "CODEX_SESSION_ID")
 ARTIFACTS = {
@@ -98,9 +98,9 @@ def require_absent(original):
 def task_bytes(root):
     """Charge every task attempt/check/worktree, including failures."""
     cache = root / ".cache"
-    parents = [p for p in cache.iterdir() if p.name.startswith("scene349")]
+    parents = [p for p in cache.iterdir() if p.name.startswith("scene359")]
     parents.extend(
-        p for p in (cache / "worktrees").iterdir() if p.name.startswith("scene349")
+        p for p in (cache / "worktrees").iterdir() if p.name.startswith("scene359")
     )
     total = 0
     for parent in parents:
@@ -128,7 +128,7 @@ def task_bytes(root):
 def validate_protocol(protocol):
     require(
         protocol.get("schema_version") == 1
-        and protocol.get("task") == 349
+        and protocol.get("task") == 359
         and protocol.get("spec_hash") == SPEC_HASH,
         "Wrong frozen task protocol",
     )
@@ -150,8 +150,8 @@ def ownership(args, grant, *, now=None):
     now = time.time() if now is None else now
     live = read(args.ownership)
     require(
-        grant.get("task_number") == 349 and live.get("task_number") == 349,
-        "Fresh task 349 grant and observation required",
+        grant.get("task_number") == 359 and live.get("task_number") == 359,
+        "Fresh task 359 grant and observation required",
     )
     require(
         type(live.get("at")) in (int, float)
@@ -315,7 +315,7 @@ def freeze(args):
     )
     context = {
         "schema_version": 1,
-        "task": 349,
+        "task": 359,
         "grant": grant,
         "deadline": deadline,
         "root": str(args.root),
@@ -396,7 +396,7 @@ def published(args, context):
     require(
         stamp["user"]["login"] == context["grant"]["task"]["claim"]["actor"]
         and stamp["html_url"].startswith(
-            "https://github.com/Ken0u/badminton-match-analyzer/issues/349#issuecomment-"
+            "https://github.com/Ken0u/badminton-match-analyzer/issues/359#issuecomment-"
         )
         and context["frozen_at"] <= created < context["deadline"]
         and args.context_sha256 in stamp["body"]
@@ -751,7 +751,7 @@ def execute(args, context, batch, lane, prior_note="", claims=None):
     require(not STOP.is_set(), "Another assessor lifetime requires observation")
     ownership(args, context["grant"])
     require(time.time() < context["deadline"] - 180, "No new session near deadline")
-    session = "scene349:" + lane + ":" + str(batch["index"]) + ":" + uuid4().hex
+    session = "scene359:" + lane + ":" + str(batch["index"]) + ":" + uuid4().hex
     message = review.assessment_prompt(
         batch, session, lane, prior_note=prior_note, claims=claims
     )
@@ -1092,7 +1092,7 @@ def admitted(args, stage, calculate):
 
     try:
         result = run_local_job(
-            store, "shuttle_scene_" + stage, "familiar-scene349", work
+            store, "shuttle_scene_" + stage, "familiar-scene359", work
         )
     except BaseException as exc:
         write(
@@ -1169,7 +1169,7 @@ def audit(args):
 
 def validate_output(root, output):
     require(
-        output.parent == root / ".cache" and output.name.startswith("scene349"),
+        output.parent == root / ".cache" and output.name.startswith("scene359"),
         "Task-private output required",
     )
 
