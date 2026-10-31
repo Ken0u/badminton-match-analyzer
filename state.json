@@ -10000,6 +10000,26 @@
       "task_id": "355",
       "verb": "human-approved"
     },
+    "scene355-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793409245,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "036bdc8f4aab0869d7e44b8f04d779990e09d530",
+        "branch": "codex/issue-355-migrate-the-required-standard-macos-nati",
+        "epoch": 1,
+        "expires_at": 1793420045,
+        "granted_at": 1793409245,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c"
+      },
+      "epoch": 1,
+      "fingerprint": "f2899328bcc54d5bfdfabbb446656b9260281984030efbb9059f9910b1796c36",
+      "status": "granted",
+      "task_id": "355",
+      "verb": "next"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30153,7 +30173,18 @@
       }
     },
     "355": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "036bdc8f4aab0869d7e44b8f04d779990e09d530",
+        "branch": "codex/issue-355-migrate-the-required-standard-macos-nati",
+        "epoch": 1,
+        "expires_at": 1793420045,
+        "granted_at": 1793409245,
+        "host_id": "MSI",
+        "session_id": "d1a16595edd7434185d81366f95e8828",
+        "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c"
+      },
+      "epoch": 1,
       "human_approval": {
         "actor": "Ken0u",
         "at": 1793407686,
@@ -30204,7 +30235,7 @@
         ]
       },
       "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
