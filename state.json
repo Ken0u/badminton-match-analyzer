@@ -11690,6 +11690,14 @@
       "task_id": "359",
       "verb": "plan"
     },
+    "spec-361-a28c26cd07b7683188e39a7d8dfac2a4885d54fadebcf9fdea3256625f6ae63c": {
+      "actor": "Ken0u",
+      "at": 1793421614,
+      "fingerprint": "ffa0b8594ea388265edcc08ff169044f89fadc1b8bc7605f545ba79b43a9ed42",
+      "status": "ready",
+      "task_id": "361",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -30513,6 +30521,56 @@
       },
       "spec_hash": "bc196890b261e169047b847ce06acaa6b64045648d7bfa085f1aa122979c917a",
       "status": "running"
+    },
+    "361": {
+      "epoch": 0,
+      "planned_at": 1793421614,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Wait for completed predecessor359 and obtain a fresh committed isolated code-only grant before implementation. Never change or restart the active359 frozen consumers/processes. Preserve its source hashes, deadline, original readings, failures, Store/process receipts, images and all earlier evidence. Search open/closed issue/PR/task/report history; retain the metadata-only operational profile as motivation, not scientific evidence.",
+          "Reproduce the repeated metadata-call overhead on a generated retained tree without private media, semantic readings, real CLI sessions or application Store. The observed359 profile charged164159370bytes and took15.257826805seconds with117766filesystem stat calls; timing is machine-specific. Use generated syscall-count controls to identify avoidable repeated metadata queries, and separately report measured before/after timing without a flaky wall-clock test or an unproven production speed guarantee.",
+          "Optimize only retained-tree traversal/accounting. Every call must freshly enumerate all existing task-prefix cache roots and matching worktrees and charge each retained regular-file occurrence plus interior link metadata exactly as before. Root symlinks/reparse points must be rejected, interior links/reparse points charged without traversal, and disappearing/unreadable entries must fail closed. Do not follow links, omit tests/failures/worktrees, cache stale sizes, swallow missing-file errors, move/archive/delete live fixtures or change prefix membership, output ceilings, reservation/write headroom or durable-write semantics.",
+          "Use meaningful generated stable-tree parity controls and independently asserted expected totals for multiple roots/worktrees, new/growing files between calls, hard links, interior links/reparse points, linked roots, disappearance and access failures. Demonstrate fewer metadata calls without changing accounting or negative guard outcomes. Existing collector/fatal-lane/source/ownership/budget/identity/Store/blind-stream/denominator/unknown checks must retain their behavior. Any test adaptation must preserve the original behavioral assertion and use real filesystem or metadata-level controls rather than deleting an assertion because its implementation hook changed.",
+          "Keep the CLI bound to its existing359 scientific task and all public scientific protocols unchanged; this software-only grant must make zero real assessment sessions eligible. Complete focused and required full checks, preserve any failures, report the measured operational limitation and repaired scope, and deliver through exact PR/controller/main and full public package/both-image verification. A future image assessment still requires its own valid owner-authorized scope, grant, prospective freeze and runtime; do not reuse expired allowances."
+        ],
+        "artifacts": {
+          "operational-budget-profile": "69ea102daea361660535a55c4b208b9265ea342596942e939ebd97d2734e202f"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "359"
+        ],
+        "exclusions": [
+          "No image transfer, scientific session/retry/replacement/continuation, source/semantic-label/model/prediction/holdout access, inference/training/promotion, application truth/data/weight changes, changed scientific protocol/eligibility/denominator/threshold/authorization/budget/signal/deadline rules, new dependencies, workflow/auth/security/deployment policy changes, paid usage, historical CI retry, manual merge, raw coordination edit or PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 536870912,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Reduce repeated retained-output scan overhead in the scene-assessment runner while preserving complete fresh accounting, fail-closed errors and every scientific/process/authorization guard.",
+        "paths": [
+          "scripts/review_shuttle_scenes.py",
+          "tests/test_shuttle_scene_review.py",
+          "docs/SHUTTLE_SCENE_BUDGET_SCAN_REPORT.md"
+        ],
+        "priority": 45,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated exact-accounting/error/link/mutation parity controls, deterministic metadata-call reduction, measured generated before/after profile, focused/full required project checks and exact PR/controller/main/public delivery. Zero scientific dispatch."
+        ]
+      },
+      "spec_hash": "4ca107b923423c5cecd02be857f8ca2b49cb1ec35ecf0efc4f3e500b3c753524",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
