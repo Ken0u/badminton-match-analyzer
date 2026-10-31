@@ -11707,6 +11707,14 @@
       "task_id": "361",
       "verb": "plan"
     },
+    "spec-362-6cb7b30fc709a80a7561eafb2031978c6e81ec03885a38dd1e29bc5677c6e07f": {
+      "actor": "Ken0u",
+      "at": 1793425890,
+      "fingerprint": "c25da584b01e8fd61990b9ad192c4c71c459bb056866976628200f9b9f49e59a",
+      "status": "ready",
+      "task_id": "362",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -30579,6 +30587,58 @@
         ]
       },
       "spec_hash": "4ca107b923423c5cecd02be857f8ca2b49cb1ec35ecf0efc4f3e500b3c753524",
+      "status": "ready"
+    },
+    "362": {
+      "epoch": 0,
+      "planned_at": 1793425890,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search current open/closed issue/PR/controller/report history and obtain a fresh committed isolated code-only grant after359 completes. Preserve its frozen consumers, processes, source images, readings, original deadlines and evidence. Do not edit or restart the active assessment. The private generated-browser handler probe is supporting software evidence only; reproduce the reported behavior in the actual mounted editor with generated media before changing production code.",
+          "On the unchanged full editor, demonstrate that focused Save and Select4corners/Calibrate buttons receive Enter activation but Space is prevented by the global key handler and invokes playback. Add an independently asserted real-browser regression for intended native Space button activation. Use generated fixture sources and isolated test storage only; no real app Store, private media, labels, inference or scientific session.",
+          "Repair global shortcut ownership so non-transport native buttons, including Save, Calibrate and event-mark controls, retain their native Space activation exactly once without accidentally starting playback or moving the source frame. Preserve Enter activation, focus, dirty drafts, explicit save behavior and saved revision/source ownership. Protect nested interactive targets and existing form fields, export controls and mini-court summary behavior. Do not invoke the button click manually or change reviewed annotations implicitly.",
+          "Preserve deliberate existing transport shortcuts and background review shortcuts, including the already-tested Space toggle while transport Next-frame has focus, arrow frame stepping,123marking and Ctrl/Cmd-S. Add explicit controls for background versus non-transport button versus form/export/summary focus. Do not silently delete the existing transport assertion or broadly disable all shortcuts to pass the new tests. Repeated events and video changes must not create duplicate handler registration or action.",
+          "Complete meaningful focused frontend tests and generated real-browser integration coverage plus required full Python/frontend/browser/repository checks. Preserve before failures and actual terminal process evidence. Document concrete trigger, corrected behavior and limits. Deliver through exact PR/controller/main checks and complete public packages/both-image verification; no manual merge. This improves editor accessibility and review integrity, not model or badminton annotation accuracy."
+        ],
+        "artifacts": {
+          "generated-key-handler-browser-probe": "c0541e541e9de9ce4d096e2ccd1c61e093288e0876822a217bbe4d9d47526c6d"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "359"
+        ],
+        "exclusions": [
+          "No scientific image transfer/session/retry/replacement, private-source/semantic-label/model/prediction/holdout access, inference/training/promotion, real application truth/data/weights changes, research restart, new dependency, workflow/auth/security/deployment policy change, paid usage, historical CI retry, manual merge, raw coordination edit or PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 536870912,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Preserve native Space activation on non-transport editor buttons instead of hijacking it for video playback.",
+        "paths": [
+          "backend/frontend/src/editor/EditorApp.tsx",
+          "backend/frontend/src/editor/keyboard.ts",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs",
+          "docs/EDITOR_KEYBOARD_REPORT.md"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual mounted generated-media before/after native-button controls; preserved transport/background/form/export/summary shortcuts; focused/full required checks; exact PR/controller/main/public delivery. No badminton accuracy claim."
+        ]
+      },
+      "spec_hash": "f95235567af9796e560a6f0a661a707deddc23acb8bec0c297e973563a8dc3f0",
       "status": "ready"
     },
     "62": {
