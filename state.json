@@ -30065,6 +30065,7 @@
       }
     },
     "353": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41153657662",
       "checkpoint": {
         "artifacts": [
           ".cache/scene353-before-v1/verification.json",
@@ -30089,7 +30090,7 @@
         "spec_hash": "95ab2fe7d560230a7a04d40a4aded21b3759b7d4c33af515beccc45cb4897554"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793408123,
