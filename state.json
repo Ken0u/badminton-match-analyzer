@@ -1,5 +1,5 @@
 {
-  "paused": true,
+  "paused": false,
   "receipts": {
     "actor-after252-plan-v1": {
       "actor": "Ken0u",
@@ -9673,6 +9673,14 @@
       "task_id": "97",
       "verb": "submit"
     },
+    "scene-next-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793413276,
+      "fingerprint": "b19a7b1f9f214b997294f5ddfc4c98de90550788a5baec9204a5d47cbf756fa4",
+      "status": "needs_human",
+      "task_id": "359",
+      "verb": "plan"
+    },
     "scene340-next-v1": {
       "actor": "Ken0u",
       "at": 1793158379,
@@ -10053,6 +10061,13 @@
       "status": "review",
       "task_id": "355",
       "verb": "submit"
+    },
+    "scene355-successful-authorized-retry-resume-v1": {
+      "actor": "Ken0u",
+      "at": 1793413276,
+      "fingerprint": "7fa0eee2c6b50a9b014d41b418328191072dcf6a756bee6b545667879535e920",
+      "status": "ok",
+      "verb": "resume"
     },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
@@ -30319,6 +30334,7 @@
       "epoch": 0,
       "planned_at": 1793412055,
       "planned_by": "github-actions[bot]",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "repair_for": "355",
       "spec": {
         "acceptance": [
@@ -30360,6 +30376,75 @@
         ]
       },
       "spec_hash": "95e383ac9e59e8c189c3891439173aabcc9b3fa165b2e93400159fe9bb8f9f01",
+      "status": "blocked"
+    },
+    "359": {
+      "epoch": 0,
+      "planned_at": 1793413276,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Search issue/PR/controller/report history and retain #342/#344/#349/#353/#355 evidence. #349 remains incomplete with seven charged attempts, 30,446,222 image bytes, six accepted sessions and one failure; 143 original slots unattempted, no adjudication, all 13,499 occurrences retained, four eligibility flags false and complete rally references 0/2. Do not reopen old runtimes, replace failed sessions or relabel old outputs as new evidence. Obtain explicit owner authorization of this exact frozen payload/destination/new runtime, followed by a fresh committed original-host grant and isolated worktree before implementation or scientific dispatch.",
+          "Use only the existing 870 unchanged 1280x864 chronological 4x4 JPEG sheets from the supplied singles/doubles videos. Bind gallery 89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37, plan 87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2 and original source hashes 970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f/c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd. Verify unchanged images/manifests/source and opaque application-truth hashes; no new image generation/download/source substitution or old semantic label/model/prediction access. Preserve all 50 views, 60 cases, 13,499 native occurrences, duplicated views, native frames, PTS/time bases and orientation.",
+          "Reuse the delivered #353 runner at 036bdc8f4aab0869d7e44b8f04d779990e09d530 or its unchanged bytes in completed #355. Keep v1/v2 protocols and all earlier reports immutable. Only update the existing CLI binding and distinct output prefixes, add a v3 immutable public protocol and aggregate report, add meaningful generated CLI regressions and include the new protocol in MANIFEST.in. Keep backend scientific validation, source/ownership/budget/identity/signal/output guards and fixed deadlines unchanged. No workflow/dependency/auth/security/deployment changes or historical CI retry. Freeze and publish exact tested consumer/invoker/prompt/schema/schedule/runtime hashes and prospective source-only commitment before any scientific dispatch; reject all stale grants/protocols/timestamps/output roots.",
+          "Only these sheets plus minimal blind source/frame/PTS/hash/caption/protocol context and the same new stream own within-view continuity note may go to the existing ChatGPT-authenticated Codex CLI, using the existing provider/model/account without a new paid API/service. Fresh original assessors must not receive old #349 labels/notes, another stream reading, model output, coordinates, component/pose/tracker data, credentials or raw videos. Record genuinely separate process/session identities. Disable project instructions, memories, shell/connectors/web for source readings as in the delivered protocol; tool-bearing/unrecognized traces fail closed. Keep all images/readings/session/process records private; publish only code/public protocol/aggregate findings.",
+          "Run a completely fresh audited 75-session schedule in each original lane, with the planned one-sheet within-view overlap: 150 original sessions and 651,237,900 image bytes. At most 75 separate fresh adjudication sessions/325,618,950 bytes may inspect only the same planned sheets needed for conflicts/unknowns after both originals are durably sealed. New ceilings are 225 sessions/976,856,850 image bytes, at most 6 MiB/20 images per session and two simultaneous original CLI processes. Every attempted launch, including failures, consumes its pre-reserved payload/session budget; no automatic scientific replacement. Including #349, cumulative familiar-source cost cannot exceed 232 attempts/1,007,303,072 image bytes. Old outputs are retained but cannot enter fresh originals.",
+          "Use the real shared Store and data:windows-primary reservation, pin real root/data before imports and preserve all original datasets/environments/weights/labels/predictions and deprecated PROGRESS edits. Preflight confirmed original-host process identities, actual job statuses and durable artifacts before Store admission; do not infer absence from an old timeout or handle. No isolated Store, competing research job, inference/training or application-truth writes. Do not archive or move output/fixture paths while any scanner or owned process uses them. Retain fatal-lane evidence, fence later dispatch and observe only the same frozen lifetimes within existing cleanup bounds. Never restart a process or replace an assessment on observation failure.",
+          "Original cells require explicit live/replay/non-play/unknown and same-camera/edit/unknown/view-start readings; preserve missing/unavailable cells and all within-stream/overlap/cross-view contradictions. A visible court does not certify live play; a metadata partition does not certify an edit. Only separate blind source-based adjudication after both originals seal may resolve eligible conflicts, retaining insufficient-detail unknowns and original readings. No majority-vote erasure or conversion of unavailable/unknown into negative or live truth. Agent scene agreement is not expert ground truth, exact native contact/identity/rally/stroke annotation or a shuttle-accuracy result. Four eligibility flags stay false and complete independent rally references stay 0/2 until separately scoped verification.",
+          "Allow at most eight hours from the fresh committed grant, 2 GiB of new retained output including checks/failures/delivery evidence and two software repair rounds. Prior outputs/clocks are preserved separately; old allowances are not reclaimed. Prospectively check schedule cost and output headroom before launch. Run focused changed-source and required full checks, independently verify terminal processes/Store seals, unchanged sources/truth and exact coverage/budgets before reporting. Stop with an explicit incomplete full-denominator result if any bound or required evidence fails. Deliver code/protocol/aggregate report through exact PR/controller/main and public package/both-image verification; no manual merge or scientific restart, promotion, paid usage or full-accuracy claim."
+        ],
+        "artifacts": {
+          "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
+          "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
+          "scene-context": "17bbb33f3cd501af65b8982080fbf73756a3f22991f863bf1e5c2e2880a40c5f",
+          "scene-gallery": "89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37",
+          "scene-plan": "87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2"
+        },
+        "capabilities": [
+          "cpu",
+          "windows",
+          "review-inputs"
+        ],
+        "dependencies": [
+          "349",
+          "353",
+          "355"
+        ],
+        "exclusions": [
+          "No other source/BWF images, new image generation/download, old semantic reading or model/prediction/holdout access, scientific replacements, native shuttle/contact/rally/stroke/player-identity truth, application truth/default/guard changes, inference/training/promotion, raw public redistribution, credentials, paid services, workflow/auth/security/dependency/deployment changes, historical CI retries, manual merge, raw coordination edits or PROGRESS edits."
+        ],
+        "limits": {
+          "max_adjudication_sessions": 75,
+          "max_assessor_sessions": 225,
+          "max_image_payload_bytes": 976856850,
+          "max_original_sessions": 150,
+          "max_output_bytes": 2147483648,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 8,
+          "paid_services": false,
+          "session_max_image_bytes": 6291456,
+          "session_max_images": 20
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Run fresh independent coarse scene assessments and bounded adjudication on the unchanged 870 familiar-source sheets using the delivered fatal-lane and terminal-observation repair; preserve all missing evidence and unknowns.",
+        "paths": [
+          "scripts/review_shuttle_scenes.py",
+          "tests/test_shuttle_scene_review.py",
+          "data/manifests/shuttle_scene_review_protocol_v3.json",
+          "docs/SHUTTLE_SCENE_FRESH_ASSESSMENT_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 40,
+        "resources": [
+          "data:windows-primary"
+        ],
+        "risk": "human",
+        "verification": [
+          "Prospectively frozen fresh independent original streams, separate adjudication, exact source/coverage/cumulative cost, immutable failures/unknowns and actual terminal Store/process evidence; source-only agent agreement is not badminton accuracy.",
+          "Meaningful focused and required full checks, exact PR/controller/main and complete public package/both-image delivery."
+        ]
+      },
+      "spec_hash": "bc196890b261e169047b847ce06acaa6b64045648d7bfa085f1aa122979c917a",
       "status": "needs_human"
     },
     "62": {
