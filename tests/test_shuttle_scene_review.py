@@ -7,6 +7,7 @@ import json
 import os
 import subprocess
 import sys
+import threading
 import time
 from pathlib import Path
 from types import SimpleNamespace
@@ -1499,3 +1500,183 @@ def test_cli_unresolved_pipe_fences_next_dispatch_even_after_parent_exit(
     assert module.STOP.is_set()
     with pytest.raises(ValueError, match="cleanly"):
         module.event_identity(tmp_path, receipt)
+
+
+@pytest.mark.parametrize("fatal_lane", ["independent_a", "independent_b"])
+@pytest.mark.parametrize("stage", ["before_reservation", "after_failed_attempt"])
+def test_cli_fatal_lane_fences_later_batches_and_preserves_first_error(
+    tmp_path, monkeypatch, fatal_lane, stage
+):
+    module, args = cli_module(), cli_args(tmp_path)
+    active, fenced = threading.Event(), threading.Event()
+    batches = [{"index": i, "view_index": 0} for i in range(3)]
+    calls = []
+    original_set = module.STOP.set
+
+    def record_fence():
+        original_set()
+        fenced.set()
+
+    monkeypatch.setattr(module.STOP, "set", record_fence)
+    monkeypatch.setattr(module, "current", lambda *a, **k: ({}, {}, batches))
+    monkeypatch.setattr(module, "published", lambda *a: None)
+    monkeypatch.setattr(
+        module, "admitted", lambda args, stage, calculate: calculate(lambda _: None)
+    )
+    monkeypatch.setattr(module.review, "assemble_lane", lambda *a: {})
+    fatal = OSError("Generated fatal lane error")
+
+    def fake_execute(args, context, batch, lane, note):
+        calls.append((lane, batch["index"]))
+        folder = args.output / "sessions" / lane / str(batch["index"])
+        if lane == fatal_lane:
+            assert active.wait(2)
+            if stage == "after_failed_attempt":
+                folder.mkdir(parents=True)
+                (folder / "failure.json").write_bytes(b"generated failed evidence")
+            raise fatal
+        active.set()
+        # On the baseline, the missing fence times out and exposes later fake
+        # launches. No real CLI, images or Store are involved in this control.
+        fenced.wait(0.3)
+        folder.mkdir(parents=True)
+        (folder / "result.json").write_bytes(b"generated completed evidence")
+        return {"status": "completed", "document": {"continuity_note": "generated"}}
+
+    monkeypatch.setattr(module, "execute", fake_execute)
+    with pytest.raises(OSError) as raised:
+        module.originals(args)
+    assert raised.value is fatal
+    assert module.STOP.is_set()
+    assert sorted(calls) == sorted([(lane, 0) for lane in module.LANES])
+    other = next(lane for lane in module.LANES if lane != fatal_lane)
+    assert (args.output / "sessions" / other / "0/result.json").read_bytes() == (
+        b"generated completed evidence"
+    )
+    if stage == "after_failed_attempt":
+        assert (
+            args.output / "sessions" / fatal_lane / "0/failure.json"
+        ).read_bytes() == (b"generated failed evidence")
+    assert not (args.output / "original-streams-seal.json").exists()
+
+
+def test_cli_fence_during_prelaunch_configuration_prevents_process(
+    tmp_path, monkeypatch
+):
+    module = cli_module()
+    args, batch, context, calls = execute_fixture(module, tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        module, "verify_cli_configuration", lambda *a: module.STOP.set()
+    )
+    result = module.execute(args, context, batch, "independent_a")
+    folder = args.output / "sessions/independent_a/000"
+    assert not calls
+    assert result["status"] == "failed"
+    assert (folder / "reservation.json").is_file()
+    assert (folder / "failure.json").is_file()
+    assert not (folder / "invocation.json").exists()
+
+
+@pytest.mark.parametrize(
+    "error", [ValueError, psutil.AccessDenied, psutil.NoSuchProcess]
+)
+@pytest.mark.parametrize("persistent", [False, True])
+def test_cli_terminal_observation_repeats_same_lifetimes_with_fixed_bound(
+    tmp_path, monkeypatch, error, persistent
+):
+    module = cli_module()
+    module.COLLECT_STOP_GRACE = 0.2
+    original = module.require_absent
+    observations = []
+
+    def generated_observation(row):
+        original(row)  # Independently prove actual absence before injecting failure.
+        observations.append(copy.deepcopy(row))
+        if persistent or len(observations) == 1:
+            raise error("generated unproved observation")
+
+    monkeypatch.setattr(module, "require_absent", generated_observation)
+    began = time.monotonic()
+    receipt = collect_generated(
+        module, tmp_path, "import time; time.sleep(.1); print('complete',flush=True)"
+    )
+    assert time.monotonic() - began < 2
+    assert sum(row == receipt["process"] for row in observations) >= 2
+    assert all(row in receipt["observed_lifetimes"] for row in observations)
+    assert receipt["exit_code"] == 0 and receipt["pipes_reached_eof"]
+    assert not receipt["bounded_stop"]
+    assert receipt["terminal_observations"][0]["unresolved"]
+    assert receipt["all_observed_processes_absent"] is (not persistent)
+    assert module.STOP.is_set() is persistent
+    assert bool(receipt["collection_errors"]) is persistent
+    assert (tmp_path / "events.jsonl").read_bytes() == (
+        b"complete\r\n" if os.name == "nt" else b"complete\n"
+    )
+
+
+def test_cli_live_recorded_descendant_after_eof_remains_failed_without_signal(
+    tmp_path,
+):
+    module = cli_module()
+    module.COLLECT_STOP_GRACE = 0.2
+    receipt = collect_generated(
+        module,
+        tmp_path,
+        "import subprocess,sys,time; "
+        "subprocess.Popen([sys.executable,'-c','import time; time.sleep(1.5)'],"
+        "stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL); time.sleep(.3)",
+    )
+    assert len(receipt["observed_lifetimes"]) >= 2
+    assert receipt["exit_code"] == 0 and receipt["pipes_reached_eof"]
+    assert not receipt["bounded_stop"]
+    assert not receipt["all_observed_processes_absent"]
+    assert receipt["collection_errors"] and module.STOP.is_set()
+    assert len(receipt["terminal_observations"]) >= 2
+    assert not (tmp_path / "bounded-stop.json").exists()
+    # Observe the same self-exiting generated lifetimes; never signal a process
+    # merely because the test's terminal proof was unresolved at its bound.
+    until = time.monotonic() + 3
+    for row in receipt["observed_lifetimes"]:
+        while True:
+            try:
+                module.require_absent(row)
+                break
+            except ValueError:
+                assert time.monotonic() < until
+                time.sleep(0.02)
+
+
+def test_cli_terminal_observation_uses_original_fixed_cleanup_allowance(
+    tmp_path, monkeypatch
+):
+    module = cli_module()
+    row = {"pid": 123, "created": 456, "cwd": "generated", "command": ["generated"]}
+    clock = [0.0]
+    monkeypatch.setattr(
+        module,
+        "time",
+        SimpleNamespace(
+            time=lambda: 1000 + clock[0],
+            monotonic=lambda: clock[0],
+            sleep=lambda seconds: clock.__setitem__(0, clock[0] + seconds),
+        ),
+    )
+    monkeypatch.setattr(module.psutil, "Process", lambda _: object())
+    monkeypatch.setattr(module, "identity", lambda _: copy.deepcopy(row))
+    monkeypatch.setattr(module, "pipe_block", lambda _: b"")
+    monkeypatch.setattr(
+        module,
+        "require_absent",
+        lambda _: (_ for _ in ()).throw(ValueError("generated persistent identity")),
+    )
+    child = SimpleNamespace(
+        pid=123, stdin=None, stdout=io.BytesIO(), stderr=io.BytesIO(), poll=lambda: 0
+    )
+    receipt = module.collect(child, "generated", tmp_path, 1119)
+    assert clock[0] == module.COLLECT_STOP_GRACE == 3.0
+    assert all(
+        item["unresolved"][0]["process"] == row
+        for item in receipt["terminal_observations"]
+    )
+    assert receipt["collection_errors"] == ["terminal_ValueError"]
+    assert not receipt["all_observed_processes_absent"] and module.STOP.is_set()
