@@ -10029,6 +10029,15 @@
       "task_id": "355",
       "verb": "next"
     },
+    "scene355-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793410253,
+      "epoch": 1,
+      "fingerprint": "fe5ef0a783f17b2258c1bc4b2ab71c1aa97936a1140a854d344aba333527a366",
+      "status": "review",
+      "task_id": "355",
+      "verb": "submit"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30212,6 +30221,7 @@
       },
       "planned_at": 1793403624,
       "planned_by": "Ken0u",
+      "pr_number": 356,
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -30255,7 +30265,13 @@
         ]
       },
       "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "036bdc8f4aab0869d7e44b8f04d779990e09d530",
+        "head_sha": "49c5b35831baa868adc6014150901ce408cb6271",
+        "pr_number": 356,
+        "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c"
+      }
     },
     "62": {
       "checkpoint": {
