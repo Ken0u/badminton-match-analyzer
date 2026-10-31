@@ -588,7 +588,7 @@ def cli_module():
 
 def cli_args(tmp_path):
     (tmp_path / ".cache/worktrees").mkdir(parents=True)
-    output = tmp_path / ".cache/scene349-generated"
+    output = tmp_path / ".cache/scene359-generated"
     output.mkdir()
     return SimpleNamespace(
         root=tmp_path,
@@ -618,12 +618,12 @@ def ownership_fixture(module, args):
         "human_approval": {"spec_hash": module.SPEC_HASH},
     }
     grant = {
-        "task_number": 349,
+        "task_number": 359,
         "task": copy.deepcopy(task),
         "session_id": claim["session_id"],
         "deadline": claim["granted_at"] + 28800,
     }
-    live = {"at": now, "paused": False, "task_number": 349, "task": task}
+    live = {"at": now, "paused": False, "task_number": 359, "task": task}
     module.write(args.ownership, live)
     return grant, live, now
 
@@ -714,6 +714,33 @@ def test_continuation_accepts_only_new_public_protocol():
         module.validate_protocol(module.read(predecessor))
 
 
+def test_fresh_task_rejects_incomplete_predecessor_protocol():
+    module = cli_module()
+    checkout = Path(__file__).resolve().parents[1]
+    predecessor = checkout / "data/manifests/shuttle_scene_review_protocol_v2.json"
+    with pytest.raises(ValueError, match="Wrong frozen task"):
+        module.validate_protocol(module.read(predecessor))
+
+
+def test_fresh_task_rejects_incomplete_predecessor_grant(tmp_path):
+    module, args = cli_module(), cli_args(tmp_path)
+    grant, live, now = ownership_fixture(module, args)
+    grant["task_number"] = live["task_number"] = 349
+    old = "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
+    grant["task"]["claim"]["spec_hash"] = old
+    live["task"]["claim"]["spec_hash"] = old
+    live["task"]["human_approval"]["spec_hash"] = old
+    args.ownership.write_bytes(preparation.encode(live))
+    with pytest.raises(ValueError, match="Fresh task"):
+        module.ownership(args, grant, now=now)
+
+
+def test_fresh_task_rejects_incomplete_predecessor_output(tmp_path):
+    module = cli_module()
+    with pytest.raises(ValueError, match="Task-private"):
+        module.validate_output(tmp_path, tmp_path / ".cache/scene349-output-v1")
+
+
 @pytest.mark.parametrize("change", ["old_issue", "old_time", "late", "author", "hash"])
 def test_continuation_rejects_old_or_unbound_timestamp(tmp_path, change):
     module = cli_module()
@@ -727,13 +754,13 @@ def test_continuation_rejects_old_or_unbound_timestamp(tmp_path, change):
     stamp = {
         "created_at": "1970-01-01T00:03:20Z",
         "user": {"login": "generated"},
-        "html_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/349#issuecomment-1",
+        "html_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/359#issuecomment-1",
         "body": args.context_sha256 + " " + context["source_commit"],
     }
     args.timestamp.write_bytes(preparation.encode(stamp))
     module.published(args, context)
     if change == "old_issue":
-        stamp["html_url"] = stamp["html_url"].replace("349#", "342#")
+        stamp["html_url"] = stamp["html_url"].replace("359#", "342#")
     elif change == "old_time":
         stamp["created_at"] = "1970-01-01T00:00:10Z"
     elif change == "late":
@@ -749,11 +776,16 @@ def test_continuation_rejects_old_or_unbound_timestamp(tmp_path, change):
 
 @pytest.mark.parametrize(
     "relative",
-    [".cache/scene342-output", ".cache/other/scene349-output", "scene349-output"],
+    [
+        ".cache/scene342-output",
+        ".cache/scene349-output",
+        ".cache/other/scene359-output",
+        "scene359-output",
+    ],
 )
 def test_continuation_refuses_unaccounted_output_roots(tmp_path, relative):
     module = cli_module()
-    module.validate_output(tmp_path, tmp_path / ".cache/scene349-output")
+    module.validate_output(tmp_path, tmp_path / ".cache/scene359-output")
     with pytest.raises(ValueError, match="Task-private"):
         module.validate_output(tmp_path, tmp_path / relative)
 
@@ -764,7 +796,11 @@ def test_continuation_preserves_and_excludes_old_retained_evidence(tmp_path):
     predecessor = tmp_path / ".cache/scene342-output"
     predecessor.mkdir()
     (predecessor / "old.log").write_bytes(b"old preserved evidence")
+    incomplete = tmp_path / ".cache/scene349-output"
+    incomplete.mkdir()
+    (incomplete / "failed.log").write_bytes(b"failed attempt retained")
     assert module.task_bytes(tmp_path) == 3
+    assert (incomplete / "failed.log").read_bytes() == b"failed attempt retained"
     assert (predecessor / "old.log").read_bytes() == b"old preserved evidence"
 
 
@@ -836,7 +872,7 @@ def test_cli_reservation_rejects_unapproved_lanes_and_reused_session(tmp_path):
 def test_cli_counts_failed_outputs_and_checks_retained_parent(tmp_path, monkeypatch):
     module, args = cli_module(), cli_args(tmp_path)
     (args.output / "failed.log").write_bytes(b"x" * 13)
-    worktree = tmp_path / ".cache/worktrees/scene349-generated"
+    worktree = tmp_path / ".cache/worktrees/scene359-generated"
     worktree.mkdir()
     (worktree / "generated.txt").write_bytes(b"y" * 7)
     assert module.task_bytes(tmp_path) == 20
