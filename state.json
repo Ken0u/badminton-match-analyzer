@@ -10000,6 +10000,15 @@
       "task_id": "355",
       "verb": "human-approved"
     },
+    "scene355-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793409468,
+      "epoch": 1,
+      "fingerprint": "c21e62a9ef650d29d4507a0bac5e6089d3c827ba54a7e5389658021637ed53cc",
+      "status": "running",
+      "task_id": "355",
+      "verb": "checkpoint"
+    },
     "scene355-next-v1": {
       "actor": "Ken0u",
       "at": 1793409245,
@@ -30173,12 +30182,23 @@
       }
     },
     "355": {
+      "checkpoint": {
+        "artifacts": [
+          ".cache/scene355-before-v1/results.xml",
+          ".cache/scene355-focused-v1/results.xml",
+          ".cache/scene353-completion-v1.json"
+        ],
+        "branch": "codex/issue-355-migrate-the-required-standard-macos-nati",
+        "head_sha": "036bdc8f4aab0869d7e44b8f04d779990e09d530",
+        "progress": "Fresh owner-approved355 epoch1 adopted after353 full verified public delivery. Only native matrix macos14->standard macos15 changed; generated baseline1failure/27preservation passes, final67focused workflow/protocol tests pass. Actual gate exercised for all required dependencies with failure/cancelled/skipped. Starting required full project checks with isolated data and exact source stability; no image session, scientific access, inference/training, retry or manual merge. Fixed355 deadline1793423645 unchanged."
+      },
+      "checkpoint_at": 1793409468,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "036bdc8f4aab0869d7e44b8f04d779990e09d530",
         "branch": "codex/issue-355-migrate-the-required-standard-macos-nati",
         "epoch": 1,
-        "expires_at": 1793420045,
+        "expires_at": 1793420268,
         "granted_at": 1793409245,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
