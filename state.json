@@ -9984,6 +9984,14 @@
       "task_id": "353",
       "verb": "submit"
     },
+    "scene355-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1793407686,
+      "fingerprint": "16460af8aea524e954d10d476bac556c4c971f1423829ca51e0362508107bae9",
+      "status": "ready",
+      "task_id": "355",
+      "verb": "human-approved"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30113,8 +30121,14 @@
     },
     "355": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1793407686,
+        "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c"
+      },
       "planned_at": 1793403624,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Preserve original checkout/PROGRESS edits, all scientific evidence and PR354 source/run history. Obtain explicit configured-owner authorization of this frozen workflow task and a committed isolated grant before implementation.",
@@ -30157,7 +30171,7 @@
         ]
       },
       "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
