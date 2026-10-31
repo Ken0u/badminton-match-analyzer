@@ -10069,6 +10069,14 @@
       "status": "ok",
       "verb": "resume"
     },
+    "scene359-authorization-v1": {
+      "actor": "Ken0u",
+      "at": 1793418434,
+      "fingerprint": "a2821f7c1963aa9bdd36b720878e76b8a954e0a085d73ec7c5deb84318943703",
+      "status": "ready",
+      "task_id": "359",
+      "verb": "human-approved"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30388,8 +30396,14 @@
     },
     "359": {
       "epoch": 0,
+      "human_approval": {
+        "actor": "Ken0u",
+        "at": 1793418434,
+        "spec_hash": "bc196890b261e169047b847ce06acaa6b64045648d7bfa085f1aa122979c917a"
+      },
       "planned_at": 1793413481,
       "planned_by": "Ken0u",
+      "repair_rounds": 0,
       "spec": {
         "acceptance": [
           "Search issue/PR/controller/report history and retain #342/#344/#349/#353/#355 evidence. #349 remains incomplete with seven charged attempts, 30,446,222 image bytes, six accepted sessions and one failure; 143 original slots unattempted, no adjudication, all 13,499 occurrences retained, four eligibility flags false and complete rally references 0/2. Do not reopen old runtimes, replace failed sessions or relabel old outputs as new evidence. Obtain explicit owner authorization of this exact frozen payload/destination/new runtime, followed by a fresh committed original-host grant and isolated worktree before implementation or scientific dispatch.",
@@ -30453,7 +30467,7 @@
         ]
       },
       "spec_hash": "bc196890b261e169047b847ce06acaa6b64045648d7bfa085f1aa122979c917a",
-      "status": "needs_human"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
