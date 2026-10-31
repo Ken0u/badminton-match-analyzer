@@ -8781,6 +8781,14 @@
       "task_id": "177",
       "verb": "repair"
     },
+    "repair-8ab8fe50d46e8ce00c73da196047a1b80b2b8ebe": {
+      "actor": "github-actions[bot]",
+      "at": 1793412055,
+      "fingerprint": "e177cbc66a4bd241566ef46945240e1604f0b66525aa4a6bd087eb443b5a6c8e",
+      "status": "needs_human",
+      "task_id": "358",
+      "verb": "repair"
+    },
     "repair-db140236b0d6d2e3cb2055db83fa676cbc3ff326": {
       "actor": "github-actions[bot]",
       "at": 1792709994,
@@ -30295,6 +30303,53 @@
         "pr_number": 356,
         "spec_hash": "e73dc74c457fe176869f3eabbbc9c3a8e497c7537bdaf5b580b2bde7b182e67c"
       }
+    },
+    "358": {
+      "epoch": 0,
+      "planned_at": 1793412055,
+      "planned_by": "github-actions[bot]",
+      "repair_for": "355",
+      "spec": {
+        "acceptance": [
+          "Preserve original checkout/PROGRESS edits, all scientific evidence and PR354 source/run history. Obtain explicit configured-owner authorization of this frozen workflow task and a committed isolated grant before implementation.",
+          "Search all open/closed issue/PR/task/report history and preserve GitHub run41145428910 job124369351515 cancellation annotation: scheduled macOS14 brownout, no runner allocated and no steps executed. Verify the official actions/runner-images issue13518 notice and standard macos15 availability; do not use larger or paid runner labels.",
+          "Change only the native CI matrix macos-14 entry to macos-15. Retain windows-2022, all native commands, Python versions, time limits, full test groups, signatures, dependency lock, required gates, permissions and controller integration. Do not weaken checks, alter retry rules or add bypass conditions.",
+          "Add focused structural regressions for standard supported macOS15 and unchanged Windows coverage, complete native commands and fail-closed gate dependencies. Validate workflow syntax, existing protocol checks and required full project checks. Report actual hosted macOS15 native results after exact PR/controller/main CI and public delivery.",
+          "Use the normal controller for merge and verify exact submitted/merged source. No scientific sessions/image transfer/source reading/Store work/inference/training/promotion, paid service, historical CI retry or manual merge. Zero image payload and sessions; no old scientific/runtime allowance reclaimed."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [],
+        "exclusions": [
+          "No other workflow/deployment/auth/permission/retry/timeout/check changes, paid runner/service, historical run retry, manual merge, scientific data/model/truth access or PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 1073741824,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Repair main verification for 8ab8fe50d46e",
+        "paths": [
+          ".github/workflows/ci.yml",
+          "tests/test_ci_runner.py",
+          "docs/CI_RUNNER_REPORT.md",
+          "tests/"
+        ],
+        "priority": 0,
+        "resources": [],
+        "risk": "human",
+        "verification": [
+          "Structural workflow coverage and unchanged native/gate controls; full required checks; all exact PR/main jobs including standard macos15 native job; complete public delivery."
+        ]
+      },
+      "spec_hash": "95e383ac9e59e8c189c3891439173aabcc9b3fa165b2e93400159fe9bb8f9f01",
+      "status": "needs_human"
     },
     "62": {
       "checkpoint": {
