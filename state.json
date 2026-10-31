@@ -10097,6 +10097,15 @@
       "task_id": "359",
       "verb": "next"
     },
+    "scene359-runtime-checkpoint-1": {
+      "actor": "Ken0u",
+      "at": 1793419015,
+      "epoch": 1,
+      "fingerprint": "82faba862ca4b9b9746febba3972748b2d73deb84c520f0926ae25f0d9a8672a",
+      "status": "running",
+      "task_id": "359",
+      "verb": "checkpoint"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30415,12 +30424,17 @@
       "status": "blocked"
     },
     "359": {
+      "checkpoint": {
+        "branch": "codex/issue-359-run-fresh-independent-coarse-scene-asses",
+        "progress": "Authorized source-only scene assessment remains in progress. Original independent readings/failures and all input evidence are preserved; no training or promotion."
+      },
+      "checkpoint_at": 1793419015,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "8ab8fe50d46e8ce00c73da196047a1b80b2b8ebe",
         "branch": "codex/issue-359-run-fresh-independent-coarse-scene-asses",
         "epoch": 1,
-        "expires_at": 1793429441,
+        "expires_at": 1793429815,
         "granted_at": 1793418641,
         "host_id": "MSI",
         "session_id": "d1a16595edd7434185d81366f95e8828",
