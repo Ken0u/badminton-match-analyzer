@@ -1848,6 +1848,15 @@
       "task_id": "370",
       "verb": "next"
     },
+    "fixture370-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793528315,
+      "epoch": 1,
+      "fingerprint": "eb8e43fdb35f507ccb8e14744dbdc1725cd4d9732895858d1c1915aabbe5ff3e",
+      "status": "review",
+      "task_id": "370",
+      "verb": "submit"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
@@ -31249,6 +31258,7 @@
       "epoch": 1,
       "planned_at": 1793526958,
       "planned_by": "Ken0u",
+      "pr_number": 371,
       "spec": {
         "acceptance": [
           "Begin only after task367's exact main and full public candidate delivery is verified and a fresh routine code-only grant is committed. Search open/closed issue, PR and task history; link incident369, repair367/PR368 and parent361 rather than duplicate their evidence. Preserve both historical failed main attempts and the separately authorized successful retry without claiming the exact host delay cause or resolved flakiness from a passing rerun.",
@@ -31289,7 +31299,13 @@
         ]
       },
       "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
+        "head_sha": "6f82c674f41011369571eb2a92c719f2a11e9ea4",
+        "pr_number": 371,
+        "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
+      }
     },
     "62": {
       "checkpoint": {
