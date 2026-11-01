@@ -3777,6 +3777,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "keyboard362-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793516083,
+      "epoch": 1,
+      "fingerprint": "3b86af88d0db21a53505b0c658859ca49bfed90a5355f234c8c8025902df79eb",
+      "status": "review",
+      "task_id": "362",
+      "verb": "submit"
+    },
     "laptop-cuda-01a16bd6-next-v1": {
       "actor": "dootz1",
       "at": 1792811564,
@@ -30793,6 +30802,7 @@
       "epoch": 1,
       "planned_at": 1793496421,
       "planned_by": "Ken0u",
+      "pr_number": 365,
       "spec": {
         "acceptance": [
           "Dependency transfer: expired scientific task359 is preserved as incomplete and superseded. Begin only after software-only363 preservation delivery is Done and a fresh grant is committed. This replaces references below to waiting for359 completion; all other original requirements remain. Search current open/closed issue/PR/controller/report history and obtain a fresh committed isolated code-only grant after359 completes. Preserve its frozen consumers, processes, source images, readings, original deadlines and evidence. Do not edit or restart the active assessment. The private generated-browser handler probe is supporting software evidence only; reproduce the reported behavior in the actual mounted editor with generated media before changing production code.",
@@ -30841,7 +30851,13 @@
         ]
       },
       "spec_hash": "ade3b7c07c987f7585d5a8d0f54234b73c0a373a6484bd7f30ef36bcf55e191b",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "c919f79983a301e09f99333f8e008e91eb972ec1",
+        "head_sha": "3f6441f4a9e0bd178a9915c8213c27d3e4f28a9d",
+        "pr_number": 365,
+        "spec_hash": "ade3b7c07c987f7585d5a8d0f54234b73c0a373a6484bd7f30ef36bcf55e191b"
+      }
     },
     "363": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41263879301",
