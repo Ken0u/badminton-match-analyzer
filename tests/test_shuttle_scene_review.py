@@ -5,6 +5,7 @@ import importlib.util
 import io
 import json
 import os
+import stat
 import subprocess
 import sys
 import threading
@@ -876,10 +877,15 @@ def test_cli_counts_failed_outputs_and_checks_retained_parent(tmp_path, monkeypa
     worktree.mkdir()
     (worktree / "generated.txt").write_bytes(b"y" * 7)
     assert module.task_bytes(tmp_path) == 20
-    original = Path.is_symlink
-    monkeypatch.setattr(
-        Path, "is_symlink", lambda path: path == args.output or original(path)
-    )
+    original = Path.lstat
+
+    def metadata(path, *call_args, **kwargs):
+        info = original(path, *call_args, **kwargs)
+        if path == args.output:
+            return SimpleNamespace(st_mode=stat.S_IFLNK, st_size=info.st_size)
+        return info
+
+    monkeypatch.setattr(Path, "lstat", metadata)
     with pytest.raises(ValueError, match="Linked"):
         module.task_bytes(tmp_path)
 
@@ -1510,10 +1516,148 @@ def test_cli_retained_pytest_links_are_charged_without_following(tmp_path, monke
     linked = args.output / "current"
     linked.mkdir()
     (linked / "target-bytes-must-not-be-read").write_bytes(b"x" * 10000)
-    original = Path.is_symlink
-    monkeypatch.setattr(Path, "is_symlink", lambda p: p == linked or original(p))
+    original = Path.lstat
+
+    def metadata(path, *args, **kwargs):
+        info = original(path, *args, **kwargs)
+        if path == linked:
+            return SimpleNamespace(st_mode=stat.S_IFLNK, st_size=info.st_size)
+        return info
+
+    monkeypatch.setattr(Path, "lstat", metadata)
     # Simulate the link marker portably; directory traversal must stop here.
     assert module.task_bytes(tmp_path) == linked.lstat().st_size
+
+
+def test_cli_retained_totals_refresh_every_root_and_file_occurrence(tmp_path):
+    module, args = cli_module(), cli_args(tmp_path)
+    (args.output / "failed.log").write_bytes(b"a" * 13)
+    nested = args.output / "nested"
+    nested.mkdir()
+    (nested / "reading.json").write_bytes(b"b" * 7)
+    worktree = tmp_path / ".cache/worktrees/scene359-checks"
+    worktree.mkdir()
+    (worktree / "test.log").write_bytes(b"c" * 11)
+    # Charge occurrences, including hard links; do not deduplicate by inode.
+    os.link(nested / "reading.json", worktree / "same-bytes.log")
+    (tmp_path / ".cache/scene359-single-file").write_bytes(b"d" * 5)
+    excluded = tmp_path / ".cache/other-task"
+    excluded.mkdir()
+    (excluded / "large.log").write_bytes(b"x" * 10000)
+    assert module.task_bytes(tmp_path) == 13 + 7 + 11 + 7 + 5
+    (nested / "reading.json").write_bytes(b"g" * 17)
+    (tmp_path / ".cache/scene359-new-root").mkdir()
+    (tmp_path / ".cache/scene359-new-root/new.log").write_bytes(b"e" * 19)
+    fresh_worktree = tmp_path / ".cache/worktrees/scene359-fresh"
+    fresh_worktree.mkdir()
+    (fresh_worktree / "new.log").write_bytes(b"f" * 23)
+    assert module.task_bytes(tmp_path) == 13 + 17 + 11 + 17 + 5 + 19 + 23
+
+
+def test_cli_retained_metadata_queries_are_bounded_per_entry(tmp_path, monkeypatch):
+    module, args = cli_module(), cli_args(tmp_path)
+    paths = [args.output, args.output / "nested"]
+    paths[1].mkdir()
+    for index in range(20):
+        path = paths[1] / f"file-{index}"
+        path.write_bytes(b"x" * (index + 1))
+        paths.append(path)
+    calls = []
+    follows_links = []
+    original = Path.stat
+
+    def observed(path, *args, **kwargs):
+        calls.append(Path(path))
+        follows_links.append(kwargs.get("follow_symlinks", True))
+        return original(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "stat", observed)
+    assert module.task_bytes(tmp_path) == 210
+    # Enumerating root directories requires no per-entry stat. Classify each
+    # retained entry from one fresh, non-following metadata result.
+    assert len(calls) == len(paths)
+    assert set(calls) == set(paths)
+    assert not any(follows_links)
+
+
+@pytest.mark.parametrize("mode", ["symlink", "reparse"])
+@pytest.mark.parametrize("at_root", [True, False])
+def test_cli_retained_link_metadata_never_traverses_targets(
+    tmp_path, monkeypatch, mode, at_root
+):
+    module, args = cli_module(), cli_args(tmp_path)
+    linked = args.output if at_root else args.output / "link"
+    if not at_root:
+        linked.mkdir()
+    (linked / "must-not-count").write_bytes(b"x" * 10000)
+    original = Path.lstat
+    enumerated = []
+    enumerate_original = Path.iterdir
+
+    def metadata(path, *args, **kwargs):
+        if path == linked:
+            return SimpleNamespace(
+                st_mode=stat.S_IFLNK if mode == "symlink" else stat.S_IFDIR,
+                st_size=37,
+                st_file_attributes=1024 if mode == "reparse" else 0,
+            )
+        return original(path, *args, **kwargs)
+
+    def enumerate_paths(path):
+        enumerated.append(path)
+        assert path != linked, "A retained link target was enumerated"
+        return enumerate_original(path)
+
+    monkeypatch.setattr(Path, "lstat", metadata)
+    monkeypatch.setattr(Path, "iterdir", enumerate_paths)
+    if at_root:
+        with pytest.raises(ValueError, match="Linked"):
+            module.task_bytes(tmp_path)
+    else:
+        assert module.task_bytes(tmp_path) == 37
+    assert linked not in enumerated
+
+
+@pytest.mark.parametrize("failure", ["disappeared", "unreadable"])
+def test_cli_retained_metadata_errors_fail_closed(tmp_path, monkeypatch, failure):
+    module, args = cli_module(), cli_args(tmp_path)
+    target = args.output / "retained.log"
+    target.write_bytes(b"charged")
+    original = Path.lstat
+
+    def metadata(path, *args, **kwargs):
+        if path == target:
+            if failure == "disappeared":
+                target.unlink()
+                return original(path, *args, **kwargs)
+            raise PermissionError("generated unreadable metadata")
+        return original(path, *args, **kwargs)
+
+    monkeypatch.setattr(Path, "lstat", metadata)
+    with pytest.raises(
+        FileNotFoundError if failure == "disappeared" else PermissionError
+    ):
+        module.task_bytes(tmp_path)
+
+
+@pytest.mark.parametrize("location", ["cache", "worktrees", "retained"])
+def test_cli_retained_enumeration_errors_fail_closed(tmp_path, monkeypatch, location):
+    module, args = cli_module(), cli_args(tmp_path)
+    target = {
+        "cache": tmp_path / ".cache",
+        "worktrees": tmp_path / ".cache/worktrees",
+        "retained": args.output,
+    }[location]
+    original = Path.iterdir
+
+    def enumerate_paths(path):
+        if path == target:
+            raise PermissionError("generated unreadable directory")
+        return original(path)
+
+    monkeypatch.setattr(Path, "iterdir", enumerate_paths)
+    with pytest.raises(PermissionError):
+        module.task_bytes(tmp_path)
 
 
 def collect_generated(
