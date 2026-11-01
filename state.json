@@ -1819,6 +1819,26 @@
       "task_id": "197",
       "verb": "submit"
     },
+    "fixture370-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793526958,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
+        "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
+        "epoch": 1,
+        "expires_at": 1793537758,
+        "granted_at": 1793526958,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
+      },
+      "epoch": 1,
+      "fingerprint": "29a8dcf7419647a87b59c84de9b3d41731e781ed167cc523e80d4ce8d74ddaba",
+      "status": "granted",
+      "task_id": "370",
+      "verb": "next"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
@@ -11927,6 +11947,14 @@
       "fingerprint": "507eacf4b143ab5bf11d2a54c6da585f73956c628b1e18850f2576b3e51e500d",
       "status": "ready",
       "task_id": "363",
+      "verb": "plan"
+    },
+    "spec-370-97aa2db9a7bc5ff9f90757d06231a6c5189c25b2d81e2ac7395629ca78c512cc": {
+      "actor": "Ken0u",
+      "at": 1793526958,
+      "fingerprint": "6f7f6c38f482e6750cfaf5d2c7a3b4125ed6cf14991157298870daec6d0cb148",
+      "status": "ready",
+      "task_id": "370",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -31186,6 +31214,63 @@
         "pr_number": 368,
         "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec"
       }
+    },
+    "370": {
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
+        "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
+        "epoch": 1,
+        "expires_at": 1793537758,
+        "granted_at": 1793526958,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
+      },
+      "epoch": 1,
+      "planned_at": 1793526958,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Begin only after task367's exact main and full public candidate delivery is verified and a fresh routine code-only grant is committed. Search open/closed issue, PR and task history; link incident369, repair367/PR368 and parent361 rather than duplicate their evidence. Preserve both historical failed main attempts and the separately authorized successful retry without claiming the exact host delay cause or resolved flakiness from a passing rerun.",
+          "Reproduce with generated inputs the diagnosed interactions: collection polling can consume the fixture's0.2s terminal allowance before the first terminal absence probe, and delayed generated setup/start-receipt writing can consume the positive file-input fixture's one-second allowance despite exit0 and complete output. Use controlled delays/clock or metadata controls, actual OS process integration where claimed and distinct synthetic controls; no private media, real assessor CLI, semantic labels or application Store.",
+          "Restructure only generated test fixtures to separate setup/collection scheduling from deliberate terminal transient/persistent observation controls. Retain every original meaningful assertion: original fixed frozen lifetimes, multiple same-process observations, EOF/output/hash/size/exit, no unintended stop in a success control, persistent fence, signal refusal on identity uncertainty, real parent/descendant absence, original real elapsed caps and original fixed production cleanup allowance. Do not reset/extend production deadlines, freeze a shared time module, treat unknown absence as success, remove assertions, skip cases, increase CI limits or implement a retry loop.",
+          "Keep real-time deadline, live-descendant, inherited-pipe, unread-input, overflow, identity-mismatch and collector-I/O failure negative controls independent from any simulated terminal clock. Add diagnostic receipts to assertions so a future failure identifies timing/EOF/absence state. A simulated control must not claim actual process proof; an integration control must independently prove original generated lifetimes terminate. Include zero/delayed observations and delayed EOF/setup controls that cover all three existing exception types and transient/persistent outcomes without relying on incidental host duration.",
+          "All production runner bytes, scientific protocols/source eligibility, budgets, clock/signal/deadline authority, application predictions/labels and workflow policies remain identical. Report generated controls and limits, run focused/full required checks and exact PR/controller/main plus source/wheel/both-public-image delivery. Keep incident369 open until its delivered diagnosis/fix is verified; make zero real scientific dispatches."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "367"
+        ],
+        "exclusions": [
+          "No production code edit, workflow/auth/security/deployment/publishing policy change, new dependencies, source/video/image/semantic-label/model/prediction access, assessor session/image transfer, real Store, inference/training/promotion, science protocol/denominator/budget/deadline change, historical CI retry, manual merge, raw coordination edit, paid service or PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 536870912,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Infrastructure",
+        "outcome": "Isolate generated collector fixture timing while retaining real process, deadline and fail-closed behavior.",
+        "paths": [
+          "tests/test_shuttle_scene_review.py",
+          "docs/SHUTTLE_SCENE_BUDGET_SCAN_REPORT.md"
+        ],
+        "priority": 35,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated clock/EOF/setup-delay controls plus actual generated process absence; retained real deadline/identity/signal negative behavior; focused/full Python and required frontend/browser/repository checks; exact PR/controller/main and complete public source/wheel/both-image verification."
+        ]
+      },
+      "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953",
+      "status": "running"
     },
     "62": {
       "checkpoint": {
