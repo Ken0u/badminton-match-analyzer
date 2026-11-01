@@ -1,5 +1,5 @@
 {
-  "paused": false,
+  "paused": true,
   "receipts": {
     "actor-after252-plan-v1": {
       "actor": "Ken0u",
@@ -30831,6 +30831,7 @@
         "base_sha": "0528ec65a3723e94556e56a0f3452e25a76a4f3b",
         "head_sha": "b4478d884526761732e83737d078e683e0fe9a27"
       },
+      "integration_error": "Merged main verification failed; repair required",
       "merge_sha": "f0a86da62b4c5f0c88ad7a49557eec87dbdcf7ac",
       "planned_at": 1793496421,
       "planned_by": "Ken0u",
