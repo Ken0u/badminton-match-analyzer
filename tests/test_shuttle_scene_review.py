@@ -1973,16 +1973,42 @@ def test_cli_fence_during_prelaunch_configuration_prevents_process(
     "error", [ValueError, psutil.AccessDenied, psutil.NoSuchProcess]
 )
 @pytest.mark.parametrize("persistent", [False, True])
+@pytest.mark.parametrize("probe_delay", [0.0, 0.25])
 def test_cli_terminal_observation_repeats_same_lifetimes_with_fixed_bound(
-    tmp_path, monkeypatch, error, persistent
+    tmp_path, monkeypatch, error, persistent, probe_delay
 ):
     module = cli_module()
     module.COLLECT_STOP_GRACE = 0.2
     original = module.require_absent
     observations = []
+    clock = SimpleNamespace(now=0.0, terminal=False, terminal_sleeps=[])
+
+    def sleep(seconds):
+        if clock.terminal:
+            clock.terminal_sleeps.append(seconds)
+        # Real terminal polling lets launcher/console lifetimes settle as well.
+        time.sleep(seconds)
+        clock.now += seconds
+
+    # Keep this fixture's monotonic allowance deterministic. Real OS absence
+    # checks still run; their scheduling delay must not decide how many
+    # simulated transient observations fit into the fixed 0.2-second control.
+    # Replace only this imported runner's clock, never the shared time module.
+    monkeypatch.setattr(
+        module,
+        "time",
+        SimpleNamespace(
+            monotonic=lambda: clock.now,
+            sleep=sleep,
+            time=time.time,
+        ),
+    )
 
     def generated_observation(row):
         original(row)  # Independently prove actual absence before injecting failure.
+        if not observations:
+            time.sleep(probe_delay)
+        clock.terminal = True
         observations.append(copy.deepcopy(row))
         if persistent or len(observations) == 1:
             raise error("generated unproved observation")
@@ -1993,6 +2019,8 @@ def test_cli_terminal_observation_repeats_same_lifetimes_with_fixed_bound(
         module, tmp_path, "import time; time.sleep(.1); print('complete',flush=True)"
     )
     assert time.monotonic() - began < 2
+    assert 0 < sum(clock.terminal_sleeps)
+    assert sum(clock.terminal_sleeps) <= module.COLLECT_STOP_GRACE + 1e-12
     assert sum(row == receipt["process"] for row in observations) >= 2
     assert all(row in receipt["observed_lifetimes"] for row in observations)
     assert receipt["exit_code"] == 0 and receipt["pipes_reached_eof"]
