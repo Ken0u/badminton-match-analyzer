@@ -1,0 +1,121 @@
+{
+  "artifacts": {
+    "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
+    "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
+    "scene-context": "17bbb33f3cd501af65b8982080fbf73756a3f22991f863bf1e5c2e2880a40c5f",
+    "scene-gallery": "89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37",
+    "scene-plan": "87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2"
+  },
+  "continuation": {
+    "cumulative_image_bytes_max": 1007303072,
+    "cumulative_sessions_max": 232,
+    "native_ci_delivery_task": 355,
+    "new_original_readings": "Fresh streams only; no prior349 labels or continuity notes enter originals.",
+    "predecessor_image_bytes": 30446222,
+    "predecessor_sessions": 7,
+    "predecessor_status": "terminal_incomplete_preserved",
+    "predecessor_task": 349,
+    "runtime": "Eight hours from task359 fresh committed grant; never reuse predecessor runtime.",
+    "software_delivery_task": 353
+  },
+  "denominators": {
+    "cases": 60,
+    "frame_occurrences": 13499,
+    "sheets": 870,
+    "views": 50
+  },
+  "destination": "existing ChatGPT-authenticated Codex CLI",
+  "documentation": [
+    "https://learn.chatgpt.com/docs/developer-commands?surface=cli"
+  ],
+  "eligibility": {
+    "dataset_redistribution_allowed": false,
+    "independent_test_allowed": false,
+    "model_deployment_allowed": false,
+    "training_allowed": false
+  },
+  "execution_rules": [
+    "Reserve each session and image payload durably before process creation. Failed sessions consume the same cap. Existing attempt directories forbid replacements.",
+    "Use one real original shared Store job and at most two concurrent independent original CLI processes; adjudication is a later separate Store stage.",
+    "Recheck current committed original-host ownership, fixed grant deadline and source/consumer hashes. Check original process lifetimes, Store terminal records and immutable artifacts before downstream stages.",
+    "Never change model/provider or add a paid service. Clear account/API environment credentials from assessor children; use the existing local ChatGPT CLI authentication.",
+    "Bound retained logs and all task outputs, including checks and failed attempts, to the granted total. Near the fixed deadline stop launching; terminate only directly verified owned process lifetimes if required for bounds."
+  ],
+  "limits": {
+    "max_adjudication_sessions": 75,
+    "max_assessor_sessions": 225,
+    "max_image_payload_bytes": 976856850,
+    "max_original_sessions": 150,
+    "max_output_bytes": 2147483648,
+    "max_repair_rounds": 2,
+    "max_runtime_hours": 8,
+    "paid_services": false,
+    "session_max_image_bytes": 6291456,
+    "session_max_images": 20
+  },
+  "name": "independent-familiar-source-scene-review-v3",
+  "remaining": "All four eligibility flags stay false; complete independent rally references remain 0/2. A separate frozen diagnostic is needed before measuring any shuttle improvement.",
+  "scene_codes": {
+    "L": "Supported live broadcast play context; a visible court alone is insufficient.",
+    "N": "Explicit non-play context such as titles, graphics or between-play presentation.",
+    "R": "Replay supported by visible source evidence.",
+    "U": "Unknown or insufficient reduced-resolution source evidence."
+  },
+  "schedule": {
+    "adjudication_image_bytes_max": 325618950,
+    "adjudication_sessions_max": 75,
+    "new_scientific_replacements": 0,
+    "original_image_bytes": 651237900,
+    "original_lanes": [
+      "independent_a",
+      "independent_b"
+    ],
+    "original_sessions": 150,
+    "overlap_sheets_within_view": 1,
+    "sessions_per_lane": 75
+  },
+  "schema_version": 1,
+  "scientific_rules": [
+    "Every actual native cell gets an explicit scene and transition code. Empty cells are not observations. Every view and duplicate native occurrence remains in the denominator.",
+    "Metadata partitions, frame coverage and visible court pixels are not verified live scenes or camera edits. Preserve transition uncertainty and thumbnail limitations.",
+    "Each original session is fresh and receives only its scheduled unchanged JPEGs, minimal native source/frame/PTS/hash/caption/protocol context, and its own lane previous continuity note within the same view.",
+    "No old labels, models, predictions, coordinates, poses, identities, other-stream reading or tool use enters original assessment. Reject tool-bearing session traces.",
+    "Both original streams and all their contradictions/failures must be sealed before fresh adjudication. Adjudication uses only targeted scheduled sheets and conflicting/unknown source-only claims, with its own source reasons.",
+    "Never use majority voting, silently resolve overlap disagreements, convert unknowns to negatives, overwrite original readings or credit unavailable original streams as independent evidence.",
+    "Coarse scene agreements remain independent agent evidence, not expert gold, exact contacts, native identities, complete rallies or deployable-model accuracy."
+  ],
+  "sources": [
+    {
+      "artifact": "familiar-source-singles",
+      "display_size": [
+        1280,
+        720
+      ],
+      "frame_count": 12023,
+      "id": "970dbd8adfe548d8",
+      "media_path": "singles.mp4",
+      "rotation": 0,
+      "sha256": "970dbd8adfe548d8b43259e283ba30d6900f16a4c429f108df435cec82bbf14f"
+    },
+    {
+      "artifact": "familiar-source-doubles",
+      "display_size": [
+        1280,
+        720
+      ],
+      "frame_count": 12148,
+      "id": "c406a1187130b845",
+      "media_path": "doubles.mp4",
+      "rotation": 0,
+      "sha256": "c406a1187130b845ca03ba807199bbebb72924566c58cc294217c56dae0af4dd"
+    }
+  ],
+  "spec_hash": "bc196890b261e169047b847ce06acaa6b64045648d7bfa085f1aa122979c917a",
+  "task": 359,
+  "transition_codes": {
+    "C": "Visible camera edit/transition into this native cell.",
+    "S": "Visible same-camera continuity from preceding native cell.",
+    "U": "Uncertain or unavailable preceding-cell continuity.",
+    "X": "First native cell of the original view; no predecessor in this view."
+  }
+}
