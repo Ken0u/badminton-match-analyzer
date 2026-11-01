@@ -3733,6 +3733,14 @@
       "task_id": "345",
       "verb": "invalidate-review"
     },
+    "invalidate-370-efbcf62521ba679c2b04b40d8c67d9835e54b33a-939780608f03ccc5bac7290a72eae54ba581cf13": {
+      "actor": "github-actions[bot]",
+      "at": 1793529840,
+      "fingerprint": "c409b12e3eb79d71fa73877cef91e9cce7e11728d652ae638a43ed339c80d99f",
+      "status": "running",
+      "task_id": "370",
+      "verb": "invalidate-review"
+    },
     "invalidate-63-67a74987a4ef39281b7c9d1be5ac6baeabd409cd-6e23ffc567a9c2c632a727acc5dbf093d00168cb": {
       "actor": "github-actions[bot]",
       "at": 1792423338,
@@ -31271,6 +31279,7 @@
       "planned_at": 1793526958,
       "planned_by": "Ken0u",
       "pr_number": 371,
+      "reason": "Update branch against current main, run checks, then resubmit for a fresh review",
       "spec": {
         "acceptance": [
           "Begin only after task367's exact main and full public candidate delivery is verified and a fresh routine code-only grant is committed. Search open/closed issue, PR and task history; link incident369, repair367/PR368 and parent361 rather than duplicate their evidence. Preserve both historical failed main attempts and the separately authorized successful retry without claiming the exact host delay cause or resolved flakiness from a passing rerun.",
@@ -31311,7 +31320,7 @@
         ]
       },
       "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953",
-      "status": "review",
+      "status": "running",
       "submission": {
         "base_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
         "head_sha": "6f82c674f41011369571eb2a92c719f2a11e9ea4",
