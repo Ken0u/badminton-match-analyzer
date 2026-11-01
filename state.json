@@ -12266,6 +12266,15 @@
       "task_id": "367",
       "verb": "next"
     },
+    "terminal367-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793521450,
+      "epoch": 1,
+      "fingerprint": "14b70a118e0b43181b30c21c5f05fa05ceacef0f8f48e4de18c65fb3cc5fba6a",
+      "status": "review",
+      "task_id": "367",
+      "verb": "submit"
+    },
     "tiling-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792933796,
@@ -31093,6 +31102,7 @@
       "epoch": 1,
       "planned_at": 1793519982,
       "planned_by": "github-actions[bot]",
+      "pr_number": 368,
       "repair_for": "361",
       "spec": {
         "acceptance": [
@@ -31134,7 +31144,13 @@
         ]
       },
       "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "f0a86da62b4c5f0c88ad7a49557eec87dbdcf7ac",
+        "head_sha": "3568990860867260fcfa93dbde493f3bd04de488",
+        "pr_number": 368,
+        "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec"
+      }
     },
     "62": {
       "checkpoint": {
