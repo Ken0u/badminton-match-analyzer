@@ -339,6 +339,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "budget361-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793518595,
+      "epoch": 1,
+      "fingerprint": "f58f804968cf330fb8814ece9b02e25641bd9e6e433ebdc138533730b4587280",
+      "status": "review",
+      "task_id": "361",
+      "verb": "submit"
+    },
     "camera-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792963398,
@@ -30803,6 +30812,7 @@
       "epoch": 1,
       "planned_at": 1793496421,
       "planned_by": "Ken0u",
+      "pr_number": 366,
       "spec": {
         "acceptance": [
           "Dependency transfer: expired scientific task359 is preserved as incomplete and superseded. Begin only after software-only363 preservation delivery is Done and a fresh grant is committed. This replaces references below to waiting for359 completion; all other original requirements remain. Wait for completed predecessor359 and obtain a fresh committed isolated code-only grant before implementation. Never change or restart the active359 frozen consumers/processes. Preserve its source hashes, deadline, original readings, failures, Store/process receipts, images and all earlier evidence. Search open/closed issue/PR/task/report history; retain the metadata-only operational profile as motivation, not scientific evidence.",
@@ -30847,7 +30857,13 @@
         ]
       },
       "spec_hash": "34feeb2c7e76a8df1c443b24256f7d529ea8b9cc1861fc8f038753a89765883c",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "0528ec65a3723e94556e56a0f3452e25a76a4f3b",
+        "head_sha": "b4478d884526761732e83737d078e683e0fe9a27",
+        "pr_number": 366,
+        "spec_hash": "34feeb2c7e76a8df1c443b24256f7d529ea8b9cc1861fc8f038753a89765883c"
+      }
     },
     "362": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41284008325",
