@@ -1863,6 +1863,12 @@
       "task_id": "370",
       "verb": "submit"
     },
+    "fixture370-submit-v2": {
+      "actor": "Ken0u",
+      "reason": "submit requires running work",
+      "status": "rejected",
+      "verb": "submit"
+    },
     "fresh-subagent-review97-d499-v4": {
       "actor": "dootz1",
       "at": 1792469751,
