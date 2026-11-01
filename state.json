@@ -1,5 +1,5 @@
 {
-  "paused": true,
+  "paused": false,
   "receipts": {
     "actor-after252-plan-v1": {
       "actor": "Ken0u",
@@ -14071,6 +14071,14 @@
       "at": 1793522070,
       "fingerprint": "962fd6073a09e2b4e949e83e46ae4601ee5df7c2ddf52b2680b4228a0903debc",
       "status": "verifying_main",
+      "task_id": "367",
+      "verb": "verify-main"
+    },
+    "verify-367-939780608f03ccc5bac7290a72eae54ba581cf13-True": {
+      "actor": "github-actions[bot]",
+      "at": 1793526538,
+      "fingerprint": "6fe02d24c3ebe6f4259c90e82ebcab7287ab9f7fa3629371b1c783cb1b670df9",
+      "status": "done",
       "task_id": "367",
       "verb": "verify-main"
     },
@@ -30933,13 +30941,14 @@
         ]
       },
       "spec_hash": "34feeb2c7e76a8df1c443b24256f7d529ea8b9cc1861fc8f038753a89765883c",
-      "status": "verifying_main",
+      "status": "done",
       "submission": {
         "base_sha": "0528ec65a3723e94556e56a0f3452e25a76a4f3b",
         "head_sha": "b4478d884526761732e83737d078e683e0fe9a27",
         "pr_number": 366,
         "spec_hash": "34feeb2c7e76a8df1c443b24256f7d529ea8b9cc1861fc8f038753a89765883c"
-      }
+      },
+      "verified_by_repair": "939780608f03ccc5bac7290a72eae54ba581cf13"
     },
     "362": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41284008325",
@@ -31115,6 +31124,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec"
       },
+      "delivery_pending": true,
       "epoch": 1,
       "integration": {
         "at": 1793522057,
@@ -31167,7 +31177,7 @@
         ]
       },
       "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec",
-      "status": "verifying_main",
+      "status": "done",
       "submission": {
         "base_sha": "f0a86da62b4c5f0c88ad7a49557eec87dbdcf7ac",
         "head_sha": "3568990860867260fcfa93dbde493f3bd04de488",
