@@ -588,7 +588,7 @@ def cli_module():
 
 def cli_args(tmp_path):
     (tmp_path / ".cache/worktrees").mkdir(parents=True)
-    output = tmp_path / ".cache/scene349-generated"
+    output = tmp_path / ".cache/scene359-generated"
     output.mkdir()
     return SimpleNamespace(
         root=tmp_path,
@@ -618,12 +618,12 @@ def ownership_fixture(module, args):
         "human_approval": {"spec_hash": module.SPEC_HASH},
     }
     grant = {
-        "task_number": 349,
+        "task_number": 359,
         "task": copy.deepcopy(task),
         "session_id": claim["session_id"],
         "deadline": claim["granted_at"] + 28800,
     }
-    live = {"at": now, "paused": False, "task_number": 349, "task": task}
+    live = {"at": now, "paused": False, "task_number": 359, "task": task}
     module.write(args.ownership, live)
     return grant, live, now
 
@@ -714,6 +714,33 @@ def test_continuation_accepts_only_new_public_protocol():
         module.validate_protocol(module.read(predecessor))
 
 
+def test_fresh_task_rejects_incomplete_predecessor_protocol():
+    module = cli_module()
+    checkout = Path(__file__).resolve().parents[1]
+    predecessor = checkout / "data/manifests/shuttle_scene_review_protocol_v2.json"
+    with pytest.raises(ValueError, match="Wrong frozen task"):
+        module.validate_protocol(module.read(predecessor))
+
+
+def test_fresh_task_rejects_incomplete_predecessor_grant(tmp_path):
+    module, args = cli_module(), cli_args(tmp_path)
+    grant, live, now = ownership_fixture(module, args)
+    grant["task_number"] = live["task_number"] = 349
+    old = "4242e1e1af6137a8a237a432f2f208ba1dafe9ac3431586b289e1f971c24db97"
+    grant["task"]["claim"]["spec_hash"] = old
+    live["task"]["claim"]["spec_hash"] = old
+    live["task"]["human_approval"]["spec_hash"] = old
+    args.ownership.write_bytes(preparation.encode(live))
+    with pytest.raises(ValueError, match="Fresh task"):
+        module.ownership(args, grant, now=now)
+
+
+def test_fresh_task_rejects_incomplete_predecessor_output(tmp_path):
+    module = cli_module()
+    with pytest.raises(ValueError, match="Task-private"):
+        module.validate_output(tmp_path, tmp_path / ".cache/scene349-output-v1")
+
+
 @pytest.mark.parametrize("change", ["old_issue", "old_time", "late", "author", "hash"])
 def test_continuation_rejects_old_or_unbound_timestamp(tmp_path, change):
     module = cli_module()
@@ -727,13 +754,13 @@ def test_continuation_rejects_old_or_unbound_timestamp(tmp_path, change):
     stamp = {
         "created_at": "1970-01-01T00:03:20Z",
         "user": {"login": "generated"},
-        "html_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/349#issuecomment-1",
+        "html_url": "https://github.com/Ken0u/badminton-match-analyzer/issues/359#issuecomment-1",
         "body": args.context_sha256 + " " + context["source_commit"],
     }
     args.timestamp.write_bytes(preparation.encode(stamp))
     module.published(args, context)
     if change == "old_issue":
-        stamp["html_url"] = stamp["html_url"].replace("349#", "342#")
+        stamp["html_url"] = stamp["html_url"].replace("359#", "342#")
     elif change == "old_time":
         stamp["created_at"] = "1970-01-01T00:00:10Z"
     elif change == "late":
@@ -749,11 +776,16 @@ def test_continuation_rejects_old_or_unbound_timestamp(tmp_path, change):
 
 @pytest.mark.parametrize(
     "relative",
-    [".cache/scene342-output", ".cache/other/scene349-output", "scene349-output"],
+    [
+        ".cache/scene342-output",
+        ".cache/scene349-output",
+        ".cache/other/scene359-output",
+        "scene359-output",
+    ],
 )
 def test_continuation_refuses_unaccounted_output_roots(tmp_path, relative):
     module = cli_module()
-    module.validate_output(tmp_path, tmp_path / ".cache/scene349-output")
+    module.validate_output(tmp_path, tmp_path / ".cache/scene359-output")
     with pytest.raises(ValueError, match="Task-private"):
         module.validate_output(tmp_path, tmp_path / relative)
 
@@ -764,7 +796,11 @@ def test_continuation_preserves_and_excludes_old_retained_evidence(tmp_path):
     predecessor = tmp_path / ".cache/scene342-output"
     predecessor.mkdir()
     (predecessor / "old.log").write_bytes(b"old preserved evidence")
+    incomplete = tmp_path / ".cache/scene349-output"
+    incomplete.mkdir()
+    (incomplete / "failed.log").write_bytes(b"failed attempt retained")
     assert module.task_bytes(tmp_path) == 3
+    assert (incomplete / "failed.log").read_bytes() == b"failed attempt retained"
     assert (predecessor / "old.log").read_bytes() == b"old preserved evidence"
 
 
@@ -836,7 +872,7 @@ def test_cli_reservation_rejects_unapproved_lanes_and_reused_session(tmp_path):
 def test_cli_counts_failed_outputs_and_checks_retained_parent(tmp_path, monkeypatch):
     module, args = cli_module(), cli_args(tmp_path)
     (args.output / "failed.log").write_bytes(b"x" * 13)
-    worktree = tmp_path / ".cache/worktrees/scene349-generated"
+    worktree = tmp_path / ".cache/worktrees/scene359-generated"
     worktree.mkdir()
     (worktree / "generated.txt").write_bytes(b"y" * 7)
     assert module.task_bytes(tmp_path) == 20
@@ -1163,6 +1199,218 @@ def test_cli_invocation_is_blind_and_removes_other_credentials(tmp_path, monkeyp
     assert (
         module.read(folder / "reservation.json")["session_id"] == result["session_id"]
     )
+
+
+def quota_events(lane, *, event_type="error", message=None):
+    message = message or "You\u2019ve hit your usage limit. Try again later."
+    failure = (
+        {"type": "error", "message": message}
+        if event_type == "error"
+        else {"type": "turn.failed", "error": {"message": message}}
+    )
+    return [
+        {"type": "thread.started", "thread_id": "generated-quota-" + lane},
+        {"type": "turn.started"},
+        failure,
+    ]
+
+
+def write_quota_events(folder, lane, *, event_type="error", message=None):
+    (folder / "events.jsonl").write_bytes(
+        b"\n".join(
+            json.dumps(e).encode()
+            for e in quota_events(lane, event_type=event_type, message=message)
+        )
+    )
+    return {**clean_receipt(), "exit_code": 1}
+
+
+@pytest.mark.parametrize("lane", ["independent_a", "independent_b", "adjudication"])
+@pytest.mark.parametrize("event_type", ["error", "turn.failed"])
+@pytest.mark.parametrize("apostrophe", ["'", "\u2019"], ids=["ascii", "curly"])
+def test_cli_quota_failure_preserves_attempt_and_fences_next_dispatch(
+    tmp_path, monkeypatch, lane, event_type, apostrophe
+):
+    module = cli_module()
+    args, batch, context, calls = execute_fixture(module, tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        module,
+        "collect",
+        lambda child, message, folder, deadline: write_quota_events(
+            folder,
+            lane,
+            event_type=event_type,
+            message=f"You{apostrophe}ve hit your usage limit. Try again later.",
+        ),
+    )
+    with pytest.raises(ValueError, match="usage limit") as first:
+        module.execute(args, context, batch, lane)
+    folder = args.output / "sessions" / lane / "000"
+    assert len(calls) == 1 and module.STOP.is_set()
+    assert module.read(folder / "result.json")["status"] == "failed"
+    assert module.read(folder / "result.json")["document"] is None
+    assert not module.read(folder / "failure.json")["replacement_allowed"]
+    assert module.read(folder / "finish.json")["exit_code"] == 1
+    reservation = (folder / "reservation.json").read_bytes()
+    with pytest.raises(ValueError, match="usage limit") as later:
+        module.execute(args, context, {**batch, "index": 1}, lane)
+    assert later.value is first.value
+    assert len(calls) == 1 and (folder / "reservation.json").read_bytes() == reservation
+    assert len(list((args.output / "sessions").glob("*/*/reservation.json"))) == 1
+
+
+def test_cli_real_generated_quota_subprocess_fences_dispatch(tmp_path, monkeypatch):
+    module = cli_module()
+    real_collect, real_popen = module.collect, subprocess.Popen
+    args, batch, context, calls = execute_fixture(module, tmp_path, monkeypatch)
+
+    def generated_collect(child, message, folder, deadline):
+        body = (
+            "import json,sys\n"
+            + "\n".join(
+                f"print(json.dumps({event!r}), flush=True)"
+                for event in quota_events("independent_a")
+            )
+            + "\nsys.exit(1)"
+        )
+        with monkeypatch.context() as standin:
+            standin.setattr(module, "collect", real_collect)
+            standin.setattr(subprocess, "Popen", real_popen)
+            return collect_generated(module, folder, body)
+
+    monkeypatch.setattr(module, "collect", generated_collect)
+    with pytest.raises(ValueError, match="usage limit"):
+        module.execute(args, context, batch, "independent_a")
+    folder = args.output / "sessions/independent_a/000"
+    receipt = module.read(folder / "finish.json")
+    assert receipt["exit_code"] == 1 and receipt["all_observed_processes_absent"]
+    assert receipt["pipes_reached_eof"] and not receipt["collection_errors"]
+    with pytest.raises(ValueError, match="usage limit"):
+        module.execute(args, context, batch, "independent_b")
+    assert len(calls) == 1
+
+
+@pytest.mark.parametrize("mode", ["ordinary_error", "agent_text", "unrecognized_event"])
+def test_cli_nonquota_or_assessor_text_cannot_claim_quota(tmp_path, monkeypatch, mode):
+    module = cli_module()
+    args, batch, context, calls = execute_fixture(module, tmp_path, monkeypatch)
+
+    def failed_collect(child, message, folder, deadline):
+        if mode == "ordinary_error":
+            return write_quota_events(
+                folder, "generated", message="Generated transport error"
+            )
+        event = {
+            "type": "item.completed" if mode == "agent_text" else "unknown.event",
+            "item": {"type": "agent_message", "text": "You've hit your usage limit."},
+            "message": "You've hit your usage limit.",
+        }
+        (folder / "events.jsonl").write_bytes(json.dumps(event).encode())
+        return clean_receipt()
+
+    monkeypatch.setattr(module, "collect", failed_collect)
+    first = module.execute(args, context, batch, "independent_a")
+    second = module.execute(args, context, batch, "independent_b")
+    assert first["status"] == second["status"] == "failed"
+    assert not module.STOP.is_set() and len(calls) == 2
+
+
+@pytest.mark.parametrize("quota_lane", ["independent_a", "independent_b", "both"])
+def test_cli_originals_quota_race_retains_already_launched_peer(
+    tmp_path, monkeypatch, quota_lane
+):
+    module = cli_module()
+    args, batch, context, calls = execute_fixture(module, tmp_path, monkeypatch)
+    batches = [batch, {**batch, "index": 1}]
+    arrived = threading.Barrier(2)
+    monkeypatch.setattr(module, "current", lambda *a, **k: (context, {}, batches))
+    monkeypatch.setattr(module, "published", lambda *a: None)
+    monkeypatch.setattr(
+        module, "admitted", lambda args, stage, calculate: calculate(lambda _: None)
+    )
+
+    def terminal(child, message, folder, deadline):
+        lane = folder.parent.name
+        arrived.wait(timeout=3)
+        if quota_lane in (lane, "both"):
+            return write_quota_events(folder, lane)
+        assert module.STOP.wait(3)
+        schema = module.read(folder / "schema.json")
+        session = schema["properties"]["session_id"]["enum"][0]
+        module.write(
+            folder / "original-final.json", reading(batch, lane, session=session)
+        )
+        events = [
+            {"type": "thread.started", "thread_id": "generated-completed-" + lane},
+            {"type": "turn.started"},
+            {"type": "turn.completed"},
+        ]
+        (folder / "events.jsonl").write_bytes(
+            b"\n".join(json.dumps(e).encode() for e in events)
+        )
+        return clean_receipt()
+
+    monkeypatch.setattr(module, "collect", terminal)
+    with pytest.raises(ValueError, match="usage limit") as original:
+        module.originals(args)
+    assert len(calls) == 2
+    assert len(list((args.output / "sessions").glob("*/*/reservation.json"))) == 2
+    assert not (args.output / "original-streams-seal.json").exists()
+    for lane in module.LANES:
+        folder = args.output / "sessions" / lane / "000"
+        result = module.read(folder / "result.json")
+        assert result["status"] == (
+            "failed" if quota_lane in (lane, "both") else "completed"
+        )
+        assert (folder / "finish.json").exists()
+        assert not (folder.parent / "001").exists()
+    with pytest.raises(ValueError, match="usage limit") as later:
+        module.execute(args, context, batch, "adjudication")
+    assert later.value is original.value and len(calls) == 2
+
+
+def test_cli_adjudication_quota_fences_remaining_needed_batches(tmp_path, monkeypatch):
+    module = cli_module()
+    args, batch, context, calls = execute_fixture(module, tmp_path, monkeypatch)
+    batches = [batch, {**batch, "index": 1}]
+    rows = [
+        {
+            "view_index": batch["view_index"],
+            "frame": m["frame"],
+            "original_a": {"readings": []},
+            "original_b": {"readings": []},
+        }
+        for sheet in batch["images"]
+        for m in sheet["members"]
+    ]
+    monkeypatch.setattr(module, "current", lambda *a, **k: (context, {}, batches))
+    monkeypatch.setattr(module, "published", lambda *a: None)
+    monkeypatch.setattr(module, "verify_originals", lambda *a: [{}, {}])
+    monkeypatch.setattr(
+        module.review,
+        "compare_lanes",
+        lambda *a: {"records": rows, "adjudication_batch_indices": [0, 1]},
+    )
+    monkeypatch.setattr(
+        module, "admitted", lambda args, stage, calculate: calculate(lambda _: None)
+    )
+    monkeypatch.setattr(
+        module,
+        "collect",
+        lambda child, message, folder, deadline: write_quota_events(
+            folder, "adjudication"
+        ),
+    )
+    with pytest.raises(ValueError, match="usage limit"):
+        module.adjudicate(args)
+    assert len(calls) == 1
+    assert (
+        module.read(args.output / "sessions/adjudication/000/result.json")["status"]
+        == "failed"
+    )
+    assert not (args.output / "sessions/adjudication/001").exists()
+    assert not (args.output / "adjudication.json").exists()
+    assert not (args.output / "comparison-final.json").exists()
 
 
 def test_cli_changed_image_blocks_launch_before_budget_charge(tmp_path, monkeypatch):
