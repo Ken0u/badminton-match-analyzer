@@ -3735,6 +3735,33 @@
       "task_id": "190",
       "verb": "submit"
     },
+    "keyboard362-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793514122,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c919f79983a301e09f99333f8e008e91eb972ec1",
+        "branch": "codex/issue-362-preserve-native-space-activation-on-non-",
+        "epoch": 1,
+        "expires_at": 1793524922,
+        "granted_at": 1793514122,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "30f501ee385db8c7d52eb1e5e143e4212485d8d2ee2a9aebe2ebcbf300b25a2a"
+      },
+      "epoch": 1,
+      "fingerprint": "4b3118b7df0d2173802aec31abba07dbd40619167db3cf21aae957fe5f960b0c",
+      "status": "granted",
+      "task_id": "362",
+      "verb": "next"
+    },
+    "keyboard362-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793514122,
+      "fingerprint": "22a8fc2442016c9a3bafb342167048198c84a170d075f430dd65ce4b02ec4fae",
+      "status": "ok",
+      "verb": "register"
+    },
     "laptop-cuda-01a16bd6-next-v1": {
       "actor": "dootz1",
       "at": 1792811564,
@@ -30737,7 +30764,18 @@
       "status": "ready"
     },
     "362": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "c919f79983a301e09f99333f8e008e91eb972ec1",
+        "branch": "codex/issue-362-preserve-native-space-activation-on-non-",
+        "epoch": 1,
+        "expires_at": 1793524922,
+        "granted_at": 1793514122,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "30f501ee385db8c7d52eb1e5e143e4212485d8d2ee2a9aebe2ebcbf300b25a2a"
+      },
+      "epoch": 1,
       "planned_at": 1793496421,
       "planned_by": "Ken0u",
       "spec": {
@@ -30786,7 +30824,7 @@
         ]
       },
       "spec_hash": "30f501ee385db8c7d52eb1e5e143e4212485d8d2ee2a9aebe2ebcbf300b25a2a",
-      "status": "ready"
+      "status": "running"
     },
     "363": {
       "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41263879301",
@@ -34113,14 +34151,16 @@
     },
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
-      "artifacts": {},
+      "artifacts": {
+        "generated-key-handler-browser-probe": "c0541e541e9de9ce4d096e2ccd1c61e093288e0876822a217bbe4d9d47526c6d"
+      },
       "capabilities": [
         "cpu",
         "windows",
         "amd64"
       ],
       "host_id": "MSI",
-      "registered_at": 1793495718,
+      "registered_at": 1793514122,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
