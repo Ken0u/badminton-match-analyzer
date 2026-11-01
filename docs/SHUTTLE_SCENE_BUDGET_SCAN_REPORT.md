@@ -118,3 +118,55 @@ Required final checks, exact repair PR/main source evidence and both the repair
 and parent delivery outcomes belong on #367/#361. No historical CI retry,
 scientific dispatch, image transfer, training or model promotion is authorized
 by this repair. The earlier scientific limitations above still apply.
+
+## Follow-up fixture phase isolation
+
+[PR #368](https://github.com/Ken0u/badminton-match-analyzer/pull/368) passed all
+12 PR jobs, but merged source `9397806` failed three Python 3.12 collector tests
+in [main run 41289435469](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41289435469).
+The owner's single bounded failed-job retry passed, followed by verified public
+delivery and controller recovery of #367/#361. Original failures remain evidence;
+the retry did not establish that their timing dependencies were repaired.
+[Incident #369](https://github.com/Ken0u/badminton-match-analyzer/issues/369) and
+[follow-up #370](https://github.com/Ken0u/badminton-match-analyzer/issues/370)
+track the diagnosis and fixture change separately.
+
+Generated controls reproduce two possible failure paths, without establishing
+the historical CI host's exact delays. Delaying only start-receipt setup by
+1.1 seconds yields complete 262,144-byte input, correct output and exit zero,
+but an unintended bounded stop under the original one-second fixture allowance.
+Deferring stdout EOF for five real polling sleeps consumes 0.25 seconds of the
+old fixture clock: all 12 delayed-EOF combinations fail its positive-terminal-
+sleep assertion. The zero-EOF-delay combinations pass in that reproduction.
+Earlier synthetic metadata controls expose the same clock interaction without
+claiming actual process absence.
+
+The positive file-input fixture now gives only its imported runner a clock that
+starts after generated start-receipt setup and then follows real elapsed time.
+Both zero-delay and 1.1-second setup-delay controls retain complete output,
+hash/size, EOF, exit, absence and no-unintended-stop assertions. The helper's
+original four-second real collection cap remains. This fixture does not test
+production setup-deadline enforcement; the real deadline and failure controls
+remain separate and unchanged.
+
+The terminal fixture's private clock now charges only terminal polling sleeps.
+Collection and controlled EOF delays still sleep in real time but cannot consume
+the simulated terminal allowance. Zero/five deferred EOF polls cross zero/0.25-
+second first-probe delays, transient/persistent outcomes and all three original
+exception types. All 24 combinations retain the original two-second real cap,
+fixed lifetimes, repeated observations, output/EOF, fence and failure assertions.
+Every injected absence error follows an independent actual OS absence check;
+the positive file-input control also checks all recorded lifetimes independently.
+Assertion diagnostics include the complete receipt, phase clock and injected
+delays. The unchanged synthetic fixed-cleanup control still consumes the original
+three-second production allowance, with no deadline reset or extra grace.
+
+Real live-descendant, inherited-pipe, unread-input, output-overflow, collection-I/O,
+identity-mismatch and signal-refusal controls keep their real clocks. Production
+runner bytes remain SHA256
+`cb41c0695f8e67b092dab0904e254641b59f42241a31c1dbb15b96313d27924e`;
+no workflow, scientific protocol, budget, source, Store, prediction or model
+changes. Required final checks and exact PR/main/public delivery evidence belong
+on #370; #369 remains open until delivered verification. No scientific session,
+image transfer, inference or training occurs, and the scientific limitations
+above remain unchanged.

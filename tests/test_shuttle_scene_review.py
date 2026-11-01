@@ -1717,22 +1717,56 @@ def collect_generated(
             child.wait(timeout=8)  # Includes a failed startup handshake.
 
 
-def test_cli_real_file_input_avoids_stalled_pipe_and_preserves_output(tmp_path):
+@pytest.mark.parametrize("setup_delay", [0.0, 1.1])
+def test_cli_real_file_input_avoids_stalled_pipe_and_preserves_output(
+    tmp_path, monkeypatch, setup_delay
+):
     module = cli_module()
+    original_write = module.write
+    clock = SimpleNamespace(collection_started=None, setup_elapsed=None)
+
+    def collection_time():
+        if clock.collection_started is None:
+            return 0.0
+        return time.monotonic() - clock.collection_started
+
+    def delayed_start(path, value):
+        if path.name == "start.json":
+            began = time.monotonic()
+            time.sleep(setup_delay)
+            original_write(path, value)
+            clock.setup_elapsed = time.monotonic() - began
+            clock.collection_started = time.monotonic()
+        else:
+            original_write(path, value)
+
+    # This positive file-input control measures collection, not start-receipt
+    # setup. Its private clock starts once setup completes, then follows real
+    # elapsed time. Production deadlines and all negative controls are untouched.
+    monkeypatch.setattr(
+        module,
+        "time",
+        SimpleNamespace(monotonic=collection_time, sleep=time.sleep, time=time.time),
+    )
+    monkeypatch.setattr(module, "write", delayed_start)
     receipt = collect_generated(
         module,
         tmp_path,
         "import sys,time; time.sleep(.15); print(len(sys.stdin.buffer.read()),flush=True)",
         message=b"x" * (256 * 1024),
     )
-    assert receipt["exit_code"] == 0 and not receipt["bounded_stop"], receipt
-    assert receipt["stdin_error"] is None and receipt["pipes_reached_eof"]
-    assert receipt["collection_errors"] == []
-    assert receipt["all_observed_processes_absent"]
+    diagnostic = {"receipt": receipt, "clock": vars(clock), "delay": setup_delay}
+    assert clock.setup_elapsed >= setup_delay, diagnostic
+    assert receipt["exit_code"] == 0 and not receipt["bounded_stop"], diagnostic
+    assert receipt["stdin_error"] is None and receipt["pipes_reached_eof"], diagnostic
+    assert receipt["collection_errors"] == [], diagnostic
+    assert receipt["all_observed_processes_absent"], diagnostic
+    for row in receipt["observed_lifetimes"]:
+        module.require_absent(row)  # Actual OS proof, independent of fixture clock.
     raw = (tmp_path / "events.jsonl").read_bytes()
-    assert raw.strip() == b"262144"
-    assert receipt["stdout"]["sha256"] == preparation.digest(raw)
-    assert receipt["stdout"]["bytes"] == len(raw)
+    assert raw.strip() == b"262144", diagnostic
+    assert receipt["stdout"]["sha256"] == preparation.digest(raw), diagnostic
+    assert receipt["stdout"]["bytes"] == len(raw), diagnostic
 
 
 def test_cli_real_unread_pipe_input_is_refused_without_blocking(tmp_path):
@@ -1974,25 +2008,30 @@ def test_cli_fence_during_prelaunch_configuration_prevents_process(
 )
 @pytest.mark.parametrize("persistent", [False, True])
 @pytest.mark.parametrize("probe_delay", [0.0, 0.25])
+@pytest.mark.parametrize("eof_polls", [0, 5])
 def test_cli_terminal_observation_repeats_same_lifetimes_with_fixed_bound(
-    tmp_path, monkeypatch, error, persistent, probe_delay
+    tmp_path, monkeypatch, error, persistent, probe_delay, eof_polls
 ):
     module = cli_module()
     module.COLLECT_STOP_GRACE = 0.2
     original = module.require_absent
     observations = []
-    clock = SimpleNamespace(now=0.0, terminal=False, terminal_sleeps=[])
+    clock = SimpleNamespace(
+        now=0.0, terminal=False, terminal_sleeps=[], collection_sleeps=[]
+    )
 
     def sleep(seconds):
         if clock.terminal:
             clock.terminal_sleeps.append(seconds)
+            clock.now += seconds
+        else:
+            clock.collection_sleeps.append(seconds)
         # Real terminal polling lets launcher/console lifetimes settle as well.
         time.sleep(seconds)
-        clock.now += seconds
 
-    # Keep this fixture's monotonic allowance deterministic. Real OS absence
-    # checks still run; their scheduling delay must not decide how many
-    # simulated transient observations fit into the fixed 0.2-second control.
+    # This fixture simulates only terminal-observation time. Collection/EOF
+    # polling and OS probe scheduling cannot consume its simulated allowance.
+    # Real OS absence checks and real elapsed caps remain independent.
     # Replace only this imported runner's clock, never the shared time module.
     monkeypatch.setattr(
         module,
@@ -2014,24 +2053,51 @@ def test_cli_terminal_observation_repeats_same_lifetimes_with_fixed_bound(
             raise error("generated unproved observation")
 
     monkeypatch.setattr(module, "require_absent", generated_observation)
+    original_pipe_block = module.pipe_block
+    deferred_eof = []
+    stdout_stream = []
+
+    def delayed_eof(stream):
+        if not stdout_stream:
+            stdout_stream.append(stream)
+        block = original_pipe_block(stream)
+        if (
+            stream is stdout_stream[0]
+            and block == b""
+            and len(deferred_eof) < eof_polls
+        ):
+            deferred_eof.append(stream)
+            return None
+        return block
+
+    monkeypatch.setattr(module, "pipe_block", delayed_eof)
     began = time.monotonic()
     receipt = collect_generated(
         module, tmp_path, "import time; time.sleep(.1); print('complete',flush=True)"
     )
-    assert time.monotonic() - began < 2
-    assert 0 < sum(clock.terminal_sleeps)
-    assert sum(clock.terminal_sleeps) <= module.COLLECT_STOP_GRACE + 1e-12
-    assert sum(row == receipt["process"] for row in observations) >= 2
-    assert all(row in receipt["observed_lifetimes"] for row in observations)
-    assert receipt["exit_code"] == 0 and receipt["pipes_reached_eof"]
-    assert not receipt["bounded_stop"]
-    assert receipt["terminal_observations"][0]["unresolved"]
-    assert receipt["all_observed_processes_absent"] is (not persistent)
-    assert module.STOP.is_set() is persistent
-    assert bool(receipt["collection_errors"]) is persistent
+    diagnostic = {
+        "receipt": receipt,
+        "clock": vars(clock),
+        "probe_delay": probe_delay,
+        "deferred_eof_polls": len(deferred_eof),
+        "elapsed": time.monotonic() - began,
+    }
+    assert diagnostic["elapsed"] < 2, diagnostic
+    assert len(deferred_eof) == eof_polls, diagnostic
+    assert sum(clock.collection_sleeps) >= eof_polls * module.COLLECT_POLL, diagnostic
+    assert 0 < sum(clock.terminal_sleeps), diagnostic
+    assert sum(clock.terminal_sleeps) <= module.COLLECT_STOP_GRACE + 1e-12, diagnostic
+    assert sum(row == receipt["process"] for row in observations) >= 2, diagnostic
+    assert all(row in receipt["observed_lifetimes"] for row in observations), diagnostic
+    assert receipt["exit_code"] == 0 and receipt["pipes_reached_eof"], diagnostic
+    assert not receipt["bounded_stop"], diagnostic
+    assert receipt["terminal_observations"][0]["unresolved"], diagnostic
+    assert receipt["all_observed_processes_absent"] is (not persistent), diagnostic
+    assert module.STOP.is_set() is persistent, diagnostic
+    assert bool(receipt["collection_errors"]) is persistent, diagnostic
     assert (tmp_path / "events.jsonl").read_bytes() == (
         b"complete\r\n" if os.name == "nt" else b"complete\n"
-    )
+    ), diagnostic
 
 
 def test_cli_live_recorded_descendant_after_eof_remains_failed_without_signal(
