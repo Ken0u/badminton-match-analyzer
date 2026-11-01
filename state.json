@@ -3735,6 +3735,12 @@
       "task_id": "190",
       "verb": "submit"
     },
+    "keyboard362-extend-assets-v1": {
+      "actor": "Ken0u",
+      "reason": "scope expansion cannot change task semantics",
+      "status": "rejected",
+      "verb": "extend-scope"
+    },
     "keyboard362-next-v1": {
       "actor": "Ken0u",
       "at": 1793514122,
