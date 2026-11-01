@@ -30800,6 +30800,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "fe8e59fd933690de886668e054c6ff08ebed3d93d02fd86861be214cf206fb6f"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 1,
       "integration": {
