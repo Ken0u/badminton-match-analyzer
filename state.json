@@ -1828,6 +1828,12 @@
       "task_id": "370",
       "verb": "checkpoint"
     },
+    "fixture370-before-checks-v2": {
+      "actor": "Ken0u",
+      "reason": "checkpoint requires running work",
+      "status": "rejected",
+      "verb": "checkpoint"
+    },
     "fixture370-next-v1": {
       "actor": "Ken0u",
       "at": 1793526958,
