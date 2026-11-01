@@ -12246,6 +12246,26 @@
       "task_id": "305",
       "verb": "submit"
     },
+    "terminal367-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793520117,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "f0a86da62b4c5f0c88ad7a49557eec87dbdcf7ac",
+        "branch": "codex/issue-367-repair-main-verification-for-f0a86da62b4",
+        "epoch": 1,
+        "expires_at": 1793530917,
+        "granted_at": 1793520117,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec"
+      },
+      "epoch": 1,
+      "fingerprint": "ccf573a1a868a8837d53f750b4c1a7892351cf9f8db524b4d5de43f6c3d62ba0",
+      "status": "granted",
+      "task_id": "367",
+      "verb": "next"
+    },
     "tiling-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792933796,
@@ -31059,7 +31079,18 @@
       }
     },
     "367": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "f0a86da62b4c5f0c88ad7a49557eec87dbdcf7ac",
+        "branch": "codex/issue-367-repair-main-verification-for-f0a86da62b4",
+        "epoch": 1,
+        "expires_at": 1793530917,
+        "granted_at": 1793520117,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec"
+      },
+      "epoch": 1,
       "planned_at": 1793519982,
       "planned_by": "github-actions[bot]",
       "repair_for": "361",
@@ -31103,7 +31134,7 @@
         ]
       },
       "spec_hash": "9d375dc650d6690b30e664f31dc97e4a694bcf5c4f0f7c01a7aae65238414aec",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
