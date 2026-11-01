@@ -2059,6 +2059,235 @@ try {
     };
   });
 
+  await check("native button keyboard ownership", async () => {
+    await selected(seeded.rally);
+    const observations = [];
+    await page.evaluate(() => {
+      window.nativeButtonClicks = [];
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest?.("button");
+        if (button)
+          window.nativeButtonClicks.push({
+            id: button.id,
+            mark: button.dataset.mark,
+          });
+      });
+    });
+    for (const key of ["Enter", "Space"]) {
+      await exact(15);
+      await page.locator("#calibrate").focus();
+      await page.evaluate(() => {
+        window.nativeButtonClicks = [];
+      });
+      await page.keyboard.press(key);
+      const state = await page.evaluate(() => ({
+        control: "calibrate",
+        selecting:
+          document.querySelector("#calibrate").textContent.trim() ===
+          "Cancel selection",
+        paused: document.querySelector("#video").paused,
+        clicks: window.nativeButtonClicks.filter((x) => x.id === "calibrate")
+          .length,
+      }));
+      // Pass only serializable browser state; the key belongs to this test loop.
+      state.key = key;
+      observations.push(state);
+      await page.evaluate(() => document.querySelector("#video").pause());
+      if (state.selecting) {
+        await page.locator("#calibrate").focus();
+        await page.keyboard.press("Enter");
+      }
+    }
+    for (const key of ["Enter", "Space"]) {
+      const before = await api(`/api/videos/${seeded.rally.id}/annotations`);
+      const availableFrame = Array.from({ length: 90 }, (_, i) => i + 1).find(
+        (frame) => !before.events.some((event) => event.frame === frame),
+      );
+      assert.notEqual(availableFrame, undefined);
+      await addShot(availableFrame, `Native ${key} save QA`);
+      await page.locator("#save").focus();
+      await page.evaluate(() => {
+        window.nativeButtonClicks = [];
+      });
+      await page.keyboard.press(key);
+      await page.waitForFunction(
+        () =>
+          document
+            .querySelector("#save-state")
+            .textContent.startsWith("Saved") ||
+          !document.querySelector("#video").paused,
+      );
+      const state = await page.evaluate(() => ({
+        control: "save",
+        paused: document.querySelector("#video").paused,
+        clicks: window.nativeButtonClicks.filter((x) => x.id === "save").length,
+      }));
+      const after = await api(`/api/videos/${seeded.rally.id}/annotations`);
+      observations.push({
+        ...state,
+        key,
+        revisionDelta: after.revision - before.revision,
+      });
+      await page.evaluate(() => document.querySelector("#video").pause());
+      if (!state.clicks) await save(); // Clean up the reproduced broken candidate.
+    }
+    await write("native-button-observations.json", observations);
+    assert.deepEqual(observations, [
+      {
+        control: "calibrate",
+        key: "Enter",
+        selecting: true,
+        paused: true,
+        clicks: 1,
+      },
+      {
+        control: "calibrate",
+        key: "Space",
+        selecting: true,
+        paused: true,
+        clicks: 1,
+      },
+      {
+        control: "save",
+        key: "Enter",
+        paused: true,
+        clicks: 1,
+        revisionDelta: 1,
+      },
+      {
+        control: "save",
+        key: "Space",
+        paused: true,
+        clicks: 1,
+        revisionDelta: 1,
+      },
+    ]);
+    const savedTruth = await api(`/api/videos/${seeded.rally.id}/annotations`);
+    for (const [kind, focus] of [
+      ["serve", "event-player"],
+      ["shot", "event-family"],
+      ["rally_end", "event-frame"],
+    ]) {
+      for (const key of ["Enter", "Space"]) {
+        await exact(40);
+        await page.locator(`[data-mark="${kind}"]`).focus();
+        await page.evaluate(() => {
+          window.nativeButtonClicks = [];
+        });
+        await page.keyboard.press(key);
+        await page.waitForFunction(
+          (id) => document.activeElement.id === id,
+          focus,
+        );
+        assert.equal(await page.locator("#event-kind").inputValue(), kind);
+        assert.equal(
+          await page.evaluate(() => document.activeElement.id),
+          focus,
+        );
+        assert.equal(
+          await page.locator("#video").evaluate((v) => v.paused),
+          true,
+        );
+        assert.equal(await page.locator("#frame-number").inputValue(), "40");
+        assert.equal(
+          await page.evaluate(
+            (kind) =>
+              window.nativeButtonClicks.filter((x) => x.mark === kind).length,
+            kind,
+          ),
+          1,
+        );
+      }
+    }
+    assert.deepEqual(
+      await api(`/api/videos/${seeded.rally.id}/annotations`),
+      savedTruth,
+    );
+    await page.locator("#calibrate").focus();
+    const originalKind = await page.locator("#event-kind").inputValue();
+    await page.keyboard.press("ArrowRight");
+    await page.keyboard.press("1");
+    assert.equal(await page.locator("#frame-number").inputValue(), "40");
+    assert.equal(await page.locator("#event-kind").inputValue(), originalKind);
+    const nested = await page.locator("#calibrate").evaluate((button) => {
+      const child = document.createElement("span");
+      child.textContent = "nested generated keyboard target";
+      button.append(child);
+      const event = new KeyboardEvent("keydown", {
+        key: " ",
+        code: "Space",
+        bubbles: true,
+        cancelable: true,
+      });
+      const unconsumed = child.dispatchEvent(event);
+      child.remove();
+      return { unconsumed, paused: document.querySelector("#video").paused };
+    });
+    assert.deepEqual(nested, { unconsumed: true, paused: true });
+    // Background review keys still work; no button owns these events.
+    await page.evaluate(() => document.activeElement.blur());
+    await page.keyboard.press("ArrowRight");
+    await imageReady(41);
+    await page.keyboard.press("ArrowLeft");
+    await imageReady(40);
+    for (const [key, kind] of [
+      ["1", "serve"],
+      ["2", "shot"],
+      ["3", "rally_end"],
+    ]) {
+      await page.evaluate(() => document.activeElement.blur());
+      await page.keyboard.press(key);
+      await page.waitForFunction(
+        (kind) => document.querySelector("#event-kind").value === kind,
+        kind,
+      );
+      await page.evaluate(
+        () => new Promise((resolve) => requestAnimationFrame(resolve)),
+      );
+      assert.equal(await page.locator("#event-kind").inputValue(), kind);
+    }
+    // Selection changes must not accumulate global handlers or duplicate saves.
+    for (const video of [oriented, seeded.rally]) {
+      await selected(video);
+      const before = await api(`/api/videos/${video.id}/annotations`);
+      const panel = page
+        .locator("details")
+        .filter({ has: page.locator("#players") });
+      if (!(await panel.evaluate((element) => element.open))) {
+        await panel.locator("summary").focus();
+        await page.keyboard.press("Space");
+      }
+      await page
+        .locator('#players input[data-field="name"]')
+        .first()
+        .fill(`Keyboard source ${video.id}`);
+      await page.locator("#save").focus();
+      await page.evaluate(() => {
+        window.nativeButtonClicks = [];
+      });
+      await page.keyboard.down("Space");
+      await page.keyboard.down("Space");
+      await page.keyboard.up("Space");
+      await page.waitForFunction(() =>
+        document.querySelector("#save-state").textContent.startsWith("Saved"),
+      );
+      const after = await api(`/api/videos/${video.id}/annotations`);
+      assert.equal(after.revision, before.revision + 1);
+      assert.equal(after.players[0].name, `Keyboard source ${video.id}`);
+      assert.equal(
+        await page.evaluate(
+          () => window.nativeButtonClicks.filter((x) => x.id === "save").length,
+        ),
+        1,
+      );
+      assert.equal(
+        await page.locator("#video").evaluate((v) => v.paused),
+        true,
+      );
+    }
+    return observations;
+  });
+
   await check("performance", async () => {
     await selected(seeded.rally);
     await page.waitForFunction(() =>

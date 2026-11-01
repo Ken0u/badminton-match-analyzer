@@ -1,5 +1,19 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { isTransportShortcutControl } from "../.test-build/editor/keyboard.js";
+
+test("only the three existing transport buttons opt into review shortcuts", () => {
+  for (const id of ["back-frame", "play", "next-frame"])
+    assert.equal(isTransportShortcutControl("BUTTON", id, true), true);
+  for (const id of ["save", "calibrate", "apply-event", "clear-court", ""])
+    assert.equal(isTransportShortcutControl("BUTTON", id, true), false);
+  for (const tag of ["INPUT", "SELECT", "TEXTAREA", "A", "SUMMARY", "SPAN"])
+    assert.equal(isTransportShortcutControl(tag, "next-frame", true), false);
+  assert.equal(
+    isTransportShortcutControl("BUTTON", "next-frame", false),
+    false,
+  );
+});
 import {
   frameAt,
   parseDocument,
