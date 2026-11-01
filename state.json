@@ -10169,6 +10169,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "scene363-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793497573,
+      "epoch": 1,
+      "fingerprint": "8985c3803ed6f2259dcdfa6863051d0b3e2dd868cb5944a2ca41367e8ff55600",
+      "status": "review",
+      "task_id": "363",
+      "verb": "submit"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30770,6 +30779,7 @@
       "epoch": 1,
       "planned_at": 1793495509,
       "planned_by": "Ken0u",
+      "pr_number": 364,
       "spec": {
         "acceptance": [
           "Retain #359/PR360 and all #342/#344/#349/#353/#355 evidence. Before claiming, preserve original branch/head 78e79cf42b0c244a8a078bccf15a225d4918df90, expired grant/deadline1793447441, exact process/Store/artifact receipts and partial labels; use normal controller release with original-host terminal proof after all recorded lifetimes are absent. Normal shared Store recovery has changed only adjudication job4a78d25606b6410eb39559510f046887 from running to interrupted; original jobcc2f3a0a0aec4f2a95e993ad777be464 remains completed. Supersede the old task/PR without deletion or merging. This new task has zero scientific execution allowance and cannot renew old clocks.",
@@ -30818,7 +30828,13 @@
         ]
       },
       "spec_hash": "fe8e59fd933690de886668e054c6ff08ebed3d93d02fd86861be214cf206fb6f",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "8ab8fe50d46e8ce00c73da196047a1b80b2b8ebe",
+        "head_sha": "29c93a087244e3cae2c910d813ddc23d7d61ebb9",
+        "pr_number": 364,
+        "spec_hash": "fe8e59fd933690de886668e054c6ff08ebed3d93d02fd86861be214cf206fb6f"
+      }
     },
     "62": {
       "checkpoint": {
