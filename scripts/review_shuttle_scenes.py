@@ -13,6 +13,7 @@ import os
 import platform
 import shutil
 import sqlite3
+import stat
 import subprocess
 import sys
 import threading
@@ -151,21 +152,22 @@ def task_bytes(root):
     )
     total = 0
     for parent in parents:
-        require(
-            not parent.is_symlink()
-            and not getattr(parent.lstat(), "st_file_attributes", 0) & 1024,
-            "Linked retained root is unsupported",
-        )
         pending = [parent]
         while pending:
             path = pending.pop()
             info = path.lstat()
-            if path.is_symlink() or getattr(info, "st_file_attributes", 0) & 1024:
+            linked = (
+                stat.S_ISLNK(info.st_mode)
+                or getattr(info, "st_file_attributes", 0) & 1024
+            )
+            if path == parent:
+                require(not linked, "Linked retained root is unsupported")
+            if linked:
                 # Pytest leaves `current` links in retained evidence. Charge
                 # their own metadata without following or deleting targets.
                 # Actual input/output writers still refuse linked paths.
                 total += info.st_size
-            elif path.is_dir():
+            elif stat.S_ISDIR(info.st_mode):
                 pending.extend(path.iterdir())
             else:
                 total += info.st_size
