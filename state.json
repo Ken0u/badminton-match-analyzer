@@ -10142,6 +10142,33 @@
       "task_id": "359",
       "verb": "release"
     },
+    "scene363-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793495718,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "8ab8fe50d46e8ce00c73da196047a1b80b2b8ebe",
+        "branch": "codex/issue-363-stop-further-source-scene-session-dispat",
+        "epoch": 1,
+        "expires_at": 1793506518,
+        "granted_at": 1793495718,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "fe8e59fd933690de886668e054c6ff08ebed3d93d02fd86861be214cf206fb6f"
+      },
+      "epoch": 1,
+      "fingerprint": "b875d097dc6ab6310593049c7d7599cfdb0ad685a0bcbb64ca59c018f7d39c45",
+      "status": "granted",
+      "task_id": "363",
+      "verb": "next"
+    },
+    "scene363-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793495718,
+      "fingerprint": "e01e0d016b24d56dc369dc305f2d6ac0cd6c424e5f50b47aff648e817887858f",
+      "status": "ok",
+      "verb": "register"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -30543,7 +30570,7 @@
       },
       "planned_at": 1793413481,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "repair_rounds": 0,
       "spec": {
         "acceptance": [
@@ -30608,7 +30635,7 @@
         ]
       },
       "spec_hash": "bc196890b261e169047b847ce06acaa6b64045648d7bfa085f1aa122979c917a",
-      "status": "ready"
+      "status": "blocked"
     },
     "361": {
       "epoch": 0,
@@ -30713,7 +30740,18 @@
       "status": "ready"
     },
     "363": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "8ab8fe50d46e8ce00c73da196047a1b80b2b8ebe",
+        "branch": "codex/issue-363-stop-further-source-scene-session-dispat",
+        "epoch": 1,
+        "expires_at": 1793506518,
+        "granted_at": 1793495718,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "fe8e59fd933690de886668e054c6ff08ebed3d93d02fd86861be214cf206fb6f"
+      },
+      "epoch": 1,
       "planned_at": 1793495509,
       "planned_by": "Ken0u",
       "spec": {
@@ -30764,7 +30802,7 @@
         ]
       },
       "spec_hash": "fe8e59fd933690de886668e054c6ff08ebed3d93d02fd86861be214cf206fb6f",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
@@ -34010,32 +34048,14 @@
     },
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
-      "artifacts": {
-        "generated-reproduction": "a0241be5802ac7446f4cf7e5d1aa04002700cc0c813cca52869ea1ea45a74a1c",
-        "rally208-dense-doubles-packet": "8f485d0c661f298c56268785d05dd681345bdfc7817bbf28552ca740f4e8f86a",
-        "rally208-dense-singles-packet": "26ce8a86d01ecff8882f917370fb2b7c1cb2cfbebdebb9f9062d7cddd1b3cae6",
-        "rally212-frozen-target-plan": "0a102b316ec6bf7d4b1362c28dd4f69044d8acddfc8066ac066a86add66dae6b",
-        "rally226-context": "795b230a8b6836742c9b776edb5ac30de47307c94e4960213c07ed1f4d4c63a6",
-        "rally226-final-integrity": "0defa2acb1e267fcf346ff38441178a4e0495156a28688e81fd13df6c5681c7e",
-        "rally228-aggregate": "853145706c9481945ae6db99ffd9af353523f5f4c4374657311faab24d86d126",
-        "rally228-context": "eab01b0f90e766fc28acfdf4ef4df6cc095125bbcb11aa487b9b91f59c322a59",
-        "rally228-index": "558fa7455a0090f797e8ff11610984d4357df7c6de41b26ad73dd723add08070",
-        "rally238-aggregate": "826270e19a43e92986afcd5464231632ddb3edbe028799823f1bb8cce37e37d1",
-        "rally238-ledger": "cdb6a7f59417a0a17eee3313619b3c77e37357b9d64e2a28107e3be9dac92b33",
-        "rally240-context": "02ebc417010c63b8bfd681c88905e51dd48907dfebb7bb11f0c2520bf2d408f0",
-        "rally240-doubles-gallery": "f8a95b425b9604d12dcc14dabd1c4382ead327266a0e47fa5cf6ff3754116e6b",
-        "rally240-plan": "c82d669a854448d0f31aa917c5d45161cee4ce0096381f2c3bae5519f9b03ed7",
-        "rally240-singles-gallery": "ac3c401a2a1ab4ad4b348e45e5a53f77fb6c3413ab848295c1f0e2c02e689bc0",
-        "rally242-aggregate": "9959e3d740d18c82e1918f1706c85d89ec7e489d00572000f7cb4cb7dbc20580"
-      },
+      "artifacts": {},
       "capabilities": [
-        "amd64",
         "cpu",
-        "review-inputs",
-        "windows"
+        "windows",
+        "amd64"
       ],
       "host_id": "MSI",
-      "registered_at": 1792881746,
+      "registered_at": 1793495718,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
