@@ -1819,6 +1819,15 @@
       "task_id": "197",
       "verb": "submit"
     },
+    "fixture370-before-checks-v1": {
+      "actor": "Ken0u",
+      "at": 1793527364,
+      "epoch": 1,
+      "fingerprint": "7562c5da535baac4b8d4b25828c1e0dfb36f9d6f47bce1a638c58a1866a89ed3",
+      "status": "running",
+      "task_id": "370",
+      "verb": "checkpoint"
+    },
     "fixture370-next-v1": {
       "actor": "Ken0u",
       "at": 1793526958,
@@ -31216,12 +31225,22 @@
       }
     },
     "370": {
+      "checkpoint": {
+        "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
+        "evidence": [
+          ".cache/worktrees/fixture370-e1/.cache/repro3.xml",
+          ".cache/worktrees/fixture370-e1/.cache/fixed.xml"
+        ],
+        "head_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
+        "summary": "#370 checkpoint: generated baseline controls reproduce an unintended bounded stop after 1.1s start-receipt setup, and all 12 five-poll delayed-EOF terminal combinations fail their positive-sleep assertion. Exact historical CI delays remain unknown. After fixture-only phase isolation, 27 targeted controls pass, including all three exception types and transient/persistent outcomes; lint/format/diff pass. Original real caps and all negative controls remain. Production runner bytes unchanged. Starting full required Python/frontend/browser/repository checks in disposable storage; zero scientific sessions, image access, Store, inference or training. Original failed attempts and authorized retry remain preserved. Branch codex/issue-370-isolate-generated-collector-fixture-timi, baseline 939780608f03ccc5bac7290a72eae54ba581cf13. Evidence: ignored fixture370-e1/.cache/repro2.xml, repro3.xml, fixed.xml and reproduction patch; final evidence follows. #369 remains open through delivered verification."
+      },
+      "checkpoint_at": 1793527364,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
         "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
         "epoch": 1,
-        "expires_at": 1793537758,
+        "expires_at": 1793538164,
         "granted_at": 1793526958,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
