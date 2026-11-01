@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { ChangeEvent, ReactNode } from "react";
 import { createEditorController } from "./controller.js";
+import { ownsEditorShortcuts } from "./keyboard.js";
 import type { EditorController, LoadedRun } from "./controller.js";
 import { Playback } from "./Playback.js";
 import type { PlaybackActions } from "./Playback.js";
@@ -422,6 +423,7 @@ export function EditorApp() {
       }
     };
     const key = (e: KeyboardEvent) => {
+      if (e.defaultPrevented) return;
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
         e.preventDefault();
         void saveWithFocus();
@@ -429,9 +431,8 @@ export function EditorApp() {
       }
       if (
         !controller.snapshot().video ||
-        ["INPUT", "TEXTAREA", "SELECT"].includes(
-          document.activeElement?.tagName ?? "",
-        )
+        !ownsEditorShortcuts(e.target instanceof Element ? e.target : null) ||
+        !ownsEditorShortcuts(document.activeElement)
       )
         return;
       if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
