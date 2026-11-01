@@ -3741,6 +3741,15 @@
       "status": "rejected",
       "verb": "extend-scope"
     },
+    "keyboard362-extend-assets-v2": {
+      "actor": "Ken0u",
+      "at": 1793515044,
+      "epoch": 1,
+      "fingerprint": "9dcf2dbe1a55e215443b4bbbf42aa9a889f30bcd87bd9ba3879fc8d6ea930485",
+      "status": "running",
+      "task_id": "362",
+      "verb": "extend-scope"
+    },
     "keyboard362-next-v1": {
       "actor": "Ken0u",
       "at": 1793514122,
@@ -30779,7 +30788,7 @@
         "granted_at": 1793514122,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "30f501ee385db8c7d52eb1e5e143e4212485d8d2ee2a9aebe2ebcbf300b25a2a"
+        "spec_hash": "ade3b7c07c987f7585d5a8d0f54234b73c0a373a6484bd7f30ef36bcf55e191b"
       },
       "epoch": 1,
       "planned_at": 1793496421,
@@ -30820,7 +30829,9 @@
           "backend/frontend/src/editor/keyboard.ts",
           "backend/frontend/tests/editor.test.mjs",
           "tests/frontend-editor.mjs",
-          "docs/EDITOR_KEYBOARD_REPORT.md"
+          "docs/EDITOR_KEYBOARD_REPORT.md",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/build-manifest.json"
         ],
         "priority": 30,
         "resources": [],
@@ -30829,7 +30840,7 @@
           "Actual mounted generated-media before/after native-button controls; preserved transport/background/form/export/summary shortcuts; focused/full required checks; exact PR/controller/main/public delivery. No badminton accuracy claim."
         ]
       },
-      "spec_hash": "30f501ee385db8c7d52eb1e5e143e4212485d8d2ee2a9aebe2ebcbf300b25a2a",
+      "spec_hash": "ade3b7c07c987f7585d5a8d0f54234b73c0a373a6484bd7f30ef36bcf55e191b",
       "status": "running"
     },
     "363": {
