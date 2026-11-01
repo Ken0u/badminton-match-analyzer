@@ -150,15 +150,27 @@ production setup-deadline enforcement; the real deadline and failure controls
 remain separate and unchanged.
 
 The terminal fixture's private clock now charges only terminal polling sleeps.
-Collection and controlled EOF delays still sleep in real time but cannot consume
-the simulated terminal allowance. Zero/five deferred EOF polls cross zero/0.25-
-second first-probe delays, transient/persistent outcomes and all three original
-exception types. All 24 combinations retain the original two-second real cap,
-fixed lifetimes, repeated observations, output/EOF, fence and failure assertions.
-Every injected absence error follows an independent actual OS absence check;
-the positive file-input control also checks all recorded lifetimes independently.
-Assertion diagnostics include the complete receipt, phase clock and injected
-delays. The unchanged synthetic fixed-cleanup control still consumes the original
+Collection still sleeps in real time but cannot consume the simulated terminal
+allowance. Its 12 original probe-delay/exception/outcome combinations retain
+the original two-second real cap, fixed lifetimes, repeated observations,
+output/EOF, fence and failure assertions. Every injected absence error follows
+an independent actual OS absence check; the positive file-input control also
+checks all recorded lifetimes independently.
+
+The initial #370 PR head `6f82c67` combined five additional real EOF sleeps with
+those integration controls. Two persistent 0.25-second-probe cases exceeded the
+unchanged two-second cap on macOS (2.142 and 2.184 seconds). Both Linux Python
+jobs passed. This failed PR attempt and its logs remain preserved, without a CI
+retry. The added artificial delay matrix now lives in a separate synthetic
+metadata control: zero/five deferred EOF polls cross zero/0.25-second modeled
+probe delays, all three exception types and transient/persistent outcomes.
+These 24 controls explicitly claim no real process or OS absence. They verify
+the collector's receipt, output hash/size/EOF, frozen metadata, repeat observations,
+terminal allowance, persistent fence and independent phase accounting without
+adding host scheduling cost to the real integration controls. No real elapsed
+cap was moved, removed or increased. Assertion messages serialize complete JSON
+receipts and phase clocks rather than relying on pytest's truncated dict repr.
+The unchanged synthetic fixed-cleanup control still consumes the original
 three-second production allowance, with no deadline reset or extra grace.
 
 Real live-descendant, inherited-pipe, unread-input, output-overflow, collection-I/O,
