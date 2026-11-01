@@ -1732,10 +1732,10 @@ def test_cli_real_file_input_avoids_stalled_pipe_and_preserves_output(
 
     def delayed_start(path, value):
         if path.name == "start.json":
-            began = time.monotonic()
+            began = time.perf_counter()
             time.sleep(setup_delay)
             original_write(path, value)
-            clock.setup_elapsed = time.monotonic() - began
+            clock.setup_elapsed = time.perf_counter() - began
             clock.collection_started = time.monotonic()
         else:
             original_write(path, value)

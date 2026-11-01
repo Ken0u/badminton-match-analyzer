@@ -173,6 +173,17 @@ receipts and phase clocks rather than relying on pytest's truncated dict repr.
 The unchanged synthetic fixed-cleanup control still consumes the original
 three-second production allowance, with no deadline reset or extra grace.
 
+The next PR source `efbcf62` passed macOS and both Linux Python suites, but the
+Windows job failed only the added setup-duration assertion: its receipt had
+exit zero, complete output/EOF, no bounded stop, no errors and proven absence,
+while the requested 1.1-second setup sleep measured 1.094 seconds between the
+recorded `monotonic()` readings. Those readings alone do not establish the exact
+physical sleep duration. Setup measurement now uses `perf_counter()` for its
+elapsed interval, retaining the requested-duration assertion and the same real
+sleep. The collector's private collection clock, original real elapsed caps and
+all production clocks are unchanged. This second failed PR source/run and full
+JSON diagnostic are preserved, without a retry or relaxed assertion.
+
 Real live-descendant, inherited-pipe, unread-input, output-overflow, collection-I/O,
 identity-mismatch and signal-refusal controls keep their real clocks. Production
 runner bytes remain SHA256
