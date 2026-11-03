@@ -1863,6 +1863,26 @@
       "task_id": "370",
       "verb": "next"
     },
+    "fixture370-reclaim-v4": {
+      "actor": "Ken0u",
+      "at": 1793743723,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
+        "branch": "codex/issue-370-isolate-generated-collector-fixture-timi-e3",
+        "epoch": 3,
+        "expires_at": 1793754523,
+        "granted_at": 1793743723,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
+      },
+      "epoch": 3,
+      "fingerprint": "4378ab10482712f53bbbd751f0f980736c7f87ec4ca99099d0a2933fb46e20d9",
+      "status": "granted",
+      "task_id": "370",
+      "verb": "next"
+    },
     "fixture370-submit-after-head-reconcile-v2": {
       "actor": "Ken0u",
       "at": 1793530004,
@@ -31290,7 +31310,18 @@
         "summary": "Interrupted after final source publication; all12 exact PR CI jobs passed at attempt1. No v3 submission occurred before lease expiry. Preserve PR371 and both earlier failed source/CI attempts. Original observer lifetimes absent; local full/focused/frontend/source evidence remains hash-identical. Code-only recovery for delivery; no code repair, CI retry, scientific runtime, Store, images, inference or training."
       },
       "checkpoint_at": 1793527364,
-      "epoch": 2,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
+        "branch": "codex/issue-370-isolate-generated-collector-fixture-timi-e3",
+        "epoch": 3,
+        "expires_at": 1793754523,
+        "granted_at": 1793743723,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
+      },
+      "epoch": 3,
       "history": [
         {
           "at": 1793743483,
@@ -31360,7 +31391,7 @@
         ]
       },
       "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953",
-      "status": "ready",
+      "status": "running",
       "submission": {
         "base_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
         "head_sha": "efbcf62521ba679c2b04b40d8c67d9835e54b33a",
