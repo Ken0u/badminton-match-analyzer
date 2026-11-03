@@ -10643,6 +10643,15 @@
       "task_id": "334",
       "verb": "submit"
     },
+    "shot374-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793746403,
+      "epoch": 1,
+      "fingerprint": "6c9cd63c87f78154b98819169d811a83acab878b073b5ecd642c58dacce87c18",
+      "status": "running",
+      "task_id": "374",
+      "verb": "checkpoint"
+    },
     "shot374-next-v1": {
       "actor": "Ken0u",
       "at": 1793745488,
@@ -31470,12 +31479,22 @@
       }
     },
     "374": {
+      "checkpoint": {
+        "branch": "codex/issue-374-show-source-linked-shot-profiles-for-sin",
+        "evidence": [
+          ".cache/shot374-fast-v4/verification.json",
+          ".cache/shot374-stage-v1/verification.json"
+        ],
+        "head_sha": "e2f082b6c85ed046b63bd20302183bf6dac02c08",
+        "summary": "Recorded profile implementation and251 frontend tests pass type/build/contract/staged-byte checks. Windows module-name precheck failure preserved; consolidated own helper/component. Production-browser and required full Python checks pending. Zero scientific sessions, models, image payload, Store or training; original root edit preserved."
+      },
+      "checkpoint_at": 1793746403,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "df284567d2930cd2f25f71c6d23003070eb454dc",
         "branch": "codex/issue-374-show-source-linked-shot-profiles-for-sin",
         "epoch": 1,
-        "expires_at": 1793756288,
+        "expires_at": 1793757203,
         "granted_at": 1793745488,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
