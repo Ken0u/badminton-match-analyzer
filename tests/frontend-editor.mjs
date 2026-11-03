@@ -989,6 +989,356 @@ try {
     };
   });
 
+  await check("shot profiles", async () => {
+    const before = await api(rallyRoot + "/annotations");
+    const make = (id, frame, player_id, family, side, status) => ({
+      id: `profile-${id}`,
+      rally_id: "profile-rally",
+      kind: "shot",
+      frame,
+      player_id,
+      family,
+      side,
+      status,
+    });
+    const canonical = [
+      {
+        id: "profile-serve",
+        rally_id: "profile-rally",
+        kind: "serve",
+        frame: 1,
+        player_id: "A",
+        status: "reviewed",
+      },
+      {
+        ...make("clear", 10, "A", "clear", "forehand", "reviewed"),
+        contact_start_frame: 8,
+        contact_end_frame: 12,
+      },
+      make("drop", 20, "B", "drop", "backhand", "corrected"),
+      make("smash", 30, "A", "smash", "forehand", "predicted"),
+      make("drive", 40, "B", "drive", "backhand", "reviewed"),
+      make("unknown", 50, null, "unknown", "unknown", "reviewed"),
+      make("other", 60, null, "other", "unknown", "reviewed"),
+      make("lift", 70, "A", "lift", "forehand", "predicted"),
+      make("net", 80, "B", "net", "unknown", "predicted"),
+      {
+        id: "profile-end",
+        rally_id: "profile-rally",
+        kind: "rally_end",
+        frame: 90,
+        status: "reviewed",
+      },
+    ];
+    const total = async (expected) => {
+      await page.waitForFunction(
+        (n) =>
+          document.querySelector("#shot-profile-selection")?.dataset.shots ===
+          String(n),
+        expected,
+      );
+    };
+    const cell = async (family, side, expected) =>
+      assert.equal(
+        await page
+          .locator(`[data-profile-cell="${family}/${side}"]`)
+          .textContent(),
+        String(expected),
+      );
+    const open = async () => {
+      if (!(await page.locator("#shot-profile").evaluate((el) => el.open)))
+        await page.locator("#shot-profile > summary").click();
+    };
+    let annotationsHandler, metadataHandler, releaseSave;
+    const annotationsRoute = `**${rallyRoot}/annotations`;
+    const metadataRoute = `**${rallyRoot}`;
+    try {
+      await api(rallyRoot + "/annotations", {
+        method: "PUT",
+        data: { ...before, events: canonical },
+      });
+      await reloadSelected(seeded.rally);
+      await open();
+      await total(5);
+      assert.equal(await page.locator("[data-profile-player]").count(), 3);
+      assert.match(
+        await page.locator("#shot-profile-coverage").textContent(),
+        /8 recorded shots: 5 reviewed\/corrected, 3 predicted, 0 unknown/,
+      );
+      await cell("clear", "forehand", 1);
+      await cell("unknown", "unknown", 1);
+      assert.equal(
+        await page
+          .locator("#shot-profile-selection")
+          .getAttribute("data-serves"),
+        "1",
+      );
+      await page.locator('[data-profile-jump="profile-clear"]').click();
+      await imageReady(10);
+      assert.equal(await page.locator("#event-frame").inputValue(), "10");
+      assert.deepEqual(
+        await Promise.all([
+          page.locator("#contact-start").inputValue(),
+          page.locator("#contact-end").inputValue(),
+        ]),
+        ["8", "12"],
+      );
+      assert.match(
+        await page.locator("#shot-profile-events").textContent(),
+        /possible contact frames 8–12/,
+      );
+      await page.locator("#event-family").selectOption("net");
+      await page.locator("#event-player").selectOption("B");
+      await page.locator("#apply-event").click();
+      await total(5);
+      await cell("clear", "forehand", 0);
+      await cell("net", "forehand", 1);
+      assert.match(
+        await page.locator("#shot-profile-snapshot").textContent(),
+        /Unsaved draft/,
+      );
+      let entered;
+      const started = new Promise((resolve) => {
+        entered = resolve;
+      });
+      const gate = new Promise((resolve) => {
+        releaseSave = resolve;
+        releases.push(resolve);
+      });
+      const savingHandler = async (route) => {
+        if (route.request().method() === "PUT") {
+          entered();
+          await gate;
+        }
+        await continueOwnedRoute(route);
+      };
+      await page.route(annotationsRoute, savingHandler);
+      const saving = save();
+      await started;
+      assert.match(
+        await page.locator("#shot-profile-snapshot").textContent(),
+        /Saving; current draft/,
+      );
+      releaseSave();
+      await saving;
+      await page.unroute(annotationsRoute, savingHandler);
+      assert.match(
+        await page.locator("#shot-profile-snapshot").textContent(),
+        /Saved annotations/,
+      );
+      const saved = await api(rallyRoot + "/annotations");
+      assert.equal(
+        await page.locator("#shot-profile").getAttribute("data-revision"),
+        String(saved.revision),
+      );
+      const exported = JSON.parse(
+        await download("#export-json", "profile-export.json"),
+      );
+      const exportedRows = csv(
+        await download("#export-csv", "profile-export.csv"),
+      );
+      assert.deepEqual(exported.annotations, saved);
+      assert.deepEqual(
+        exportedRows
+          .filter(
+            (e) =>
+              e.kind === "shot" && ["reviewed", "corrected"].includes(e.status),
+          )
+          .map((e) => e.id)
+          .sort(),
+        [
+          "profile-clear",
+          "profile-drop",
+          "profile-drive",
+          "profile-unknown",
+          "profile-other",
+        ].sort(),
+      );
+      assert.equal(
+        exportedRows.find((e) => e.id === "profile-clear").family,
+        "net",
+      );
+      assert.equal(
+        exportedRows.find((e) => e.id === "profile-clear").player_id,
+        "B",
+      );
+      await page.locator('[data-profile-jump="profile-drop"]').click();
+      await page.locator("#event-family").selectOption("smash");
+      await page.locator("#apply-event").click();
+      await cell("smash", "backhand", 1);
+      page.once("dialog", (dialog) => dialog.accept());
+      await page.locator("#reload-annotations").click();
+      await page.waitForFunction(() =>
+        document
+          .querySelector("#shot-profile-snapshot")
+          ?.textContent.includes("Saved annotations"),
+      );
+      await open();
+      await cell("smash", "backhand", 0);
+      await cell("drop", "backhand", 1);
+      await page.locator('[data-profile-jump="profile-clear"]').click();
+      await page.locator("#delete-event").click();
+      await total(4);
+      await addShot(15, "Generated profile addition", "lift", "forehand");
+      await total(5);
+      await cell("lift", "forehand", 1);
+      await save();
+      await selected(oriented);
+      await open();
+      await total(1);
+      assert.equal(
+        await page.locator("#shot-profile").getAttribute("data-video"),
+        oriented.id,
+      );
+      assert.equal(
+        await page.locator("#shot-profile-review").inputValue(),
+        "reviewed",
+      );
+      await selected(seeded.rally);
+      await open();
+      const actual = await api(rallyRoot + "/annotations");
+      let reading = {
+        ...actual,
+        mode: "doubles",
+        players: [
+          ...actual.players,
+          { id: "C", name: "Third", team: "T1" },
+          { id: "D", name: "Fourth", team: "T2" },
+        ],
+        events: canonical.map((e) =>
+          e.id === "profile-smash"
+            ? { ...e, player_id: "C" }
+            : e.id === "profile-drive"
+              ? { ...e, player_id: "D" }
+              : e.id === "profile-other"
+                ? { ...e, player_id: "orphan" }
+                : e.id === "profile-lift"
+                  ? { ...e, status: undefined }
+                  : e,
+        ),
+      };
+      annotationsHandler = async (route) => {
+        assert.equal(
+          route.request().method(),
+          "GET",
+          "Synthetic doubles readings must never be saved",
+        );
+        await route.fulfill({ json: reading });
+      };
+      metadataHandler = async (route) => {
+        const response = await route.fetch();
+        await route.fulfill({
+          response,
+          json: { ...(await response.json()), mode: "doubles" },
+        });
+      };
+      await page.route(annotationsRoute, annotationsHandler);
+      await page.route(metadataRoute, metadataHandler);
+      await reloadSelected(seeded.rally);
+      await open();
+      await total(5);
+      assert.equal(await page.locator("[data-profile-player]").count(), 5);
+      assert.equal(
+        await page
+          .locator('[data-profile-player="C"] td')
+          .first()
+          .textContent(),
+        "0",
+      );
+      assert.match(
+        await page.locator("#shot-profile-coverage").textContent(),
+        /8 recorded shots: 5 reviewed\/corrected, 2 predicted, 1 unknown/,
+      );
+      assert.match(
+        await page.locator("#shot-profile-coverage").textContent(),
+        /2 included shots have unresolved hitters/,
+      );
+      await page.locator("#shot-profile-review").selectOption("all");
+      await total(8);
+      await page
+        .locator("#shot-profile-hitter")
+        .selectOption({ label: "Third (C)" });
+      await total(1);
+      await cell("smash", "forehand", 1);
+      await page.locator('[data-profile-jump="profile-smash"]').focus();
+      await page.keyboard.press("Space");
+      await imageReady(30);
+      assert.equal(await page.locator("#event-frame").inputValue(), "30");
+      const summary = page.locator("#shot-profile > summary");
+      await summary.focus();
+      await page.keyboard.press("Space");
+      assert.equal(
+        await page.locator("#shot-profile").evaluate((el) => el.open),
+        false,
+      );
+      await page.keyboard.press("Enter");
+      assert.equal(
+        await page.locator("#shot-profile").evaluate((el) => el.open),
+        true,
+      );
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.screenshot({
+        path: path.join(evidence, "shot-profile-mobile.png"),
+        fullPage: true,
+      });
+      assert.equal(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth + 1,
+        ),
+        true,
+      );
+      const extraFrames = [12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 23, 24];
+      reading = {
+        ...reading,
+        events: [
+          ...reading.events,
+          ...extraFrames.map((frame, i) =>
+            make(`extra-${i}`, frame, "D", "drive", "backhand", "reviewed"),
+          ),
+        ],
+      };
+      await reloadSelected(seeded.rally);
+      await open();
+      await page.locator("#shot-profile-review").selectOption("all");
+      await total(20);
+      assert.equal(await page.locator("#shot-profile-events li").count(), 10);
+      await page.locator("#shot-profile-next").click();
+      assert.equal(await page.locator("#shot-profile-events li").count(), 10);
+      await page.locator('[data-profile-jump="profile-extra-11"]').click();
+      await imageReady(24);
+      reading = { ...reading, events: [] };
+      await reloadSelected(seeded.rally);
+      await open();
+      await total(0);
+      await page.locator("#shot-profile-empty").waitFor();
+      assert.equal(await page.locator("[data-profile-player]").count(), 5);
+      assert.deepEqual(await api(rallyRoot + "/annotations"), actual);
+    } finally {
+      releaseSave?.();
+      if (annotationsHandler)
+        await page.unroute(annotationsRoute, annotationsHandler);
+      if (metadataHandler) await page.unroute(metadataRoute, metadataHandler);
+      // Restore generated annotation contents with the current optimistic revision.
+      const current = await api(rallyRoot + "/annotations");
+      const restored = await api(rallyRoot + "/annotations", {
+        method: "PUT",
+        data: { ...before, revision: current.revision },
+      });
+      assert.deepEqual({ ...restored, revision: before.revision }, before);
+      await page.setViewportSize(protocol.viewport);
+      await reloadSelected(seeded.rally);
+    }
+    return {
+      singlesAndFourPlayerDoubles: true,
+      unknownsPreserved: true,
+      sourceJumps: [10, 30, 24],
+      savedExportParity: true,
+      draftSaveDiscardDeleteAdd: true,
+      keyboardAndMobile: true,
+      paginatedSourceLinks: true,
+    };
+  });
+
   await check("rallies", async () => {
     await page.waitForFunction(
       () => !document.querySelector("#suggest-rallies").disabled,

@@ -420,6 +420,75 @@
 .editor-app [hidden] {
   display: none !important;
 }
+.editor-app .shot-profile {
+  margin: 18px 0;
+  padding: 12px;
+  border: 1px solid #37523e;
+  border-radius: 8px;
+  background: #17291f;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+.editor-app .shot-profile summary {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+.editor-app .profile-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+.editor-app .shot-profile table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+.editor-app .shot-profile caption {
+  text-align: left;
+  margin-bottom: 8px;
+}
+.editor-app .shot-profile th,
+.editor-app .shot-profile td {
+  padding: 7px 5px;
+  border-bottom: 1px solid #37523e;
+  text-align: right;
+}
+.editor-app .shot-profile th:first-child {
+  text-align: left;
+}
+.editor-app .profile-bar {
+  display: block;
+  height: 3px;
+  margin-top: 4px;
+  width: 100%;
+  background: #304c39;
+}
+.editor-app .profile-bar > span {
+  display: block;
+  height: 100%;
+  background: #9ae07c;
+}
+.editor-app #shot-profile-events {
+  list-style: none;
+  padding: 0;
+}
+.editor-app #shot-profile-events li {
+  margin: 10px 0;
+}
+.editor-app #shot-profile-events button {
+  width: 100%;
+  text-align: left;
+  white-space: normal;
+}
+.editor-app #shot-profile-events small {
+  display: block;
+  margin-top: 4px;
+}
+.editor-app .profile-pagination {
+  flex-wrap: wrap;
+  align-items: center;
+}
 @media (max-width: 1050px) {
   .editor-app {
     grid-template-columns: 200px minmax(0, 1fr);
