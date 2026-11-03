@@ -31527,6 +31527,7 @@
       }
     },
     "374": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41741094867",
       "checkpoint": {
         "branch": "codex/issue-374-show-source-linked-shot-profiles-for-sin",
         "evidence": [
@@ -31549,7 +31550,7 @@
         "spec_hash": "81f7db5ee7c2f2194f024859f7f188ad7712dbc36fb58c1e61e9e1d51dcfccb4"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793748245,
