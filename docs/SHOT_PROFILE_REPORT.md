@@ -51,6 +51,13 @@ check logs are retained. A fresh type check, 250 frontend tests and production
 build then passed. An additional regression now refuses repeated native contact
 frames. No existing assertion or check was removed.
 
+The first production-browser attempt reached saved correction/export parity,
+then its newly added fixture tried to click inside the profile after annotation
+reload had recreated the panel closed. The corrected fixture explicitly reopens
+it through its native summary, retaining the count, discard and source-jump
+assertions. Production behavior and timeouts are unchanged; failed-run evidence
+and complete cleanup receipts remain preserved.
+
 The generated pure controls cover the exact family/side matrix, singles and
 four-player doubles, zero-shot players, corrected/predicted/missing status,
 unknowns, unresolved and ambiguous attribution, invalid identity/frames,
@@ -59,8 +66,25 @@ browser controls cover draft/save/discard and exports, artificial four-player
 readings, source seeks, keyboard/mobile operation and pagination. Artificial
 readings remain distinct from actual saved generated annotations.
 
-Final full project/browser checks, exact-head CI, controller/main verification
-and public package/both-image delivery are pending at this checkpoint. The
-owning issue records final evidence. This software-only task accesses no private
-scientific media, labels or predictions and runs no training or image assessment.
+All 251 frontend tests, type checking, production build, API contract and staged
+runtime/package parity checks pass. All 21 generated production-editor browser
+groups pass, including the profile workflow and existing processing, review,
+identity, exports, accessibility and performance coverage. The 390px screenshot
+was inspected. Seek/timeline/playback-start p95 were 79.8/31.6/71.7 ms;
+animation-frame p95 was 16.8 ms. These are generated local fixture measurements,
+not a native-match throughput benchmark; all frozen ceilings are unchanged.
+
+All 5,781 Python tests pass with 4 optional skips, alongside required
+lint, formatting, dependency, repository and whitespace checks. Production
+delivery passes 19 browser checks, eight library groups and 13 export groups.
+A clean locked wheel installation verifies all 108 runtime files, 56 public
+manifests, five HTTP assets, three SPA routes and authentication. The first
+offline installation lacked a locked dependency in its cache; the separate
+clean attempt fetched the unchanged lock into a disposable environment and
+passed. Existing environments remain preserved.
+
+Exact-head CI, controller/main verification and complete public package/both-image
+delivery remain pending at this checkpoint. The owning issue records final
+evidence. This software-only task accesses no private scientific media, labels
+or predictions and runs no training or image assessment.
 Accepted complete-rally references remain 0/2; full-match accuracy is unproven.

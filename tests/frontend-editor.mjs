@@ -1173,6 +1173,7 @@ try {
           .querySelector("#shot-profile-snapshot")
           ?.textContent.includes("Saved annotations"),
       );
+      await open();
       await cell("smash", "backhand", 0);
       await cell("drop", "backhand", 1);
       await page.locator('[data-profile-jump="profile-clear"]').click();
