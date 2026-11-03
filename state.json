@@ -10672,6 +10672,15 @@
       "task_id": "374",
       "verb": "next"
     },
+    "shot374-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793747567,
+      "epoch": 1,
+      "fingerprint": "759cee6a3fcb29063479c9a7a3991b209393cd74ff287de411d25dcf69346701",
+      "status": "review",
+      "task_id": "374",
+      "verb": "submit"
+    },
     "shuttle-clock-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792960457,
@@ -31503,6 +31512,7 @@
       "epoch": 1,
       "planned_at": 1793744372,
       "planned_by": "Ken0u",
+      "pr_number": 375,
       "spec": {
         "acceptance": [
           "Revalidate all issue/PR/controller history, current main, completed345 mini-court and344 design review. Implement independently from abstract feature ideas, with no reference repository code/assets/weights/prose. Begin only after delivered370 and a fresh committed code-only grant in an isolated worktree. Preserve original root changes, environments, datasets and all scientific evidence.",
@@ -31554,7 +31564,13 @@
         ]
       },
       "spec_hash": "81f7db5ee7c2f2194f024859f7f188ad7712dbc36fb58c1e61e9e1d51dcfccb4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "df284567d2930cd2f25f71c6d23003070eb454dc",
+        "head_sha": "f34d29cdb4b38cdbe0632d92f2f777a810575259",
+        "pr_number": 375,
+        "spec_hash": "81f7db5ee7c2f2194f024859f7f188ad7712dbc36fb58c1e61e9e1d51dcfccb4"
+      }
     },
     "62": {
       "checkpoint": {
