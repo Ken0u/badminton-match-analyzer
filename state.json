@@ -31341,6 +31341,7 @@
       }
     },
     "370": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41731066300",
       "checkpoint": {
         "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
         "evidence": [
@@ -31363,7 +31364,7 @@
         "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 3,
       "history": [
         {
