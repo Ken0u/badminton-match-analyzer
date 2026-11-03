@@ -9937,6 +9937,13 @@
       "task_id": "359",
       "verb": "plan"
     },
+    "scene-support-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793748447,
+      "fingerprint": "0220bdad158d41a97c001cecda5917c1acdbf6191945a5649059efdff8aa3080",
+      "status": "ok",
+      "verb": "register"
+    },
     "scene340-next-v1": {
       "actor": "Ken0u",
       "at": 1793158379,
@@ -34906,7 +34913,13 @@
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
-        "operational-budget-profile": "69ea102daea361660535a55c4b208b9265ea342596942e939ebd97d2734e202f"
+        "operational-budget-profile": "69ea102daea361660535a55c4b208b9265ea342596942e939ebd97d2734e202f",
+        "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
+        "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
+        "scene-context": "17bbb33f3cd501af65b8982080fbf73756a3f22991f863bf1e5c2e2880a40c5f",
+        "scene-gallery": "89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37",
+        "scene-plan": "87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2",
+        "scene-review-v3-protocol": "2b9a8fdef2f81e713ef1b14c58a8999c1cf34e55175875b6f67fd02e99c13ac2"
       },
       "capabilities": [
         "cpu",
@@ -34914,7 +34927,7 @@
         "amd64"
       ],
       "host_id": "MSI",
-      "registered_at": 1793517419,
+      "registered_at": 1793748447,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
