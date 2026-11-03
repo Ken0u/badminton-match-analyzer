@@ -12058,6 +12058,14 @@
       "task_id": "370",
       "verb": "plan"
     },
+    "spec-374-dd42bed812732ab319e4713a49eae0546f1caebd400099921cfa62864c172b77": {
+      "actor": "Ken0u",
+      "at": 1793744372,
+      "fingerprint": "f4bccc319be74ababbd3b6f80c16e2825c928e16c6787b168477ca9f95631f11",
+      "status": "ready",
+      "task_id": "374",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -31429,6 +31437,63 @@
         "pr_number": 371,
         "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
       }
+    },
+    "374": {
+      "epoch": 0,
+      "planned_at": 1793744372,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Revalidate all issue/PR/controller history, current main, completed345 mini-court and344 design review. Implement independently from abstract feature ideas, with no reference repository code/assets/weights/prose. Begin only after delivered370 and a fresh committed code-only grant in an isolated worktree. Preserve original root changes, environments, datasets and all scientific evidence.",
+          "Add a collapsible accessible shot-profile panel to the existing editor. Default to reviewed/corrected events; offer an explicit all-recorded-shots filter which visibly accounts for predicted and unknown review status. Count only kind=shot in the six-family/forehand/backhand grid; retain other/unknown family and unknown side as explicit rows/columns. Show serves separately and never count rally_end as a shot. Summaries describe recorded annotations, not automatic accuracy, winners, physical speed or tactical recommendations.",
+          "Use the exact current annotation snapshot, with video ID, saved revision and an explicit unsaved-draft/saving indicator. Counts update immediately after event add/edit/delete, status or player changes, save/reload/discard and video switching. Support all four doubles players and each roster player even with zero shots; missing, orphaned or ambiguous hitter references remain unresolved. Do not infer player identity, court ends or team from detection numbers. Expose unknown/excluded/predicted denominators rather than silently dropping them or upgrading absent status to reviewed.",
+          "Compute all totals, family/side breakdowns and any proportional bars from one selected event collection. Never reconcile to desired totals or silently double-count duplicate event IDs. Malformed or conflicting event identity must be explicitly unavailable rather than silently choosing a row. Provide a keyboard-accessible source jump for contributing events through the existing exact native-frame editor selection; preserve time uncertainty. Use text/tabular equivalents, readable narrow layouts and existing keyboard behavior. No annotation writes, new inference or extra network service.",
+          "Include meaningful generated pure aggregation and production-browser regressions for singles/four-player doubles, reviewed/corrected/predicted/missing status, unknown/other family/side, serves/end exclusion, empty profiles, unresolved hitter/duplicate identity, correction/delete/status changes, source jumps, draft/save/discard/reload/video ownership and mobile keyboard operation. Preserve existing processing/review/export/browser checks and frozen latency ceilings. Verify event/chart counts against independently asserted canonical fixture rows and saved JSON/CSV exports after correction; do not change export semantics.",
+          "Rebuild and stage the three existing shipped runtime files with the existing manifest tool; verify source/build/package parity. Run relevant focused frontend/browser checks and all required Python/lint/format/dependency/repository/contract/whitespace checks. Deliver through exact PR/controller/main and complete public package/both-image verification; do not claim layer-byte/runtime image parity from manifest/blob availability alone. Zero scientific image transfer, model/data changes, training, promotion or paid service. Record measured behavior and limits in the task report and owning issue."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "345",
+          "370"
+        ],
+        "exclusions": [
+          "No backend API/schema/storage/auth/security/workflow/dependency/deployment change, inference/training/image assessment, private scientific media/labels/model/prediction/holdout access, scientific protocol/runtime renewal, identity inference, heatmap/dwell/speed/winner claims, reference code copying, raw coordination edits, manual merge, CI retry, paid service or PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 1073741824,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Show source-linked shot profiles for singles and doubles from the current versioned annotation document, with explicit review filters and unknown attribution.",
+        "paths": [
+          "backend/frontend/src/editor/shotProfile.ts",
+          "backend/frontend/src/editor/ShotProfile.tsx",
+          "backend/frontend/src/editor/EditorApp.tsx",
+          "backend/frontend/src/editor/editor.css",
+          "backend/frontend/tests/editor.test.mjs",
+          "tests/frontend-editor.mjs",
+          "backend/badminton/static/app.js",
+          "backend/badminton/static/style.css",
+          "backend/badminton/static/build-manifest.json",
+          "docs/SHOT_PROFILE_REPORT.md"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Canonical generated row/denominator and ownership tests, source-jump/revision/draft/mobile keyboard browser checks and export-count parity; all existing project checks preserved.",
+          "Exact-head CI, controller integration, exact merged-main/source revision and complete public package/frontend/manifests/both-image delivery, without claiming badminton accuracy."
+        ]
+      },
+      "spec_hash": "81f7db5ee7c2f2194f024859f7f188ad7712dbc36fb58c1e61e9e1d51dcfccb4",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
