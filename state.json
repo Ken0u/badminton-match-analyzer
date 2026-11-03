@@ -1834,6 +1834,15 @@
       "status": "rejected",
       "verb": "checkpoint"
     },
+    "fixture370-code-recovery-v4": {
+      "actor": "Ken0u",
+      "at": 1793743483,
+      "epoch": 2,
+      "fingerprint": "53aa35279bdb021a4ff016d444beb94d889b14ad736f9fea8b6a51a4dc5b022c",
+      "status": "ready",
+      "task_id": "370",
+      "verb": "recover"
+    },
     "fixture370-next-v1": {
       "actor": "Ken0u",
       "at": 1793526958,
@@ -31274,25 +31283,39 @@
       "checkpoint": {
         "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
         "evidence": [
-          ".cache/worktrees/fixture370-e1/.cache/repro3.xml",
-          ".cache/worktrees/fixture370-e1/.cache/fixed.xml"
+          ".cache/fixture370-final-verification-v3.json",
+          ".cache/fixture370-resume-status-latest-v4.json"
         ],
-        "head_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
-        "summary": "#370 checkpoint: generated baseline controls reproduce an unintended bounded stop after 1.1s start-receipt setup, and all 12 five-poll delayed-EOF terminal combinations fail their positive-sleep assertion. Exact historical CI delays remain unknown. After fixture-only phase isolation, 27 targeted controls pass, including all three exception types and transient/persistent outcomes; lint/format/diff pass. Original real caps and all negative controls remain. Production runner bytes unchanged. Starting full required Python/frontend/browser/repository checks in disposable storage; zero scientific sessions, image access, Store, inference or training. Original failed attempts and authorized retry remain preserved. Branch codex/issue-370-isolate-generated-collector-fixture-timi, baseline 939780608f03ccc5bac7290a72eae54ba581cf13. Evidence: ignored fixture370-e1/.cache/repro2.xml, repro3.xml, fixed.xml and reproduction patch; final evidence follows. #369 remains open through delivered verification."
+        "head_sha": "48f72d2215ad4f9b740c1edaa00c1aab08934d66",
+        "summary": "Interrupted after final source publication; all12 exact PR CI jobs passed at attempt1. No v3 submission occurred before lease expiry. Preserve PR371 and both earlier failed source/CI attempts. Original observer lifetimes absent; local full/focused/frontend/source evidence remains hash-identical. Code-only recovery for delivery; no code repair, CI retry, scientific runtime, Store, images, inference or training."
       },
       "checkpoint_at": 1793527364,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
-        "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
-        "epoch": 1,
-        "expires_at": 1793538164,
-        "granted_at": 1793526958,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
-      },
-      "epoch": 1,
+      "epoch": 2,
+      "history": [
+        {
+          "at": 1793743483,
+          "checkpoint": {
+            "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
+            "evidence": [
+              ".cache/fixture370-final-verification-v3.json",
+              ".cache/fixture370-resume-status-latest-v4.json"
+            ],
+            "head_sha": "48f72d2215ad4f9b740c1edaa00c1aab08934d66",
+            "summary": "Interrupted after final source publication; all12 exact PR CI jobs passed at attempt1. No v3 submission occurred before lease expiry. Preserve PR371 and both earlier failed source/CI attempts. Original observer lifetimes absent; local full/focused/frontend/source evidence remains hash-identical. Code-only recovery for delivery; no code repair, CI retry, scientific runtime, Store, images, inference or training."
+          },
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
+            "branch": "codex/issue-370-isolate-generated-collector-fixture-timi",
+            "epoch": 1,
+            "expires_at": 1793538164,
+            "granted_at": 1793526958,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
+          }
+        }
+      ],
       "planned_at": 1793526958,
       "planned_by": "Ken0u",
       "pr_number": 371,
@@ -31337,7 +31360,7 @@
         ]
       },
       "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953",
-      "status": "recovery_required",
+      "status": "ready",
       "submission": {
         "base_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
         "head_sha": "efbcf62521ba679c2b04b40d8c67d9835e54b33a",
