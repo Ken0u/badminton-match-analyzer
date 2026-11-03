@@ -9937,6 +9937,26 @@
       "task_id": "359",
       "verb": "plan"
     },
+    "scene-support-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793749741,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "94816dfb801dd08046e05222759122f981023220",
+        "branch": "codex/issue-376-census-preserved-familiar-source-scene-s",
+        "epoch": 1,
+        "expires_at": 1793760541,
+        "granted_at": 1793749741,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "39858e8d8427a98af43dbe78d3bb7d7d921da1144c25f013d0b5f6187ed739f2"
+      },
+      "epoch": 1,
+      "fingerprint": "cb1622ebc2b850f6364ad7f7db7e0751d07ca4c2d550928124b53cf8583e612c",
+      "status": "granted",
+      "task_id": "376",
+      "verb": "next"
+    },
     "scene-support-register-v1": {
       "actor": "Ken0u",
       "at": 1793748447,
@@ -31621,7 +31641,18 @@
       }
     },
     "376": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "94816dfb801dd08046e05222759122f981023220",
+        "branch": "codex/issue-376-census-preserved-familiar-source-scene-s",
+        "epoch": 1,
+        "expires_at": 1793760541,
+        "granted_at": 1793749741,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "39858e8d8427a98af43dbe78d3bb7d7d921da1144c25f013d0b5f6187ed739f2"
+      },
+      "epoch": 1,
       "planned_at": 1793748154,
       "planned_by": "Ken0u",
       "spec": {
@@ -31677,7 +31708,7 @@
         ]
       },
       "spec_hash": "39858e8d8427a98af43dbe78d3bb7d7d921da1144c25f013d0b5f6187ed739f2",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
