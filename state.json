@@ -12104,6 +12104,14 @@
       "task_id": "374",
       "verb": "plan"
     },
+    "spec-376-149717c1ebb11bfcd1d14483b95a826300a67f7aa032276d58d26319bf92338f": {
+      "actor": "Ken0u",
+      "at": 1793748154,
+      "fingerprint": "31651ce5c3437cd7cdcc54c0e28eb80d090175136cc87fb1c0b005d4e18a6f18",
+      "status": "ready",
+      "task_id": "376",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -31571,6 +31579,65 @@
         "pr_number": 375,
         "spec_hash": "81f7db5ee7c2f2194f024859f7f188ad7712dbc36fb58c1e61e9e1d51dcfccb4"
       }
+    },
+    "376": {
+      "epoch": 0,
+      "planned_at": 1793748154,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Before implementation revalidate all issue/PR/controller history and delivered337/363. Use a fresh committed CPU grant and isolated worktree. Preserve expired359/PR360, original deadlines, source preparation, all failed quota sessions, original lane seals, partial adjudication and installed application truth/models. This is a metadata-only descendant of65/337/359/363, not a continuation of expired scientific execution.",
+          "Implement an offline read-only consumer for the already sealed359 original scene JSON and permitted source/view/case/native-clock/schedule metadata. Freeze exact original evidence hashes, historical consumer/protocol hashes and new tested consumers in a public prospective commitment before reading scientific scene fields. Bind historical metadata/terminal evidence and verify original session/lane/comparison seals and global independent execution identities. Reproduce the unchanged original comparison exactly:13499 native occurrences,50 views,60 cases,870 sheets and the preserved original agreement/conflict/unknown/unavailable categories. Never invoke an expired stage or manufacture missing terminal/adjudication records. Failed-session scientific output must never supply accepted readings, and absent adjudication remains absent.",
+          "Produce a private provenance ledger and public aggregate census over every native occurrence, unique source frame, view and case. Separate supported agent live/same-camera agreement, replay/non-play, transition/edit/unknown, conflict, missing and failed evidence. Retain all repeated/overlapping occurrences and cross-view contradictions. Count exact complete-view support only when every required native frame has consistent original-source/clock membership, two supported original readings and appropriate within-view transition evidence; a supported center or visible court must never imply a complete view. Original agreements are development evidence, not expert truth or runtime guard eligibility. Distinguish fully agreed coverage of any known scene from all-live stable-camera coverage and from mixed/excluded coverage; preserve declared partitions and do not certify a continuous live view across an edit.",
+          "Report review gaps and their original sheet/batch membership without reading image bytes: full denominators, union versus repeated-occurrence counts, successful/failed/unattempted historical sessions and unresolved required native frames. Estimate bounded remaining source-review packing costs from the original immutable image size/hash metadata only; label estimates as hypothetical, not an authorized new schedule, scientific replacement or payload dispatch. Preserve same-lane, cross-lane and cross-view ambiguity rather than majority voting, interpolating, relabeling or shrinking denominators. A zero complete-view result is an acceptable finding and must direct the next step honestly.",
+          "Keep the incomplete359 scientific outcome, all four false eligibility flags and0/2 complete rally references unchanged. Do not publish frame-level source labels, raw session traces or private paths. This census must neither emit application scene ranges, claim eligible inputs for an old learned selector, score model predictions nor turn partial agreement into accepted source truth. It supplies measured prerequisites for a separately frozen diagnostic or source review, with no authority for new source images/runtime or model promotion.",
+          "Provide meaningful generated regressions for full-view versus center-only support, frame/PTS/source mismatch, gaps and half-open membership, source cuts and view starts, repeated conflicting occurrence/cross-view support, unknowns, failed/absent sessions, duplicate global identities, altered historical evidence/consumer/protocol hashes, private-field suppression, bounded/exclusive output and before/after mutation checks. Test consumer/source stability before the actual one-shot metadata census; retain every failure/receipt. Run focused and required full Python/frontend/lint/format/dependency/repository/JSON/link/LF/whitespace checks, then exact PR/controller/main CI and complete public package/both-image verification under existing rules."
+        ],
+        "artifacts": {
+          "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
+          "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
+          "scene-context": "17bbb33f3cd501af65b8982080fbf73756a3f22991f863bf1e5c2e2880a40c5f",
+          "scene-gallery": "89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37",
+          "scene-plan": "87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2",
+          "scene-review-v3-protocol": "2b9a8fdef2f81e713ef1b14c58a8999c1cf34e55175875b6f67fd02e99c13ac2"
+        },
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "337",
+          "363"
+        ],
+        "exclusions": [
+          "No new image or media access/decoding/transfer, CLI assessor/provider sessions, image adjudication, inference/training/fitting, model/coordinate/visibility/contact/identity/shot/held-out prediction reads, new label or eligibility creation, scene-range publication, changed original acceptance/protocol/deadline/limits, expired-stage invocation, original output rewrite, Store mutation/admission, process signals, workflow/security/dependency/deployment changes, scientific replacement, CI retry, manual merge, paid service, raw coordination or PROGRESS edits. Only existing scene JSON and whitelisted historical execution/hash/source-clock/view/case/schedule metadata may be consumed after the prospective freeze."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "image_sessions": 0,
+          "max_output_bytes": 1073741824,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Census preserved familiar-source scene support and remaining review gaps without changing labels, scientific acceptance or source-context guards.",
+        "paths": [
+          "backend/badminton/shuttle_scene_support.py",
+          "scripts/audit_shuttle_scene_support.py",
+          "tests/test_shuttle_scene_support.py",
+          "data/manifests/shuttle_scene_support_protocol_v1.json",
+          "docs/SHUTTLE_SCENE_SUPPORT_REPORT.md"
+        ],
+        "priority": 45,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Exact unchanged original comparison and native-denominator reproduction before source support census; generated before/after corruption/unknown/overlap controls, original evidence and consumer hash stability, no image/model access or stage restart.",
+          "Required local checks, exact PR/main CI, controller integration and independent complete public delivery; preserve partial scientific result and all unknown/unavailable cases."
+        ]
+      },
+      "spec_hash": "39858e8d8427a98af43dbe78d3bb7d7d921da1144c25f013d0b5f6187ed739f2",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
