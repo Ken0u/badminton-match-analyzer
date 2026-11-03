@@ -1,5 +1,9 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import {
+  buildShotProfile,
+  profileFamilies,
+} from "../.test-build/editor/ShotProfile.js";
 import { isTransportShortcutControl } from "../.test-build/editor/keyboard.js";
 
 test("only the three existing transport buttons opt into review shortcuts", () => {
@@ -1874,4 +1878,284 @@ test("duplicate track ids cannot establish reviewed or provisional player identi
   assert.ok(
     playerCourtView(f).players.every((p) => p.identity === "unassigned"),
   );
+});
+
+function profileDocument() {
+  const event = (id, frame, player_id, family, side, status) => ({
+    id,
+    frame,
+    player_id,
+    family,
+    side,
+    status,
+    kind: "shot",
+    rally_id: "R1",
+  });
+  return {
+    ...doc(),
+    mode: "doubles",
+    players: ["A", "B", "C", "D"].map((id, index) => ({
+      id,
+      name: `Player ${id}`,
+      team: index % 2 ? "T2" : "T1",
+    })),
+    events: [
+      {
+        id: "serve",
+        frame: 0,
+        player_id: "A",
+        kind: "serve",
+        rally_id: "R1",
+        status: "reviewed",
+      },
+      event("clear", 3, "A", "clear", "forehand", "reviewed"),
+      event("drop", 4, "B", "drop", "backhand", "corrected"),
+      event("smash", 5, "C", "smash", "forehand", "predicted"),
+      event("drive", 6, "D", "drive", "backhand", "reviewed"),
+      event("unknown", 7, null, "unknown", "unknown", "reviewed"),
+      event("other", 8, "orphan", "other", null, "reviewed"),
+      event("lift", 9, "A", "lift", "forehand", undefined),
+      event("net", 10, "D", "net", null, "predicted"),
+      {
+        id: "end",
+        frame: 11,
+        kind: "rally_end",
+        rally_id: "R1",
+        status: "reviewed",
+      },
+    ],
+  };
+}
+
+test("shot profiles preserve review, unknown and serve denominators in four-player doubles", () => {
+  const p = buildShotProfile(profileDocument(), 20);
+  assert.equal(p.available, true);
+  assert.deepEqual(
+    [p.recordedShots, p.reviewedShots, p.predictedShots, p.unknownStatusShots],
+    [8, 5, 2, 1],
+  );
+  assert.deepEqual(
+    [p.eligibleShots, p.excludedShots, p.unresolvedShots],
+    [5, 3, 2],
+  );
+  assert.deepEqual(
+    [p.recordedServes, p.selectedServes, p.rallyEnds],
+    [1, 1, 1],
+  );
+  assert.deepEqual(
+    p.players.map((player) => [player.id, player.shots, player.serves]),
+    [
+      ["A", 1, 1],
+      ["B", 1, 0],
+      ["C", 0, 0],
+      ["D", 1, 0],
+      ["", 2, 0],
+    ],
+  );
+  assert.deepEqual(
+    p.events.map((event) => event.id),
+    ["clear", "drop", "drive", "unknown", "other"],
+  );
+});
+
+test("the six-family side grid counts canonical recorded rows exactly once", () => {
+  const p = buildShotProfile(profileDocument(), 20, "all");
+  assert.deepEqual(profileFamilies, [
+    "clear",
+    "lift",
+    "net",
+    "drop",
+    "smash",
+    "drive",
+    "other",
+    "unknown",
+  ]);
+  assert.deepEqual(
+    p.families.map((row) => [
+      row.name,
+      row.sides.forehand,
+      row.sides.backhand,
+      row.sides.unknown,
+      row.total,
+    ]),
+    [
+      ["clear", 1, 0, 0, 1],
+      ["lift", 1, 0, 0, 1],
+      ["net", 0, 0, 1, 1],
+      ["drop", 0, 1, 0, 1],
+      ["smash", 1, 0, 0, 1],
+      ["drive", 0, 1, 0, 1],
+      ["other", 0, 0, 1, 1],
+      ["unknown", 0, 0, 1, 1],
+    ],
+  );
+  assert.equal(
+    p.families.reduce((sum, row) => sum + row.total, 0),
+    8,
+  );
+  assert.equal(
+    p.players.reduce((sum, player) => sum + player.shots, 0),
+    8,
+  );
+});
+
+test("profile filters retain zero-shot players and separate unresolved hitters", () => {
+  const source = profileDocument();
+  const original = buildShotProfile(source, 20);
+  const c = original.players.find((player) => player.id === "C").key;
+  assert.equal(buildShotProfile(source, 20, "reviewed", c).events.length, 0);
+  assert.deepEqual(
+    buildShotProfile(source, 20, "all", c).events.map((event) => event.id),
+    ["smash"],
+  );
+  assert.deepEqual(
+    buildShotProfile(source, 20, "all", "unresolved").events.map(
+      (event) => event.id,
+    ),
+    ["unknown", "other"],
+  );
+  assert.equal(
+    buildShotProfile(source, 20, "all", "removed-player").playerKey,
+    "all",
+  );
+});
+
+test("profile counts recompute after correction, attribution, status and deletion", () => {
+  const source = profileDocument();
+  source.events = source.events.map((event) =>
+    event.id === "smash"
+      ? {
+          ...event,
+          family: "net",
+          side: "backhand",
+          status: "corrected",
+          player_id: "A",
+        }
+      : event,
+  );
+  let p = buildShotProfile(source, 20);
+  assert.equal(p.eligibleShots, 6);
+  assert.equal(p.predictedShots, 1);
+  assert.equal(p.players[0].shots, 2);
+  assert.equal(p.families.find((row) => row.name === "net").sides.backhand, 1);
+  source.events = source.events.filter((event) => event.id !== "clear");
+  p = buildShotProfile(source, 20);
+  assert.deepEqual(
+    [p.recordedShots, p.eligibleShots, p.players[0].shots],
+    [7, 5, 1],
+  );
+  assert.equal(p.families.find((row) => row.name === "clear").total, 0);
+});
+
+test("empty profiles preserve the full taxonomy and every singles roster member", () => {
+  const source = profileDocument();
+  source.mode = "singles";
+  source.players = source.players.slice(0, 2);
+  source.events = [];
+  const p = buildShotProfile(source, 20);
+  assert.equal(p.recordedShots, 0);
+  assert.equal(p.families.length, 8);
+  assert.equal(p.players.length, 3);
+  assert.ok(p.families.every((row) => row.total === 0));
+  assert.ok(
+    p.players.every((player) => player.shots === 0 && player.serves === 0),
+  );
+});
+
+test("ambiguous roster identity stays unresolved without losing its recorded shots", () => {
+  const source = profileDocument();
+  source.players.push({ ...source.players[0], name: "Conflicting A" });
+  const p = buildShotProfile(source, 20, "all");
+  assert.equal(p.events.length, 8);
+  assert.equal(p.unresolvedShots, 4);
+  assert.ok(
+    p.players
+      .filter((player) => player.id === "A")
+      .every((player) => player.ambiguous && player.shots === 0),
+  );
+});
+
+test("profile ownership uses explicit roster IDs including object-property-like names", () => {
+  const source = profileDocument();
+  source.players[0].id = "__proto__";
+  source.events[1].player_id = "__proto__";
+  const p = buildShotProfile(source, 20);
+  assert.equal(p.players[0].shots, 1);
+  assert.equal(p.unresolvedShots, 2);
+});
+
+for (const [name, mutate] of [
+  ["duplicate event ID", (d) => d.events.push({ ...d.events[1] })],
+  [
+    "ID reused across kinds",
+    (d) => {
+      d.events[0].id = "clear";
+    },
+  ],
+  [
+    "empty event ID",
+    (d) => {
+      d.events[1].id = " ";
+    },
+  ],
+  [
+    "numeric event ID",
+    (d) => {
+      d.events[1].id = 1;
+    },
+  ],
+  [
+    "missing rally identity",
+    (d) => {
+      d.events[1].rally_id = "";
+    },
+  ],
+  [
+    "outside source frame",
+    (d) => {
+      d.events[1].frame = 20;
+    },
+  ],
+  [
+    "duplicate native contact frame",
+    (d) => {
+      d.events[2].frame = d.events[1].frame;
+    },
+  ],
+  [
+    "nonfinite source frame",
+    (d) => {
+      d.events[1].frame = NaN;
+    },
+  ],
+])
+  test(`shot profile refuses ${name} rather than silently changing totals`, () => {
+    const source = profileDocument();
+    mutate(source);
+    const p = buildShotProfile(source, 20, "all");
+    assert.equal(p.available, false);
+    assert.match(p.error, /identity or source frame/);
+    assert.equal(p.events, undefined);
+  });
+
+test("profiles do not mutate annotations, reinterpret scenes or use published event time as a native clock", () => {
+  const source = profileDocument();
+  source.events.reverse();
+  source.events.find((event) => event.id === "clear").time_s = 9999;
+  source.scene_ranges = [
+    {
+      id: "unresolved-context",
+      start_frame: 0,
+      end_frame: 20,
+      scene: "unknown",
+    },
+  ];
+  const saved = structuredClone(source);
+  const p = buildShotProfile(source, 20);
+  assert.deepEqual(source, saved);
+  assert.deepEqual(
+    p.events.map((event) => event.frame),
+    [3, 4, 6, 7, 8],
+  );
+  assert.equal(buildShotProfile(source, 0).available, false);
 });

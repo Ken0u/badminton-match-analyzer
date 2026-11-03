@@ -6,6 +6,7 @@ import type { EditorController, LoadedRun } from "./controller.js";
 import { Playback } from "./Playback.js";
 import type { PlaybackActions } from "./Playback.js";
 import { ExportPanel } from "./exports/ExportPanel.js";
+import { ShotProfile } from "./ShotProfile.js";
 import {
   array,
   bounds,
@@ -2003,6 +2004,16 @@ export function EditorApp() {
                   count={current.frame_count}
                   selected={selected}
                   edit={stableEdit}
+                />
+                <ShotProfile
+                  key={current.id}
+                  doc={doc}
+                  videoId={current.id}
+                  revision={draft.revision}
+                  dirty={draft.dirty}
+                  saving={draft.saving}
+                  times={state.times}
+                  onSelect={stableEdit}
                 />
                 <div className="export-bar">
                   <span>EXPORT REVIEWED DATA</span>
