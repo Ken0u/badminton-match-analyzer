@@ -1892,6 +1892,15 @@
       "task_id": "370",
       "verb": "submit"
     },
+    "fixture370-submit-recovered-v4": {
+      "actor": "Ken0u",
+      "at": 1793744023,
+      "epoch": 3,
+      "fingerprint": "747daf6dcd50b324e07f6b270e5358bde6502a772b0837f5ccb578d2370537e4",
+      "status": "review",
+      "task_id": "370",
+      "verb": "submit"
+    },
     "fixture370-submit-v1": {
       "actor": "Ken0u",
       "at": 1793528315,
@@ -31391,10 +31400,10 @@
         ]
       },
       "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "939780608f03ccc5bac7290a72eae54ba581cf13",
-        "head_sha": "efbcf62521ba679c2b04b40d8c67d9835e54b33a",
+        "head_sha": "48f72d2215ad4f9b740c1edaa00c1aab08934d66",
         "pr_number": 371,
         "spec_hash": "a52e92b9979c9d91b4efb5e4fde0a405179ad8f7e7a032d22a579f997d176953"
       }
