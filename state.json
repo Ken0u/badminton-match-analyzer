@@ -10470,6 +10470,26 @@
       "task_id": "376",
       "verb": "release"
     },
+    "scene378-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793766987,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "94816dfb801dd08046e05222759122f981023220",
+        "branch": "codex/issue-378-complete-the-preserved-scene-support-cen",
+        "epoch": 1,
+        "expires_at": 1793777787,
+        "granted_at": 1793766987,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "36b5f0192f2c4afc0b199c846509cecd474836034fee12057d6bc0999092c966"
+      },
+      "epoch": 1,
+      "fingerprint": "af739b26d065de4a6eae7167d08e54f3f88590220bbe644b5212df650fe19fdf",
+      "status": "granted",
+      "task_id": "378",
+      "verb": "next"
+    },
     "scene378-register-v1": {
       "actor": "Ken0u",
       "at": 1793766692,
@@ -31768,7 +31788,18 @@
       "status": "blocked"
     },
     "378": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "94816dfb801dd08046e05222759122f981023220",
+        "branch": "codex/issue-378-complete-the-preserved-scene-support-cen",
+        "epoch": 1,
+        "expires_at": 1793777787,
+        "granted_at": 1793766987,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "36b5f0192f2c4afc0b199c846509cecd474836034fee12057d6bc0999092c966"
+      },
+      "epoch": 1,
       "planned_at": 1793766692,
       "planned_by": "Ken0u",
       "spec": {
@@ -31827,7 +31858,7 @@
         ]
       },
       "spec_hash": "36b5f0192f2c4afc0b199c846509cecd474836034fee12057d6bc0999092c966",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
