@@ -104,6 +104,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "actor387-tested-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793802120,
+      "epoch": 1,
+      "fingerprint": "48deb04d5788dfa777c798ee0a49f6eaa19e65d232190a05314fdbb1dada514c",
+      "status": "running",
+      "task_id": "387",
+      "verb": "checkpoint"
+    },
     "adopt-003628c8dcaecb68b1f14319cad228db61bf5c092e5028caeb9297739a68b42e": {
       "actor": "github-actions[bot]",
       "at": 1792454159,
@@ -32649,12 +32658,22 @@
       }
     },
     "387": {
+      "checkpoint": {
+        "branch": "codex/issue-387-measure-whether-published-ai-cup-hitter-",
+        "evidence": [
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/387#issuecomment-6633082819"
+        ],
+        "head_sha": "21b26b3342a0f13ea523c443471217855929a786",
+        "original_audit_executed": false,
+        "summary": "Full 6054-test suite and clean package pass; prospective consumer/input hashes published before one original correspondence audit."
+      },
+      "checkpoint_at": 1793802120,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "924807a338047fb521ec11f01c54f3832bb7fc7d",
         "branch": "codex/issue-387-measure-whether-published-ai-cup-hitter-",
         "epoch": 1,
-        "expires_at": 1793811358,
+        "expires_at": 1793812920,
         "granted_at": 1793800558,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
