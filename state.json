@@ -9258,6 +9258,14 @@
       "task_id": "62",
       "verb": "checkpoint"
     },
+    "recognition393-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793825550,
+      "fingerprint": "8b2007fafc7c3c7ad21c5ae588a6ebb1539e20f09a265ba95980b3fd9cd589f4",
+      "status": "ready",
+      "task_id": "393",
+      "verb": "plan"
+    },
     "repair-01d5e2874f8366d3e6e44edfbaef00624f1a7c7e": {
       "actor": "github-actions[bot]",
       "at": 1792639868,
@@ -12500,6 +12508,14 @@
       "fingerprint": "e7867aea666ef75bb8596e202f967043728660ac955e4cced98471d767563c66",
       "status": "ready",
       "task_id": "391",
+      "verb": "plan"
+    },
+    "spec-393-fb01ed5c110dbe16d6c1a97be74071c4517568a9cdde185b735f2b28a2bb032f": {
+      "actor": "Ken0u",
+      "at": 1793825550,
+      "fingerprint": "6a6dc5213360314ed5321bbaf68e1188b82a3c7a730288e447173bf6afec6356",
+      "status": "ready",
+      "task_id": "393",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -33119,6 +33135,62 @@
         "pr_number": 392,
         "spec_hash": "767fa7339dd10c670f2817bebca68b6c6d3d665768259d6090a8be3dd0795363"
       }
+    },
+    "393": {
+      "epoch": 0,
+      "planned_at": 1793825550,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "After391 completes exact PR/main verification and full public delivery, revalidate current main, open/closed history, active grants and actual source/artifact state. Obtain a fresh routine code-only CPU grant and isolated worktree. Preserve the completed negative391 result, consumed scientific runs, original checkout/environments/data/labels/weights and deprecated PROGRESS edit. Reproduce the generated8failures/4disjoint controls before production edits.",
+          "In recognition_targets, when include_reviewed is enabled, retain each reviewed/corrected shot target and suppress a contact proposal whenever its inclusive candidate[start_frame,end_frame] interval intersects any retained reviewed/corrected shot contact_start_frame/contact_end_frame interval. A shot without uncertainty is the singleton[event.frame,event.frame]. A proposal without interval bounds is likewise a singleton. Shared endpoints overlap; adjacent disjoint native frames do not. Do not collapse two reviewed events into one or choose an exact physical contact from an interval.",
+          "Apply saved-shot priority before requested navigation-frame range filtering, preserving the existing behavior that a reviewed shot outside a processing window can suppress an overlapping proposal within it. Preserve include_reviewed=False semantics, predicted-label behavior, serve/rally-end handling, scene/calibration guards, original IDs/order/provenance, unknown labels and all disjoint proposal targets. Do not silently broaden this repair to serves, confidence thresholds, model features or event schemas.",
+          "Use generated regression cases for both interval-overlap directions when the reviewed navigation frame lies outside the candidate, exact inclusive endpoints, nested intervals, point/legacy proposals and reviewed points, disjoint adjacent contacts, both statuses and both match modes, requested range edges, excluded scenes and input immutability. Exercise actual saved annotation validation and Store/API/CLI target selection where feasible without loading a neural model; only expensive inference execution may be replaced in orchestration tests. Compare actual production outputs on generated controls; no test may merely repeat the overlap implementation.",
+          "Provide truthful exact-head source/model/receipt-bound native_evidence for the recognition orchestration path. Use generated source frames and saved Store/API/CLI artifacts and, if available, a bounded read-only comparison of pre-existing actual source/contact/recognition metadata. Bind the unchanged pinned model digest; do not invoke or install any neural model or claim inference/accuracy verification. Preserve all original metadata/predictions/annotations and unknown cases; all hypothetical overlaps stay generated examples, not assertions about historical contamination.",
+          "Run focused and required fullPython,lint,format,dependencies,repositoryUTF8/LF/local-link/whitespace checks and clean source/wheel/installedHTTP verification. Record the original failing regressions, final checks, exact source and limitations in the focused report and owning issue. Submit normal exact-head CI/controller integration, verify merged main and complete public delivery without retries/manual merge. This repairs duplicate recognition-target selection only; complete scientific rally references remain0/2 and full automatic accuracy remains unproven."
+        ],
+        "artifacts": {
+          "recognition-baseline-source": "d362f3b72e2a8389afc13b2f3a3e71639bb5523b53a940be5a8372951113ec6f",
+          "recognition-overlap-generated-probe": "3cdb38bc9ac672807eb252c13b48ebff983fa21be01b160ac666cf09c33e3608"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "391"
+        ],
+        "exclusions": [
+          "No new source/media/model acquisition, image/label transfer or assessor sessions, actual media decode, neural inference, feature extraction, training, scientific replacement or rerun, consumed test/prediction access, source/annotation/prediction/weight edits, app model installation/promotion, target taxonomy/threshold/schema changes, workflow/security/credential/deployment/dependency changes, paid service, process signal, manual merge, CI retry, raw coordination writes or deprecated PROGRESS updates. No change to include_reviewed=False, predicted events or serve/terminal selection semantics."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_cached_metadata_bytes": 67108864,
+          "max_cached_metadata_files": 100,
+          "max_native_passes": 0,
+          "max_output_bytes": 1073741824,
+          "max_real_fits": 0,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 8,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Honor complete inclusive reviewed shot-contact intervals when selecting recognition targets, preventing redundant proposals around a saved uncertain shot without selecting an exact contact or changing models.",
+        "paths": [
+          "backend/badminton/recognition.py",
+          "tests/test_recognition_contact_priority.py",
+          "docs/RECOGNITION_CONTACT_PRIORITY_REPORT.md"
+        ],
+        "priority": 40,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Original production must reproduce generated duplicate targets; after repair all overlaps yield one saved-shot target while disjoint/predicted/disabled/range/scene controls preserve existing behavior.",
+          "Required focused/full checks, truthful source/model/code-bound orchestration receipt, exact controller PR/main verification and complete public delivery. No new scientific truth, model improvement or full-match accuracy claim."
+        ]
+      },
+      "spec_hash": "f9895fdc085de8fd0940d36abdb36073139426f5916275e0398d7fb9b5aefe49",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
