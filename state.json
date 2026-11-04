@@ -69,6 +69,14 @@
       "task_id": "254",
       "verb": "next"
     },
+    "actor387-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793799644,
+      "fingerprint": "05ae615276e6660dacdfe6c9639cc885ddfc3d224ebbfb9de4066fbc9f62c6c1",
+      "status": "ready",
+      "task_id": "387",
+      "verb": "plan"
+    },
     "adopt-003628c8dcaecb68b1f14319cad228db61bf5c092e5028caeb9297739a68b42e": {
       "actor": "github-actions[bot]",
       "at": 1792454159,
@@ -12325,6 +12333,14 @@
       "fingerprint": "44ed79e61dfcd6cf04482605518f6c270fce68315a0b69bdbbe90d8290e28a07",
       "status": "ready",
       "task_id": "385",
+      "verb": "plan"
+    },
+    "spec-387-7cbe939d45df88bf9c01602a74d7534e64085051a3ee1e5843646e0dd5e999d3": {
+      "actor": "Ken0u",
+      "at": 1793799644,
+      "fingerprint": "4264aff2e53c37d23c3fc83113cbc7db823836a2c3aa0d5fe7eba1284be4f8bf",
+      "status": "ready",
+      "task_id": "387",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -32593,6 +32609,72 @@
         "pr_number": 386,
         "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9"
       }
+    },
+    "387": {
+      "epoch": 0,
+      "planned_at": 1793799644,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "After385 completes exact PR/main and full public delivery, revalidate current main, all open/closed issues, PRs, grants and original completed shared Store job. Obtain a fresh routine CPU grant and isolated worktree. Reuse only the unchanged45 development clips/24273 native frames/784 reference rows from385, including431train/353validation and all3H0 censored rows. Preserve original root, environment, data, weights, annotations, predictions and consumed experiments.",
+          "Implement clone-contained audit/verify commands and a versioned public protocol. Require the pinned original source archive/index/group/model hashes, exact385preparation freeze and native completion hashes. Verify their complete inventories and native source/frame/integerPTS/rational-clock/orientation/camera/calibration/support provenance without decoding media or importing model runtimes. Bind each ordered raw reference, coordinates and weak family/side/contact/actor metadata back to canonical source CSV rows; use only the original development members and fence test inputs before opening. Reject omitted/extra/duplicate rows, conflicting folds, changed source bytes, schema fields or sealed inputs.",
+          "Freeze the official coordinate interpretation before observation: hitter/defender picture-pixel dominant-foot/toe locations, with court-plane projection on jumps; landing is a trajectory-end projection, never contact or automatically rally end. Preserve inclusive ambiguous[H-1,H]and keepH0unavailable. Unknown scene, source mode, actual hitter/identity and original-match independence remain unknown. No family/side label, landing coordinate, published A/B or winner enters geometric matching; published A/B is a separate weak court-end diagnostic, never an identity authority.",
+          "Use a fixed label-blind geometric diagnostic at both original interval frames. Compare each coordinate independently with minimum distance to confident observed left/right ankles(indices15/16,confidence>=0.25)and with observed box-bottom center, normalized by that candidate observed box height. Retain all raw normalized distances and both endpoint results. For each representation require at least2distinct finite positive-height pose tracks, unique best normalized distance<=0.5and second-best minus best>=0.25; an exact tie stays ambiguous. The weak pair candidate requires both representations and both frames to choose the same hitter and same defender tracks, hitter!=defender, valid calibration on both frames and one camera namespace. No missing-ankle fallback, interpolation, extrapolation, forced assignment, cross-cut association or interval-endpoint selection. Missing, remote, tied, representation/endpoint disagreements and possible jump/projection mismatch remain explicit; geometric compatibility never certifies the true actor or live scene.",
+          "After generated checks and a tested code commit, prospectively publish exact consumer/protocol/dependency and385input hashes before exactly one read-only correspondence audit of the unchanged cohort. Fresh scientific window is four hours from the original grant; at most1GiBnew ignored output, zero image bytes, media decodes, native passes and real fits. Freeze and retain immutable per-reference endpoint/representation diagnostics privately, including every unknown/unavailable row; produce aggregate per-fold/context/family/side candidate/ambiguity/availability counts and distances. Do not tune gates using observed labels/results, replace inputs or repeat the consumed original audit after failure. Any unexpected real input mismatch stops and is preserved for separate scope.",
+          "Keep the original frozen producer reproducible despite adding a new consumer module: do not call the producer all-module current-code seal as if a later consumer were the original producer; instead pin and verify the immutable original preparation/completion and their complete source/artifact seals explicitly. The new consumer binds its own transitive parser/schema/geometry code and protocol. Verify outputs by independently reproducing label-blind rules from the sealed inputs. Original execution claim, annotations and completed shared job must remain unchanged; no new shared jobs or locks are needed for this bounded read-only audit.",
+          "Add generated regressions for canonical-coordinate/target corruption including jointly resealed cache fields, missing/nonfinite/out-of-display coordinates, duplicate/missing tracks, missing/weak/out-of-display ankles, zero-height boxes, ties/remote candidates, representation/endpoint disagreement, same hitter/defender, nativePTS/rotation/cut/calibration conflicts, test fencing, all-denominator retention, family/side/landing/A-B label-blindness, exclusive output, deadline/budget refusal and input/code mutation. Run focused/fullPython, lint/format/dependency/repository/UTF8/LF/JSON/link/whitespace and clean source/wheel/installedHTTPchecks before exact controller/PR/main and full public delivery. Publish aggregate evidence and code/protocol only; detailed source rows/poses remain private. Training-ready rows remain0and complete scientific rallies0/2; no improved accuracy or learned model is claimed."
+        ],
+        "artifacts": {
+          "aicup-capture-groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+          "aicup-clip-index": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+          "aicup-original-part1": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+          "aicup-pose-native-completion": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+          "aicup-pose-preparation": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+          "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+          "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "385"
+        ],
+        "exclusions": [
+          "No image/media decode or external image/label transfer, source/model acquisition, GPU/native/shuttle/classifier inference, temporal feature extraction, real fitting, independent source-truth assessment, training-eligibility promotion, actual identity or live-scene assignment, held-out/test media/features/targets/predictions, changed cohort/groups, tuning against outcomes, model/app/UI/API/default changes, original producer/freeze/cache/annotation/weight edits, dependency/environment/workflow/security/credential/deployment changes, CI retries, manual merges, raw coordination writes, paid services or deprecated PROGRESS updates. Weak geometric agreement remains separate from correct hitter attribution and end-to-end badminton accuracy."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_native_frames_read": 24273,
+          "max_native_passes": 0,
+          "max_original_audits": 1,
+          "max_output_bytes": 1073741824,
+          "max_real_fits": 0,
+          "max_reference_rows": 784,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Measure whether published AI CUP hitter/defender image-foot coordinates support stable weak associations to the existing native pose observations, preserving unresolved truth before temporal pose learning.",
+        "paths": [
+          "backend/badminton/aicup_actor_correspondence.py",
+          "scripts/audit_aicup_actor_correspondence.py",
+          "tests/test_aicup_actor_correspondence.py",
+          "data/manifests/aicup_actor_correspondence_protocol_v1.json",
+          "docs/AICUP_ACTOR_CORRESPONDENCE_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 80,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated label-blind and source-bound controls must preserve every original weak/unknown/unavailable row and reject corrupted source/native evidence.",
+          "One prospectively frozen read-only correspondence audit, required local checks, exact controller PR/main and full public delivery. Zero fits, new inference, images, new scene/actor truth or accuracy claim."
+        ]
+      },
+      "spec_hash": "a17eabfe199571a8b133008bbf91df1f5a0ac588956d25d28fb28c8e8c2d7c64",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
