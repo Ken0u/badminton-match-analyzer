@@ -32254,6 +32254,7 @@
       }
     },
     "382": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41798530824",
       "checkpoint": {
         "branch": "codex/issue-382-bind-portable-stroke-training-targets-to-e2",
         "remaining": "Finish full/package verification, record final evidence, commit and push granted epoch-2 branch, open fresh PR and submit exact head/base/specification to controller. Verify exact PR/main and complete public delivery; preserve all earlier failures. No CI retry or manual merge. Full app accuracy remains unproven.",
@@ -32272,7 +32273,7 @@
         "spec_hash": "5ac5ffd140d8af4cfd0eb26909bd4bf5f8c214f2fbad8e5d82c290c4363a2cc3"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 2,
       "history": [
         {
