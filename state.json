@@ -12601,6 +12601,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "stroke382-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793776042,
+      "epoch": 1,
+      "fingerprint": "4cde7507ecc1def17138a391a46be13c89dc92b90d49ac589c7b8871a6d0d65a",
+      "status": "review",
+      "task_id": "382",
+      "verb": "submit"
+    },
     "synthetic-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792953762,
@@ -32179,6 +32188,7 @@
       "epoch": 1,
       "planned_at": 1793773628,
       "planned_by": "Ken0u",
+      "pr_number": 383,
       "spec": {
         "acceptance": [
           "After380 completes exact PR/main verification and full public delivery, revalidate current main/issues/controller ownership and obtain a fresh routine CPU grant and isolated worktree. Reproduce the generated semantic audit gap: fixed source clear/forehand is accepted as drive/backhand when metadata and NPZ targets are changed together and resealed. Do not infer historical contamination;380 uses an immutable precommitted manifest that remains unchanged.",
@@ -32232,7 +32242,13 @@
         ]
       },
       "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
+        "head_sha": "2e87797fb9aa8f42e03784042a124bed0c1e7ba4",
+        "pr_number": 383,
+        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+      }
     },
     "62": {
       "checkpoint": {
