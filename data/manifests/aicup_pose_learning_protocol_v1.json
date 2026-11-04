@@ -1,0 +1,120 @@
+{
+  "actor_completion_sha256": "b89e2d5c7e2ca711ccdc36f83dfb9eae673ac8317bf3fe9f06ee60256a48d7fb",
+  "actor_diagnostics_sha256": "6d01625e726d113ba17a82df59ae976dd628727386ebe2bf094a5fc5bb745856",
+  "actor_prospective_sha256": "ed36c13f0c87fc867ccf0736311c4d8a39c87361a9a2bfd3e0c515d43fd5e030",
+  "complete_rally_references": {
+    "accepted": 0,
+    "required": 2
+  },
+  "expected": {
+    "clips": 45,
+    "native_frames": 24273,
+    "references": 784,
+    "train_rows": 431,
+    "unresolved": 132,
+    "validation_rows": 353,
+    "weak_pairs": 652
+  },
+  "features": {
+    "center_offsets": [
+      -1,
+      0
+    ],
+    "dimensions": 108,
+    "joints": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "maximum_adjacent_seconds": 0.1,
+    "minimum_confidence": 0.25,
+    "missing": "Zero coordinates/confidence with explicit observation and velocity masks; no interpolation",
+    "native_offsets": [
+      -5,
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "normalization": "(x-box_center_x)/box_height,(y-box_bottom)/box_height",
+    "pooling": "Unweighted observed geometry mean; confidence sum/nominal slots",
+    "roles": [
+      "hitter",
+      "defender"
+    ],
+    "static": [
+      "center",
+      "center",
+      "zero_velocity"
+    ],
+    "temporal": [
+      "center",
+      "mean",
+      "velocity"
+    ],
+    "velocity": "Mean adjacent observed differences/exact PTS dt; confidence sum of endpoint minima/9"
+  },
+  "image_bytes": 0,
+  "independent_accuracy_established": false,
+  "labels": {
+    "family": [
+      "clear",
+      "lift",
+      "net",
+      "drop",
+      "smash",
+      "drive",
+      "other",
+      "serve"
+    ],
+    "side": [
+      "forehand",
+      "backhand"
+    ]
+  },
+  "limits": {
+    "output_bytes": 1073741824,
+    "real_fits": 2,
+    "runtime_seconds": 14400
+  },
+  "model_installed_in_app": false,
+  "name": "aicup-pose-learning-v1",
+  "native_completion_sha256": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+  "native_passes": 0,
+  "preparation_sha256": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+  "schema_version": 1,
+  "training": {
+    "arm_tie": "static",
+    "batch_size": 64,
+    "class_weights": "Inverse sqrt of known training counts; mean one over supported classes",
+    "cpu_threads": 2,
+    "dropout": 0.1,
+    "epochs": 300,
+    "hidden": [
+      64,
+      32
+    ],
+    "learning_rate": 0.001,
+    "loss_weights": [
+      1.0,
+      0.5
+    ],
+    "normalized_clip": 10.0,
+    "optimizer": "AdamW",
+    "prediction": "Argmax supported training classes; unavailable rows unanswered; no threshold search",
+    "seed": 20261104,
+    "selection": "Mean supported 8-group family macro F1/side balanced recall, strict joint, earlier epoch",
+    "selection_every": 5,
+    "std_floor": 0.05,
+    "weight_decay": 0.01
+  },
+  "training_ready": false
+}
