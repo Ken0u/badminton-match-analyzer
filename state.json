@@ -33278,6 +33278,7 @@
       }
     },
     "393": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41921906211",
       "checkpoint": {
         "branch": "codex/issue-393-honor-complete-inclusive-reviewed-shot-c",
         "evidence": [
@@ -33305,7 +33306,7 @@
         "spec_hash": "f9895fdc085de8fd0940d36abdb36073139426f5916275e0398d7fb9b5aefe49"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793829181,
