@@ -35,12 +35,16 @@ def recognition_targets(
         raise ValueError(
             "Court calibration changed contact inputs; rerun player tracking and contacts"
         )
-    reviewed_frames = set()
+    reviewed_intervals = []
     if include_reviewed:
         for event in annotations.events:
             if event.kind != "shot" or event.status not in ("reviewed", "corrected"):
                 continue
-            reviewed_frames.add(event.frame)
+            reviewed_intervals.append(
+                (event.contact_start_frame, event.contact_end_frame)
+                if event.contact_start_frame is not None
+                else (event.frame, event.frame)
+            )
             targets.append(
                 {
                     "frame": event.frame,
@@ -59,11 +63,11 @@ def recognition_targets(
     for candidate in candidates:
         if candidate.get("scene_excluded"):
             continue
+        candidate_start = candidate.get("start_frame", candidate["frame"])
+        candidate_end = candidate.get("end_frame", candidate["frame"])
         if any(
-            candidate.get("start_frame", candidate["frame"])
-            <= frame
-            <= candidate.get("end_frame", candidate["frame"])
-            for frame in reviewed_frames
+            candidate_start <= right and left <= candidate_end
+            for left, right in reviewed_intervals
         ):
             continue
         targets.append(
