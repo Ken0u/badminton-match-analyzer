@@ -7693,6 +7693,26 @@
       "task_id": "391",
       "verb": "checkpoint"
     },
+    "pose394-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793830949,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
+        "epoch": 1,
+        "expires_at": 1793841749,
+        "granted_at": 1793830949,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e"
+      },
+      "epoch": 1,
+      "fingerprint": "a96f116db002089594a1e717ee5fbacbd97e8ce2e1aec43b22b83ee524f87aca",
+      "status": "granted",
+      "task_id": "394",
+      "verb": "next"
+    },
     "pose394-plan-v1": {
       "actor": "Ken0u",
       "at": 1793826390,
@@ -33389,7 +33409,18 @@
       }
     },
     "394": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
+        "epoch": 1,
+        "expires_at": 1793841749,
+        "granted_at": 1793830949,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e"
+      },
+      "epoch": 1,
       "planned_at": 1793826390,
       "planned_by": "Ken0u",
       "spec": {
@@ -33471,7 +33502,7 @@
         ]
       },
       "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e",
-      "status": "ready"
+      "status": "running"
     },
     "396": {
       "epoch": 0,
