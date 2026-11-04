@@ -7721,6 +7721,15 @@
       "task_id": "394",
       "verb": "plan"
     },
+    "pose394-preparation-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793832080,
+      "epoch": 1,
+      "fingerprint": "2cdf827ca7aa64e45e32d55f1ccd7f303dc20c2d6b91fd5f3bd90a9d7ea867f2",
+      "status": "running",
+      "task_id": "394",
+      "verb": "checkpoint"
+    },
     "pose394-register-v1": {
       "actor": "Ken0u",
       "at": 1793830078,
@@ -33409,12 +33418,26 @@
       }
     },
     "394": {
+      "checkpoint": {
+        "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
+        "evidence": [
+          ".cache/pose394-grant-v1.json",
+          ".cache/pose394-preflight-v1.json",
+          ".cache/pose394-historical-code-v1.json",
+          ".cache/pose394-focused-v1.xml",
+          ".cache/pose394-runner-design-v1.md"
+        ],
+        "head_sha": "dc0fc3e3587b8c845a7074aad2c372a53777dd92",
+        "remaining": "Complete generated freeze/arithmetic/decoder integration tests; focused/full required and clean package/HTTP checks; commit/publish exact consumer and prospective protocol/input/runtime/claim seal; only then one shared-Store admitted scientific operation and read-only/independent arithmetic verification. Exact PR/main/public delivery remains required. No model promotion, test access, manual merge or CI retry.",
+        "summary": "Granted #394 runner under implementation. Existing 212 generated baseline tests pass. Initial integrated new checks: 84 passed and two synthetic fixture path failures are being corrected for the added immutable clock-ledger guard. Runner combines first-pass native clock/cut scan and second-pass exact frame cache, reuses sealed original features/control, preserves one claimed fit and partial failures, verifies old source inventories at original Git revisions, and refuses CUDA fallback. Historical source-only check passes all three retained revisions. Scientific operation, source preparation, inference, new features and real fit remain zero; no prospective execution claim exists."
+      },
+      "checkpoint_at": 1793832080,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
         "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
         "epoch": 1,
-        "expires_at": 1793841749,
+        "expires_at": 1793842880,
         "granted_at": 1793830949,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
