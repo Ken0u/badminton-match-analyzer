@@ -12601,6 +12601,12 @@
       "status": "ok",
       "verb": "register"
     },
+    "stroke382-repair-scope-v1": {
+      "actor": "Ken0u",
+      "reason": "scope change requires running work",
+      "status": "rejected",
+      "verb": "extend-scope"
+    },
     "stroke382-submit-v1": {
       "actor": "Ken0u",
       "at": 1793776042,
