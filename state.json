@@ -9309,6 +9309,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "recognition393-tested-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793827733,
+      "epoch": 1,
+      "fingerprint": "52870072a5cb6d491c8d62723acf7fa7c66d9f72bbe69f1c3eff3b5b6b1dc4d7",
+      "status": "running",
+      "task_id": "393",
+      "verb": "checkpoint"
+    },
     "repair-01d5e2874f8366d3e6e44edfbaef00624f1a7c7e": {
       "actor": "github-actions[bot]",
       "at": 1792639868,
@@ -33213,12 +33222,27 @@
       }
     },
     "393": {
+      "checkpoint": {
+        "branch": "codex/issue-393-honor-complete-inclusive-reviewed-shot-c",
+        "evidence": [
+          ".cache/recognition393-baseline-v1.json",
+          ".cache/recognition393-focused-v1.xml",
+          ".cache/recognition393-tooling-v2/verification.json",
+          ".cache/recognition393-orchestration-v1/receipt.json",
+          ".cache/recognition393-full-v2/pytest-process.json",
+          ".cache/recognition393-package-v2/package-process.json"
+        ],
+        "head_sha": "3a6657546bf8cba0623a8d958c80fe86a3725230",
+        "remaining": "Complete full suite and final package checks, report exact results, seal final-head source/model/receipt evidence, create and submit PR, verify exact PR/main CI and full public delivery. No manual merge or CI retry.",
+        "summary": "Minimal reviewed-contact interval priority repair committed and pushed. Original production reproduced 40 failures with 13 passing controls; repaired 53 new/141 focused checks pass. Lint, formatting, dependencies, tracked UTF-8/LF/JSON/local-link and diff checks pass. Generated 100-frame source exercises saved Store/API/CLI paths with only neural execution replaced; sources, annotation revisions and proposal artifacts preserved. Corrected isolated full suite and clean package/HTTP checks are live; first collection-only attempt imported the older editable checkout and is preserved. No actual match decode, neural inference, training or model installation."
+      },
+      "checkpoint_at": 1793827733,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "1fbac67ff671553e45d5afbac71ec251f18131e0",
         "branch": "codex/issue-393-honor-complete-inclusive-reviewed-shot-c",
         "epoch": 1,
-        "expires_at": 1793837775,
+        "expires_at": 1793838533,
         "granted_at": 1793826975,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
