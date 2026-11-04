@@ -33079,6 +33079,7 @@
       "status": "blocked"
     },
     "391": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41913232000",
       "checkpoint": {
         "branch": "codex/issue-391-complete-the-unchanged-static-temporal-w",
         "evidence": [
@@ -33102,7 +33103,7 @@
         "spec_hash": "767fa7339dd10c670f2817bebca68b6c6d3d665768259d6090a8be3dd0795363"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793825658,
