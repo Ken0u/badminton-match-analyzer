@@ -12532,6 +12532,14 @@
       "task_id": "380",
       "verb": "submit"
     },
+    "stroke382-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793773294,
+      "fingerprint": "097dcb1497245bc15c1aaf6ca019b7d1803f57b5914abbd96aee83a8d49c899e",
+      "status": "ready",
+      "task_id": "382",
+      "verb": "plan"
+    },
     "synthetic-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792953762,
@@ -32063,6 +32071,65 @@
         "pr_number": 381,
         "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be"
       }
+    },
+    "382": {
+      "epoch": 0,
+      "planned_at": 1793773294,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "After380 completes exact PR/main verification and full public delivery, revalidate current main/issues/controller ownership and obtain a fresh routine CPU grant and isolated worktree. Reproduce the generated semantic audit gap: fixed source clear/forehand is accepted as drive/backhand when metadata and NPZ targets are changed together and resealed. Do not infer historical contamination;380 uses an immutable precommitted manifest that remains unchanged.",
+          "Extend the original source audit to derive each exact ordered canonical ID and its weak family/side targets from the pinned original S2Doubles ball_type/backhand values, using the reviewed normalizer mapping and serve/other/unknown conventions. Compare cached target arrays AND cached record targets to those canonical source values before training admission. Reject cache-plus-metadata relabeling, fabricated unknowns, omitted source columns, invalid mappings and altered source hashes/order. Retain original rows, unknown source truth and unavailable inputs; unknowns never become negatives or known source rows silently disappear.",
+          "Preserve the exact fixed training algorithm, seed, optimizer, normalization, selection, thresholds, source groups, clips, counts, original raw files and existing models. Include every newly consumed mapping/parser module in source-stability seals before actual training. Fix generated fixtures to contain genuine source target fields and exercise both source-derived partial unknown outputs and cache/source corruption independently. No actual fitting, media, native perception or held-out input/prediction access is permitted.",
+          "Preserve the published portable v1 training parameters and historical capacity-v1 protocol/result/source commitments unchanged. Because the stronger audit changes stroke_learning source bytes, introduce an explicitly versioned capacity-v2 protocol and current clone-contained source binding rather than silently rewriting the executed v1 record or leaving current tests/CLI permanently pinned to the old source file. Update default protocol guidance/tests/source-archive inclusion honestly; exact v1 reproduction uses its preserved original consumer revision. No v2 model fit or scientific result is claimed. Keep the capacity study result negative and all complete-rally references0/2.",
+          "After meaningful generated tests pass, prospectively freeze exact tested consumer/mapping hashes and the immutable original development manifest before a single read-only canonical-target conformity audit over the original134development clips/1296source rows. Reuse original276source/protocol/feature seals and the separately sealed original reference inventory; preserve624/672rows and608/662available inputs, unknowns, source groups and all original hashes. Publish aggregate agreement/mismatch counts only; any unexpected real mismatch stops the audit for separate scope, never relabels or drops rows. No source labels, cache rows, predictions or weights are published.",
+          "Provide useful regressions for independently changed source fields, array-only/metadata-only/both resealed targets, valid service/other/six-family aliases, invalid/missing flags, per-output unknowns, unchanged strict unavailable denominators, exact row identity/order, duplicate source identity and parser/mapping mutation, original fitting semantics, preserved v1 history and current v2 source binding. Run focused/full Python, lint/format/dependency/repository/UTF8/LF/JSON/link/whitespace and clean source/wheel/HTTP checks, followed by exact-head controller/PR/main verification and full public delivery. Preserve original failed receipts and old root/environment/data/weights/PROGRESS edits."
+        ],
+        "artifacts": {
+          "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
+          "r3-development-manifest": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+          "source-target-generated-probe": "0a2f7eda921be836a7e9c5c0c1d6ef909fe25799fe90255d31d522b480ab4503"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "380"
+        ],
+        "exclusions": [
+          "No original input/model/cache/label edits, image/media access or transfer, native inference/feature extraction, actual fits, training/held-out/test prediction reads, model promotion, app/API/UI behavior change, changed classification algorithm/selection/thresholds, scientific replacement, new source acquisition, workflow/security/credential/deployment/dependency changes, CI retries, manual merges, raw coordination writes, paid service or deprecated PROGRESS updates. This is software source-target integrity work, not new scientific truth or accuracy."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_output_bytes": 1073741824,
+          "max_real_fits": 0,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Bind portable stroke training targets to the pinned original source CSV values, rejecting self-consistent resealed cache relabeling while preserving all historical experiments.",
+        "paths": [
+          "backend/badminton/stroke_learning.py",
+          "tests/test_stroke_learning.py",
+          "backend/badminton/stroke_capacity.py",
+          "tests/test_stroke_capacity.py",
+          "data/manifests/stroke_capacity_protocol_v2.json",
+          "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
+          "docs/STROKE_TARGET_AUDIT_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 45,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated regression must fail on the original audit for a self-consistent relabeling and pass after canonical source binding. Original selected models and historical v1 protocols/results remain unchanged.",
+          "One prospectively frozen read-only original-development target audit, all required local checks and exact controller/PR/main/public delivery; no fits or accuracy claim."
+        ]
+      },
+      "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
