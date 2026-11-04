@@ -7456,6 +7456,21 @@
       "task_id": "317",
       "verb": "submit"
     },
+    "pose385-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793790416,
+      "fingerprint": "5b204477f3938efbaa9b253178292192e17f9a57a3e61cb3045643d328436204",
+      "status": "ready",
+      "task_id": "385",
+      "verb": "plan"
+    },
+    "pose385-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793790416,
+      "fingerprint": "c02c38300a7d25414bd56eec428a91c474f4ed1cbe7eb7f911a6b581b086f82e",
+      "status": "ok",
+      "verb": "register"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -12247,6 +12262,14 @@
       "fingerprint": "06b554fe379ca01a3a728f12d33d64b0b4fff4d05754e09fb757061503a1c7aa",
       "status": "ready",
       "task_id": "382",
+      "verb": "plan"
+    },
+    "spec-385-bc3e6b80428b3576a7f87869765bb497d10de7618752bd94937889b73673efa8": {
+      "actor": "Ken0u",
+      "at": 1793790416,
+      "fingerprint": "44ed79e61dfcd6cf04482605518f6c270fce68315a0b69bdbbe90d8290e28a07",
+      "status": "ready",
+      "task_id": "385",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -32392,6 +32415,73 @@
         "spec_hash": "5ac5ffd140d8af4cfd0eb26909bd4bf5f8c214f2fbad8e5d82c290c4363a2cc3"
       }
     },
+    "385": {
+      "epoch": 0,
+      "planned_at": 1793790416,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "After382 completes exact PR/main and full public delivery, revalidate main, issue history, active grants and real shared Store; obtain a fresh GPU grant and isolated worktree. Preserve original root edits, environments, datasets, weights, source indexes, original RGB experiment and consumed tests. This is a precursor to broader source-aligned stroke learning, not a replacement accuracy benchmark or model promotion.",
+          "Implement clone-contained prepare/run/verify commands and a public fixed protocol. Verify the pinned existing part1 archive, normalized indexes, original capture-group mapping and standard yolo11s-pose checkpoint. Reuse only existing sources/models; no download or external image service. CSV targets/identities must agree with canonical source rows through the existing AI CUP importer mapping; cache self-consistency alone is insufficient. Hashing original archives/indexes for identity is allowed, but never decode or deserialize held-out media/features/models/predictions, or use held-out targets in cohort selection.",
+          "Freeze the deterministic pilot rule before scientific selection: independently in the original train and validation folds, select at most two source contact rows per requested six-family/forehand-backhand combination by ascending SHA256 of UTF-8 aicup-pose-pilot-v1|fold|record-id. Only original contact-label-eligible rows with known requested family and side enter the selection pool. Keep shortfalls explicit; do not borrow from test or retune the rule. Deduplicate selected clip keys in first selected-row order. At most48 selected rows/48 clips; retain every original reference row from each selected clip, including serve/other/unknown, censored contacts and unavailable cases. Report original pool and selected denominators separately. No family/side target may enter a pose feature value, court detector or native tracker.",
+          "After generated checks and a tested code commit, prospectively publish the exact consumer/protocol/runtime/model/source/cohort hashes before native inference. Freeze a private exact cohort and every original source hash, camera/scene state and native clock. Before starting, require <=32000 native frames, <=1GiB selected media and <=4GiB total new retained outputs, all within eight hours from the original fresh grant. If the fixed cohort exceeds a ceiling or inputs do not match, stop and preserve the failure; do not truncate, substitute sources, resample labels or silently drop difficult rows.",
+          "Execute exactly one unchanged standard player/pose pass per selected full clip at native stride1, using existing source orientation, PTS, cuts, current pinned tracker recipe and provisional automatic court calibration. Initialize torchvision before threaded PyAV; preserve managed native FFmpeg logging restoration. Configure BADMINTON_ROOT/data/weights before imports, use the real shared main Store admission through run_local_job for all GPU work, and write only new exclusive ignored research output plus ordinary shared job metadata. Never let a detached research Store grant competing GPU access. No shuttle/classifier inference or optimizer; no annotation/default/model installation. Preserve original annotations and raw predictions.",
+          "Validate every native frame identity/PTS, source/model/code/runtime seal, finite keypoint/box value, cut-separated track namespace, explicit missing pose and calibration expiry. Keep immutable native observations separate from weak published targets. Report per-fold/source-context/family/side native processing coverage and observed shoulder/elbow/wrist support around the preserved ambiguous H-1/H intervals, with H0 explicitly censored. Record candidate actor ambiguity; court end is not persistent identity, pose availability is not correct hitter attribution, complete contact detection or badminton accuracy. Do not certify scene/live support from a cut or dataset membership. Do not create new scene truth or training-ready/model-promotion eligibility from this pilot.",
+          "Use generated regressions for split/test access fencing, canonical source labels/flags, deterministic shortfall and repeated-clip selection, complete original denominators, source/clock/camera/orientation mutation, unsupported/NaN pose, stale calibration, exclusive output, shared admission denial, deadline/budget refusal and partial preservation. Required focused/full Python, lint/format/dependency/repository/UTF8/LF/JSON/link/whitespace and clean source/wheel/installed-HTTP checks precede exact controller PR/main and full public delivery. Publish reproducible code, public protocol and aggregate coverage only; media, labels, poses and detailed cohort/process/Store receipts remain private. Complete scientific rally references remain0/2 until separate evidence establishes otherwise."
+        ],
+        "artifacts": {
+          "aicup-capture-groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+          "aicup-clip-index": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+          "aicup-original-part1": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+          "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+          "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba"
+        },
+        "capabilities": [
+          "cuda",
+          "windows"
+        ],
+        "dependencies": [
+          "382"
+        ],
+        "exclusions": [
+          "No new source/model acquisition, external image/label transfer or assessor sessions, paid services, real fitting, scientific replacements, held-out media/features/prediction reads, changed source groups, tuning against consumed tests, model promotion, application UI/API/default changes, source/annotation/cache/model edits, dependency/environment migration, workflow/security/credential/deployment policy changes, CI retries, manual merges, raw coordination writes or deprecated PROGRESS updates. Published source labels and ordinal intervals remain weak supervision, not expert ground truth or independently resolved original-match identities."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_native_frames": 32000,
+          "max_native_passes_per_clip": 1,
+          "max_output_bytes": 4294967296,
+          "max_real_fits": 0,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 8,
+          "max_selected_clips": 48,
+          "max_selected_media_bytes": 1073741824,
+          "max_selected_rows": 48,
+          "paid_services": false
+        },
+        "milestone": "Data and evaluation",
+        "outcome": "Prepare and measure native source-clock-bound player/pose inputs on a fixed class-balanced pilot from the existing AI CUP training/validation capture groups, enabling broader stroke-learning supervision without training or touching held-out inputs.",
+        "paths": [
+          "backend/badminton/aicup_pose_pilot.py",
+          "scripts/prepare_aicup_pose_pilot.py",
+          "tests/test_aicup_pose_pilot.py",
+          "data/manifests/aicup_pose_pilot_protocol_v1.json",
+          "docs/AICUP_POSE_PILOT_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 80,
+        "resources": [
+          "gpu:windows-primary"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Generated controls must enforce the fixed cohort, original source/target and split boundaries before admission. Preserve original scientific artifacts and unavailable denominators.",
+          "One prospectively frozen native pose-input pilot under the real shared Store; strict complete source/frame/PTS/output audit, required local checks and exact PR/main/public delivery. No claim of improved classifier or full-match accuracy."
+        ]
+      },
+      "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -35637,6 +35727,11 @@
     "MSI/3283a9953d4445739251c6b8dfdb55bd": {
       "actor": "Ken0u",
       "artifacts": {
+        "aicup-capture-groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+        "aicup-clip-index": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+        "aicup-original-part1": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+        "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+        "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
         "operational-budget-profile": "69ea102daea361660535a55c4b208b9265ea342596942e939ebd97d2734e202f",
         "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
         "r3-development-manifest": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
@@ -35652,12 +35747,13 @@
         "source-target-generated-probe": "0a2f7eda921be836a7e9c5c0c1d6ef909fe25799fe90255d31d522b480ab4503"
       },
       "capabilities": [
+        "amd64",
         "cpu",
-        "windows",
-        "amd64"
+        "cuda",
+        "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1793773883,
+      "registered_at": 1793790416,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
