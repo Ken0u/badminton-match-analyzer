@@ -12586,6 +12586,15 @@
       "task_id": "382",
       "verb": "next"
     },
+    "stroke382-path-scope-e2-v1": {
+      "actor": "Ken0u",
+      "at": 1793777442,
+      "epoch": 2,
+      "fingerprint": "f30a557df3a3e364beaf3391ce1bcf053f133090a0f31df8aba6f7e126ab36bc",
+      "status": "running",
+      "task_id": "382",
+      "verb": "extend-scope"
+    },
     "stroke382-plan-v1": {
       "actor": "Ken0u",
       "at": 1793773294,
@@ -32218,7 +32227,7 @@
         "granted_at": 1793777169,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+        "spec_hash": "5ac5ffd140d8af4cfd0eb26909bd4bf5f8c214f2fbad8e5d82c290c4363a2cc3"
       },
       "epoch": 2,
       "history": [
@@ -32312,7 +32321,8 @@
           "data/manifests/stroke_capacity_protocol_v2.json",
           "docs/PORTABLE_STROKE_TRAINING_REPORT.md",
           "docs/STROKE_TARGET_AUDIT_REPORT.md",
-          "MANIFEST.in"
+          "MANIFEST.in",
+          "tests/test_rally_review_contract_cli.py"
         ],
         "priority": 45,
         "resources": [],
@@ -32322,7 +32332,7 @@
           "One prospectively frozen read-only original-development target audit, all required local checks and exact controller/PR/main/public delivery; no fits or accuracy claim."
         ]
       },
-      "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4",
+      "spec_hash": "5ac5ffd140d8af4cfd0eb26909bd4bf5f8c214f2fbad8e5d82c290c4363a2cc3",
       "status": "running",
       "submission": {
         "base_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
