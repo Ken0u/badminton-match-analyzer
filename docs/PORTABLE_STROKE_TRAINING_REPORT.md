@@ -9,6 +9,16 @@ does not improve or install an application model. Half smash remains excluded.
 
 ## Inputs and usage
 
+November 4, 2026: the [source-target audit repair](STROKE_TARGET_AUDIT_REPORT.md)
+additionally checks each cached family/side target against the pinned original
+CSV's reviewed doubles mapping. It rejects self-consistent cache/metadata
+relabeling and seals the parser and mapping modules during training. The public
+v1 training parameters and all historical results remain unchanged. Exact
+historical source-byte reproduction uses preserved consumer revision
+`113d1bc10b1b3301bf7ec2d31da7c99e2ad8562a`; current source has a stronger audit
+and is not byte-identical to that historical learner. This repair runs no real
+fit and establishes no new recognition accuracy.
+
 The clone supplies code and parameters. It does not supply original labels,
 features, media, models or local receipts. Obtain legally available original
 inputs with their pinned hashes. S2Doubles has no license file at the pinned

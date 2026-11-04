@@ -39,7 +39,7 @@ def fast(monkeypatch):
 def test_committed_protocol_and_original_recipe_are_unchanged():
     path = (
         Path(capacity.__file__).resolve().parents[2]
-        / "data/manifests/stroke_capacity_protocol_v1.json"
+        / "data/manifests/stroke_capacity_protocol_v2.json"
     )
     assert learning.read_json(path.read_bytes()) == capacity.PROTOCOL
     assert capacity.PROTOCOL["training"] == learning.PROTOCOL["training"]
@@ -48,6 +48,26 @@ def test_committed_protocol_and_original_recipe_are_unchanged():
         == capacity.PROTOCOL["baseline_source_sha256"]
     )
     assert capacity.PROTOCOL["maximum_real_fits"] == 2
+    for name, expected in capacity.PROTOCOL["target_source_sha256"].items():
+        assert capacity.code_seals()[name] == expected
+    historical_path = path.with_name("stroke_capacity_protocol_v1.json")
+    assert (
+        learning.digest(historical_path.read_bytes())
+        == "a1f2d5396c4ab00f188c99bf8fd599036da3aac0be75e5fcd66461a20edc1e77"
+    )
+    historical = learning.read_json(historical_path.read_bytes())
+    assert historical["baseline_source_sha256"] == (
+        "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932"
+    )
+    changed_keys = {
+        "schema_version",
+        "name",
+        "baseline_source_sha256",
+        "target_source_sha256",
+    }
+    assert {k: v for k, v in capacity.PROTOCOL.items() if k not in changed_keys} == {
+        k: v for k, v in historical.items() if k not in changed_keys
+    }
 
 
 def test_linear_fit_partial_labels_determinism_normalization_and_rng(data, fast):
@@ -247,6 +267,30 @@ def test_real_shared_admission_denial_precedes_both_fits(frozen, monkeypatch):
 
 
 @pytest.mark.parametrize(
+    "name", ["stroke_learning.py", "datasets.py", "doubles_data.py"]
+)
+def test_changed_declared_baseline_parser_or_mapping_fails_before_freeze(
+    frozen, monkeypatch, name
+):
+    original = capacity.code_seals()
+    monkeypatch.setattr(capacity, "code_seals", lambda: {**original, name: "0" * 64})
+    _main, root, _path, _sha, _output = frozen
+    path = root / "changed-consumer-freeze.json"
+    with pytest.raises(
+        ValueError, match=r"Changed fixed baseline|Changed canonical target"
+    ):
+        capacity.freeze(
+            root,
+            root / "manifest.json",
+            capacity.PROTOCOL["input_manifest_sha256"],
+            root / "protocol.json",
+            time.time() + 1000,
+            path,
+        )
+    assert not path.exists()
+
+
+@pytest.mark.parametrize(
     "name", ["manifest.json", "protocol.json", "features.npz", "freeze.json"]
 )
 def test_changed_frozen_inputs_fail_before_admission(frozen, monkeypatch, name):
@@ -269,7 +313,8 @@ def test_conflicting_imported_configuration_is_rejected(frozen, monkeypatch):
 
 
 @pytest.mark.parametrize(
-    "mutation", ["input", "consumer", "freeze", "deadline", "budget"]
+    "mutation",
+    ["input", "consumer", "parser", "mapping", "freeze", "deadline", "budget"],
 )
 def test_mutation_during_fit_fails_without_publishing_a_checkpoint(
     frozen, monkeypatch, mutation
@@ -279,12 +324,17 @@ def test_mutation_during_fit_fails_without_publishing_a_checkpoint(
     def changed(*args):
         if mutation == "input":
             (frozen[1] / "features.npz").write_bytes(b"changed")
-        elif mutation == "consumer":
+        elif mutation in ("consumer", "parser", "mapping"):
             original = capacity.code_seals()
+            name = {
+                "consumer": "stroke_capacity.py",
+                "parser": "datasets.py",
+                "mapping": "doubles_data.py",
+            }[mutation]
             monkeypatch.setattr(
                 capacity,
                 "code_seals",
-                lambda: {**original, "stroke_capacity.py": "0" * 64},
+                lambda: {**original, name: "0" * 64},
             )
         elif mutation == "freeze":
             frozen[2].write_bytes(b"changed")

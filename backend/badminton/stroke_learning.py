@@ -6,6 +6,7 @@ importing application configuration or admitting CPU training.
 """
 
 import argparse
+import csv
 import hashlib
 import io
 import json
@@ -17,6 +18,7 @@ from pathlib import Path, PurePosixPath
 import numpy as np
 
 from .datasets import integer, read_rows
+from .doubles_data import TYPES
 
 FAMILIES = ("clear", "lift", "net", "drop", "smash", "drive", "other", "serve")
 SIDES = ("forehand", "backhand")
@@ -221,7 +223,7 @@ def prepare(root, plan, features, source_catalog, protocol, target):
 
 
 def canonical_source_rows(root, entries):
-    """Derive exact ordered IDs from original pinned development CSV bytes."""
+    """Derive ordered identities and weak targets from pinned source CSVs."""
     expected = {entry["path"]: entry for entry in PROTOCOL["source_labels"]}
     if not isinstance(entries, dict) or set(entries) != set(expected):
         raise ValueError("Incomplete original source label files")
@@ -232,16 +234,31 @@ def canonical_source_rows(root, entries):
         if blob != description["git_blob"]:
             raise ValueError("Changed original source labels")
         rows = read_rows(raw)
-        if rows and not {"rally", "ball_round"}.issubset(rows[0]):
-            raise ValueError("Original source labels lack identity columns")
+        columns = next(csv.reader(io.StringIO(raw.decode("utf-8-sig"))), [])
+        if not {"rally", "ball_round", "ball_type", "backhand"}.issubset(columns):
+            raise ValueError("Original source labels lack identity or target columns")
         match, set_id = description["match_id"], description["set_id"]
         # Match normalize_set exactly, including its source data-row numbering.
         # Unselected flawed/unknown rows remain in the source; no evaluation
         # reference is removed or renumbered when constructing an included rally.
         for number, row in enumerate(rows, 2):
             rally, order = integer(row["rally"], 1), integer(row["ball_round"], 1)
+            # Use the reviewed doubles normalizer's TYPES and flag convention.
+            # Services are a separate head class; unknown mechanics stay unknown.
+            translated, family = TYPES.get(row["ball_type"], ("unknown", "unknown"))
+            if translated in ("short service", "long service"):
+                family = "serve"
+            if family not in (*FAMILIES, "unknown"):
+                raise ValueError("Invalid original source target mapping")
+            flag = integer(row["backhand"])
+            side = "backhand" if flag == 1 else "forehand" if flag == 0 else "unknown"
             result.setdefault((match, set_id, rally), []).append(
-                f"s2doubles:{match}:{set_id}:{rally}:{order}:{number}"
+                {
+                    "id": f"s2doubles:{match}:{set_id}:{rally}:{order}:{number}",
+                    "stroke_order": order,
+                    "family_target": family,
+                    "side_target": side,
+                }
             )
     return result
 
@@ -336,11 +353,14 @@ def audit(root, raw, manifest_sha256):
         size = len(records)
         if size != request["published_strokes"]:
             raise ValueError("Incomplete source records for clip")
-        expected_ids = canonical.get(
+        source_records = canonical.get(
             (request["match_id"], request["set_id"], request["rally_id"]), []
         )
-        if [record["id"] for record in records] != expected_ids:
+        if [record["id"] for record in records] != [r["id"] for r in source_records]:
             raise ValueError("Canonical source row identity or order mismatch")
+        orders = [record["stroke_order"] for record in source_records]
+        if None in orders or len(set(orders)) != size:
+            raise ValueError("Duplicate or invalid canonical source stroke identity")
         if (
             x.dtype != np.float32
             or x.shape != (size, PROTOCOL["input_dim"])
@@ -359,10 +379,18 @@ def audit(root, raw, manifest_sha256):
             ):
                 raise ValueError("Invalid target labels")
             expected = [
-                labels.index(r[key]) if r[key] in labels else -1 for r in records
+                labels.index(r[key]) if r[key] in labels else -1 for r in source_records
             ]
             if not np.array_equal(target, expected):
-                raise ValueError("Targets disagree with source records")
+                raise ValueError("Targets disagree with canonical source labels")
+            for record, source_record in zip(records, source_records):
+                value = record[key]
+                if value not in (*labels, "unknown", None):
+                    raise ValueError("Targets contain unsupported cached record labels")
+                if ("unknown" if value is None else value) != source_record[key]:
+                    raise ValueError(
+                        "Targets in cached records disagree with source labels"
+                    )
         for index, record in enumerate(records):
             row_id = record["id"]
             if (
@@ -722,6 +750,7 @@ def train(workspace, root, manifest_path, manifest_sha256, output):
         Path(__file__).with_name("recognition_evaluation.py"),
         Path(__file__).with_name("evaluation.py"),
         Path(__file__).with_name("datasets.py"),
+        Path(__file__).with_name("doubles_data.py"),
     ]
     code = {p.name: digest(p.read_bytes()) for p in source_paths}
 

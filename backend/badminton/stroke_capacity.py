@@ -14,10 +14,14 @@ import psutil
 from . import stroke_learning as learning
 
 PROTOCOL = {
-    "schema_version": 1,
-    "name": "observed-stroke-capacity-development-v1",
+    "schema_version": 2,
+    "name": "observed-stroke-capacity-development-v2",
     "input_manifest_sha256": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
-    "baseline_source_sha256": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
+    "baseline_source_sha256": "c4b4345491441a4ce51d99fcd037a7b087037232b2f6c4d268ad7903becf4a01",
+    "target_source_sha256": {
+        "datasets.py": "8f6a5d69b7a5d0f159de75c8e0697a1bcd782101e0e396199373082d4b6a4ee0",
+        "doubles_data.py": "d4b4bdfb086c16cbb42b1702fa00bac6f641a40470687280b9687377c05005d1",
+    },
     "input_dim": 371,
     "training": copy.deepcopy(learning.PROTOCOL["training"]),
     "variants": {
@@ -49,6 +53,7 @@ CODE_FILES = (
     "recognition_evaluation.py",
     "evaluation.py",
     "datasets.py",
+    "doubles_data.py",
     "jobs.py",
     "storage.py",
     "config.py",
@@ -95,6 +100,11 @@ def freeze(root, manifest, manifest_sha256, protocol, deadline, output):
     code = code_seals()
     if code["stroke_learning.py"] != PROTOCOL["baseline_source_sha256"]:
         raise ValueError("Changed fixed baseline source")
+    if any(
+        code[name] != expected
+        for name, expected in PROTOCOL["target_source_sha256"].items()
+    ):
+        raise ValueError("Changed canonical target parser or mapping source")
     if PROTOCOL["training"] != learning.PROTOCOL["training"]:
         raise ValueError("Changed fixed baseline training parameters")
     # Freeze files are new immutable artifacts, never executable launchers.

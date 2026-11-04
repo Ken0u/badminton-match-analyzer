@@ -1,12 +1,15 @@
 """Generated-input guards and training semantics, without external research data."""
 
 import copy
+import csv
 import hashlib
+import io
 from pathlib import Path
 
 import numpy as np
 import pytest
 from badminton import stroke_learning as learning
+from badminton.doubles_data import TYPES
 
 
 @pytest.fixture
@@ -34,10 +37,16 @@ def corpus(tmp_path, monkeypatch):
     (features / "recipe.json").write_bytes(recipe)
     (tmp_path / "Match.csv").write_bytes(catalog)
     for description in protocol["source_labels"]:
-        rows = "rally,ball_round\n"
+        types = [
+            next(name for name, value in TYPES.items() if value[1] == family)
+            for family in ("clear", "lift", "net")
+        ]
+        rows = "rally,ball_round,ball_type,backhand\n"
         if description["set_id"] == 1:
             rows += "".join(
-                f"{rally},{order}\n" for rally in (1, 2) for order in (1, 2, 3)
+                f"{rally},{order},{types[order - 1]},{(order - 1) % 2}\n"
+                for rally in (1, 2)
+                for order in (1, 2, 3)
             )
         raw = rows.encode("utf-8")
         path = tmp_path / description["path"]
@@ -129,6 +138,60 @@ def rewrite_clip(corpus, index, *, arrays=None, change=None):
     meta_path.write_bytes(learning.encoded(meta))
     entry["metadata"] = learning.seal(root, meta_path)
     path.write_bytes(learning.encoded(manifest))
+
+
+def rewrite_source(corpus, change, *, file_index=0, omitted_column=None):
+    """Change generated source truth and explicitly repin its toy protocol."""
+    root, path = corpus
+    manifest = learning.read_json(path.read_bytes())
+    description = learning.PROTOCOL["source_labels"][file_index]
+    name = description["path"]
+    source = root / manifest["source_labels"][name]["path"]
+    reader = csv.DictReader(io.StringIO(source.read_text(encoding="utf-8")))
+    rows, fields = list(reader), reader.fieldnames
+    change(rows)
+    if omitted_column:
+        fields = [field for field in fields if field != omitted_column]
+    stream = io.StringIO(newline="")
+    writer = csv.DictWriter(stream, fields, lineterminator="\n", extrasaction="ignore")
+    writer.writeheader()
+    writer.writerows(rows)
+    raw = stream.getvalue().encode("utf-8")
+    source.write_bytes(raw)
+    description["git_blob"] = hashlib.sha1(
+        b"blob " + str(len(raw)).encode() + b"\0" + raw
+    ).hexdigest()
+    manifest["source_labels"][name] = learning.seal(root, source)
+    protocol = root / manifest["protocol"]["path"]
+    protocol.write_bytes(learning.encoded(learning.PROTOCOL))
+    manifest["protocol"] = learning.seal(root, protocol)
+    path.write_bytes(learning.encoded(manifest))
+
+
+@pytest.mark.parametrize("part", ["arrays", "metadata", "both"])
+@pytest.mark.parametrize(
+    "family,side",
+    [("drive", "backhand"), ("unknown", "forehand"), ("clear", "unknown")],
+)
+def test_resealed_targets_must_agree_with_original_source(corpus, part, family, side):
+    def change_arrays(arrays, _meta):
+        for key, label, labels in (
+            ("family", family, learning.FAMILIES),
+            ("side", side, learning.SIDES),
+        ):
+            arrays[key][0] = labels.index(label) if label in labels else -1
+
+    def change_metadata(meta):
+        meta["records"][0].update(family_target=family, side_target=side)
+
+    rewrite_clip(
+        corpus,
+        0,
+        arrays=change_arrays if part in ("arrays", "both") else None,
+        change=change_metadata if part in ("metadata", "both") else None,
+    )
+    with pytest.raises(ValueError, match="Targets"):
+        load(corpus)
 
 
 def test_public_protocol_matches_fixed_recipe():
@@ -323,6 +386,11 @@ def test_unknown_truth_and_unavailable_input_remain_distinct(corpus):
         arrays["family"][0] = -1
         meta["records"][0]["family_target"] = None
 
+    rewrite_source(
+        corpus,
+        lambda rows: rows[0].update(ball_type="unmapped-source-type"),
+        file_index=2,
+    )
     rewrite_clip(corpus, 2, arrays=unknown)
     data, proof = load(corpus)
     validation = data["validation"]
@@ -339,6 +407,118 @@ def test_unknown_truth_and_unavailable_input_remain_distinct(corpus):
     assert result["side"]["source_rows"] == 6
     assert result["side"]["strict_accuracy"] == 5 / 6
     assert result["family_side_tuple_given_weak_source_hitter_clock"] == 4 / 5
+
+
+@pytest.mark.parametrize("column", ["rally", "ball_round", "ball_type", "backhand"])
+@pytest.mark.parametrize("file_index", [0, 1])
+def test_missing_source_columns_fail_even_for_header_only_sets(
+    corpus, column, file_index
+):
+    rewrite_source(
+        corpus, lambda _rows: None, file_index=file_index, omitted_column=column
+    )
+    with pytest.raises(ValueError, match="lack identity or target columns"):
+        load(corpus)
+
+
+@pytest.mark.parametrize("column,value", [("ball_type", "unmapped"), ("backhand", "1")])
+def test_independently_changed_generated_source_targets_reject_unchanged_cache(
+    corpus, column, value
+):
+    rewrite_source(corpus, lambda rows: rows[0].update({column: value}))
+    with pytest.raises(ValueError, match="Targets disagree with canonical source"):
+        load(corpus)
+
+
+@pytest.mark.parametrize("source_type,mapping", list(TYPES.items()))
+def test_source_target_aliases_match_reviewed_doubles_normalizer(
+    corpus, source_type, mapping
+):
+    from badminton.doubles_data import normalize_set
+
+    rewrite_source(corpus, lambda rows: rows[0].update(ball_type=source_type))
+    root, manifest_path = corpus
+    manifest = learning.read_json(manifest_path.read_bytes())
+    name = learning.PROTOCOL["source_labels"][0]["path"]
+    rows = learning.read_rows(
+        (root / manifest["source_labels"][name]["path"]).read_bytes()
+    )
+    full_rows = [
+        {
+            "time": "00:00:01.0",
+            "start_frame": "1",
+            "end_frame": "2",
+            "player": "A",
+            "server": "2",
+            "flaw": "0",
+            "roundscore_AB": "0",
+            "roundscore_CD": "0",
+            **row,
+        }
+        for row in rows
+    ]
+    normalized, _ = normalize_set(full_rows, 1, 1, "train", {})
+    family = "serve" if normalized[0]["kind"] == "serve" else normalized[0]["family"]
+    assert mapping[1] == normalized[0]["family"]
+
+    def targets(arrays, meta):
+        arrays["family"][0] = learning.FAMILIES.index(family)
+        meta["records"][0]["family_target"] = family
+
+    rewrite_clip(corpus, 0, arrays=targets)
+    data, _ = load(corpus)
+    assert data["train"]["family"][0] == learning.FAMILIES.index(family)
+    assert data["train"]["side"][0] == learning.SIDES.index(normalized[0]["side"])
+
+
+@pytest.mark.parametrize("flag", ["", "-1", "2", "NaN", "infinity", "0.5", "missing"])
+@pytest.mark.parametrize("missing_value", [None, "unknown"])
+def test_invalid_or_missing_source_side_stays_unknown(corpus, flag, missing_value):
+    rewrite_source(corpus, lambda rows: rows[0].update(backhand=flag))
+
+    def targets(arrays, meta):
+        arrays["side"][0] = -1
+        meta["records"][0]["side_target"] = missing_value
+
+    rewrite_clip(corpus, 0, arrays=targets)
+    data, proof = load(corpus)
+    assert data["train"]["side"][0] == -1
+    assert data["train"]["family"][0] == learning.FAMILIES.index("clear")
+    assert proof["counts"]["train"]["unknown_side"] == 1
+    assert proof["counts"]["train"]["rows"] == 6
+    assert proof["counts"]["train"]["available"] == 5
+
+
+def test_duplicate_source_stroke_identity_fails_even_with_resealed_matching_ids(corpus):
+    rewrite_source(
+        corpus, lambda rows: rows[1].update(ball_round=rows[0]["ball_round"])
+    )
+    rewrite_clip(
+        corpus,
+        0,
+        change=lambda meta: meta["records"][1].update(id="s2doubles:1:1:1:1:3"),
+    )
+    with pytest.raises(ValueError, match="Duplicate or invalid canonical source"):
+        load(corpus)
+
+
+def test_unsupported_cached_unknown_spelling_is_rejected(corpus):
+    rewrite_source(corpus, lambda rows: rows[0].update(ball_type="unmapped"))
+
+    def targets(arrays, meta):
+        arrays["family"][0] = -1
+        meta["records"][0]["family_target"] = "made-up-unknown"
+
+    rewrite_clip(corpus, 0, arrays=targets)
+    with pytest.raises(ValueError, match="unsupported cached record"):
+        load(corpus)
+
+
+def test_invalid_normalizer_mapping_cannot_become_unknown(corpus, monkeypatch):
+    source_type = next(name for name, value in TYPES.items() if value[1] == "clear")
+    monkeypatch.setitem(TYPES, source_type, ("clear", "unsupported-family"))
+    with pytest.raises(ValueError, match="Invalid original source target mapping"):
+        load(corpus)
 
 
 def test_thresholds_retain_disabled_classes_and_ignore_unknowns(corpus):
@@ -520,5 +700,54 @@ def test_inputs_changed_during_training_prevent_model_publication(corpus, monkey
             main, root, manifest, learning.digest(manifest.read_bytes()), output
         )
     assert statuses[-1] == "failed"
+    assert not (output / "selected.pt").exists()
+    assert not (output / "completed.json").exists()
+
+
+@pytest.mark.parametrize("name", ["datasets.py", "doubles_data.py"])
+def test_parser_or_mapping_source_changes_prevent_model_publication(
+    corpus, monkeypatch, name
+):
+    pytest.importorskip("torch")
+    from badminton import storage
+
+    main = workspace(corpus, monkeypatch)
+    root, manifest = corpus
+    output = main / ".cache/output"
+    statuses = []
+
+    class Main:
+        def __init__(self, _data):
+            pass
+
+        def claim_job(self, _job):
+            pass
+
+        def put_job(self, job):
+            statuses.append(job["status"])
+
+    original = Path.read_bytes
+    changed = False
+    target = Path(learning.__file__).with_name(name)
+
+    def source_bytes(path):
+        raw = original(path)
+        return raw + b"\n# generated mutation\n" if changed and path == target else raw
+
+    def mutation(*_):
+        nonlocal changed
+        changed = True
+        return {}, {"epoch": 1}
+
+    monkeypatch.setattr(Path, "read_bytes", source_bytes)
+    monkeypatch.setattr(storage, "Store", Main)
+    monkeypatch.setattr(learning, "fit", mutation)
+    with pytest.raises(ValueError, match="Execution code changed"):
+        learning.train(
+            main, root, manifest, learning.digest(manifest.read_bytes()), output
+        )
+    assert statuses[-1] == "failed"
+    attempt = learning.read_json((output / "attempt.json").read_bytes())
+    assert {"datasets.py", "doubles_data.py"}.issubset(attempt["code_sha256"])
     assert not (output / "selected.pt").exists()
     assert not (output / "completed.json").exists()

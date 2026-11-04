@@ -212,7 +212,23 @@ def invoke(tmp_path, *extra, output="validated.json", startup_delay=0):
     gate.write_text(CLI_STARTUP_GATE, encoding="utf-8")
     nonce = uuid4().hex
     gated_command = [command[0], str(gate), str(startup_path), nonce, *command[1:]]
-    identities, observation_errors = {}, []
+    identities, observation_errors, terminal_observations = {}, [], []
+
+    def denied(pid, process):
+        # Inspect the original Popen handle, never an unverified PID successor.
+        # Its terminal state proves only the owned root exited, not a child.
+        code = process.poll()
+        if (
+            startup_verified
+            and pid == process.pid
+            and any(observed_pid == pid for observed_pid, _created in identities)
+            and code is not None
+        ):
+            terminal_observations.append(
+                {"pid": pid, "returncode": code, "reason": "owned root already reaped"}
+            )
+        else:
+            observation_errors.append(pid)
 
     def observe(process):
         try:
@@ -229,11 +245,11 @@ def invoke(tmp_path, *extra, output="validated.json", startup_delay=0):
                 except psutil.NoSuchProcess:
                     continue
                 except psutil.AccessDenied:
-                    observation_errors.append(child.pid)
+                    denied(child.pid, process)
         except psutil.NoSuchProcess:
             pass
         except psutil.AccessDenied:
-            observation_errors.append(process.pid)
+            denied(process.pid, process)
 
     startup, startup_verified, startup_error = None, False, None
     with stdout.open("wb") as out, stderr.open("wb") as err:
@@ -285,6 +301,7 @@ def invoke(tmp_path, *extra, output="validated.json", startup_delay=0):
         "returncode": code,
         "identities": list(identities.values()),
         "observation_errors": observation_errors,
+        "terminal_observations": terminal_observations,
     }
     (run / "cli-process.json").write_bytes(encoded(receipt))
     assert not observation_errors, receipt
@@ -317,6 +334,145 @@ def test_startup_gate_records_identity_before_delayed_first_observation(
         and row["created"] == receipt["startup"]["created"]
         for row in receipt["identities"]
     )
+
+
+@pytest.mark.parametrize("method", ["cwd", "children"])
+@pytest.mark.parametrize("phase", ["after_exit", "while_live"])
+def test_owned_root_observation_denial_requires_terminal_popen_evidence(
+    tmp_path, monkeypatch, method, phase
+):
+    """Deterministically end the lifetime between poll and process inspection."""
+    workspace(tmp_path)
+    original_process, original_popen = psutil.Process, subprocess.Popen
+    handles, denials = [], []
+
+    def spawn(*args, **kwargs):
+        handle = original_popen(*args, **kwargs)
+        handles.append(handle)
+        return handle
+
+    class ObservedProcess:
+        def __init__(self, pid=None):
+            self.inner = original_process(pid)
+
+        def __getattr__(self, name):
+            return getattr(self.inner, name)
+
+        def observe(self, name):
+            handle = next((h for h in handles if h.pid == self.inner.pid), None)
+            if (
+                name == method
+                and handle is not None
+                and handle.stdin.closed
+                and not denials
+            ):
+                if phase == "after_exit":
+                    handle.wait(timeout=10)
+                else:
+                    assert handle.poll() is None
+                denials.append({"pid": handle.pid, "returncode": handle.poll()})
+                raise psutil.AccessDenied(handle.pid)
+            return getattr(self.inner, name)()
+
+        def cwd(self):
+            return self.observe("cwd")
+
+        def children(self, recursive=False):
+            if method == "children":
+                self.observe("children")
+            return self.inner.children(recursive=recursive)
+
+    monkeypatch.setattr(subprocess, "Popen", spawn)
+    monkeypatch.setattr(psutil, "Process", ObservedProcess)
+    monkeypatch.setattr(
+        sys.modules[__name__],
+        "CLI_STARTUP_GATE",
+        CLI_STARTUP_GATE.replace(
+            "runpy.run_path(sys.argv[0]",
+            "import time; time.sleep(0.15)\nrunpy.run_path(sys.argv[0]",
+        ),
+    )
+    if phase == "after_exit":
+        code, _stdout, _stderr = invoke(tmp_path)
+        assert code == 0
+    else:
+        with pytest.raises(AssertionError):
+            invoke(tmp_path)
+    assert len(handles) == len(denials) == 1
+    assert handles[0].returncode == 0
+    assert denials[0]["returncode"] == (0 if phase == "after_exit" else None)
+    receipt = json.loads((tmp_path / "cli-runs/run-000/cli-process.json").read_bytes())
+    assert receipt["startup_verified"] and receipt["startup_error"] is None
+    assert receipt["returncode"] == 0
+    if phase == "after_exit":
+        assert receipt["observation_errors"] == []
+        assert receipt["terminal_observations"] == [
+            {
+                "pid": handles[0].pid,
+                "returncode": 0,
+                "reason": "owned root already reaped",
+            }
+        ]
+    else:
+        assert receipt["observation_errors"] == [handles[0].pid]
+        assert receipt["terminal_observations"] == []
+
+
+def test_owned_root_exit_cannot_resolve_descendant_observation_denial(
+    tmp_path, monkeypatch
+):
+    workspace(tmp_path)
+    original_process, original_popen = psutil.Process, subprocess.Popen
+    handles, denied = [], []
+
+    def spawn(*args, **kwargs):
+        handle = original_popen(*args, **kwargs)
+        handles.append(handle)
+        return handle
+
+    class DeniedDescendant:
+        # A generated observer response, distinct from every spawned root PID.
+        pid = os.getpid()
+
+        def create_time(self):
+            return original_process(self.pid).create_time()
+
+        def cwd(self):
+            denied.append(self.pid)
+            raise psutil.AccessDenied(self.pid)
+
+    class ObservedProcess:
+        def __init__(self, pid=None):
+            self.inner = original_process(pid)
+
+        def __getattr__(self, name):
+            return getattr(self.inner, name)
+
+        def children(self, recursive=False):
+            handle = next((h for h in handles if h.pid == self.inner.pid), None)
+            if handle is not None and handle.stdin.closed and not denied:
+                handle.wait(timeout=10)
+                return [DeniedDescendant()]
+            return self.inner.children(recursive=recursive)
+
+    monkeypatch.setattr(subprocess, "Popen", spawn)
+    monkeypatch.setattr(psutil, "Process", ObservedProcess)
+    monkeypatch.setattr(
+        sys.modules[__name__],
+        "CLI_STARTUP_GATE",
+        CLI_STARTUP_GATE.replace(
+            "runpy.run_path(sys.argv[0]",
+            "import time; time.sleep(0.15)\nrunpy.run_path(sys.argv[0]",
+        ),
+    )
+    with pytest.raises(AssertionError):
+        invoke(tmp_path)
+    assert denied == [os.getpid()]
+    assert len(handles) == 1 and handles[0].returncode == 0
+    receipt = json.loads((tmp_path / "cli-runs/run-000/cli-process.json").read_bytes())
+    assert receipt["startup_verified"] and receipt["startup_error"] is None
+    assert receipt["observation_errors"] == denied
+    assert receipt["terminal_observations"] == []
 
 
 def test_actual_cli_preserves_native_denominators_unknowns_and_private_documents(
