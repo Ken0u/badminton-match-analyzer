@@ -7659,6 +7659,15 @@
       "task_id": "391",
       "verb": "plan"
     },
+    "pose391-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793825009,
+      "epoch": 1,
+      "fingerprint": "11af3d45a41e22d8a3048a2fe61ee241cad20d38cd81130439e8761685f9fce5",
+      "status": "review",
+      "task_id": "391",
+      "verb": "submit"
+    },
     "pose391-tested-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793823764,
@@ -33032,6 +33041,7 @@
       "epoch": 1,
       "planned_at": 1793823509,
       "planned_by": "Ken0u",
+      "pr_number": 392,
       "spec": {
         "acceptance": [
           "Preserve expired389epoch1spec/grant/window, draftPR390head64c7c31c6c2db9c92b8ff3143eaf6205ecde1f95, all software/checkpoint/incident evidence and zero-real-fit status. After its documented terminal-proof release is durably accepted, close389as superseded without calling it completed; keep draft390and branch. Revalidate authoritative main/grants, original-host process/Store/inputs and all historical evidence. Obtain a fresh committed continuation grant and new isolated worktree. Adopt the tested six-path preparation through a normal reviewable commit; reused software checks must match exact source bytes and rerun changed-source checks. The fresh scientific window is this new task grant time+14400; no389lease/deadline is extended or reused. Any preparation/CI observer work remains outside scientific outcome claims.",
@@ -33102,7 +33112,13 @@
         ]
       },
       "spec_hash": "767fa7339dd10c670f2817bebca68b6c6d3d665768259d6090a8be3dd0795363",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "da6e40968a4411414d4b04b1dd4d942600157163",
+        "head_sha": "611a53eccf0c7f9507c0e71e1ebf3b4165b2e582",
+        "pr_number": 392,
+        "spec_hash": "767fa7339dd10c670f2817bebca68b6c6d3d665768259d6090a8be3dd0795363"
+      }
     },
     "62": {
       "checkpoint": {
