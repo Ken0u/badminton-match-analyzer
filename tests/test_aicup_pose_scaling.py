@@ -1418,7 +1418,12 @@ def arithmetic_case(tmp_path, monkeypatch):
     producer.publish(audit / "diagnostics.json", raw_diagnostics)
     scaling_protocol = copy.deepcopy(scaling.PROTOCOL)
     scaling_protocol["expected"].update(
-        train_rows=4, validation_rows=4, reused_rows=8, new_clips=0, reused_clips=2
+        train_rows=4,
+        validation_rows=4,
+        reused_rows=8,
+        new_clips=0,
+        reused_clips=2,
+        new_frames=0,
     )
     scaling_protocol["original"].update(
         control_features=producer.digest(original / "features.json"),
@@ -1435,6 +1440,13 @@ def arithmetic_case(tmp_path, monkeypatch):
             "native": str(native),
             "audit": str(audit),
             "protocol": scaling_protocol,
+        },
+    )
+    producer.publish(
+        output / "completion.json",
+        {
+            "prospective_sha256": producer.digest(prospective),
+            "receipts": [],
         },
     )
     return prospective, output

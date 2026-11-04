@@ -126,10 +126,16 @@ commands describe the bounded interface; they do not authorize repeating a
 consumed operation or using an expired grant.
 
 ```text
-python scripts/scale_aicup_pose_learning.py freeze --workspace REAL --prepared ORIGINAL --native ORIGINAL --actor-prospective ORIGINAL --audit ORIGINAL --control ORIGINAL391 --clock-ledger ORIGINAL_JSONL --protocol data/manifests/aicup_pose_scaling_protocol_v1.json --granted-at GRANT_UNIX --committed-at FIRST_ADMISSION_COMMITMENT_UNIX --deadline FIXED_DEADLINE --output NEW_FREEZE
+python scripts/scale_aicup_pose_learning.py freeze --workspace REAL --prepared ORIGINAL --native ORIGINAL --actor-prospective ORIGINAL --audit ORIGINAL --control ORIGINAL391 --control-prospective ORIGINAL391_FREEZE/prospective.json --clock-ledger ORIGINAL_JSONL --protocol data/manifests/aicup_pose_scaling_protocol_v1.json --granted-at GRANT_UNIX --committed-at FIRST_ADMISSION_COMMITMENT_UNIX --deadline FIXED_DEADLINE --output NEW_FREEZE --run-output NEW_OUTPUT
 python scripts/scale_aicup_pose_learning.py run --prospective NEW_FREEZE/prospective.json --prospective-sha256 HASH --output NEW_OUTPUT
 python scripts/scale_aicup_pose_learning.py verify --prospective NEW_FREEZE/prospective.json --prospective-sha256 HASH --output NEW_OUTPUT
+python scripts/scale_aicup_pose_learning.py arithmetic --prospective NEW_FREEZE/prospective.json --prospective-sha256 HASH --output NEW_OUTPUT --receipt NEW_PRIVATE_RECEIPT.json
 ```
+
+Freeze reserves the single immutable cohort claim and binds the exact new run
+directory. A second freeze or a different run directory cannot restart it. The
+first run creates its dispatch directory exclusively; a failure leaves that
+directory and its shared Store job intact.
 
 Read-only verification must reproduce canonical rows, original cache/control
 integrity, native PTS/camera/calibration inventories, new features and masks,

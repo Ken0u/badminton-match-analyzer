@@ -1,0 +1,183 @@
+{
+  "complete_rally_references": {
+    "accepted": 0,
+    "required": 2
+  },
+  "correspondence": {
+    "accuracy_established": false,
+    "ankle_indices": [
+      15,
+      16
+    ],
+    "complete_rally_references": {
+      "accepted": 0,
+      "required": 2
+    },
+    "completion_sha256": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+    "coordinates": "Image-pixel dominant foot/toe; jumping uses court-plane projection",
+    "expected": {
+      "clips": 45,
+      "native_frames": 24273,
+      "references": 784
+    },
+    "forbidden_matching_inputs": [
+      "family",
+      "side",
+      "landing",
+      "A/B",
+      "winner"
+    ],
+    "image_bytes": 0,
+    "interval": "Both inclusive [H-1,H] frames; H0 censored and unavailable",
+    "landing": "Trajectory-end projection; not contact or automatically rally end",
+    "limits": {
+      "audits": 1,
+      "output_bytes": 1073741824,
+      "runtime_seconds": 14400
+    },
+    "maximum_normalized_distance": 0.5,
+    "minimum_ankle_confidence": 0.25,
+    "minimum_candidates": 2,
+    "minimum_normalized_margin": 0.25,
+    "name": "aicup-actor-correspondence-v1",
+    "native_passes": 0,
+    "normalization": "Each candidate's own observed positive box height",
+    "pair": "Same distinct hitter/defender tracks at both endpoints and representations; one camera and valid calibration",
+    "preparation_sha256": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+    "real_fits": 0,
+    "representations": [
+      "ankle",
+      "box_bottom"
+    ],
+    "schema_version": 1,
+    "source_schema": "https://sites.google.com/view/coachai-challenge-2023/tasks/track1",
+    "training_ready": false
+  },
+  "expected": {
+    "new_clips": 402,
+    "new_frames": 141197,
+    "new_media_bytes": 825568691,
+    "new_rows": 4253,
+    "reused_clips": 45,
+    "reused_rows": 784,
+    "total_frames": 165470,
+    "train_clips": 424,
+    "train_rows": 4684,
+    "validation_clips": 23,
+    "validation_rows": 353
+  },
+  "features": {
+    "center_offsets": [
+      -1,
+      0
+    ],
+    "dimensions": 108,
+    "joints": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "minimum_confidence": 0.25,
+    "missing": "Zero coordinates/confidence and explicit masks; no interpolation",
+    "normalization": "(x-box_center_x)/box_height,(y-box_bottom)/box_height",
+    "representation": "center,center,zero-velocity; unchanged original static recipe",
+    "roles": [
+      "hitter",
+      "defender"
+    ]
+  },
+  "historical": {
+    "actor": "86cad39b715ceadf380b4452707febe1aa6e9c6a",
+    "learning": "4e063b49974eb6fe7d97a831edb8ea7ac399cf62",
+    "pilot": "6dbdd044849ff22e98e92df33be0d9f487536710"
+  },
+  "independent_accuracy_established": false,
+  "labels": {
+    "family": [
+      "clear",
+      "lift",
+      "net",
+      "drop",
+      "smash",
+      "drive",
+      "other",
+      "serve"
+    ],
+    "side": [
+      "forehand",
+      "backhand"
+    ]
+  },
+  "limitations": [
+    "Weak published references, not verified source truth",
+    "Actual actors/scenes, original-match independence and upstream pretraining unresolved",
+    "Author declaration CC BY 4.0 does not resolve original media or deployment rights",
+    "Familiar validation development; no held-out test access or model promotion"
+  ],
+  "limits": {
+    "decoded_frame_visits": 282394,
+    "image_bytes": 0,
+    "model_frame_observations": 141197,
+    "operation_seconds": 28800,
+    "original_operations": 1,
+    "output_bytes": 4294967296,
+    "real_fits": 1,
+    "task_seconds": 43200
+  },
+  "model_installed_in_app": false,
+  "name": "aicup-pose-scaling-v1",
+  "native": {
+    "auto_calibrate": true,
+    "stride": 1,
+    "variant": "small"
+  },
+  "original": {
+    "actor_completion": "b89e2d5c7e2ca711ccdc36f83dfb9eae673ac8317bf3fe9f06ee60256a48d7fb",
+    "actor_diagnostics": "6d01625e726d113ba17a82df59ae976dd628727386ebe2bf094a5fc5bb745856",
+    "actor_prospective": "ed36c13f0c87fc867ccf0736311c4d8a39c87361a9a2bfd3e0c515d43fd5e030",
+    "clock_ledger": "de5ca6509087dfd79048e179fc500536660127b8c7927aad995ab8faf739585b",
+    "control_completion": "42500f898ad6a1fd4548d42dd233f25826be9f7ea8cc6248fb10ab735dc84dd3",
+    "control_features": "12bc9769a57077ed33e50d5fccec69386760487ce8fce0a9f5e4269a5da7e1be",
+    "control_model": "ae66352af2877a58a5d665b69a5077b0319f613e27087ff285c10b0cfc9605ae",
+    "control_statistics": "ba02db68741ad8e2bbf548f1395aa1fd6c6bd6e5654c272122b4ce003c51d367",
+    "native": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+    "preparation": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea"
+  },
+  "schema_version": 1,
+  "sources": {
+    "archive": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+    "clips": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+    "groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+    "model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+    "records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44"
+  },
+  "training": {
+    "arm_tie": "static",
+    "batch_size": 64,
+    "class_weights": "Inverse sqrt of known training counts; mean one over supported classes",
+    "cpu_threads": 2,
+    "dropout": 0.1,
+    "epochs": 300,
+    "hidden": [
+      64,
+      32
+    ],
+    "learning_rate": 0.001,
+    "loss_weights": [
+      1.0,
+      0.5
+    ],
+    "normalized_clip": 10.0,
+    "optimizer": "AdamW",
+    "prediction": "Argmax supported training classes; unavailable rows unanswered; no threshold search",
+    "seed": 20261104,
+    "selection": "Mean supported 8-group family macro F1/side balanced recall, strict joint, earlier epoch",
+    "selection_every": 5,
+    "std_floor": 0.05,
+    "weight_decay": 0.01
+  },
+  "training_ready": false
+}
