@@ -7631,6 +7631,34 @@
       "task_id": "389",
       "verb": "release"
     },
+    "pose391-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793823509,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "da6e40968a4411414d4b04b1dd4d942600157163",
+        "branch": "codex/issue-391-complete-the-unchanged-static-temporal-w",
+        "epoch": 1,
+        "expires_at": 1793834309,
+        "granted_at": 1793823509,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "767fa7339dd10c670f2817bebca68b6c6d3d665768259d6090a8be3dd0795363"
+      },
+      "epoch": 1,
+      "fingerprint": "0cdeed37209588988b591ed16e058288bf757e9781d34b0c5ffeb7f7ca959f3f",
+      "status": "granted",
+      "task_id": "391",
+      "verb": "next"
+    },
+    "pose391-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793823509,
+      "fingerprint": "8e1ef63a4a9dc4e07071e3935d4ded3f50acf601acf932c7403c61548dc87ff4",
+      "status": "ready",
+      "task_id": "391",
+      "verb": "plan"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -12446,6 +12474,14 @@
       "fingerprint": "1cf2c706983657ad9920acb1330b57e2358c1cb4c8d68a59b2e32caa0d3d6bc9",
       "status": "ready",
       "task_id": "389",
+      "verb": "plan"
+    },
+    "spec-391-2ab943b03d05451c9b61ff1d7471ac0d56887c9b20d1019d069d28a203f766cb": {
+      "actor": "Ken0u",
+      "at": 1793823509,
+      "fingerprint": "e7867aea666ef75bb8596e202f967043728660ac955e4cced98471d767563c66",
+      "status": "ready",
+      "task_id": "391",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -32891,7 +32927,7 @@
       ],
       "planned_at": 1793803084,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "After387 completes exact PR/main and full public delivery, revalidate current main, open/closed history, active PRs/grants and original-host process/Store/artifact state. Obtain a fresh committed CPU/windows grant and isolated worktree. Reuse only the sealed385/387development cohort:45clips/24273nativeframes/784rows,431training and353validation; all652weak pairs (362train/290validation),132unresolved and3H0rows remain. Preserve consumed original audits/native experiments, original root/environment/data/labels/weights/predictions and deprecated PROGRESS bytes.",
@@ -32959,7 +32995,94 @@
         ]
       },
       "spec_hash": "4d46fb8c724425cf9b0d5099c87f5d554f7d81f748403f51aad4757905630895",
-      "status": "ready"
+      "status": "blocked"
+    },
+    "391": {
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "da6e40968a4411414d4b04b1dd4d942600157163",
+        "branch": "codex/issue-391-complete-the-unchanged-static-temporal-w",
+        "epoch": 1,
+        "expires_at": 1793834309,
+        "granted_at": 1793823509,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "767fa7339dd10c670f2817bebca68b6c6d3d665768259d6090a8be3dd0795363"
+      },
+      "epoch": 1,
+      "planned_at": 1793823509,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve expired389epoch1spec/grant/window, draftPR390head64c7c31c6c2db9c92b8ff3143eaf6205ecde1f95, all software/checkpoint/incident evidence and zero-real-fit status. After its documented terminal-proof release is durably accepted, close389as superseded without calling it completed; keep draft390and branch. Revalidate authoritative main/grants, original-host process/Store/inputs and all historical evidence. Obtain a fresh committed continuation grant and new isolated worktree. Adopt the tested six-path preparation through a normal reviewable commit; reused software checks must match exact source bytes and rerun changed-source checks. The fresh scientific window is this new task grant time+14400; no389lease/deadline is extended or reused. Any preparation/CI observer work remains outside scientific outcome claims.",
+          "After387 completes exact PR/main and full public delivery, revalidate current main, open/closed history, active PRs/grants and original-host process/Store/artifact state. Obtain a fresh committed CPU/windows grant and isolated worktree. Reuse only the sealed385/387development cohort:45clips/24273nativeframes/784rows,431training and353validation; all652weak pairs (362train/290validation),132unresolved and3H0rows remain. Preserve consumed original audits/native experiments, original root/environment/data/labels/weights/predictions and deprecated PROGRESS bytes.",
+          "Implement clone-contained integrity-only freeze, single-run and read-only verify commands plus a fixed public protocol. Bind exact original archive/index/groups/model,385preparation/native,387prospective/completion/diagnostic hashes and complete inventories. Reconstruct ordered canonical CSV targets from original development members and verify individual immutable producer dependency seals; adding this new consumer must not be treated as part of either historical producer all-module inventory. Preserve native integerPTS/rational clocks, rotation, calibration, camera namespaces, track observations and source checks; fence test CSV/media/features/targets before opening. Verify original shared Store completion and annotations. No media decode or model inference.",
+          "Freeze one108-dimensional label-blind observed-pose feature recipe before real extraction: six joints5..10(shoulders/elbows/wrists), hitter then defender, each joint(x,y,confidence). For a unique matched original track on a valid calibrated frame in the contact camera namespace, require finite positive-height in-display box and finite in-display joint with confidence>=0.25; normalize x by (x-box-center-x)/box-height and y by (y-box-bottom)/box-height. Missing/weak/conflicting track/joint/cut/calibration/out-of-bounds cases have zero coordinates/confidence and explicit masks. Source scene/mode/true actor stay unknown. Coordinates, family/side, landing, A/B and winner cannot enter feature values except the already frozen387weak pair selects provisional tracks. No new identity link, scene label, interpolation or extrapolation.",
+          "For each H>0 preserve both contact endpoints[H-1,H]. The36-value center block pools each joint over observed endpoint values only; confidence is its sum over the2nominal slots divided by2, with zero geometry if unsupported. Use the fixed10native-frame slotsH-5..H+4, keeping unavailable slots masked. The36-value temporal mean block pools observed per-frame normalized joint positions, confidence sum divided by10. The36-value velocity block averages normalized-position differences divided by exact sourcePTSdt only for adjacent native slots with that joint observed on the same provisional track/camera and 0<dt<=0.1seconds; confidence is sum of endpoint-minimum confidence over valid pairs divided by9. Missing velocities are zero/masked, never inferred. Preserve actual window clocks/durations and masks; native frame offsets do not claim a constant elapsed-time horizon. Temporal input is(center,mean,velocity); static control is(center,center,zero velocity), both108values with identical network parameter count. Report pose/adjacent-pair availability rather than dropping sparse cases.",
+          "Use all original8weak family groups(clear/lift/net/drop/smash/drive/other/serve) and2side outputs, canonical kind=serve mapping source null family separately. Only the same652frozen weak-pair rows are fit-eligible in either arm;132unresolved inputs stay unavailable with original targets/unknowns retained. Zero/missing joints do not silently remove any matched row. This is explicitly private weak-supervision research; do not modify scientific training-ready/independent-test/deployment/redistribution flags or treat inferred actor/scene as truth. Original capture folds remain; exact original-match independence and upstream perception/media-rights limitations remain unresolved.",
+          "Fit exactly two CPU models, static then temporal, both108->64->32shared ReLU/dropout0.1 MLP with biased family8/side2heads, same seed20261104,2CPUthreads,300epochs,batch64,AdamWlr0.001,weight_decay0.01,family/side loss1/0.5,train-only mean/std with floor0.05 and normalized clip10, inverse-sqrt training label weights normalized over supported classes. Preserve feature missingness/confidence and original eligibility; unsupported training classes cannot be predicted as known learned classes. Select within each arm every5epochs by mean of supported8-group family macroF1 and side balanced recall, then strict joint accuracy, then earlier epoch; compare arms using the same tuple and retain static on a tie. Argmax only; no abstention threshold search, hyperparameter/seed sweep, ensemble, test reads or post-result changes. Save both models privately and publish actual parameter counts, histories, selection and per-class confusion/support. Retain a negative/mixed result without tuning.",
+          "After generated checks and a tested source commit, publish exact tested consumer/dependency/protocol/input/runtime and prospective freeze hashes BEFORE any real feature extraction or fitting. Admit the entire original extraction/two-fit operation through real main Store run_local_job with BADMINTON_ROOT/DATA_DIR pinned before configuration imports. Reserve one original run with an exclusive immutable execution claim tied to source cohort/protocol; bounded4hours from fresh grant,1GiBcumulative new output,2real fits,zero images/media decodes/native passes. Record PID/creation time, original real Store job, input/source/RNG/thread state, masks, normalization/training/validation checkpoints, durable post-job completion and partial failures. No silent fallback, competing Store, repeated fits or restarted consumed operation. Recheck inputs/code at progress and before publication; changed provenance stops and remains preserved for separate scope.",
+          "Read-only verification must reproduce feature values/masks from unchanged original observations, verify both model histories/selection/normalization and recompute conditional predictions/metrics without refitting. All431/353source-row denominators remain, including132unavailable rows and any unknown target per output; strict metrics count unavailable/abstained/unsupported predictions as misses and conditional metrics state their narrower denominator. Report each8-group and requested6-family/side support, per-class precision/recall/F1/confusion, full-denominator joint accuracy, matched coverage, per-capture/fold and sparse-cell limitations. Validation is familiar development evidence, not independent accuracy, automatic contact detection, persistent identity or complete full-match annotation.",
+          "Meaningful generated tests cover both endpoint/temporal bounds, duplicate/missing tracks, confidence/finite/out-of-display joints, sourcePTS/rotation/camera/calibration masks, missing adjacent velocities, no target leakage, source-bound split/order/cohort corruption, unavailable/partial unknown denominators, absent training classes, train-only normalization/class weights, identical model parameter count, deterministic CPU state restoration, selection/ties, real Store/configuration admission, exclusive output/claim/deadline/budget and source/code mutation. Required focused/fullPython,lint/format/dependency/repositoryUTF8/LF/JSON/local-link/whitespace and final clean source/wheel/installedHTTPchecks pass. Publish only reproducible code/protocol and aggregate findings through exact controller PR/main and full public delivery; no manual merge or CI retry. Full goal and0/2complete references stay unresolved.",
+          "Fresh allowance supersedes only389zero-fit runtime; scientific recipe/784row cohort/capture splits/weak-pair rules/seed/network/optimizer/schedule/selection are unchanged. Cumulative across389and this continuation: at most1original real feature-extraction/two-fit operation,2real fits,1GiBscientific outputs,zeroimages/nativepasses/acquisition. Existing original385/387consumed operations must never repeat. Publish new grant/source/runtime/input/prospective hashes before real extraction/fits. Observe/renew leases with monotonic local clock checkpoints before long jobs and publication; expiry fences work and never silently resets the scientific clock. A negative or incomplete result remains reported without tuning/replacements."
+        ],
+        "artifacts": {
+          "actor-correspondence-completion": "b89e2d5c7e2ca711ccdc36f83dfb9eae673ac8317bf3fe9f06ee60256a48d7fb",
+          "actor-correspondence-diagnostics": "6d01625e726d113ba17a82df59ae976dd628727386ebe2bf094a5fc5bb745856",
+          "actor-prospective-freeze": "ed36c13f0c87fc867ccf0736311c4d8a39c87361a9a2bfd3e0c515d43fd5e030",
+          "aicup-capture-groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+          "aicup-clip-index": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+          "aicup-original-part1": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+          "aicup-pose-native-completion": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+          "aicup-pose-preparation": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+          "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+          "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "387"
+        ],
+        "exclusions": [
+          "No held-out/test source/feature/target/prediction access, new source/model acquisition, images or external image/label transfer, media decode, player/shuttle/classifier-native inference, new scientific scene/actor/contact truth, changed cohort/387matching gates or source groups, promotion of eligibility flags, hyperparameter/seed/threshold sweep, more than2real fits or replay of consumed work, source/annotation/prediction/weight overwrite, application/API/UI/default change, research model installation or redistribution, environment/dependency/workflow/security/credential/deployment/policy changes, process signal, paid service, CI retry, manual merge, direct coordination edits or deprecated PROGRESS updates.",
+          "No reuse or extension of expired389grant/runtime; no reopening or scientific-completion claim for superseded389; no removal of preserved draft390/source/evidence. No additional real fits beyond the original cumulative two-fit comparison."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_native_frames_read": 24273,
+          "max_native_passes": 0,
+          "max_original_runs": 1,
+          "max_output_bytes": 1073741824,
+          "max_real_fits": 2,
+          "max_reference_rows": 784,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Complete the unchanged static/temporal weak pose comparison from preserved zero-fit task389 preparation under one explicit fresh four-hour original-run allowance; no application model change or independent accuracy claim.",
+        "paths": [
+          "backend/badminton/aicup_pose_learning.py",
+          "scripts/compare_aicup_pose_learning.py",
+          "tests/test_aicup_pose_learning.py",
+          "data/manifests/aicup_pose_learning_protocol_v1.json",
+          "docs/AICUP_POSE_LEARNING_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 85,
+        "resources": [
+          "cpu:windows-training"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Frozen exact-source one-run/two-fit CPU development comparison; independent arithmetic/feature and prediction/metric reproduction without refitting, all784weak/unknown/unavailable source rows retained.",
+          "Meaningful generated controls plus required local checks, exact controller PR/main and full public package/both-image delivery. No independent accuracy, new source truth, model promotion or complete-event claim."
+        ]
+      },
+      "spec_hash": "767fa7339dd10c670f2817bebca68b6c6d3d665768259d6090a8be3dd0795363",
+      "status": "running"
     },
     "62": {
       "checkpoint": {
