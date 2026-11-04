@@ -12601,6 +12601,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "stroke382-release-for-repair-v1": {
+      "actor": "Ken0u",
+      "at": 1793776909,
+      "epoch": 1,
+      "fingerprint": "3982681509c9c9c70ffd0b3d33739cf0fb07eb81caeb669ce9c4454c7ce52ff6",
+      "status": "ready",
+      "task_id": "382",
+      "verb": "release"
+    },
     "stroke382-repair-scope-v1": {
       "actor": "Ken0u",
       "reason": "scope change requires running work",
@@ -32180,21 +32189,56 @@
         "summary": "Canonical source-target repair and explicit capacity-v2 compatibility implemented within the eight granted paths. Three generated baseline regressions fail on original code; all 130 final focused tests pass. Ruff, format, repository and whitespace pass. Historical v1 protocol/parameters and negative results preserved. Starting required full generated-data Python suite with isolated root/data/weights and preserved project environment; no real fits or original-development audit yet."
       },
       "checkpoint_at": 1793774935,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
-        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
-        "epoch": 1,
-        "expires_at": 1793785735,
-        "granted_at": 1793774393,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1793776909,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
+            "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
+            "epoch": 1,
+            "expires_at": 1793785735,
+            "granted_at": 1793774393,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
+              "checkpoint": "https://github.com/Ken0u/badminton-match-analyzer/issues/382#issuecomment-6625094253",
+              "failure_artifact_sha256": "de16b916e9c3effbd5d197247965c8eab4d1a659edac82e99ff9c4c36b3a0702",
+              "head_sha": "2e87797fb9aa8f42e03784042a124bed0c1e7ba4",
+              "local_recorded_processes_absent": 9,
+              "original_scientific_deadline": 1793788793,
+              "pr": 383,
+              "read_only_audit_consumed": true,
+              "source_clean": true,
+              "terminal_receipt_sha256": "7e883b7fba5c860331e38ccd52347d383b12af1403f63564981fa18b42300bb2"
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "C:\\Program Files\\Python310\\python.exe -B .cache/stroke382-watch-delivery-v1.py",
+              "creation_time": 1793776054.5448368,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer",
+              "evidence": "Original Popen observation session43349 exited1; original lifetime independently absent.",
+              "exited": true,
+              "pid": 16944
+            },
+            "store": {
+              "reason": "Code-only task; no Store, real fits, native inference or scientific worker.",
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1793773628,
       "planned_by": "Ken0u",
       "pr_number": 383,
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "After380 completes exact PR/main verification and full public delivery, revalidate current main/issues/controller ownership and obtain a fresh routine CPU grant and isolated worktree. Reproduce the generated semantic audit gap: fixed source clear/forehand is accepted as drive/backhand when metadata and NPZ targets are changed together and resealed. Do not infer historical contamination;380 uses an immutable precommitted manifest that remains unchanged.",
@@ -32248,7 +32292,7 @@
         ]
       },
       "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4",
-      "status": "review",
+      "status": "ready",
       "submission": {
         "base_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
         "head_sha": "2e87797fb9aa8f42e03784042a124bed0c1e7ba4",
