@@ -32510,6 +32510,7 @@
       }
     },
     "385": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41841335321",
       "checkpoint": {
         "artifacts": [
           "https://github.com/Ken0u/badminton-match-analyzer/issues/385#issuecomment-6630214502",
@@ -32535,7 +32536,7 @@
         "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793799276,
