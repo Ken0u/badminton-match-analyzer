@@ -69,6 +69,26 @@
       "task_id": "254",
       "verb": "next"
     },
+    "actor387-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793800558,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "924807a338047fb521ec11f01c54f3832bb7fc7d",
+        "branch": "codex/issue-387-measure-whether-published-ai-cup-hitter-",
+        "epoch": 1,
+        "expires_at": 1793811358,
+        "granted_at": 1793800558,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a17eabfe199571a8b133008bbf91df1f5a0ac588956d25d28fb28c8e8c2d7c64"
+      },
+      "epoch": 1,
+      "fingerprint": "334d834a96a0186f7f450b66f92af2b466770f73c54f68ef0c87ae554e964c0f",
+      "status": "granted",
+      "task_id": "387",
+      "verb": "next"
+    },
     "actor387-plan-v1": {
       "actor": "Ken0u",
       "at": 1793799644,
@@ -32629,7 +32649,18 @@
       }
     },
     "387": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "924807a338047fb521ec11f01c54f3832bb7fc7d",
+        "branch": "codex/issue-387-measure-whether-published-ai-cup-hitter-",
+        "epoch": 1,
+        "expires_at": 1793811358,
+        "granted_at": 1793800558,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "a17eabfe199571a8b133008bbf91df1f5a0ac588956d25d28fb28c8e8c2d7c64"
+      },
+      "epoch": 1,
       "planned_at": 1793799644,
       "planned_by": "Ken0u",
       "spec": {
@@ -32692,7 +32723,7 @@
         ]
       },
       "spec_hash": "a17eabfe199571a8b133008bbf91df1f5a0ac588956d25d28fb28c8e8c2d7c64",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
