@@ -12548,6 +12548,15 @@
       "task_id": "380",
       "verb": "submit"
     },
+    "stroke382-before-full-v1": {
+      "actor": "Ken0u",
+      "at": 1793774935,
+      "epoch": 1,
+      "fingerprint": "d14933fa0ace5f5316f2a209bcca7561f5e797779cd846bf6354a842775fda46",
+      "status": "running",
+      "task_id": "382",
+      "verb": "checkpoint"
+    },
     "stroke382-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793774594,
@@ -32152,17 +32161,16 @@
     "382": {
       "checkpoint": {
         "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
-        "head_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
-        "remaining": "Repair canonical source binding and versioned capacity compatibility; focused/full checks, prospective read-only development conformity audit, normal controller integration and public delivery.",
-        "summary": "Confirmed epoch1 routine grant after #380 exact PR/main and full public delivery. Isolated worktree created; original checkout, environment, data, weights and deprecated handoff edits preserved. Adding generated source-target regression before repair. Zero actual fits, images, native inference or held-out reads."
+        "remaining": "Complete required checks, commit/push exact tested consumer and publish prospective code/input freeze, perform one read-only development conformity audit, report aggregates, package checks, controller PR/main integration and full public delivery. Any unexpected real mismatch stops for separate scope.",
+        "summary": "Canonical source-target repair and explicit capacity-v2 compatibility implemented within the eight granted paths. Three generated baseline regressions fail on original code; all 130 final focused tests pass. Ruff, format, repository and whitespace pass. Historical v1 protocol/parameters and negative results preserved. Starting required full generated-data Python suite with isolated root/data/weights and preserved project environment; no real fits or original-development audit yet."
       },
-      "checkpoint_at": 1793774594,
+      "checkpoint_at": 1793774935,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
         "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
         "epoch": 1,
-        "expires_at": 1793785394,
+        "expires_at": 1793785735,
         "granted_at": 1793774393,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
