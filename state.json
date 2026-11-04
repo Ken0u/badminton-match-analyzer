@@ -12479,6 +12479,26 @@
       "task_id": "98",
       "verb": "plan"
     },
+    "stroke380-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793771071,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4755428aaf1574e1bfd563b376919030e3140634",
+        "branch": "codex/issue-380-measure-a-single-low-capacity-stroke-cla",
+        "epoch": 1,
+        "expires_at": 1793781871,
+        "granted_at": 1793771071,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be"
+      },
+      "epoch": 1,
+      "fingerprint": "06fa98d8eea3264036bba3ed566dc94c4f4f0ce77fd5f49f545cac820217f3b9",
+      "status": "granted",
+      "task_id": "380",
+      "verb": "next"
+    },
     "stroke380-plan-v1": {
       "actor": "Ken0u",
       "at": 1793770812,
@@ -31943,7 +31963,18 @@
       }
     },
     "380": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4755428aaf1574e1bfd563b376919030e3140634",
+        "branch": "codex/issue-380-measure-a-single-low-capacity-stroke-cla",
+        "epoch": 1,
+        "expires_at": 1793781871,
+        "granted_at": 1793771071,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be"
+      },
+      "epoch": 1,
       "planned_at": 1793770812,
       "planned_by": "Ken0u",
       "spec": {
@@ -31999,7 +32030,7 @@
         ]
       },
       "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
