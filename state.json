@@ -7500,6 +7500,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "pose385-report-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793794175,
+      "epoch": 1,
+      "fingerprint": "1d3190b1ac82487b9898dc63a9364ff75d9046a95af865a991775d3988f8a1f8",
+      "status": "running",
+      "task_id": "385",
+      "verb": "checkpoint"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -32447,22 +32456,23 @@
     "385": {
       "checkpoint": {
         "artifacts": [
-          ".cache/pose385-grant-v1.json",
-          ".cache/pose385-prepared-v1/",
-          ".cache/pose385-package-v1/"
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/385#issuecomment-6630214502",
+          ".cache/pose385-native-v1/",
+          ".cache/pose385-package-v2/",
+          ".cache/pose385-implementation-resume-v1.md"
         ],
         "branch": "codex/issue-385-prepare-and-measure-native-source-clock-",
-        "head_sha": "2d471a0140b4fd3a72c6fe122cfb3cc2b0d33b7b",
+        "head_sha": "20f48da7970af6159e4f04239f5537a39c1ed964",
         "scientific_deadline": 1793819802,
-        "summary": "Fixed consumer/protocol committed after 138 focused checks. Required lint/format/dependency/repository checks pass. Package/source/installed-HTTP verification passes (111 package files, 60 public manifests). Full regression is running; 164 FFmpeg-dependent checks independently pass with the pinned local tool enabled. One local source/cohort/clock preparation is running; no model inference or fitting has begun. Native observation requires the completed prospective freeze and public source commitment."
+        "summary": "Prospectively frozen native run remains live with matching exact process/Store; 10/45 clips/5160/24273 frames validated. Tested report committed/pushed; complete denominators and multiple-player ambiguity preserved. Fresh source/wheel/installed HTTP and repository checks pass. Full native verification/final report and PR/main/public delivery await completion. No training/model promotion; scientific deadline unchanged."
       },
-      "checkpoint_at": 1793792164,
+      "checkpoint_at": 1793794175,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4c71056dbf864cdde624cc06a6b8179bb991844f",
         "branch": "codex/issue-385-prepare-and-measure-native-source-clock-",
         "epoch": 1,
-        "expires_at": 1793802964,
+        "expires_at": 1793804975,
         "granted_at": 1793791002,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
