@@ -10490,6 +10490,15 @@
       "task_id": "378",
       "verb": "next"
     },
+    "scene378-package-scope-v1": {
+      "actor": "Ken0u",
+      "at": 1793767231,
+      "epoch": 1,
+      "fingerprint": "8b3dc66524d6ac932ebedc6b921de5d03c22bf124121accb04b0b3d928890ef2",
+      "status": "running",
+      "task_id": "378",
+      "verb": "extend-scope"
+    },
     "scene378-register-v1": {
       "actor": "Ken0u",
       "at": 1793766692,
@@ -31797,7 +31806,7 @@
         "granted_at": 1793766987,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "36b5f0192f2c4afc0b199c846509cecd474836034fee12057d6bc0999092c966"
+        "spec_hash": "9f0c8c0398f8d16fda6fa94fda977682bfe047c600cc9550bc2a0b11bebad20d"
       },
       "epoch": 1,
       "planned_at": 1793766692,
@@ -31847,7 +31856,8 @@
           "scripts/audit_shuttle_scene_support.py",
           "tests/test_shuttle_scene_support.py",
           "data/manifests/shuttle_scene_support_protocol_v1.json",
-          "docs/SHUTTLE_SCENE_SUPPORT_REPORT.md"
+          "docs/SHUTTLE_SCENE_SUPPORT_REPORT.md",
+          "MANIFEST.in"
         ],
         "priority": 45,
         "resources": [],
@@ -31857,7 +31867,7 @@
           "Required local checks, exact PR/main CI, controller integration and independent complete public delivery; preserve partial scientific result and all unknown/unavailable cases."
         ]
       },
-      "spec_hash": "36b5f0192f2c4afc0b199c846509cecd474836034fee12057d6bc0999092c966",
+      "spec_hash": "9f0c8c0398f8d16fda6fa94fda977682bfe047c600cc9550bc2a0b11bebad20d",
       "status": "running"
     },
     "62": {
