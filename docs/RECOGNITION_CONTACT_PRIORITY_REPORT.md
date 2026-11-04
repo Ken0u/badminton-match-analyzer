@@ -41,10 +41,29 @@ saved output, unchanged source bytes, timestamps, original run files and saved
 annotation revisions. They do not decode original match videos, load a neural
 checkpoint or measure badminton accuracy.
 
-Full regression, required tooling checks, clean packaging/installed HTTP checks,
-exact-head CI, controller integration and public delivery remain required;
-the owning issue records each result as it completes. A source/model/code-bound orchestration receipt must
-state the generated-only evidence and absence of neural inference explicitly.
+The full Windows Python 3.10 suite passes **6,179 tests**, with
+4 optional GPU checks skipped. Executable and test bytes match the
+completed run. Ruff, formatting, dependency health, tracked UTF-8/LF, strict JSON,
+local documentation links and whitespace checks pass. Clean source/wheel and
+installed HTTP checks verify 113 package files,
+62 public manifests, 5 frontend assets,
+3 SPA routes and authentication. These are software checks.
+
+A separate generated orchestration receipt uses 100 encoded 640x360 frames at
+25 fps, explicit PTS and the same saved Store/API/CLI checks. The source digest
+is `2f0eac461a38a0c1ebf06aa5642df135d246a6c554f11c0405d0e92c2a6c1b44`. Both paths preserve original source,
+timestamp, proposal and saved-annotation bytes and produce only the reviewed
+shot plus the disjoint proposal. The actual unchanged pinned BST checkpoint
+digest `5291095b880088ebb9aa5ec8a868ba1e0ced0cd57285b508feb495d94582cbe0` is verified without loading
+or executing it. No original match is decoded and no neural inference runs;
+this is target-selection and artifact-preservation evidence, not accuracy.
+
+The first full-suite launch stopped during collection because the workstation's
+editable installation resolved the old checkout. Its log is preserved. The
+successful isolated run explicitly pins this worktree's backend import path;
+no production code change or test weakening was used to resolve that launch.
+Exact-head CI, controller integration, merged-main checks and complete public
+delivery remain separate requirements recorded on the owning issue.
 
 The completed [static/temporal pose comparison](AICUP_POSE_LEARNING_REPORT.md)
 remains negative for advancement, with neither model installed. This repair
