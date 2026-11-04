@@ -12594,6 +12594,26 @@
       "task_id": "382",
       "verb": "plan"
     },
+    "stroke382-reclaim-e2-v1": {
+      "actor": "Ken0u",
+      "at": 1793777169,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
+        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to-e2",
+        "epoch": 2,
+        "expires_at": 1793787969,
+        "granted_at": 1793777169,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+      },
+      "epoch": 2,
+      "fingerprint": "274e9432faec5eda864fe322e8b0f05c558456b9c86e3b55b26e11dfd74ab3f6",
+      "status": "granted",
+      "task_id": "382",
+      "verb": "next"
+    },
     "stroke382-register-v1": {
       "actor": "Ken0u",
       "at": 1793773883,
@@ -32189,7 +32209,18 @@
         "summary": "Canonical source-target repair and explicit capacity-v2 compatibility implemented within the eight granted paths. Three generated baseline regressions fail on original code; all 130 final focused tests pass. Ruff, format, repository and whitespace pass. Historical v1 protocol/parameters and negative results preserved. Starting required full generated-data Python suite with isolated root/data/weights and preserved project environment; no real fits or original-development audit yet."
       },
       "checkpoint_at": 1793774935,
-      "epoch": 1,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
+        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to-e2",
+        "epoch": 2,
+        "expires_at": 1793787969,
+        "granted_at": 1793777169,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+      },
+      "epoch": 2,
       "history": [
         {
           "at": 1793776909,
@@ -32292,7 +32323,7 @@
         ]
       },
       "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4",
-      "status": "ready",
+      "status": "running",
       "submission": {
         "base_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
         "head_sha": "2e87797fb9aa8f42e03784042a124bed0c1e7ba4",
