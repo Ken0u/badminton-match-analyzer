@@ -12548,6 +12548,26 @@
       "task_id": "380",
       "verb": "submit"
     },
+    "stroke382-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793774393,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
+        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
+        "epoch": 1,
+        "expires_at": 1793785193,
+        "granted_at": 1793774393,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+      },
+      "epoch": 1,
+      "fingerprint": "6563a3cc48a844442b3152017cada6f32990a63cecc16e3f9e1bc6aedbaa242b",
+      "status": "granted",
+      "task_id": "382",
+      "verb": "next"
+    },
     "stroke382-plan-v1": {
       "actor": "Ken0u",
       "at": 1793773294,
@@ -32121,7 +32141,18 @@
       }
     },
     "382": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
+        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
+        "epoch": 1,
+        "expires_at": 1793785193,
+        "granted_at": 1793774393,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+      },
+      "epoch": 1,
       "planned_at": 1793773628,
       "planned_by": "Ken0u",
       "spec": {
@@ -32177,7 +32208,7 @@
         ]
       },
       "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
