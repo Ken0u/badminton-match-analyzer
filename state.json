@@ -7659,6 +7659,15 @@
       "task_id": "391",
       "verb": "plan"
     },
+    "pose391-tested-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793823764,
+      "epoch": 1,
+      "fingerprint": "dc73cbfeed4a29dae81528a8361f90236c1e3aef964ce983c04493ae3b49018a",
+      "status": "running",
+      "task_id": "391",
+      "verb": "checkpoint"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -32998,12 +33007,23 @@
       "status": "blocked"
     },
     "391": {
+      "checkpoint": {
+        "branch": "codex/issue-391-complete-the-unchanged-static-temporal-w",
+        "evidence": [
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/391#issuecomment-6641197055"
+        ],
+        "features_extracted": false,
+        "head_sha": "4e063b49974eb6fe7d97a831edb8ea7ac399cf62",
+        "real_fits": 0,
+        "summary": "Tested exact-source preparation adopted; integrity-only prospective hashes published before original real-Store two-fit operation."
+      },
+      "checkpoint_at": 1793823764,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "da6e40968a4411414d4b04b1dd4d942600157163",
         "branch": "codex/issue-391-complete-the-unchanged-static-temporal-w",
         "epoch": 1,
-        "expires_at": 1793834309,
+        "expires_at": 1793834564,
         "granted_at": 1793823509,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
