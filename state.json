@@ -7456,6 +7456,26 @@
       "task_id": "317",
       "verb": "submit"
     },
+    "pose385-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793791002,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4c71056dbf864cdde624cc06a6b8179bb991844f",
+        "branch": "codex/issue-385-prepare-and-measure-native-source-clock-",
+        "epoch": 1,
+        "expires_at": 1793801802,
+        "granted_at": 1793791002,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9"
+      },
+      "epoch": 1,
+      "fingerprint": "3f8566d7676f63295564e70acdc54a32221966a0e403a53d61908ac38b5d2b20",
+      "status": "granted",
+      "task_id": "385",
+      "verb": "next"
+    },
     "pose385-plan-v1": {
       "actor": "Ken0u",
       "at": 1793790416,
@@ -32416,7 +32436,18 @@
       }
     },
     "385": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "4c71056dbf864cdde624cc06a6b8179bb991844f",
+        "branch": "codex/issue-385-prepare-and-measure-native-source-clock-",
+        "epoch": 1,
+        "expires_at": 1793801802,
+        "granted_at": 1793791002,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9"
+      },
+      "epoch": 1,
       "planned_at": 1793790416,
       "planned_by": "Ken0u",
       "spec": {
@@ -32480,7 +32511,7 @@
         ]
       },
       "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
