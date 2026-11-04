@@ -32707,6 +32707,7 @@
       }
     },
     "387": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41852913369",
       "checkpoint": {
         "branch": "codex/issue-387-measure-whether-published-ai-cup-hitter-",
         "evidence": [
@@ -32729,7 +32730,7 @@
         "spec_hash": "a17eabfe199571a8b133008bbf91df1f5a0ac588956d25d28fb28c8e8c2d7c64"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793803484,
