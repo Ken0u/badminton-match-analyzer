@@ -1,0 +1,50 @@
+{
+  "accuracy_established": false,
+  "ankle_indices": [
+    15,
+    16
+  ],
+  "complete_rally_references": {
+    "accepted": 0,
+    "required": 2
+  },
+  "completion_sha256": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+  "coordinates": "Image-pixel dominant foot/toe; jumping uses court-plane projection",
+  "expected": {
+    "clips": 45,
+    "native_frames": 24273,
+    "references": 784
+  },
+  "forbidden_matching_inputs": [
+    "family",
+    "side",
+    "landing",
+    "A/B",
+    "winner"
+  ],
+  "image_bytes": 0,
+  "interval": "Both inclusive [H-1,H] frames; H0 censored and unavailable",
+  "landing": "Trajectory-end projection; not contact or automatically rally end",
+  "limits": {
+    "audits": 1,
+    "output_bytes": 1073741824,
+    "runtime_seconds": 14400
+  },
+  "maximum_normalized_distance": 0.5,
+  "minimum_ankle_confidence": 0.25,
+  "minimum_candidates": 2,
+  "minimum_normalized_margin": 0.25,
+  "name": "aicup-actor-correspondence-v1",
+  "native_passes": 0,
+  "normalization": "Each candidate's own observed positive box height",
+  "pair": "Same distinct hitter/defender tracks at both endpoints and representations; one camera and valid calibration",
+  "preparation_sha256": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+  "real_fits": 0,
+  "representations": [
+    "ankle",
+    "box_bottom"
+  ],
+  "schema_version": 1,
+  "source_schema": "https://sites.google.com/view/coachai-challenge-2023/tasks/track1",
+  "training_ready": false
+}
