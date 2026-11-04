@@ -12217,6 +12217,14 @@
       "task_id": "378",
       "verb": "plan"
     },
+    "spec-380-e309f8b6ef7ef2567e531b8b48ca675101fd4d9a0898d3639e526cbd2288e06d": {
+      "actor": "Ken0u",
+      "at": 1793770812,
+      "fingerprint": "b1804eab00088ef035ad03bfa02436fb5b10144f6d1121913d0d65ca564191b0",
+      "status": "ready",
+      "task_id": "380",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -12470,6 +12478,21 @@
       "status": "needs_human",
       "task_id": "98",
       "verb": "plan"
+    },
+    "stroke380-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793770812,
+      "fingerprint": "bdde2224daec29149e6ac62e5b0d29bb6511d3cac866b4bb9d70aae591f9a7ba",
+      "status": "ready",
+      "task_id": "380",
+      "verb": "plan"
+    },
+    "stroke380-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793770812,
+      "fingerprint": "8257c033d476d7c3c044ea7509ce7e5b135d7ebe8d62fbf00199222c1aa21c9b",
+      "status": "ok",
+      "verb": "register"
     },
     "synthetic-next-next-v1": {
       "actor": "Ken0u",
@@ -31919,6 +31942,65 @@
         "spec_hash": "9f0c8c0398f8d16fda6fa94fda977682bfe047c600cc9550bc2a0b11bebad20d"
       }
     },
+    "380": {
+      "epoch": 0,
+      "planned_at": 1793770812,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Revalidate current issues, main, authoritative queue ownership and original-host Store/process state. Obtain a fresh committed CPU grant and isolated worktree before implementing. Reuse the legally held original Match001 training and Match002 validation R3 caches only: 67/67 clips, 624/672 source rows and 608/662 available inputs. Reuse the exact portable64 audit and all canonical source/hash/split/order/unknown/unavailable guards. No new media or feature extraction.",
+          "Implement a clone-contained CPU-only controlled capacity comparison using existing stroke_learning metrics, source audit and baseline fit without changing that fixed reproduction recipe. Fit exactly two real-data models: original 128/64 shared MLP and a direct 371-to-8 family / 371-to-2 side linear classifier with biases and no hidden layers/dropout. Use the same fixed seed20261018, train-only normalization and inverse-sqrt class weights, AdamW lr0.001 weight_decay0.01, 300epochs, batch64, family/side loss1/0.5, twoCPUthreads, five-epoch validation selection and existing threshold policy. No hyperparameter or seed sweeps, ensembles, new source labels or post-result recipe changes.",
+          "Freeze the complete candidate/baseline protocol, exact input manifest and original source/feature hashes, tested execution-consumer hashes and selection rule prospectively on the owning issue before either real fit. Use the predeclared mean of supported eight-group family macroF1 and side balanced recall, then strict joint accuracy and earlier epoch; report both variants and all original requested-family/side/unknown/unavailable denominators, per-class confusion/support, abstention coverage and model parameter counts. Validation comparison is development evidence only, cannot prove overfitting, unseen accuracy or complete event detection. Retain a worse or unchanged result without repair-driven tuning.",
+          "Pin BADMINTON_ROOT and BADMINTON_DATA_DIR to the original real shared main workspace before configuration imports; admit the entire two-fit experiment through its actual Store run_local_job. Record PID/creation time and durable main job, immutable input/code/protocol/runtime hashes, per-variant progress/checkpoint/validation receipts, comparison and post-job completion only after Store completion. New ignored exclusive output only; preserve original files and successful partial evidence on failure. Verify source/input stability at progress and before publication and reject changed inputs, resealed manifests, competing writers, conflicting imported config or admission denial.",
+          "Test useful generated regressions for train-only normalization, per-output partial unknowns, unavailable strict misses, absent training classes, deterministic CPU behavior, actual smaller linear parameter count, comparison selection/ties, original protocol preservation, source/protocol/input mutation, output immutability and real Store admission/configuration rejection. Preserve thread/RNG state. Required focused/full Python, lint/format/dependency/repository/JSON/link/LF/whitespace and package/source checks must pass; exact PR/main CI and public package/both-image delivery remain required through the controller.",
+          "Publish only aggregate research findings and reproducible code/protocol. Preserve all historical held-out results and 0/2 complete-rally references. Do not load test or held-out inputs/predictions, install models, modify app truth, redistribute private labels/features/weights or infer that conditional validation accuracy meets the full-match goal. The single validation source, weak supervision, class sparsity, upstream perception overlap uncertainty and unresolved dataset redistribution rights remain explicit."
+        ],
+        "artifacts": {
+          "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
+          "r3-development-manifest": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+          "r3-fixed-training-source": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932"
+        },
+        "capabilities": [
+          "cpu",
+          "windows"
+        ],
+        "dependencies": [
+          "64"
+        ],
+        "exclusions": [
+          "No held-out/test files or prediction reads, native media/feature/inference jobs, image transfer or assessor session, downloads, new labels, application/API/UI change, model promotion, production weight edits, original experiment overwrite, environment migration, process signal, credential/policy/workflow/dependency/deployment change, paid service, CI retry, manual merge, raw coordination or deprecated PROGRESS edit."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_output_bytes": 1073741824,
+          "max_real_fits": 2,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Measure a single low-capacity stroke classifier against the fixed R3 baseline on existing original-match-separated development inputs, preserving all consumed tests and production models.",
+        "paths": [
+          "backend/badminton/stroke_capacity.py",
+          "scripts/compare_stroke_capacity.py",
+          "tests/test_stroke_capacity.py",
+          "data/manifests/stroke_capacity_protocol_v1.json",
+          "docs/STROKE_CAPACITY_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 85,
+        "resources": [
+          "cpu:windows-training"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Generated regressions plus required project/package checks; frozen exact-source two-fit CPU development experiment with all input/source seals preserved.",
+          "Controller exact PR/main checks and complete public delivery; no scientific eligibility or model promotion inferred from green checks."
+        ]
+      },
+      "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be",
+      "status": "ready"
+    },
     "62": {
       "checkpoint": {
         "branch": "codex/issue-62-adjudicate-source-aligned-complete-ralli-e2",
@@ -35165,6 +35247,9 @@
       "actor": "Ken0u",
       "artifacts": {
         "operational-budget-profile": "69ea102daea361660535a55c4b208b9265ea342596942e939ebd97d2734e202f",
+        "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
+        "r3-development-manifest": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
+        "r3-fixed-training-source": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
         "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
         "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
         "scene-census-draft-protocol": "2d30661f92f5caa7db9f38fa62937517c53e93536dc93a5c8818c0e5faf04df2",
@@ -35180,7 +35265,7 @@
         "amd64"
       ],
       "host_id": "MSI",
-      "registered_at": 1793766692,
+      "registered_at": 1793770812,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
