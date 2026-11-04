@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "name": "aicup-pose-pilot-v1",
+  "families": [
+    "clear",
+    "lift",
+    "net",
+    "drop",
+    "smash",
+    "drive"
+  ],
+  "sides": [
+    "forehand",
+    "backhand"
+  ],
+  "folds": [
+    "train",
+    "validation"
+  ],
+  "contacts_per_cell": 2,
+  "selection_key": "SHA256 UTF-8 aicup-pose-pilot-v1|fold|record-id, ascending",
+  "sources": {
+    "archive": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+    "clips": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+    "records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+    "groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+    "model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba"
+  },
+  "limits": {
+    "runtime_seconds": 28800,
+    "output_bytes": 4294967296,
+    "media_bytes": 1073741824,
+    "native_frames": 32000,
+    "selected_rows": 48,
+    "selected_clips": 48,
+    "native_passes_per_clip": 1,
+    "fits": 0,
+    "external_image_bytes": 0
+  },
+  "pose": {
+    "variant": "small",
+    "stride": 1,
+    "auto_calibrate": true
+  },
+  "support_confidence": 0.25,
+  "contact_interval": "Published H>0 is ambiguous inclusive [H-1,H]; H0 is censored",
+  "processing_mode": "singles placeholder; expected_players and roster are configuration, not truth",
+  "scene_truth": "unknown; cuts and dataset membership do not certify live play",
+  "source_mode_truth": "unknown",
+  "actor_truth": "unresolved; published A/B court end is not persistent identity",
+  "complete_rally_references": {
+    "accepted": 0,
+    "required": 2
+  },
+  "model_installed_in_app": false,
+  "training_ready": false
+}
