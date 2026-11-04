@@ -1,6 +1,6 @@
 # Static versus temporal weak pose learning
 
-Task [#389](https://github.com/Ken0u/badminton-match-analyzer/issues/389) tests
+Task [#391](https://github.com/Ken0u/badminton-match-analyzer/issues/391) tests
 whether short-window observed player motion improves conditional stroke family
 and forehand/backhand classification over a matched-capacity static control.
 The [original pose inputs](AICUP_POSE_PILOT_REPORT.md) and
@@ -105,3 +105,16 @@ mask invalid native gaps/cameras/joints, retain unavailable/unknown rows, and
 verify all checkpoint selections without refitting. These are software controls,
 not improved badminton accuracy. No original real-source fit has run at this
 preparation checkpoint.
+
+The original [#389](https://github.com/Ken0u/badminton-match-analyzer/issues/389)
+lease and scientific window expired before a real-source freeze, extraction or
+fit. Its tested source and timing incident are preserved in
+[draft PR #390](https://github.com/Ken0u/badminton-match-analyzer/pull/390) and the
+[owning preservation checkpoint](https://github.com/Ken0u/badminton-match-analyzer/issues/389#issuecomment-6641011191).
+An authenticated original-host terminal-proof release was accepted before that
+task was closed as superseded. This is a transfer, not scientific completion.
+The fresh #391 grant supplies its own four-hour window; the old deadline is not
+reset. Its adopted scientific code and recipe are byte-identical to the tested
+preparation. Cumulative limits remain one original operation, two real CPU fits
+and 1 GiB scientific output. No images, new inference or source replacements are
+added. No original real fit has run at this continuation preparation checkpoint.
