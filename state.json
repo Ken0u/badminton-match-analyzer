@@ -12595,6 +12595,14 @@
       "task_id": "394",
       "verb": "plan"
     },
+    "spec-396-7e397450ca251356c462f380fd3cd3103d7984acfe0f7705edd5f42c34a145cd": {
+      "actor": "Ken0u",
+      "at": 1793829440,
+      "fingerprint": "55998191be05cf42fe546bf5f062ebc6cf34bdaa10845bb05619c20445b3cf36",
+      "status": "ready",
+      "task_id": "396",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -12847,6 +12855,14 @@
       "fingerprint": "0747d972116209af7e4319bb88e82b625651076f03f1c9516221ca550c52c84d",
       "status": "needs_human",
       "task_id": "98",
+      "verb": "plan"
+    },
+    "status396-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793829440,
+      "fingerprint": "de002bb4da45c4a556ae11119f34055235582233a5afd8649e877a96178fce1e",
+      "status": "ready",
+      "task_id": "396",
       "verb": "plan"
     },
     "stroke380-checkpoint-v1": {
@@ -33437,6 +33453,57 @@
         ]
       },
       "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e",
+      "status": "ready"
+    },
+    "396": {
+      "epoch": 0,
+      "planned_at": 1793829440,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "After393and394 complete exact main verification and full public delivery, revalidate current issues/PRs, coordination grants, main and owning-issue completion checkpoints. Obtain a fresh routine documentation-only CPU grant and isolated worktree. Preserve all original checkouts/environments/data/weights/annotations/research processes, historical evidence and deprecated PROGRESS edits. No work follows from Ready alone.",
+          "Replace the stale October25 current-status snapshot in PROJECT_PLAN with a dated evidence-linked summary derived from current main reports and owning-issue exact CI/delivery records. Reconcile post301source/evaluation repairs, the independently adapted mini-court/shot-profile/rally-navigation product increments, scene-assessment outcomes, portable learning/target audits, capacity comparison, AI CUP pose/actor/static-temporal work, recognition interval-priority repair and completed394data-scaling result. Distinguish implemented code, verified delivery, research execution and scientific acceptance; never infer delivery from a report written before integration.",
+          "Update docs/BUG_REVIEW with concise verified recent fixes and their reproduced failures, preservation behavior, focused/full evidence where actually recorded and remaining practical limitations. Summarize without rewriting underlying experiment reports, original predictions, attempted runs, unknown cases or historical failure evidence. Link primary owning issues for exact source/main/public delivery instead of treating a count of passing tests as badminton accuracy.",
+          "Align README current capability and limitation text with the actual delivered upload/YouTube/review/export/mini-court/shot-profile/rally-navigation behavior. Record that reference-repository ideas were independently adapted without copying code/assets/weights/prose. Preserve the six requested families and separate forehand/backhand, singles/doubles scope and half-smash exclusion. Do not introduce new product behavior, endpoints, models, tactical/speed claims or deployment policy.",
+          "Describe each scientific result using its actual source/cohort/date, denominator, unknown/unavailable cases, conditional assumptions and held-out/development status. Keep familiar-source agreement, weak-label family/side classification, automatic contact/rally detection, persistent identity and complete full-match accuracy separate. Report rejected or mixed experiments faithfully, including394regardless of sign; no pooled metrics, new thresholds, promotion or solution claim. Preserve unresolved media/model rights, upstream/source independence and complete accepted rally-reference prerequisites unless authoritative newer evidence resolves them.",
+          "Order remaining work toward reliable end-to-end automatic annotation: trustworthy complete source-aligned contact/hitter/boundary labels and eligible training sources, shuttle/contact/identity failure diagnosis, separately bounded targeted adaptation and unseen singles/doubles workflow evidence. Do not redefine completion as software delivery or choose another research operation in this documentation task. Keep follow-ups inside the existing approved milestones and preserve existing task dependencies/approvals.",
+          "Run documentation UTF-8/LF, strict JSON/local-link/repository/whitespace and appropriate required project checks; inspect changed claims against primary reports/current issue checkpoints and verify package/source inclusion where affected. Publish a focused PR through exact-head CI/controller integration, verify merged main and complete public delivery without manual merge or retry. No scientific input/prediction read, media decode, image transfer, inference, extraction, fit, model installation or eligibility change."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "393",
+          "394"
+        ],
+        "exclusions": [
+          "No application/UI/API/executable/test/workflow/security/credential/dependency/deployment/model/default/schema changes, new dataset/media/model acquisition or publication, raw/private scientific labels/features/predictions access, image assessment/transfer, experiment rerun, inference/training, threshold/model selection or promotion, source/process/Store manipulation, spending, CI retry, manual merge, raw coordination writes, historical report edits or deprecated PROGRESS updates."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_native_passes": 0,
+          "max_output_bytes": 134217728,
+          "max_real_fits": 0,
+          "max_runtime_hours": 4,
+          "paid_services": false
+        },
+        "milestone": "Review and product",
+        "outcome": "Refresh the shared project plan, bug-review summary and README with verified current product delivery and model evidence after the existing training-data comparison, preserving limitations and the full automatic annotation goal.",
+        "paths": [
+          "PROJECT_PLAN.md",
+          "docs/BUG_REVIEW.md",
+          "README.md"
+        ],
+        "priority": 100,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Changed claims traced to exact current primary reports and delivered issue records, with dates, denominators and uncertainty preserved; no claimed accuracy gain from software checks.",
+          "Required documentation/repository and exact PR/main/public delivery checks; all private inputs and historical experiments remain intact."
+        ]
+      },
+      "spec_hash": "d6a130be7c9c4b7a4b8f49f890350df0e14d6303061b95d70b1ce64bd394b560",
       "status": "ready"
     },
     "62": {
