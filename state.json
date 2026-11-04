@@ -32028,6 +32028,7 @@
       }
     },
     "380": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41786273376",
       "checkpoint": {
         "branch": "codex/issue-380-measure-a-single-low-capacity-stroke-cla",
         "local_head": "113d1bc10b1b3301bf7ec2d31da7c99e2ad8562a",
@@ -32047,7 +32048,7 @@
         "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1793773407,
