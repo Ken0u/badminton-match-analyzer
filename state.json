@@ -104,6 +104,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "actor387-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793802483,
+      "epoch": 1,
+      "fingerprint": "5d4c5a80ef880fe2b1af02183f3af4758e5f8c86f48dfdec409077219e6a2663",
+      "status": "review",
+      "task_id": "387",
+      "verb": "submit"
+    },
     "actor387-tested-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793802120,
@@ -32682,6 +32691,7 @@
       "epoch": 1,
       "planned_at": 1793799644,
       "planned_by": "Ken0u",
+      "pr_number": 388,
       "spec": {
         "acceptance": [
           "After385 completes exact PR/main and full public delivery, revalidate current main, all open/closed issues, PRs, grants and original completed shared Store job. Obtain a fresh routine CPU grant and isolated worktree. Reuse only the unchanged45 development clips/24273 native frames/784 reference rows from385, including431train/353validation and all3H0 censored rows. Preserve original root, environment, data, weights, annotations, predictions and consumed experiments.",
@@ -32742,7 +32752,13 @@
         ]
       },
       "spec_hash": "a17eabfe199571a8b133008bbf91df1f5a0ac588956d25d28fb28c8e8c2d7c64",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "924807a338047fb521ec11f01c54f3832bb7fc7d",
+        "head_sha": "86cad39b715ceadf380b4452707febe1aa6e9c6a",
+        "pr_number": 388,
+        "spec_hash": "a17eabfe199571a8b133008bbf91df1f5a0ac588956d25d28fb28c8e8c2d7c64"
+      }
     },
     "62": {
       "checkpoint": {
