@@ -12479,6 +12479,15 @@
       "task_id": "98",
       "verb": "plan"
     },
+    "stroke380-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793771741,
+      "epoch": 1,
+      "fingerprint": "e723567b6d226b6fc86a9c72e6c4fcffdda6defddc46b7b739b686796e249d50",
+      "status": "running",
+      "task_id": "380",
+      "verb": "checkpoint"
+    },
     "stroke380-next-v1": {
       "actor": "Ken0u",
       "at": 1793771071,
@@ -31963,12 +31972,19 @@
       }
     },
     "380": {
+      "checkpoint": {
+        "branch": "codex/issue-380-measure-a-single-low-capacity-stroke-cla",
+        "local_head": "113d1bc10b1b3301bf7ec2d31da7c99e2ad8562a",
+        "remaining": "Complete full tests, publish exact source/protocol/input/consumer commitment, run both CPU fits under real Store admission, publish aggregate results, exact PR/controller/main CI and public delivery. No model promotion.",
+        "status": "Implementation committed locally. All67 focused tests, lint, formatting, dependencies, repository, whitespace and clean package/source/installed HTTP verification pass. Full Python check is live on the preserved project environment; source remains unchanged. No real fits or held-out input reads. Remote source publication and prospective commitment will precede both prescribed fits."
+      },
+      "checkpoint_at": 1793771741,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "4755428aaf1574e1bfd563b376919030e3140634",
         "branch": "codex/issue-380-measure-a-single-low-capacity-stroke-cla",
         "epoch": 1,
-        "expires_at": 1793781871,
+        "expires_at": 1793782541,
         "granted_at": 1793771071,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
