@@ -54,13 +54,40 @@ unknowns, partial unknown truth, invalid side flags, absent columns, exact row
 identity/order, strict unavailable denominators, parser/mapping mutations,
 unchanged fitting semantics and historical/current protocol compatibility.
 The original three failing cases and their logs are preserved privately.
+The full Python suite passes 5,909 tests with four optional GPU skips and one
+existing Starlette warning; lint, format, dependencies, repository UTF-8/LF/JSON/
+links and whitespace checks pass on unchanged sources.
 
-Before any original-development conformity audit, commit the tested consumer
-and prospectively publish its code/mapping hashes, the unchanged development
-manifest and original reference-inventory hashes. Then perform one read-only
-audit of the 134 original development clips, retaining 624/672 rows and
-608/662 available inputs. An unexpected real mismatch stops work for separate
-scope; no rows may be relabeled or dropped. This audit has not yet executed.
+The single read-only original-development audit completed November 4, 2026
+(UTC), after [prospective publication](https://github.com/Ken0u/badminton-match-analyzer/issues/382#issuecomment-6624811146).
+Tested consumer `ed8e2cd83ea8ef0de6418e08f8ab4456e403fe50` and private freeze
+`177fc901928e36b334146a0782e55a4be19595ef9b49ee34d09d29e4f3249485`
+precede that audit. The unchanged development manifest is
+`0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059`;
+the separately sealed original reference inventory is
+`ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2`.
+
+| Development group | Clips | All source rows | Available inputs | Family mismatches | Side mismatches |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Training, Match001 | 67 | 624 | 608 | 0 | 0 |
+| Validation, Match002 | 67 | 672 | 662 | 0 | 0 |
+
+All 1,296 family targets and 1,296 side targets agree in both cached arrays and
+metadata records. These particular original development inputs contain zero
+unknown family or side labels; generated partial-unknown cases remain covered
+separately. All 26 unavailable-input rows remain, with no source/cache edits or
+denominator changes. All 276 original development seals and all 276 entries of
+the earlier reference inventory match before and after the audit. Preservation
+checks hash original artifacts without deserializing weights or prediction
+values. Original consumer sources, historical protocols/results and deprecated
+handoff edits remain unchanged. There was no mismatch requiring separate scope.
+
+Private freeze, publication, process/check logs and aggregate audit receipts live
+under `.cache/stroke382-*`; the conformity receipt is
+`.cache/stroke382-conformity-v1/verification.json`. Exact final-head PR/main
+checks, controller integration and public delivery remain required, with their
+source revisions recorded on the owning issue. This repair does not rerun or
+alter the negative capacity result or upgrade a running application model.
 
 No images, media, native inference, real fitting, held-out predictions or model
 promotion are part of this repair. Labels, features, weights and detailed
