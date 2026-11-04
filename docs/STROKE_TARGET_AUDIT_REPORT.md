@@ -48,7 +48,7 @@ real fits. Both public protocol files are included in the source distribution.
 
 ## Verification and original-development conformity
 
-All 130 focused generated-data tests pass. They cover source/cache changes,
+Before the CI fixture repair, all 130 focused generated-data tests passed. They cover source/cache changes,
 independent and joint resealing, valid family/service aliases, fabricated
 unknowns, partial unknown truth, invalid side flags, absent columns, exact row
 identity/order, strict unavailable denominators, parser/mapping mutations,
@@ -96,3 +96,42 @@ redistribution rights and upstream perception overlap remain unresolved.
 Source conformity is agreement with published weak supervision, not independent
 badminton truth. Complete-rally references remain 0/2 and full automatic
 annotation accuracy remains unproven.
+
+## Preserved PR failure and generated fixture repair
+
+Original [PR #383](https://github.com/Ken0u/badminton-match-analyzer/pull/383)
+at `2e87797fb9aa8f42e03784042a124bed0c1e7ba4` failed exact-head
+[CI run 41790046630](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/41790046630):
+ten verification jobs passed; macOS recorded one generated rally-review CLI
+fixture failure and the final gate failed consequentially. The test retained
+verified startup, normal `wait()` completion and an intermediate psutil access
+denial. Its logs, XML and terminal observer receipt remain private preserved
+evidence; no CI job was retried. Failed XML ZIP SHA-256 is
+`de16b916e9c3effbd5d197247965c8eab4d1a659edac82e99ff9c4c36b3a0702`.
+
+A generated probe demonstrates that an access denial after the owned process
+exits falsely fails this fixture. It does not prove the unobserved historical
+timing. The fixture now records a terminal observation only if startup and the
+root identity were verified and the original direct `Popen` handle proves that
+root exited. Live or unverified denial remains an error; root exit does not
+resolve a descendant's denied observation. No signal authority, timeout, test
+gate, workflow or retry policy changes. Deterministic generated regressions
+exercise terminal metadata/child-list races, live-denial failures and denied
+descendants after root exit.
+
+The failed PR remains closed without merge, with its branch and both original
+commits retained. Documented original-host terminal release and a fresh epoch-2
+grant preserve all scientific results and the original fixed deadline; a
+committed path-only expansion reserves this existing generated test file.
+The sole real conformity audit stays consumed and is not rerun. The scientific
+consumer source and fitting behavior remain unchanged. Fresh changed-source
+PR/main verification and public delivery remain required for the repaired PR.
+
+Fresh epoch-2 verification passes 174 focused and 5,914 full Python tests, with
+four optional GPU skips and the existing Starlette warning. Required lint,
+format, dependency, repository/UTF-8/LF/JSON/link and whitespace checks pass.
+Clean source/wheel/installed-HTTP checks verify 110 package files, five frontend
+files and 59 public manifests. Final documentation is checked again before
+publication. All prior failed receipts remain separate. Only this report and
+the generated CLI fixture differ from the already audited scientific consumer;
+the original development audit is not repeated and no model is trained.
