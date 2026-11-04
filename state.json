@@ -12548,6 +12548,15 @@
       "task_id": "380",
       "verb": "submit"
     },
+    "stroke382-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793774594,
+      "epoch": 1,
+      "fingerprint": "23ab9653f97cf08cb7f2f269d7db9ca147750298985f28925eb5072684fd0283",
+      "status": "running",
+      "task_id": "382",
+      "verb": "checkpoint"
+    },
     "stroke382-next-v1": {
       "actor": "Ken0u",
       "at": 1793774393,
@@ -32141,12 +32150,19 @@
       }
     },
     "382": {
+      "checkpoint": {
+        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
+        "head_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
+        "remaining": "Repair canonical source binding and versioned capacity compatibility; focused/full checks, prospective read-only development conformity audit, normal controller integration and public delivery.",
+        "summary": "Confirmed epoch1 routine grant after #380 exact PR/main and full public delivery. Isolated worktree created; original checkout, environment, data, weights and deprecated handoff edits preserved. Adding generated source-target regression before repair. Zero actual fits, images, native inference or held-out reads."
+      },
+      "checkpoint_at": 1793774594,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
         "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
         "epoch": 1,
-        "expires_at": 1793785193,
+        "expires_at": 1793785394,
         "granted_at": 1793774393,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
