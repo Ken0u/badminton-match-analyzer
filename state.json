@@ -7509,6 +7509,15 @@
       "task_id": "385",
       "verb": "checkpoint"
     },
+    "pose385-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793798591,
+      "epoch": 1,
+      "fingerprint": "ca319d24e788043bf8dc1c2f11328f227c3ed812c57cfe04732f6e8b202d7fc2",
+      "status": "review",
+      "task_id": "385",
+      "verb": "submit"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -32481,6 +32490,7 @@
       "epoch": 1,
       "planned_at": 1793790416,
       "planned_by": "Ken0u",
+      "pr_number": 386,
       "spec": {
         "acceptance": [
           "After382 completes exact PR/main and full public delivery, revalidate main, issue history, active grants and real shared Store; obtain a fresh GPU grant and isolated worktree. Preserve original root edits, environments, datasets, weights, source indexes, original RGB experiment and consumed tests. This is a precursor to broader source-aligned stroke learning, not a replacement accuracy benchmark or model promotion.",
@@ -32542,7 +32552,25 @@
         ]
       },
       "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4c71056dbf864cdde624cc06a6b8179bb991844f",
+        "head_sha": "6dbdd044849ff22e98e92df33be0d9f487536710",
+        "native_evidence": {
+          "code_sha": "6dbdd044849ff22e98e92df33be0d9f487536710",
+          "limitations": [
+            "Native consumer prospectively committed at2d471a0; later head commits change docs only and all scientific source seals match.",
+            "Published H-1/H and source families/sides remain weak; H0 and unavailable cases are preserved.",
+            "Correct hitter/scene/source mode and original-match independence remain unadjudicated; training-ready0, complete-rally references0/2.",
+            "No real fitting or improved model/annotation accuracy is claimed."
+          ],
+          "model_sha256": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+          "receipt_sha256": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+          "source_sha256": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b"
+        },
+        "pr_number": 386,
+        "spec_hash": "80fd3e314573dfc3dd0fc8aff5ef26fd358a2f4bd3d47c95da8f5fe54a7ba2b9"
+      }
     },
     "62": {
       "checkpoint": {
