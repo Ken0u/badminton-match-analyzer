@@ -12566,6 +12566,15 @@
       "task_id": "382",
       "verb": "checkpoint"
     },
+    "stroke382-e2-checkpoint-checks-v1": {
+      "actor": "Ken0u",
+      "at": 1793778009,
+      "epoch": 2,
+      "fingerprint": "b41c2c3edca59113511ca32823407220acd9cda69d1f9dabda566d071d49e9e6",
+      "status": "running",
+      "task_id": "382",
+      "verb": "checkpoint"
+    },
     "stroke382-next-v1": {
       "actor": "Ken0u",
       "at": 1793774393,
@@ -32213,17 +32222,17 @@
     },
     "382": {
       "checkpoint": {
-        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to",
-        "remaining": "Complete required checks, commit/push exact tested consumer and publish prospective code/input freeze, perform one read-only development conformity audit, report aggregates, package checks, controller PR/main integration and full public delivery. Any unexpected real mismatch stops for separate scope.",
-        "summary": "Canonical source-target repair and explicit capacity-v2 compatibility implemented within the eight granted paths. Three generated baseline regressions fail on original code; all 130 final focused tests pass. Ruff, format, repository and whitespace pass. Historical v1 protocol/parameters and negative results preserved. Starting required full generated-data Python suite with isolated root/data/weights and preserved project environment; no real fits or original-development audit yet."
+        "branch": "codex/issue-382-bind-portable-stroke-training-targets-to-e2",
+        "remaining": "Finish full/package verification, record final evidence, commit and push granted epoch-2 branch, open fresh PR and submit exact head/base/specification to controller. Verify exact PR/main and complete public delivery; preserve all earlier failures. No CI retry or manual merge. Full app accuracy remains unproven.",
+        "summary": "Resumed and revalidated committed epoch-2 grant and expanded scope at coordination 8e530f9932929f2c450205e3b0e54061e724e4d8. Generated fixture repair passes all 174 focused tests including terminal metadata and child-list races, live-denial rejection and descendant-denial rejection after root exit. Lint, format, dependencies, repository and whitespace pass. Required full suite and clean package checks are running under isolated roots using the preserved project environment. Original failed CI and the consumed source-conformity audit remain intact; no science rerun or training."
       },
-      "checkpoint_at": 1793774935,
+      "checkpoint_at": 1793778009,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
         "branch": "codex/issue-382-bind-portable-stroke-training-targets-to-e2",
         "epoch": 2,
-        "expires_at": 1793787969,
+        "expires_at": 1793788809,
         "granted_at": 1793777169,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
