@@ -7622,6 +7622,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "pose389-release-expired-v1": {
+      "actor": "Ken0u",
+      "at": 1793823243,
+      "epoch": 1,
+      "fingerprint": "f3ca1522168f13d4a967a4dea62c0751d99b47bbfb25631dcbdc1a7698ce1989",
+      "status": "ready",
+      "task_id": "389",
+      "verb": "release"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -32837,20 +32846,52 @@
       }
     },
     "389": {
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "da6e40968a4411414d4b04b1dd4d942600157163",
-        "branch": "codex/issue-389-measure-whether-observed-short-window-pl",
-        "epoch": 1,
-        "expires_at": 1793816071,
-        "granted_at": 1793805271,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "4d46fb8c724425cf9b0d5099c87f5d554f7d81f748403f51aad4757905630895"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1793823243,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "da6e40968a4411414d4b04b1dd4d942600157163",
+            "branch": "codex/issue-389-measure-whether-observed-short-window-pl",
+            "epoch": 1,
+            "expires_at": 1793816071,
+            "granted_at": 1793805271,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "4d46fb8c724425cf9b0d5099c87f5d554f7d81f748403f51aad4757905630895"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "old_scientific_window_expired": true,
+              "original_inputs_unchanged": true,
+              "preservation_receipt_sha256": "4ae6e0234c5015421f6ec1c1d74f0056a551b116e9377c79d77be5282f95d14b",
+              "preserved_draft_pr": 390,
+              "real_fits": 0,
+              "source_head": "64c7c31c6c2db9c92b8ff3143eaf6205ecde1f95"
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "[\"C:\\\\Program Files\\\\Python310\\\\python.exe\", \"-X\", \"utf8\", \"-B\", \".cache/pose389-preserve-expired-v1.py\"]",
+              "creation_time": 1793823210.9158454,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer",
+              "exited": true,
+              "pid": 16460,
+              "role": "Completed read-only original-host preservation audit; scientific worker never launched"
+            },
+            "store": {
+              "live_shared_jobs": 0,
+              "scientific_worker_launched": false,
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1793803084,
       "planned_by": "Ken0u",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "After387 completes exact PR/main and full public delivery, revalidate current main, open/closed history, active PRs/grants and original-host process/Store/artifact state. Obtain a fresh committed CPU/windows grant and isolated worktree. Reuse only the sealed385/387development cohort:45clips/24273nativeframes/784rows,431training and353validation; all652weak pairs (362train/290validation),132unresolved and3H0rows remain. Preserve consumed original audits/native experiments, original root/environment/data/labels/weights/predictions and deprecated PROGRESS bytes.",
@@ -32918,7 +32959,7 @@
         ]
       },
       "spec_hash": "4d46fb8c724425cf9b0d5099c87f5d554f7d81f748403f51aad4757905630895",
-      "status": "running"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
