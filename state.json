@@ -12523,6 +12523,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "stroke380-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793772692,
+      "epoch": 1,
+      "fingerprint": "7e40c5d6290fe3f0407951ffc9059083e403cda20cdb5cbe4f891bfaf201863f",
+      "status": "review",
+      "task_id": "380",
+      "verb": "submit"
+    },
     "synthetic-next-next-v1": {
       "actor": "Ken0u",
       "at": 1792953762,
@@ -31993,6 +32002,7 @@
       "epoch": 1,
       "planned_at": 1793770812,
       "planned_by": "Ken0u",
+      "pr_number": 381,
       "spec": {
         "acceptance": [
           "Revalidate current issues, main, authoritative queue ownership and original-host Store/process state. Obtain a fresh committed CPU grant and isolated worktree before implementing. Reuse the legally held original Match001 training and Match002 validation R3 caches only: 67/67 clips, 624/672 source rows and 608/662 available inputs. Reuse the exact portable64 audit and all canonical source/hash/split/order/unknown/unavailable guards. No new media or feature extraction.",
@@ -32046,7 +32056,13 @@
         ]
       },
       "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "4755428aaf1574e1bfd563b376919030e3140634",
+        "head_sha": "e73602d402ba3f23ccc1336610a2675ab6660a2b",
+        "pr_number": 381,
+        "spec_hash": "78057888bec8f8113f8a44b438e36e6928904769c9b5fe57666159efa810b9be"
+      }
     },
     "62": {
       "checkpoint": {
