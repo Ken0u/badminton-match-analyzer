@@ -135,7 +135,7 @@ def test_failed_or_missing_sessions_retain_full_missing_denominators(status):
         else:
             a[0].update(status="failed", thread_id=None, document=None)
 
-    public, _ = support.census(*generated(mutate=mutate))
+    public, private = support.census(*generated(mutate=mutate))
     assert public["denominators"]["frame_occurrences"] == 40
     assert public["occurrence_categories"]["unavailable"] == 35
     assert public["views"]["known_scene_complete"] == 1
@@ -145,6 +145,10 @@ def test_failed_or_missing_sessions_retain_full_missing_denominators(status):
         ]
         == 1
     )
+    attempt = private["occurrences"][0]["original_attempts"]["independent_a"][0]
+    assert attempt["status"] == ("unattempted" if status == "missing" else "failed")
+    assert attempt["batch_index"] == 0
+    assert (attempt["session_id"] is None) == (status == "missing")
 
 
 def test_overlap_unknown_and_cross_view_conflicts_stay_unresolved():
@@ -152,6 +156,13 @@ def test_overlap_unknown_and_cross_view_conflicts_stay_unresolved():
     assert public["occurrence_categories"]["conflict"] >= 1
     assert public["views"]["known_scene_complete"] < 2
     assert len(private["occurrences"]) == 40
+    overlapping = [
+        row for row in private["occurrences"] if len(row["original_batch_indices"]) > 1
+    ]
+    assert overlapping
+    for row in overlapping:
+        for attempts in row["original_attempts"].values():
+            assert [a["batch_index"] for a in attempts] == row["original_batch_indices"]
 
     def mutate(a, b):
         for rows in (a, b):
@@ -619,6 +630,12 @@ def test_complete_generated_historical_chain_and_unsealed_failed_adjudication(tm
         public["historical_execution"]["adjudication_terminal_seal_available"] is False
     )
     assert len(private["cases"]) == 2
+    attempted = private["occurrences"][0]["adjudication_attempts"][0]
+    assert attempted["status"] == "failed"
+    assert attempted["session_id"] and attempted["thread_ids"]
+    unattempted = private["occurrences"][-1]["adjudication_attempts"][0]
+    assert unattempted["status"] == "unattempted"
+    assert unattempted["session_id"] is None
     assert not (tmp_path / "original/adjudication/terminal.json").exists()
 
 

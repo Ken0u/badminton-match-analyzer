@@ -59,6 +59,11 @@ def census(gallery, plan, protocol, lane_a, lane_b, original, cases, cameras):
     views = [g["view"] for g in gallery["galleries"]]
     require(len(cameras) == len(views), "Missing original camera metadata")
     grouped, unique, sheet_members = defaultdict(list), defaultdict(list), {}
+    batch_members = defaultdict(set)
+    attempts = {
+        lane["lane"]: {r["batch_index"]: r for r in lane["results"]}
+        for lane in (lane_a, lane_b)
+    }
     for batch in schedule:
         for sheet in batch["images"]:
             for member in sheet["members"]:
@@ -69,6 +74,7 @@ def census(gallery, plan, protocol, lane_a, lane_b, original, cases, cameras):
                     "Original sheet membership changed",
                 )
                 sheet_members[key] = identity
+                batch_members[key].add(batch["index"])
     ledger = []
     for row in original["records"]:
         view = views[row["view_index"]]
@@ -90,6 +96,24 @@ def census(gallery, plan, protocol, lane_a, lane_b, original, cases, cameras):
             "transition": row["transition"],
             "category": bucket,
             "sheet_path": sheet_members[(view["index"], row["frame"])][0],
+            "original_batch_indices": sorted(
+                batch_members[(view["index"], row["frame"])]
+            ),
+            "original_attempts": {
+                lane: [
+                    {
+                        "batch_index": index,
+                        "status": results[index]["status"]
+                        if index in results
+                        else "unattempted",
+                        "session_id": results[index]["session_id"]
+                        if index in results
+                        else None,
+                    }
+                    for index in sorted(batch_members[(view["index"], row["frame"])])
+                ]
+                for lane, results in attempts.items()
+            },
             "partition": max(
                 i
                 for i, start in enumerate(view["partition_starts"])
@@ -577,7 +601,7 @@ def verify_public_inventory(protocol, bindings):
     )
 
 
-def session_history(reader, schedule, lanes):
+def session_history(reader, schedule, lanes, *, attempts=None):
     """Audit every attempted identity, including failed and unsealed adjudication."""
     original_root = reader.root / reader.roots["original"]
     by_batch = {b["index"]: b for b in schedule}
@@ -682,6 +706,17 @@ def session_history(reader, schedule, lanes):
         totals[lane]["unresolved_terminal_metadata"] += not (
             finish["all_observed_processes_absent"] and finish["pipes_reached_eof"]
         )
+        if attempts is not None:
+            attempts[member] = {
+                "batch_index": index,
+                "status": result["status"],
+                "session_id": reservation["session_id"],
+                "thread_ids": events["threads"],
+                "terminal_metadata_resolved": bool(
+                    finish["all_observed_processes_absent"]
+                    and finish["pipes_reached_eof"]
+                ),
+            }
     require(set(accepted) <= memberships, "Missing sealed original session evidence")
     partial = review.assemble_lane(
         schedule,
@@ -866,7 +901,8 @@ def audit_bound(reader, protocol):
         terminal["summary"]["aggregate"] == original["aggregate"],
         "Original terminal comparison differs",
     )
-    history = session_history(reader, schedule, lanes)
+    attempts = {}
+    history = session_history(reader, schedule, lanes, attempts=attempts)
     public, private = census(
         gallery,
         plan,
@@ -877,6 +913,20 @@ def audit_bound(reader, protocol):
         [v["camera_metadata"] for v in diagnostics["methods"]["control"]["views"]],
     )
     public["historical_execution"] = history
+    for occurrence in private["occurrences"]:
+        occurrence["adjudication_attempts"] = [
+            attempts.get(
+                (review.ADJUDICATION, index),
+                {
+                    "batch_index": index,
+                    "status": "unattempted",
+                    "session_id": None,
+                    "thread_ids": [],
+                    "terminal_metadata_resolved": None,
+                },
+            )
+            for index in occurrence["original_batch_indices"]
+        ]
     require(
         original["aggregate"]["status_counts"]
         == protocol["expected_original_status_counts"],

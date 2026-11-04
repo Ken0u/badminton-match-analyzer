@@ -4,10 +4,26 @@
     "backend/badminton/shuttle_context_audit.py": "f9506df041625bfea3178aae1278441fea9391c3132c7690915ca795c8456a2b",
     "backend/badminton/shuttle_scene_preparation.py": "a8fcddd5d2eb8e7c579922c44ff52bd60674c2cbc2d38f2f96ef4729f86df471",
     "backend/badminton/shuttle_scene_review.py": "1d91aee84c87d9c4cfa7464a782723d0f3b542d302ab5eb61e5f354133978f14",
-    "backend/badminton/shuttle_scene_support.py": "f9cc43d85ddbda1c426706618c3946eb6f970503e69fcf0338442dd5884ac575",
+    "backend/badminton/shuttle_scene_support.py": "c390de18cd2efc0697a5646d95a14fe0b01035283bc27edcd1204aae948bd32b",
     "scripts/audit_shuttle_scene_support.py": "912c9c89b657a07e8bdf670caef2dccfa7b143078753fe0ed43fbe8f41b58e33",
     "tests/test_shuttle_scene_review.py": "ed1b38cb57cdbef601af22beaeace6d11e9a4031908486a7a4d97b63e893da76",
-    "tests/test_shuttle_scene_support.py": "3b4cf060eb2b48d6b3318f61f4155d212fe565343dd080108c47ef14c680e085"
+    "tests/test_shuttle_scene_support.py": "a0883e08f7502e0e4351b128ca4c5cf0b919aa866d965c3f1cd2364f19cad0fa"
+  },
+  "continuation": {
+    "archival_source": "d7db554d7ab46ae7b79dbe377afac63dc590af65",
+    "assessor_sessions": 0,
+    "baseline_sha": "94816dfb801dd08046e05222759122f981023220",
+    "cumulative_output_limit_bytes": 1073741824,
+    "deadline": 1793781387,
+    "epoch": 1,
+    "expired_predecessor_deadline": 1793764141,
+    "granted_at": 1793766987,
+    "image_bytes": 0,
+    "inherited_engine_task": 376,
+    "predecessor_overrun_preserved": true,
+    "publication_required_before_original_scene_read": true,
+    "spec_hash": "9f0c8c0398f8d16fda6fa94fda977682bfe047c600cc9550bc2a0b11bebad20d",
+    "task": 378
   },
   "denominators": {
     "cases": 60,

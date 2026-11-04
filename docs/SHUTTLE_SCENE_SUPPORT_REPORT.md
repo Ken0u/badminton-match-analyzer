@@ -1,7 +1,8 @@
 # Preserved scene-support census
 
-Task [#376](https://github.com/Ken0u/badminton-match-analyzer/issues/376)
-implements a metadata-only census of the incomplete
+Task [#378](https://github.com/Ken0u/badminton-match-analyzer/issues/378)
+continues the preserved metadata-only census draft from
+[#376](https://github.com/Ken0u/badminton-match-analyzer/issues/376), applied to the incomplete
 [#359 assessment](SHUTTLE_SCENE_FRESH_ASSESSMENT_REPORT.md), following the
 [source-context audit](SHUTTLE_CONTEXT_AUDIT_REPORT.md) and
 [quota-dispatch repair](SHUTTLE_SCENE_QUOTA_FAILURE_REPORT.md).
@@ -31,7 +32,9 @@ No image/media/model/prediction bytes are read, no assessor is launched and no
 Store or annotation is changed. Hypothetical costs use original sheet sizes and
 original batch membership, including their context and overlap; they authorize
 no new dispatch, replacement or runtime. The private ledger retains frame,
-source, view, sheet, batch and execution provenance. Public artifacts contain
+source, view, sheet, batch and execution provenance. Each occurrence explicitly
+lists all original overlapping batches, failed or unattempted original
+assessments, and failed or unattempted adjudication. Public artifacts contain
 aggregate counts and hashes only.
 
 ## Verification and execution status
@@ -44,9 +47,24 @@ initial test run exposed Windows newline translation in a generated fixture;
 the fixture now writes exact LF bytes and the failed receipt remains preserved.
 
 The original scientific census has not run at this preparation checkpoint.
-Required full software checks, prospective publication, the actual one-shot
-census and exact PR/controller/main/public-delivery verification remain pending.
-Owning-issue checkpoints carry exact revisions, measured checks and receipts.
+The fresh isolated Python 3.10 review environment passes 5,789 tests with
+35 skips; the focused scene/support suite passes 266 tests. Ruff, formatting,
+dependencies, repository/LF/JSON/link and whitespace checks pass. Frontend
+types, 251 unit tests, build, staged assets, contracts and delivery checks pass.
+Clean wheel/source verification matches 109 package files, five frontend files
+and 57 public manifests, including the corrected protocol inclusion; installed
+HTTP checks pass. These are software checks, not scientific accuracy evidence.
+Prospective publication, the actual one-shot census and exact
+PR/controller/main/public-delivery verification remain pending. Owning-issue
+checkpoints carry exact revisions, measured checks and receipts.
+
+The original #376 four-hour window expired before complete checks or the census.
+Its final generated-test receipt falls after that deadline and is preserved as
+an overrun. Archival PR #377 is closed without merge; its source and failures
+remain intact. #378 has a fresh committed grant and fixed four-hour deadline,
+with no reuse of the old scientific runtime. The archived CI exposed a missing
+source-distribution inclusion for the public protocol; the continuation adds
+that explicit MANIFEST.in entry without weakening package verification.
 
 Reproduce with the matching ignored original artifacts and private bindings:
 
