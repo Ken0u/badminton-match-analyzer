@@ -9309,6 +9309,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "recognition393-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793828476,
+      "epoch": 1,
+      "fingerprint": "7a7182dc741449377bed2e122404444952a427c5c6c0f2891b055085629adc1d",
+      "status": "review",
+      "task_id": "393",
+      "verb": "submit"
+    },
     "recognition393-tested-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793827733,
@@ -33251,6 +33260,7 @@
       "epoch": 1,
       "planned_at": 1793825550,
       "planned_by": "Ken0u",
+      "pr_number": 395,
       "spec": {
         "acceptance": [
           "After391 completes exact PR/main verification and full public delivery, revalidate current main, open/closed history, active grants and actual source/artifact state. Obtain a fresh routine code-only CPU grant and isolated worktree. Preserve the completed negative391 result, consumed scientific runs, original checkout/environments/data/labels/weights and deprecated PROGRESS edit. Reproduce the generated8failures/4disjoint controls before production edits.",
@@ -33301,7 +33311,26 @@
         ]
       },
       "spec_hash": "f9895fdc085de8fd0940d36abdb36073139426f5916275e0398d7fb9b5aefe49",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "1fbac67ff671553e45d5afbac71ec251f18131e0",
+        "head_sha": "2318ccf2d95b42ef0ae80a1380a20961dbd9da6f",
+        "native_evidence": {
+          "code_sha": "2318ccf2d95b42ef0ae80a1380a20961dbd9da6f",
+          "limitations": [
+            "Generated source only; frames encoded but never decoded or visually evaluated.",
+            "Only expensive recognition execution is replaced by an explicit abstaining fixture.",
+            "Real Store/API/CLI target selection and saving are exercised; no neural accuracy evidence.",
+            "No actual match metadata, annotations, predictions or weights modified.",
+            "Complete accepted scientific rally references remain 0/2; full-match accuracy unproven."
+          ],
+          "model_sha256": "5291095b880088ebb9aa5ec8a868ba1e0ced0cd57285b508feb495d94582cbe0",
+          "receipt_sha256": "2c835ef4836730c4f071fd2fbb7804cbc4169b05afb272bee0e9cd64d553af63",
+          "source_sha256": "2f0eac461a38a0c1ebf06aa5642df135d246a6c554f11c0405d0e92c2a6c1b44"
+        },
+        "pr_number": 395,
+        "spec_hash": "f9895fdc085de8fd0940d36abdb36073139426f5916275e0398d7fb9b5aefe49"
+      }
     },
     "394": {
       "epoch": 0,
