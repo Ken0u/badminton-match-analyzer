@@ -2,6 +2,7 @@
 
 import copy
 import hashlib
+import json
 import os
 import subprocess
 import sys
@@ -753,6 +754,7 @@ def test_clock_scanner_refuses_invalid_native_identity_even_after_decoder_close(
         "control",
         "actor_prospective",
         "control_prospective",
+        "clock_ledger",
         "prospective_directory",
     ],
 )
@@ -763,10 +765,10 @@ def test_new_output_cannot_overwrite_or_enclose_original_evidence(tmp_path, prot
     plan = {"workspace": str(workspace)}
     for key in ("prepared", "native", "audit", "control", "prospective_directory"):
         plan[key] = str(cache / key)
-    for key in ("actor_prospective", "control_prospective"):
+    for key in ("actor_prospective", "control_prospective", "clock_ledger"):
         plan[key] = str(cache / key / "prospective.json")
     base = Path(plan[protected])
-    if protected in ("actor_prospective", "control_prospective"):
+    if protected in ("actor_prospective", "control_prospective", "clock_ledger"):
         base = base.parent
     for output in (base, base / "child", cache):
         with pytest.raises(ValueError):
@@ -945,7 +947,12 @@ def metadata_operation(run_case, cohort_case, combined_case, monkeypatch):
     refs = [
         ref for ref in combined_case[0]["reference_rows"] if ref["clip_key"] in keys
     ]
-    plan.update(cohort=cohort, clock_ledger="generated-clock-ledger")
+    plan.update(
+        cohort=cohort,
+        clock_ledger=str(
+            Path(plan["workspace"]) / ".cache/original-ledger/clocks.jsonl"
+        ),
+    )
     prepared = Path(plan["prepared"])
     prepared.mkdir()
     producer.publish(prepared / "freeze.json", old_freeze)
@@ -1203,3 +1210,271 @@ def test_new_clip_has_two_real_generated_decodes_and_preserves_missing_inputs(
     assert not features[0]["available"] and features[0]["static"] == [0.0] * 108
     assert features[0]["training_ready"] is False
     assert max(item.get("decoded", 0) for item in checks) == 6
+
+
+def test_integrity_freeze_publishes_fresh_claim_without_any_science(
+    metadata_operation, monkeypatch
+):
+    plan, _, _, _ = metadata_operation
+    claim = scaling.execution_claim(plan)
+    claim.unlink()
+    paths = scaling.input_sources(plan)
+    producer.publish(paths["archive"], {"generated_archive_placeholder": True})
+    old_freeze = producer.read_json(Path(plan["prepared"]) / "freeze.json")
+    observations = [(clip, {}, {}, []) for clip in old_freeze["clips"]]
+    monkeypatch.setattr(scaling, "original_inputs", lambda *_: (observations, [], []))
+    monkeypatch.setattr(scaling, "code_seals", lambda: {"generated": "source-hash"})
+    monkeypatch.setattr(scaling, "tested_commit", lambda: "a" * 40)
+    monkeypatch.setattr(producer, "runtime", lambda: {"generated": "runtime"})
+    monkeypatch.setattr(
+        scaling, "clock_and_scan", lambda *_: pytest.fail("Decoded during freeze")
+    )
+    monkeypatch.setattr(
+        scaling, "new_clip", lambda *_: pytest.fail("Inference during freeze")
+    )
+    monkeypatch.setattr(learning, "fit", lambda *_: pytest.fail("Fit during freeze"))
+    protocol = Path(plan["workspace"]) / ".cache/protocol.json"
+    producer.publish(protocol, scaling.PROTOCOL)
+    args = {
+        key: plan[key]
+        for key in (
+            "workspace",
+            "prepared",
+            "native",
+            "actor_prospective",
+            "audit",
+            "control",
+            "control_prospective",
+            "clock_ledger",
+            "granted_at",
+            "committed_at",
+            "deadline",
+        )
+    }
+    output, run_output = Path(plan["prospective_directory"]), Path(plan["output"])
+    result = scaling.freeze(
+        **args, protocol=protocol, output=output, run_output=run_output
+    )
+    assert result["new_decodes"] == result["real_fits"] == 0
+    frozen = producer.read_json(output / "prospective.json")
+    assert frozen["output"] == str(run_output) and not run_output.exists()
+    assert producer.read_json(claim) == {
+        "prospective_sha256": result["prospective_sha256"],
+        "output": str(run_output),
+        "committed_at": plan["committed_at"],
+        "deadline": plan["deadline"],
+    }
+    original_claim = claim.read_bytes()
+    with pytest.raises(FileExistsError):
+        scaling.freeze(
+            **args,
+            protocol=protocol,
+            output=output.with_name("another-freeze"),
+            run_output=run_output.with_name("another-run"),
+        )
+    assert claim.read_bytes() == original_claim
+
+
+@pytest.mark.parametrize(
+    "available,raises", [(True, False), (True, True), (False, False)]
+)
+def test_required_cuda_refuses_fallback_and_restores_runtime_probe(
+    monkeypatch, available, raises
+):
+    import torch
+
+    def probe():
+        return available
+
+    monkeypatch.setattr(torch.cuda, "is_available", probe)
+    try:
+        with scaling.required_cuda():
+            if not available:
+                with pytest.raises(ValueError, match="CPU fallback"):
+                    torch.cuda.is_available()
+            else:
+                assert torch.cuda.is_available() is True
+                if raises:
+                    raise RuntimeError("generated tracker failure")
+    except RuntimeError:
+        assert raises
+    assert torch.cuda.is_available is probe
+
+
+@pytest.mark.parametrize("mutation", ["protocol", "overlap", "deadline", "input"])
+def test_freeze_rejects_bad_scope_before_claim_or_science(
+    metadata_operation, monkeypatch, mutation
+):
+    plan, _, _, _ = metadata_operation
+    claim = scaling.execution_claim(plan)
+    claim.unlink()
+    monkeypatch.setattr(scaling, "code_seals", lambda: {"generated": "source"})
+    monkeypatch.setattr(scaling, "tested_commit", lambda: "a" * 40)
+    monkeypatch.setattr(producer, "runtime", lambda: {"generated": "runtime"})
+    monkeypatch.setattr(
+        scaling, "new_clip", lambda *_: pytest.fail("Science in failed freeze")
+    )
+    monkeypatch.setattr(learning, "fit", lambda *_: pytest.fail("Fit in failed freeze"))
+    args = {
+        key: plan[key]
+        for key in (
+            "workspace",
+            "prepared",
+            "native",
+            "actor_prospective",
+            "audit",
+            "control",
+            "control_prospective",
+            "clock_ledger",
+            "granted_at",
+            "committed_at",
+            "deadline",
+        )
+    }
+    protocol = Path(plan["workspace"]) / ".cache/generated-protocol.json"
+    fixed = copy.deepcopy(scaling.PROTOCOL)
+    if mutation == "protocol":
+        fixed["limits"]["real_fits"] = 2
+    elif mutation == "deadline":
+        args["deadline"] = args["committed_at"] + 28801
+    producer.publish(protocol, fixed)
+    output, run_output = Path(plan["prospective_directory"]), Path(plan["output"])
+    if mutation == "overlap":
+        run_output = output / "nested"
+    elif mutation == "input":
+
+        def reject(_):
+            raise ValueError("generated original seal changed")
+
+        monkeypatch.setattr(scaling, "original_inputs", reject)
+    with pytest.raises(ValueError):
+        scaling.freeze(**args, protocol=protocol, output=output, run_output=run_output)
+    assert not claim.exists() and not output.exists() and not run_output.exists()
+
+
+@pytest.fixture
+def arithmetic_case(tmp_path, monkeypatch):
+    pytest.importorskip("torch")
+    root = tmp_path / "arithmetic"
+    output, original, prepared, native, audit = [
+        root / name for name in ("run", "control", "prepared", "native", "audit")
+    ]
+    for directory in (output, original, prepared, native, audit):
+        directory.mkdir(parents=True)
+    ref, diagnostic, result, video, ledger = case()
+    old_rows, rows, refs = [], [], []
+    original_clips = []
+    raw_diagnostics = []
+    for index, fold in enumerate(("train", "validation")):
+        clip = {
+            "key": f"{fold}:00001",
+            "fold": fold,
+            "context": fold,
+            "folder": f"clip-{index:02d}",
+        }
+        original_clips.append(clip)
+        folder = prepared / clip["folder"]
+        folder.mkdir()
+        (native / clip["folder"]).mkdir()
+        producer.publish(folder / "video.json", video)
+        producer.publish(native / clip["folder"] / "players.json", result)
+        for target in range(4):
+            reference = {
+                **ref,
+                "id": f"{fold}:{target}",
+                "clip_key": clip["key"],
+                "family": "clear" if target % 2 == 0 else "lift",
+                "side": "forehand" if target % 2 == 0 else "backhand",
+            }
+            d = {**diagnostic, "reference_id": reference["id"]}
+            raw_diagnostics.append(d)
+            row = scaling.target_fields(clip, reference) | learning.reference_features(
+                reference, d, result, video, ledger
+            )
+            if target == 3:
+                row.update(available=False)
+                row["static"] = [0.0] * 108
+                d["weak_pair"] = None
+            old_rows.append(row)
+            refs.append(reference)
+    rows = copy.deepcopy(old_rows)
+    protocol = copy.deepcopy(learning.PROTOCOL)
+    protocol["training"].update(epochs=5, selection_every=5)
+    monkeypatch.setattr(learning, "PROTOCOL", protocol)
+    data = learning.arrays(rows, "static")
+    learning.fit(data, original / "static", lambda *_: None)
+    learning.fit(data, output / "candidate", lambda *_: None)
+    producer.publish(original / "features.json", old_rows)
+    producer.publish(output / "features.json", rows)
+    producer.publish(
+        output / "cohort.json",
+        {
+            "reference_rows": refs,
+            "new_keys": [],
+            "reused_keys": [c["key"] for c in original_clips],
+        },
+    )
+    producer.publish(prepared / "freeze.json", {"clips": original_clips})
+    producer.publish(audit / "diagnostics.json", raw_diagnostics)
+    scaling_protocol = copy.deepcopy(scaling.PROTOCOL)
+    scaling_protocol["expected"].update(
+        train_rows=4, validation_rows=4, reused_rows=8, new_clips=0, reused_clips=2
+    )
+    scaling_protocol["original"].update(
+        control_features=producer.digest(original / "features.json"),
+        control_model=producer.digest(original / "static/model.pt"),
+        control_statistics=producer.digest(original / "static/statistics.json"),
+    )
+    prospective = root / "prospective.json"
+    producer.publish(
+        prospective,
+        {
+            "output": str(output.resolve()),
+            "control": str(original),
+            "prepared": str(prepared),
+            "native": str(native),
+            "audit": str(audit),
+            "protocol": scaling_protocol,
+        },
+    )
+    return prospective, output
+
+
+def test_independent_arithmetic_cli_reproduces_generated_fit_without_producer_import(
+    arithmetic_case,
+):
+    prospective, output = arithmetic_case
+    script = (
+        Path(scaling.__file__).resolve().parents[2]
+        / "scripts/scale_aicup_pose_learning.py"
+    )
+    receipt = output.parent / "arithmetic.json"
+    command = [
+        sys.executable,
+        str(script),
+        "arithmetic",
+        "--prospective",
+        str(prospective),
+        "--prospective-sha256",
+        producer.digest(prospective),
+        "--output",
+        str(output),
+        "--receipt",
+        str(receipt),
+    ]
+    result = subprocess.run(command, check=True, capture_output=True, text=True)
+    checked = json.loads(result.stdout)
+    assert checked["verified_rows"] == 8 and checked["reused_rows"] == 8
+    assert checked["raw_pose_samples"] >= 2
+    assert checked["feature_producer_imported"] is checked["refitted"] is False
+    statistics = output / "candidate/statistics.json"
+    altered = producer.read_json(statistics)
+    altered["mean"][0] += 1
+    statistics.write_bytes(producer.encoded(altered))
+    changed = subprocess.run(
+        [*command[:-1], str(receipt.with_name("mutated.json"))],
+        capture_output=True,
+        text=True,
+    )
+    assert changed.returncode != 0
+    assert not receipt.with_name("mutated.json").exists()
