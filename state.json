@@ -10506,6 +10506,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "scene378-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793768578,
+      "epoch": 1,
+      "fingerprint": "3d618b9fdb200bc78f41d32d5ca6b45602a9511ef2e6bb7b896d0a4970fb448a",
+      "status": "review",
+      "task_id": "378",
+      "verb": "submit"
+    },
     "selection294-checkpoint-final-v1": {
       "actor": "Ken0u",
       "at": 1792931643,
@@ -31811,6 +31820,7 @@
       "epoch": 1,
       "planned_at": 1793766692,
       "planned_by": "Ken0u",
+      "pr_number": 379,
       "spec": {
         "acceptance": [
           "Before implementation revalidate current main, all related issues/PRs/controller grants and original-host preservation. Preserve expired376/archival draft PR377 head d7db554d7ab46ae7b79dbe377afac63dc590af65, its original deadline and generated-check overrun; preserve all failed/full-check refusal receipts. Obtain a fresh committed CPU grant and isolated worktree before adopting the preserved five-path draft. Wait until376 terminal-proof release is durably accepted. This is routine zero-image metadata continuation under Data and evaluation, not renewed authority for359 or376.",
@@ -31868,7 +31878,13 @@
         ]
       },
       "spec_hash": "9f0c8c0398f8d16fda6fa94fda977682bfe047c600cc9550bc2a0b11bebad20d",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "94816dfb801dd08046e05222759122f981023220",
+        "head_sha": "b96b822999e6459b94fe8b21a200a9e1310c2021",
+        "pr_number": 379,
+        "spec_hash": "9f0c8c0398f8d16fda6fa94fda977682bfe047c600cc9550bc2a0b11bebad20d"
+      }
     },
     "62": {
       "checkpoint": {
