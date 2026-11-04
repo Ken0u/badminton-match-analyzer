@@ -12575,6 +12575,15 @@
       "task_id": "382",
       "verb": "checkpoint"
     },
+    "stroke382-e2-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1793778903,
+      "epoch": 2,
+      "fingerprint": "4aa14b95f590f2dc5c0ef3d1529e24a6c5fe61f4bb47c3a0a2242b1095a3aa0d",
+      "status": "review",
+      "task_id": "382",
+      "verb": "submit"
+    },
     "stroke382-next-v1": {
       "actor": "Ken0u",
       "at": 1793774393,
@@ -32286,7 +32295,7 @@
       ],
       "planned_at": 1793773628,
       "planned_by": "Ken0u",
-      "pr_number": 383,
+      "pr_number": 384,
       "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
@@ -32342,12 +32351,12 @@
         ]
       },
       "spec_hash": "5ac5ffd140d8af4cfd0eb26909bd4bf5f8c214f2fbad8e5d82c290c4363a2cc3",
-      "status": "running",
+      "status": "review",
       "submission": {
         "base_sha": "5b33baacd1fcd2e0b3c26630c53d634d10709f60",
-        "head_sha": "2e87797fb9aa8f42e03784042a124bed0c1e7ba4",
-        "pr_number": 383,
-        "spec_hash": "34ded4f720db7c2fdcb29a50bebfda7445217f1541db9f676bf52599811e52e4"
+        "head_sha": "bb481235cfb71cebff4cbd2926a43620b7b85e9f",
+        "pr_number": 384,
+        "spec_hash": "5ac5ffd140d8af4cfd0eb26909bd4bf5f8c214f2fbad8e5d82c290c4363a2cc3"
       }
     },
     "62": {
