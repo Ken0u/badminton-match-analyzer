@@ -7861,6 +7861,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "pose397-terminal-transfer-release-v1": {
+      "actor": "Ken0u",
+      "at": 1793863910,
+      "epoch": 1,
+      "fingerprint": "d8107b1571ca7d63b5133572c4e1a27eccd824f396ee434335cd08fa2e203dfa",
+      "status": "ready",
+      "task_id": "397",
+      "verb": "release"
+    },
     "pose398-explicit-api-recovery-plan-v1": {
       "actor": "Ken0u",
       "at": 1793863347,
@@ -7868,6 +7877,13 @@
       "status": "ready",
       "task_id": "398",
       "verb": "plan"
+    },
+    "pose398-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793863910,
+      "fingerprint": "9a73393b87dc59e6e5bd6c1d8abb38bf489c879d9c967571e32ea67b2ef5fb18",
+      "status": "ok",
+      "verb": "register"
     },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
@@ -33856,20 +33872,67 @@
         "summary": "Original CLI invocation terminal before dispatch/no Store job/no new science;immutable freeze/claim preserved. Parser fixed;3reproducing controls and all133focused/tooling pass;fresh full/package verification underway. No retry."
       },
       "checkpoint_at": 1793863087,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
-        "branch": "codex/issue-397-complete-one-prospectively-bounded-broad",
-        "epoch": 1,
-        "expires_at": 1793873887,
-        "granted_at": 1793861134,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1793863910,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+            "branch": "codex/issue-397-complete-one-prospectively-bounded-broad",
+            "epoch": 1,
+            "expires_at": 1793873887,
+            "granted_at": 1793861134,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "branch": "codex/issue-397-complete-one-prospectively-bounded-broad",
+              "failed_scientific_consumer_commit": "8bc2b0270e6350281421d7590855627cfdfc1178",
+              "followup_spec_hash": "6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67",
+              "full_verification_sha256": "242199ff11e890d1c95ac79449ed65e62a43f471707030f509b02ded6d44b54e",
+              "head_sha": "bb0c7e1f27cffcb24ce0978b3793b20d84289a68",
+              "original_cohort_claim_sha256": "7831a0d3335dd9924e12e1daf9294c4fe0923d86d27088d4ae5c82689dde6357",
+              "original_commitment": 1793862568.8576179,
+              "original_deadline": 1793905768.8576179,
+              "original_failure_proof_sha256": "e60dc956a055731b03723b72b23f1555cfdd2692eb2b54acfbbcb54ac1c91873",
+              "original_freeze_and_claim_preserved": true,
+              "original_granted_at": 1793861134,
+              "original_prospective_sha256": "5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6",
+              "original_run_output_absent": true,
+              "original_terminal_sha256": "410703c726214ee6010fd4afc87d7cea36c6ba09ae7a985fc0481db451e65a42",
+              "package_verification_sha256": "04e46c6bd11e802c8f8e188a1c7c22cfda81d322f010440ae5a6cd8f526853cc",
+              "summary": "Release/supersede397code-only ownership after preserved CLI failure before function entry and corrected stable-source checks. No scientific success or native/fit repeat. Retain original scientific source/freeze/claim/output/deadline unchanged. Separate398matching grant and tested audited API wrapper are required before the first actual frozen scientific dispatch.",
+              "tooling_verification_sha256": "2f1b443542bf62f59d30699b306f17cfe41d29f5144e4b9590bbf2c45edceb7e",
+              "transfer_to": 398
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe -X utf8 -B C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose397-e1\\scripts\\scale_aicup_pose_learning.py run --prospective C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose397-freeze-v1\\prospective.json --prospective-sha256 5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6 --output C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose397-run-v1",
+              "creation_time": 1793862651.5062568,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose397-e1",
+              "exited": true,
+              "pid": 5340
+            },
+            "store": {
+              "active_jobs": 0,
+              "new_decodes": 0,
+              "new_model_observations": 0,
+              "original_cli_invocation_consumed": true,
+              "real_fits": 0,
+              "scientific_operations_started": 0,
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1793859929,
       "planned_by": "Ken0u",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "After original-host terminal preservation/release and explicit supersession of unexecuted #394, obtain a fresh routine Windows/CUDA grant and isolated worktree. Preserve its tested source, generated tests, all historical/native/control inputs and its original deadline and elapsed window. Verify no #394 scientific freeze, cohort execution claim, new real-source decoding, native inference, features or fit occurred. The new task is explicit follow-up authority; it does not renew or claim completion of #394. Revalidate main/issues/PRs/grants, all input seals and actual original-host process/Store state. Preserve original root/environment/data/weights/annotations and deprecated PROGRESS edit.",
@@ -33956,7 +34019,7 @@
         ]
       },
       "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b",
-      "status": "running"
+      "status": "ready"
     },
     "398": {
       "epoch": 0,
@@ -37337,7 +37400,17 @@
         "pose394-full-v1": "08c06339944574b1a0588effeab0dd4221904abaf0a19e64d337ce2da2bb9003",
         "pose394-generated-controls": "477e7beffcbd67df21bd7d9c0f9f1ac52e344d5b74980c8d6e175439deae510d",
         "pose394-prepared-consumer": "45004886f086353f7cb1a69e039e7b79eea9ecea50f192d93c5db3fcdef75766",
-        "pose394-runtime-cost": "60e8a042073787337ce740d2b689e49beca02eb5ec48d01fdce013c36221b1a4"
+        "pose394-runtime-cost": "60e8a042073787337ce740d2b689e49beca02eb5ec48d01fdce013c36221b1a4",
+        "pose397-corrected-consumer": "78f9495526c0af1e4d68cb59edec7e4aa4477deec1ec0805eaa1912488b0311d",
+        "pose397-corrected-controls": "fae72950ac437700d4ccfc52a1541899324620c4de5a837863fa8f3932e2c8b0",
+        "pose397-failed-invocation": "66b38f21e1ce55e29bcc1d7556acfeb6c21dc88ea33127eafb76b51df9a64499",
+        "pose397-failed-process": "1b033277c273b5e03ba9528a3e73c18d4209cdf950db5fea80b8ee78620134fb",
+        "pose397-failed-stderr": "21de0ba796addb784217b12dc1f9a1f9948bd67e5eb92b9e6af823e0c0e89bb9",
+        "pose397-failed-terminal": "410703c726214ee6010fd4afc87d7cea36c6ba09ae7a985fc0481db451e65a42",
+        "pose397-original-claim": "7831a0d3335dd9924e12e1daf9294c4fe0923d86d27088d4ae5c82689dde6357",
+        "pose397-original-full-checks": "28be66883818b9ef8bb732965bb7d77e3a05d8d8efd8b395b8fc7e7a3aa6027b",
+        "pose397-original-prospective": "5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6",
+        "pose397-predispatch-proof": "e60dc956a055731b03723b72b23f1555cfdd2692eb2b54acfbbcb54ac1c91873"
       },
       "capabilities": [
         "amd64",
@@ -37346,7 +37419,7 @@
         "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1793860838,
+      "registered_at": 1793863910,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
