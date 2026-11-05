@@ -121,11 +121,11 @@
     "decoded_frame_visits": 282394,
     "image_bytes": 0,
     "model_frame_observations": 141197,
-    "operation_seconds": 28800,
+    "operation_seconds": 43200,
     "original_operations": 1,
     "output_bytes": 4294967296,
     "real_fits": 1,
-    "task_seconds": 43200
+    "task_seconds": 57600
   },
   "model_installed_in_app": false,
   "name": "aicup-pose-scaling-v1",

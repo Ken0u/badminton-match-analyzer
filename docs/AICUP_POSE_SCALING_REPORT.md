@@ -1,13 +1,18 @@
 # Broader weak pose training with a fixed validation set
 
-Task [#394](https://github.com/Ken0u/badminton-match-analyzer/issues/394) tests
+Task [#397](https://github.com/Ken0u/badminton-match-analyzer/issues/397) tests
 whether broader existing training supervision improves the static pose
 classifier from the [completed learning comparison](AICUP_POSE_LEARNING_REPORT.md).
 Its frozen specification is
-`2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e`.
+`bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b`.
 This is preparation for one private development experiment. No original
 data-scaling operation, new native inference or new fit has run at this
-checkpoint; generated parity, scientific results and delivery remain pending.
+checkpoint; original scientific results and delivery remain pending.
+It inherits tested preparation from superseded, unexecuted
+[#394](https://github.com/Ken0u/badminton-match-analyzer/issues/394), whose
+original deadline and evidence remain preserved. This fresh task explicitly
+provides a costed sixteen-hour task window and one twelve-hour operation;
+it does not extend or claim scientific completion of #394.
 
 The preceding experiment selected static over temporal pose: validation
 eight-group family macro F1 was 0.415854 versus 0.398081, and strict joint
@@ -92,8 +97,11 @@ unchanged automatic-court and dual-tracker small-pose recipe. This avoids
 extra camera/court decoding while preserving stride 1, source orientation,
 native frame identity, camera boundaries and calibration expiry. Generated
 tests cover parity, exact decoder accounting and adapter restoration
-on success and failure before this design is used on real inputs. Final
-verification of the compressed-cache change remains pending at this checkpoint.
+on success and failure before this design is used on real inputs. The inherited
+compressed-cache implementation passed all 129 scaling controls and the full
+6,308-test suite, with four optional skips, plus required tooling and clean
+package/HTTP checks. Fresh verification of this task's bound changes remains
+required before the original operation.
 
 New decoding is bounded to 282,394 frame visits and new model observations to
 141,197 frames. There is no new pass on the original 45 clips, shuttle
@@ -101,10 +109,10 @@ inference, model acquisition, CPU fallback or repeated failed pass. Initialize
 torchvision before threaded PyAV and retain native FFmpeg logging restoration
 before media opening and closing.
 
-A fresh committed task grant permits at most 12 hours from its grant timestamp.
-The single original scientific operation has at most eight hours from its first
+A fresh committed task grant permits at most 16 hours from its grant timestamp.
+The single original scientific operation has at most twelve hours from its first
 published admission commitment, and must finish no later than grant plus
-12 hours. Lease renewal and a different output path extend neither bound.
+16 hours. Lease renewal and a different output path extend neither bound.
 Cumulative new scientific outputs are limited to 4 GiB (4,294,967,296 bytes),
 including preparation, inference, features, weights and failure evidence.
 One cohort-bound exclusive execution claim prevents another original operation.
@@ -178,12 +186,15 @@ arithmetic completion receipt. Both failures remain preserved and are corrected.
 Color/clock parity, LRU recency/eviction, exact memory boundaries, low-memory
 failure and adapter restoration are generated checks, not accuracy measurements.
 
-Before this change, the stable source passed 6,275 Python tests with four optional
-skips, plus required tooling and clean package/HTTP checks. Those results do not
-verify this later cache change or establish scientific accuracy. Fresh focused,
-full and package verification is required before any original operation.
+The compressed-cache preparation source `78b5dfe` passed 6,308 Python tests with
+four optional skips, required tooling and clean package/HTTP checks (114 package
+files, 63 public manifests, five assets, three SPA routes and authentication).
+Earlier failed generated fixtures and the network-restricted package attempt
+remain preserved separately. These software checks do not establish scientific
+accuracy. Fresh focused, full and package verification of #397's changes is
+required before any original operation.
 
-An interruption expired epoch 1 before any scientific freeze, claim, source
+In #394, an interruption expired epoch 1 before any scientific freeze, claim, source
 processing or fit. The controller accepted original-host terminal proof and
 issued epoch 2; original scientific bounds remain preserved. A metadata-only
 forecast from 45 completed native clips (24,273 frames in 4,860.661 seconds)
@@ -191,5 +202,10 @@ projects about 28,274.657 seconds for 141,197 new frames before clock scanning,
 compression, feature construction, fitting and verification. This is a linear
 forecast, not a benchmark of the new cache. The original interrupted window has
 insufficient forecast headroom. No scientific operation will be launched under
-that window; a separately specified bounded follow-up must preserve this task's
-unexecuted evidence and original deadline rather than reset it implicitly.
+that window. The controller accepted its terminal release before #394 was
+closed as superseded, with its branch, tests and unexecuted evidence retained.
+The separately specified #397 follow-up preserves identical cohorts, recipe,
+control, output/decode/model budgets and original unknowns. Its fresh grant
+supplies the explicit 16-hour task / 12-hour operation bounds above; the old
+deadline is never reset implicitly. No new real-source processing or fit has
+run at this preparation checkpoint.

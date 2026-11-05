@@ -150,8 +150,8 @@ def test_protocol_is_public_fixed_recipe_and_import_has_no_model_runtime():
         (0, 101, 102),
         (0, 50, 100),
         (0, 50, 50),
-        (0, 50, 28851),
-        (0, 20000, 43201),
+        (0, 50, 43251),
+        (0, 50, 57601),
         (float("nan"), 50, 101),
         (0, float("inf"), 101),
         (0, 50, float("nan")),
@@ -172,6 +172,21 @@ def test_lease_renewal_does_not_change_original_scientific_clock(monkeypatch):
     monkeypatch.setattr(scaling.time, "time", lambda: 101)
     with pytest.raises(ValueError):
         scaling.check_deadline(0, 50, 101)
+
+
+@pytest.mark.parametrize("commit,deadline", [(50, 43250), (20000, 57600)])
+def test_original_operation_and_task_deadline_boundaries(monkeypatch, commit, deadline):
+    # An early commitment reaches the operation cap; a later one reaches the
+    # grant cap first. Renewal cannot extend either boundary by any amount.
+    monkeypatch.setattr(scaling.time, "time", lambda: commit)
+    scaling.check_deadline(0, commit, deadline)
+    with pytest.raises(ValueError, match="deadline"):
+        scaling.check_deadline(0, commit, deadline + 0.001)
+    monkeypatch.setattr(scaling.time, "time", lambda: deadline - 0.001)
+    scaling.check_deadline(0, commit, deadline)
+    monkeypatch.setattr(scaling.time, "time", lambda: deadline)
+    with pytest.raises(ValueError, match="deadline"):
+        scaling.check_deadline(0, commit, deadline)
 
 
 def test_static_center_uses_both_ambiguous_endpoints_and_original_recipe():
@@ -1438,7 +1453,7 @@ def test_freeze_rejects_bad_scope_before_claim_or_science(
     if mutation == "protocol":
         fixed["limits"]["real_fits"] = 2
     elif mutation == "deadline":
-        args["deadline"] = args["committed_at"] + 28801
+        args["deadline"] = args["committed_at"] + 43201
     producer.publish(protocol, fixed)
     output, run_output = Path(plan["prospective_directory"]), Path(plan["output"])
     if mutation == "overlap":

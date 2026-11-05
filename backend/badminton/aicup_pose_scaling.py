@@ -75,8 +75,8 @@ PROTOCOL = {
     "training": copy.deepcopy(learning.PROTOCOL["training"]),
     "labels": copy.deepcopy(learning.PROTOCOL["labels"]),
     "limits": {
-        "task_seconds": 43200,
-        "operation_seconds": 28800,
+        "task_seconds": 57600,
+        "operation_seconds": 43200,
         "output_bytes": 4294967296,
         "decoded_frame_visits": 282394,
         "model_frame_observations": 141197,
