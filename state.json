@@ -7775,6 +7775,14 @@
       "task_id": "394",
       "verb": "recover"
     },
+    "pose397-costed-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793859622,
+      "fingerprint": "889a27ba62a1ae4416d5cbcc19e00fcb114b52faafb781a194030759166ebd6b",
+      "status": "ready",
+      "task_id": "397",
+      "verb": "plan"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -12675,6 +12683,12 @@
       "fingerprint": "55998191be05cf42fe546bf5f062ebc6cf34bdaa10845bb05619c20445b3cf36",
       "status": "ready",
       "task_id": "396",
+      "verb": "plan"
+    },
+    "spec-397-23a982924b9fa2eeacd484188f86f98ca5f158a06f16604a645043d8b6996c86": {
+      "actor": "Ken0u",
+      "reason": "spec fields must match the version 1 task contract",
+      "status": "rejected",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -33679,6 +33693,98 @@
         ]
       },
       "spec_hash": "d6a130be7c9c4b7a4b8f49f890350df0e14d6303061b95d70b1ce64bd394b560",
+      "status": "ready"
+    },
+    "397": {
+      "epoch": 0,
+      "planned_at": 1793859622,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "After original-host terminal preservation/release and explicit supersession of unexecuted #394, obtain a fresh routine Windows/CUDA grant and isolated worktree. Preserve its tested source, generated tests, all historical/native/control inputs and its original deadline and elapsed window. Verify no #394 scientific freeze, cohort execution claim, new real-source decoding, native inference, features or fit occurred. The new task is explicit follow-up authority; it does not renew or claim completion of #394. Revalidate main/issues/PRs/grants, all input seals and actual original-host process/Store state. Preserve original root/environment/data/weights/annotations and deprecated PROGRESS edit.",
+          "Use only the existing pinned AI CUP archive/index/capture groups and original clock ledger. Broaden training to all424original labelled training-fold clips/154684nativeframes/4684published references, while retaining precisely the original23validation clips/10786frames/353references from385/391. Reuse original22training clips/13487frames/431references and all23validation native/feature artifacts without decoding or rerunning them. The only new perception scope is402previously unprocessed training clips/141197frames/4253references,825568691compressed media bytes. Final cohort is447clips/165470frames/5037references. Exclude all held-out source CSV/media/features/predictions and unlabelled clips before member opening; no changed source folds or validation membership.",
+          "Implement clone-contained preparation, one original run and read-only verification with a public fixed protocol. Canonical targets and weak hitter/defender image coordinates come from each original pinned CSV via the reviewed normalizer, not a resealable cache. Retain all4684/353original rows, unknown outputs, H0censoring and unavailable inputs. Author source declaresCCBY4.0; original media rights, original-match independence, upstream pretraining and actual actor/scene truth remain unresolved. This is private weak-supervision research, never eligibility promotion or app truth. Update only the public task/operation runtime limits to16/12hours for this explicit follow-up, and add generated checks for both unchanged deadline fences. All scientific cohorts, counts, recipes, unknowns, outputs and consumed original385/387/391controls remain fixed.",
+          "Before real preparation/inference/features/fitting, commit tested code and prospectively publish exact consumer/protocol/runtime/source/model and immutable producer/control/input inventories and one cohort-bound exclusive execution claim. Historical385/387/391producer source seals must be verified against their retained original revisions/artifacts; new current consumers do not retroactively belong to historical inventories. Reuse original features/weights/statistics by their original seals, never regenerate a consumed control. Source changes stop with partial evidence. Use a fresh fixed task window at most16hours from grant; the one original scientific operation deadline is at most12hours from its first published admission commitment and never later than grant+16hours. A lease renewal or another output path cannot reset either bound.",
+          "Preserve the metadata-only runtime forecast from 45 completed native clips: 24273frames/4860.661seconds, approximately28274.657seconds for141197new frames before clock/scan/compression/features/fit/verification. Before science, implement and test a bounded lossless native-array cache with RGB/BGR byte parity, exact colorspace/range and PTS/time-base preservation, maximum1GiB or half initial free RAM,512MiB live reserve and16-frame reconstruction LRU. No disk frame/image outputs and no additional real-source decoding or model observations. The new16-hour task/12-hour original-operation limits provide bounded preparation and execution time; no deadline resets, consumed scientific replay or unbounded retries. Reuse the preserved preparation commit78b5dfea5ab8e5efdb45a942a195793301a69fd1, adapting only explicitly granted runtime/provenance requirements and any generated-test-discovered bugs before the prospective freeze. No scientific outcome is represented by that preparation.",
+          "Admit all actual preparation/native extraction/feature construction/oneCPUfit through real shared Store run_local_job with BADMINTON_ROOT/DATA_DIR pinned before imports. Only new402training clips may decode for native PTS/camera preparation and one unchanged standard small-pose CUDA pass per clip at stride1 with the original dual-tracker/automatic-court recipe. Maximum282394new decoded frame visits across preparation and perception,141197new model-frame observations, zero new passes on the original45clips, and4GiBcumulative new scientific outputs. Initialize torchvision before threaded PyAV, preserve FFmpeg log restoration and exact native PTS/orientation/camera/calibration expiry. No shuttle inference, weights acquisition, CPU fallback, repeated failed passes, original cache edits or process signals. Preserve PID/creation/cwd/command, Store status and durable receipts; observation timeout never establishes exit.",
+          "Apply the unchanged387weak correspondence rules independently at both[H-1,H]endpoints using ankle/box-bottom representations, minimum confidence0.25, maximum box-height-normalized distance0.5, minimum margin0.25, same distinct observed hitter/defender tracks and valid camera/calibration. Do not tune gates to increase coverage. Actual actors/scenes stay unknown. Reuse391static108-value(center,center,zero-velocity) features for original784rows; produce identical-recipe inputs only for new4253training rows. Do not introduce new temporal features, source coordinates as classifier features, target leakage, identity repair or scene labels.",
+          "Run exactly one new private CPUfit using all weakly paired expanded training rows, unchanged108->64->32/9386parameter static network, seed20261104,2CPUthreads,300epochs,batch64,AdamWlr0.001,weight_decay0.01,dropout0.1,family/side loss1/0.5,train-only mean/std-floor0.05/clip10 and inverse-sqrt supported-class weights. Use all8family groups and2sides with original unknown/unsupported semantics. Select every5epochs by original mean supported8-group macroF1/side balanced recall, then strict joint, then earlier epoch. No sweep, augmentation, additional fit, seed/threshold search or post-result protocol change. Compare to the sealed391static control on the same353rows using its saved original features/stats/weights/predictions; do not refit or reselect the control. A negative/mixed result remains reported without promotion.",
+          "Read-only verification reproduces all new inputs and canonical rows, old cache/control integrity, native source/PTS/camera/calibration inventories, new feature masks/normalization/class weights, all60selection checkpoint predictions/metrics, final model and fixed comparison without refitting. A separate arithmetic implementation checks original/control and new candidate predictions plus full353-row metrics, source/feature counts and representative raw-pose feature calculations without importing the feature producer. Report all source/fold/capture/family/side/family-side support, unavailable counts, per-class confusion/precision/recall/F1, strict joint and separately named conditional denominators. Increased training quantity does not establish verified labels, independent test accuracy, doubles identity or full-match annotation; accepted complete references remain0/2.",
+          "Meaningful generated controls cover split/member fencing and original cache reuse, exact ordered canonical targets, missing/unknown/H0rows, pose/matching/frame/camera/calibration errors, source/producer/control mutation, real shared admission, exclusive claim, fixed deadline/budget, preserved partial failures, single fit, supported-class and train-only statistics/selection/denominator behavior. Run required focused/fullPython,lint/format/dependencies/repositoryUTF8/LF/JSON/links/whitespace and clean source/wheel/installedHTTP checks. Publish only reproducible code/protocol/aggregates through exact controller PR/main and complete public delivery. No model is installed and no automatic accuracy solution is claimed."
+        ],
+        "artifacts": {
+          "actor-correspondence-completion": "b89e2d5c7e2ca711ccdc36f83dfb9eae673ac8317bf3fe9f06ee60256a48d7fb",
+          "actor-correspondence-diagnostics": "6d01625e726d113ba17a82df59ae976dd628727386ebe2bf094a5fc5bb745856",
+          "actor-prospective-freeze": "ed36c13f0c87fc867ccf0736311c4d8a39c87361a9a2bfd3e0c515d43fd5e030",
+          "aicup-capture-groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+          "aicup-clip-index": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+          "aicup-original-part1": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+          "aicup-pose-native-completion": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+          "aicup-pose-preparation": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+          "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+          "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+          "original-source-clock-ledger": "de5ca6509087dfd79048e179fc500536660127b8c7927aad995ab8faf739585b",
+          "pose-scaling-structural-cost": "0f33876be34aad215b6b14373fb0e298f668552142bb42c2eb8811759cf2ba3e",
+          "pose391-original-completion": "42500f898ad6a1fd4548d42dd233f25826be9f7ea8cc6248fb10ab735dc84dd3",
+          "pose391-original-features": "12bc9769a57077ed33e50d5fccec69386760487ce8fce0a9f5e4269a5da7e1be",
+          "pose391-static-model": "ae66352af2877a58a5d665b69a5077b0319f613e27087ff285c10b0cfc9605ae",
+          "pose391-static-statistics": "ba02db68741ad8e2bbf548f1395aa1fd6c6bd6e5654c272122b4ce003c51d367",
+          "pose394-cache-protocol": "7e9a44c4c1bba4b64f61712f077e185119d7670a88a8f769c78f4e1a403eae9c",
+          "pose394-full-v1": "08c06339944574b1a0588effeab0dd4221904abaf0a19e64d337ce2da2bb9003",
+          "pose394-generated-controls": "477e7beffcbd67df21bd7d9c0f9f1ac52e344d5b74980c8d6e175439deae510d",
+          "pose394-prepared-consumer": "45004886f086353f7cb1a69e039e7b79eea9ecea50f192d93c5db3fcdef75766",
+          "pose394-runtime-cost": "60e8a042073787337ce740d2b689e49beca02eb5ec48d01fdce013c36221b1a4"
+        },
+        "capabilities": [
+          "cuda",
+          "windows",
+          "cpu"
+        ],
+        "dependencies": [
+          "391",
+          "393"
+        ],
+        "exclusions": [
+          "No new source/model acquisition, external image/label transfer, assessor sessions, held-out/test source/feature/label/prediction access, changed source grouping or original validation membership, scientific truth/eligibility promotion, new shuttle/classifier-native inference, neural architecture/hyperparameter/threshold changes, more than one new fit, native rerun of an original pilot clip, original source/cache/annotation/model edits, app/UI/API/default changes, dependency/workflow/security/credential/deployment/policy changes, process signals, paid service, manual merge, CI retry, raw coordination writes or deprecated PROGRESS updates. Data scaling is familiar weak-reference development, not independent accuracy or permission to install weights."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_new_decoded_frame_visits": 282394,
+          "max_new_media_bytes": 825568691,
+          "max_new_native_clips": 402,
+          "max_new_native_frames": 141197,
+          "max_original_operations": 1,
+          "max_output_bytes": 4294967296,
+          "max_real_fits": 1,
+          "max_reference_rows": 5037,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 16,
+          "max_scientific_operation_hours": 12,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Complete one prospectively bounded broader weak-pose training comparison using the preserved unexecuted #394 preparation, unchanged source/validation/control and a costed execution window; keep all research weights private.",
+        "paths": [
+          "backend/badminton/aicup_pose_scaling.py",
+          "scripts/scale_aicup_pose_learning.py",
+          "tests/test_aicup_pose_scaling.py",
+          "data/manifests/aicup_pose_scaling_protocol_v1.json",
+          "docs/AICUP_POSE_SCALING_REPORT.md",
+          "MANIFEST.in"
+        ],
+        "priority": 85,
+        "resources": [
+          "gpu:windows-primary",
+          "cpu:windows-training"
+        ],
+        "risk": "routine",
+        "verification": [
+          "One prospectively frozen source-bound training-data scaling comparison with unchanged353-row validation and consumed391control reused; exactly402new native training clips and one new private fit at most.",
+          "Required local and exact controller PR/main/public delivery checks, independent arithmetic and immutable original evidence; all unknown/unavailable rows remain. No independent accuracy or app model promotion.",
+          "All original #394 scientific counters remain zero; original task/grant/deadline and source are preserved with an explicit transfer record. New task/code/protocol/input/runtime/cohort claim and matching grant are frozen before any scientific operation. Final report distinguishes preparation/supersession from actual execution."
+        ]
+      },
+      "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b",
       "status": "ready"
     },
     "62": {
