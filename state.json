@@ -7906,6 +7906,15 @@
       "task_id": "398",
       "verb": "next"
     },
+    "pose398-live-api-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793867005,
+      "epoch": 1,
+      "fingerprint": "1eac04ee69cbd5edb06678dfcc5fd06312224de8649d13b30e9f838396ba8812",
+      "status": "running",
+      "task_id": "398",
+      "verb": "checkpoint"
+    },
     "pose398-prospective-api-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793866657,
@@ -34071,20 +34080,20 @@
       "checkpoint": {
         "branch": "codex/issue-398-perform-the-first-actual-dispatch-of-the",
         "evidence": [
-          "https://github.com/Ken0u/badminton-match-analyzer/issues/398#issuecomment-6653173324"
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/398#issuecomment-6653268538"
         ],
         "head_sha": "eceb0600bd0e23d70038a19b2f738461367f3862",
-        "new_decodes": 0,
         "real_fits": 0,
-        "summary": "Exact wrapper/protocol/runtime/proof/intent prospectively published; all software checks pass; one unchanged frozen API dispatch pending; science counters zero."
+        "scientific_operations_started": 1,
+        "summary": "Original frozen API and real shared Store running; exact lifetime identities verified locally; first new native clip started; fit pending; single consumed dispatch preserved."
       },
-      "checkpoint_at": 1793866657,
+      "checkpoint_at": 1793867005,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
         "branch": "codex/issue-398-perform-the-first-actual-dispatch-of-the",
         "epoch": 1,
-        "expires_at": 1793877457,
+        "expires_at": 1793877805,
         "granted_at": 1793864201,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
