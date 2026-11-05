@@ -326,3 +326,18 @@ libraries; all 194 pass with the learning runtime. This changes no workflow,
 dependency, production function or scientific source. Fresh exact-head CI and
 controller delivery remain required; the PR stays draft while scientific
 failure disposition and follow-up planning remain open.
+
+## Completion receipt guard
+
+A subsequent local delivery audit reproduced two false-success cases with
+generated child processes: an exit-zero child without `completion.json` left
+`scientific_success` true in its terminal receipt before the wrapper raised;
+a directory named `completion.json` was accepted as completion. The wrapper now
+requires a completion file inside its guarded dispatch block, before writing
+the terminal receipt. Missing files and directories retain terminal failure,
+preserve the consumed invocation and prevent read-only verification from
+starting. The overflow control supplies a valid completion file so it continues
+to isolate incomplete log capture. Both new regressions failed against the
+previous source. This is a delivery-code repair using generated data, not a
+re-execution or change to the preserved scientific source, failure, inputs,
+deadline or counters. Fresh checks and controller delivery remain required.

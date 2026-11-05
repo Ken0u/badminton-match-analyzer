@@ -709,6 +709,11 @@ def dispatch(workspace, intent_sha256, grant_state, publication):
         code = process.wait()
         for reader in readers:
             reader.join()
+        if code == 0:
+            require(
+                (output / "completion.json").is_file(),
+                "No durable scientific completion",
+            )
     except BaseException as failure:
         error = {"type": type(failure).__name__}
         raise
@@ -750,7 +755,7 @@ def dispatch(workspace, intent_sha256, grant_state, publication):
         terminal["scientific_success"],
         "Incomplete process/log observation; preserve dispatch",
     )
-    require((output / "completion.json").exists(), "No durable scientific completion")
+    require((output / "completion.json").is_file(), "No durable scientific completion")
     return terminal
 
 

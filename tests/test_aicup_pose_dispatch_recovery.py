@@ -647,12 +647,48 @@ def test_terminal_child_failure_remains_consumed_without_false_success(
         recovery.dispatch(**args)
 
 
+@pytest.mark.parametrize("completion", ["missing", "directory"])
+def test_zero_exit_without_a_completion_file_never_persists_scientific_success(
+    generated, monkeypatch, completion
+):
+    args = prepared(generated)
+    code = (
+        "from pathlib import Path; "
+        f"output = Path({str(generated.output)!r}); output.mkdir(); "
+        + ("(output / 'completion.json').mkdir()" if completion == "directory" else "")
+    )
+    monkeypatch.setattr(
+        recovery, "child_command", lambda *_: [sys.executable, "-I", "-B", "-c", code]
+    )
+    before = generated.original.read_bytes(), generated.claim.read_bytes()
+    with pytest.raises(ValueError, match="No durable scientific completion"):
+        recovery.dispatch(**args)
+    receipt = recovery.read(generated.companion / "terminal.json")
+    assert receipt["terminal"] is True and receipt["exit_code"] == 0
+    assert receipt["original_process_absent"] is True
+    assert receipt["scientific_success"] is False
+    assert receipt["corrective_invocation_consumed"] is True
+    assert before == (generated.original.read_bytes(), generated.claim.read_bytes())
+    terminal_bytes = (generated.companion / "terminal.json").read_bytes()
+    with pytest.raises(ValueError, match="Preserve original output"):
+        recovery.dispatch(**args)
+    assert terminal_bytes == (generated.companion / "terminal.json").read_bytes()
+    args.pop("publication")
+    with pytest.raises(ValueError, match="No successful terminal"):
+        recovery.verify(**args)
+
+
 def test_log_overflow_keeps_fixed_reservations_and_prevents_success(
     generated, monkeypatch
 ):
     args = prepared(generated)
     size = generated.protocol["limits"]["log_slot_bytes"]
-    code = "import sys; sys.stdout.buffer.write(b'x'*" + str(size + 100) + ")"
+    code = (
+        "import sys; from pathlib import Path; "
+        f"output = Path({str(generated.output)!r}); output.mkdir(); "
+        "(output / 'completion.json').write_text('{}'); "
+        "sys.stdout.buffer.write(b'x'*" + str(size + 100) + ")"
+    )
     monkeypatch.setattr(
         recovery, "child_command", lambda *_: [sys.executable, "-I", "-B", "-c", code]
     )
