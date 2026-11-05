@@ -86,13 +86,14 @@ post-result protocol change. A mixed or negative result remains reported.
 
 The runner design combines exact native PTS observation and the unchanged
 incremental camera detector in the first decode pass. A second pass retains
-display-oriented frames for one clip, supplying those same frames to the
+losslessly compressed native arrays for one clip, supplying pixel-identical
+display frames to the
 unchanged automatic-court and dual-tracker small-pose recipe. This avoids
 extra camera/court decoding while preserving stride 1, source orientation,
 native frame identity, camera boundaries and calibration expiry. Generated
-tests must establish parity, exact decoder accounting and adapter restoration
-on success and failure before this design is used on real inputs; no parity
-result is claimed at this checkpoint.
+tests cover parity, exact decoder accounting and adapter restoration
+on success and failure before this design is used on real inputs. Final
+verification of the compressed-cache change remains pending at this checkpoint.
 
 New decoding is bounded to 282,394 frame visits and new model observations to
 141,197 frames. There is no new pass on the original 45 clips, shuttle
@@ -156,3 +157,39 @@ Broader training quantity does not establish correct labels or improved unseen
 accuracy. No research model is installed or promoted. Complete scientific rally
 references remain **0/2**; automatic contacts, rally boundaries, persistent
 identity, doubles support and correct full-match annotation remain unresolved.
+
+## Memory and runtime preflight
+
+Metadata-only costing found a largest conservative raw-frame cache of
+5,219,942,400 bytes, exceeding the workstation's observed free RAM. The replacement
+retains zlib-level-1 native arrays or raw planes in RAM with native format,
+shape, dtype, SHA256,
+colorspace, color range, PTS and rational time base. Every packed frame must
+reconstruct identical RGB and BGR pixels. Compressed pixels are capped at the
+smaller of half initial free RAM and 1 GiB; admission requires 512 MiB free plus
+64 MiB initial headroom, and live checks retain the 512 MiB reserve. At most
+16 reconstructed frames belong to the LRU. It writes no frame/image files and
+does not add native source decoding or model observations.
+
+All 129 scaling controls now pass, including exact packed-RGB plane reconstruction
+for formats PyAV cannot expose directly as NumPy arrays. The initial generated
+FFV1 case exposed that format gap; another failed fixture had omitted an existing
+arithmetic completion receipt. Both failures remain preserved and are corrected.
+Color/clock parity, LRU recency/eviction, exact memory boundaries, low-memory
+failure and adapter restoration are generated checks, not accuracy measurements.
+
+Before this change, the stable source passed 6,275 Python tests with four optional
+skips, plus required tooling and clean package/HTTP checks. Those results do not
+verify this later cache change or establish scientific accuracy. Fresh focused,
+full and package verification is required before any original operation.
+
+An interruption expired epoch 1 before any scientific freeze, claim, source
+processing or fit. The controller accepted original-host terminal proof and
+issued epoch 2; original scientific bounds remain preserved. A metadata-only
+forecast from 45 completed native clips (24,273 frames in 4,860.661 seconds)
+projects about 28,274.657 seconds for 141,197 new frames before clock scanning,
+compression, feature construction, fitting and verification. This is a linear
+forecast, not a benchmark of the new cache. The original interrupted window has
+insufficient forecast headroom. No scientific operation will be launched under
+that window; a separately specified bounded follow-up must preserve this task's
+unexecuted evidence and original deadline rather than reset it implicitly.

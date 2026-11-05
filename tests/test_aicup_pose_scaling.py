@@ -8,6 +8,7 @@ import subprocess
 import sys
 import time
 import zipfile
+import zlib
 from contextlib import contextmanager
 from fractions import Fraction
 from pathlib import Path
@@ -19,6 +20,107 @@ from badminton import aicup_pose_learning as learning
 from badminton import aicup_pose_pilot as producer
 from badminton import aicup_pose_scaling as scaling
 from test_aicup_pose_learning import case
+
+
+def generated_frame(format="yuv420p", colorspace=1, color_range=1):
+    import av
+
+    pixels = np.empty((64, 96, 3), np.uint8)
+    y, x = np.indices((64, 96))
+    pixels[..., 0] = (x * 7 + y * 3) % 256
+    pixels[..., 1] = (x * 2 + y * 11) % 256
+    pixels[..., 2] = (x * 13 + y * 5) % 256
+    frame = av.VideoFrame.from_ndarray(pixels, "rgb24").reformat(format=format)
+    frame.colorspace, frame.color_range = colorspace, color_range
+    frame.pts, frame.time_base = 1001, Fraction(1, 30000)
+    return frame
+
+
+@pytest.mark.parametrize(
+    "format", ["yuv420p", "yuv422p", "yuv444p", "rgb24", "bgr24", "bgr0", "rgb0"]
+)
+@pytest.mark.parametrize("colorspace,color_range", [(0, 0), (1, 1), (5, 2)])
+def test_native_compressed_frames_preserve_pixels_color_and_source_clock(
+    format, colorspace, color_range
+):
+    frame = generated_frame(format, colorspace, color_range)
+    packed = scaling.pack_frame(frame)
+    assert isinstance(packed["compressed_pixels"], bytes)
+    restored = scaling.unpack_frame(packed)
+    assert restored is not frame
+    assert restored.format.name == frame.format.name
+    assert (restored.width, restored.height) == (frame.width, frame.height)
+    assert (restored.pts, restored.time_base) == (frame.pts, frame.time_base)
+    assert (restored.colorspace, restored.color_range) == (
+        frame.colorspace,
+        frame.color_range,
+    )
+    for representation in (None, "rgb24", "bgr24"):
+        if representation is None and "planes" in packed:
+            # Plane padding can differ between allocations; native pixel bytes
+            # in these packed RGB formats must remain exact as well as RGB/BGR.
+            for before, after in zip(frame.planes, restored.planes, strict=True):
+                a = np.frombuffer(bytes(before), np.uint8).reshape(
+                    before.height, before.line_size
+                )
+                b = np.frombuffer(bytes(after), np.uint8).reshape(
+                    after.height, after.line_size
+                )
+                np.testing.assert_array_equal(
+                    a[:, : frame.width * 4], b[:, : frame.width * 4]
+                )
+            continue
+        kwargs = {} if representation is None else {"format": representation}
+        np.testing.assert_array_equal(
+            frame.to_ndarray(**kwargs), restored.to_ndarray(**kwargs)
+        )
+
+
+@pytest.mark.parametrize("mutation", ["compressed", "format", "shape", "dtype"])
+def test_compressed_frame_corruption_or_layout_changes_are_rejected(mutation):
+    packed = scaling.pack_frame(generated_frame())
+    if mutation == "compressed":
+        packed["compressed_pixels"] = b"not a zlib stream"
+    elif mutation == "format":
+        packed["format"] = "unsupported-native-layout"
+    elif mutation == "shape":
+        packed["shape"] = [1, 1]
+    else:
+        packed["dtype"] = "float64"
+    with pytest.raises((ValueError, zlib.error)):
+        scaling.unpack_frame(packed)
+
+
+def test_valid_compression_with_changed_native_pixels_is_rejected():
+    packed = scaling.pack_frame(generated_frame())
+    raw = bytearray(zlib.decompress(packed["compressed_pixels"]))
+    raw[0] ^= 1
+    packed["compressed_pixels"] = zlib.compress(raw, 1)
+    with pytest.raises(ValueError, match="cache changed"):
+        scaling.unpack_frame(packed)
+
+
+def test_packing_refuses_roundtrip_that_changes_rendered_rgb_or_bgr(monkeypatch):
+    frame = generated_frame()
+    altered = generated_frame()
+    replacement = altered.to_ndarray()
+    replacement[:] = 0
+    import av
+
+    altered = av.VideoFrame.from_ndarray(replacement, format=altered.format.name)
+    monkeypatch.setattr(scaling, "unpack_frame", lambda _: altered)
+    with pytest.raises(ValueError, match="RGB and BGR"):
+        scaling.pack_frame(frame)
+
+
+@pytest.fixture
+def fake_frame_codec(monkeypatch):
+    monkeypatch.setattr(
+        scaling,
+        "pack_frame",
+        lambda frame: {"compressed_pixels": b"generated", "fake_frame": frame},
+    )
+    monkeypatch.setattr(scaling, "unpack_frame", lambda record: record["fake_frame"])
 
 
 def test_protocol_is_public_fixed_recipe_and_import_has_no_model_runtime():
@@ -412,7 +514,7 @@ def test_combination_refuses_silent_denominator_or_truth_changes(
 
 @pytest.mark.parametrize("body_failure", [False, True])
 def test_decode_cache_decodes_once_reuses_actual_objects_and_restores_aliases(
-    tmp_path, monkeypatch, body_failure
+    tmp_path, monkeypatch, body_failure, fake_frame_codec
 ):
     from badminton import court_detection, tracking, video
 
@@ -456,7 +558,7 @@ def test_decode_cache_decodes_once_reuses_actual_objects_and_restores_aliases(
 
 @pytest.mark.parametrize("mutation", ["source", "root", "clock", "range", "bool"])
 def test_cached_reader_refuses_another_source_or_unbounded_range(
-    tmp_path, monkeypatch, mutation
+    tmp_path, monkeypatch, mutation, fake_frame_codec
 ):
     from badminton import tracking, video
 
@@ -622,7 +724,7 @@ def test_decoder_memory_denial_happens_before_any_frame_or_adapter_change(
 
 @pytest.mark.parametrize("failure_at", ["decode", "source_check"])
 def test_decoder_and_final_source_errors_preserve_adapter_identity(
-    tmp_path, monkeypatch, failure_at
+    tmp_path, monkeypatch, failure_at, fake_frame_codec
 ):
     from badminton import court_detection, tracking, video
 
@@ -1444,10 +1546,7 @@ def arithmetic_case(tmp_path, monkeypatch):
     )
     producer.publish(
         output / "completion.json",
-        {
-            "prospective_sha256": producer.digest(prospective),
-            "receipts": [],
-        },
+        {"prospective_sha256": producer.digest(prospective), "receipts": []},
     )
     return prospective, output
 
@@ -1490,3 +1589,180 @@ def test_independent_arithmetic_cli_reproduces_generated_fit_without_producer_im
     )
     assert changed.returncode != 0
     assert not receipt.with_name("mutated.json").exists()
+
+
+def test_compressed_cache_reconstructs_exact_native_frames_and_bounds_live_lru(
+    tmp_path, monkeypatch
+):
+    from badminton import court_detection, tracking, video
+
+    originals = [generated_frame() for _ in range(20)]
+    for index, frame in enumerate(originals):
+        frame.pts = 1001 + index * 2
+    source = {"id": "generated", "frame_count": 20, "width": 96, "height": 64}
+    times, visits, packed, unpacked = [index / 30 for index in range(20)], [], [], []
+    original_tracking, original_court = (
+        tracking.iter_frames,
+        court_detection.iter_frames,
+    )
+    pack, unpack = scaling.pack_frame, scaling.unpack_frame
+
+    def decoded(*_):
+        for index, frame in enumerate(originals):
+            visits.append(index)
+            yield index, times[index], frame
+
+    def observed_pack(frame):
+        packed.append(frame.pts)
+        return pack(frame)
+
+    def observed_unpack(record):
+        unpacked.append(record["pts"])
+        return unpack(record)
+
+    monkeypatch.setattr(video, "iter_frames", decoded)
+    monkeypatch.setattr(video, "resolve_source", lambda *_: None)
+    monkeypatch.setattr(scaling, "pack_frame", observed_pack)
+    monkeypatch.setattr(scaling, "unpack_frame", observed_unpack)
+    assert scaling.CACHE_LRU_FRAMES == 16
+    with scaling.decode_cache(source, tmp_path, times, lambda _: None) as count:
+        assert count == 20 and visits == list(range(20))
+        assert packed == [frame.pts for frame in originals]
+        unpacked.clear()  # Packing verifies a reconstruction before retaining bytes.
+        first = list(tracking.iter_frames(source, tmp_path, times, 0, 20))
+        assert len(unpacked) == 20
+        for index, (ordinal, timestamp, restored) in enumerate(first):
+            original = originals[index]
+            assert (ordinal, timestamp) == (index, times[index])
+            assert restored is not original
+            assert (restored.pts, restored.time_base) == (
+                original.pts,
+                original.time_base,
+            )
+            for representation in ("rgb24", "bgr24"):
+                np.testing.assert_array_equal(
+                    original.to_ndarray(format=representation),
+                    restored.to_ndarray(format=representation),
+                )
+        newest = list(court_detection.iter_frames(source, tmp_path, times, 19, 20))
+        assert newest[0][2] is first[19][2] and len(unpacked) == 20
+        refreshed = list(tracking.iter_frames(source, tmp_path, times, 4, 5))
+        assert refreshed[0][2] is first[4][2] and len(unpacked) == 20
+        evicted = list(court_detection.iter_frames(source, tmp_path, times, 0, 1))
+        assert evicted[0][2] is not first[0][2] and len(unpacked) == 21
+        repeated = list(tracking.iter_frames(source, tmp_path, times, 0, 1))
+        assert repeated[0][2] is evicted[0][2] and len(unpacked) == 21
+        retained = list(tracking.iter_frames(source, tmp_path, times, 4, 5))
+        assert retained[0][2] is refreshed[0][2] and len(unpacked) == 21
+        next_evicted = list(tracking.iter_frames(source, tmp_path, times, 5, 6))
+        assert next_evicted[0][2] is not first[5][2] and len(unpacked) == 22
+        assert visits == list(range(20))
+    assert tracking.iter_frames is original_tracking
+    assert court_detection.iter_frames is original_court
+    assert list(tmp_path.iterdir()) == []
+
+
+@pytest.mark.parametrize("failure", ["initial", "compressed_cap", "free_memory"])
+def test_compressed_cache_enforces_small_generated_memory_limits_without_disk_outputs(
+    tmp_path, monkeypatch, fake_frame_codec, failure
+):
+    import psutil
+    from badminton import court_detection, tracking, video
+
+    original_tracking, original_court = (
+        tracking.iter_frames,
+        court_detection.iter_frames,
+    )
+    visits = []
+    source = {"id": "generated", "frame_count": 2, "width": 10, "height": 10}
+    monkeypatch.setattr(scaling, "CACHE_MIN_FREE_BYTES", 100)
+    monkeypatch.setattr(scaling, "CACHE_INITIAL_EXTRA_BYTES", 20)
+    monkeypatch.setattr(
+        scaling, "CACHE_MAX_BYTES", 15 if failure == "compressed_cap" else 100
+    )
+
+    def available_memory():
+        if failure == "initial":
+            available = 119
+        elif failure == "free_memory" and len(visits) >= 2:
+            available = 99
+        else:
+            available = 1000
+        return SimpleNamespace(available=available)
+
+    def decoded(*_):
+        for index in range(2):
+            visits.append(index)
+            yield index, index / 30, object()
+
+    monkeypatch.setattr(psutil, "virtual_memory", available_memory)
+    monkeypatch.setattr(video, "iter_frames", decoded)
+    monkeypatch.setattr(video, "resolve_source", lambda *_: None)
+    with pytest.raises(ValueError):
+        with scaling.decode_cache(source, tmp_path, [0.0, 1 / 30], lambda _: None):
+            pytest.fail("Entered cache beyond its bounded memory allowance")
+    assert visits == ([] if failure == "initial" else [0, 1])
+    assert tracking.iter_frames is original_tracking
+    assert court_detection.iter_frames is original_court
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_compressed_cache_caps_half_of_initial_free_memory(
+    tmp_path, monkeypatch, fake_frame_codec
+):
+    import psutil
+    from badminton import court_detection, tracking, video
+
+    original_tracking, original_court = (
+        tracking.iter_frames,
+        court_detection.iter_frames,
+    )
+    monkeypatch.setattr(scaling, "CACHE_MIN_FREE_BYTES", 1)
+    monkeypatch.setattr(scaling, "CACHE_INITIAL_EXTRA_BYTES", 1)
+    monkeypatch.setattr(scaling, "CACHE_MAX_BYTES", 100)
+    monkeypatch.setattr(psutil, "virtual_memory", lambda: SimpleNamespace(available=25))
+    monkeypatch.setattr(
+        video, "iter_frames", lambda *_: iter([(0, 0.0, object()), (1, 0.03, object())])
+    )
+    monkeypatch.setattr(video, "resolve_source", lambda *_: None)
+    source = {"id": "generated", "frame_count": 2, "width": 10, "height": 10}
+    with pytest.raises(ValueError):
+        with scaling.decode_cache(source, tmp_path, [0.0, 0.03], lambda _: None):
+            pytest.fail("Retained eighteen generated bytes under a twelve-byte cap")
+    assert tracking.iter_frames is original_tracking
+    assert court_detection.iter_frames is original_court
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_compressed_cache_accepts_exact_reserve_and_compressed_byte_boundaries(
+    tmp_path, monkeypatch, fake_frame_codec
+):
+    import psutil
+    from badminton import tracking, video
+
+    probes = []
+    monkeypatch.setattr(scaling, "CACHE_MIN_FREE_BYTES", 100)
+    monkeypatch.setattr(scaling, "CACHE_INITIAL_EXTRA_BYTES", 20)
+    monkeypatch.setattr(scaling, "CACHE_MAX_BYTES", 18)
+
+    def memory():
+        available = 120 if not probes else 100
+        probes.append(available)
+        return SimpleNamespace(available=available)
+
+    objects = [object(), object()]
+    monkeypatch.setattr(psutil, "virtual_memory", memory)
+    monkeypatch.setattr(
+        video,
+        "iter_frames",
+        lambda *_: iter([(0, 0.0, objects[0]), (1, 0.03, objects[1])]),
+    )
+    monkeypatch.setattr(video, "resolve_source", lambda *_: None)
+    source = {"id": "generated", "frame_count": 2, "width": 10, "height": 10}
+    with scaling.decode_cache(source, tmp_path, [0.0, 0.03], lambda _: None) as count:
+        assert count == 2
+        assert [
+            row[2] for row in tracking.iter_frames(source, tmp_path, [0.0, 0.03], 0, 2)
+        ] == objects
+    assert len(probes) >= 3
+    assert list(tmp_path.iterdir()) == []

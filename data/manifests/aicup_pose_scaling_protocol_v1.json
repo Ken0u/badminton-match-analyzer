@@ -131,6 +131,15 @@
   "name": "aicup-pose-scaling-v1",
   "native": {
     "auto_calibrate": true,
+    "frame_cache": {
+      "codec": "zlib level 1 of exact native ndarray/planes; RGB/BGR byte parity required",
+      "disk_image_outputs": 0,
+      "initial_extra_bytes": 67108864,
+      "initial_free_fraction": 0.5,
+      "max_compressed_bytes": 1073741824,
+      "minimum_free_bytes": 536870912,
+      "reconstruction_lru_frames": 16
+    },
     "stride": 1,
     "variant": "small"
   },

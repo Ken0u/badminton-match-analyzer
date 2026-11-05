@@ -15,7 +15,8 @@ import subprocess
 import tarfile
 import time
 import zipfile
-from collections import Counter
+import zlib
+from collections import Counter, OrderedDict
 from contextlib import contextmanager
 from fractions import Fraction
 from pathlib import Path
@@ -83,7 +84,20 @@ PROTOCOL = {
         "original_operations": 1,
         "image_bytes": 0,
     },
-    "native": {"variant": "small", "stride": 1, "auto_calibrate": True},
+    "native": {
+        "variant": "small",
+        "stride": 1,
+        "auto_calibrate": True,
+        "frame_cache": {
+            "codec": "zlib level 1 of exact native ndarray/planes; RGB/BGR byte parity required",
+            "max_compressed_bytes": 1073741824,
+            "initial_free_fraction": 0.5,
+            "minimum_free_bytes": 536870912,
+            "initial_extra_bytes": 67108864,
+            "reconstruction_lru_frames": 16,
+            "disk_image_outputs": 0,
+        },
+    },
     "training_ready": False,
     "independent_accuracy_established": False,
     "model_installed_in_app": False,
@@ -436,28 +450,108 @@ def clock_and_scan(media, progress):
     return ledger, times, video, scan
 
 
+CACHE_MAX_BYTES = PROTOCOL["native"]["frame_cache"]["max_compressed_bytes"]
+CACHE_MIN_FREE_BYTES = PROTOCOL["native"]["frame_cache"]["minimum_free_bytes"]
+CACHE_INITIAL_EXTRA_BYTES = PROTOCOL["native"]["frame_cache"]["initial_extra_bytes"]
+CACHE_LRU_FRAMES = PROTOCOL["native"]["frame_cache"]["reconstruction_lru_frames"]
+
+
+def unpack_frame(record):
+    import av
+
+    raw = zlib.decompress(record["compressed_pixels"])
+    if hashlib.sha256(raw).hexdigest() != record["raw_sha256"]:
+        raise ValueError("Lossless native pixel cache changed")
+    array = np.frombuffer(raw, dtype=np.dtype(record["dtype"])).reshape(record["shape"])
+    if "planes" in record:
+        frame = av.VideoFrame(*record["dimensions"], format=record["format"])
+        if len(frame.planes) != len(record["planes"]):
+            raise ValueError("Lossless native plane layout changed")
+        offset = 0
+        for plane, layout in zip(frame.planes, record["planes"], strict=True):
+            if plane.height != layout["height"]:
+                raise ValueError("Lossless native plane height changed")
+            source = array[offset : offset + layout["size"]].reshape(
+                layout["height"], layout["line_size"]
+            )
+            offset += layout["size"]
+            restored = np.zeros((plane.height, plane.line_size), np.uint8)
+            width = min(plane.line_size, layout["line_size"])
+            restored[:, :width] = source[:, :width]
+            plane.update(restored.tobytes())
+        if offset != len(array):
+            raise ValueError("Lossless native plane bytes changed")
+    else:
+        frame = av.VideoFrame.from_ndarray(array, format=record["format"])
+    frame.colorspace = record["colorspace"]
+    frame.color_range = record["color_range"]
+    frame.pts = record["pts"]
+    if record["time_base"] is not None:
+        frame.time_base = Fraction(*record["time_base"])
+    return frame
+
+
+def pack_frame(frame):
+    planes = None
+    try:
+        array = frame.to_ndarray()
+    except ValueError:
+        # PyAV cannot expose some packed formats (such as FFV1 bgr0) as an
+        # ndarray. Retain native planes, including row strides, without a color
+        # conversion. Reconstruction may use different non-pixel row padding.
+        planes = [
+            {"size": p.buffer_size, "line_size": p.line_size, "height": p.height}
+            for p in frame.planes
+        ]
+        array = np.frombuffer(b"".join(bytes(p) for p in frame.planes), dtype=np.uint8)
+    raw = array.tobytes()
+    base = Fraction(frame.time_base) if frame.time_base is not None else None
+    record = {
+        "compressed_pixels": zlib.compress(raw, 1),
+        "raw_sha256": hashlib.sha256(raw).hexdigest(),
+        "dtype": str(array.dtype),
+        "shape": list(array.shape),
+        "format": frame.format.name,
+        "colorspace": frame.colorspace,
+        "color_range": frame.color_range,
+        "pts": frame.pts,
+        "time_base": [base.numerator, base.denominator] if base is not None else None,
+    }
+    if planes is not None:
+        record.update(planes=planes, dimensions=[frame.width, frame.height])
+    restored = unpack_frame(record)
+    if not all(
+        np.array_equal(frame.to_ndarray(format=name), restored.to_ndarray(format=name))
+        for name in ("rgb24", "bgr24")
+    ):
+        raise ValueError("Lossless pixel cache does not preserve RGB and BGR")
+    return record
+
+
 @contextmanager
 def decode_cache(video, root, times, progress):
-    """Cache one clip's actual display frames; court samples cause no re-decode.
+    """Retain bounded lossless pixels, reconstructing at most sixteen LRU frames.
 
-    This adapter is scoped to the single admitted research process. Application
-    functions and saved outputs retain the original recipe and are restored even
-    after an exception. No RGB compression/reconstruction changes decoded pixels.
+    Only source decoding counts as a native frame visit. Court samples and the
+    tracking iterator read the exact same cached native pixels and source clock.
+    No image or frame cache is written to disk. Scoped adapters always restore.
     """
     import psutil
 
     from . import court_detection, tracking
     from .video import iter_frames, resolve_source
 
-    # A single native clip is cached, never the whole corpus. Reject before
-    # dispatch when conservative RGB+decoder headroom cannot fit available RAM.
-    required = video["frame_count"] * video["width"] * video["height"] * 4
-    if required + 512 * 1024 * 1024 > psutil.virtual_memory().available:
+    initial = psutil.virtual_memory().available
+    if initial < CACHE_MIN_FREE_BYTES + CACHE_INITIAL_EXTRA_BYTES:
         raise ValueError("Insufficient RAM for one bounded native clip cache")
-    cached = []
-    for row in iter_frames(video, root, times, 0, video["frame_count"]):
-        cached.append(row)
-        progress(len(cached))
+    limit = min(initial // 2, CACHE_MAX_BYTES)
+    cached, live = [], OrderedDict()
+    total = 0
+    old_tracking, old_court = tracking.iter_frames, court_detection.iter_frames
+
+    def memory_check():
+        if psutil.virtual_memory().available < CACHE_MIN_FREE_BYTES:
+            raise ValueError("Insufficient free RAM for bounded native clip cache")
 
     def frames(requested, requested_root, requested_times, start, end):
         if (
@@ -469,16 +563,36 @@ def decode_cache(video, root, times, progress):
             or not 0 <= start < end <= len(cached)
         ):
             raise ValueError("Cached decoder requested another source or range")
-        yield from cached[start:end]
+        for index in range(start, end):
+            memory_check()
+            ordinal, timestamp, record = cached[index]
+            if index not in live:
+                if len(live) >= CACHE_LRU_FRAMES:
+                    live.popitem(last=False)
+                live[index] = unpack_frame(record)
+                memory_check()
+            live.move_to_end(index)
+            yield ordinal, timestamp, live[index]
 
-    old_tracking, old_court = tracking.iter_frames, court_detection.iter_frames
     try:
+        for ordinal, timestamp, frame in iter_frames(
+            video, root, times, 0, video["frame_count"]
+        ):
+            memory_check()
+            record = pack_frame(frame)
+            total += len(record["compressed_pixels"])
+            if total > limit:
+                raise ValueError("Bounded compressed native clip cache exceeds RAM cap")
+            memory_check()
+            cached.append((ordinal, timestamp, record))
+            progress(len(cached))
         tracking.iter_frames = court_detection.iter_frames = frames
         yield len(cached)
         resolve_source(video, root)
     finally:
         tracking.iter_frames, court_detection.iter_frames = old_tracking, old_court
         cached.clear()
+        live.clear()
 
 
 @contextmanager
