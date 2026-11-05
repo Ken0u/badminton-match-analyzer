@@ -639,6 +639,7 @@ def test_cached_reader_refuses_another_source_or_unbounded_range(
 
 @pytest.mark.parametrize("gap", [False, True])
 def test_single_pass_clock_and_camera_scan_match_existing_native_tools(tmp_path, gap):
+    pytest.importorskip("torchvision")
     import av
     from badminton import segments
 
@@ -840,6 +841,7 @@ def test_cumulative_output_budget_counts_freeze_run_and_exclusive_claim_once(
 def test_clock_scanner_refuses_invalid_native_identity_even_after_decoder_close(
     tmp_path, monkeypatch, mutation
 ):
+    pytest.importorskip("torchvision")
     from badminton import av_runtime, orientation, segments
 
     media = tmp_path / "generated.mp4"
@@ -925,7 +927,7 @@ def test_new_output_cannot_overwrite_or_enclose_original_evidence(tmp_path, prot
 
 @pytest.fixture
 def run_case(tmp_path, monkeypatch):
-    import torch
+    torch = pytest.importorskip("torch")
     from badminton.storage import Store
 
     workspace = tmp_path / "workspace"
@@ -1225,6 +1227,7 @@ def test_completed_metadata_verification_never_decodes_or_refits(
 def test_new_clip_has_two_real_generated_decodes_and_preserves_missing_inputs(
     tmp_path, monkeypatch, mutation
 ):
+    pytest.importorskip("torchvision")
     import av
     from badminton import av_runtime, court_detection, tracking
     from badminton import video as video_tools
@@ -1438,7 +1441,7 @@ def test_integrity_freeze_publishes_fresh_claim_without_any_science(
 def test_required_cuda_refuses_fallback_and_restores_runtime_probe(
     monkeypatch, available, raises
 ):
-    import torch
+    torch = pytest.importorskip("torch")
 
     def probe():
         return available

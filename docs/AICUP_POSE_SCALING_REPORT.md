@@ -7,9 +7,11 @@ whether broader existing training supervision improves the static pose
 classifier from the [completed learning comparison](AICUP_POSE_LEARNING_REPORT.md).
 Its frozen specification is
 `6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67`.
-This is preparation for one private development experiment. No original
-data-scaling operation, new native inference or new fit has run at this
-checkpoint; original scientific results and delivery remain pending.
+The private development operation started and failed during the fifth new
+clip's pose pass after a free-RAM guard fired. Four new clips completed;
+no classifier fit or validation comparison ran. The operation and corrective
+invocation are consumed; partial evidence is preserved and must not be restarted.
+Scientific completion and improved accuracy remain unestablished.
 It inherits tested preparation from superseded, unexecuted
 [#394](https://github.com/Ken0u/badminton-match-analyzer/issues/394), whose
 original deadline and evidence remain preserved. #397 explicitly provided a
@@ -276,8 +278,51 @@ Generated controls cover the actual isolated API entry, original shared-Store
 completion and read-only verification, stale/mismatched grants, changed or
 contradictory proof, source/import mutations, process identity loss, existing
 output/Store work, original clocks/headroom, exact byte accounting and exclusive
-intent/dispatch. These are software safeguards. No new source processing,
-features, fit, validation comparison or accuracy improvement is claimed yet.
-After full stable-source/package checks, prospective publication and adequate
-headroom, the single admitted operation remains next. Accepted complete-rally
+intent/dispatch. These are software safeguards. Accepted complete-rally
 references remain 0/2; experimental weights are not installed in the app.
+
+## Terminal memory failure and CI dependency diagnosis
+
+Wrapper source `eceb0600bd0e23d70038a19b2f738461367f3862` passed 194 focused
+controls and 6,373 full tests with four optional skips, required tooling and
+clean package/installed-HTTP checks. Its
+[exact prospective intent](https://github.com/Ken0u/badminton-match-analyzer/issues/398#issuecomment-6653173324)
+was published before corrective dispatch. The original API reached real shared
+Store admission and completed four new clips, covering 2,200 frames, 4,400 decode
+visits and their retained native outputs/features. The fifth clip's 1,051 frames
+completed both source decodes, then its tracking iterator raised
+`Insufficient free RAM for bounded native clip cache` when available RAM fell
+below the original 512 MiB floor. The source cache had finished loading; this
+was a runtime memory guard during pose iteration, not a failure before decoding.
+
+Total source decode visits are therefore 6,502. Exactly 2,200 model observations
+belong to completed receipts; the failed clip's exact partial observation count
+was not durably recorded and must remain unknown, bounded by 1,051 additional
+observations (at most 3,251 total). The failure receipt's 4,400/2,200 counters
+cover completed clips only and must not be presented as whole-attempt totals.
+The failed clip has source/clock/camera/perception-start evidence but no final
+player result or feature receipt. All five clips and every original reference
+remain in the cohort; no unavailable row is silently dropped.
+
+The worker exited 1, the shared Store job is durably failed, the exact original
+process lifetimes are absent, and the wrapper terminal receipt reports failure.
+No fit-start or completion receipt exists. Model fitting, validation metrics,
+original full-result verification and separate arithmetic remain unexecuted.
+This is an incomplete scientific attempt, not a negative classifier result.
+Both the CLI invocation and corrective invocation stay consumed; original
+source, freeze, permanent claim, partial output and deadline stay intact.
+There is no retry, threshold reduction, CPU fallback or process termination.
+Memory observations are insufficient to attribute the transient pressure to
+one application. Other applications, environments and research artifacts remain
+preserved. Further execution requires a separately specified continuation;
+this failed operation cannot be replayed under a new output or lease.
+
+Draft PR #399's lean Python/macOS/Windows CI profiles also exposed 26 test
+failures/errors from unconditional optional `torch`/`torchvision` imports.
+The same failures reproduced locally with those imports unavailable. A test-only
+repair uses per-test/fixture `importorskip` for genuine learning-runtime cases,
+leaving other controls active: 167 pass / 27 optional cases skip without those
+libraries; all 194 pass with the learning runtime. This changes no workflow,
+dependency, production function or scientific source. Fresh exact-head CI and
+controller delivery remain required; the PR stays draft while scientific
+failure disposition and follow-up planning remain open.
