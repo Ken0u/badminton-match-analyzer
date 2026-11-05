@@ -7827,6 +7827,15 @@
       "task_id": "397",
       "verb": "plan"
     },
+    "pose397-preparation-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793861728,
+      "epoch": 1,
+      "fingerprint": "0834cf22b1a82e6864c580ccabcebdfa19d0c6a8e902a60432d524f640e7c9ef",
+      "status": "running",
+      "task_id": "397",
+      "verb": "checkpoint"
+    },
     "pose397-register-v1": {
       "actor": "Ken0u",
       "at": 1793860838,
@@ -33802,12 +33811,23 @@
       "status": "ready"
     },
     "397": {
+      "checkpoint": {
+        "branch": "codex/issue-397-complete-one-prospectively-bounded-broad",
+        "evidence": [
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/397#issuecomment-6651800709"
+        ],
+        "head_sha": "8bc2b0270e6350281421d7590855627cfdfc1178",
+        "new_decodes": 0,
+        "real_fits": 0,
+        "summary": "Fresh costed bounds committed;131focused tests/tooling/package pass;stable full suite verified live;science counters remain zero."
+      },
+      "checkpoint_at": 1793861728,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
         "branch": "codex/issue-397-complete-one-prospectively-bounded-broad",
         "epoch": 1,
-        "expires_at": 1793871934,
+        "expires_at": 1793872528,
         "granted_at": 1793861134,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
