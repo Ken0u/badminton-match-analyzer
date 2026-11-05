@@ -7861,6 +7861,14 @@
       "status": "ok",
       "verb": "register"
     },
+    "pose398-explicit-api-recovery-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1793863347,
+      "fingerprint": "ef89dcce1fbb76b76823c9b1ad210a33918dfbe3460a273ab19dac7f184a6d4e",
+      "status": "ready",
+      "task_id": "398",
+      "verb": "plan"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -12783,6 +12791,14 @@
       "fingerprint": "9164f8982267cdc480c571f6b2d90e4ab54420ecb2fe819ea2b5c48a94398731",
       "status": "ready",
       "task_id": "397",
+      "verb": "plan"
+    },
+    "spec-398-f84ea74d765c379430ad2833666105dd749dbc63f0fb772af38e271d16c115d4": {
+      "actor": "Ken0u",
+      "at": 1793863347,
+      "fingerprint": "fd10eb9a0af5de1dbc14648c7265ab8f54a887002ad9d294a95c36eab452dd2f",
+      "status": "ready",
+      "task_id": "398",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -33941,6 +33957,120 @@
       },
       "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b",
       "status": "running"
+    },
+    "398": {
+      "epoch": 0,
+      "planned_at": 1793863347,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "After the corrected #397 source passes fresh focused/full/tooling/package verification, preserve its tested branch and all failed invocation evidence. Release/supersede its code-only task ownership through documented authenticated terminal proof; do not claim successful science. Obtain a fresh matching routine MSI/CUDA grant and isolated implementation worktree. Revalidate original processes/Store/main/related issues/grants and all seals. Preserve original root/environment/data/weights/annotations/PROGRESS edit and consumed385/387/391operations. This task explicitly authorizes one corrective API-entry invocation after the known pre-dispatch CLI failure, not a second scientific operation or any repeated decoding/fit.",
+          "The only eligible predecessor is397 at scientific consumer8bc2b0270e6350281421d7590855627cfdfc1178, prospective5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6 and permanent claim7831a0d3335dd9924e12e1daf9294c4fe0923d86d27088d4ae5c82689dde6357. Verify its exact failed invocation/process/terminal/stderr seals, original PID/creation/cwd/command and terminal absence, TypeError before entering run, absent run output/dispatch/process/Store job and zero scientific counters. An unknown, changed, live, partially dispatched or native/fit-started predecessor is ineligible. Preserve the original consumed CLI-invocation record forever; do not reinterpret it as a successful operation.",
+          "Implement a public fixed recovery protocol and bounded dispatch/verify wrapper, specific to this predecessor. Use a clean separately retained read-only Git snapshot of the original tested8bc2b02 source. Verify every original prospective code seal, original scientific protocol/runtime and existing input/control inventories against that snapshot. Keep the corrected public CLI fix in the implementation branch for eventual delivery, but do not substitute its changed bytes into the old scientific freeze. The scientific child must load only the original snapshot backend and invoke its existing run(prospective_path,prospective_sha256,output) API directly; no numerical/scientific function, threshold or scientific source is changed.",
+          "Keep original prospective.json, original cohort claim, original source files and original reserved output path byte-identical/unchanged. Never delete, rewrite, reseal or create a competing cohort claim, output directory or scientific freeze. Before dispatch, commit/test the new wrapper and prospectively publish its exact source/protocol/runtime/proof hashes, the original scientific commitment and one append-only exclusive dispatch-intent companion. The companion goes under the existing private freeze directory so original scientific budget accounting includes all new proof/log/receipt bytes. A second recovery invocation/intent is forbidden even if this corrective launch fails before native work. The existing original run output mkdir(exist_ok=False), original shared admission and all original source/code/clock guards remain authoritative; no direct Store/annotation writes.",
+          "The scientific deadline remains precisely1793905768.8576179 from the first commitment1793862568.8576179; original task397grant1793861134 and original limits57600/43200 remain preserved. The fresh task grants no extra scientific time. Check forecast headroom before admission; do not launch if inadequate. The task window is at most16hours from its fresh grant, but cannot extend the old scientific deadline. Lease renewal, alternate checkout, output or new wrapper cannot reset any bound. Preserve the metadata-only 24273frames/4860.661seconds and28274.657seconds forecast plus uncosted scan/compression/features/fit/verification, with no new real-source benchmark.",
+          "Use only the existing pinned AI CUP archive/index/capture groups and original clock ledger. Broaden training to all424original labelled training-fold clips/154684nativeframes/4684published references, while retaining precisely the original23validation clips/10786frames/353references from385/391. Reuse original22training clips/13487frames/431references and all23validation native/feature artifacts without decoding or rerunning them. The only new perception scope is402previously unprocessed training clips/141197frames/4253references,825568691compressed media bytes. Final cohort is447clips/165470frames/5037references. Exclude all held-out source CSV/media/features/predictions and unlabelled clips before member opening; no changed source folds or validation membership.",
+          "All actual original scientific preparation/native extraction/features/the one CPUfit execute exclusively inside the original run API real shared-Store run_local_job. Pin BADMINTON_ROOT/DATA_DIR/WEIGHTS_DIR to the real original host before imports, use the original Python executable/runtime and frozen backend, strip credentials from the scientific child environment, initialize torchvision before threaded PyAV and preserve native FFmpeg restoration. Retain the bounded lossless cache, exact RGB/BGR/native PTS/color/orientation/camera/calibration semantics and all original decode/model/output caps. No CPU fallback, extra model pass, source replacement, existing app mutation, process signals or repeat after partial failure. Observe exact PID/creation/cwd/command, Store and durable artifacts; timeout is not exit.",
+          "Apply the unchanged387weak correspondence rules independently at both[H-1,H]endpoints using ankle/box-bottom representations, minimum confidence0.25, maximum box-height-normalized distance0.5, minimum margin0.25, same distinct observed hitter/defender tracks and valid camera/calibration. Do not tune gates to increase coverage. Actual actors/scenes stay unknown. Reuse391static108-value(center,center,zero-velocity) features for original784rows; produce identical-recipe inputs only for new4253training rows. Do not introduce new temporal features, source coordinates as classifier features, target leakage, identity repair or scene labels.",
+          "Run exactly one new private CPUfit using all weakly paired expanded training rows, unchanged108->64->32/9386parameter static network, seed20261104,2CPUthreads,300epochs,batch64,AdamWlr0.001,weight_decay0.01,dropout0.1,family/side loss1/0.5,train-only mean/std-floor0.05/clip10 and inverse-sqrt supported-class weights. Use all8family groups and2sides with original unknown/unsupported semantics. Select every5epochs by original mean supported8-group macroF1/side balanced recall, then strict joint, then earlier epoch. No sweep, augmentation, additional fit, seed/threshold search or post-result protocol change. Compare to the sealed391static control on the same353rows using its saved original features/stats/weights/predictions; do not refit or reselect the control. A negative/mixed result remains reported without promotion.",
+          "Read-only verification reproduces all new inputs and canonical rows, old cache/control integrity, native source/PTS/camera/calibration inventories, new feature masks/normalization/class weights, all60selection checkpoint predictions/metrics, final model and fixed comparison without refitting. A separate arithmetic implementation checks original/control and new candidate predictions plus full353-row metrics, source/feature counts and representative raw-pose feature calculations without importing the feature producer. Report all source/fold/capture/family/side/family-side support, unavailable counts, per-class confusion/precision/recall/F1, strict joint and separately named conditional denominators. Increased training quantity does not establish verified labels, independent test accuracy, doubles identity or full-match annotation; accepted complete references remain0/2.",
+          "Keep complete scientific outputs plus all added dispatch proof/log/receipts within the original4GiB cumulative cap, accounted inside the original freeze/run paths. Retain the failed CLI evidence as an explicitly charged historical invocation and separately report actual scientific dispatches/decoded visits/model observations/fits. Original decoding remains at most282394new visits,141197model observations,402new training clips and one fit; no additional original pilot processing or image transfer.",
+          "Meaningful regressions cover exact public CLI run/verify entry, missing/changed/forged predecessor and source/runtime/claim/terminal evidence, process liveness/PID reuse, existing original output/dispatch/Store collisions, immutable original deadline and inadequate headroom, exclusive append-only intent, credential-free child rooting and frozen module provenance, original shared admission and no repeated partial launch. Generated integration must prove the wrapper reaches the original run API with the correct argument names and unchanged scientific inputs, and read-only verification never decodes/refits. Include the three #397 pre-dispatch regression controls. Run full required Python/lint/format/dependency/repository and clean package/installedHTTP checks before original dispatch, then independent original verification and producer-free arithmetic after durable completion. Public code/aggregates only via controller exact PR/main and full delivery; no accuracy/promotion claim from software checks."
+        ],
+        "artifacts": {
+          "actor-correspondence-completion": "b89e2d5c7e2ca711ccdc36f83dfb9eae673ac8317bf3fe9f06ee60256a48d7fb",
+          "actor-correspondence-diagnostics": "6d01625e726d113ba17a82df59ae976dd628727386ebe2bf094a5fc5bb745856",
+          "actor-prospective-freeze": "ed36c13f0c87fc867ccf0736311c4d8a39c87361a9a2bfd3e0c515d43fd5e030",
+          "aicup-capture-groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+          "aicup-clip-index": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+          "aicup-original-part1": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+          "aicup-pose-native-completion": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+          "aicup-pose-preparation": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+          "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+          "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+          "original-source-clock-ledger": "de5ca6509087dfd79048e179fc500536660127b8c7927aad995ab8faf739585b",
+          "pose-scaling-structural-cost": "0f33876be34aad215b6b14373fb0e298f668552142bb42c2eb8811759cf2ba3e",
+          "pose391-original-completion": "42500f898ad6a1fd4548d42dd233f25826be9f7ea8cc6248fb10ab735dc84dd3",
+          "pose391-original-features": "12bc9769a57077ed33e50d5fccec69386760487ce8fce0a9f5e4269a5da7e1be",
+          "pose391-static-model": "ae66352af2877a58a5d665b69a5077b0319f613e27087ff285c10b0cfc9605ae",
+          "pose391-static-statistics": "ba02db68741ad8e2bbf548f1395aa1fd6c6bd6e5654c272122b4ce003c51d367",
+          "pose394-cache-protocol": "7e9a44c4c1bba4b64f61712f077e185119d7670a88a8f769c78f4e1a403eae9c",
+          "pose394-full-v1": "08c06339944574b1a0588effeab0dd4221904abaf0a19e64d337ce2da2bb9003",
+          "pose394-generated-controls": "477e7beffcbd67df21bd7d9c0f9f1ac52e344d5b74980c8d6e175439deae510d",
+          "pose394-prepared-consumer": "45004886f086353f7cb1a69e039e7b79eea9ecea50f192d93c5db3fcdef75766",
+          "pose394-runtime-cost": "60e8a042073787337ce740d2b689e49beca02eb5ec48d01fdce013c36221b1a4",
+          "pose397-corrected-consumer": "78f9495526c0af1e4d68cb59edec7e4aa4477deec1ec0805eaa1912488b0311d",
+          "pose397-corrected-controls": "fae72950ac437700d4ccfc52a1541899324620c4de5a837863fa8f3932e2c8b0",
+          "pose397-failed-invocation": "66b38f21e1ce55e29bcc1d7556acfeb6c21dc88ea33127eafb76b51df9a64499",
+          "pose397-failed-process": "1b033277c273b5e03ba9528a3e73c18d4209cdf950db5fea80b8ee78620134fb",
+          "pose397-failed-stderr": "21de0ba796addb784217b12dc1f9a1f9948bd67e5eb92b9e6af823e0c0e89bb9",
+          "pose397-failed-terminal": "410703c726214ee6010fd4afc87d7cea36c6ba09ae7a985fc0481db451e65a42",
+          "pose397-original-claim": "7831a0d3335dd9924e12e1daf9294c4fe0923d86d27088d4ae5c82689dde6357",
+          "pose397-original-full-checks": "28be66883818b9ef8bb732965bb7d77e3a05d8d8efd8b395b8fc7e7a3aa6027b",
+          "pose397-original-prospective": "5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6",
+          "pose397-predispatch-proof": "e60dc956a055731b03723b72b23f1555cfdd2692eb2b54acfbbcb54ac1c91873"
+        },
+        "capabilities": [
+          "cuda",
+          "windows",
+          "cpu"
+        ],
+        "dependencies": [
+          "391",
+          "393"
+        ],
+        "exclusions": [
+          "No new source/model acquisition, external image/label transfer, assessor sessions, held-out/test source/feature/label/prediction access, changed source grouping or original validation membership, scientific truth/eligibility promotion, new shuttle/classifier-native inference, neural architecture/hyperparameter/threshold changes, more than one new fit, native rerun of an original pilot clip, original source/cache/annotation/model edits, app/UI/API/default changes, dependency/workflow/security/credential/deployment/policy changes, process signals, paid service, manual merge, CI retry, raw coordination writes or deprecated PROGRESS updates. Data scaling is familiar weak-reference development, not independent accuracy or permission to install weights.",
+          "No replacement scientific freeze/source/claim/output, original scientific deadline extension, general recovery-policy change, repeated corrective invocation, raw coordination/Store editing, monkeypatch of scientific code, alternate numerical path or acceptance of any predecessor that entered run or produced science. This is the first actual API dispatch of one untouched frozen operation; both old failed CLI invocation and new corrective invocation remain visible."
+        ],
+        "limits": {
+          "fixed_scientific_deadline": 1793905768.8576179,
+          "image_payload_bytes": 0,
+          "max_corrective_invocations": 1,
+          "max_new_decoded_frame_visits": 282394,
+          "max_new_media_bytes": 825568691,
+          "max_new_native_clips": 402,
+          "max_new_native_frames": 141197,
+          "max_original_operations": 1,
+          "max_output_bytes": 4294967296,
+          "max_real_fits": 1,
+          "max_reference_rows": 5037,
+          "max_repair_rounds": 2,
+          "max_runtime_hours": 16,
+          "max_scientific_operation_hours": 12,
+          "max_total_cli_and_corrective_invocations": 2,
+          "new_cohort_claims": 0,
+          "new_scientific_freezes": 0,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Perform the first actual dispatch of the unchanged frozen broader pose comparison through a separately tested, audited API-entry wrapper after preserving its zero-science CLI failure; retain the original scientific claim, source, output and deadline.",
+        "paths": [
+          "backend/badminton/aicup_pose_scaling.py",
+          "scripts/scale_aicup_pose_learning.py",
+          "tests/test_aicup_pose_scaling.py",
+          "data/manifests/aicup_pose_scaling_protocol_v1.json",
+          "docs/AICUP_POSE_SCALING_REPORT.md",
+          "MANIFEST.in",
+          "backend/badminton/aicup_pose_dispatch_recovery.py",
+          "scripts/recover_aicup_pose_dispatch.py",
+          "tests/test_aicup_pose_dispatch_recovery.py",
+          "data/manifests/aicup_pose_dispatch_recovery_protocol_v1.json"
+        ],
+        "priority": 80,
+        "resources": [
+          "gpu:windows-primary",
+          "cpu:windows-training"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Exactly one first scientific API dispatch of the unchanged397freeze; a single corrective invocation in addition to the preserved failed CLI launch. Same original output/claim/deadline and all353validation rows; no replayed native input/control or fit.",
+          "Original8bc2b02scientific code and all original seals remain unchanged; a separately frozen/tested wrapper binds exact pre-dispatch terminal proof and correct API parameters. All original scientific guards, shared Store and immutable deadline remain in force. Fail closed on any partial science or insufficient headroom.",
+          "Required exact local/controller PR/main/public delivery checks plus original read-only verification and separate arithmetic. Complete full-match correctness is unproven, accepted complete rally references0/2, no model promotion."
+        ]
+      },
+      "spec_hash": "6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
