@@ -7799,6 +7799,26 @@
       "status": "idle",
       "verb": "next"
     },
+    "pose397-costed-next-v2": {
+      "actor": "Ken0u",
+      "at": 1793861134,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-397-complete-one-prospectively-bounded-broad",
+        "epoch": 1,
+        "expires_at": 1793871934,
+        "granted_at": 1793861134,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b"
+      },
+      "epoch": 1,
+      "fingerprint": "2df63d64bc35faf5914637f1f4279205406aad797b2823a38948b894186d9a6f",
+      "status": "granted",
+      "task_id": "397",
+      "verb": "next"
+    },
     "pose397-costed-plan-v1": {
       "actor": "Ken0u",
       "at": 1793859622,
@@ -33782,7 +33802,18 @@
       "status": "ready"
     },
     "397": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-397-complete-one-prospectively-bounded-broad",
+        "epoch": 1,
+        "expires_at": 1793871934,
+        "granted_at": 1793861134,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b"
+      },
+      "epoch": 1,
       "planned_at": 1793859929,
       "planned_by": "Ken0u",
       "spec": {
@@ -33871,7 +33902,7 @@
         ]
       },
       "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
