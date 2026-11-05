@@ -7775,6 +7775,15 @@
       "task_id": "394",
       "verb": "recover"
     },
+    "pose394-terminal-transfer-release-v2": {
+      "actor": "Ken0u",
+      "at": 1793860249,
+      "epoch": 2,
+      "fingerprint": "5d84e22cb182f3519534cbbde06c5ea34852314049a92d16d8937132418404e3",
+      "status": "ready",
+      "task_id": "394",
+      "verb": "release"
+    },
     "pose396-dependency-transfer-v1": {
       "actor": "Ken0u",
       "at": 1793859929,
@@ -33526,17 +33535,6 @@
         "summary": "Recovered epoch 2 after verified terminal original-host preservation. Bounded lossless native array/plane cache and sixteen-frame LRU committed; all 129 scaling controls, tooling and clean package/HTTP pass. Initial generated FFV1 format gap and copied arithmetic fixture omission corrected with failures preserved. Full v2 suite live on stable source; earlier full v1 passed6275/four skips. Metadata-only original native throughput forecasts7.85hours before preparation for all402new clips; interrupted original window lacks headroom. Scientific freeze/claim/operation/new decoding/features/fit all remain zero. No operation will launch under the interrupted bound; explicit costed follow-up planning is required, retaining original grant/deadline and evidence."
       },
       "checkpoint_at": 1793859319,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
-        "branch": "codex/issue-394-test-whether-broader-existing-weak-train-e2",
-        "epoch": 2,
-        "expires_at": 1793870119,
-        "granted_at": 1793858738,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e"
-      },
       "epoch": 2,
       "history": [
         {
@@ -33582,6 +33580,55 @@
             "terminal": true
           },
           "verb": "recover"
+        },
+        {
+          "at": 1793860249,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+            "branch": "codex/issue-394-test-whether-broader-existing-weak-train-e2",
+            "epoch": 2,
+            "expires_at": 1793870119,
+            "granted_at": 1793858738,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "branch": "codex/issue-394-test-whether-broader-existing-weak-train-e2",
+              "exclusive_claim_absent": true,
+              "followup_spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b",
+              "freeze_absent": true,
+              "full_verification_sha256": "f674e234431d8ae3c2cc4f5c29baff3ff1510a6149d7b532e56134f83c77042d",
+              "head_sha": "78b5dfea5ab8e5efdb45a942a195793301a69fd1",
+              "original_deadline": 1793874149,
+              "original_granted_at": 1793830949,
+              "package_verification_sha256": "34f47ba8102a639fdd2d4fc9b1461fa827e61135771637e27df63178a569a7bb",
+              "run_absent": true,
+              "runtime_cost_sha256": "60e8a042073787337ce740d2b689e49beca02eb5ec48d01fdce013c36221b1a4",
+              "summary": "Release and explicitly supersede unexecuted #394 after completed preparation checks. Preserve all source/evidence and its original interrupted deadline; do not mark science complete. #397 requires a fresh matching committed grant before adapting runtime constants or executing any science.",
+              "tooling_verification_sha256": "d12f78a24b6d32297f1a613568703474f7d16c829368756106c29df917303abb",
+              "transfer_to": 397
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe -m pytest -q --basetemp C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose394-full-v2\\temp --junitxml=C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose394-full-v2\\results.xml",
+              "creation_time": 1793859202.3312979,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose394-e1",
+              "exited": true,
+              "pid": 2384
+            },
+            "store": {
+              "active_jobs": 0,
+              "new_decodes": 0,
+              "real_fits": 0,
+              "scientific_operations_started": 0,
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
         }
       ],
       "planned_at": 1793826390,
@@ -33666,7 +33713,7 @@
         ]
       },
       "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e",
-      "status": "running"
+      "status": "ready"
     },
     "396": {
       "epoch": 0,
