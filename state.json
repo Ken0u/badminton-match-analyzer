@@ -7737,6 +7737,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "pose394-terminal-recovery-v1": {
+      "actor": "Ken0u",
+      "at": 1793858449,
+      "epoch": 1,
+      "fingerprint": "f3e5a71fccfde23aa733f78e4d22de43876fe61f353aaa35950376bdf80f19a0",
+      "status": "ready",
+      "task_id": "394",
+      "verb": "recover"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -33432,20 +33441,56 @@
         "summary": "Granted #394 runner under implementation. Existing 212 generated baseline tests pass. Initial integrated new checks: 84 passed and two synthetic fixture path failures are being corrected for the added immutable clock-ledger guard. Runner combines first-pass native clock/cut scan and second-pass exact frame cache, reuses sealed original features/control, preserves one claimed fit and partial failures, verifies old source inventories at original Git revisions, and refuses CUDA fallback. Historical source-only check passes all three retained revisions. Scientific operation, source preparation, inference, new features and real fit remain zero; no prospective execution claim exists."
       },
       "checkpoint_at": 1793832080,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
-        "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
-        "epoch": 1,
-        "expires_at": 1793842880,
-        "granted_at": 1793830949,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1793858449,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+            "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
+            "epoch": 1,
+            "expires_at": 1793842880,
+            "granted_at": 1793830949,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
+              "exclusive_claim_absent": true,
+              "freeze_absent": true,
+              "full_verification_sha256": "08c06339944574b1a0588effeab0dd4221904abaf0a19e64d337ce2da2bb9003",
+              "head_sha": "43220fb7ae53edbdf251c7e718883cc62257abd0",
+              "original_granted_at": 1793830949,
+              "original_latest_scientific_deadline": 1793874149,
+              "run_absent": true,
+              "summary": "Interrupted before science. Preserve original epoch-1 twelve-hour scientific cap; recovery cannot reset the consumed elapsed time. Raw cache memory issue identified; compressed-cache implementation and fresh required checks remain before any original operation."
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe -m pytest -q --basetemp C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose394-full-v1\\temp --junitxml=C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose394-full-v1\\results.xml",
+              "creation_time": 1793832302.400874,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose394-e1",
+              "exited": true,
+              "pid": 15632
+            },
+            "store": {
+              "active_jobs": 0,
+              "new_decodes": 0,
+              "real_fits": 0,
+              "scientific_operations_started": 0,
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "recover"
+        }
+      ],
       "planned_at": 1793826390,
       "planned_by": "Ken0u",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "After391and393 complete exact main verification and full public delivery, revalidate current main/issues/PRs/grants, actual original-host process/Store state, original inputs and all scientific seals. Obtain a fresh routine Windows/CUDA grant and isolated worktree. Preserve completed391negative motion comparison and original385/387/391consumed operations, expired389/draft390 evidence and original root/environment/data/weights/annotations/PROGRESS edit. No inference or fit follows from Ready or this plan.",
@@ -33525,7 +33570,7 @@
         ]
       },
       "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e",
-      "status": "running"
+      "status": "ready"
     },
     "396": {
       "epoch": 0,
