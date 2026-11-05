@@ -34102,6 +34102,7 @@
       "epoch": 1,
       "planned_at": 1793863347,
       "planned_by": "Ken0u",
+      "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
           "After the corrected #397 source passes fresh focused/full/tooling/package verification, preserve its tested branch and all failed invocation evidence. Release/supersede its code-only task ownership through documented authenticated terminal proof; do not claim successful science. Obtain a fresh matching routine MSI/CUDA grant and isolated implementation worktree. Revalidate original processes/Store/main/related issues/grants and all seals. Preserve original root/environment/data/weights/annotations/PROGRESS edit and consumed385/387/391operations. This task explicitly authorizes one corrective API-entry invocation after the known pre-dispatch CLI failure, not a second scientific operation or any repeated decoding/fit.",
@@ -34210,7 +34211,7 @@
         ]
       },
       "spec_hash": "6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67",
-      "status": "running"
+      "status": "recovery_required"
     },
     "62": {
       "checkpoint": {
