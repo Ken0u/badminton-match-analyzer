@@ -7792,6 +7792,13 @@
       "task_id": "396",
       "verb": "plan"
     },
+    "pose397-costed-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793860528,
+      "fingerprint": "42a3bca52cfc367668df9b17bd244b2598cfa3e48f4acd998c5ab831fe1f3fd1",
+      "status": "idle",
+      "verb": "next"
+    },
     "pose397-costed-plan-v1": {
       "actor": "Ken0u",
       "at": 1793859622,
@@ -33633,7 +33640,7 @@
       ],
       "planned_at": 1793826390,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "After391and393 complete exact main verification and full public delivery, revalidate current main/issues/PRs/grants, actual original-host process/Store state, original inputs and all scientific seals. Obtain a fresh routine Windows/CUDA grant and isolated worktree. Preserve completed391negative motion comparison and original385/387/391consumed operations, expired389/draft390 evidence and original root/environment/data/weights/annotations/PROGRESS edit. No inference or fit follows from Ready or this plan.",
@@ -33713,7 +33720,7 @@
         ]
       },
       "spec_hash": "2c839533cfaf3c7d603e84d044fd4d12c2ee0d753c30175adaa974c606c9d17e",
-      "status": "ready"
+      "status": "blocked"
     },
     "396": {
       "epoch": 0,
