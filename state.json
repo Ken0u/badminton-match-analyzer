@@ -7807,6 +7807,13 @@
       "task_id": "397",
       "verb": "plan"
     },
+    "pose397-register-v1": {
+      "actor": "Ken0u",
+      "at": 1793860838,
+      "fingerprint": "10018857d8c2aca8e71197febd5181fc1e3c6768137096b0da9ece441023c6c5",
+      "status": "ok",
+      "verb": "register"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -37121,27 +37128,17 @@
         "aicup-pose-preparation": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
         "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
         "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
-        "operational-budget-profile": "69ea102daea361660535a55c4b208b9265ea342596942e939ebd97d2734e202f",
         "original-source-clock-ledger": "de5ca6509087dfd79048e179fc500536660127b8c7927aad995ab8faf739585b",
         "pose-scaling-structural-cost": "0f33876be34aad215b6b14373fb0e298f668552142bb42c2eb8811759cf2ba3e",
         "pose391-original-completion": "42500f898ad6a1fd4548d42dd233f25826be9f7ea8cc6248fb10ab735dc84dd3",
         "pose391-original-features": "12bc9769a57077ed33e50d5fccec69386760487ce8fce0a9f5e4269a5da7e1be",
         "pose391-static-model": "ae66352af2877a58a5d665b69a5077b0319f613e27087ff285c10b0cfc9605ae",
         "pose391-static-statistics": "ba02db68741ad8e2bbf548f1395aa1fd6c6bd6e5654c272122b4ce003c51d367",
-        "r3-development-input-inventory": "ec02275493b278a7d482ddbf9acd820ff1bc46d2d4da2b599fd1eadc358aaed2",
-        "r3-development-manifest": "0bea5f55f6ba402ca7665bb0d2d4bb8eaa903d0593ebc76870cf8901035bd059",
-        "r3-fixed-training-source": "745de9212ef0ecf41d47b9ad96426c46741b330e462783baecdcc5c46c700932",
-        "recognition-baseline-source": "d362f3b72e2a8389afc13b2f3a3e71639bb5523b53a940be5a8372951113ec6f",
-        "recognition-overlap-generated-probe": "3cdb38bc9ac672807eb252c13b48ebff983fa21be01b160ac666cf09c33e3608",
-        "scene-aggregate": "c73642b84576b1750e2944009769a6c3948e3e509aa1fd8bef014841e40deb5c",
-        "scene-audit": "c4aca2acc0f90c9a0344e934a5bfa0c4e1a17d33d7e3d47c9abbd5c3560b80e2",
-        "scene-census-draft-protocol": "2d30661f92f5caa7db9f38fa62937517c53e93536dc93a5c8818c0e5faf04df2",
-        "scene-census-input-inventory": "afaab87985b54fc81457b80e5f09f0eed00a0527e3e170f4d6eda89888a0d267",
-        "scene-context": "17bbb33f3cd501af65b8982080fbf73756a3f22991f863bf1e5c2e2880a40c5f",
-        "scene-gallery": "89ac499a8ee143d66f66c6d622ad191fad043263acfef27f593dc3870e333a37",
-        "scene-plan": "87eb616cfb7fe9707c081c7bde9fffa04a15ce0d0cecf47256026ec4aea761d2",
-        "scene-review-v3-protocol": "2b9a8fdef2f81e713ef1b14c58a8999c1cf34e55175875b6f67fd02e99c13ac2",
-        "source-target-generated-probe": "0a2f7eda921be836a7e9c5c0c1d6ef909fe25799fe90255d31d522b480ab4503"
+        "pose394-cache-protocol": "7e9a44c4c1bba4b64f61712f077e185119d7670a88a8f769c78f4e1a403eae9c",
+        "pose394-full-v1": "08c06339944574b1a0588effeab0dd4221904abaf0a19e64d337ce2da2bb9003",
+        "pose394-generated-controls": "477e7beffcbd67df21bd7d9c0f9f1ac52e344d5b74980c8d6e175439deae510d",
+        "pose394-prepared-consumer": "45004886f086353f7cb1a69e039e7b79eea9ecea50f192d93c5db3fcdef75766",
+        "pose394-runtime-cost": "60e8a042073787337ce740d2b689e49beca02eb5ec48d01fdce013c36221b1a4"
       },
       "capabilities": [
         "amd64",
@@ -37150,7 +37147,7 @@
         "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1793830078,
+      "registered_at": 1793860838,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
