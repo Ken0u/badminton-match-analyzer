@@ -209,3 +209,32 @@ control, output/decode/model budgets and original unknowns. Its fresh grant
 supplies the explicit 16-hour task / 12-hour operation bounds above; the old
 deadline is never reset implicitly. No new real-source processing or fit has
 run at this preparation checkpoint.
+
+## Preserved pre-dispatch CLI failure in #397
+
+Preparation commit `8bc2b0270e6350281421d7590855627cfdfc1178` passed all
+131 focused scaling checks, the full 6,310-test suite with four optional skips,
+required tooling and clean package/installed-HTTP verification. Its exact source,
+inputs, runtime, original producer/control seals and immutable cohort claim were
+[published before launch](https://github.com/Ken0u/badminton-match-analyzer/issues/397#issuecomment-6652039292).
+The prospective SHA256 is
+`5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6`;
+its original deadline remains `1793905768.8576179`. These records remain unchanged.
+
+The original invocation exited with code 1 before entering `run`: argparse
+supplied `prospective`, while both `run` and `verify` accept `prospective_path`.
+The terminal process identity and failed stderr are preserved. There is no run
+output directory, dispatch receipt, shared Store job, source decode, model
+observation, new feature or fit. The launcher conservatively records its original
+invocation as consumed; no second invocation, new freeze, claim deletion or
+source substitution is permitted against that published commitment.
+
+The corrected parser retains the public `--prospective` option and explicitly
+binds its internal destination. Two real subprocess regressions reproduce the
+failure for both commands, and the generated shared-Store run/completion/verify
+test now exercises the public parser in both directions. All three controls
+failed on the original source before applying the fix. Fresh corrected-source
+verification remains pending at this checkpoint. The fix does not supply a
+scientific result or authorize replay of the old commitment. A separately frozen
+follow-up must explicitly preserve and account for this pre-dispatch failure
+before any changed consumer can perform the still-unexecuted comparison.

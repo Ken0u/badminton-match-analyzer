@@ -1479,7 +1479,9 @@ def main(argv=None):
         command.add_argument("--" + name, type=float, required=True)
     for name in ("run", "verify"):
         command = commands.add_parser(name)
-        command.add_argument("--prospective", type=Path, required=True)
+        command.add_argument(
+            "--prospective", dest="prospective_path", type=Path, required=True
+        )
         command.add_argument("--prospective-sha256", required=True)
         command.add_argument("--output", type=Path, required=True)
     args = vars(parser.parse_args(argv))

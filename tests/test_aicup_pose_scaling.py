@@ -143,6 +143,36 @@ def test_protocol_is_public_fixed_recipe_and_import_has_no_model_runtime():
     )
 
 
+@pytest.mark.parametrize("command", ["run", "verify"])
+def test_public_cli_reaches_prospective_validation_before_any_science(
+    tmp_path, command
+):
+    root = Path(scaling.__file__).resolve().parents[2]
+    prospective = tmp_path / "missing-prospective.json"
+    output = tmp_path / "must-remain-absent"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-B",
+            str(root / "scripts/scale_aicup_pose_learning.py"),
+            command,
+            "--prospective",
+            str(prospective),
+            "--prospective-sha256",
+            "0" * 64,
+            "--output",
+            str(output),
+        ],
+        env=dict(os.environ, PYTHONPATH=str(root / "backend")),
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0
+    assert "FileNotFoundError" in result.stderr
+    assert "TypeError" not in result.stderr
+    assert not prospective.exists() and not output.exists()
+
+
 @pytest.mark.parametrize(
     "grant,commit,deadline",
     [
@@ -1142,7 +1172,7 @@ def test_one_fit_failure_keeps_partial_artifacts_and_forbids_retry(
 
 
 def test_completed_metadata_verification_never_decodes_or_refits(
-    metadata_operation, monkeypatch
+    metadata_operation, monkeypatch, capsys
 ):
     plan, store, result, predictions = metadata_operation
     fits, verifications = [], []
@@ -1155,7 +1185,16 @@ def test_completed_metadata_verification_never_decodes_or_refits(
 
     monkeypatch.setattr(learning, "fit", fit)
     output = Path(plan["output"])
-    summary = scaling.run("generated-prospective", "generated-hash", output)
+    cli_args = [
+        "--prospective",
+        "generated-prospective",
+        "--prospective-sha256",
+        "generated-hash",
+        "--output",
+        str(output),
+    ]
+    scaling.main(["run", *cli_args])
+    summary = json.loads(capsys.readouterr().out)
     assert summary["real_fits"] == len(fits) == 1
     process = producer.read_json(output / "process.json")
     assert store.job(process["job_id"])["status"] == "completed"
@@ -1174,7 +1213,8 @@ def test_completed_metadata_verification_never_decodes_or_refits(
         return result, predictions
 
     monkeypatch.setattr(learning, "verify_arm", verify_arm)
-    verified = scaling.verify("generated-prospective", "generated-hash", output)
+    scaling.main(["verify", *cli_args])
+    verified = json.loads(capsys.readouterr().out)
     assert verified["verified_references"] == 2
     assert verified["real_fits"] == 1 and verified["new_native_frames"] == 0
     assert verified["independent_accuracy_established"] is False
