@@ -7693,6 +7693,15 @@
       "task_id": "391",
       "verb": "checkpoint"
     },
+    "pose394-memory-preflight-checkpoint-v2": {
+      "actor": "Ken0u",
+      "at": 1793859319,
+      "epoch": 2,
+      "fingerprint": "2d7c154cae2d072fcc43c3f1d6648afaa3145625c7a03261e733e6c0662534ff",
+      "status": "running",
+      "task_id": "394",
+      "verb": "checkpoint"
+    },
     "pose394-next-v1": {
       "actor": "Ken0u",
       "at": 1793830949,
@@ -33448,25 +33457,43 @@
     },
     "394": {
       "checkpoint": {
-        "branch": "codex/issue-394-test-whether-broader-existing-weak-train",
+        "branch": "codex/issue-394-test-whether-broader-existing-weak-train-e2",
         "evidence": [
-          ".cache/pose394-grant-v1.json",
-          ".cache/pose394-preflight-v1.json",
-          ".cache/pose394-historical-code-v1.json",
-          ".cache/pose394-focused-v1.xml",
-          ".cache/pose394-runner-design-v1.md"
+          ".cache/pose394-focused-v5.xml",
+          ".cache/pose394-full-v1/verification.json",
+          ".cache/pose394-full-v2/pytest-process.json",
+          ".cache/pose394-tooling-v2/verification.json",
+          ".cache/pose394-package-v2-network1/verification.json",
+          ".cache/pose394-runtime-cost-v1.json"
         ],
-        "head_sha": "dc0fc3e3587b8c845a7074aad2c372a53777dd92",
-        "remaining": "Complete generated freeze/arithmetic/decoder integration tests; focused/full required and clean package/HTTP checks; commit/publish exact consumer and prospective protocol/input/runtime/claim seal; only then one shared-Store admitted scientific operation and read-only/independent arithmetic verification. Exact PR/main/public delivery remains required. No model promotion, test access, manual merge or CI retry.",
-        "summary": "Granted #394 runner under implementation. Existing 212 generated baseline tests pass. Initial integrated new checks: 84 passed and two synthetic fixture path failures are being corrected for the added immutable clock-ledger guard. Runner combines first-pass native clock/cut scan and second-pass exact frame cache, reuses sealed original features/control, preserves one claimed fit and partial failures, verifies old source inventories at original Git revisions, and refuses CUDA fallback. Historical source-only check passes all three retained revisions. Scientific operation, source preparation, inference, new features and real fit remain zero; no prospective execution claim exists."
+        "head_sha": "78b5dfea5ab8e5efdb45a942a195793301a69fd1",
+        "new_decodes": 0,
+        "real_fits": 0,
+        "remaining": "Finish stable full v2 checks; preserve/transfer unexecuted tested preparation through documented terminal release and explicit supersession. Separately frozen bounded routine follow-up must receive a committed matching grant before any new science. No model promotion, image transfer, manual merge or CI retry.",
+        "software_process": {
+          "command": [
+            "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.venv\\Scripts\\python.exe",
+            "-m",
+            "pytest",
+            "-q",
+            "--basetemp",
+            "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose394-full-v2\\temp",
+            "--junitxml=C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose394-full-v2\\results.xml"
+          ],
+          "creation_time": 1793859202.3312979,
+          "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose394-e1",
+          "pid": 2384,
+          "status": "live"
+        },
+        "summary": "Recovered epoch 2 after verified terminal original-host preservation. Bounded lossless native array/plane cache and sixteen-frame LRU committed; all 129 scaling controls, tooling and clean package/HTTP pass. Initial generated FFV1 format gap and copied arithmetic fixture omission corrected with failures preserved. Full v2 suite live on stable source; earlier full v1 passed6275/four skips. Metadata-only original native throughput forecasts7.85hours before preparation for all402new clips; interrupted original window lacks headroom. Scientific freeze/claim/operation/new decoding/features/fit all remain zero. No operation will launch under the interrupted bound; explicit costed follow-up planning is required, retaining original grant/deadline and evidence."
       },
-      "checkpoint_at": 1793832080,
+      "checkpoint_at": 1793859319,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
         "branch": "codex/issue-394-test-whether-broader-existing-weak-train-e2",
         "epoch": 2,
-        "expires_at": 1793869538,
+        "expires_at": 1793870119,
         "granted_at": 1793858738,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
