@@ -7775,6 +7775,14 @@
       "task_id": "394",
       "verb": "recover"
     },
+    "pose396-dependency-transfer-v1": {
+      "actor": "Ken0u",
+      "at": 1793859929,
+      "fingerprint": "43baa05a7557f8c6ff56d9c7d26c60d79cc4f84f7bc686476c72829024c3c9df",
+      "status": "ready",
+      "task_id": "396",
+      "verb": "plan"
+    },
     "pose397-costed-plan-v1": {
       "actor": "Ken0u",
       "at": 1793859622,
@@ -12677,6 +12685,14 @@
       "task_id": "394",
       "verb": "plan"
     },
+    "spec-396-4d5e8bd36a97ec8c190519216587887a1f4ed8c832b6bf79a921d77a8a0ea6b4": {
+      "actor": "Ken0u",
+      "at": 1793859929,
+      "fingerprint": "aeb3f3b40c648b3b29fbf23d157298fc3ff30122b9b6b05093fa53bcf382aedc",
+      "status": "ready",
+      "task_id": "396",
+      "verb": "plan"
+    },
     "spec-396-7e397450ca251356c462f380fd3cd3103d7984acfe0f7705edd5f42c34a145cd": {
       "actor": "Ken0u",
       "at": 1793829440,
@@ -12689,6 +12705,14 @@
       "actor": "Ken0u",
       "reason": "spec fields must match the version 1 task contract",
       "status": "rejected",
+      "verb": "plan"
+    },
+    "spec-397-725d600c407001d6063b4403ab6d50b978f1b6ed3f9893c9cf7fff317e9c70db": {
+      "actor": "Ken0u",
+      "at": 1793859929,
+      "fingerprint": "9164f8982267cdc480c571f6b2d90e4ab54420ecb2fe819ea2b5c48a94398731",
+      "status": "ready",
+      "task_id": "397",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -33646,15 +33670,16 @@
     },
     "396": {
       "epoch": 0,
-      "planned_at": 1793829440,
+      "planned_at": 1793859929,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
-          "After393and394 complete exact main verification and full public delivery, revalidate current issues/PRs, coordination grants, main and owning-issue completion checkpoints. Obtain a fresh routine documentation-only CPU grant and isolated worktree. Preserve all original checkouts/environments/data/weights/annotations/research processes, historical evidence and deprecated PROGRESS edits. No work follows from Ready alone.",
-          "Replace the stale October25 current-status snapshot in PROJECT_PLAN with a dated evidence-linked summary derived from current main reports and owning-issue exact CI/delivery records. Reconcile post301source/evaluation repairs, the independently adapted mini-court/shot-profile/rally-navigation product increments, scene-assessment outcomes, portable learning/target audits, capacity comparison, AI CUP pose/actor/static-temporal work, recognition interval-priority repair and completed394data-scaling result. Distinguish implemented code, verified delivery, research execution and scientific acceptance; never infer delivery from a report written before integration.",
+          "After393and397 complete exact main verification and full public delivery, revalidate current issues/PRs, coordination grants, main and owning-issue completion checkpoints. Obtain a fresh routine documentation-only CPU grant and isolated worktree. Preserve all original checkouts/environments/data/weights/annotations/research processes, historical evidence and deprecated PROGRESS edits. No work follows from Ready alone.",
+          "Preserve #394 as explicitly superseded unexecuted preparation, with its original deadline, source, generated-test/format/fixture/network evidence and zero scientific counters. Use the separately granted #397 result only after its actual completion, exact main checks and public delivery; do not call the #394 preparation a completed experiment or infer an improvement before results.",
+          "Replace the stale October25 current-status snapshot in PROJECT_PLAN with a dated evidence-linked summary derived from current main reports and owning-issue exact CI/delivery records. Reconcile post301source/evaluation repairs, the independently adapted mini-court/shot-profile/rally-navigation product increments, scene-assessment outcomes, portable learning/target audits, capacity comparison, AI CUP pose/actor/static-temporal work, recognition interval-priority repair and completed397data-scaling result. Distinguish implemented code, verified delivery, research execution and scientific acceptance; never infer delivery from a report written before integration.",
           "Update docs/BUG_REVIEW with concise verified recent fixes and their reproduced failures, preservation behavior, focused/full evidence where actually recorded and remaining practical limitations. Summarize without rewriting underlying experiment reports, original predictions, attempted runs, unknown cases or historical failure evidence. Link primary owning issues for exact source/main/public delivery instead of treating a count of passing tests as badminton accuracy.",
           "Align README current capability and limitation text with the actual delivered upload/YouTube/review/export/mini-court/shot-profile/rally-navigation behavior. Record that reference-repository ideas were independently adapted without copying code/assets/weights/prose. Preserve the six requested families and separate forehand/backhand, singles/doubles scope and half-smash exclusion. Do not introduce new product behavior, endpoints, models, tactical/speed claims or deployment policy.",
-          "Describe each scientific result using its actual source/cohort/date, denominator, unknown/unavailable cases, conditional assumptions and held-out/development status. Keep familiar-source agreement, weak-label family/side classification, automatic contact/rally detection, persistent identity and complete full-match accuracy separate. Report rejected or mixed experiments faithfully, including394regardless of sign; no pooled metrics, new thresholds, promotion or solution claim. Preserve unresolved media/model rights, upstream/source independence and complete accepted rally-reference prerequisites unless authoritative newer evidence resolves them.",
+          "Describe each scientific result using its actual source/cohort/date, denominator, unknown/unavailable cases, conditional assumptions and held-out/development status. Keep familiar-source agreement, weak-label family/side classification, automatic contact/rally detection, persistent identity and complete full-match accuracy separate. Report rejected or mixed experiments faithfully, including397regardless of sign; no pooled metrics, new thresholds, promotion or solution claim. Preserve unresolved media/model rights, upstream/source independence and complete accepted rally-reference prerequisites unless authoritative newer evidence resolves them.",
           "Order remaining work toward reliable end-to-end automatic annotation: trustworthy complete source-aligned contact/hitter/boundary labels and eligible training sources, shuttle/contact/identity failure diagnosis, separately bounded targeted adaptation and unseen singles/doubles workflow evidence. Do not redefine completion as software delivery or choose another research operation in this documentation task. Keep follow-ups inside the existing approved milestones and preserve existing task dependencies/approvals.",
           "Run documentation UTF-8/LF, strict JSON/local-link/repository/whitespace and appropriate required project checks; inspect changed claims against primary reports/current issue checkpoints and verify package/source inclusion where affected. Publish a focused PR through exact-head CI/controller integration, verify merged main and complete public delivery without manual merge or retry. No scientific input/prediction read, media decode, image transfer, inference, extraction, fit, model installation or eligibility change."
         ],
@@ -33664,7 +33689,7 @@
         ],
         "dependencies": [
           "393",
-          "394"
+          "397"
         ],
         "exclusions": [
           "No application/UI/API/executable/test/workflow/security/credential/dependency/deployment/model/default/schema changes, new dataset/media/model acquisition or publication, raw/private scientific labels/features/predictions access, image assessment/transfer, experiment rerun, inference/training, threshold/model selection or promotion, source/process/Store manipulation, spending, CI retry, manual merge, raw coordination writes, historical report edits or deprecated PROGRESS updates."
@@ -33692,12 +33717,12 @@
           "Required documentation/repository and exact PR/main/public delivery checks; all private inputs and historical experiments remain intact."
         ]
       },
-      "spec_hash": "d6a130be7c9c4b7a4b8f49f890350df0e14d6303061b95d70b1ce64bd394b560",
+      "spec_hash": "e6fa5657c021257c8830e6fd1953961b2a859560b83f79dbe2bca5f58bbc2002",
       "status": "ready"
     },
     "397": {
       "epoch": 0,
-      "planned_at": 1793859622,
+      "planned_at": 1793859929,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
