@@ -7792,6 +7792,14 @@
       "task_id": "396",
       "verb": "plan"
     },
+    "pose396-dependency398-plan-v2": {
+      "actor": "Ken0u",
+      "at": 1793864201,
+      "fingerprint": "8d31f66abef98a816974307dea7f08e13b556701c90a5a7e06a336030f76c18d",
+      "status": "ready",
+      "task_id": "396",
+      "verb": "plan"
+    },
     "pose397-cli-failure-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1793863087,
@@ -7877,6 +7885,26 @@
       "status": "ready",
       "task_id": "398",
       "verb": "plan"
+    },
+    "pose398-frozen-api-next-v1": {
+      "actor": "Ken0u",
+      "at": 1793864201,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-398-perform-the-first-actual-dispatch-of-the",
+        "epoch": 1,
+        "expires_at": 1793875001,
+        "granted_at": 1793864201,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67"
+      },
+      "epoch": 1,
+      "fingerprint": "6c3febf900b7541361d9419367d143030f79232c273b03686a80907ef296ccb6",
+      "status": "granted",
+      "task_id": "398",
+      "verb": "next"
     },
     "pose398-register-v1": {
       "actor": "Ken0u",
@@ -12777,6 +12805,14 @@
       "fingerprint": "a3e55b257c090062e1ce74c960ac09051d7cb7b6f289024adce8ea8ee00509b0",
       "status": "ready",
       "task_id": "394",
+      "verb": "plan"
+    },
+    "spec-396-40113024900bc6c4957f2256b0af9e75e1645037878064c6400cf9df21d39b1b": {
+      "actor": "Ken0u",
+      "at": 1793864201,
+      "fingerprint": "6ee34b439ddf44243d2cab4b8a188c2e99078dbe41fdbc12770e2b5e6a83783d",
+      "status": "ready",
+      "task_id": "396",
       "verb": "plan"
     },
     "spec-396-4d5e8bd36a97ec8c190519216587887a1f4ed8c832b6bf79a921d77a8a0ea6b4": {
@@ -33810,16 +33846,17 @@
     },
     "396": {
       "epoch": 0,
-      "planned_at": 1793859929,
+      "planned_at": 1793864201,
       "planned_by": "Ken0u",
       "spec": {
         "acceptance": [
-          "After393and397 complete exact main verification and full public delivery, revalidate current issues/PRs, coordination grants, main and owning-issue completion checkpoints. Obtain a fresh routine documentation-only CPU grant and isolated worktree. Preserve all original checkouts/environments/data/weights/annotations/research processes, historical evidence and deprecated PROGRESS edits. No work follows from Ready alone.",
-          "Preserve #394 as explicitly superseded unexecuted preparation, with its original deadline, source, generated-test/format/fixture/network evidence and zero scientific counters. Use the separately granted #397 result only after its actual completion, exact main checks and public delivery; do not call the #394 preparation a completed experiment or infer an improvement before results.",
-          "Replace the stale October25 current-status snapshot in PROJECT_PLAN with a dated evidence-linked summary derived from current main reports and owning-issue exact CI/delivery records. Reconcile post301source/evaluation repairs, the independently adapted mini-court/shot-profile/rally-navigation product increments, scene-assessment outcomes, portable learning/target audits, capacity comparison, AI CUP pose/actor/static-temporal work, recognition interval-priority repair and completed397data-scaling result. Distinguish implemented code, verified delivery, research execution and scientific acceptance; never infer delivery from a report written before integration.",
+          "After393and398 complete exact main verification and full public delivery, revalidate current issues/PRs, coordination grants, main and owning-issue completion checkpoints. Obtain a fresh routine documentation-only CPU grant and isolated worktree. Preserve all original checkouts/environments/data/weights/annotations/research processes, historical evidence and deprecated PROGRESS edits. No work follows from Ready alone.",
+          "Preserve #394 as explicitly superseded unexecuted preparation, with its original deadline, source, generated-test/format/fixture/network evidence and zero scientific counters. Use the separately granted #398 result only after its actual completion, exact main checks and public delivery; do not call the #394 preparation a completed experiment or infer an improvement before results.",
+          "Preserve #397 as superseded zero-science pre-dispatch CLI failure, with its consumed original invocation, unchanged8bc2b02scientific source/prospective/permanent claim/output/deadline and correctedbb0c7e1software verified by6312tests/four skips. Separately scoped398can perform the first actual API dispatch only under a fresh grant and tested audited wrapper, retaining that exact original commitment and deadline. Use398only after actual verified execution/report, exact main checks and public delivery. Do not call software checks, failed invocation or accepted recovery planning improved model accuracy; keep unavailable/unknowns and complete accepted rally references0/2 distinct.",
+          "Replace the stale October25 current-status snapshot in PROJECT_PLAN with a dated evidence-linked summary derived from current main reports and owning-issue exact CI/delivery records. Reconcile post301source/evaluation repairs, the independently adapted mini-court/shot-profile/rally-navigation product increments, scene-assessment outcomes, portable learning/target audits, capacity comparison, AI CUP pose/actor/static-temporal work, recognition interval-priority repair and completed398data-scaling result. Distinguish implemented code, verified delivery, research execution and scientific acceptance; never infer delivery from a report written before integration.",
           "Update docs/BUG_REVIEW with concise verified recent fixes and their reproduced failures, preservation behavior, focused/full evidence where actually recorded and remaining practical limitations. Summarize without rewriting underlying experiment reports, original predictions, attempted runs, unknown cases or historical failure evidence. Link primary owning issues for exact source/main/public delivery instead of treating a count of passing tests as badminton accuracy.",
           "Align README current capability and limitation text with the actual delivered upload/YouTube/review/export/mini-court/shot-profile/rally-navigation behavior. Record that reference-repository ideas were independently adapted without copying code/assets/weights/prose. Preserve the six requested families and separate forehand/backhand, singles/doubles scope and half-smash exclusion. Do not introduce new product behavior, endpoints, models, tactical/speed claims or deployment policy.",
-          "Describe each scientific result using its actual source/cohort/date, denominator, unknown/unavailable cases, conditional assumptions and held-out/development status. Keep familiar-source agreement, weak-label family/side classification, automatic contact/rally detection, persistent identity and complete full-match accuracy separate. Report rejected or mixed experiments faithfully, including397regardless of sign; no pooled metrics, new thresholds, promotion or solution claim. Preserve unresolved media/model rights, upstream/source independence and complete accepted rally-reference prerequisites unless authoritative newer evidence resolves them.",
+          "Describe each scientific result using its actual source/cohort/date, denominator, unknown/unavailable cases, conditional assumptions and held-out/development status. Keep familiar-source agreement, weak-label family/side classification, automatic contact/rally detection, persistent identity and complete full-match accuracy separate. Report rejected or mixed experiments faithfully, including398regardless of sign; no pooled metrics, new thresholds, promotion or solution claim. Preserve unresolved media/model rights, upstream/source independence and complete accepted rally-reference prerequisites unless authoritative newer evidence resolves them.",
           "Order remaining work toward reliable end-to-end automatic annotation: trustworthy complete source-aligned contact/hitter/boundary labels and eligible training sources, shuttle/contact/identity failure diagnosis, separately bounded targeted adaptation and unseen singles/doubles workflow evidence. Do not redefine completion as software delivery or choose another research operation in this documentation task. Keep follow-ups inside the existing approved milestones and preserve existing task dependencies/approvals.",
           "Run documentation UTF-8/LF, strict JSON/local-link/repository/whitespace and appropriate required project checks; inspect changed claims against primary reports/current issue checkpoints and verify package/source inclusion where affected. Publish a focused PR through exact-head CI/controller integration, verify merged main and complete public delivery without manual merge or retry. No scientific input/prediction read, media decode, image transfer, inference, extraction, fit, model installation or eligibility change."
         ],
@@ -33829,7 +33866,7 @@
         ],
         "dependencies": [
           "393",
-          "397"
+          "398"
         ],
         "exclusions": [
           "No application/UI/API/executable/test/workflow/security/credential/dependency/deployment/model/default/schema changes, new dataset/media/model acquisition or publication, raw/private scientific labels/features/predictions access, image assessment/transfer, experiment rerun, inference/training, threshold/model selection or promotion, source/process/Store manipulation, spending, CI retry, manual merge, raw coordination writes, historical report edits or deprecated PROGRESS updates."
@@ -33857,7 +33894,7 @@
           "Required documentation/repository and exact PR/main/public delivery checks; all private inputs and historical experiments remain intact."
         ]
       },
-      "spec_hash": "e6fa5657c021257c8830e6fd1953961b2a859560b83f79dbe2bca5f58bbc2002",
+      "spec_hash": "cac4b236465d6d17d864a7bb47ccaaba3f537e1c58bc3cd2eae28b76c3ddbd90",
       "status": "ready"
     },
     "397": {
@@ -33932,7 +33969,7 @@
       ],
       "planned_at": 1793859929,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "After original-host terminal preservation/release and explicit supersession of unexecuted #394, obtain a fresh routine Windows/CUDA grant and isolated worktree. Preserve its tested source, generated tests, all historical/native/control inputs and its original deadline and elapsed window. Verify no #394 scientific freeze, cohort execution claim, new real-source decoding, native inference, features or fit occurred. The new task is explicit follow-up authority; it does not renew or claim completion of #394. Revalidate main/issues/PRs/grants, all input seals and actual original-host process/Store state. Preserve original root/environment/data/weights/annotations and deprecated PROGRESS edit.",
@@ -34019,10 +34056,21 @@
         ]
       },
       "spec_hash": "bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b",
-      "status": "ready"
+      "status": "blocked"
     },
     "398": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-398-perform-the-first-actual-dispatch-of-the",
+        "epoch": 1,
+        "expires_at": 1793875001,
+        "granted_at": 1793864201,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67"
+      },
+      "epoch": 1,
       "planned_at": 1793863347,
       "planned_by": "Ken0u",
       "spec": {
@@ -34133,7 +34181,7 @@
         ]
       },
       "spec_hash": "6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
