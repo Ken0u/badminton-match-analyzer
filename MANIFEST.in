@@ -70,3 +70,4 @@ include data/manifests/aicup_pose_pilot_protocol_v1.json
 include data/manifests/aicup_actor_correspondence_protocol_v1.json
 include data/manifests/aicup_pose_learning_protocol_v1.json
 include data/manifests/aicup_pose_scaling_protocol_v1.json
+include data/manifests/aicup_pose_dispatch_recovery_protocol_v1.json

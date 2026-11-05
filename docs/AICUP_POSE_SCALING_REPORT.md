@@ -1,18 +1,21 @@
 # Broader weak pose training with a fixed validation set
 
-Task [#397](https://github.com/Ken0u/badminton-match-analyzer/issues/397) tests
+Task [#398](https://github.com/Ken0u/badminton-match-analyzer/issues/398) prepares
+the first actual API dispatch of the unchanged operation frozen under
+[#397](https://github.com/Ken0u/badminton-match-analyzer/issues/397), testing
 whether broader existing training supervision improves the static pose
 classifier from the [completed learning comparison](AICUP_POSE_LEARNING_REPORT.md).
 Its frozen specification is
-`bd77adac39fb7f84e6a483ecb9cf8c5381b02715dcd3ddc55555f0de6a09c11b`.
+`6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67`.
 This is preparation for one private development experiment. No original
 data-scaling operation, new native inference or new fit has run at this
 checkpoint; original scientific results and delivery remain pending.
 It inherits tested preparation from superseded, unexecuted
 [#394](https://github.com/Ken0u/badminton-match-analyzer/issues/394), whose
-original deadline and evidence remain preserved. This fresh task explicitly
-provides a costed sixteen-hour task window and one twelve-hour operation;
-it does not extend or claim scientific completion of #394.
+original deadline and evidence remain preserved. #397 explicitly provided a
+costed sixteen-hour task window and one twelve-hour operation; its failed CLI
+attempt did not perform science. The recovery preserves #397's
+original scientific deadline and adds no scientific runtime.
 
 The preceding experiment selected static over temporal pose: validation
 eight-group family macro F1 was 0.415854 versus 0.398081, and strict joint
@@ -206,7 +209,7 @@ that window. The controller accepted its terminal release before #394 was
 closed as superseded, with its branch, tests and unexecuted evidence retained.
 The separately specified #397 follow-up preserves identical cohorts, recipe,
 control, output/decode/model budgets and original unknowns. Its fresh grant
-supplies the explicit 16-hour task / 12-hour operation bounds above; the old
+supplied the explicit 16-hour task / 12-hour operation bounds above; the old
 deadline is never reset implicitly. No new real-source processing or fit has
 run at this preparation checkpoint.
 
@@ -233,8 +236,48 @@ The corrected parser retains the public `--prospective` option and explicitly
 binds its internal destination. Two real subprocess regressions reproduce the
 failure for both commands, and the generated shared-Store run/completion/verify
 test now exercises the public parser in both directions. All three controls
-failed on the original source before applying the fix. Fresh corrected-source
-verification remains pending at this checkpoint. The fix does not supply a
-scientific result or authorize replay of the old commitment. A separately frozen
-follow-up must explicitly preserve and account for this pre-dispatch failure
-before any changed consumer can perform the still-unexecuted comparison.
+failed on the original source before applying the fix. Corrected source
+`bb0c7e1f27cffcb24ce0978b3793b20d84289a68` passed 133 focused controls,
+6,312 full tests with four optional skips, required tooling and clean
+package/installed-HTTP checks. The tested branch and all failure evidence are
+preserved; the controller accepted terminal ownership release and #397 was
+closed as superseded, without claiming successful science.
+
+## Specific API-entry recovery in #398
+
+The follow-up grants exactly one corrective API invocation after that specific
+pre-entry failure. It grants neither a second scientific operation nor extra
+scientific time. The source remains `8bc2b02`, the original prospective and
+permanent cohort claim remain byte-identical, and the reserved output stays
+`.cache/pose397-run-v1`. The deadline is still November 5, 2026 at
+19:09:28.8576179 UTC (`1793905768.8576179`). Insufficient forecast headroom
+prevents admission; a renewed lease never extends this deadline.
+
+The [fixed recovery protocol](../data/manifests/aicup_pose_dispatch_recovery_protocol_v1.json)
+and `scripts/recover_aicup_pose_dispatch.py` bind the exact predecessor failure,
+original commitment and committed epoch-1 grant. Preparation verifies an isolated
+clean snapshot of the original scientific source plus its original runtime,
+inputs and control seals. A credential-filtered `python -I -B` child loads only
+that snapshot's backend and calls the original `run(prospective_path=...,
+prospective_sha256=..., output=...)` directly. The corrected public parser stays
+in the delivery branch; it does not replace bytes in the scientific freeze.
+
+Preparation creates one exclusive companion under the original freeze directory,
+containing immutable failure proof, integrity receipts and dispatch intent.
+Its exact source/protocol/runtime/proof/intent hashes must be published before
+dispatch. An exclusive start receipt consumes the corrective invocation even if
+launch fails. Missing process identity or interrupted observation remains
+unknown, never evidence of exit or permission to restart. Logs have two fixed
+1 MiB slots, with overflow drained and recorded; terminal evidence has a reserved
+64 KiB slot. All companion files and actual claim bytes count against the
+original 4 GiB budget, including the unchanged runner's per-stage checks.
+
+Generated controls cover the actual isolated API entry, original shared-Store
+completion and read-only verification, stale/mismatched grants, changed or
+contradictory proof, source/import mutations, process identity loss, existing
+output/Store work, original clocks/headroom, exact byte accounting and exclusive
+intent/dispatch. These are software safeguards. No new source processing,
+features, fit, validation comparison or accuracy improvement is claimed yet.
+After full stable-source/package checks, prospective publication and adequate
+headroom, the single admitted operation remains next. Accepted complete-rally
+references remain 0/2; experimental weights are not installed in the app.
