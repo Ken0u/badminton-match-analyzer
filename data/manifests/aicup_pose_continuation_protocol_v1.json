@@ -1,0 +1,71 @@
+{
+  "name": "aicup-pose-continuation-v1",
+  "task": 400,
+  "spec_hash": "a721a4359e08e17b809a2f5954f665abf1c3c9f502b25f99cd2a36962adb0455",
+  "predecessor": {
+    "task": 398,
+    "scientific_commit": "8bc2b0270e6350281421d7590855627cfdfc1178",
+    "prospective_sha256": "5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6",
+    "claim_sha256": "7831a0d3335dd9924e12e1daf9294c4fe0923d86d27088d4ae5c82689dde6357",
+    "failure_sha256": "f0c31fc5564f76254320d999d4367b1c4223afd43685917bec37d814565cda19",
+    "preservation_sha256": "10598be437b8d3b3ff1d262e3f15aed29e7232f98447fdbf6688053f87262c1c",
+    "original_deadline": 1793905768.8576179,
+    "decoded_frame_visits": 6502,
+    "model_observations_exact": null,
+    "model_observations_lower": 2200,
+    "model_observations_upper": 3251,
+    "real_fits": 0
+  },
+  "limits": {
+    "task_seconds": 57600,
+    "operation_seconds": 43200,
+    "extra_headroom_seconds": 7200,
+    "decoded_frame_visits": 276943,
+    "model_observations": 138997,
+    "real_fits": 1,
+    "scratch_bytes": 8589934592,
+    "retained_bytes": 8589934592,
+    "combined_bytes": 17179869184,
+    "minimum_disk_free_bytes": 2147483648,
+    "cache_ram_bytes": 67108864,
+    "minimum_ram_free_bytes": 536870912,
+    "record_bytes": 5242880,
+    "index_manifest_bytes": 1048576,
+    "reconstruction_frames": 2,
+    "frames_per_clip": 1416
+  },
+  "expected": {
+    "all_clips": 447,
+    "all_reference_rows": 5037,
+    "validation_rows": 353,
+    "pilot_clips_reused": 45,
+    "completed_clips_reused": 4,
+    "all_features_reused": 844,
+    "remaining_clips": 398,
+    "remaining_frames": 138997,
+    "remaining_reference_rows": 4193,
+    "failed_clip_frames": 1051
+  },
+  "frame_storage": {
+    "codec": "zlib level1 exact native ndarray/planes",
+    "bounded_decompression": true,
+    "formats": [
+      "yuv420p",
+      "yuv422p",
+      "yuv444p",
+      "rgb24",
+      "bgr24",
+      "bgr0",
+      "rgb0"
+    ],
+    "maximum_dimensions": [
+      1280,
+      720
+    ],
+    "source_clock_color_orientation_preserved": true,
+    "old_outputs_modified": false
+  },
+  "training_ready": false,
+  "independent_accuracy_established": false,
+  "model_installed_in_app": false
+}

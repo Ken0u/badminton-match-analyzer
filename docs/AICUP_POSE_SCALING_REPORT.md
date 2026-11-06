@@ -341,3 +341,35 @@ to isolate incomplete log capture. Both new regressions failed against the
 previous source. This is a delivery-code repair using generated data, not a
 re-execution or change to the preserved scientific source, failure, inputs,
 deadline or counters. Fresh checks and controller delivery remain required.
+
+## Separately granted memory-safe continuation in #400
+
+The configured owner authorized the bounded public terminal-release proof;
+the controller accepted release of #398's expired claim. Its closed task is
+superseded by [#400](https://github.com/Ken0u/badminton-match-analyzer/issues/400),
+with draft PR #399, original source, consumed invocations, permanent claim,
+partial outputs and original deadline preserved. The new grant does not permit
+replaying either original entry point or extending its expired deadline.
+
+The initial continuation implementation provides a separate lossless disk
+spool with bounded record/metadata sizes, validated decompression before
+reconstruction, preserved native colors and clocks, and a two-frame reader
+cache. Its memory admission includes conservative packing/parity temporaries;
+an LRU length alone does not bound decompression allocation. Record hashes and
+file identity reject changed/truncated data even with a warm cache. Successful
+cleanup removes only exact owned transient files after readers close and source
+validation passes; failure preserves its spool and restores decoder adapters.
+The original research source and application defaults are unchanged.
+
+Generated tests exercise seven native formats, three color settings, irregular
+timestamps, repeated and out-of-order reads, corrupt/oversized compressed data,
+memory/disk admission, decoder/source failures and cleanup preservation. These
+controls are development evidence, not full-process memory or annotation
+accuracy measurements. Existing source-clock metadata costs all 398 remaining
+clips / 138,997 frames without opening their videos; actual native-format and
+storage admission still require verification under the fresh grant.
+
+The continuation execution/verification runner and prospective commitment are
+not complete. No new scientific operation, classifier fit, validation result
+or model promotion has occurred under #400. Its fixed protocol, complete local
+checks and exact controller PR/main/delivery remain required before completion.
