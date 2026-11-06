@@ -7975,6 +7975,15 @@
       "task_id": "400",
       "verb": "plan"
     },
+    "pose400-storage-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1793931319,
+      "epoch": 1,
+      "fingerprint": "df7e65ca280a39f4069a130c3fc38141719830ce68738406aa8a00625186dff0",
+      "status": "running",
+      "task_id": "400",
+      "verb": "checkpoint"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -34307,12 +34316,23 @@
       "status": "blocked"
     },
     "400": {
+      "checkpoint": {
+        "branch": "codex/issue-400-complete-the-unchanged-broader-weak-pose",
+        "evidence": [
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/398#issuecomment-6674810449"
+        ],
+        "head_sha": "be3549191966ef03ffc53a49e07dfc6db463a304",
+        "real_fits": 0,
+        "scientific_operations_started": 0,
+        "summary": "Local storage increment: 247 generated recovery/scaling/spool controls pass; lint/format/dependency/repository checks pass. Bounded native disk spool implemented, continuation runner incomplete. Original consumed science preserved; no new source processing or fit. Full/package verification pending."
+      },
+      "checkpoint_at": 1793931319,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
         "branch": "codex/issue-400-complete-the-unchanged-broader-weak-pose",
         "epoch": 1,
-        "expires_at": 1793941552,
+        "expires_at": 1793942119,
         "granted_at": 1793930752,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
