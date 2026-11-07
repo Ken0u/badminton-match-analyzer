@@ -47,6 +47,11 @@ def arithmetic(argv):
     plan, output = read(args.prospective), args.output.resolve()
     assert plan["output"] == str(output)
     assert not any(name.startswith("badminton") for name in sys.modules)
+    continuation = plan if "original" in plan else None
+    if continuation is not None:
+        assert plan["protocol"]["name"] == "aicup-pose-continuation-v1"
+        assert plan["protocol"]["task"] == 402
+        plan = plan["original"]
     protocol = plan["protocol"]
     labels = [protocol["labels"]["family"], protocol["labels"]["side"]]
     rows, cohort = read(output / "features.json"), read(output / "cohort.json")
@@ -55,19 +60,32 @@ def arithmetic(argv):
     receipts = completion["receipts"]
     assert [r["key"] for r in receipts] == cohort["new_keys"]
     assert sum(r["frames"] for r in receipts) == protocol["expected"]["new_frames"]
-    assert (
-        sum(r["decoded_frame_visits"] for r in receipts)
-        == 2 * protocol["expected"]["new_frames"]
+    repeated_preparation = receipts[4]["frames"] if continuation is not None else 0
+    assert sum(r["decoded_frame_visits"] for r in receipts) == (
+        2 * protocol["expected"]["new_frames"] - repeated_preparation
     )
     assert (
         sum(r["model_frame_observations"] for r in receipts)
         == protocol["expected"]["new_frames"]
     )
     assert all(
-        r["decoded_frame_visits"] == 2 * r["frames"]
+        r["decoded_frame_visits"]
+        == (1 if continuation is not None and i == 4 else 2) * r["frames"]
         and r["model_frame_observations"] == r["frames"]
-        for r in receipts
+        for i, r in enumerate(receipts)
     )
+    if continuation is not None:
+        # The first four receipts describe sealed old work, never new passes.
+        assert len(receipts) == 402
+        assert sum(r["frames"] for r in receipts[:4]) == 2200
+        assert repeated_preparation == 1051
+        assert sum(r["decoded_frame_visits"] for r in receipts[4:]) == 276943
+        assert sum(r["model_frame_observations"] for r in receipts[4:]) == 138997
+        assert completion["summary"]["accounting"]["exact"] == {
+            "decoded": 276943,
+            "observed": 138997,
+            "real_fits": 1,
+        }
     original = Path(plan["control"])
     assert sha(original / "features.json") == protocol["original"]["control_features"]
     assert sha(original / "static/model.pt") == protocol["original"]["control_model"]
@@ -305,7 +323,12 @@ def arithmetic(argv):
                 result = read(Path(plan["native"]) / f"clip-{number:02d}/players.json")
                 diagnostics = old_diagnostics
             else:
-                folder = output / f"clip-{new_clips[key]:03d}"
+                number = new_clips[key]
+                folder = (
+                    Path(plan["output"])
+                    if continuation is not None and number < 4
+                    else output
+                ) / f"clip-{number:03d}"
                 result = read(folder / "players.json")
                 diagnostics = {
                     r["reference_id"]: r for r in read(folder / "diagnostics.json")
@@ -385,6 +408,23 @@ def arithmetic(argv):
         "refitted": False,
         "independent_accuracy_established": False,
     }
+    if continuation is not None:
+        summary.update(
+            continuation=True,
+            new_clips=len(receipts) - 4,
+            new_native_frames=sum(r["frames"] for r in receipts[4:]),
+            new_decoded_frame_visits=sum(
+                r["decoded_frame_visits"] for r in receipts[4:]
+            ),
+            reused_completed_clips=4,
+            predecessor_model_observations_exact=None,
+            cumulative_decoded_frame_visits=6502
+            + sum(r["decoded_frame_visits"] for r in receipts[4:]),
+            cumulative_model_observations_bounds=[
+                2200 + sum(r["model_frame_observations"] for r in receipts[4:]),
+                3251 + sum(r["model_frame_observations"] for r in receipts[4:]),
+            ],
+        )
     assert not any(name.startswith("badminton") for name in sys.modules)
     with args.receipt.open("x", encoding="utf-8", newline="\n") as stream:
         json.dump(summary, stream, indent=2, allow_nan=False)

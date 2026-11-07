@@ -1649,6 +1649,90 @@ def test_independent_arithmetic_cli_reproduces_generated_fit_without_producer_im
     assert not receipt.with_name("mutated.json").exists()
 
 
+def test_continuation_arithmetic_keeps_old_counts_and_failed_preparation_reuse(
+    arithmetic_case,
+):
+    # Generated small numerical fixture with a full structural counter ledger;
+    # no private source/predictions are read and no scientific fit is launched.
+    prospective, output = arithmetic_case
+    original = producer.read_json(prospective)
+    original["output"] = str(output.parent / "preserved-attempt")
+    original["protocol"]["expected"].update(new_clips=402, new_frames=141197)
+    cohort = producer.read_json(output / "cohort.json")
+    cohort["new_keys"] = [f"generated:{i}" for i in range(402)]
+    (output / "cohort.json").write_bytes(producer.encoded(cohort))
+    counts = [317, 176, 1039, 668, 1051, 1416] + [344] * 394 + [518, 476]
+    assert len(counts) == 402 and sum(counts) == 141197
+    receipts = [
+        {
+            "key": key,
+            "frames": count,
+            "decoded_frame_visits": count * (1 if i == 4 else 2),
+            "model_frame_observations": count,
+        }
+        for i, (key, count) in enumerate(zip(cohort["new_keys"], counts, strict=True))
+    ]
+    continuation = output.parent / "continuation.json"
+    producer.publish(
+        continuation,
+        {
+            "output": str(output.resolve()),
+            "original": original,
+            "protocol": {"name": "aicup-pose-continuation-v1", "task": 402},
+        },
+    )
+    completion = {
+        "prospective_sha256": producer.digest(continuation),
+        "receipts": receipts,
+        "summary": {
+            "accounting": {
+                "exact": {"decoded": 276943, "observed": 138997, "real_fits": 1}
+            }
+        },
+    }
+    (output / "completion.json").write_bytes(producer.encoded(completion))
+    script = (
+        Path(scaling.__file__).resolve().parents[2]
+        / "scripts/scale_aicup_pose_learning.py"
+    )
+    receipt = output.parent / "continuation-arithmetic.json"
+    command = [
+        sys.executable,
+        str(script),
+        "arithmetic",
+        "--prospective",
+        str(continuation),
+        "--prospective-sha256",
+        producer.digest(continuation),
+        "--output",
+        str(output),
+        "--receipt",
+        str(receipt),
+    ]
+    result = subprocess.run(command, check=True, capture_output=True, text=True)
+    checked = json.loads(result.stdout)
+    assert checked["verified_rows"] == 8 and checked["new_clips"] == 398
+    assert (
+        checked["new_native_frames"] == 138997
+        and checked["new_decoded_frame_visits"] == 276943
+    )
+    assert checked["cumulative_decoded_frame_visits"] == 283445
+    assert checked["cumulative_model_observations_bounds"] == [141197, 142248]
+    assert checked["predecessor_model_observations_exact"] is None
+    assert checked["refitted"] is checked["feature_producer_imported"] is False
+    completion["receipts"][4]["decoded_frame_visits"] *= 2
+    (output / "completion.json").write_bytes(producer.encoded(completion))
+    changed = subprocess.run(
+        [*command[:-1], str(receipt.with_name("mutated-continuation.json"))],
+        capture_output=True,
+        text=True,
+    )
+    assert (
+        changed.returncode != 0
+        and not receipt.with_name("mutated-continuation.json").exists()
+    )
+
+
 def test_compressed_cache_reconstructs_exact_native_frames_and_bounds_live_lru(
     tmp_path, monkeypatch
 ):

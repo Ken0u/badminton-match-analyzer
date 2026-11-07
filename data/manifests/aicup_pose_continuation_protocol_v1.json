@@ -1,7 +1,17 @@
 {
   "name": "aicup-pose-continuation-v1",
-  "task": 400,
-  "spec_hash": "a721a4359e08e17b809a2f5954f665abf1c3c9f502b25f99cd2a36962adb0455",
+  "code_task": 401,
+  "task": 402,
+  "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb",
+  "grant": {
+    "actor": "Ken0u",
+    "host_id": "MSI",
+    "resources": [
+      "gpu:windows-primary",
+      "cpu:windows-training"
+    ],
+    "observation_seconds": 300
+  },
   "predecessor": {
     "task": 398,
     "scientific_commit": "8bc2b0270e6350281421d7590855627cfdfc1178",
@@ -20,6 +30,7 @@
     "task_seconds": 57600,
     "operation_seconds": 43200,
     "extra_headroom_seconds": 7200,
+    "minimum_forecast_seconds": 27834,
     "decoded_frame_visits": 276943,
     "model_observations": 138997,
     "real_fits": 1,
@@ -32,7 +43,9 @@
     "record_bytes": 5242880,
     "index_manifest_bytes": 1048576,
     "reconstruction_frames": 2,
-    "frames_per_clip": 1416
+    "frames_per_clip": 1416,
+    "journal_record_bytes": 1024,
+    "terminal_bytes": 65536
   },
   "expected": {
     "all_clips": 447,
@@ -62,6 +75,7 @@
       1280,
       720
     ],
+    "display_axes_may_be_swapped": true,
     "source_clock_color_orientation_preserved": true,
     "old_outputs_modified": false
   },

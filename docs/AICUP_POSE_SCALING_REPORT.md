@@ -1,5 +1,88 @@
 # Broader weak pose training with a fixed validation set
 
+## Memory-bounded continuation: software verification in progress
+
+[#401](https://github.com/Ken0u/badminton-match-analyzer/issues/401) separates
+delivery of the complete continuation runner from
+[#402](https://github.com/Ken0u/badminton-match-analyzer/issues/402)'s separately
+granted scientific execution. #400's lease expired without any scientific
+dispatch; its original grant/deadline, tested storage code and terminal release
+remain preserved. #401 recovered its expired code-only lease through the
+controller and continues on a new ownership epoch. Neither a code grant nor
+software checks authorize real-source decoding, model observations or fitting.
+
+The public `scripts/continue_aicup_pose_scaling.py` supplies integrity-only
+`freeze`, one-shot `run`, and read-only `verify` commands. Before freezing it
+requires #402's exact committed grant and specification, the delivered runner's
+exact source revision, a recent authenticated coordination observation and
+completed #401 main verification/public delivery. Execution also requires the
+exact prospective intent published by the owner on #402. Missing, expired,
+changed or code-only grants fail closed. Lease renewal preserves the initial
+grant time; a recovered science grant cannot reset its task/operation windows.
+
+The continuation retains all 447 clips / 5,037 published rows and all 353
+validation rows. It independently reconstructs the 784 pilot features and 60
+features from #398's four completed clips without decoding or model calls.
+The fifth clip reuses verified preparation and receives one further 1,051-frame
+perception decode/pass; the other 397 clips receive one preparation decode and
+one perception decode/pass each. New caps remain 276,943 decode visits and
+138,997 model observations, with one unchanged CPU fit. The old attempt remains
+6,502 visits and 2,200–3,251 observations with an unknown exact total, and zero
+fits. No failed operation or old deadline is reset.
+
+Native frames use an exclusive disk spool with bounded decompression, a two-frame
+reconstruction cache and conservative temporary-memory accounting. Display axes
+may swap under rotation while the source pixel/byte bounds remain unchanged.
+The 512 MiB RAM floor, 64 MiB cache-payload bound, 8 GiB scratch/retained allowances,
+16 GiB combined cap and 2 GiB free-disk floor remain enforced. Before each opaque
+JSON/checkpoint writer, the runner reserves its bytes plus the remaining bounded
+journal allowance. Active scratch must also fit the retained allowance if it
+fails. A preallocated terminal slot preserves a failure summary without needing
+more disk. Successful cleanup removes only verified owned spool files and retains
+the small manifest/hash; failures preserve the spool and never resume it.
+
+The durable journal brackets each decoder/model stage. A model call that raises
+leaves a lower/upper observation range; starting the sole fit consumes it even
+without a returned checkpoint. Real shared Store admission precedes run-output
+creation. Read-only verification reconstructs source correspondence, features,
+all saved selection checkpoints, the fixed comparison and stage order/counts.
+The separate `scale_aicup_pose_learning.py arithmetic` command also understands
+the continuation, retains old/new counters separately and imports no feature
+producer while independently calculating predictions, metrics and representative
+raw-pose features.
+
+Generated checks currently include 111 continuation tests and the new separate
+arithmetic regression. They cover native packed formats, nonzero/VFR clocks,
+rotated 720p pixels, preparation reuse, unknown labels, model interruption,
+shared Store refusal, fake-fit failure/no replay, grant/source/runtime tampering,
+credential-free child setup and read-only verification. The seven rotation cases
+failed against the preceding storage guard and pass after correction. A separate
+metadata-only check verifies the real predecessor's unchanged terminal/Store/
+inventory evidence, with zero new decodes, observations or fits. Broader checks,
+exact PR/main integration and public delivery are still required; this section
+does not claim that #401 or #402 is complete.
+
+For a future granted operation, first run `observe-grant --workspace WORKSPACE
+--output WORKSPACE/.cache/pose402-observations/grant.json`. Then use `freeze`
+with that private `--grant-state`, the delivered `--protocol`, a fresh `--output`
+and a separate fresh `--run-output`. Publish only the returned prospective hash,
+exact source commit, task 402 and its specification hash in a fenced JSON block
+marked `<!-- pose-continuation-intent:v1 -->` on #402. Use `observe-publication`
+with its `--publication-url` to save a private publication receipt beneath
+`.cache/pose402-observations/`. `run` takes `--prospective`,
+`--prospective-sha256`, `--output`, `--grant-state` and `--publication`.
+The supervising session must refresh authenticated grant observations before
+their five-minute freshness bound, renew the controller lease, and verify actual
+process/Store state. Neither observation nor interruption resets a deadline.
+After a complete operation, `verify` takes the same prospective/hash/output;
+the separate arithmetic command additionally requires a fresh `--receipt` path.
+The launcher pins original root/data/weights before application imports and
+strips credentials from its numerical child. Do not invoke old consumed runners.
+
+No new scientific operation has started. The original static/temporal result
+below is unchanged, no model is promoted, accepted complete rally references
+remain **0/2**, and full automatic annotation accuracy remains unproven.
+
 Task [#398](https://github.com/Ken0u/badminton-match-analyzer/issues/398) prepares
 the first actual API dispatch of the unchanged operation frozen under
 [#397](https://github.com/Ken0u/badminton-match-analyzer/issues/397), testing
