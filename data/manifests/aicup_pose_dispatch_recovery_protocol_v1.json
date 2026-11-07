@@ -1,0 +1,37 @@
+{
+  "claim_sha256": "7831a0d3335dd9924e12e1daf9294c4fe0923d86d27088d4ae5c82689dde6357",
+  "grant": {
+    "actor": "Ken0u",
+    "epoch": 1,
+    "granted_at": 1793864201,
+    "host_id": "MSI",
+    "session_id": "3283a9953d4445739251c6b8dfdb55bd"
+  },
+  "limits": {
+    "corrective_invocations": 1,
+    "extra_headroom_seconds": 7200,
+    "forecast_seconds": 28274.657076463565,
+    "grant_observation_seconds": 120,
+    "log_slot_bytes": 1048576,
+    "output_bytes": 4294967296,
+    "real_fits": 1,
+    "scientific_operations": 1,
+    "task_seconds": 57600,
+    "terminal_slot_bytes": 65536
+  },
+  "name": "aicup-pose-dispatch-recovery-v1",
+  "original_committed_at": 1793862568.8576179,
+  "original_granted_at": 1793861134,
+  "proofs": {
+    "pose397-original-invocation-v1.json": "66b38f21e1ce55e29bcc1d7556acfeb6c21dc88ea33127eafb76b51df9a64499",
+    "pose397-original-process-v1.json": "1b033277c273b5e03ba9528a3e73c18d4209cdf950db5fea80b8ee78620134fb",
+    "pose397-original-run-v1-verification.json": "410703c726214ee6010fd4afc87d7cea36c6ba09ae7a985fc0481db451e65a42",
+    "pose397-original-stderr-v1.log": "21de0ba796addb784217b12dc1f9a1f9948bd67e5eb92b9e6af823e0c0e89bb9",
+    "pose397-predispatch-failure-proof-v1.json": "e60dc956a055731b03723b72b23f1555cfdd2692eb2b54acfbbcb54ac1c91873"
+  },
+  "prospective_sha256": "5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6",
+  "scientific_commit": "8bc2b0270e6350281421d7590855627cfdfc1178",
+  "scientific_deadline": 1793905768.8576179,
+  "spec_hash": "6a4c4140d9d9762227d9d203b7e379ecaf304658526f86b069c8d68012aceb67",
+  "task": 398
+}
