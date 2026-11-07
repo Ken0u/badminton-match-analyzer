@@ -34655,6 +34655,7 @@
       "status": "blocked"
     },
     "401": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42425657392",
       "checkpoint": {
         "branch": "codex/issue-401-deliver-the-complete-memory-bounded-pose-e3",
         "head_sha": "86c5db9c6c7f2023497742563476e54f5cfe9f45",
@@ -34674,7 +34675,7 @@
         "spec_hash": "370dfdf41b497bb370d3f176aff9dacee54ed3bfae6da18fdd0bcb9fec112568"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 3,
       "history": [
         {
