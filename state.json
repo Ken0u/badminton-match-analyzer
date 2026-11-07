@@ -8068,6 +8068,15 @@
       "task_id": "401",
       "verb": "checkpoint"
     },
+    "pose401-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1794092839,
+      "epoch": 3,
+      "fingerprint": "4565c0e690079250b6bf96a494d086c57063bf61563d7c6d2424b00ae5da27c4",
+      "status": "review",
+      "task_id": "401",
+      "verb": "submit"
+    },
     "pose402-dependent-science-plan-v1": {
       "actor": "Ken0u",
       "at": 1793961539,
@@ -34664,6 +34673,7 @@
       ],
       "planned_at": 1793961539,
       "planned_by": "Ken0u",
+      "pr_number": 403,
       "reason": "implementation lease expired; reservations retained",
       "spec": {
         "acceptance": [
@@ -34721,7 +34731,13 @@
         ]
       },
       "spec_hash": "370dfdf41b497bb370d3f176aff9dacee54ed3bfae6da18fdd0bcb9fec112568",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "head_sha": "86c5db9c6c7f2023497742563476e54f5cfe9f45",
+        "pr_number": 403,
+        "spec_hash": "370dfdf41b497bb370d3f176aff9dacee54ed3bfae6da18fdd0bcb9fec112568"
+      }
     },
     "402": {
       "epoch": 0,
