@@ -8093,6 +8093,26 @@
       "task_id": "402",
       "verb": "plan"
     },
+    "pose402-next-v1": {
+      "actor": "Ken0u",
+      "at": 1794094747,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+        "branch": "codex/issue-402-execute-the-delivered-memory-bounded-pos",
+        "epoch": 1,
+        "expires_at": 1794105547,
+        "granted_at": 1794094747,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb"
+      },
+      "epoch": 1,
+      "fingerprint": "6b59691f465e083e2cdd61c43034d6b8c98e0eff4c5bc10506f1033209f78d6d",
+      "status": "granted",
+      "task_id": "402",
+      "verb": "next"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -34773,7 +34793,18 @@
       }
     },
     "402": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+        "branch": "codex/issue-402-execute-the-delivered-memory-bounded-pos",
+        "epoch": 1,
+        "expires_at": 1794105547,
+        "granted_at": 1794094747,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb"
+      },
+      "epoch": 1,
       "planned_at": 1793961539,
       "planned_by": "Ken0u",
       "spec": {
@@ -34891,7 +34922,7 @@
         ]
       },
       "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
