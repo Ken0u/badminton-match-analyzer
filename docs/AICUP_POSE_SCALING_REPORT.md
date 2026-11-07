@@ -51,11 +51,12 @@ the continuation, retains old/new counters separately and imports no feature
 producer while independently calculating predictions, metrics and representative
 raw-pose features.
 
-Generated checks currently include 111 continuation tests and the new separate
+Generated checks currently include 115 continuation tests and the new separate
 arithmetic regression. They cover native packed formats, nonzero/VFR clocks,
 rotated 720p pixels, preparation reuse, unknown labels, model interruption,
 shared Store refusal, fake-fit failure/no replay, grant/source/runtime tampering,
-credential-free child setup and read-only verification. The seven rotation cases
+credential-free child setup, authenticated parent refresh/refusal and read-only
+verification. The seven rotation cases
 failed against the preceding storage guard and pass after correction. A separate
 metadata-only check verifies the real predecessor's unchanged terminal/Store/
 inventory evidence, with zero new decodes, observations or fits. Broader checks,
@@ -73,7 +74,10 @@ with its `--publication-url` to save a private publication receipt beneath
 `--prospective-sha256`, `--output`, `--grant-state` and `--publication`.
 The supervising session must refresh authenticated grant observations before
 their five-minute freshness bound, renew the controller lease, and verify actual
-process/Store state. Neither observation nor interruption resets a deadline.
+process/Store state. The launcher itself refreshes the authenticated grant
+immediately before each `freeze` or `run` child; `run` also refreshes its published
+intent directly from GitHub. Authentication or refresh failure prevents the child
+from starting. Neither observation nor interruption resets a deadline.
 After a complete operation, `verify` takes the same prospective/hash/output;
 the separate arithmetic command additionally requires a fresh `--receipt` path.
 The launcher pins original root/data/weights before application imports and

@@ -1142,11 +1142,14 @@ def test_launcher_pins_root_before_import_and_excludes_credentials_from_child(
 ):
     launcher = launcher_module()
     observed = []
+    refreshed = []
     monkeypatch.setenv("GENERATED_API_KEY", "generated-secret")
+    monkeypatch.setenv("GENERATED_ACCESS_KEY_ID", "generated-identifier")
     monkeypatch.setenv("GENERATED_AUTH", "generated-auth")
     monkeypatch.setenv("PYTHONPATH", "generated-untrusted-path")
 
     def child(command, *, env, check):
+        assert refreshed == [True]
         observed.append((command, env))
         assert command[:3] == [sys.executable, "-I", "-B"]
         assert "--worker" in command and check is False
@@ -1156,14 +1159,83 @@ def test_launcher_pins_root_before_import_and_excludes_credentials_from_child(
         assert not any(
             word in key.upper()
             for key in env
-            for word in ("TOKEN", "SECRET", "AUTH", "API_KEY")
+            for word in ("TOKEN", "SECRET", "AUTH", "KEY")
         )
         assert "PYTHONPATH" not in env
         return SimpleNamespace(returncode=0)
 
     monkeypatch.setattr(launcher.subprocess, "run", child)
+    monkeypatch.setattr(
+        launcher, "refresh_before_worker", lambda *_: refreshed.append(True)
+    )
     launcher.launch(["freeze", "--workspace", str(tmp_path)])
     assert len(observed) == 1 and os.environ["GENERATED_API_KEY"] == "generated-secret"
+
+
+@pytest.mark.parametrize("command", ["freeze", "run"])
+def test_parent_refreshes_authenticated_grant_and_run_publication_before_child(
+    tmp_path, monkeypatch, command
+):
+    launcher = launcher_module()
+    grant = tmp_path / ".cache/pose402-observations/grant.json"
+    publication = tmp_path / ".cache/pose402-observations/publication.json"
+    publication.parent.mkdir(parents=True)
+    publication.write_text(json.dumps({"url": "generated-publication-url"}))
+    calls = []
+
+    def observe(argv, quiet=False):
+        assert quiet is True
+        assert argv[argv.index("--workspace") + 1] == str(tmp_path)
+        calls.append(argv)
+
+    def child(*_args, **_kwargs):
+        assert [call[0] for call in calls] == (
+            ["observe-grant", "observe-publication"]
+            if command == "run"
+            else ["observe-grant"]
+        )
+        assert calls[0][calls[0].index("--output") + 1] == str(grant)
+        if command == "run":
+            assert calls[1][calls[1].index("--output") + 1] == str(publication)
+            assert calls[1][-1] == "generated-publication-url"
+        return SimpleNamespace(returncode=0)
+
+    monkeypatch.setattr(launcher, "observe", observe)
+    monkeypatch.setattr(launcher.subprocess, "run", child)
+    launcher.launch(
+        [command, "--workspace", str(tmp_path), "--grant-state", str(grant)]
+        + (["--publication", str(publication)] if command == "run" else [])
+    )
+
+
+@pytest.mark.parametrize("failed_observation", ["observe-grant", "observe-publication"])
+def test_parent_authentication_failure_prevents_numerical_child(
+    tmp_path, monkeypatch, failed_observation
+):
+    launcher = launcher_module()
+    publication = tmp_path / "publication.json"
+    publication.write_text(json.dumps({"url": "generated-publication-url"}))
+
+    def observe(argv, quiet=False):
+        if argv[0] == failed_observation:
+            raise RuntimeError("Generated authentication refusal")
+
+    monkeypatch.setattr(launcher, "observe", observe)
+    monkeypatch.setattr(
+        launcher.subprocess, "run", lambda *_a, **_k: pytest.fail("Child after refusal")
+    )
+    with pytest.raises(RuntimeError, match="authentication refusal"):
+        launcher.launch(
+            [
+                "run",
+                "--workspace",
+                str(tmp_path),
+                "--grant-state",
+                "generated.json",
+                "--publication",
+                str(publication),
+            ]
+        )
 
 
 def test_observation_writer_cannot_replace_old_runs_or_escape_private_area(tmp_path):
@@ -1194,8 +1266,6 @@ def test_public_subprocess_help_and_bad_freeze_never_open_scientific_sources(tmp
             "freeze",
             "--workspace",
             str(tmp_path),
-            "--grant-state",
-            str(tmp_path / "missing-grant.json"),
             "--protocol",
             str(protocol),
             "--output",
@@ -1208,7 +1278,7 @@ def test_public_subprocess_help_and_bad_freeze_never_open_scientific_sources(tmp
     )
     assert (
         failure.returncode != 0
-        and "Changed fixed continuation protocol" in failure.stderr
+        and "Exactly one --grant-state is required" in failure.stderr
     )
     assert not (tmp_path / ".cache").exists()
 

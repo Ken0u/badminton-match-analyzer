@@ -43,7 +43,7 @@ def private_write(root, path, value):
     os.replace(temporary, path)
 
 
-def observe(argv):
+def observe(argv, quiet=False):
     from datetime import datetime
 
     parser = argparse.ArgumentParser(
@@ -104,7 +104,38 @@ def observe(argv):
             ),
         }
     private_write(root, args.output, value)
-    print(json.dumps({"observed": args.command, "new_decodes": 0, "real_fits": 0}))
+    if not quiet:
+        print(json.dumps({"observed": args.command, "new_decodes": 0, "real_fits": 0}))
+
+
+def refresh_before_worker(argv, root):
+    """Only the authenticated parent refreshes evidence; children get no credentials."""
+
+    def option(name):
+        flag = "--" + name
+        if argv.count(flag) != 1 or argv.index(flag) + 1 >= len(argv):
+            raise ValueError("Exactly one " + flag + " is required")
+        return argv[argv.index(flag) + 1]
+
+    observe(
+        ["observe-grant", "--workspace", str(root), "--output", option("grant-state")],
+        quiet=True,
+    )
+    if argv[0] == "run":
+        publication = Path(option("publication"))
+        url = json.loads(publication.read_bytes())["url"]
+        observe(
+            [
+                "observe-publication",
+                "--workspace",
+                str(root),
+                "--output",
+                str(publication),
+                "--publication-url",
+                url,
+            ],
+            quiet=True,
+        )
 
 
 def launch(argv=None):
@@ -115,7 +146,14 @@ def launch(argv=None):
     if worker:
         argv.pop(0)
     root = workspace(argv)
-    denied = ("TOKEN", "SECRET", "PASSWORD", "API_KEY", "CREDENTIAL", "AUTH", "COOKIE")
+    if (
+        not worker
+        and argv
+        and argv[0] in ("freeze", "run")
+        and not any(flag in argv for flag in ("--help", "-h"))
+    ):
+        refresh_before_worker(argv, root)
+    denied = ("TOKEN", "SECRET", "PASSWORD", "KEY", "CREDENTIAL", "AUTH", "COOKIE")
     environment = {
         key: value
         for key, value in os.environ.items()
