@@ -34673,6 +34673,7 @@
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
         "spec_hash": "370dfdf41b497bb370d3f176aff9dacee54ed3bfae6da18fdd0bcb9fec112568"
       },
+      "delivery_attempts": 1,
       "delivery_pending": true,
       "epoch": 3,
       "history": [
