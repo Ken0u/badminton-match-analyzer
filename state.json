@@ -8122,6 +8122,22 @@
       "task_id": "402",
       "verb": "release"
     },
+    "pose404-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1794095508,
+      "fingerprint": "92d87022f1b4d8a3d83dca2dd71f6e95284eff6972a6a5980d9330052e3cf07e",
+      "status": "ready",
+      "task_id": "404",
+      "verb": "plan"
+    },
+    "pose405-plan-v1": {
+      "actor": "Ken0u",
+      "at": 1794095508,
+      "fingerprint": "a286e459a25ed2db5d04fceef4f9a227e51164e35026e49cac591c13854dbbf1",
+      "status": "ready",
+      "task_id": "405",
+      "verb": "plan"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -13084,6 +13100,22 @@
       "fingerprint": "222c14b3b62b34ca00d4c68479791a30cbaa5ab51d415f6cb09ae439f0636ab6",
       "status": "ready",
       "task_id": "402",
+      "verb": "plan"
+    },
+    "spec-404-151206dd7ac03bd3169808d744c6fef8f15de90ebfe97068b1a710609bcbdc55": {
+      "actor": "Ken0u",
+      "at": 1794095508,
+      "fingerprint": "9730c6ed0964b74916b627bd498609287c2f6afa974377103dc85c1c36fe7d51",
+      "status": "ready",
+      "task_id": "404",
+      "verb": "plan"
+    },
+    "spec-405-03a7cc524c13341a2fcbadad43bcbcbf8159064c87ac2271e6000835bcd87e23": {
+      "actor": "Ken0u",
+      "at": 1794095508,
+      "fingerprint": "304a762c5732552da08ef8499e488ffbd845b479d11262aafc381c994a84106f",
+      "status": "ready",
+      "task_id": "405",
       "verb": "plan"
     },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
@@ -34857,7 +34889,7 @@
       ],
       "planned_at": 1793961539,
       "planned_by": "Ken0u",
-      "reason": "released after terminal proof",
+      "reason": "Issue closed by collaborator; re-plan explicitly after reopening",
       "spec": {
         "acceptance": [
           "Require verified controller integration, exact merged-main checks and complete public delivery of the runner task before claiming this scientific task. Preserve consumed398/zero-operation400 clocks and all old evidence; task400 deadline1793988352 is not extended. Obtain a new matching research grant, source snapshot, prospective commitment and exclusive successor claim. All447clips/5037references/353validation rows, remaining398clips and old completed artifacts remain unchanged. This separately specified operation owns new16hour task/12hour operation bounds; no automatic retry or later clock reset.",
@@ -34973,6 +35005,182 @@
         ]
       },
       "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb",
+      "status": "blocked"
+    },
+    "404": {
+      "epoch": 0,
+      "planned_at": 1794095508,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve fully delivered401 source b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f and all prior398/400 evidence/deadlines, draft399/390, root edit/environment/data/weights/annotations. Task402 metadata freeze failed at psutil.disk_usage(WindowsPath) before any prospective output, successor claim, run output, shared Store job, media decode, model observation or fit. After accepted documented no-job release, close402 transferred/incomplete with links; retain grant1794094747/deadline1794152347 and its failure receipt/branch. No source or clock reset.",
+          "Convert path-like arguments to native filesystem text before all three continuation psutil.disk_usage call sites: FrameSpool.guard, disk_budget and OutputBudget.scratch. Preserve exact RAM/disk/record/decompression/journal/deadline/admission/reuse counters and all scientific feature/model/normalization/fit/selection semantics. No fallback, threshold, dependency or workflow change.",
+          "Reproduce the defect with generated-only tests against the actual installed psutil disk API, including a strict Windows-style string boundary covering all three real call paths. Prove the regressions fail on delivered b0bf642 and pass after the adapter. Do not hide this path-type boundary behind permissive resource mocks; preserve other generated guards and full denominator/no-replay/credential-stripped launcher controls. No original media or private semantic-label reading.",
+          "Bind the delivered runner and fixed manifest to code task404 and dependent scientific task405/specification e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb, including authenticated grant/publication observations for405 and its own private observation directory. Require sealed zero-operation402 admission evidence before a future scientific freeze. Preserve consumed398 and zero-operation400/402 clocks and leave the unchanged unused successor claim exclusive. A code-only404 grant cannot launch real science; science405 remains unclaimed until exact main/public delivery.",
+          "Update the aggregate report to distinguish401software delivery from402failed actual admission and the pending405comparison. Report the real Windows API regression and actual verification; no improved model, accuracy claim, scientific success or promotion.",
+          "Run focused/full Python, Ruff/format, dependency/repository/JSON/links/UTF-8/LF/diff and clean package/installed HTTP authentication checks. Commit focused changes, open linked PR and submit through the controller. Require exact PR/main success and complete public package/container delivery before405. Preserve original research and all failure evidence; no manual merge or CI retry."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "401"
+        ],
+        "exclusions": [
+          "No real-source decoding, perception/model calls, classifier fits, private semantic-label reading, image transfer, source/model acquisition, scientific replay/resume or old artifact/claim/deadline edits. Generated media/disposable Store and metadata/integrity-only original-evidence checks only.",
+          "No app/UI/API/default/asset changes, auth/security/deployment/policy/workflow/dependency changes, process signals, raw Store/coordination writes, manual merge, CI retry, paid service, source/fold/validation/unknown changes or deprecated PROGRESS updates."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_runtime_hours": 24,
+          "paid_services": false,
+          "real_classifier_fits": 0,
+          "real_model_observations": 0,
+          "real_source_decode_visits": 0
+        },
+        "milestone": "Event recognition",
+        "outcome": "Repair Windows native disk-space admission and deliver real-API generated verification before unchanged separately granted pose science.",
+        "paths": [
+          "backend/badminton/aicup_pose_continuation.py",
+          "scripts/continue_aicup_pose_scaling.py",
+          "tests/test_aicup_pose_continuation.py",
+          "data/manifests/aicup_pose_continuation_protocol_v1.json",
+          "docs/AICUP_POSE_SCALING_REPORT.md"
+        ],
+        "priority": 50,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated real-psutil disk admission regression fails on original and passes after fix; complete existing focused/full/tooling/package/controller/main/public delivery. Zero actual science under this grant."
+        ]
+      },
+      "spec_hash": "6ebeac9244ff7c491285ee32ed11c794472402a3dc9e212f0f5c31fef784ea75",
+      "status": "ready"
+    },
+    "405": {
+      "epoch": 0,
+      "planned_at": 1794095508,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Task405 follows the zero-science task402 metadata admission failure. Require complete controller/main/public delivery of code repair404 at its exact source before claiming. Preserve402 source b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f, grant1794094747, original16hour deadline1794152347, managed CLI terminal exit1, no original CLI PID capture, no prospective/successor claim/run output/Store job and zero source decodes/model observations/fits. Do not reset or replay402 or alter its frozen source. This separately specified task alone owns its fresh16hour task/12hour operation windows and identical unchanged scientific bounds; there was no402scientific operation to repeat. Require the sealed402admission-failure receipt plus all predecessor/control/input seals before any new science.",
+          "Require verified controller integration, exact merged-main checks and complete public delivery of the runner task before claiming this scientific task. Preserve consumed398/zero-operation400 clocks and all old evidence; task400 deadline1793988352 is not extended. Obtain a new matching research grant, source snapshot, prospective commitment and exclusive successor claim. All447clips/5037references/353validation rows, remaining398clips and old completed artifacts remain unchanged. This separately specified operation owns new16hour task/12hour operation bounds; no automatic retry or later clock reset.",
+          "Before new science, deliver/test the memory-safe continuation and fixed public protocol and publish its exact committed source/runtime/protocol/input/control/preservation seals and one exclusive successor execution claim. The old claim remains consumed and unchanged. This task explicitly authorizes one successor operation with the changed execution/storage bounds below; it is not a rerun or extension of the old API commitment. One16hour task window and one12hour operation window from fresh grant/first prospective commitment respectively; no lease, output or interruption resets either bound. Require metadata-only forecast plus at least2hours uncosted overhead headroom at admission.",
+          "Keep the same447development clips/165470frames/5037published rows:424training clips /4684rows and exactly the original23validation clips/353rows. Use only the pinned archive/index/capture groups/clock ledger. Exclude held-out/test and unlabelled CSV/media members before opening. Reuse all45original pilot native artifacts and784features without decoding/model calls; additionally verify/reuse all four398completed clips /2200frames/60features by inventory, source clocks, pose coverage and independently reconstructed correspondence/features, without decoding or inference.",
+          "The failed fifth clip remains incomplete and retains all original evidence and unknown partial observations. Verify/reuse its existing source, native-clock, camera, video and timestamp artifacts; do not rescan its already completed preparation. Explicitly authorize exactly one further1051frame decode and one complete1051frame pose pass for that failed clip in a successor-owned output. Do not reinterpret its lost RAM cache as retained pixels or partial predictions as complete truth. Remaining397clips receive exactly one preparation decode and one perception decode/model pass each. No rerun of a completed clip and no retry after any new partial failure.",
+          "Replace only research pixel storage: stream exact original native ndarray/plane records into one exclusive disk-backed spool per active clip. Preserve original pack/unpack pixel/hash/format/plane/color/PTS/time-base semantics and prove RGB/BGR byte parity for VFR, nonzero-origin and rotated/native packed-format cases. Keep at most two reconstructed frames, each bounded by declared dimensions, and at most64MiB of application-owned cache records/pixel payload in RAM. Never read the whole spool into memory, use an unbounded mmap, or weaken the512MiB live-RAM safety reserve. Use at most8GiB scratch for one active clip, an8GiB cumulative retained-output cap including all predecessor/new receipts/logs/artifacts,16GiB combined disk cap and 2GiB free-disk reserve. Metadata costing must verify bounds before source opening.",
+          "The scratch directory must be a fresh exclusively owned location beneath the successor run with no symlink/junction escape. Count it throughout execution; retain small immutable manifests/hashes. On normal verified completion, unlink only exact owned transient spool files after readers close, never recursive removal or historical artifact deletion. On failure preserve evidence and the terminal spool under the cap; no automatic resume/restart. Missing/changed/truncated/corrupt frame records and unexpected memory/disk pressure fail closed. Restore scoped decoder adapters on every exit, preserving native FFmpeg logging restoration before media open/close.",
+          "Bound decompression before allocation: validate dtype, positive integral shape/dimensions, format/plane count/stride/height and overflow-safe exact raw byte count against the64MiB cache payload budget before writing or reading any record. Use bounded incremental decompression with a one-byte excess sentinel; reject excess/short output, incomplete streams, trailing or concatenated compressed data and unexpected format layouts before constructing ndarray or AVFrame objects. Account compressed records, decompressed reconstruction, live-frame payloads and packing/parity-check temporary buffers together within the declared cache memory bound; twoLRUframes alone is not a memory bound. Generated corrupt-metadata, high-expansion, overflow and valid plane-format controls must demonstrate bounded allocation and exact source pixel/clock parity without real media decoding or scientific execution.",
+          "Metadata-only scratch costing retains every remaining clip: the sealed clock ledger certifies398clips/138997frames at1280x720, maximum1416frames per clip. Bound each complete serialized spool record, including metadata and compressed pixels, to5MiB and aggregate index/manifests to1MiB. The worst-case one-clip scratch reservation is7424966656bytes, below8GiB. These are admission bounds, not observed native formats or achieved compression. Validate actual format/raw-byte and record limits under the fresh grant before accepting each frame; any excess stops without fallback, row exclusion or retry. Retained partial failed spool counts against cumulative retained-output and combined-disk caps. The old metadata ledger does not certify dtype/native plane strides; retain that distinction.",
+          "All preparation/native/features/oneCPUfit run under the real original shared Store run_local_job, with BADMINTON_ROOT/DATA_DIR/WEIGHTS_DIR pinned before imports and the original project Python/runtime. Credentials stay outside scientific children. Initialize torchvision before threaded PyAV; preserve stride1 small-pose CUDA, dual trackers, automatic court, camera cuts, source PTS/orientation and calibration expiry. No fallback or model/threshold/numerical change. Verify exact live process lifetimes/command/cwd and Store/artifacts; timeout is not exit. Record monotonic durable per-stage counts with explicit uncertainty on interrupted model calls.",
+          "Apply unchanged387weak matching rules at both[H-1,H]endpoints and unchanged391static 108value center/center/zero-velocity features. Reuse all844sealed old/completed features; construct only4193remaining training features. Preserve every unknown, H0censored and unavailable row and the full5037row cohort. Weak actor coordinates never become features or verified actor/scene truth. Source rights, original-match independence and upstream pretraining remain unresolved.",
+          "Run exactly one new private CPUfit after all447clip inventories/features pass. Keep the9386parameter108->64->32static network, seed20261104,2threads,300epochs, batch64,AdamWlr0.001/weight_decay0.01,dropout0.1,family/side loss1/0.5, training-only mean/std-floor0.05/clip10 and inverse-sqrt supported-class weights. Use all8family groups/2sides and the same60five-epoch selection checkpoints, supported-group macroF1/side balanced recall then strict joint then earlier epoch. Compare on precisely353validation rows against sealed391static predictions, features/statistics/weights without refit/reselection. No sweep, augmentation, threshold tuning, additional fit, held-out predictions or promotion.",
+          "Read-only verification recomputes canonical targets, preserved/new input integrity and feature rows, normalization/weights, all60saved checkpoint predictions/metrics and fixed353row comparison without source decode, model perception or fit. Separate producer-free arithmetic verifies original/new predictions, metrics, denominators and representative raw-pose feature calculations. Report full per-source/fold /family/side/joint support, confusion, precision/recall/F1, unavailable counts and conditional denominators; static0.415854familyF1/143of353joint control stays visible.",
+          "Explicit accounting across attempts:398used6502decode visits and2200to3251model observations with exact total unknown. This successor permits at most276943new decode visits and138997new model observations; cumulative ceilings283445/142248 respectively, including up to1051repeat failed-clip visits/observations. All 402additional training clips and4253rows remain included. At most one fit across both attempts;402new clips are not silently reduced to the398remaining clips. Old scientific deadline1793905768.8576179and failed invocation remain preserved; successor deadlines are separately explicit and fixed, never old-run resets.",
+          "Generated regressions exercise actual public CLI entry/run/verify, real shared-Store admission, exact repeated/out-of-order court/tracker pixel reads, bounded RAM/disk accounting, corruption/truncation/change guards, safe owned spool cleanup/failure preservation, observer uncertainty, changed/live predecessor evidence, no completed clip replay, correct failed-clip clock reuse, historical seals, exclusive successor claim and immutable runtime/deadline. Run focused/full/lint/format/dependency /repository/diff and clean package/installedHTTP checks before real processing, then original read-only verification and separate arithmetic. Controller exact PR/main/full public delivery remains required; no scientific success from software checks. Complete accepted rally references remain0/2; all weights stay private.",
+          "The source and protocol delivered by the code task are frozen by exact merged revision and published hashes before opening real inputs. This task changes only the owning aggregate report, not implementation, workflow or model/feature/selection recipes. If an implementation defect prevents admission, preserve consumed state and plan a separately granted repair; never edit the frozen source during the operation."
+        ],
+        "artifacts": {
+          "actor-correspondence-completion": "b89e2d5c7e2ca711ccdc36f83dfb9eae673ac8317bf3fe9f06ee60256a48d7fb",
+          "actor-correspondence-diagnostics": "6d01625e726d113ba17a82df59ae976dd628727386ebe2bf094a5fc5bb745856",
+          "actor-prospective-freeze": "ed36c13f0c87fc867ccf0736311c4d8a39c87361a9a2bfd3e0c515d43fd5e030",
+          "aicup-capture-groups": "7e97f6101cb7339a339bc0f8b0ab4e6142c0e0157101217fbac93a0bf933afc5",
+          "aicup-clip-index": "ab1b906c6d5032d666ae02a66dd2049fc8ee1b297a979bf16bbca8cf7904e703",
+          "aicup-original-part1": "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b",
+          "aicup-pose-native-completion": "fe0021fca0236d2701f86d2274b3799ffae7ca5a77fffaca419e296c13deb523",
+          "aicup-pose-preparation": "24110a19919ba0307fbeff375d64ea973ab535ac6bf8b63f2b78cf7ff8563dea",
+          "aicup-source-records": "1362ae1cd88e3b975fff0b3bfa1144c19c7e64b8ace1d188081802893ef95d44",
+          "native-small-pose-model": "1060bda4a27012060eca246f9b2adeea22eabb045a1e58f8d229be29b7ebc2ba",
+          "original-source-clock-ledger": "de5ca6509087dfd79048e179fc500536660127b8c7927aad995ab8faf739585b",
+          "pose-scaling-structural-cost": "0f33876be34aad215b6b14373fb0e298f668552142bb42c2eb8811759cf2ba3e",
+          "pose391-original-completion": "42500f898ad6a1fd4548d42dd233f25826be9f7ea8cc6248fb10ab735dc84dd3",
+          "pose391-original-features": "12bc9769a57077ed33e50d5fccec69386760487ce8fce0a9f5e4269a5da7e1be",
+          "pose391-static-model": "ae66352af2877a58a5d665b69a5077b0319f613e27087ff285c10b0cfc9605ae",
+          "pose391-static-statistics": "ba02db68741ad8e2bbf548f1395aa1fd6c6bd6e5654c272122b4ce003c51d367",
+          "pose394-cache-protocol": "7e9a44c4c1bba4b64f61712f077e185119d7670a88a8f769c78f4e1a403eae9c",
+          "pose394-full-v1": "08c06339944574b1a0588effeab0dd4221904abaf0a19e64d337ce2da2bb9003",
+          "pose394-generated-controls": "477e7beffcbd67df21bd7d9c0f9f1ac52e344d5b74980c8d6e175439deae510d",
+          "pose394-prepared-consumer": "45004886f086353f7cb1a69e039e7b79eea9ecea50f192d93c5db3fcdef75766",
+          "pose394-runtime-cost": "60e8a042073787337ce740d2b689e49beca02eb5ec48d01fdce013c36221b1a4",
+          "pose397-corrected-consumer": "78f9495526c0af1e4d68cb59edec7e4aa4477deec1ec0805eaa1912488b0311d",
+          "pose397-corrected-controls": "fae72950ac437700d4ccfc52a1541899324620c4de5a837863fa8f3932e2c8b0",
+          "pose397-failed-invocation": "66b38f21e1ce55e29bcc1d7556acfeb6c21dc88ea33127eafb76b51df9a64499",
+          "pose397-failed-process": "1b033277c273b5e03ba9528a3e73c18d4209cdf950db5fea80b8ee78620134fb",
+          "pose397-failed-stderr": "21de0ba796addb784217b12dc1f9a1f9948bd67e5eb92b9e6af823e0c0e89bb9",
+          "pose397-failed-terminal": "410703c726214ee6010fd4afc87d7cea36c6ba09ae7a985fc0481db451e65a42",
+          "pose397-original-claim": "7831a0d3335dd9924e12e1daf9294c4fe0923d86d27088d4ae5c82689dde6357",
+          "pose397-original-full-checks": "28be66883818b9ef8bb732965bb7d77e3a05d8d8efd8b395b8fc7e7a3aa6027b",
+          "pose397-original-prospective": "5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6",
+          "pose397-predispatch-proof": "e60dc956a055731b03723b72b23f1555cfdd2692eb2b54acfbbcb54ac1c91873",
+          "pose398-completed-0-receipt": "583c24c10d015343ee00cd4a72a0a1651182d6bdc9f76ab2b694e13c6a3b618d",
+          "pose398-completed-1-receipt": "6d0123b7697724fdf53ba7cb52b871216b4cb8728a7845b8fbd073f1b83c85b7",
+          "pose398-completed-2-receipt": "4bc1f37b8e849d98ca8d2153903525e9869b12e457428d202fea8edf1f8962c5",
+          "pose398-completed-3-receipt": "f400e4cd9f61960a0ebbadd33f363fe774983a017fcabee5bc121bb890853785",
+          "pose398-failure": "f0c31fc5564f76254320d999d4367b1c4223afd43685917bec37d814565cda19",
+          "pose398-private-failure-preservation": "10598be437b8d3b3ff1d262e3f15aed29e7232f98447fdbf6688053f87262c1c",
+          "pose398-terminal": "528b6cd97947f8d2cdbea2f7dd7fa85ee73c6c2050f41728f25364f961f45796",
+          "pose402-admission-failure": "53d028580f96714b38858554b144a88980dfdb9e15315374435e550aa61c3819",
+          "pose402-input-integrity": "86a371b2e0b780b5972b75e2ccc73d624ca8d01de019d58d58bf32cb0ab0dd6a"
+        },
+        "capabilities": [
+          "cuda",
+          "windows",
+          "cpu"
+        ],
+        "dependencies": [
+          "391",
+          "393",
+          "401",
+          "404"
+        ],
+        "exclusions": [
+          "No new source/model acquisition, external image/label transfer, assessor sessions, held-out/test access, source/fold/validation changes, label/scientific truth or eligibility promotion, model/architecture/hyperparameter/threshold changes, extra fit/sweep, completed-clip replay, original artifact/source/claim/deadline writes, app/UI/API/defaults, workflow/dependency/security/credential/deployment/policy changes, process signals, paid service, manual merge, CI retry, raw coordination /Store writes, historical evidence deletion or deprecated PROGRESS updates.",
+          "No replay of the consumed398operation or API wrapper; only the explicitly accounted one successor operation under a fresh grant/claim and separately frozen changed storage/runtime bounds. No automatic retry/resume after a successor partial failure."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_all_attempts_real_fits": 1,
+          "max_combined_disk_bytes": 17179869184,
+          "max_cumulative_decoded_frame_visits": 283445,
+          "max_cumulative_model_observations": 142248,
+          "max_new_decoded_frame_visits": 276943,
+          "max_new_model_observations": 138997,
+          "max_ram_cache_bytes": 67108864,
+          "max_real_fits": 1,
+          "max_reconstruction_lru_frames": 2,
+          "max_reference_rows": 5037,
+          "max_remaining_clips": 398,
+          "max_repair_rounds": 2,
+          "max_retained_output_bytes": 8589934592,
+          "max_runtime_hours": 16,
+          "max_scientific_operation_hours": 12,
+          "max_scratch_bytes": 8589934592,
+          "max_spool_index_and_manifest_bytes": 1048576,
+          "max_spool_record_bytes": 5242880,
+          "max_successor_operations": 1,
+          "minimum_free_disk_bytes": 2147483648,
+          "minimum_free_ram_bytes": 536870912,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Execute the delivered memory-bounded pose continuation once under a fresh scientific grant and unchanged fixed comparison.",
+        "paths": [
+          "docs/AICUP_POSE_SCALING_REPORT.md"
+        ],
+        "priority": 80,
+        "resources": [
+          "gpu:windows-primary",
+          "cpu:windows-training"
+        ],
+        "risk": "routine",
+        "verification": [
+          "Preserve/revalidate398terminal evidence and all four completed clips. Reuse844sealed features; process only remaining398clips/4193references, with explicit fifth-clip decode/model repetition and preserved all5037references/353validation rows.",
+          "Prove bounded disk-backed exact native pixel/clock parity and64MiB cache payload without changing scientific thresholds/model/recipe or old evidence. Preserve real shared Store, original environments/data and all unknown/partial counts.",
+          "One fixed-fit353row comparison, read-only original verification and separate arithmetic after actual completion; controller exact PR/main/public delivery. Software checks and broader weak supervision are not accuracy or promotion."
+        ]
+      },
+      "spec_hash": "e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb",
       "status": "ready"
     },
     "62": {
