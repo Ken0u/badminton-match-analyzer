@@ -8021,6 +8021,26 @@
       "task_id": "401",
       "verb": "next"
     },
+    "pose401-code-only-next-v2": {
+      "actor": "Ken0u",
+      "at": 1794088980,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-401-deliver-the-complete-memory-bounded-pose-e3",
+        "epoch": 3,
+        "expires_at": 1794099780,
+        "granted_at": 1794088980,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "370dfdf41b497bb370d3f176aff9dacee54ed3bfae6da18fdd0bcb9fec112568"
+      },
+      "epoch": 3,
+      "fingerprint": "a4b06d219aaab610a39f9b130297766e9a8ab70c9b117a342b40ff80bf91f4a9",
+      "status": "granted",
+      "task_id": "401",
+      "verb": "next"
+    },
     "pose401-code-only-recovery-v1": {
       "actor": "Ken0u",
       "at": 1794088663,
@@ -34589,7 +34609,18 @@
         "head_sha": "be3549191966ef03ffc53a49e07dfc6db463a304",
         "summary": "Resume code-only task after unattended lease expiry. No implementation or scientific process was launched under epoch1. Preserve tested inherited code:6426 passed/four optional skips; tooling/package checks pass. Scientific counters remain zero. Original 398/400 deadlines and evidence remain unchanged. Full continuation CLI and generated integration still required; scientific execution remains separately dependent on402."
       },
-      "epoch": 2,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
+        "branch": "codex/issue-401-deliver-the-complete-memory-bounded-pose-e3",
+        "epoch": 3,
+        "expires_at": 1794099780,
+        "granted_at": 1794088980,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "370dfdf41b497bb370d3f176aff9dacee54ed3bfae6da18fdd0bcb9fec112568"
+      },
+      "epoch": 3,
       "history": [
         {
           "at": 1794088663,
@@ -34670,7 +34701,7 @@
         ]
       },
       "spec_hash": "370dfdf41b497bb370d3f176aff9dacee54ed3bfae6da18fdd0bcb9fec112568",
-      "status": "ready"
+      "status": "running"
     },
     "402": {
       "epoch": 0,
