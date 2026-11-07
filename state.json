@@ -8050,6 +8050,15 @@
       "task_id": "401",
       "verb": "recover"
     },
+    "pose401-complete-code-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1794091065,
+      "epoch": 3,
+      "fingerprint": "11a9b1bb630d8805ab739619499d7122556aaa721c53dbe18175dd1d926c1f30",
+      "status": "running",
+      "task_id": "401",
+      "verb": "checkpoint"
+    },
     "pose402-dependent-science-plan-v1": {
       "actor": "Ken0u",
       "at": 1793961539,
@@ -34605,16 +34614,18 @@
     },
     "401": {
       "checkpoint": {
-        "branch": "codex/issue-401-deliver-the-complete-memory-bounded-pose",
-        "head_sha": "be3549191966ef03ffc53a49e07dfc6db463a304",
-        "summary": "Resume code-only task after unattended lease expiry. No implementation or scientific process was launched under epoch1. Preserve tested inherited code:6426 passed/four optional skips; tooling/package checks pass. Scientific counters remain zero. Original 398/400 deadlines and evidence remain unchanged. Full continuation CLI and generated integration still required; scientific execution remains separately dependent on402."
+        "branch": "codex/issue-401-deliver-the-complete-memory-bounded-pose-e3",
+        "head_sha": "9a9fca34e737722d505acd0724f5c99888362031",
+        "remaining": "Finish full verification; address the parent-launcher review finding so authenticated grant/publication observations are always refreshed before freeze/run; rerun relevant exact-source checks, then publish/submit tested PR and require controller/main/public delivery before402.",
+        "summary": "Complete continuation implementation committed locally; preservation/rotation fixes, exact science-grant binding, source/clock/feature reuse, scoped model counting, bounded disk outputs/journal/terminal, public CLI and read-only/separate arithmetic verification. 302 focused checks plus six later predecessor regressions passed. Tooling and clean package/installed HTTP/authentication pass at this revision. Full Python suite is verified live. All scientific counters remain zero. Original398/400 evidence/deadlines, drafts399/390, root edits and deprecated PROGRESS remain preserved. No scientific grant, source decoding, model observation, fit, PR submission, retry or manual merge."
       },
+      "checkpoint_at": 1794091065,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "7ecc6b00bad81f006ed94f680dc8d06235b2e7a5",
         "branch": "codex/issue-401-deliver-the-complete-memory-bounded-pose-e3",
         "epoch": 3,
-        "expires_at": 1794099780,
+        "expires_at": 1794101865,
         "granted_at": 1794088980,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
