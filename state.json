@@ -8113,6 +8113,15 @@
       "task_id": "402",
       "verb": "next"
     },
+    "pose402-release-no-science-v1": {
+      "actor": "Ken0u",
+      "at": 1794095255,
+      "epoch": 1,
+      "fingerprint": "54d8b30c0e0c722c959ce78c21d6a1a53cbfd54df77d3418cf95100cda3aaac9",
+      "status": "ready",
+      "task_id": "402",
+      "verb": "release"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -34793,20 +34802,62 @@
       }
     },
     "402": {
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
-        "branch": "codex/issue-402-execute-the-delivered-memory-bounded-pos",
-        "epoch": 1,
-        "expires_at": 1794105547,
-        "granted_at": 1794094747,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1794095255,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+            "branch": "codex/issue-402-execute-the-delivered-memory-bounded-pos",
+            "epoch": 1,
+            "expires_at": 1794105547,
+            "granted_at": 1794094747,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "admission_failure_sha256": "53d028580f96714b38858554b144a88980dfdb9e15315374435e550aa61c3819",
+              "all_matching_launchers_absent": true,
+              "branch": "codex/issue-402-execute-the-delivered-memory-bounded-pos",
+              "delivered_code_verification_sha256": "d7b701eb82131a61e2cc9f69711806bf07d69a2a1513681a59aeff5d69faf3f8",
+              "input_integrity_sha256": "86a371b2e0b780b5972b75e2ccc73d624ca8d01de019d58d58bf32cb0ab0dd6a",
+              "local_head_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+              "managed_metadata_cli_terminal_exit_code": 1,
+              "metadata_cli_original_pid_not_recorded": true,
+              "original_task_deadline": 1794152347,
+              "original_task_granted_at": 1794094747,
+              "previous_scientific_identity_evidence": "https://github.com/Ken0u/badminton-match-analyzer/issues/74#issuecomment-6674758593",
+              "scientific_process_identity_is_historical": true,
+              "successor_claim_created": false,
+              "summary": "Task402 failed metadata-only freeze admission at the Windows psutil path-type API before any prospective output, exclusive successor claim, run output or shared Store job. Its managed CLI completed exit1; original CLI PID was not recorded, and a complete current process scan establishes no matching launcher. No scientific worker ever started. The process field explicitly reuses the unchanged already-public last scientific worker from398, independently still absent; it is not a claimed402 worker or CLI PID. Preserve402 grant/deadline and zero science counters, original398/400 evidence and all delivered401 code. Release only for separately planned API repair and later fresh source-bound science; no scientific replay, clock reset or manual merge."
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "\"C:\\Program Files\\Python310\\python.exe\" -I -B -c \"\nimport json, sys\nfrom pathlib import Path\nbackend, action, prospective, expected, output = sys.argv[1:]\nbackend = Path(backend).resolve()\nsys.path.insert(0, str(backend))\nfrom badminton import aicup_pose_scaling as scaling\nassert Path(scaling.__file__).resolve().parents[1] == backend\nfor name, module in list(sys.modules.items()):\n    if name == 'badminton' or name.startswith('badminton.'):\n        assert Path(module.__file__).resolve().is_relative_to(backend)\nif action == 'check':\n    plan = scaling.prospective(Path(prospective), expected, True)\n    scaling.learning.validate_workspace(plan)\n    scaling.original_inputs(plan)\n    scaling.input_sources(plan)\n    result = dict(integrity_only=True, new_decodes=0, real_fits=0)\nelif action == 'run':\n    result = scaling.run(prospective_path=Path(prospective),\n                         prospective_sha256=expected, output=Path(output))\nelif action == 'verify':\n    result = scaling.verify(prospective_path=Path(prospective),\n                            prospective_sha256=expected, output=Path(output))\nelse:\n    raise ValueError('Unknown frozen API action')\nprint(json.dumps(result, indent=2, allow_nan=False))\n\" C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose397-scientific-8bc\\backend run C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose397-freeze-v1\\prospective.json 5603570cf1a40bd8dfee776c9a21b3ac44ac6e0c68073810da917ebd964c6be6 C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose397-run-v1",
+              "creation_time": 1793866861.5081935,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose397-scientific-8bc",
+              "exited": true,
+              "pid": 22212
+            },
+            "store": {
+              "active_jobs": 0,
+              "new_decodes": 0,
+              "new_model_observations": 0,
+              "real_fits": 0,
+              "scientific_operations_started": 0,
+              "status": "no_job"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1793961539,
       "planned_by": "Ken0u",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Require verified controller integration, exact merged-main checks and complete public delivery of the runner task before claiming this scientific task. Preserve consumed398/zero-operation400 clocks and all old evidence; task400 deadline1793988352 is not extended. Obtain a new matching research grant, source snapshot, prospective commitment and exclusive successor claim. All447clips/5037references/353validation rows, remaining398clips and old completed artifacts remain unchanged. This separately specified operation owns new16hour task/12hour operation bounds; no automatic retry or later clock reset.",
@@ -34922,7 +34973,7 @@
         ]
       },
       "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb",
-      "status": "running"
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
