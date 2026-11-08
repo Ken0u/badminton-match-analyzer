@@ -24,14 +24,22 @@ producer, actor, learning = scaling.producer, scaling.actor, scaling.learning
 
 PROTOCOL = {
     "name": "aicup-pose-continuation-v1",
-    "code_task": 401,
-    "task": 402,
-    "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb",
+    "code_task": 404,
+    "task": 405,
+    "spec_hash": "e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb",
     "grant": {
         "actor": "Ken0u",
         "host_id": "MSI",
         "resources": ["gpu:windows-primary", "cpu:windows-training"],
         "observation_seconds": 300,
+    },
+    "prior_admission": {
+        "task": 402,
+        "source": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+        "granted_at": 1794094747,
+        "deadline": 1794152347,
+        "failure_sha256": "53d028580f96714b38858554b144a88980dfdb9e15315374435e550aa61c3819",
+        "integrity_sha256": "86a371b2e0b780b5972b75e2ccc73d624ca8d01de019d58d58bf32cb0ab0dd6a",
     },
     "predecessor": {
         "task": 398,
@@ -602,7 +610,7 @@ class FrameSpool:
             "Spool scratch cap exceeded",
         )
         require(
-            psutil.disk_usage(self.directory).free
+            psutil.disk_usage(os.fspath(self.directory)).free
             >= reserve + PROTOCOL["limits"]["minimum_disk_free_bytes"],
             "Insufficient disk reserve for native spool",
         )
@@ -844,11 +852,55 @@ def source_seals():
     }
 
 
+def admission_receipts(workspace):
+    root = Path(workspace).resolve()
+    return (
+        root / ".cache/pose402-admission-failure-v1.json",
+        root / ".cache/pose402-input-integrity-v1.json",
+    )
+
+
+def prior_admission(workspace):
+    """Retain the source-bound zero-operation failure without resetting its clock."""
+    root = Path(workspace).resolve()
+    failure, integrity = (no_links(path, root) for path in admission_receipts(root))
+    expected = PROTOCOL["prior_admission"]
+    require(
+        digest(failure) == expected["failure_sha256"]
+        and digest(integrity) == expected["integrity_sha256"],
+        "Changed prior zero-operation admission evidence",
+    )
+    value = read(failure)
+    require(
+        value["task"] == expected["task"]
+        and value["source"] == expected["source"]
+        and value["grant_at"] == expected["granted_at"]
+        and value["original_task_deadline"] == expected["deadline"]
+        and value["managed_exec_terminal"] is True
+        and value["managed_exec_exit_code"] == 1
+        and value["prospective_created"] is False
+        and value["successor_claim_created"] is False
+        and value["run_output_created"] is False
+        and all(
+            type(value[key]) is int and value[key] == 0
+            for key in (
+                "active_shared_store_jobs",
+                "scientific_operations_started",
+                "source_decode_visits",
+                "model_observations",
+                "real_fits",
+            )
+        ),
+        "Prior admission is not the preserved zero-operation failure",
+    )
+
+
 def predecessor(workspace):
     """Verify the failed operation without reopening its consumed entry point."""
     from . import aicup_pose_dispatch_recovery as recovery
 
     root = Path(workspace).resolve()
+    prior_admission(root)
     cache = no_links(root / ".cache", root)
     original = no_links(cache / "pose397-freeze-v1/prospective.json", root)
     require(
@@ -1071,6 +1123,7 @@ def owned_output(workspace, path):
 
 def retained_roots(plan):
     original = plan["original"]
+    root = Path(plan["workspace"])
     return (
         {Path(original[key]) for key in ("prepared", "native", "audit", "control")}
         | {
@@ -1082,6 +1135,9 @@ def retained_roots(plan):
             Path(original["prospective_directory"]),
             Path(plan["prospective_directory"]),
             Path(plan["output"]),
+            *admission_receipts(root),
+            root / ".cache/pose402-observations",
+            root / ".cache/pose405-observations",
         }
     )
 
@@ -1098,7 +1154,9 @@ def disk_budget(plan, reserve=0, scratch_reserve=0):
     root = Path(plan["workspace"])
     for folder in retained_roots(plan):
         no_links(folder, root)
-        if folder.exists():
+        if folder.is_file():
+            files[folder] = folder.stat().st_size
+        elif folder.exists():
             for path in folder.rglob("*"):
                 no_links(path, root)
                 if path.is_file():
@@ -1116,7 +1174,7 @@ def disk_budget(plan, reserve=0, scratch_reserve=0):
         and retained + reserve <= PROTOCOL["limits"]["retained_bytes"]
         and sum(files.values()) + reserve + scratch_reserve
         <= PROTOCOL["limits"]["combined_bytes"]
-        and psutil.disk_usage(root).free
+        and psutil.disk_usage(os.fspath(root)).free
         >= reserve + scratch_reserve + PROTOCOL["limits"]["minimum_disk_free_bytes"],
         "Continuation retained/scratch/combined disk budget exceeded",
     )
@@ -1185,7 +1243,7 @@ class OutputBudget:
             # The failed spool must also fit the retained-evidence allowance.
             and self.retained + self.journal_reserve + size + reserve
             <= PROTOCOL["limits"]["retained_bytes"]
-            and psutil.disk_usage(self.output).free
+            and psutil.disk_usage(os.fspath(self.output)).free
             >= reserve + PROTOCOL["limits"]["minimum_disk_free_bytes"],
             "Active spool would exceed preservable disk allowance",
         )
@@ -1548,7 +1606,7 @@ def published_intent(value, plan, expected):
         value.get("author") == plan["grant"]["actor"]
         and isinstance(value.get("url"), str)
         and value["url"].startswith(
-            "https://github.com/Ken0u/badminton-match-analyzer/issues/402#issuecomment-"
+            "https://github.com/Ken0u/badminton-match-analyzer/issues/405#issuecomment-"
         )
         and value.get("intent")
         == {

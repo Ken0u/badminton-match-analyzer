@@ -1,8 +1,8 @@
 {
   "name": "aicup-pose-continuation-v1",
-  "code_task": 401,
-  "task": 402,
-  "spec_hash": "eb2b00bb9cd0b4bdbced5044ef8001aa710394e01b73c5970eef18a5583e0dfb",
+  "code_task": 404,
+  "task": 405,
+  "spec_hash": "e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb",
   "grant": {
     "actor": "Ken0u",
     "host_id": "MSI",
@@ -11,6 +11,14 @@
       "cpu:windows-training"
     ],
     "observation_seconds": 300
+  },
+  "prior_admission": {
+    "task": 402,
+    "source": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+    "granted_at": 1794094747,
+    "deadline": 1794152347,
+    "failure_sha256": "53d028580f96714b38858554b144a88980dfdb9e15315374435e550aa61c3819",
+    "integrity_sha256": "86a371b2e0b780b5972b75e2ccc73d624ca8d01de019d58d58bf32cb0ab0dd6a"
   },
   "predecessor": {
     "task": 398,

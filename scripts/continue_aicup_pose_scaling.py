@@ -27,7 +27,7 @@ def workspace(argv):
 
 def private_write(root, path, value):
     path = Path(os.path.abspath(path))
-    cache = root / ".cache/pose402-observations"
+    cache = root / ".cache/pose405-observations"
     if not path.is_relative_to(cache) or path.resolve() != path:
         raise ValueError(
             "Observation output must stay inside the original private cache"
@@ -62,12 +62,12 @@ def observe(argv, quiet=False):
     gh = GitHub("Ken0u/badminton-match-analyzer")
     if args.command == "observe-grant":
         tip, state = StateStore(gh, "codex/coordination").read()
-        task = state["tasks"]["402"]
+        task = state["tasks"]["405"]
         claim = task["claim"]
         receipts = [
             receipt
             for receipt in state["receipts"].values()
-            if receipt.get("task_id") == "402"
+            if receipt.get("task_id") == "405"
             and receipt.get("status") == "granted"
             and receipt.get("epoch") == claim["epoch"]
             and receipt.get("claim", {}).get("granted_at") == claim["granted_at"]
@@ -81,11 +81,11 @@ def observe(argv, quiet=False):
             "coordination_sha": tip,
             "task": task,
             "grant_receipt": receipts[0],
-            "code_task": state["tasks"]["401"],
+            "code_task": state["tasks"]["404"],
         }
     else:
         prefix = (
-            "https://github.com/Ken0u/badminton-match-analyzer/issues/402#issuecomment-"
+            "https://github.com/Ken0u/badminton-match-analyzer/issues/405#issuecomment-"
         )
         url = args.publication_url or ""
         if not url.startswith(prefix) or not url[len(prefix) :].isdigit():

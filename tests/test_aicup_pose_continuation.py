@@ -14,6 +14,7 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
+import psutil
 import pytest
 from badminton import aicup_pose_continuation as continuation
 from badminton import aicup_pose_scaling as scaling
@@ -24,6 +25,62 @@ from test_aicup_pose_scaling import (  # noqa: F401
     metadata_operation,
     run_case,
 )
+
+NATIVE_DISK_USAGE = psutil.disk_usage
+
+
+@pytest.mark.parametrize("target", ["spool", "retained", "scratch"])
+def test_disk_guards_use_real_native_api_with_filesystem_text(
+    tmp_path, monkeypatch, target
+):
+    """Permissive resource doubles must not conceal the Windows API boundary."""
+    calls = []
+
+    def disk_usage(path):
+        calls.append(path)
+        result = NATIVE_DISK_USAGE(path)
+        # Enforce Windows' boundary even on hosts whose psutil accepts PathLike.
+        assert type(path) is str
+        return result
+
+    monkeypatch.setattr(psutil, "disk_usage", disk_usage)
+    monkeypatch.setitem(continuation.PROTOCOL["limits"], "minimum_disk_free_bytes", 0)
+    output = tmp_path / "run"
+    output.mkdir()
+    if target == "spool":
+        spool = continuation.FrameSpool(output / "spool", output, lambda **_: None)
+        try:
+            spool.guard()
+        finally:
+            spool.close()
+    elif target == "retained":
+        original = {
+            name: str(tmp_path / "original" / name)
+            for name in (
+                "prepared",
+                "native",
+                "audit",
+                "control",
+                "output",
+                "prospective_directory",
+                "actor_prospective",
+                "control_prospective",
+            )
+        }
+        continuation.disk_budget(
+            {
+                "workspace": str(tmp_path),
+                "original": original,
+                "prospective_directory": str(tmp_path / "freeze"),
+                "output": str(output),
+            }
+        )
+    else:
+        # Exercise the scratch boundary independently of retained-disk admission.
+        budget = continuation.OutputBudget.__new__(continuation.OutputBudget)
+        budget.output, budget.retained, budget.journal_reserve = output, 0, 0
+        budget.scratch()
+    assert calls
 
 
 @pytest.fixture(autouse=True)
@@ -414,7 +471,7 @@ def science_observation(monkeypatch):
     spec = {
         "resources": ["gpu:windows-primary", "cpu:windows-training"],
         "paths": ["docs/AICUP_POSE_SCALING_REPORT.md"],
-        "dependencies": ["391", "393", "401"],
+        "dependencies": ["391", "393", str(continuation.PROTOCOL["code_task"])],
     }
     spec_hash = hashlib.sha256(continuation.encoded(spec)).hexdigest()
     monkeypatch.setitem(continuation.PROTOCOL, "spec_hash", spec_hash)
@@ -424,7 +481,7 @@ def science_observation(monkeypatch):
         "session_id": "generated",
         "epoch": 1,
         "spec_hash": spec_hash,
-        "branch": "codex/issue-402-generated",
+        "branch": f"codex/issue-{continuation.PROTOCOL['task']}-generated",
         "baseline_sha": "a" * 40,
         "granted_at": 1000,
         "expires_at": 11800,
@@ -441,7 +498,7 @@ def science_observation(monkeypatch):
         "grant_receipt": {
             "status": "granted",
             "verb": "next",
-            "task_id": "402",
+            "task_id": str(continuation.PROTOCOL["task"]),
             "epoch": 1,
             "actor": "Ken0u",
             "at": 1000,
@@ -498,7 +555,7 @@ def test_science_admission_refuses_wrong_or_stale_controller_evidence(
     case = science_observation
     now, source = 1200, "a" * 40
     if mutation == "code_only":
-        case["grant_receipt"]["task_id"] = "401"
+        case["grant_receipt"]["task_id"] = str(continuation.PROTOCOL["code_task"])
     elif mutation == "pending":
         case["task"]["status"] = "ready"
     elif mutation == "expired":
@@ -958,10 +1015,10 @@ def freeze_generated(case, capsys):
         publication,
         {
             "author": "Ken0u",
-            "url": "https://github.com/Ken0u/badminton-match-analyzer/issues/402#issuecomment-123",
+            "url": "https://github.com/Ken0u/badminton-match-analyzer/issues/405#issuecomment-123",
             "published_at": 1200,
             "intent": {
-                "task": 402,
+                "task": continuation.PROTOCOL["task"],
                 "spec_hash": continuation.PROTOCOL["spec_hash"],
                 "prospective_sha256": result["prospective_sha256"],
                 "source_commit": plan["tested_commit"],
@@ -1177,8 +1234,8 @@ def test_parent_refreshes_authenticated_grant_and_run_publication_before_child(
     tmp_path, monkeypatch, command
 ):
     launcher = launcher_module()
-    grant = tmp_path / ".cache/pose402-observations/grant.json"
-    publication = tmp_path / ".cache/pose402-observations/publication.json"
+    grant = tmp_path / ".cache/pose405-observations/grant.json"
+    publication = tmp_path / ".cache/pose405-observations/publication.json"
     publication.parent.mkdir(parents=True)
     publication.write_text(json.dumps({"url": "generated-publication-url"}))
     calls = []
@@ -1246,7 +1303,7 @@ def test_observation_writer_cannot_replace_old_runs_or_escape_private_area(tmp_p
     with pytest.raises(ValueError):
         launcher.private_write(tmp_path, old, {"new": True})
     assert old.read_bytes() == b"preserved"
-    output = tmp_path / ".cache/pose402-observations/grant.json"
+    output = tmp_path / ".cache/pose405-observations/grant.json"
     launcher.private_write(tmp_path, output, {"at": 1})
     launcher.private_write(tmp_path, output, {"at": 2})
     assert json.loads(output.read_bytes()) == {"at": 2}
@@ -1344,12 +1401,118 @@ def test_terminal_slot_records_failure_without_allocating_more_disk(tmp_path):
         continuation.terminal_record(path, {"terminal": True})
 
 
+def generated_admission(root, monkeypatch):
+    failure, integrity = continuation.admission_receipts(root)
+    failure.parent.mkdir(parents=True, exist_ok=True)
+    expected = copy.deepcopy(continuation.PROTOCOL["prior_admission"])
+    value = {
+        "task": expected["task"],
+        "source": expected["source"],
+        "grant_at": expected["granted_at"],
+        "original_task_deadline": expected["deadline"],
+        "managed_exec_terminal": True,
+        "managed_exec_exit_code": 1,
+        "prospective_created": False,
+        "successor_claim_created": False,
+        "run_output_created": False,
+        "active_shared_store_jobs": 0,
+        "scientific_operations_started": 0,
+        "source_decode_visits": 0,
+        "model_observations": 0,
+        "real_fits": 0,
+    }
+    continuation.publish(failure, value)
+    continuation.publish(integrity, {"generated": True})
+    expected.update(
+        failure_sha256=continuation.digest(failure),
+        integrity_sha256=continuation.digest(integrity),
+    )
+    monkeypatch.setitem(continuation.PROTOCOL, "prior_admission", expected)
+    return failure, integrity
+
+
+@pytest.mark.parametrize(
+    "change",
+    [None, "missing_failure", "missing_integrity", "bytes", "clock", "fits", "claim"],
+)
+def test_prior_admission_preserves_zero_counts_and_original_clock(
+    tmp_path, monkeypatch, change
+):
+    failure, integrity = generated_admission(tmp_path, monkeypatch)
+    if change == "missing_failure":
+        failure.unlink()
+    elif change == "missing_integrity":
+        integrity.unlink()
+    elif change == "bytes":
+        failure.write_bytes(b"changed")
+    elif change:
+        value = continuation.read(failure)
+        value[
+            {
+                "clock": "original_task_deadline",
+                "fits": "real_fits",
+                "claim": "successor_claim_created",
+            }[change]
+        ] += 1
+        failure.write_bytes(continuation.encoded(value))
+        # Even matching seals cannot reinterpret a nonzero operation or old clock.
+        monkeypatch.setitem(
+            continuation.PROTOCOL["prior_admission"],
+            "failure_sha256",
+            continuation.digest(failure),
+        )
+    if change:
+        with pytest.raises((ValueError, FileNotFoundError)):
+            continuation.prior_admission(tmp_path)
+    else:
+        before = continuation.producer.inventory(tmp_path)
+        continuation.prior_admission(tmp_path)
+        assert continuation.producer.inventory(tmp_path) == before
+
+
+def test_retained_budget_counts_admission_files_and_both_observation_directories(
+    tmp_path, monkeypatch
+):
+    generated_admission(tmp_path, monkeypatch)
+    for task in (402, 405):
+        observation = tmp_path / f".cache/pose{task}-observations/grant.json"
+        observation.parent.mkdir()
+        continuation.publish(observation, {"generated": task})
+    original = {
+        name: str(tmp_path / "original" / name)
+        for name in (
+            "prepared",
+            "native",
+            "audit",
+            "control",
+            "output",
+            "prospective_directory",
+            "actor_prospective",
+            "control_prospective",
+        )
+    }
+    plan = {
+        "workspace": str(tmp_path),
+        "original": original,
+        "prospective_directory": str(tmp_path / "freeze"),
+        "output": str(tmp_path / "run"),
+    }
+    expected = sum(
+        p.stat().st_size for p in (tmp_path / ".cache").rglob("*") if p.is_file()
+    )
+    assert continuation.disk_budget(plan)["retained_bytes"] == expected
+    monkeypatch.setitem(continuation.PROTOCOL["limits"], "retained_bytes", expected - 1)
+    with pytest.raises(ValueError, match="disk budget"):
+        continuation.disk_budget(plan)
+
+
 @pytest.fixture
 def generated_predecessor(tmp_path, monkeypatch):
     import psutil
     from badminton.storage import Store
 
     root = tmp_path / "original"
+    generated_admission(root, monkeypatch)
     output = root / ".cache/pose397-run-v1"
     output.mkdir(parents=True)
     continuation.publish(output / "failure.json", {"real_fits": 0})
