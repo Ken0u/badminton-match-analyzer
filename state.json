@@ -8267,6 +8267,15 @@
       "task_id": "409",
       "verb": "next"
     },
+    "pose409-tested-code-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1794104093,
+      "epoch": 1,
+      "fingerprint": "0df6348bc883968e57866ba3937ce13d6898ca3d0e75be78a6196786da74d8f7",
+      "status": "running",
+      "task_id": "409",
+      "verb": "checkpoint"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -35548,12 +35557,21 @@
       "status": "ready"
     },
     "409": {
+      "checkpoint": {
+        "branch": "codex/issue-409-preserve-the-original-pose-continuation-",
+        "evidence": [
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/409"
+        ],
+        "head_sha": "1dfc6386df1188ebdbf4131570b7ab9888ee9149",
+        "summary": "Scoped primary-failure preservation committed. Generated delivered-source controls reproduced eight masking failures and two passes; repaired focused suite passes all 144. Lint, formatting, dependencies, repository/diff and clean package/install/HTTP checks pass. Full generated Python suite is running. No scientific replay, source perception, private prediction access, classifier fit or model promotion."
+      },
+      "checkpoint_at": 1794104093,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "728ada95e8b568827603d9621b5b7520a641246d",
         "branch": "codex/issue-409-preserve-the-original-pose-continuation-",
         "epoch": 1,
-        "expires_at": 1794114182,
+        "expires_at": 1794114893,
         "granted_at": 1794103382,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
