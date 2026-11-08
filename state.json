@@ -8293,6 +8293,26 @@
       "task_id": "409",
       "verb": "checkpoint"
     },
+    "pose411-main-repair-grant-v1": {
+      "actor": "Ken0u",
+      "at": 1794125857,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "a66b83ec33036b5396a4448fe4095c70bb9f24ac",
+        "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
+        "epoch": 1,
+        "expires_at": 1794136657,
+        "granted_at": 1794125857,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "15a0eda8ab0218584415f3e7298107bacca196f7ba353dce450a3a9d7a1601e2"
+      },
+      "epoch": 1,
+      "fingerprint": "9de7419acfb71837766d290ee5336b289c95446f52d34f18f4e2d17df869a8dd",
+      "status": "granted",
+      "task_id": "411",
+      "verb": "next"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -35674,7 +35694,18 @@
       }
     },
     "411": {
-      "epoch": 0,
+      "claim": {
+        "actor": "Ken0u",
+        "baseline_sha": "a66b83ec33036b5396a4448fe4095c70bb9f24ac",
+        "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
+        "epoch": 1,
+        "expires_at": 1794136657,
+        "granted_at": 1794125857,
+        "host_id": "MSI",
+        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+        "spec_hash": "15a0eda8ab0218584415f3e7298107bacca196f7ba353dce450a3a9d7a1601e2"
+      },
+      "epoch": 1,
       "planned_at": 1794105887,
       "planned_by": "github-actions[bot]",
       "repair_for": "409",
@@ -35721,7 +35752,7 @@
         ]
       },
       "spec_hash": "15a0eda8ab0218584415f3e7298107bacca196f7ba353dce450a3a9d7a1601e2",
-      "status": "ready"
+      "status": "running"
     },
     "62": {
       "checkpoint": {
