@@ -13234,6 +13234,14 @@
       "task_id": "408",
       "verb": "plan"
     },
+    "spec-409-74acafa10f43810280a10af327755ae6ec1f318ef386a407697dc76e085a02f6": {
+      "actor": "Ken0u",
+      "at": 1794101494,
+      "fingerprint": "ff4badd751e723b0d8160757dc2a41c567a1b2f2e40979fdde135123869017bd",
+      "status": "ready",
+      "task_id": "409",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -35466,6 +35474,56 @@
         ]
       },
       "spec_hash": "235bac9f438dd665c72afdb3c02640ea7f7a1eb45cd319836641e4861b7a6e61",
+      "status": "ready"
+    },
+    "409": {
+      "epoch": 0,
+      "planned_at": 1794101494,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve terminal #405 source728ada95e8b568827603d9621b5b7520a641246d, prospective/exclusive claim, all completed inputs/outputs, original clocks and one-operation/no-replay rules. Its RAM guard failed before the next clip after12complete clips/4079frames/7107decodes/4079observations/134features; zero fits. A second RAM guard in ordinary failure JSON publication masked the original exception and left failure.json absent. The preallocated terminal slot and complete stderr survived. Missing failure JSON is never success or replay authority.",
+          "Reproduce the actual delivered exception-masking behavior with generated-only public-run controls, including a primary pre-fit memory failure with zero consumed fits and an interrupted generated fake-fit with one consumed fit. No real video/model/weight/label/prediction access, inference, source decode or scientific fit. An existing generated regression raises a unique RuntimeError but delivered run instead raises the secondary JSON RAM ValueError; retain this failing evidence.",
+          "Preserve the original exception type/cause and durable terminal/accounting evidence when optional failure publication itself fails on RAM, disk, serialization or I/O admission. Keep the existing bounded preallocated terminal slot; ensure failure diagnostics remain size bounded and cannot create successful completion or spend an unreserved write. Do not bypass normal artifact RAM/disk guards, lower safety reserves, silently discard partial accounting or invent zero observations. Preserve secondary reporting errors as distinct diagnostics when possible, without replacing the primary failure.",
+          "Generated controls cover failures before/during counted stages, ordinary success/failure publication, secondary low RAM/low disk/I/O/oversized error cases, terminal-slot integrity and exact size, restoration of scoped writers/adapters, real disposable shared Store failure status, no successful completion and immutable consumed output refusal. Prove primary cause and uncertainty/consumed-fit accounting survive; do not merely check that some exception occurred.",
+          "Keep all scientific protocol/task/source bindings, numerical algorithms, cohorts, models, thresholds, limits and runtime/retry/authorization rules unchanged. No scientific restart or continuation follows from code delivery. Use a separately granted isolated worktree; do not alter the terminal405snapshot or its historical outputs. Coordinate overlapping implementation paths with408 through normal controller reservations; neither task expands the other.",
+          "Run focused/full required checks, lint/format/dependency/repository/diff, clean-package CLI checks and controller exact PR/main/full public delivery. Report the verified failed outcome and repaired software contract in the separate reliability report, without claiming successful scientific verification, model improvement or full-match accuracy."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "404"
+        ],
+        "exclusions": [
+          "No historical source/output/failure-receipt mutation, no replay/continuation, real source/weight/label/prediction/held-out access, inference/scientific fit, model or app truth/default/eligibility change, weakened budget/clock/process rules, signals, new dependencies, workflow/auth/security/deployment/policy changes, paid service, historical CI retry, manual merge, raw coordination/Store edit or deprecated PROGRESS update."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_generated_output_bytes": 536870912,
+          "max_model_observations": 0,
+          "max_real_fits": 0,
+          "max_runtime_hours": 4,
+          "max_source_decode_visits": 0,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Preserve the original pose-continuation failure and bounded terminal accounting when low RAM prevents ordinary failure JSON publication.",
+        "paths": [
+          "backend/badminton/aicup_pose_continuation.py",
+          "tests/test_aicup_pose_continuation.py",
+          "docs/POSE_CONTINUATION_RELIABILITY_REPORT.md"
+        ],
+        "priority": 5,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Actual public-run generated primary/secondary-error regression fails delivered source and passes repaired source; full bounded terminal/accounting/Store/no-replay behavior verified without science.",
+          "Required focused/full/tooling/package checks and controller exact PR/main/public delivery; historical scientific source and artifacts remain untouched."
+        ]
+      },
+      "spec_hash": "79d856be07c4079413958560c4a3e56d62339e6b7e3685e10127bed6eb7e52bc",
       "status": "ready"
     },
     "62": {
