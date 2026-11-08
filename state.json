@@ -8302,6 +8302,15 @@
       "task_id": "411",
       "verb": "checkpoint"
     },
+    "pose411-full-pass-ci-escalation-v4": {
+      "actor": "Ken0u",
+      "at": 1794128386,
+      "epoch": 1,
+      "fingerprint": "448e704b49f10c3a3024c019474991379156d7db1d76ca22e37af90fbf0210ee",
+      "status": "running",
+      "task_id": "411",
+      "verb": "checkpoint"
+    },
     "pose411-main-repair-grant-v1": {
       "actor": "Ken0u",
       "at": 1794125857,
@@ -35725,18 +35734,18 @@
         "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
         "evidence": [
           "https://github.com/Ken0u/badminton-match-analyzer/pull/412",
-          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42464103315"
+          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42464880435"
         ],
         "head_sha": "af3e1911f39bf4563f95e96526c5ebbfe8d63a7a",
-        "summary": "Draft PR 412 third scoped revision diagnoses macOS framework argv replacement in preserved failed PR logs. Generated stdlib children now choose the parent's native interpreter before launch; expected child identity is never rewritten. All 200 focused tests and tooling/repository checks pass. Existing full-suite run on prior head 25eccb4 is beyond 80 percent with no failures observed and remains live; results will retain their source binding. Fresh exact-head CI pending. Production code, scientific source and guard thresholds unchanged; no historical CI retry or science."
+        "summary": "Original full local suite on prior head 25eccb4 terminal exit zero: 6359 passed / 168 skipped. Final native-interpreter helper separately passes 200 focused tests and tooling; package parity passed with unchanged application bytes. Third-revision exact-head CI 42464880435 failed frontend setup on three HTTP 504 responses downloading pinned uv, before frontend tests; logs preserved. Remaining native jobs still running. PR412 stays draft/unsubmitted. Task excludes CI retries; no retry, fourth code repair, manual merge or science has started."
       },
-      "checkpoint_at": 1794128095,
+      "checkpoint_at": 1794128386,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a66b83ec33036b5396a4448fe4095c70bb9f24ac",
         "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
         "epoch": 1,
-        "expires_at": 1794138895,
+        "expires_at": 1794139186,
         "granted_at": 1794125857,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
