@@ -8220,6 +8220,15 @@
       "status": "ok",
       "verb": "register"
     },
+    "pose405-running-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1794099610,
+      "epoch": 1,
+      "fingerprint": "e919227dab15b1da1996502eccbaab9b7ebc8e363f0187bb1e0397488cf97ea2",
+      "status": "running",
+      "task_id": "405",
+      "verb": "checkpoint"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -35191,12 +35200,19 @@
       }
     },
     "405": {
+      "checkpoint": {
+        "branch": "codex/issue-405-execute-the-delivered-memory-bounded-pos",
+        "head_sha": "728ada95e8b568827603d9621b5b7520a641246d",
+        "remaining": "Observe the same operation without restarting. After completion require original read-only verify and separate arithmetic, full-denominator comparison, tested report PR/controller exactmain/public delivery. On failure preserve all artifacts and bounds; do not retry.",
+        "summary": "Verified all40input hashes and full404delivery before fresh epoch1 grant. Metadata-only prospective freeze succeeded; exact hash8083604ab3bcbe98a7a96ca41f14d098642462d037498374564ba32b6a621d0c published before the single run. Real shared Store nowrunning; fresh supervisor/launcher/worker identity checks match. First remaining clip reuses verified prior preparation and is writing its bounded native spool. No fit started or accuracy claim. Automated authenticated grant observations refresh every90seconds; heartbeat maintenance only extends lease expires_at, never originalgranted_at1794099233 or immutabledeadline1794142568.0044048. Logs/identities remain private. No replay or process signals."
+      },
+      "checkpoint_at": 1794099610,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "728ada95e8b568827603d9621b5b7520a641246d",
         "branch": "codex/issue-405-execute-the-delivered-memory-bounded-pos",
         "epoch": 1,
-        "expires_at": 1794110033,
+        "expires_at": 1794110410,
         "granted_at": 1794099233,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
