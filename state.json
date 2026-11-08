@@ -8238,6 +8238,15 @@
       "task_id": "405",
       "verb": "checkpoint"
     },
+    "pose405-terminal-release-v1": {
+      "actor": "Ken0u",
+      "at": 1794103140,
+      "epoch": 1,
+      "fingerprint": "e32dff498e5a73af3fdb1234685cfb27bf26bd7accf7315470cf250fabbd385a",
+      "status": "ready",
+      "task_id": "405",
+      "verb": "release"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -35243,20 +35252,62 @@
         "summary": "Single frozen operation live; 5 of398 completed clips independently byte-audited; zero fits; unchanged clocks/source. Separate generated-only verifier defect planned in407; no replay/source change."
       },
       "checkpoint_at": 1794100220,
-      "claim": {
-        "actor": "Ken0u",
-        "baseline_sha": "728ada95e8b568827603d9621b5b7520a641246d",
-        "branch": "codex/issue-405-execute-the-delivered-memory-bounded-pos",
-        "epoch": 1,
-        "expires_at": 1794111020,
-        "granted_at": 1794099233,
-        "host_id": "MSI",
-        "session_id": "3283a9953d4445739251c6b8dfdb55bd",
-        "spec_hash": "e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb"
-      },
       "epoch": 1,
+      "history": [
+        {
+          "at": 1794103140,
+          "claim": {
+            "actor": "Ken0u",
+            "baseline_sha": "728ada95e8b568827603d9621b5b7520a641246d",
+            "branch": "codex/issue-405-execute-the-delivered-memory-bounded-pos",
+            "epoch": 1,
+            "expires_at": 1794111020,
+            "granted_at": 1794099233,
+            "host_id": "MSI",
+            "session_id": "3283a9953d4445739251c6b8dfdb55bd",
+            "spec_hash": "e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb"
+          },
+          "terminal_proof": {
+            "artifacts": {
+              "branch": "codex/issue-405-execute-the-delivered-memory-bounded-pos",
+              "completed_clips": 12,
+              "head_sha": "728ada95e8b568827603d9621b5b7520a641246d",
+              "journal_sha256": "df2803b5e2180ac97e613dceee4ae25590bb3178f245ac001cd45850aaa0ff03",
+              "original_deadline": 1794142568.0044048,
+              "original_granted_at": 1794099233,
+              "preservation_sha256": "4d80eec34945135332ad2c16c2149742cf306b76a614514e9c79346544e424e8",
+              "remaining_clips": 386,
+              "stderr_sha256": "57b2084b73d3a590e22d5dfeaa3b89b325222c9792954955b4c0aac1eacc5146",
+              "summary": "Terminal RAM-guard failure before next clip; ordinary failure writer also refused RAM; reserved terminal and complete stderr preserved. Twelve completed clips and all old inputs/source/clocks/claims remain intact, zero fits. Release reservation only; no replay, success, model improvement, promotion or scientific continuation. Further code/science needs separate committed grants.",
+              "terminal_sha256": "3f8f9f56733c14840863a49489c4691f037986cbd5ab7dba01aead6a8f6c8c39",
+              "verified_feature_rows": 134
+            },
+            "host_id": "MSI",
+            "process": {
+              "command": "\"C:\\Program Files\\Python310\\python.exe\" -I -B C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose405-science\\scripts\\continue_aicup_pose_scaling.py --worker run --prospective C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose405-freeze-v1\\prospective.json --prospective-sha256 8083604ab3bcbe98a7a96ca41f14d098642462d037498374564ba32b6a621d0c --output C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose405-run-v1 --grant-state C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose405-observations\\grant.json --publication C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\pose405-observations\\publication.json",
+              "creation_time": 1794099496.1753776,
+              "cwd": "C:\\Users\\enkra\\Documents\\Projects\\badminton-match-analyzer\\.cache\\worktrees\\pose405-science",
+              "exited": true,
+              "pid": 12036
+            },
+            "store": {
+              "active_jobs": 0,
+              "decoded_frame_visits": 7107,
+              "model_observations_exact": 4079,
+              "original_failure_json_missing": true,
+              "preallocated_terminal_preserved": true,
+              "real_fits": 0,
+              "scientific_operations_started": 1,
+              "status": "failed"
+            },
+            "terminal": true
+          },
+          "verb": "release"
+        }
+      ],
       "planned_at": 1794095508,
       "planned_by": "Ken0u",
+      "reason": "released after terminal proof",
       "spec": {
         "acceptance": [
           "Task405 follows the zero-science task402 metadata admission failure. Require complete controller/main/public delivery of code repair404 at its exact source before claiming. Preserve402 source b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f, grant1794094747, original16hour deadline1794152347, managed CLI terminal exit1, no original CLI PID capture, no prospective/successor claim/run output/Store job and zero source decodes/model observations/fits. Do not reset or replay402 or alter its frozen source. This separately specified task alone owns its fresh16hour task/12hour operation windows and identical unchanged scientific bounds; there was no402scientific operation to repeat. Require the sealed402admission-failure receipt plus all predecessor/control/input seals before any new science.",
@@ -35376,7 +35427,7 @@
         ]
       },
       "spec_hash": "e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb",
-      "status": "running"
+      "status": "ready"
     },
     "407": {
       "epoch": 0,
