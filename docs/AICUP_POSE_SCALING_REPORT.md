@@ -1,24 +1,47 @@
 # Broader weak pose training with a fixed validation set
 
-## Memory-bounded continuation: software verification in progress
+## Windows disk admission repair: local verification complete
 
-[#401](https://github.com/Ken0u/badminton-match-analyzer/issues/401) separates
-delivery of the complete continuation runner from
-[#402](https://github.com/Ken0u/badminton-match-analyzer/issues/402)'s separately
-granted scientific execution. #400's lease expired without any scientific
-dispatch; its original grant/deadline, tested storage code and terminal release
-remain preserved. #401 recovered its expired code-only lease through the
-controller and continues on a new ownership epoch. Neither a code grant nor
-software checks authorize real-source decoding, model observations or fitting.
+[#401](https://github.com/Ken0u/badminton-match-analyzer/issues/401) delivered
+the continuation runner through [PR #403](https://github.com/Ken0u/badminton-match-analyzer/pull/403)
+at `b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f`. Its 6,491 local tests passed
+with four optional skips, as did all 12 PR and 12 exact-main verification jobs
+and complete public package/container delivery. Those checks did not establish
+that the actual Windows scientific admission could succeed.
+
+[#402](https://github.com/Ken0u/badminton-match-analyzer/issues/402)'s first
+metadata-only freeze then failed because installed Windows `psutil 7.2.2`
+rejects a `WindowsPath` in `disk_usage`. No prospective output, exclusive
+successor claim, run output or shared Store job was created; scientific source
+decodes, model observations and fits remained **zero**. Its managed CLI completed
+with exit 1; its PID was not captured. Current launcher absence and an idle
+shared Store were verified before documented no-job release. Historical process
+evidence is explicitly historical, never a claimed #402 worker. The grant at
+`1794094747` and original deadline `1794152347`, failure receipt and clean source
+branch remain preserved. #402 closed transferred and incomplete.
+
+[#404](https://github.com/Ken0u/badminton-match-analyzer/issues/404) converts all
+three disk-check paths to filesystem strings without changing any limits. Three
+generated regressions call the real installed `psutil` API and enforce its Windows
+string boundary: each fails at its own call site on delivered `b0bf642` and passes
+after conversion. Earlier permissive disk mocks concealed this incompatibility.
+The repair is code-only and requires exact controller/main/public delivery before
+the unchanged comparison in [#405](https://github.com/Ken0u/badminton-match-analyzer/issues/405).
+No code grant or software checks authorize scientific execution. #398's consumed
+operation, #400's zero-operation deadline and all original evidence stay intact.
 
 The public `scripts/continue_aicup_pose_scaling.py` supplies integrity-only
 `freeze`, one-shot `run`, and read-only `verify` commands. Before freezing it
-requires #402's exact committed grant and specification, the delivered runner's
+requires #405's exact committed grant and specification, the delivered runner's
 exact source revision, a recent authenticated coordination observation and
-completed #401 main verification/public delivery. Execution also requires the
-exact prospective intent published by the owner on #402. Missing, expired,
+completed #404 main verification/public delivery. Execution also requires the
+exact prospective intent published by the owner on #405. Missing, expired,
 changed or code-only grants fail closed. Lease renewal preserves the initial
 grant time; a recovered science grant cannot reset its task/operation windows.
+The sealed #402 admission-failure and input-integrity receipts must match before
+any prospective freeze. Their original zero counts, source and clock remain
+explicit; those receipts and both observation directories count against retained
+output limits.
 
 The continuation retains all 447 clips / 5,037 published rows and all 353
 validation rows. It independently reconstructs the 784 pilot features and 60
@@ -51,7 +74,7 @@ the continuation, retains old/new counters separately and imports no feature
 producer while independently calculating predictions, metrics and representative
 raw-pose features.
 
-Generated checks currently include 115 continuation tests and the new separate
+Generated checks cover continuation behavior and the separate
 arithmetic regression. They cover native packed formats, nonzero/VFR clocks,
 rotated 720p pixels, preparation reuse, unknown labels, model interruption,
 shared Store refusal, fake-fit failure/no replay, grant/source/runtime tampering,
@@ -59,18 +82,26 @@ credential-free child setup, authenticated parent refresh/refusal and read-only
 verification. The seven rotation cases
 failed against the preceding storage guard and pass after correction. A separate
 metadata-only check verifies the real predecessor's unchanged terminal/Store/
-inventory evidence, with zero new decodes, observations or fits. Broader checks,
-exact PR/main integration and public delivery are still required; this section
-does not claim that #401 or #402 is complete.
+inventory evidence, with zero new decodes, observations or fits. The #404
+repair passes 323 focused tests and 6,502 full Python tests with four optional
+skips, lint, formatting, dependencies, repository JSON/links/UTF-8/LF and
+whitespace checks, and a clean package/installed HTTP authentication check.
+The initial new generated fixtures omitted their private parent directories;
+those setup failures and the initial lint finding remain preserved. The corrected
+fixtures pass without changing production guards. The fixed manifest matches
+the runner and the exact #405 specification, and the real sealed #402 receipts
+pass metadata-only verification unchanged. Exact PR/main integration and public
+delivery are still required; this section
+does not claim that #404 or #405 is complete, or that #402's comparison succeeded.
 
 For a future granted operation, first run `observe-grant --workspace WORKSPACE
---output WORKSPACE/.cache/pose402-observations/grant.json`. Then use `freeze`
+--output WORKSPACE/.cache/pose405-observations/grant.json`. Then use `freeze`
 with that private `--grant-state`, the delivered `--protocol`, a fresh `--output`
 and a separate fresh `--run-output`. Publish only the returned prospective hash,
-exact source commit, task 402 and its specification hash in a fenced JSON block
-marked `<!-- pose-continuation-intent:v1 -->` on #402. Use `observe-publication`
+exact source commit, task 405 and its specification hash in a fenced JSON block
+marked `<!-- pose-continuation-intent:v1 -->` on #405. Use `observe-publication`
 with its `--publication-url` to save a private publication receipt beneath
-`.cache/pose402-observations/`. `run` takes `--prospective`,
+`.cache/pose405-observations/`. `run` takes `--prospective`,
 `--prospective-sha256`, `--output`, `--grant-state` and `--publication`.
 The supervising session must refresh authenticated grant observations before
 their five-minute freshness bound, renew the controller lease, and verify actual
