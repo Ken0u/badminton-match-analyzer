@@ -279,13 +279,11 @@ def terminal_child(generated, monkeypatch, code=None, observation_delay=0):
         if code is None
         else [sys.executable, "-I", "-B", "-c", code]
     )
-    # The Windows venv executable is a launcher with a different PID from the
-    # Python child that executes the readiness code. Generated children need
-    # only stdlib, so launch the actual interpreter to observe a single lifetime.
+    # Windows venv and macOS framework launchers change PID or executable argv.
+    # Select the parent's actual native interpreter before launch; these children
+    # use only stdlib. Never derive an expected command from the observed child.
     command = [
-        getattr(sys, "_base_executable", sys.executable)
-        if sys.platform == "win32"
-        else command[0],
+        psutil.Process().exe(),
         *command[1:4],
         prefix + command[4],
         *command[5:],

@@ -97,8 +97,14 @@ directory completion and overflow refusal without accepting another exception
 as success. Successful verification and nonzero child exit remain covered.
 
 On Windows the virtual-environment executable may launch another interpreter
-with a distinct PID. These standard-library-only generated children use the
-underlying interpreter directly, binding readiness to the launched lifetime.
+with a distinct PID. Fresh macOS PR checks also exposed a framework launcher
+replacing the executable argument: the expected virtual-environment path became
+the framework's native `Python.app` executable while all other arguments matched.
+The generated children now select the parent's actual native executable through
+psutil before launch. They use only the standard library, so this bypasses the
+launcher while retaining strict equality against the prospectively chosen command
+and binding readiness to the launched lifetime. Expected identity is never
+rewritten from the observed child, and production checks remain unchanged.
 The test helper has bounded readiness/release waits and releases its own children
 on assertion failure. It drains startup-failure pipes when production readers
 were not established; it never signals a process or changes production limits.
@@ -106,7 +112,7 @@ The existing unobservable-identity test remains separate and unchanged.
 
 All **66 dispatch-recovery tests pass** locally after the fixture repair. Full
 regression/tooling results and fresh exact PR/main/public-delivery evidence are
-recorded on the repair PR. Only the test module and this report change;
+recorded on the repair PR. Only two test modules and this report change;
 production supervision, identity/log/completion checks, scientific source,
 protocols, dependencies, workflow, timeouts and retry policy remain unchanged.
 
