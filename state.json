@@ -8293,6 +8293,15 @@
       "task_id": "409",
       "verb": "checkpoint"
     },
+    "pose411-exact-head-submission-v1": {
+      "actor": "Ken0u",
+      "at": 1794129007,
+      "epoch": 1,
+      "fingerprint": "ab2896171515c3d73dc1ef12bbdb52334a73d73f798d1a231b33d0371af94491",
+      "status": "review",
+      "task_id": "411",
+      "verb": "submit"
+    },
     "pose411-fixture-repair-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1794126358,
@@ -35754,6 +35763,7 @@
       "epoch": 1,
       "planned_at": 1794105887,
       "planned_by": "github-actions[bot]",
+      "pr_number": 412,
       "repair_for": "409",
       "spec": {
         "acceptance": [
@@ -35798,7 +35808,13 @@
         ]
       },
       "spec_hash": "15a0eda8ab0218584415f3e7298107bacca196f7ba353dce450a3a9d7a1601e2",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "a66b83ec33036b5396a4448fe4095c70bb9f24ac",
+        "head_sha": "af3e1911f39bf4563f95e96526c5ebbfe8d63a7a",
+        "pr_number": 412,
+        "spec_hash": "15a0eda8ab0218584415f3e7298107bacca196f7ba353dce450a3a9d7a1601e2"
+      }
     },
     "62": {
       "checkpoint": {
