@@ -8150,6 +8150,15 @@
       "task_id": "404",
       "verb": "plan"
     },
+    "pose404-resumed-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1794096220,
+      "epoch": 1,
+      "fingerprint": "716cfafc51e000e1ea1523f70c51afba43b1c48930d0c138737483e8284641b2",
+      "status": "running",
+      "task_id": "404",
+      "verb": "checkpoint"
+    },
     "pose405-plan-v1": {
       "actor": "Ken0u",
       "at": 1794095508,
@@ -35028,12 +35037,18 @@
       "status": "blocked"
     },
     "404": {
+      "checkpoint": {
+        "branch": "codex/issue-404-repair-windows-native-disk-space-admissi",
+        "head_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+        "summary": "Resumed committed epoch1 grant. Five-path Windows native disk adapter and generated controls locally prepared. Three real installed psutil call-site regressions fail on delivered baseline and pass after repair. Sealed zero-operation402 evidence guard and405 protocol binding prepared. Broader focused/full/tooling/package checks next. Zero new scientific decodes/model observations/fits/image transfer; all predecessor failures and clocks preserved."
+      },
+      "checkpoint_at": 1794096220,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
         "branch": "codex/issue-404-repair-windows-native-disk-space-admissi",
         "epoch": 1,
-        "expires_at": 1794106539,
+        "expires_at": 1794107020,
         "granted_at": 1794095739,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
