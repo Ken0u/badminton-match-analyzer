@@ -13209,6 +13209,14 @@
       "task_id": "405",
       "verb": "plan"
     },
+    "spec-407-d0f302334c09b93372d6e0e5fad54d7dd1a6ac12d3313ce5f3981590c0957f46": {
+      "actor": "Ken0u",
+      "at": 1794100157,
+      "fingerprint": "7fa939b0b097522f424b32ac938457d121cbc50cf5436cb42be59c6988063ef2",
+      "status": "ready",
+      "task_id": "407",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -35341,6 +35349,54 @@
       },
       "spec_hash": "e76e1629e4f7fc63916991ac90a389297548402df7956e398ef58bd5893ddfdb",
       "status": "running"
+    },
+    "407": {
+      "epoch": 0,
+      "planned_at": 1794100157,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "The delivered independent arithmetic entry point asserts continuation task 402, while delivered public protocol and actual prospective freeze identify task 405. Reproduce the rejection with generated metadata; preserve the live frozen scientific source, grant, prospective, execution claim, outputs, clocks and earlier evidence.",
+          "In a separately granted isolated worktree, accept the explicitly supported historical task402 and current delivered task405 continuation identities. Reject unsupported or malformed identities, including boolean and string lookalikes, before opening numerical result artifacts. Preserve independent producer-free arithmetic and all existing hash, complete-row, feature, denominator, checkpoint, prediction and metric checks; do not substitute labels, change models, recompute scientific features or weaken verification.",
+          "Exercise actual arithmetic CLI on complete generated continuation outputs for current405 and historical402 identities, with all existing no-replay accounting checks. Include an explicit current-public-manifest identity check so a stale fixture cannot conceal this mismatch again. Unsupported identity controls must fail before numerical artifact access and must create no receipt.",
+          "The repair may later read existing completed scientific outputs through the independent checker from its own verified source. This task authorizes generated controls only, zero real-source decoding, zero perception/model observations and zero real scientific fits. Do not execute against partial live405 outputs, alter frozen source, replay science, renew scientific clocks or claim model improvement.",
+          "Run focused regressions and required full/lint/format/dependency/repository/diff checks and appropriate clean-package CLI checks; use controller exact-head/main verification and complete public delivery. Preserve all historical protocols and failed fixture evidence. No manual merge or historical CI retry."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "404"
+        ],
+        "exclusions": [
+          "No changes to the active405worktree, scientific implementation/recipe, cohort, validation/test inputs, metrics/selection, runtime/storage limits, grant/claim, scientific clocks, old artifacts, app truth, weights/defaults, automation/workflows/dependencies/security/policy, credentials, image/label transfer, paid service, process signals, manual merge, CI retry or deprecated PROGRESS."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_model_observations": 0,
+          "max_real_fits": 0,
+          "max_runtime_hours": 4,
+          "max_source_decode_visits": 0,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Repair independent pose-continuation arithmetic verification for the delivered #405 protocol without changing or replaying its scientific operation.",
+        "paths": [
+          "scripts/scale_aicup_pose_learning.py",
+          "tests/test_aicup_pose_scaling.py"
+        ],
+        "priority": 10,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Current405 entry fails against delivered source using generated metadata only; patched actual CLI passes complete generated405 and402 arithmetic fixtures without importing the feature/metric producer.",
+          "Unknown/malformed task identities and existing altered-hash/counter/prediction/feature controls fail closed, preserve every original denominator and create no false verification receipt.",
+          "Exact controller integration/main checks/public delivery; no real scientific execution or current405 source mutation."
+        ]
+      },
+      "spec_hash": "38603dfc2698813559144b93afb86b796afe0302ae06aa7d8cb05768c208815a",
+      "status": "ready"
     },
     "62": {
       "checkpoint": {
