@@ -8193,6 +8193,13 @@
       "task_id": "405",
       "verb": "plan"
     },
+    "pose405-register-v1": {
+      "actor": "Ken0u",
+      "at": 1794098990,
+      "fingerprint": "727244a46d83ebdc742805f158e3c5aae382d3dd6e04f8d73a285e4bea361de7",
+      "status": "ok",
+      "verb": "register"
+    },
     "post-capacity311-62-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1792982267,
@@ -38570,7 +38577,9 @@
         "pose398-completed-3-receipt": "f400e4cd9f61960a0ebbadd33f363fe774983a017fcabee5bc121bb890853785",
         "pose398-failure": "f0c31fc5564f76254320d999d4367b1c4223afd43685917bec37d814565cda19",
         "pose398-private-failure-preservation": "10598be437b8d3b3ff1d262e3f15aed29e7232f98447fdbf6688053f87262c1c",
-        "pose398-terminal": "528b6cd97947f8d2cdbea2f7dd7fa85ee73c6c2050f41728f25364f961f45796"
+        "pose398-terminal": "528b6cd97947f8d2cdbea2f7dd7fa85ee73c6c2050f41728f25364f961f45796",
+        "pose402-admission-failure": "53d028580f96714b38858554b144a88980dfdb9e15315374435e550aa61c3819",
+        "pose402-input-integrity": "86a371b2e0b780b5972b75e2ccc73d624ca8d01de019d58d58bf32cb0ab0dd6a"
       },
       "capabilities": [
         "amd64",
@@ -38579,7 +38588,7 @@
         "windows"
       ],
       "host_id": "MSI",
-      "registered_at": 1793930453,
+      "registered_at": 1794098990,
       "session_id": "3283a9953d4445739251c6b8dfdb55bd"
     },
     "MSI/38cb048544ad42769dddcd36b6f75292": {
