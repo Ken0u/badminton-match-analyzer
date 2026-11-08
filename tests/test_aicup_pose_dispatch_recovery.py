@@ -283,7 +283,9 @@ def terminal_child(generated, monkeypatch, code=None, observation_delay=0):
     # Python child that executes the readiness code. Generated children need
     # only stdlib, so launch the actual interpreter to observe a single lifetime.
     command = [
-        getattr(sys, "_base_executable", sys.executable),
+        getattr(sys, "_base_executable", sys.executable)
+        if sys.platform == "win32"
+        else command[0],
         *command[1:4],
         prefix + command[4],
         *command[5:],
@@ -302,6 +304,15 @@ def terminal_child(generated, monkeypatch, code=None, observation_delay=0):
             assert time.monotonic() < deadline, "No generated child readiness"
             time.sleep(0.005)
         assert int(ready.read_text()) == process.pid
+        native = psutil.Process(process.pid)
+        assert native.cmdline() == command, {
+            "launched_command": command,
+            "observed_command": native.cmdline(),
+        }
+        assert native.cwd() == str(generated.snapshot), {
+            "launched_cwd": str(generated.snapshot),
+            "observed_cwd": native.cwd(),
+        }
         observed_handles.append(process)
         return process
 

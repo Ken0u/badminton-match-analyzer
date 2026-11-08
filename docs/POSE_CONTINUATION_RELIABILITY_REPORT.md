@@ -109,3 +109,14 @@ regression/tooling results and fresh exact PR/main/public-delivery evidence are
 recorded on the repair PR. Only the test module and this report change;
 production supervision, identity/log/completion checks, scientific source,
 protocols, dependencies, workflow, timeouts and retry policy remain unchanged.
+
+The first full local repair check also exposed an independent fixture dependency
+on host RAM: nine scaling-cache cases failed, eight with the initial RAM guard
+and one before its expected second decode. Their generated frames and object
+stubs are tiny; physical RAM pressure should not determine whether those
+pixel/range/clock assertions run. These controls now use a scoped, deterministic
+memory probe. Dedicated low-memory, half-free-memory cap and exact reserve/byte
+boundary controls retain their explicit probes and assertions. Production
+reserves and admission logic are unchanged; unrelated processes remain intact.
+The original failed run and its XML are retained, and revised full-suite and
+cross-platform results are recorded on the repair PR before submission.

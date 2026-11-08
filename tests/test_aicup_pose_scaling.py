@@ -114,7 +114,21 @@ def test_packing_refuses_roundtrip_that_changes_rendered_rgb_or_bgr(monkeypatch)
 
 
 @pytest.fixture
-def fake_frame_codec(monkeypatch):
+def generated_cache_memory(monkeypatch):
+    """Tiny generated pixel tests do not depend on unrelated host RAM pressure.
+
+    Dedicated admission/boundary controls replace this probe with their explicit
+    low-memory cases. Production reserves and admission logic remain unchanged.
+    """
+    import psutil
+
+    monkeypatch.setattr(
+        psutil, "virtual_memory", lambda: SimpleNamespace(available=4 * 1024**3)
+    )
+
+
+@pytest.fixture
+def fake_frame_codec(monkeypatch, generated_cache_memory):
     monkeypatch.setattr(
         scaling,
         "pack_frame",
@@ -1225,7 +1239,7 @@ def test_completed_metadata_verification_never_decodes_or_refits(
 
 @pytest.mark.parametrize("mutation", [None, "shape", "count", "cpu"])
 def test_new_clip_has_two_real_generated_decodes_and_preserves_missing_inputs(
-    tmp_path, monkeypatch, mutation
+    tmp_path, monkeypatch, mutation, generated_cache_memory
 ):
     pytest.importorskip("torchvision")
     import av
@@ -1734,7 +1748,7 @@ def test_continuation_arithmetic_keeps_old_counts_and_failed_preparation_reuse(
 
 
 def test_compressed_cache_reconstructs_exact_native_frames_and_bounds_live_lru(
-    tmp_path, monkeypatch
+    tmp_path, monkeypatch, generated_cache_memory
 ):
     from badminton import court_detection, tracking, video
 
