@@ -8293,6 +8293,15 @@
       "task_id": "409",
       "verb": "checkpoint"
     },
+    "pose411-fixture-repair-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1794126358,
+      "epoch": 1,
+      "fingerprint": "dda05729c948a0e1763876e97b3dce3a2a05a146a80267ebeadef1e9d0c9a95d",
+      "status": "running",
+      "task_id": "411",
+      "verb": "checkpoint"
+    },
     "pose411-main-repair-grant-v1": {
       "actor": "Ken0u",
       "at": 1794125857,
@@ -35694,12 +35703,22 @@
       }
     },
     "411": {
+      "checkpoint": {
+        "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
+        "evidence": [
+          "https://github.com/Ken0u/badminton-match-analyzer/issues/411",
+          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42439172067"
+        ],
+        "head_sha": "0ef317090710adf28e9ace00dd78ae539296c556",
+        "summary": "Original main CI logs and both failure XML artifacts preserved. Test-only readiness/release synchronization keeps generated children live until native identity capture; production observers/limits unchanged. Focused dispatch suite passes all 66; full lint/format/dependency/repository/diff and clean package/install/HTTP checks pass. Full generated Python suite running. No historical CI retry, signals, scientific replay, private input access or model training."
+      },
+      "checkpoint_at": 1794126358,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a66b83ec33036b5396a4448fe4095c70bb9f24ac",
         "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
         "epoch": 1,
-        "expires_at": 1794136657,
+        "expires_at": 1794137158,
         "granted_at": 1794125857,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
