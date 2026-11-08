@@ -1144,6 +1144,254 @@ def test_failed_fit_consumes_once_and_preserves_real_store_and_partial_output(
     assert len(calls) == 1 and continuation.producer.inventory(args[2]) == before
 
 
+@pytest.mark.parametrize("stage", ["before_fit", "during_fake_fit"])
+@pytest.mark.parametrize(
+    "report_failure", ["none", "ram", "disk", "io", "serialization"]
+)
+def test_primary_failure_survives_secondary_reporting_errors(
+    continuation_operation, monkeypatch, capsys, stage, report_failure
+):
+    from badminton import tracking
+
+    _, store, _, _, _, _ = continuation_operation
+    arguments = freeze_generated(continuation_operation, capsys)
+    reporting_started = []
+    if report_failure in ("io", "serialization"):
+        original_publish = continuation.publish
+
+        def unavailable(path, value):
+            if reporting_started and Path(path).name == "failure.json":
+                if report_failure == "io":
+                    raise OSError("Generated reporting I/O failure")
+                raise TypeError("Generated reporting serialization failure")
+            return original_publish(path, value)
+
+        monkeypatch.setattr(continuation, "publish", unavailable)
+    original_writers = (
+        continuation.publish,
+        continuation.producer.publish,
+        continuation.learning.publish,
+        continuation.learning.save_state,
+        tracking.write_json,
+    )
+    primary = RuntimeError("Generated primary " + stage)
+    cause = LookupError("Generated primary cause")
+    calls = []
+
+    def fail(*unused):
+        calls.append(stage)
+        reporting_started.append(True)
+        if report_failure == "ram":
+            monkeypatch.setattr(
+                psutil, "virtual_memory", lambda: SimpleNamespace(available=0)
+            )
+        elif report_failure == "disk":
+            monkeypatch.setattr(psutil, "disk_usage", lambda _: SimpleNamespace(free=0))
+        raise primary from cause
+
+    monkeypatch.setattr(
+        continuation.learning,
+        "fit",
+        fail
+        if stage == "during_fake_fit"
+        else lambda *_: pytest.fail("Unexpected fit"),
+    )
+    if stage == "before_fit":
+        monkeypatch.setattr(continuation.scaling, "combined_features", fail)
+    with pytest.raises(RuntimeError) as caught:
+        continuation.run(*arguments)
+    assert caught.value is primary and caught.value.__cause__ is cause
+    assert calls == [stage]
+    terminal = continuation.read(arguments[2] / "terminal.json")
+    assert terminal["terminal"] is True and terminal["scientific_success"] is False
+    consumed = int(stage == "during_fake_fit")
+    assert terminal["accounting"]["exact"]["real_fits"] == consumed
+    assert terminal["accounting"]["cumulative"]["real_fits_consumed"] == consumed
+    assert (arguments[2] / "terminal.json").stat().st_size == continuation.PROTOCOL[
+        "limits"
+    ]["terminal_bytes"]
+    if report_failure == "none":
+        failure = continuation.read(arguments[2] / "failure.json")
+        assert failure["message"] == str(primary)
+        assert failure["accounting"] == terminal["accounting"]
+    else:
+        assert not (arguments[2] / "failure.json").exists()
+        assert terminal["reporting_errors"] == [
+            {
+                "stage": "failure_json",
+                "error_type": {
+                    "ram": "ValueError",
+                    "disk": "ValueError",
+                    "io": "OSError",
+                    "serialization": "TypeError",
+                }[report_failure],
+            }
+        ]
+    process = continuation.read(arguments[2] / "process.json")
+    assert store.job(process["job_id"])["status"] == "failed"
+    assert not (arguments[2] / "completion.json").exists()
+    assert original_writers == (
+        continuation.publish,
+        continuation.producer.publish,
+        continuation.learning.publish,
+        continuation.learning.save_state,
+        tracking.write_json,
+    )
+    before = continuation.producer.inventory(arguments[2])
+    with pytest.raises(ValueError, match="previously used"):
+        continuation.run(*arguments)
+    assert continuation.producer.inventory(arguments[2]) == before and calls == [stage]
+
+
+@pytest.mark.parametrize("kind", ["decoded", "observed"])
+@pytest.mark.parametrize("report_failure", ["ram", "journal_close"])
+def test_reporting_failure_preserves_partial_stage_uncertainty(
+    continuation_operation, monkeypatch, capsys, kind, report_failure
+):
+    _, store, _, _, _, _ = continuation_operation
+    arguments = freeze_generated(continuation_operation, capsys)
+    original_init = continuation.StageLedger.__init__
+    original_close = continuation.StageLedger.close
+    ledgers = []
+    primary = MemoryError("Generated counted-stage memory failure")
+
+    def capture(ledger, path):
+        original_init(ledger, path)
+        ledgers.append(ledger)
+
+    def fail(*unused):
+        limit = "decoded_frame_visits" if kind == "decoded" else "model_observations"
+        monkeypatch.setitem(continuation.PROTOCOL["limits"], limit, 3)
+        ledgers[0].begin(kind, "generated stage only", 3)
+        ledgers[0].advance(1)
+        if report_failure == "ram":
+            monkeypatch.setattr(
+                psutil, "virtual_memory", lambda: SimpleNamespace(available=0)
+            )
+        raise primary
+
+    def fail_close(ledger):
+        original_close(ledger)
+        raise OSError("Generated journal close failure")
+
+    monkeypatch.setattr(continuation.StageLedger, "__init__", capture)
+    if report_failure == "journal_close":
+        monkeypatch.setattr(continuation.StageLedger, "close", fail_close)
+    monkeypatch.setattr(continuation.scaling, "combined_features", fail)
+    monkeypatch.setattr(
+        continuation.learning, "fit", lambda *_: pytest.fail("Unexpected fit")
+    )
+    with pytest.raises(MemoryError) as caught:
+        continuation.run(*arguments)
+    assert caught.value is primary
+    terminal = continuation.read(arguments[2] / "terminal.json")
+    accounting = terminal["accounting"]
+    assert accounting["lower"][kind] == 1
+    assert accounting["upper"][kind] == 3
+    assert accounting["exact"][kind] is None
+    assert accounting["incomplete_stage"] == {
+        "kind": kind,
+        "key": "generated stage only",
+        "total": 3,
+        "completed": 1,
+    }
+    assert accounting["exact"]["real_fits"] == 0
+    assert (
+        continuation.StageLedger.verify(arguments[2] / "stages.jsonl")["summary"]
+        == accounting
+    )
+    assert terminal["reporting_errors"][0]["stage"] == (
+        "failure_json" if report_failure == "ram" else "journal_close"
+    )
+    assert ledgers[0].stream.closed and terminal["scientific_success"] is False
+    process = continuation.read(arguments[2] / "process.json")
+    assert store.job(process["job_id"])["status"] == "failed"
+    assert not (arguments[2] / "completion.json").exists()
+
+
+def test_oversized_primary_message_is_bounded_without_changing_exception(
+    continuation_operation, monkeypatch, capsys
+):
+    arguments = freeze_generated(continuation_operation, capsys)
+    # JSON escapes each character to six bytes; character and byte bounds differ.
+    primary = RuntimeError("\x00" * 100_000)
+
+    def fail(*unused):
+        raise primary
+
+    monkeypatch.setattr(continuation.scaling, "combined_features", fail)
+    with pytest.raises(RuntimeError) as caught:
+        continuation.run(*arguments)
+    assert caught.value is primary and len(primary.args[0]) == 100_000
+    for name in ("terminal.json", "failure.json"):
+        record = continuation.read(arguments[2] / name)
+        assert record["message"] == "\x00" * 1024
+        assert record["message_truncated"] is True
+        assert record["scientific_success"] is False
+    assert (arguments[2] / "failure.json").stat().st_size < 8192
+    assert (arguments[2] / "terminal.json").stat().st_size == continuation.PROTOCOL[
+        "limits"
+    ]["terminal_bytes"]
+
+
+@pytest.mark.parametrize("terminal_failure", ["io", "changed_slot"])
+def test_unwritable_terminal_does_not_mask_primary_or_allocate_replacement(
+    continuation_operation, monkeypatch, capsys, terminal_failure
+):
+    _, store, _, _, _, _ = continuation_operation
+    arguments = freeze_generated(continuation_operation, capsys)
+    original_terminal = continuation.terminal_record
+    primary = RuntimeError("Generated primary with unavailable terminal")
+
+    def terminal(path, value, create=False):
+        if not create and terminal_failure == "io":
+            raise OSError("Generated terminal I/O failure")
+        return original_terminal(path, value, create=create)
+
+    def fail(*unused):
+        if terminal_failure == "changed_slot":
+            (arguments[2] / "terminal.json").write_bytes(b"changed slot")
+        raise primary
+
+    monkeypatch.setattr(continuation, "terminal_record", terminal)
+    monkeypatch.setattr(continuation.scaling, "combined_features", fail)
+    with pytest.raises(RuntimeError) as caught:
+        continuation.run(*arguments)
+    assert caught.value is primary
+    failure = continuation.read(arguments[2] / "failure.json")
+    assert failure["message"] == str(primary)
+    assert failure["reporting_errors"][0] == {
+        "stage": "terminal",
+        "error_type": "OSError" if terminal_failure == "io" else "ValueError",
+    }
+    if terminal_failure == "changed_slot":
+        assert (arguments[2] / "terminal.json").read_bytes() == b"changed slot"
+    else:
+        assert (arguments[2] / "terminal.json").stat().st_size == continuation.PROTOCOL[
+            "limits"
+        ]["terminal_bytes"]
+        assert continuation.read(arguments[2] / "terminal.json")["terminal"] is False
+    assert "terminal_diagnostics" in capsys.readouterr().err
+    process = continuation.read(arguments[2] / "process.json")
+    assert store.job(process["job_id"])["status"] == "failed"
+    assert not (arguments[2] / "completion.json").exists()
+
+
+def test_failure_diagnostics_do_not_invoke_custom_exception_formatting(tmp_path):
+    class UnformattableError(Exception):
+        def __str__(self):
+            raise AssertionError("Do not invoke exception formatting")
+
+    continuation.terminal_record(tmp_path / "terminal.json", {}, create=True)
+    error = UnformattableError(object(), "non-scalar arguments")
+    continuation.preserve_failure(tmp_path, None, error)
+    terminal = continuation.read(tmp_path / "terminal.json")
+    assert terminal["error_type"] == "UnformattableError"
+    assert terminal["message_truncated"] is True
+    assert terminal["accounting"] is None and terminal["scientific_success"] is False
+    assert (tmp_path / "failure.json").stat().st_size < 1024
+
+
 @pytest.mark.parametrize(
     "change", ["source", "runtime", "claim", "grant", "publication"]
 )
