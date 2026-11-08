@@ -8159,6 +8159,24 @@
       "task_id": "404",
       "verb": "checkpoint"
     },
+    "pose404-submit-v1": {
+      "actor": "Ken0u",
+      "at": 1794097292,
+      "epoch": 1,
+      "fingerprint": "c0817daa946619c44b2a1709601f7b562c916ae1a47ad293279e4961b6f73eb9",
+      "status": "review",
+      "task_id": "404",
+      "verb": "submit"
+    },
+    "pose404-tested-checkpoint-v1": {
+      "actor": "Ken0u",
+      "at": 1794097173,
+      "epoch": 1,
+      "fingerprint": "62a332491441eb78e4bb2f76276e336e6bb34d0cca9e039cff4010fda2c91428",
+      "status": "running",
+      "task_id": "404",
+      "verb": "checkpoint"
+    },
     "pose405-plan-v1": {
       "actor": "Ken0u",
       "at": 1794095508,
@@ -35039,16 +35057,17 @@
     "404": {
       "checkpoint": {
         "branch": "codex/issue-404-repair-windows-native-disk-space-admissi",
-        "head_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
-        "summary": "Resumed committed epoch1 grant. Five-path Windows native disk adapter and generated controls locally prepared. Three real installed psutil call-site regressions fail on delivered baseline and pass after repair. Sealed zero-operation402 evidence guard and405 protocol binding prepared. Broader focused/full/tooling/package checks next. Zero new scientific decodes/model observations/fits/image transfer; all predecessor failures and clocks preserved."
+        "head_sha": "33ef4304bbfe46987633a0bcd417ade5d5b7e015",
+        "remaining": "Submit exact PR/head/base/spec through controller; observe all exact PR/main jobs and complete public delivery before separate405grant.",
+        "summary": "Committed and published five-path Windows disk API fix; all323focused and6502full Python tests pass with4optional skips. Real installed psutil regressions fail on baseline/pass after fix; sealed402evidence and405manifest/spec verified metadata-only. Final tooling and clean package/installed HTTP authentication pass on committed source. Only aggregate report updated after full run; executable/test hashes match final head. Initial fixture/lint failures preserved. Zero new scientific decodes, model observations, fits or image transfer; original deadlines and evidence untouched."
       },
-      "checkpoint_at": 1794096220,
+      "checkpoint_at": 1794097173,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
         "branch": "codex/issue-404-repair-windows-native-disk-space-admissi",
         "epoch": 1,
-        "expires_at": 1794107020,
+        "expires_at": 1794107973,
         "granted_at": 1794095739,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
@@ -35057,6 +35076,7 @@
       "epoch": 1,
       "planned_at": 1794095508,
       "planned_by": "Ken0u",
+      "pr_number": 406,
       "spec": {
         "acceptance": [
           "Preserve fully delivered401 source b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f and all prior398/400 evidence/deadlines, draft399/390, root edit/environment/data/weights/annotations. Task402 metadata freeze failed at psutil.disk_usage(WindowsPath) before any prospective output, successor claim, run output, shared Store job, media decode, model observation or fit. After accepted documented no-job release, close402 transferred/incomplete with links; retain grant1794094747/deadline1794152347 and its failure receipt/branch. No source or clock reset.",
@@ -35102,7 +35122,13 @@
         ]
       },
       "spec_hash": "6ebeac9244ff7c491285ee32ed11c794472402a3dc9e212f0f5c31fef784ea75",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "b0bf6421cbb0ad11e5e6fb7203f168d449f98d9f",
+        "head_sha": "33ef4304bbfe46987633a0bcd417ade5d5b7e015",
+        "pr_number": 406,
+        "spec_hash": "6ebeac9244ff7c491285ee32ed11c794472402a3dc9e212f0f5c31fef784ea75"
+      }
     },
     "405": {
       "epoch": 0,
