@@ -5,6 +5,7 @@ import io
 import subprocess
 import sys
 import time
+from contextlib import contextmanager
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -250,6 +251,108 @@ def prepared(generated):
         "grant_state": generated.grant_path,
         "publication": publication,
     }
+
+
+@contextmanager
+def terminal_child(generated, monkeypatch, code=None, observation_delay=0):
+    """Keep a real generated child alive until its real identity is captured.
+
+    Readiness proves that Python has entered the final command, rather than a
+    transient launcher. The separate release follows production process.json
+    publication. No production observer, identity field or limit is replaced.
+    """
+    ready = generated.cache / "fixture-child-ready"
+    release = generated.cache / "fixture-child-release"
+    prefix = (
+        "import os, time; from pathlib import Path\n"
+        f"Path({str(ready)!r}).write_text(str(os.getpid()))\n"
+        "fixture_deadline = time.monotonic() + 20\n"
+        f"while not Path({str(release)!r}).exists():\n"
+        "    if time.monotonic() >= fixture_deadline:\n"
+        "        raise RuntimeError('Generated identity release not received')\n"
+        "    time.sleep(0.005)\n"
+    )
+    command = (
+        recovery.child_command(
+            generated.snapshot, generated.plan, generated.original, "run"
+        )
+        if code is None
+        else [sys.executable, "-I", "-B", "-c", code]
+    )
+    # Windows venv and macOS framework launchers change PID or executable argv.
+    # Select the parent's actual native interpreter before launch; these children
+    # use only stdlib. Never derive an expected command from the observed child.
+    command = [
+        psutil.Process().exe(),
+        *command[1:4],
+        prefix + command[4],
+        *command[5:],
+    ]
+    spawn, publish = subprocess.Popen, recovery.publish
+    children, observed_handles, identities = [], [], []
+
+    def synchronized_spawn(actual, *args, **kwargs):
+        process = spawn(actual, *args, **kwargs)
+        if actual != command:
+            return process
+        children.append(process)
+        deadline = time.monotonic() + 10
+        while not ready.exists():
+            assert process.poll() is None, "Generated child exited before readiness"
+            assert time.monotonic() < deadline, "No generated child readiness"
+            time.sleep(0.005)
+        assert int(ready.read_text()) == process.pid
+        native = psutil.Process(process.pid)
+        assert native.cmdline() == command, {
+            "launched_command": command,
+            "observed_command": native.cmdline(),
+        }
+        assert native.cwd() == str(generated.snapshot), {
+            "launched_cwd": str(generated.snapshot),
+            "observed_cwd": native.cwd(),
+        }
+        observed_handles.append(process)
+        return process
+
+    def observed(path, value):
+        result = publish(path, value)
+        if Path(path) == generated.companion / "launched.json":
+            # Deliberately give a fast child time to exit in the original tests.
+            # The handshake keeps the subject live independently of scheduling.
+            time.sleep(observation_delay)
+        if Path(path) == generated.companion / "process.json":
+            native = psutil.Process(value["pid"])
+            assert children[0].poll() is None
+            assert value == {
+                "pid": native.pid,
+                "created_at": native.create_time(),
+                "cwd": native.cwd(),
+                "command": native.cmdline(),
+            }
+            assert value["command"] == command
+            assert value["cwd"] == str(generated.snapshot)
+            identities.append(value)
+            release.write_bytes(b"observed")
+        return result
+
+    with monkeypatch.context() as scoped:
+        scoped.setattr(recovery, "child_command", lambda *_: command)
+        scoped.setattr(recovery.subprocess, "Popen", synchronized_spawn)
+        scoped.setattr(recovery, "publish", observed)
+        try:
+            yield identities
+        finally:
+            # Release only these fixture-owned children on an assertion failure;
+            # no termination signal or claim of absence follows from a timeout.
+            release.write_bytes(b"fixture cleanup")
+            for process in children:
+                if process.poll() is None:
+                    # Failed startup may precede production reader creation;
+                    # drain the owned pipes instead of stranding overflow output.
+                    if process not in observed_handles:
+                        process.communicate(timeout=15)
+                    else:
+                        process.wait(timeout=15)
 
 
 def test_public_protocol_and_import_do_not_load_numerical_runtime():
@@ -581,11 +684,13 @@ def test_changed_dispatch_evidence_fails_before_consuming_attempt(generated, mut
 
 
 def test_corrective_child_dispatch_is_single_use_and_verification_is_readonly(
-    generated,
+    generated, monkeypatch
 ):
     args = prepared(generated)
     before = generated.original.read_bytes(), generated.claim.read_bytes()
-    result = recovery.dispatch(**args)
+    with terminal_child(generated, monkeypatch) as identities:
+        result = recovery.dispatch(**args)
+    assert len(identities) == 1 and result["process"] == identities[0]
     assert result["scientific_success"] is True and result["terminal"] is True
     assert result["original_process_absent"] is True
     assert result["corrective_invocation_consumed"] is True
@@ -623,19 +728,11 @@ def test_terminal_child_failure_remains_consumed_without_false_success(
     generated, monkeypatch
 ):
     args = prepared(generated)
-    monkeypatch.setattr(
-        recovery,
-        "child_command",
-        lambda *_: [
-            sys.executable,
-            "-I",
-            "-B",
-            "-c",
-            "raise RuntimeError('generated failure')",
-        ],
-    )
-    with pytest.raises(ValueError, match="scientific operation failed"):
-        recovery.dispatch(**args)
+    with terminal_child(
+        generated, monkeypatch, "raise RuntimeError('generated failure')"
+    ):
+        with pytest.raises(ValueError, match="scientific operation failed"):
+            recovery.dispatch(**args)
     receipt = recovery.read(generated.companion / "terminal.json")
     assert receipt["terminal"] is True and receipt["exit_code"] != 0
     assert (
@@ -648,8 +745,9 @@ def test_terminal_child_failure_remains_consumed_without_false_success(
 
 
 @pytest.mark.parametrize("completion", ["missing", "directory"])
+@pytest.mark.parametrize("observation_delay", [0, 0.2])
 def test_zero_exit_without_a_completion_file_never_persists_scientific_success(
-    generated, monkeypatch, completion
+    generated, monkeypatch, completion, observation_delay
 ):
     args = prepared(generated)
     code = (
@@ -657,12 +755,11 @@ def test_zero_exit_without_a_completion_file_never_persists_scientific_success(
         f"output = Path({str(generated.output)!r}); output.mkdir(); "
         + ("(output / 'completion.json').mkdir()" if completion == "directory" else "")
     )
-    monkeypatch.setattr(
-        recovery, "child_command", lambda *_: [sys.executable, "-I", "-B", "-c", code]
-    )
     before = generated.original.read_bytes(), generated.claim.read_bytes()
-    with pytest.raises(ValueError, match="No durable scientific completion"):
-        recovery.dispatch(**args)
+    with terminal_child(generated, monkeypatch, code, observation_delay) as identities:
+        with pytest.raises(ValueError, match="No durable scientific completion"):
+            recovery.dispatch(**args)
+    assert len(identities) == 1
     receipt = recovery.read(generated.companion / "terminal.json")
     assert receipt["terminal"] is True and receipt["exit_code"] == 0
     assert receipt["original_process_absent"] is True
@@ -678,8 +775,9 @@ def test_zero_exit_without_a_completion_file_never_persists_scientific_success(
         recovery.verify(**args)
 
 
+@pytest.mark.parametrize("observation_delay", [0, 0.2])
 def test_log_overflow_keeps_fixed_reservations_and_prevents_success(
-    generated, monkeypatch
+    generated, monkeypatch, observation_delay
 ):
     args = prepared(generated)
     size = generated.protocol["limits"]["log_slot_bytes"]
@@ -689,11 +787,10 @@ def test_log_overflow_keeps_fixed_reservations_and_prevents_success(
         "(output / 'completion.json').write_text('{}'); "
         "sys.stdout.buffer.write(b'x'*" + str(size + 100) + ")"
     )
-    monkeypatch.setattr(
-        recovery, "child_command", lambda *_: [sys.executable, "-I", "-B", "-c", code]
-    )
-    with pytest.raises(ValueError, match="process/log observation"):
-        recovery.dispatch(**args)
+    with terminal_child(generated, monkeypatch, code, observation_delay) as identities:
+        with pytest.raises(ValueError, match="process/log observation"):
+            recovery.dispatch(**args)
+    assert len(identities) == 1
     receipt = recovery.read(generated.companion / "terminal.json")
     assert receipt["terminal"] is True and receipt["exit_code"] == 0
     assert receipt["scientific_success"] is False

@@ -71,3 +71,58 @@ scientific protocol, cohorts, algorithms, limits, deadlines, application truth
 and model defaults are unchanged. No scientific restart, improved model or
 full-match accuracy follows from these software checks. Complete accepted rally
 references remain 0/2.
+
+## Main-verification fixture repair in #411
+
+All twelve PR verification jobs passed before the controller merged #410 at
+`a66b83ec33036b5396a4448fe4095c70bb9f24ac`. Its
+[original main run](https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42439172067)
+failed two existing dispatch-recovery tests, pausing integration and opening
+[#411](https://github.com/Ken0u/badminton-match-analyzer/issues/411).
+Python 3.10 observed a zombie child while reading its working directory in the
+directory-completion refusal case. macOS reported command/root identity mismatch
+before the overflow test reached its intended log guard. The latter log does
+not expose which field differed; its exact historical cause remains unknown.
+Original logs and both failure XML artifacts are preserved. No historical CI
+retry or scientific operation follows from this code repair.
+
+The generated short-child tests now use an explicit readiness/release handshake.
+The child enters its final Python command and writes its actual PID, then waits
+for publication of its real process identity before executing the test body.
+The production observer still reads PID, creation time, command and working
+directory through native psutil and enforces its original command/root match.
+The fixture independently checks those actual fields before releasing the child.
+Both ordinary scheduling and a deliberate observation delay exercise missing/
+directory completion and overflow refusal without accepting another exception
+as success. Successful verification and nonzero child exit remain covered.
+
+On Windows the virtual-environment executable may launch another interpreter
+with a distinct PID. Fresh macOS PR checks also exposed a framework launcher
+replacing the executable argument: the expected virtual-environment path became
+the framework's native `Python.app` executable while all other arguments matched.
+The generated children now select the parent's actual native executable through
+psutil before launch. They use only the standard library, so this bypasses the
+launcher while retaining strict equality against the prospectively chosen command
+and binding readiness to the launched lifetime. Expected identity is never
+rewritten from the observed child, and production checks remain unchanged.
+The test helper has bounded readiness/release waits and releases its own children
+on assertion failure. It drains startup-failure pipes when production readers
+were not established; it never signals a process or changes production limits.
+The existing unobservable-identity test remains separate and unchanged.
+
+All **66 dispatch-recovery tests pass** locally after the fixture repair. Full
+regression/tooling results and fresh exact PR/main/public-delivery evidence are
+recorded on the repair PR. Only two test modules and this report change;
+production supervision, identity/log/completion checks, scientific source,
+protocols, dependencies, workflow, timeouts and retry policy remain unchanged.
+
+The first full local repair check also exposed an independent fixture dependency
+on host RAM: nine scaling-cache cases failed, eight with the initial RAM guard
+and one before its expected second decode. Their generated frames and object
+stubs are tiny; physical RAM pressure should not determine whether those
+pixel/range/clock assertions run. These controls now use a scoped, deterministic
+memory probe. Dedicated low-memory, half-free-memory cap and exact reserve/byte
+boundary controls retain their explicit probes and assertions. Production
+reserves and admission logic are unchanged; unrelated processes remain intact.
+The original failed run and its XML are retained, and revised full-suite and
+cross-platform results are recorded on the repair PR before submission.
