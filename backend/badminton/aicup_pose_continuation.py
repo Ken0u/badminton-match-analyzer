@@ -10,6 +10,7 @@ import math
 import os
 import stat
 import struct
+import sys
 import time
 import zipfile
 import zlib
@@ -1200,6 +1201,79 @@ def terminal_record(path, value, create=False):
         os.fsync(stream.fileno())
 
 
+def preserve_failure(output, ledger, error):
+    """Best-effort diagnostics must never replace the caller's primary error.
+
+    The terminal slot was reserved before work. All other writes still pass
+    through the scoped RAM/disk admission, even while handling an exception.
+    Avoid invoking arbitrary exception formatting or copying an unbounded
+    message into a diagnostic artifact.
+    """
+    reporting_errors = []
+
+    def attempt(stage, operation):
+        try:
+            return operation()
+        except BaseException as secondary:
+            reporting_errors.append(
+                {"stage": stage, "error_type": type(secondary).__name__[:128]}
+            )
+            return None
+
+    arguments = BaseException.args.__get__(error)
+    plain_message = len(arguments) == 1 and type(arguments[0]) is str
+    message = (
+        arguments[0][:1024]
+        if plain_message
+        else "Message omitted: exception has no single plain string argument"
+    )
+    record = {
+        "terminal": True,
+        "scientific_success": False,
+        "error_type": type(error).__name__[:128],
+        "message": message,
+        "message_truncated": not plain_message or len(arguments[0]) > 1024,
+        "accounting": attempt("accounting", ledger.summary) if ledger else None,
+    }
+    if ledger is not None:
+        attempt("journal_close", ledger.close)
+
+    def save_terminal():
+        path = output / "terminal.json"
+        if path.exists():
+            no_links(path, output)
+            terminal_record(path, {**record, "reporting_errors": reporting_errors})
+
+    attempt("terminal", save_terminal)
+
+    def save_failure():
+        path = output / "failure.json"
+        if output.exists() and not path.exists():
+            publish(
+                path,
+                {
+                    **record,
+                    "at": time.time(),
+                    "successor_consumed": True,
+                    "reporting_errors": reporting_errors,
+                },
+            )
+
+    attempt("failure_json", save_failure)
+    if reporting_errors:
+        # One bounded update records secondary failures in already reserved
+        # bytes. There is no retry of ordinary artifact publication.
+        attempt("terminal_diagnostics", save_terminal)
+        try:
+            for diagnostic in reporting_errors:
+                sys.stderr.write(
+                    "Continuation failure reporting: "
+                    f"{diagnostic['stage']} ({diagnostic['error_type']})\n"
+                )
+        except BaseException:
+            pass  # Even stderr may be unavailable during the primary failure.
+
+
 class OutputBudget:
     """Reserve future journal/terminal bytes and admit opaque artifact writers.
 
@@ -1842,32 +1916,10 @@ def run(prospective_path, prospective_sha256, output, grant_state, publication):
         return summary
     except BaseException as error:
         output_budget.journal_reserve = 0
-        if ledger is not None:
-            ledger.close()
-        if (output / "terminal.json").exists() and (
-            output / "terminal.json"
-        ).stat().st_size == PROTOCOL["limits"]["terminal_bytes"]:
-            terminal_record(
-                output / "terminal.json",
-                {
-                    "terminal": True,
-                    "scientific_success": False,
-                    "error_type": type(error).__name__,
-                    "accounting": ledger.summary() if ledger is not None else None,
-                },
-            )
-        if output.exists() and not (output / "failure.json").exists():
-            publish(
-                output / "failure.json",
-                {
-                    "error_type": type(error).__name__,
-                    "message": str(error),
-                    "at": time.time(),
-                    "scientific_success": False,
-                    "successor_consumed": True,
-                    "accounting": ledger.summary() if ledger is not None else None,
-                },
-            )
+        try:
+            preserve_failure(output, ledger, error)
+        except BaseException:
+            pass  # Catastrophic diagnostic allocation must not mask the cause.
         raise
     finally:
         writers.__exit__(None, None, None)
