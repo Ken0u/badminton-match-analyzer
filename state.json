@@ -8267,6 +8267,15 @@
       "task_id": "409",
       "verb": "next"
     },
+    "pose409-submit-1dfc638-v1": {
+      "actor": "Ken0u",
+      "at": 1794104653,
+      "epoch": 1,
+      "fingerprint": "9d1a11e463dc1355ff236378e58a7a2f5d96d72df6b400ea7a74e5ace8921509",
+      "status": "review",
+      "task_id": "409",
+      "verb": "submit"
+    },
     "pose409-tested-code-checkpoint-v1": {
       "actor": "Ken0u",
       "at": 1794104093,
@@ -35580,6 +35589,7 @@
       "epoch": 1,
       "planned_at": 1794101494,
       "planned_by": "Ken0u",
+      "pr_number": 410,
       "spec": {
         "acceptance": [
           "Preserve terminal #405 source728ada95e8b568827603d9621b5b7520a641246d, prospective/exclusive claim, all completed inputs/outputs, original clocks and one-operation/no-replay rules. Its RAM guard failed before the next clip after12complete clips/4079frames/7107decodes/4079observations/134features; zero fits. A second RAM guard in ordinary failure JSON publication masked the original exception and left failure.json absent. The preallocated terminal slot and complete stderr survived. Missing failure JSON is never success or replay authority.",
@@ -35624,7 +35634,13 @@
         ]
       },
       "spec_hash": "79d856be07c4079413958560c4a3e56d62339e6b7e3685e10127bed6eb7e52bc",
-      "status": "running"
+      "status": "review",
+      "submission": {
+        "base_sha": "728ada95e8b568827603d9621b5b7520a641246d",
+        "head_sha": "1dfc6386df1188ebdbf4131570b7ab9888ee9149",
+        "pr_number": 410,
+        "spec_hash": "79d856be07c4079413958560c4a3e56d62339e6b7e3685e10127bed6eb7e52bc"
+      }
     },
     "62": {
       "checkpoint": {
