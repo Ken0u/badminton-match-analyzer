@@ -35079,6 +35079,7 @@
       "status": "blocked"
     },
     "404": {
+      "candidate_run": "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42430924481",
       "checkpoint": {
         "branch": "codex/issue-404-repair-windows-native-disk-space-admissi",
         "head_sha": "33ef4304bbfe46987633a0bcd417ade5d5b7e015",
@@ -35098,7 +35099,7 @@
         "spec_hash": "6ebeac9244ff7c491285ee32ed11c794472402a3dc9e212f0f5c31fef784ea75"
       },
       "delivery_attempts": 1,
-      "delivery_pending": true,
+      "delivery_pending": false,
       "epoch": 1,
       "integration": {
         "at": 1794097937,
