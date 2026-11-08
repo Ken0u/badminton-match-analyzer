@@ -13226,6 +13226,14 @@
       "task_id": "407",
       "verb": "plan"
     },
+    "spec-408-7afbf62b3a03cc4a31af624125d5f9df1086b4184b5592fe5a052b1e28b6258c": {
+      "actor": "Ken0u",
+      "at": 1794100977,
+      "fingerprint": "48c2661d4fffa884a10e4b8071ba719dd9400c888cb6467d247f00f860029435",
+      "status": "ready",
+      "task_id": "408",
+      "verb": "plan"
+    },
     "spec-62-3d6d9c04eb6c52f56dded3f7fc1fc5e52bb97a8522a929041d69179750c09216": {
       "actor": "dootz1",
       "at": 1792393957,
@@ -35408,6 +35416,56 @@
         ]
       },
       "spec_hash": "38603dfc2698813559144b93afb86b796afe0302ae06aa7d8cb05768c208815a",
+      "status": "ready"
+    },
+    "408": {
+      "epoch": 0,
+      "planned_at": 1794100977,
+      "planned_by": "Ken0u",
+      "spec": {
+        "acceptance": [
+          "Preserve the live #405 scientific source/worktree, prospective commitment, input/output artifacts, counters, ownership, original deadlines and one-operation/no-replay rules. Implement only under a fresh separate code grant and isolated worktree. This task authorizes zero real decoding, perception, classifier fits, source/label/prediction/weight access, signals or scientific continuation.",
+          "Delivered #404 source 728ada95e8b568827603d9621b5b7520a641246d performs repeated disk_budget scans before/after opaque writers and periodically during native work. A private metadata-only check of exact delivered functions measured 2.088274,1.945569,1.912775seconds per scan during #405. These are observational costs, not proof of the entire bottleneck or a deadline miss. Reproduce avoidable metadata-query overhead on generated retained trees before editing, and profile the relevant call amplification without importing scientific producers or opening private artifacts.",
+          "Optimize only quota-traversal/accounting cost. Each required check must freshly account every existing required historical/current root and regular-file occurrence with the same deduplication and scratch/failure-retention classification. Preserve current rejection of links/reparse points, lexical/resolved containment and root/ancestor guards, disappearing/unreadable/changed-path failures, all reserve/headroom/terminal-slot/journal accounting, opaque-write admission and every RAM/disk cap. Do not reuse stale file sizes, omit required evidence, suppress errors, archive/delete/move live files or relax check frequency to manufacture speed. Prior scene-runner task361 has different interior-link semantics and is not a drop-in replacement.",
+          "Use clone-independent generated controls for independently asserted byte totals across overlapping roots, new/growing files between calls, scratch becoming retained after failure, hard-linked occurrences, missing roots, symlinks/reparse roots and interior components, path replacement/disappearance, unreadable entries and interrupted traversal. Preserve existing rejection outcomes and source-bound/no-replay/Store/unknown/clock controls. Establish meaningful metadata-call reduction and before/after generated timing without flaky wall-clock assertions or tests that merely mirror helper implementation.",
+          "Do not change the delivered public scientific protocol/task bindings, numerical algorithms, models, thresholds, cohorts, scientific runtime or retry/authorization rules. The resulting code alone must authorize no new scientific operation. Any use in a later continuation requires its separately specified valid grant and prospective freeze; no patching or replay of #405.",
+          "Run focused/full project checks, lint/format/dependency/repository/diff and clean-package CLI checks, then controller exact PR/main/full public delivery. Publish measured scope and limitations in a separate report; avoid concurrent writes to #405s aggregate report. Software speed and accounting consistency are not badminton accuracy or model improvement."
+        ],
+        "artifacts": {},
+        "capabilities": [
+          "cpu"
+        ],
+        "dependencies": [
+          "404"
+        ],
+        "exclusions": [
+          "No edits to frozen405worktree or its aggregate report, no scientific dispatch/restart/continuation or real media/model/label/weight/prediction/test access, external payload transfer, process signals, stale accounting/cap changes, scientific truth/eligibility/model promotion, app/default/environment/data changes, dependency/workflow/auth/security/deployment/policy changes, paid service, CI retry, manual merge, raw coordination/Store edits or deprecated PROGRESS updates."
+        ],
+        "limits": {
+          "image_payload_bytes": 0,
+          "max_generated_output_bytes": 536870912,
+          "max_model_observations": 0,
+          "max_real_fits": 0,
+          "max_runtime_hours": 4,
+          "max_source_decode_visits": 0,
+          "paid_services": false
+        },
+        "milestone": "Event recognition",
+        "outcome": "Reduce repeated pose-continuation quota-traversal overhead while preserving fresh complete accounting, path containment and every failure guard.",
+        "paths": [
+          "backend/badminton/aicup_pose_continuation.py",
+          "tests/test_aicup_pose_continuation.py",
+          "docs/POSE_CONTINUATION_BUDGET_SCAN_REPORT.md"
+        ],
+        "priority": 30,
+        "resources": [],
+        "risk": "routine",
+        "verification": [
+          "Generated independently asserted accounting/failure/path/mutation parity, metadata-call and measured operational-cost comparison without science.",
+          "Focused/full required checks and package parity, controller exact PR/main/full public delivery; live405source and all scientific allowances remain unchanged."
+        ]
+      },
+      "spec_hash": "235bac9f438dd665c72afdb3c02640ea7f7a1eb45cd319836641e4861b7a6e61",
       "status": "ready"
     },
     "62": {
