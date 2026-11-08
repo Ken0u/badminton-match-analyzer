@@ -8322,6 +8322,15 @@
       "task_id": "411",
       "verb": "next"
     },
+    "pose411-native-interpreter-checkpoint-v3": {
+      "actor": "Ken0u",
+      "at": 1794128095,
+      "epoch": 1,
+      "fingerprint": "e3d02ea2353f581c7b4b6917b9f4de400d29636922541ae05104c640881506ba",
+      "status": "running",
+      "task_id": "411",
+      "verb": "checkpoint"
+    },
     "pose411-revised-tests-checkpoint-v2": {
       "actor": "Ken0u",
       "at": 1794127509,
@@ -35716,18 +35725,18 @@
         "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
         "evidence": [
           "https://github.com/Ken0u/badminton-match-analyzer/pull/412",
-          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42462967320"
+          "https://github.com/Ken0u/badminton-match-analyzer/actions/runs/42464103315"
         ],
-        "head_sha": "25eccb42fabbf1ce8ecd9e7175de169caabf2f1e",
-        "summary": "Draft PR 412 revised after original failed checks were preserved. Windows-only base interpreter; POSIX retains original executable with exact native field diagnostics. Nine local scaling-cache failures traced to initial RAM admission; tiny generated fixtures now use scoped memory probes while dedicated low-memory/boundary controls remain active. All 200 focused tests and tooling checks pass; revised full suite and fresh PR CI running. Production code, scientific inputs/protocols and guard thresholds unchanged. No historical job retry or science."
+        "head_sha": "af3e1911f39bf4563f95e96526c5ebbfe8d63a7a",
+        "summary": "Draft PR 412 third scoped revision diagnoses macOS framework argv replacement in preserved failed PR logs. Generated stdlib children now choose the parent's native interpreter before launch; expected child identity is never rewritten. All 200 focused tests and tooling/repository checks pass. Existing full-suite run on prior head 25eccb4 is beyond 80 percent with no failures observed and remains live; results will retain their source binding. Fresh exact-head CI pending. Production code, scientific source and guard thresholds unchanged; no historical CI retry or science."
       },
-      "checkpoint_at": 1794127509,
+      "checkpoint_at": 1794128095,
       "claim": {
         "actor": "Ken0u",
         "baseline_sha": "a66b83ec33036b5396a4448fe4095c70bb9f24ac",
         "branch": "codex/issue-411-repair-main-verification-for-a66b83ec330",
         "epoch": 1,
-        "expires_at": 1794138309,
+        "expires_at": 1794138895,
         "granted_at": 1794125857,
         "host_id": "MSI",
         "session_id": "3283a9953d4445739251c6b8dfdb55bd",
