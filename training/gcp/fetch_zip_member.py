@@ -7,10 +7,10 @@ the zip directory remotely and fetching only that member avoids the rest.
 """
 
 import hashlib
-import io
 import struct
 import sys
 import zipfile
+import zlib
 from concurrent.futures import ThreadPoolExecutor
 from urllib.request import Request, urlopen
 
@@ -30,19 +30,19 @@ def fetch(url, start, end):
     raise RuntimeError(f"range {start}-{end} failed")
 
 
-class Remote(io.RawIOBase):
+class Remote:
     """Just enough of a seekable file for zipfile to read the directory."""
 
     def __init__(self, url):
-        self.url, self.position = url, 0
+        self.position = 0
         with urlopen(Request(url, method="HEAD"), timeout=120) as response:
             self.size = int(response.headers["Content-Length"])
             self.url = response.url
+        # The zip directory sits at the end; one request covers all of it.
+        self.tail_start = max(0, self.size - 4 * 1024 * 1024)
+        self.tail = fetch(self.url, self.tail_start, self.size)
 
     def seekable(self):
-        return True
-
-    def readable(self):
         return True
 
     def tell(self):
@@ -56,7 +56,10 @@ class Remote(io.RawIOBase):
         end = self.size if count < 0 else min(self.size, self.position + count)
         if end <= self.position:
             return b""
-        data = fetch(self.url, self.position, end)
+        if self.position >= self.tail_start:
+            data = self.tail[self.position - self.tail_start : end - self.tail_start]
+        else:
+            data = fetch(self.url, self.position, end)
         self.position = end
         return data
 
@@ -64,23 +67,32 @@ class Remote(io.RawIOBase):
 def main():
     url, member, output = sys.argv[1:4]
     remote = Remote(url)
-    info = zipfile.ZipFile(io.BufferedReader(remote, 1024 * 1024)).getinfo(member)
-    if info.compress_type != zipfile.ZIP_STORED:
-        raise SystemExit("member is compressed; download the whole archive instead")
+    info = zipfile.ZipFile(remote).getinfo(member)
+    if info.compress_type not in (zipfile.ZIP_STORED, zipfile.ZIP_DEFLATED):
+        raise SystemExit("unsupported compression; download the whole archive")
     header = fetch(remote.url, info.header_offset, info.header_offset + 30)
     name_length, extra_length = struct.unpack("<HH", header[26:30])
     begin = info.header_offset + 30 + name_length + extra_length
     ranges = [
-        (start, min(start + CHUNK, begin + info.file_size))
-        for start in range(begin, begin + info.file_size, CHUNK)
+        (start, min(start + CHUNK, begin + info.compress_size))
+        for start in range(begin, begin + info.compress_size, CHUNK)
     ]
+    inflate = (
+        zlib.decompressobj(-15) if info.compress_type == zipfile.ZIP_DEFLATED else None
+    )
     digest, done = hashlib.sha256(), 0
     with open(output, "wb") as sink, ThreadPoolExecutor(4) as pool:
         for data in pool.map(lambda r: fetch(remote.url, *r), ranges):
+            done += len(data)
+            if inflate:
+                data = inflate.decompress(data)
             sink.write(data)
             digest.update(data)
-            done += len(data)
-            print(f"{done / info.file_size:.0%}", flush=True)
+            print(f"{done / info.compress_size:.0%}", flush=True)
+        if inflate:
+            data = inflate.flush()
+            sink.write(data)
+            digest.update(data)
     if len(sys.argv) > 4 and digest.hexdigest() != sys.argv[4]:
         raise SystemExit(f"hash mismatch: {digest.hexdigest()}")
     print("ok", digest.hexdigest())
