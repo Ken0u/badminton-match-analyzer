@@ -24,6 +24,8 @@ command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
 source /data/venv/bin/activate
 uv pip install -q torch==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cu126
 uv pip install -q -e "$REPO[tracking,download]"
+# No display libraries on the VM: use the headless OpenCV build.
+uv pip uninstall -q opencv-python && uv pip install -q opencv-python-headless==4.12.0.88
 
 export BADMINTON_ROOT="$WORK" BADMINTON_DATA_DIR="$WORK/processed" BADMINTON_WEIGHTS_DIR="$WORK/weights"
 python "$REPO/scripts/download_models.py" --kind player --player-model small
