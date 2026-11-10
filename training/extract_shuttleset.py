@@ -135,6 +135,16 @@ def main():
     parser.add_argument("--player-model", default="small")
     parser.add_argument("--shard", default="0/1", help="i/n: every n-th match")
     parser.add_argument("--keep-videos", action="store_true")
+    parser.add_argument(
+        "--no-download",
+        action="store_true",
+        help="only process matches whose video is already in <work>/videos",
+    )
+    parser.add_argument(
+        "--claim",
+        action="store_true",
+        help="several workers share --work; each match is taken by one of them",
+    )
     args = parser.parse_args()
 
     work = args.work.resolve()
@@ -186,6 +196,17 @@ def main():
         ]
         if not todo:
             continue
+        present = any(
+            p.suffix in (".webm", ".mp4", ".mkv") for p in videos.glob(f"{match_id}.*")
+        )
+        if args.no_download and not present:
+            continue
+        if args.claim:
+            try:
+                (work / "locks").mkdir(exist_ok=True)
+                (work / "locks" / str(match_id)).mkdir()
+            except FileExistsError:
+                continue
         try:
             path = download(match, videos)
             video = run_local_job(
