@@ -4,6 +4,7 @@ Completed stage artifacts are immutable and hash-checked. Processing boundaries
 are not camera cuts; tracker identities remain scoped to their source run.
 """
 
+import ast
 import bisect
 import hashlib
 import importlib.metadata
@@ -34,6 +35,12 @@ METHOD = "overlapping source windows with immutable stage checkpoints v1"
 CORE_SECONDS = 60
 HALO_SECONDS = 4
 STAGES = ("players", "shuttle", "contacts", "rallies", "recognition")
+# The expensive perception stages and the module each one runs. Their cache
+# keys cover only the code they import, so a new stroke model or a change to a
+# later stage reuses finished poses and shuttle tracks.
+PERCEPTION = {"segments": "segments", "players": "tracking", "shuttle": "shuttle"}
+# Raise when this file changes how it calls a perception stage.
+PERCEPTION_CALLS = 2
 
 
 def digest(value):
@@ -91,6 +98,38 @@ def plan_windows(video, times, core_seconds=CORE_SECONDS, halo_seconds=HALO_SECO
         )
         start = end
     return windows
+
+
+def imported_sources(module):
+    """Package files that a module imports, directly or through other modules."""
+    package = Path(__file__).parent
+    found, pending = set(), [package / f"{module}.py"]
+    while pending:
+        path = pending.pop()
+        if path in found or not path.is_file():
+            continue
+        found.add(path)
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+            if isinstance(node, ast.ImportFrom) and node.level:
+                base = path.parent
+                for _ in range(node.level - 1):
+                    base = base.parent
+                names = [node.module] if node.module else []
+                names += [
+                    ".".join(filter(None, (node.module, alias.name)))
+                    for alias in node.names
+                ]
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                base, names = package.parent, [node.module]
+                names += [f"{node.module}.{alias.name}" for alias in node.names]
+            elif isinstance(node, ast.Import):
+                base, names = package.parent, [alias.name for alias in node.names]
+            else:
+                continue
+            for name in names:
+                target = base.joinpath(*name.split("."))
+                pending += [target.with_suffix(".py"), target / "__init__.py"]
+    return {p.relative_to(package).as_posix() for p in found if package in p.parents}
 
 
 def processing_recipe(video, times, annotations, settings):
@@ -165,6 +204,15 @@ def stage_recipe(recipe, name, window, dependencies):
         if k not in ("settings", "context_signature", "local_side_files")
     }
     result.update(stage=name, window=window, dependencies=dependencies)
+    if name in PERCEPTION:
+        used = imported_sources(PERCEPTION[name])
+        result["source_files"] = {
+            path: sha
+            for path, sha in recipe["source_files"].items()
+            if path in used or not path.endswith(".py")
+        }
+        result.pop("event_model_sha256", None)
+        result["perception_calls"] = PERCEPTION_CALLS
     if name != "segments":
         result["context_signature"] = recipe["context_signature"]
     result["settings"] = (
@@ -517,6 +565,7 @@ def process_match(
                     player_model=settings["player_model"],
                     auto_calibrate=settings["auto_calibrate"],
                     camera_scan=scan,
+                    skip_uncalibrated=settings["auto_calibrate"],
                 ),
             )
             shuttle, shuttle_id = stage(
@@ -532,6 +581,11 @@ def process_match(
                     output,
                     inference_doc,
                     camera_scan=scan,
+                    skip_frames=[
+                        row["frame"]
+                        for row in players["frames"]
+                        if row.get("skipped_no_court")
+                    ],
                 ),
             )
 

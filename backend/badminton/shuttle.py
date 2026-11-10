@@ -261,8 +261,11 @@ def track_shuttle(
     heatmap_observer=None,
     spatial_layout=None,
     research_checkpoint=None,
+    skip_frames=(),
 ):
+    """Track the shuttle; camera views wholly inside skip_frames are not inferred."""
     input_size = validate_input_size(input_size)
+    skip_frames = set(skip_frames)
     from .shuttle_tiling import predict_tiles, spatial_recipe
 
     spatial = spatial_recipe(spatial_layout, input_size)
@@ -336,6 +339,7 @@ def track_shuttle(
     if device.startswith("cuda"):
         torch.cuda.reset_peak_memory_stats()
     rows = []
+    skipped_frames = 0
     model_calls = model_windows = 0
     try:
 
@@ -369,6 +373,48 @@ def track_shuttle(
 
         for segment in boundaries["camera_ranges"]:
             first, last = segment["start_frame"], segment["end_frame"]
+            if skip_frames.issuperset(range(first, last)):
+                # A view the player stage found no court in: no shuttle search.
+                segment_start = (
+                    max(
+                        [
+                            0,
+                            *[c for c in boundaries["cut_frames"] if c <= first],
+                            *(
+                                [boundaries["preceding_reviewed_cut_frame"]]
+                                if boundaries["preceding_reviewed_cut_frame"]
+                                is not None
+                                else []
+                            ),
+                        ]
+                    )
+                    if camera_scan is not None
+                    else first
+                )
+                for index in range(first, last):
+                    rows.append(
+                        {
+                            "frame": index,
+                            "time_s": times[index],
+                            "shuttle": {
+                                "visible": False,
+                                "x": None,
+                                "y": None,
+                                "confidence": 0.0,
+                                "components": 0,
+                                "component_candidates": [],
+                                "selected_component_id": None,
+                                "largest_component_id": None,
+                                "selection_reason": "skipped_no_court",
+                                "repaired": False,
+                            },
+                            "camera_segment_start_frame": segment_start,
+                            "skipped_no_court": True,
+                        }
+                    )
+                skipped_frames += last - first
+                progress(0.1 + 0.9 * (last - start_frame) / (end_frame - start_frame))
+                continue
             offset = 0.1 + 0.9 * (first - start_frame) / (end_frame - start_frame)
             fraction = 0.9 * (last - first) / (end_frame - start_frame)
             # Match upstream median-at-source-resolution preprocessing, separately
@@ -452,6 +498,7 @@ def track_shuttle(
             "processed_frames": len(rows),
             "visible_frames": sum(row["shuttle"]["visible"] for row in rows),
             "repaired_frames": 0,
+            "skipped_no_court_frames": skipped_frames,
             "cut_frames": boundaries["cut_frames"],
             "camera_boundary_method": boundaries["method"],
             "camera_ranges": boundaries["camera_ranges"],
