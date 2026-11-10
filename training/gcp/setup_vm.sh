@@ -17,9 +17,14 @@ else
   git -C "$REPO" fetch --depth 1 origin "$BRANCH" && git -C "$REPO" checkout -q FETCH_HEAD
 fi
 
-if [ ! -d /data/venv ]; then
-  sudo apt-get install -y -q python3-venv unzip >/dev/null
-  python3 -m venv /data/venv
+if [ ! -f /data/venv/bin/activate ]; then
+  rm -rf /data/venv
+  # The image's apt state cannot install python3-venv; virtualenv needs no apt.
+  python3 -m venv /data/venv 2>/dev/null || {
+    rm -rf /data/venv
+    python3 -m pip install -q --user virtualenv
+    python3 -m virtualenv -q /data/venv
+  }
 fi
 source /data/venv/bin/activate
 pip install -q --upgrade pip
