@@ -573,6 +573,12 @@ def process_match(
                     "court_context": court_run_context(players),
                     "calibration_signature": players["calibration_signature"],
                 }
+                if learned:
+                    # Unreviewed suggestion; contacts are not proposed in
+                    # views judged to be replays, close-ups or the crowd.
+                    result["view_scenes"] = event_model.view_scenes(
+                        players, event_model.run_cuts(players, shuttle)
+                    )
                 write_json(output, result)
                 callback(1)
 

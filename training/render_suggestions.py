@@ -1,8 +1,9 @@
 """Draw the latest full-match suggestions onto a video for a quick look.
 
 This previews unreviewed model output: player boxes, the shuttle, and a label
-at every suggested contact (who hit, stroke, forehand/backhand). It is separate
-from the app's reviewed-annotation exports.
+at every suggested contact (who hit, stroke, forehand/backhand, serve type).
+Camera views judged to be replays, close-ups or the crowd are marked. It is
+separate from the app's reviewed-annotation exports.
 
     python training/render_suggestions.py VIDEO_ID --output preview.mp4
 """
@@ -34,7 +35,7 @@ def load(store, video_id):
             folder / "analysis" / job["details"]["analysis_key"] / "manifest.json"
         ).read_text(encoding="utf-8")
     )
-    players, shuttle, strokes = {}, {}, []
+    players, shuttle, strokes, skipped = {}, {}, [], set()
     for part in plan["parts"]:
         runs = {
             name: json.loads(
@@ -57,7 +58,12 @@ def load(store, video_id):
             if first <= row["frame"] < last and row["shuttle"].get("visible"):
                 shuttle[row["frame"]] = (row["shuttle"]["x"], row["shuttle"]["y"])
         strokes += [c for c in owned_candidates(runs["contacts"]) if "learned" in c]
-    return players, shuttle, sorted(strokes, key=lambda c: c["frame"])
+        for view in runs["contacts"].get("view_scenes", []):
+            if view["scene"] == "non_play":
+                skipped.update(
+                    range(max(first, view["start_frame"]), min(last, view["end_frame"]))
+                )
+    return players, shuttle, sorted(strokes, key=lambda c: c["frame"]), skipped
 
 
 def main():
@@ -67,7 +73,7 @@ def main():
     args = parser.parse_args()
     store = Store(DATA)
     video = store.video(args.video_id)
-    players, shuttle, strokes = load(store, args.video_id)
+    players, shuttle, strokes, skipped = load(store, args.video_id)
     fps = Fraction(video["fps"]).limit_denominator(1000)
     hold = round(HOLD_S * float(fps))
     source = av.open(str(ROOT / video["path"]))
@@ -105,13 +111,28 @@ def main():
             if person and age < 6:
                 x1, y1, x2, y2 = (int(v) for v in person["box"])
                 cv2.rectangle(image, (x1, y1), (x2, y2), color, 3)
-            name = "serve" if info["kind"] == "serve" else info["family"]
+            name = (
+                " ".join(filter(None, (info.get("serve_type"), "serve")))
+                if info["kind"] == "serve"
+                else info["family"]
+            )
             text = f"{info['court_end']} player: {name}, {info['side']}"
             y = 60 if info["court_end"] == "far" else video["height"] - 40
             cv2.putText(
                 image, text, (40, y), cv2.FONT_HERSHEY_SIMPLEX, 1.1, (0, 0, 0), 6
             )
             cv2.putText(image, text, (40, y), cv2.FONT_HERSHEY_SIMPLEX, 1.1, color, 2)
+        if index in skipped:
+            for color, thickness in (((0, 0, 0), 5), ((255, 255, 255), 2)):
+                cv2.putText(
+                    image,
+                    "replay / other camera: not analysed",
+                    (40, video["height"] // 2),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.9,
+                    color,
+                    thickness,
+                )
         cv2.putText(
             image,
             "unreviewed model suggestions",
