@@ -17,19 +17,13 @@ else
   git -C "$REPO" fetch --depth 1 origin "$BRANCH" && git -C "$REPO" checkout -q FETCH_HEAD
 fi
 
-if [ ! -f /data/venv/bin/activate ]; then
-  rm -rf /data/venv
-  # The image's apt state cannot install python3-venv; virtualenv needs no apt.
-  python3 -m venv /data/venv 2>/dev/null || {
-    rm -rf /data/venv
-    python3 -m pip install -q --user virtualenv
-    python3 -m virtualenv -q /data/venv
-  }
-fi
+# The image ships without pip, venv or unzip; uv needs none of them.
+export PATH="$HOME/.local/bin:$PATH"
+command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
+[ -f /data/venv/bin/activate ] || { rm -rf /data/venv; uv venv -q --python 3.10 /data/venv; }
 source /data/venv/bin/activate
-pip install -q --upgrade pip
-pip install -q torch==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cu126
-pip install -q -e "$REPO[tracking,download]"
+uv pip install -q torch==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cu126
+uv pip install -q -e "$REPO[tracking,download]"
 
 export BADMINTON_ROOT="$WORK" BADMINTON_DATA_DIR="$WORK/processed" BADMINTON_WEIGHTS_DIR="$WORK/weights"
 python "$REPO/scripts/download_models.py" --kind player --player-model small
@@ -42,7 +36,7 @@ if [ ! -f /data/part1.zip ]; then
       "https://zenodo.org/records/14677727/files/assets.zip?download=1"
     mv /data/assets.zip.part /data/assets.zip
   fi
-  unzip -p /data/assets.zip datasets/part1.zip > /data/part1.zip.part
+  python -c "import shutil,zipfile; shutil.copyfileobj(zipfile.ZipFile('/data/assets.zip').open('datasets/part1.zip'), open('/data/part1.zip.part','wb'), 1<<24)"
   mv /data/part1.zip.part /data/part1.zip
   echo "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b  /data/part1.zip" | sha256sum -c -
   rm /data/assets.zip
