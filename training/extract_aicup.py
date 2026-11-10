@@ -92,6 +92,11 @@ def main():
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument("--limit", type=int)
     parser.add_argument("--player-model", default="small")
+    parser.add_argument(
+        "--shard",
+        default="0/1",
+        help="i/n: process every n-th clip; give each shard its own --work",
+    )
     args = parser.parse_args()
 
     work = args.work.resolve()
@@ -111,7 +116,8 @@ def main():
     from badminton.tracking import track_players
 
     store = Store(DATA)
-    todo = unpack(args.archive, clips)[: args.limit]
+    index, total = (int(v) for v in args.shard.split("/"))
+    todo = unpack(args.archive, clips)[index::total][: args.limit]
     print(f"{len(todo)} labelled clips", flush=True)
     failures, began = [], time.time()
     for number, (clip_id, video_path, labels) in enumerate(todo, 1):
