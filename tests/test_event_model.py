@@ -133,8 +133,7 @@ def test_views_without_a_court_are_suggested_as_non_play():
         # Second camera view starts at frame 10 and never shows the court.
         row["camera_segment_start_frame"] = 0 if index < 10 else 10
         row["calibration_valid"] = index < 9 or index >= 20
-    run = {"frames": frames, "auto_calibrate": True}
-    scenes = event_model.view_scenes(run, cuts={20})
+    scenes = event_model.view_scenes({"frames": frames}, cuts={20})
     assert [(s["start_frame"], s["end_frame"], s["scene"]) for s in scenes] == [
         (0, 10, "live"),
         (10, 20, "non_play"),
@@ -143,5 +142,5 @@ def test_views_without_a_court_are_suggested_as_non_play():
     # With no court information at all, nothing is judged or skipped.
     for row in frames:
         row["calibration_valid"] = False
-    unknown = event_model.view_scenes({"frames": frames, "auto_calibrate": False})
+    unknown = event_model.view_scenes({"frames": frames})
     assert {s["scene"] for s in unknown} == {"unknown"}
