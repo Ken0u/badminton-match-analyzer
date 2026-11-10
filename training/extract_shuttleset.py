@@ -143,14 +143,22 @@ def main():
     parser.add_argument(
         "--claim",
         action="store_true",
-        help="several workers share --work; each match is taken by one of them",
+        help="each match is taken by one of the workers sharing --shared",
+    )
+    parser.add_argument(
+        "--shared",
+        type=Path,
+        help="folder holding videos, features and claims for several workers, "
+        "each with its own --work (default: --work)",
     )
     args = parser.parse_args()
 
     work = args.work.resolve()
-    videos, features = work / "videos", work / "features"
-    for folder in (videos, features, work / "processed", work / "index"):
+    shared = (args.shared or args.work).resolve()
+    videos, features = shared / "videos", shared / "features"
+    for folder in (videos, features, work / "videos", work / "processed"):
         folder.mkdir(parents=True, exist_ok=True)
+    (shared / "index").mkdir(exist_ok=True)
     # Pin configuration before the application package is imported.
     os.environ["BADMINTON_ROOT"] = str(work)
     os.environ["BADMINTON_DATA_DIR"] = str(work / "processed")
@@ -165,9 +173,9 @@ def main():
     from badminton.storage import Store
     from badminton.tracking import track_players
 
-    index = work / "index" / "strokes.jsonl"
+    index = shared / "index" / "strokes.jsonl"
     if not index.exists():
-        import_shuttleset(args.source, work / "index")
+        import_shuttleset(args.source, shared / "index")
     rallies = defaultdict(list)
     with index.open(encoding="utf-8") as handle:
         for line in handle:
@@ -203,12 +211,16 @@ def main():
             continue
         if args.claim:
             try:
-                (work / "locks").mkdir(exist_ok=True)
-                (work / "locks" / str(match_id)).mkdir()
+                (shared / "locks").mkdir(exist_ok=True)
+                (shared / "locks" / str(match_id)).mkdir()
             except FileExistsError:
                 continue
         try:
-            path = download(match, videos)
+            original = download(match, videos)
+            # The application reads media from inside its own root folder.
+            path = work / "videos" / original.name
+            if path != original and not path.exists():
+                os.link(original, path)
             video = run_local_job(
                 store,
                 "import",
@@ -341,6 +353,7 @@ def main():
                 traceback.print_exc()
         if not args.keep_videos:
             path.unlink(missing_ok=True)
+            original.unlink(missing_ok=True)
     done = len(list(features.glob("*.json.gz")))
     print(f"finished: {done} feature files, {len(failures)} failures {failures}")
     return 1 if failures and not done else 0
