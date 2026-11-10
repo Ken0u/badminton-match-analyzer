@@ -106,3 +106,42 @@ def test_candidates_carry_the_learned_stroke_to_recognition_targets():
         "family": "smash",
         "score": 0.8,
     }
+    assert strokes[0]["serve_type"] is None
+
+    serve = event | {
+        "frame": 35,
+        "kind": "serve",
+        "family": "serve",
+        "family_scores": {"serve": 0.8},
+        "serve_type": "short",
+        "serve_type_score": 0.7,
+    }
+    contacts = event_model.contact_candidates([serve])
+    target = {"id": "stroke-c", "frame": 35, "contact_candidate_id": "contact-35"}
+    stroke = event_model.stroke_candidates([target], {"candidates": contacts})[0]
+    assert (stroke["kind"], stroke["family"], stroke["serve_type"]) == (
+        "serve",
+        None,
+        "short",
+    )
+    assert stroke["reason"].startswith("learned short serve")
+
+
+def test_views_without_a_court_are_suggested_as_non_play():
+    frames = rows(30, [person(1, 600)])
+    for index, row in enumerate(frames):
+        # Second camera view starts at frame 10 and never shows the court.
+        row["camera_segment_start_frame"] = 0 if index < 10 else 10
+        row["calibration_valid"] = index < 9 or index >= 20
+    run = {"frames": frames, "auto_calibrate": True}
+    scenes = event_model.view_scenes(run, cuts={20})
+    assert [(s["start_frame"], s["end_frame"], s["scene"]) for s in scenes] == [
+        (0, 10, "live"),
+        (10, 20, "non_play"),
+        (20, 30, "live"),
+    ]
+    # With no court information at all, nothing is judged or skipped.
+    for row in frames:
+        row["calibration_valid"] = False
+    unknown = event_model.view_scenes({"frames": frames, "auto_calibrate": False})
+    assert {s["scene"] for s in unknown} == {"unknown"}

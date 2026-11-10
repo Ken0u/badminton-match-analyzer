@@ -1,7 +1,9 @@
 """Learned contact, hitter, stroke-family and side suggestions for singles.
 
 One temporal model reads the players' poses and the shuttle track across a
-camera view and marks racket contacts with who hit, what stroke and which side.
+camera view and marks racket contacts with who hit, what stroke and which side,
+and whether a serve was short or long. Views where no court was found (replays
+from other angles, close-ups, the crowd) are labelled non-play and skipped.
 It is trained by training/train_events.py and used only when its checkpoint
 (events.pt) is present in the weights folder. Outputs are review suggestions.
 """
@@ -14,12 +16,13 @@ from .config import WEIGHTS
 
 FAMILIES = ("serve", "clear", "drive", "smash", "net", "drop", "lift", "other")
 SIDES = ("forehand", "backhand")
+SERVES = ("short", "long")
 COURT_ENDS = ("far", "near")
 PLAYER = 17 * 3 + 5
 FEATURES = 2 * PLAYER + 6
 TRAINED_FPS = 30.0
 CHECKPOINT = "events.pt"
-METHOD = "learned singles event model v1"
+METHOD = "learned singles event model v2"
 
 
 def checkpoint_path():
@@ -165,6 +168,45 @@ def _views(player_rows, cuts):
             start = index
 
 
+def run_cuts(player_run, shuttle_run):
+    return set(player_run.get("cut_frames", [])) | set(
+        shuttle_run.get("cut_frames", [])
+    )
+
+
+def view_scenes(player_run, cuts=()):
+    """Suggest which camera views show the match from the main court camera.
+
+    The court detector finds the full court only in the main broadcast view, so
+    a view where most frames have no court is a replay from another angle, a
+    close-up or the crowd. A slow-motion replay from the main camera still
+    looks like play. Without any court information nothing can be judged.
+    """
+    rows = player_run["frames"]
+    judged = bool(player_run.get("auto_calibrate")) or any(
+        r.get("calibration_valid") for r in rows
+    )
+    scenes = []
+    for start, stop in _views(rows, set(cuts)):
+        share = float(
+            np.mean([bool(r.get("calibration_valid")) for r in rows[start:stop]])
+        )
+        scenes.append(
+            {
+                "start_frame": rows[start]["frame"],
+                "end_frame": rows[stop - 1]["frame"] + 1,
+                "scene": "unknown"
+                if not judged
+                else "live"
+                if share >= 0.5
+                else "non_play",
+                "court_frame_share": round(share, 3),
+                "reviewed": False,
+            }
+        )
+    return scenes
+
+
 def predict_events(video, player_run, shuttle_run):
     """Suggest contacts for one processed window. Returns a list of dicts."""
     import torch
@@ -177,17 +219,22 @@ def predict_events(video, player_run, shuttle_run):
     saved = torch.load(checkpoint_path(), map_location="cpu", weights_only=True)
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     model = EventModel().to(device).eval()
-    model.load_state_dict(saved["state"])
+    # Checkpoints trained before serve types existed lack that output.
+    serve_types = "heads.serve.weight" in saved["state"]
+    model.load_state_dict(saved["state"], strict=serve_types)
     threshold = float(saved["threshold"])
-    cuts = set(player_run.get("cut_frames", [])) | set(
-        shuttle_run.get("cut_frames", [])
-    )
+    cuts = run_cuts(player_run, shuttle_run)
+    skipped = {
+        s["start_frame"]
+        for s in view_scenes(player_run, cuts)
+        if s["scene"] == "non_play"
+    }
     width, height = video["width"], video["height"]
     fps = float(video.get("fps") or TRAINED_FPS)
     events = []
     try:
         for start, stop in _views(player_rows, cuts):
-            if stop - start < 8:
+            if stop - start < 8 or player_rows[start]["frame"] in skipped:
                 continue
             rows = player_rows[start:stop]
             values, tracks = observations(
@@ -204,13 +251,15 @@ def predict_events(video, player_run, shuttle_run):
             hit = torch.sigmoid(out["hit"][0, :, 0]).cpu().numpy()
             scores = {
                 name: torch.softmax(out[name][0].float(), -1).cpu().numpy()
-                for name in ("hitter", "family", "side")
+                for name in ("hitter", "family", "side", "serve")
             }
             for step in _peaks(hit, threshold):
                 row = rows[int(nearest[step])]
                 end = int(scores["hitter"][step].argmax())
                 family = int(scores["family"][step].argmax())
                 side = int(scores["side"][step].argmax())
+                serve = int(scores["serve"][step].argmax())
+                typed = serve_types and FAMILIES[family] == "serve"
                 events.append(
                     {
                         "frame": row["frame"],
@@ -228,6 +277,10 @@ def predict_events(video, player_run, shuttle_run):
                         },
                         "side": SIDES[side],
                         "side_score": float(scores["side"][step][side]),
+                        "serve_type": SERVES[serve] if typed else None,
+                        "serve_type_score": float(scores["serve"][step][serve])
+                        if typed
+                        else None,
                         "view_start_frame": rows[0]["frame"],
                         "view_end_frame": rows[-1]["frame"] + 1,
                     }
@@ -267,7 +320,7 @@ def contact_candidates(events):
             "reason": f"learned contact by the {e['court_end']} player",
             "reviewed": False,
             "learned": {
-                k: e[k]
+                k: e.get(k)
                 for k in (
                     "kind",
                     "family",
@@ -278,6 +331,8 @@ def contact_candidates(events):
                     "court_end",
                     "court_end_score",
                     "track_id",
+                    "serve_type",
+                    "serve_type_score",
                 )
             },
         }
@@ -299,6 +354,11 @@ def stroke_candidates(targets, contact_run):
             continue
         ranked = sorted(info["family_scores"].items(), key=lambda item: -item[1])[:3]
         serve = info["kind"] == "serve"
+        name = (
+            " ".join(filter(None, (info.get("serve_type"), "serve")))
+            if serve
+            else info["family"]
+        )
         results.append(
             target
             | {
@@ -319,13 +379,15 @@ def stroke_candidates(targets, contact_run):
                 "side": info["side"],
                 "side_score": info["side_score"],
                 "side_status": "predicted",
+                "serve_type": info.get("serve_type"),
+                "serve_type_score": info.get("serve_type_score"),
                 "hitter_court_end": info["court_end"],
                 "hitter_hint": {
                     "court_end": info["court_end"],
                     "track_id": info["track_id"],
                     "player_id": None,
                 },
-                "reason": f"learned {'serve' if serve else info['family']} "
+                "reason": f"learned {name} "
                 f"({info['family_score']:.2f}) by the {info['court_end']} player",
             }
         )

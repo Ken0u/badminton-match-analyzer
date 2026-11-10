@@ -1,9 +1,9 @@
-"""Train one temporal model for contacts, hitter, stroke family and side.
+"""Train one temporal model for contacts, hitter, stroke, side and serve type.
 
 Input is the per-clip feature files written by extract_aicup.py. The model
 reads the whole rally (players' poses plus shuttle track) and predicts, for
 every frame, whether a racket contact happens there and, if so, who hit it,
-which stroke family it was and forehand/backhand.
+which stroke family it was, forehand/backhand and, for a serve, short or long.
 
 Clips are split by capture venue (aicup_capture_groups_v1.json): the test
 venues are never used for training or model selection and are only scored
@@ -22,11 +22,21 @@ from pathlib import Path
 
 import numpy as np
 import torch
-from badminton.event_model import FAMILIES, FEATURES, PLAYER, SIDES, clip_inputs
+from badminton.event_model import (
+    FAMILIES,
+    FEATURES,
+    PLAYER,
+    SERVES,
+    SIDES,
+    clip_inputs,
+)
 from badminton.event_network import EventModel
 from torch import nn
 
 BALL_TYPE = {1: 0, 2: 0, 3: 1, 4: 2, 5: 3, 6: 4, 7: 5, 8: 6, 9: 7}
+# AI CUP ball types 1 and 2 are the short and the long serve.
+SERVE_TYPE = {1: 0, 2: 1}
+HEADS = ("hitter", "family", "side", "serve")
 REQUESTED = ("clear", "drive", "smash", "net", "drop", "lift")
 # COCO keypoint left/right pairs, swapped when a clip is mirrored.
 MIRROR = [0, 2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15]
@@ -48,12 +58,13 @@ def clip_arrays(document):
         try:
             frame = int(label["HitFrame"])
             family = BALL_TYPE[int(label["BallType"])]
+            serve = SERVE_TYPE.get(int(label["BallType"]), -1)
             side = {1: 1, 2: 0}[int(label["Backhand"])]
             hitter = {"A": 0, "B": 1}[label["Hitter"]]
         except (KeyError, ValueError):
             continue
         if 0 <= frame < count:
-            hits.append((frame, hitter, family, side))
+            hits.append((frame, hitter, family, side, serve))
     return inputs, hits
 
 
@@ -92,19 +103,19 @@ def batch(items, device, augment=False):
     x = np.zeros((len(items), length, FEATURES), np.float32)
     hit = np.zeros((len(items), length), np.float32)
     valid = np.zeros((len(items), length), np.float32)
-    classes = np.full((len(items), length, 3), -1, np.int64)
+    classes = np.full((len(items), length, len(HEADS)), -1, np.int64)
     for row, (_, inputs, hits) in enumerate(items):
         if augment and random.random() < 0.5:
             inputs = mirror(inputs)
         x[row, : len(inputs)] = inputs
         valid[row, : len(inputs)] = 1
-        for frame, hitter, family, side in hits:
+        for frame, *labels in hits:
             for offset, weight in ((-2, 0.3), (-1, 0.8), (0, 1), (1, 0.8), (2, 0.3)):
                 if 0 <= frame + offset < len(inputs):
                     hit[row, frame + offset] = max(hit[row, frame + offset], weight)
             for offset in (-1, 0, 1):
                 if 0 <= frame + offset < len(inputs):
-                    classes[row, frame + offset] = (hitter, family, side)
+                    classes[row, frame + offset] = labels
     return (torch.from_numpy(a).to(device) for a in (x, hit, valid, classes))
 
 
@@ -116,7 +127,7 @@ def loss_fn(outputs, hit, valid, classes, weights):
         reduction="none",
     )
     total = (contact * valid).sum() / valid.sum()
-    for index, name in enumerate(("hitter", "family", "side")):
+    for index, name in enumerate(HEADS):
         target = classes[..., index]
         mask = target >= 0
         if mask.any():
@@ -146,10 +157,7 @@ def predict(model, items, device):
         results.append(
             {
                 "hit": torch.sigmoid(out["hit"][0, :, 0]).cpu().numpy(),
-                **{
-                    k: out[k][0].argmax(-1).cpu().numpy()
-                    for k in ("hitter", "family", "side")
-                },
+                **{k: out[k][0].argmax(-1).cpu().numpy() for k in HEADS},
             }
         )
     return results
@@ -168,11 +176,11 @@ def macro_f1(pairs, labels):
 
 def score(items, predictions, threshold, tolerance):
     tp = fp = fn = complete = 0
-    hitters, families, sides = [], [], []
+    hitters, families, sides, serves = [], [], [], []
     for (_, _, hits), predicted in zip(items, predictions):
         frames = peaks(predicted["hit"], threshold)
         used = set()
-        for frame, hitter, family, side in hits:
+        for frame, hitter, family, side, serve in hits:
             options = [
                 f for f in frames if f not in used and abs(f - frame) <= tolerance
             ]
@@ -186,6 +194,8 @@ def score(items, predictions, threshold, tolerance):
             hitters.append((hitter, guess[0]))
             families.append((family, guess[1]))
             sides.append((side, guess[2]))
+            if serve >= 0:
+                serves.append((serve, int(predicted["serve"][best])))
             complete += guess == (hitter, family, side)
         fp += len(frames) - len(used)
     f1 = lambda hit: 2 * hit / max(1, 2 * tp + fp + fn)  # noqa: E731
@@ -211,6 +221,23 @@ def score(items, predictions, threshold, tolerance):
         )
         if sides
         else float("nan"),
+        "serves_matched": len(serves),
+        "serve_type_balanced_accuracy_on_matched": float(
+            np.mean(
+                [
+                    np.mean([p == s for t, p in serves if t == s])
+                    for s in range(len(SERVES))
+                    if any(t == s for t, _ in serves)
+                ]
+            )
+        )
+        if serves
+        else float("nan"),
+        "family_recall_on_matched": {
+            name: float(np.mean([p == index for t, p in families if t == index]))
+            for index, name in enumerate(FAMILIES)
+            if any(t == index for t, _ in families)
+        },
         # Strict end-to-end: right time, hitter, family and side together.
         "complete_event_f1": f1(complete),
     }
@@ -219,7 +246,7 @@ def score(items, predictions, threshold, tolerance):
 def class_weights(items, device):
     counts = {"family": np.ones(len(FAMILIES)), "side": np.ones(len(SIDES))}
     for _, _, hits in items:
-        for _, _, family, side in hits:
+        for _, _, family, side, _ in hits:
             counts["family"][family] += 1
             counts["side"][side] += 1
     return {
@@ -309,6 +336,7 @@ def main():
                             "threshold": threshold,
                             "epoch": epoch,
                             "families": FAMILIES,
+                            "serves": SERVES,
                             "features": FEATURES,
                         },
                         checkpoint,
