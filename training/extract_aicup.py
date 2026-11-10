@@ -97,6 +97,13 @@ def main():
         default="0/1",
         help="i/n: process every n-th clip; give each shard its own --work",
     )
+    parser.add_argument(
+        "--done",
+        type=Path,
+        action="append",
+        default=[],
+        help="other feature folders whose finished clips are skipped",
+    )
     args = parser.parse_args()
 
     work = args.work.resolve()
@@ -122,7 +129,8 @@ def main():
     failures, began = [], time.time()
     for number, (clip_id, video_path, labels) in enumerate(todo, 1):
         output = features / f"{clip_id}.json.gz"
-        if output.exists():
+        name = f"{clip_id}.json.gz"
+        if output.exists() or any((d / name).exists() for d in args.done):
             continue
         try:
             started = time.time()
