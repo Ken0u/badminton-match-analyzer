@@ -11,9 +11,10 @@ ShuttleSet rallies by whole match (the published split). Test venues and
 matches are never used for training or model selection and are only scored
 when --final is passed.
 
-ShuttleSet adds the block (a soft return of a smash or drive to the net),
-which AI CUP does not label separately: an AI CUP "net" label therefore
-accepts either net or block. ShuttleSet hit frames are hand-entered and sit a
+ShuttleSet adds stroke types AI CUP does not label separately: the block (a
+soft return of a smash or drive to the net), push, net kill, cross-court net
+shot and wrist smash. An AI CUP label therefore accepts any of the finer
+classes it may contain (see AICUP_ACCEPTS). ShuttleSet hit frames are hand-entered and sit a
 couple of frames before the contact, so with --teacher each one is moved to
 the nearest contact an earlier checkpoint finds.
 
@@ -67,7 +68,7 @@ SHUTTLESET_FAMILY = {
     "short service": "serve",
     "long service": "serve",
     "net shot": "net",
-    "cross-court net shot": "net",
+    "cross-court net shot": "cross-court net",
     "return net": "block",
     "smash": "smash",
     "lob": "lift",
@@ -79,12 +80,26 @@ SHUTTLESET_FAMILY = {
     "defensive return drive": "drive",
     "drop": "drop",
     "passive drop": "drop",
+    "push": "push",
+    "rush": "net kill",
+    "wrist smash": "wrist smash",
+}
+# Finer classes an AI CUP label may contain; its "other" is push or net kill.
+AICUP_ACCEPTS = {
+    "net": ("block", "cross-court net"),
+    "smash": ("wrist smash",),
+    "other": ("push", "net kill"),
+}
+# The earlier, coarser classes, for comparison with earlier checkpoints.
+COARSE = {
     "push": "other",
-    "rush": "other",
+    "net kill": "other",
     "wrist smash": "other",
+    "cross-court net": "net",
 }
 HEADS = ("hitter", "family", "side", "serve")
 REQUESTED = ("clear", "drive", "smash", "net", "drop", "lift", "block")
+FINE = tuple(name for name in FAMILIES if name not in ("serve", "other"))
 # Published ShuttleSet hit frames precede the detected contact by about this.
 SHUTTLESET_LEAD_S = 0.08
 SNAP_S = 0.2
@@ -121,8 +136,7 @@ def aicup_clip(document):
         except (KeyError, ValueError):
             continue
         if 0 <= frame < len(inputs):
-            # AI CUP has no block class; its net shots may include blocks.
-            mask = accepted(family, ("block",) if family == "net" else ())
+            mask = accepted(family, AICUP_ACCEPTS.get(family, ()))
             hits.append(
                 (frame, hitter, FAMILY[family], side, SERVE_TYPE.get(code, -1), mask)
             )
@@ -322,6 +336,10 @@ def macro_f1(pairs, labels):
     return float(np.mean(scores)) if scores else float("nan")
 
 
+def coarse(index):
+    return FAMILY[COARSE.get(FAMILIES[index], FAMILIES[index])]
+
+
 def balanced(pairs, count):
     rates = [
         np.mean([p == s for t, p in pairs if t == s])
@@ -379,7 +397,11 @@ def score(items, predictions, threshold, tolerance):
         if hitters
         else float("nan"),
         "family_macro_f1_on_matched": macro_f1(
-            families, [FAMILY[name] for name in REQUESTED]
+            families, [FAMILY[name] for name in FINE]
+        ),
+        "coarse_family_macro_f1_on_matched": macro_f1(
+            [(coarse(t), coarse(p)) for t, p in families],
+            [FAMILY[name] for name in REQUESTED],
         ),
         "side_balanced_accuracy_on_matched": balanced(sides, len(SIDES)),
         "serves_matched": len(serves),
@@ -525,6 +547,7 @@ def main():
                                     for key in (
                                         "contact_f1",
                                         "family_macro_f1_on_matched",
+                                        "coarse_family_macro_f1_on_matched",
                                         "complete_event_f1",
                                     )
                                 }
