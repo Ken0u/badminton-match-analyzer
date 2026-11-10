@@ -1,16 +1,26 @@
 """Train one temporal model for contacts, hitter, stroke, side and serve type.
 
-Input is the per-clip feature files written by extract_aicup.py. The model
-reads the whole rally (players' poses plus shuttle track) and predicts, for
-every frame, whether a racket contact happens there and, if so, who hit it,
-which stroke family it was, forehand/backhand and, for a serve, short or long.
+Input is the per-clip feature files written by extract_aicup.py and, when
+given, extract_shuttleset.py. The model reads the whole rally (players' poses
+plus shuttle track) and predicts, for every frame, whether a racket contact
+happens there and, if so, who hit it, which stroke family it was,
+forehand/backhand and, for a serve, short or long.
 
-Clips are split by capture venue (aicup_capture_groups_v1.json): the test
-venues are never used for training or model selection and are only scored
+AI CUP clips are split by capture venue (aicup_capture_groups_v1.json) and
+ShuttleSet rallies by whole match (the published split). Test venues and
+matches are never used for training or model selection and are only scored
 when --final is passed.
 
-    python training/train_events.py --features /data/work/features --output /data/work/model
-    python training/train_events.py --features ... --output ... --final
+ShuttleSet adds the block (a soft return of a smash or drive to the net),
+which AI CUP does not label separately: an AI CUP "net" label therefore
+accepts either net or block. ShuttleSet hit frames are hand-entered and sit a
+couple of frames before the contact, so with --teacher each one is moved to
+the nearest contact an earlier checkpoint finds.
+
+    python training/train_events.py --features /data/features \
+        --shuttleset /data/shuttleset/features --teacher /data/model_v2/events.pt \
+        --output /data/model_v3
+    python training/train_events.py --features ... --shuttleset ... --output ... --final
 """
 
 import argparse
@@ -23,21 +33,61 @@ from pathlib import Path
 import numpy as np
 import torch
 from badminton.event_model import (
+    COURT_ENDS,
     FAMILIES,
     FEATURES,
     PLAYER,
     SERVES,
     SIDES,
+    TRAINED_FPS,
     clip_inputs,
+    observations,
+    resample,
+    with_motion,
 )
 from badminton.event_network import EventModel
 from torch import nn
 
-BALL_TYPE = {1: 0, 2: 0, 3: 1, 4: 2, 5: 3, 6: 4, 7: 5, 8: 6, 9: 7}
-# AI CUP ball types 1 and 2 are the short and the long serve.
+FAMILY = {name: index for index, name in enumerate(FAMILIES)}
+# AI CUP ball types: 1/2 short and long serve, 9 the combined push/net kill.
+AICUP_FAMILY = {
+    1: "serve",
+    2: "serve",
+    3: "clear",
+    4: "drive",
+    5: "smash",
+    6: "net",
+    7: "drop",
+    8: "lift",
+    9: "other",
+}
 SERVE_TYPE = {1: 0, 2: 1}
+# ShuttleSet stroke types, by the importer's English names.
+SHUTTLESET_FAMILY = {
+    "short service": "serve",
+    "long service": "serve",
+    "net shot": "net",
+    "cross-court net shot": "net",
+    "return net": "block",
+    "smash": "smash",
+    "lob": "lift",
+    "defensive return lob": "lift",
+    "clear": "clear",
+    "drive": "drive",
+    "driven flight": "drive",
+    "back-court drive": "drive",
+    "defensive return drive": "drive",
+    "drop": "drop",
+    "passive drop": "drop",
+    "push": "other",
+    "rush": "other",
+    "wrist smash": "other",
+}
 HEADS = ("hitter", "family", "side", "serve")
-REQUESTED = ("clear", "drive", "smash", "net", "drop", "lift")
+REQUESTED = ("clear", "drive", "smash", "net", "drop", "lift", "block")
+# Published ShuttleSet hit frames precede the detected contact by about this.
+SHUTTLESET_LEAD_S = 0.08
+SNAP_S = 0.2
 # COCO keypoint left/right pairs, swapped when a clip is mirrored.
 MIRROR = [0, 2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15]
 GROUPS = (
@@ -48,27 +98,104 @@ GROUPS = (
 )
 
 
-def clip_arrays(document):
-    """Per-frame inputs and targets for one rally clip."""
+def accepted(family, either=()):
+    """Family target as the set of classes that count as correct."""
+    mask = np.zeros(len(FAMILIES), np.float32)
+    if family is not None:
+        mask[[FAMILY[name] for name in (family, *either)]] = 1
+    return mask
+
+
+def aicup_clip(document):
+    """Per-frame inputs and hits for one AI CUP rally clip."""
     width, height = document["video"]["width"], document["video"]["height"]
     inputs = clip_inputs(document["players"], document["shuttle"], width, height)
-    count = len(inputs)
     hits = []
     for label in document["labels"]:
         try:
             frame = int(label["HitFrame"])
-            family = BALL_TYPE[int(label["BallType"])]
-            serve = SERVE_TYPE.get(int(label["BallType"]), -1)
+            code = int(label["BallType"])
+            family = AICUP_FAMILY[code]
             side = {1: 1, 2: 0}[int(label["Backhand"])]
             hitter = {"A": 0, "B": 1}[label["Hitter"]]
         except (KeyError, ValueError):
             continue
-        if 0 <= frame < count:
-            hits.append((frame, hitter, family, side, serve))
+        if 0 <= frame < len(inputs):
+            # AI CUP has no block class; its net shots may include blocks.
+            mask = accepted(family, ("block",) if family == "net" else ())
+            hits.append(
+                (frame, hitter, FAMILY[family], side, SERVE_TYPE.get(code, -1), mask)
+            )
     return inputs, hits
 
 
-def load(features, folds):
+def shuttleset_clip(document):
+    """Inputs on the trained frame rate and hits for one ShuttleSet rally."""
+    width, height = document["video"]["width"], document["video"]["height"]
+    rows = document["players"]
+    if np.mean([bool(r.get("calibration_valid")) for r in rows]) < 0.5:
+        return None, []
+    values, _ = observations(rows, document["shuttle"], width, height)
+    times = np.array([r["time_s"] for r in rows])
+    if abs(float(document["video"]["fps"]) - TRAINED_FPS) > 0.5:
+        values, _ = resample(values, times)
+    inputs = with_motion(values)
+    hits = []
+    for event in document["events"]:
+        if not 0 <= event["frame"] < len(times):
+            continue
+        moment = times[event["frame"]] - times[0] + SHUTTLESET_LEAD_S
+        frame = min(len(inputs) - 1, round(moment * TRAINED_FPS))
+        family = (
+            SHUTTLESET_FAMILY.get(event["source_type"]) if event["usable"] else None
+        )
+        hits.append(
+            (
+                frame,
+                COURT_ENDS.index(event["court_end"]) if event["court_end"] else -1,
+                FAMILY[family] if family else -1,
+                SIDES.index(event["side"]) if event["side"] in SIDES else -1,
+                SERVES.index(event["serve_type"])
+                if event["serve_type"] in SERVES
+                else -1,
+                accepted(family),
+            )
+        )
+    return inputs, hits
+
+
+def snap(items, teacher, device):
+    """Move ShuttleSet hits onto the contacts an earlier checkpoint finds."""
+    saved = torch.load(teacher, map_location=device, weights_only=True)
+    model = EventModel(families=len(saved.get("families", FAMILIES[:8]))).to(device)
+    model.load_state_dict(saved["state"], strict=False)
+    model.eval()
+    reach = round(SNAP_S * TRAINED_FPS)
+    moved = total = 0
+    snapped = []
+    with torch.no_grad():
+        for clip_id, inputs, hits in items:
+            out = model(torch.from_numpy(inputs)[None].to(device))
+            found = peaks(
+                torch.sigmoid(out["hit"][0, :, 0]).cpu().numpy(), saved["threshold"]
+            )
+            used, result = set(), []
+            for frame, *labels in hits:
+                options = [
+                    f for f in found if f not in used and abs(f - frame) <= reach
+                ]
+                total += 1
+                if options:
+                    frame = min(options, key=lambda f: abs(f - frame))
+                    used.add(frame)
+                    moved += 1
+                result.append((frame, *labels))
+            snapped.append((clip_id, inputs, result))
+    print(f"teacher placed {moved} of {total} ShuttleSet hits", flush=True)
+    return snapped
+
+
+def load(features, folds, shuttleset=None):
     data = {"train": [], "validation": [], "test": []}
     for path in sorted(Path(features).glob("*.json.gz")):
         clip_id = path.name.split(".")[0]
@@ -76,10 +203,18 @@ def load(features, folds):
         if fold is None:
             continue
         with gzip.open(path, "rt", encoding="utf-8") as source:
-            inputs, hits = clip_arrays(json.load(source))
+            inputs, hits = aicup_clip(json.load(source))
         if hits:
             data[fold].append((clip_id, inputs, hits))
-    return data
+    extra = {"train": [], "validation": [], "test": []}
+    if shuttleset:
+        for path in sorted(Path(shuttleset).glob("ss-*.json.gz")):
+            with gzip.open(path, "rt", encoding="utf-8") as source:
+                document = json.load(source)
+            inputs, hits = shuttleset_clip(document)
+            if hits and document["split"] in extra:
+                extra[document["split"]].append((document["clip_id"], inputs, hits))
+    return data, extra
 
 
 def mirror(inputs):
@@ -104,22 +239,24 @@ def batch(items, device, augment=False):
     hit = np.zeros((len(items), length), np.float32)
     valid = np.zeros((len(items), length), np.float32)
     classes = np.full((len(items), length, len(HEADS)), -1, np.int64)
+    accept = np.zeros((len(items), length, len(FAMILIES)), np.float32)
     for row, (_, inputs, hits) in enumerate(items):
         if augment and random.random() < 0.5:
             inputs = mirror(inputs)
         x[row, : len(inputs)] = inputs
         valid[row, : len(inputs)] = 1
-        for frame, *labels in hits:
+        for frame, *labels, mask in hits:
             for offset, weight in ((-2, 0.3), (-1, 0.8), (0, 1), (1, 0.8), (2, 0.3)):
                 if 0 <= frame + offset < len(inputs):
                     hit[row, frame + offset] = max(hit[row, frame + offset], weight)
             for offset in (-1, 0, 1):
                 if 0 <= frame + offset < len(inputs):
                     classes[row, frame + offset] = labels
-    return (torch.from_numpy(a).to(device) for a in (x, hit, valid, classes))
+                    accept[row, frame + offset] = mask
+    return (torch.from_numpy(a).to(device) for a in (x, hit, valid, classes, accept))
 
 
-def loss_fn(outputs, hit, valid, classes, weights):
+def loss_fn(outputs, hit, valid, classes, accept, weights):
     contact = nn.functional.binary_cross_entropy_with_logits(
         outputs["hit"].squeeze(-1),
         hit,
@@ -130,7 +267,18 @@ def loss_fn(outputs, hit, valid, classes, weights):
     for index, name in enumerate(HEADS):
         target = classes[..., index]
         mask = target >= 0
-        if mask.any():
+        if not mask.any():
+            continue
+        if name == "family":
+            # Probability of any accepted class, weighted by the labelled one.
+            chosen = torch.logsumexp(
+                outputs[name][mask].float().log_softmax(-1)
+                + torch.log(accept[mask].clamp_min(1e-12)),
+                -1,
+            )
+            scale = weights[name][target[mask]]
+            total = total + 0.5 * -(chosen * scale).sum() / scale.sum()
+        else:
             total = total + 0.5 * nn.functional.cross_entropy(
                 outputs[name][mask], target[mask], weight=weights.get(name)
             )
@@ -174,13 +322,22 @@ def macro_f1(pairs, labels):
     return float(np.mean(scores)) if scores else float("nan")
 
 
+def balanced(pairs, count):
+    rates = [
+        np.mean([p == s for t, p in pairs if t == s])
+        for s in range(count)
+        if any(t == s for t, _ in pairs)
+    ]
+    return float(np.mean(rates)) if rates else float("nan")
+
+
 def score(items, predictions, threshold, tolerance):
     tp = fp = fn = complete = 0
     hitters, families, sides, serves = [], [], [], []
     for (_, _, hits), predicted in zip(items, predictions):
         frames = peaks(predicted["hit"], threshold)
         used = set()
-        for frame, hitter, family, side, serve in hits:
+        for frame, hitter, family, side, serve, mask in hits:
             options = [
                 f for f in frames if f not in used and abs(f - frame) <= tolerance
             ]
@@ -190,16 +347,28 @@ def score(items, predictions, threshold, tolerance):
             best = min(options, key=lambda f: abs(f - frame))
             used.add(best)
             tp += 1
-            guess = tuple(int(predicted[k][best]) for k in ("hitter", "family", "side"))
-            hitters.append((hitter, guess[0]))
-            families.append((family, guess[1]))
-            sides.append((side, guess[2]))
+            guess = {k: int(predicted[k][best]) for k in HEADS}
+            # A prediction inside the accepted set counts as the labelled class.
+            if family >= 0 and mask[guess["family"]]:
+                guess["family"] = family
+            if hitter >= 0:
+                hitters.append((hitter, guess["hitter"]))
+            if family >= 0:
+                families.append((family, guess["family"]))
+            if side >= 0:
+                sides.append((side, guess["side"]))
             if serve >= 0:
-                serves.append((serve, int(predicted["serve"][best])))
-            complete += guess == (hitter, family, side)
+                serves.append((serve, guess["serve"]))
+            complete += all(
+                true < 0 or true == guess[name]
+                for name, true in (
+                    ("hitter", hitter),
+                    ("family", family),
+                    ("side", side),
+                )
+            )
         fp += len(frames) - len(used)
     f1 = lambda hit: 2 * hit / max(1, 2 * tp + fp + fn)  # noqa: E731
-    requested = [FAMILIES.index(name) for name in REQUESTED]
     return {
         "tolerance_frames": tolerance,
         "contacts": tp + fn,
@@ -209,34 +378,21 @@ def score(items, predictions, threshold, tolerance):
         "hitter_accuracy_on_matched": float(np.mean([t == p for t, p in hitters]))
         if hitters
         else float("nan"),
-        "family_macro_f1_six_on_matched": macro_f1(families, requested),
-        "side_balanced_accuracy_on_matched": float(
-            np.mean(
-                [
-                    np.mean([p == s for t, p in sides if t == s])
-                    for s in (0, 1)
-                    if any(t == s for t, _ in sides)
-                ]
-            )
-        )
-        if sides
-        else float("nan"),
+        "family_macro_f1_on_matched": macro_f1(
+            families, [FAMILY[name] for name in REQUESTED]
+        ),
+        "side_balanced_accuracy_on_matched": balanced(sides, len(SIDES)),
         "serves_matched": len(serves),
-        "serve_type_balanced_accuracy_on_matched": float(
-            np.mean(
-                [
-                    np.mean([p == s for t, p in serves if t == s])
-                    for s in range(len(SERVES))
-                    if any(t == s for t, _ in serves)
-                ]
-            )
-        )
-        if serves
-        else float("nan"),
+        "serve_type_balanced_accuracy_on_matched": balanced(serves, len(SERVES)),
         "family_recall_on_matched": {
             name: float(np.mean([p == index for t, p in families if t == index]))
             for index, name in enumerate(FAMILIES)
             if any(t == index for t, _ in families)
+        },
+        "family_precision_on_matched": {
+            name: float(np.mean([t == index for t, p in families if p == index]))
+            for index, name in enumerate(FAMILIES)
+            if any(p == index for _, p in families)
         },
         # Strict end-to-end: right time, hitter, family and side together.
         "complete_event_f1": f1(complete),
@@ -246,9 +402,11 @@ def score(items, predictions, threshold, tolerance):
 def class_weights(items, device):
     counts = {"family": np.ones(len(FAMILIES)), "side": np.ones(len(SIDES))}
     for _, _, hits in items:
-        for _, _, family, side, _ in hits:
-            counts["family"][family] += 1
-            counts["side"][side] += 1
+        for _, _, family, side, _, _ in hits:
+            if family >= 0:
+                counts["family"][family] += 1
+            if side >= 0:
+                counts["side"][side] += 1
     return {
         name: torch.tensor(
             (value.sum() / value / len(value)) ** 0.5, dtype=torch.float32
@@ -260,6 +418,10 @@ def class_weights(items, device):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--features", type=Path, required=True)
+    parser.add_argument("--shuttleset", type=Path, help="ShuttleSet feature folder")
+    parser.add_argument(
+        "--teacher", type=Path, help="checkpoint that places ShuttleSet hit frames"
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--epochs", type=int, default=120)
     parser.add_argument("--batch-size", type=int, default=16)
@@ -280,30 +442,52 @@ def main():
         for member in group["members"]
         if member.startswith("train:")
     }
-    data = load(args.features, folds)
-    print({k: len(v) for k, v in data.items()}, "clips on", device, flush=True)
+    data, extra = load(args.features, folds, args.shuttleset)
+    if args.teacher:
+        extra = {
+            fold: snap(items, args.teacher, device) for fold, items in extra.items()
+        }
+    print(
+        {k: len(v) for k, v in data.items()},
+        "AI CUP clips,",
+        {k: len(v) for k, v in extra.items()},
+        "ShuttleSet rallies on",
+        device,
+        flush=True,
+    )
+    train = data["train"] + extra["train"]
     args.output.mkdir(parents=True, exist_ok=True)
     checkpoint = args.output / "events.pt"
 
+    def evaluate(model, fold, threshold, tolerance):
+        """AI CUP and ShuttleSet are scored apart: their labels differ in kind."""
+        result = {}
+        for name, items in (("aicup", data[fold]), ("shuttleset", extra[fold])):
+            if items:
+                result[name] = score(
+                    items, predict(model, items, device), threshold, tolerance
+                )
+        return result
+
     if not args.final:
         model = EventModel().to(device)
-        weights = class_weights(data["train"], device)
+        weights = class_weights(train, device)
         optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-2)
-        steps = args.epochs * math.ceil(len(data["train"]) / args.batch_size)
+        steps = args.epochs * math.ceil(len(train) / args.batch_size)
         schedule = torch.optim.lr_scheduler.OneCycleLR(
             optimizer, 2e-3, total_steps=steps
         )
         best, history = -1, []
         for epoch in range(1, args.epochs + 1):
             model.train()
-            order = random.sample(data["train"], len(data["train"]))
+            order = random.sample(train, len(train))
             losses = []
             for start in range(0, len(order), args.batch_size):
-                x, hit, valid, classes = batch(
+                x, hit, valid, classes, accept = batch(
                     order[start : start + args.batch_size], device, augment=True
                 )
                 x = x + 0.003 * torch.randn_like(x) * (x != 0)
-                loss = loss_fn(model(x), hit, valid, classes, weights)
+                loss = loss_fn(model(x), hit, valid, classes, accept, weights)
                 optimizer.zero_grad()
                 loss.backward()
                 nn.utils.clip_grad_norm_(model.parameters(), 1)
@@ -311,25 +495,47 @@ def main():
                 schedule.step()
                 losses.append(loss.item())
             if epoch % 5 == 0 or epoch == args.epochs:
-                predictions = predict(model, data["validation"], device)
-                options = [
-                    (score(data["validation"], predictions, t, 2), t)
-                    for t in (0.3, 0.4, 0.5, 0.6, 0.7)
-                ]
-                result, threshold = max(
-                    options, key=lambda o: o[0]["complete_event_f1"]
-                )
+                options = []
+                for threshold in (0.3, 0.4, 0.5, 0.6, 0.7):
+                    result = evaluate(model, "validation", threshold, 2)
+                    mean = float(
+                        np.mean([r["complete_event_f1"] for r in result.values()])
+                    )
+                    options.append((mean, threshold, result))
+                mean, threshold, result = max(options, key=lambda o: o[0])
                 history.append(
                     {
                         "epoch": epoch,
                         "loss": float(np.mean(losses)),
                         "threshold": threshold,
+                        "selection_score": mean,
                         **result,
                     }
                 )
-                print(json.dumps(history[-1]), flush=True)
-                if result["complete_event_f1"] > best:
-                    best = result["complete_event_f1"]
+                print(
+                    json.dumps(
+                        {
+                            "epoch": epoch,
+                            "loss": round(float(np.mean(losses)), 4),
+                            "threshold": threshold,
+                            "selection_score": round(mean, 4),
+                            **{
+                                name: {
+                                    key: round(value[key], 3)
+                                    for key in (
+                                        "contact_f1",
+                                        "family_macro_f1_on_matched",
+                                        "complete_event_f1",
+                                    )
+                                }
+                                for name, value in result.items()
+                            },
+                        }
+                    ),
+                    flush=True,
+                )
+                if mean > best:
+                    best = mean
                     torch.save(
                         {
                             "state": model.state_dict(),
@@ -344,14 +550,12 @@ def main():
         (args.output / "history.json").write_text(json.dumps(history, indent=1))
 
     saved = torch.load(checkpoint, map_location=device, weights_only=True)
-    model = EventModel().to(device)
+    model = EventModel(families=len(saved["families"])).to(device)
     model.load_state_dict(saved["state"])
     report = {"epoch": saved["epoch"], "threshold": saved["threshold"]}
     for fold in ("validation", "test") if args.final else ("validation",):
-        predictions = predict(model, data[fold], device)
         report[fold] = [
-            score(data[fold], predictions, saved["threshold"], tolerance)
-            for tolerance in (2, 4)
+            evaluate(model, fold, saved["threshold"], tolerance) for tolerance in (2, 4)
         ]
     name = "final_report.json" if args.final else "validation_report.json"
     (args.output / name).write_text(json.dumps(report, indent=1))
