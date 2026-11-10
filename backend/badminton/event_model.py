@@ -14,7 +14,18 @@ import numpy as np
 
 from .config import WEIGHTS
 
-FAMILIES = ("serve", "clear", "drive", "smash", "net", "drop", "lift", "other")
+# New classes go at the end: earlier checkpoints keep their output order.
+FAMILIES = (
+    "serve",
+    "clear",
+    "drive",
+    "smash",
+    "net",
+    "drop",
+    "lift",
+    "other",
+    "block",
+)
 SIDES = ("forehand", "backhand")
 SERVES = ("short", "long")
 COURT_ENDS = ("far", "near")
@@ -22,7 +33,7 @@ PLAYER = 17 * 3 + 5
 FEATURES = 2 * PLAYER + 6
 TRAINED_FPS = 30.0
 CHECKPOINT = "events.pt"
-METHOD = "learned singles event model v2"
+METHOD = "learned singles event model v3"
 
 
 def checkpoint_path():
@@ -217,7 +228,9 @@ def predict_events(video, player_run, shuttle_run):
         raise ValueError("Player and shuttle runs must cover the same frames")
     saved = torch.load(checkpoint_path(), map_location="cpu", weights_only=True)
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    model = EventModel().to(device).eval()
+    # A checkpoint names the stroke classes it was trained with.
+    families = tuple(saved.get("families", FAMILIES[:8]))
+    model = EventModel(families=len(families)).to(device).eval()
     # Checkpoints trained before serve types existed lack that output.
     serve_types = "heads.serve.weight" in saved["state"]
     model.load_state_dict(saved["state"], strict=serve_types)
@@ -258,7 +271,7 @@ def predict_events(video, player_run, shuttle_run):
                 family = int(scores["family"][step].argmax())
                 side = int(scores["side"][step].argmax())
                 serve = int(scores["serve"][step].argmax())
-                typed = serve_types and FAMILIES[family] == "serve"
+                typed = serve_types and families[family] == "serve"
                 events.append(
                     {
                         "frame": row["frame"],
@@ -267,12 +280,12 @@ def predict_events(video, player_run, shuttle_run):
                         "court_end": COURT_ENDS[end],
                         "court_end_score": float(scores["hitter"][step][end]),
                         "track_id": tracks[int(nearest[step])][end],
-                        "kind": "serve" if FAMILIES[family] == "serve" else "shot",
-                        "family": FAMILIES[family],
+                        "kind": "serve" if families[family] == "serve" else "shot",
+                        "family": families[family],
                         "family_score": float(scores["family"][step][family]),
                         "family_scores": {
                             name: float(value)
-                            for name, value in zip(FAMILIES, scores["family"][step])
+                            for name, value in zip(families, scores["family"][step])
                         },
                         "side": SIDES[side],
                         "side_score": float(scores["side"][step][side]),

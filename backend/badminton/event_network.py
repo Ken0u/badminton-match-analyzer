@@ -6,7 +6,7 @@ from .event_model import COURT_ENDS, FAMILIES, FEATURES, SERVES, SIDES
 
 
 class EventModel(nn.Module):
-    def __init__(self, hidden=192, layers=2, dropout=0.3):
+    def __init__(self, hidden=192, layers=2, dropout=0.3, families=len(FAMILIES)):
         super().__init__()
         self.stem = nn.Sequential(
             nn.Conv1d(FEATURES, hidden, 5, padding=2),
@@ -29,7 +29,7 @@ class EventModel(nn.Module):
             {
                 "hit": nn.Linear(2 * hidden, 1),
                 "hitter": nn.Linear(2 * hidden, len(COURT_ENDS)),
-                "family": nn.Linear(2 * hidden, len(FAMILIES)),
+                "family": nn.Linear(2 * hidden, families),
                 "side": nn.Linear(2 * hidden, len(SIDES)),
                 "serve": nn.Linear(2 * hidden, len(SERVES)),
             }
