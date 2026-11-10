@@ -31,15 +31,8 @@ python "$REPO/scripts/download_models.py" --kind shuttle
 
 # AI CUP 2023 part1: 800 labelled singles rallies (CC-BY-4.0, Zenodo 14677727).
 if [ ! -f /data/part1.zip ]; then
-  if [ ! -f /data/assets.zip ]; then
-    wget -q --show-progress -c -O /data/assets.zip.part \
-      "https://zenodo.org/records/14677727/files/assets.zip?download=1"
-    mv /data/assets.zip.part /data/assets.zip
-  fi
-  python -c "import shutil,zipfile; shutil.copyfileobj(zipfile.ZipFile('/data/assets.zip').open('datasets/part1.zip'), open('/data/part1.zip.part','wb'), 1<<24)"
+  python "$REPO/training/gcp/fetch_zip_member.py"     "https://zenodo.org/records/14677727/files/assets.zip?download=1"     datasets/part1.zip /data/part1.zip.part     1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b
   mv /data/part1.zip.part /data/part1.zip
-  echo "1f14bb969a2a23fef58de76b22bd418d5848dc4f9f8ae6a364d365c1b4c9a07b  /data/part1.zip" | sha256sum -c -
-  rm /data/assets.zip
 fi
 
 python -c "import torch; print('cuda', torch.cuda.is_available(), torch.cuda.get_device_name(0))"
