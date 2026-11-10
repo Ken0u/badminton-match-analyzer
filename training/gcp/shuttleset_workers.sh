@@ -8,6 +8,7 @@ set -uo pipefail
 cd /data
 source venv/bin/activate
 WORKERS="${1:-4}"
+export BADMINTON_WEIGHTS_DIR=/data/work/weights
 # Claims left by an interrupted run would hide unfinished matches.
 rm -rf /data/shuttleset/locks
 
@@ -16,8 +17,9 @@ worker() {
     last=0
     [ -f /data/shuttleset/uploads_done ] && last=1
     python badminton-match-analyzer/training/extract_shuttleset.py \
-      --work /data/shuttleset --source /data/shuttleset/source \
-      --no-download --claim >> "/data/shuttleset/worker$1.log" 2>&1
+      --work "/data/shuttleset/w$1" --shared /data/shuttleset \
+      --source /data/shuttleset/source --no-download --claim \
+      >> "/data/shuttleset/worker$1.log" 2>&1
     [ "$last" = 1 ] && break
     sleep 45
   done
