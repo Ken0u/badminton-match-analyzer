@@ -180,12 +180,11 @@ def view_scenes(player_run, cuts=()):
     The court detector finds the full court only in the main broadcast view, so
     a view where most frames have no court is a replay from another angle, a
     close-up or the crowd. A slow-motion replay from the main camera still
-    looks like play. Without any court information nothing can be judged.
+    looks like play. If no view in the run has a court, nothing is judged:
+    the camera angle may simply be one the court detector cannot read.
     """
     rows = player_run["frames"]
-    judged = bool(player_run.get("auto_calibrate")) or any(
-        r.get("calibration_valid") for r in rows
-    )
+    judged = any(r.get("calibration_valid") for r in rows)
     scenes = []
     for start, stop in _views(rows, set(cuts)):
         share = float(

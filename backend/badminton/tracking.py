@@ -147,7 +147,15 @@ def track_players(
     player_model="small",
     auto_calibrate=True,
     camera_scan=None,
+    skip_uncalibrated=False,
 ):
+    """Track players; optionally spend no inference on views without a court.
+
+    With skip_uncalibrated, frames that no court calibration covers (replays
+    from other angles, close-ups, the crowd) get an empty row marked
+    skipped_no_court. If the requested range has no calibration at all, nothing
+    is skipped: the camera angle may simply be one the detector cannot read.
+    """
     runtime = data / "runtime"
     runtime.mkdir(exist_ok=True)
     # Keep the baseline high-score associations; only the corroborating tracker
@@ -214,6 +222,10 @@ def track_players(
     effective = effective_annotations(annotations, court_context)
     calibrations = [Calibration.model_validate(c) for c in effective["calibrations"]]
     rows, counts = [], []
+    skip = skip_uncalibrated and any(
+        c.start_frame < end_frame and c.end_frame > start_frame for c in calibrations
+    )
+    skipped_frames = 0
     calibrated_frames = 0
     weak_observations = 0
     segment_start = start_frame
@@ -255,6 +267,25 @@ def track_players(
                 ),
                 None,
             )
+            if skip and calibration is None:
+                rows.append(
+                    {
+                        "frame": index,
+                        "time_s": timestamps[index],
+                        "players": [],
+                        "motion_players": [],
+                        "camera_segment_start_frame": segment_start,
+                        "calibration_valid": False,
+                        "skipped_no_court": True,
+                    }
+                )
+                counts.append(0)
+                skipped_frames += 1
+                progress(
+                    0.2
+                    + 0.75 * (index - start_frame + 1) / max(1, end_frame - start_frame)
+                )
+                continue
             polygon = (
                 np.array(
                     [
@@ -344,6 +375,8 @@ def track_players(
             "annotation_revision": annotations.revision,
             "calibrated": bool(rows) and calibrated_frames == len(rows),
             "calibrated_frames": calibrated_frames,
+            "skip_uncalibrated": skip_uncalibrated,
+            "skipped_no_court_frames": skipped_frames,
             "elapsed_s": round(elapsed, 3),
             "processed_frames": len(rows),
             "inference_fps": round(len(rows) / max(elapsed, 0.001), 2),
