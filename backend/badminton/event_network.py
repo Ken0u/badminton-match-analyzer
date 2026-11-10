@@ -2,7 +2,7 @@
 
 from torch import nn
 
-from .event_model import COURT_ENDS, FAMILIES, FEATURES, SIDES
+from .event_model import COURT_ENDS, FAMILIES, FEATURES, SERVES, SIDES
 
 
 class EventModel(nn.Module):
@@ -31,6 +31,7 @@ class EventModel(nn.Module):
                 "hitter": nn.Linear(2 * hidden, len(COURT_ENDS)),
                 "family": nn.Linear(2 * hidden, len(FAMILIES)),
                 "side": nn.Linear(2 * hidden, len(SIDES)),
+                "serve": nn.Linear(2 * hidden, len(SERVES)),
             }
         )
 
