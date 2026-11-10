@@ -22,17 +22,14 @@ from pathlib import Path
 
 import numpy as np
 import torch
+from badminton.event_model import FAMILIES, FEATURES, PLAYER, SIDES, clip_inputs
+from badminton.event_network import EventModel
 from torch import nn
 
-FAMILIES = ("serve", "clear", "drive", "smash", "net", "drop", "lift", "other")
 BALL_TYPE = {1: 0, 2: 0, 3: 1, 4: 2, 5: 3, 6: 4, 7: 5, 8: 6, 9: 7}
 REQUESTED = ("clear", "drive", "smash", "net", "drop", "lift")
-SIDES = ("forehand", "backhand")
-HITTERS = ("far", "near")
 # COCO keypoint left/right pairs, swapped when a clip is mirrored.
 MIRROR = [0, 2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15]
-PLAYER = 17 * 3 + 5
-FEATURES = 2 * PLAYER + 6
 GROUPS = (
     Path(__file__).resolve().parents[1]
     / "backend"
@@ -41,53 +38,11 @@ GROUPS = (
 )
 
 
-def player_vector(person, width, height):
-    vector = np.zeros(PLAYER, np.float32)
-    if person is None:
-        return vector
-    points = np.asarray(person["keypoints"], np.float32).reshape(17, 3)
-    x1, y1, x2, y2 = person["box"]
-    vector[0:51:3] = points[:, 0] / width
-    vector[1:51:3] = points[:, 1] / height
-    vector[2:51:3] = points[:, 2]
-    vector[51:55] = (x1 / width, y1 / height, x2 / width, y2 / height)
-    vector[55] = 1
-    return vector
-
-
 def clip_arrays(document):
     """Per-frame inputs and targets for one rally clip."""
     width, height = document["video"]["width"], document["video"]["height"]
-    count = len(document["players"])
-    inputs = np.zeros((count, FEATURES), np.float32)
-    previous = None
-    for index, (row, ball) in enumerate(zip(document["players"], document["shuttle"])):
-        people = [p for p in row["players"] if len(p.get("keypoints", [])) == 17]
-        people = sorted(people, key=lambda p: -p["confidence"])[:2]
-        # Far player stands higher in the image; with one person, use court half.
-        people.sort(key=lambda p: p["box"][3])
-        far = near = None
-        if len(people) == 2:
-            far, near = people
-        elif people:
-            if people[0]["box"][3] < height * 0.55:
-                far = people[0]
-            else:
-                near = people[0]
-        inputs[index, :PLAYER] = player_vector(far, width, height)
-        inputs[index, PLAYER : 2 * PLAYER] = player_vector(near, width, height)
-        tail = inputs[index, 2 * PLAYER :]
-        if ball["visible"] and ball["x"] is not None:
-            position = (ball["x"] / width, ball["y"] / height)
-            tail[0:3] = (*position, 1)
-            if previous is not None and index - previous[0] <= 3:
-                gap = index - previous[0]
-                tail[3:6] = (
-                    (position[0] - previous[1][0]) / gap,
-                    (position[1] - previous[1][1]) / gap,
-                    1,
-                )
-            previous = (index, position)
+    inputs = clip_inputs(document["players"], document["shuttle"], width, height)
+    count = len(inputs)
     hits = []
     for label in document["labels"]:
         try:
@@ -151,41 +106,6 @@ def batch(items, device, augment=False):
                 if 0 <= frame + offset < len(inputs):
                     classes[row, frame + offset] = (hitter, family, side)
     return (torch.from_numpy(a).to(device) for a in (x, hit, valid, classes))
-
-
-class EventModel(nn.Module):
-    def __init__(self, hidden=192, layers=2, dropout=0.3):
-        super().__init__()
-        self.stem = nn.Sequential(
-            nn.Conv1d(FEATURES, hidden, 5, padding=2),
-            nn.BatchNorm1d(hidden),
-            nn.ReLU(),
-            nn.Conv1d(hidden, hidden, 5, padding=2),
-            nn.BatchNorm1d(hidden),
-            nn.ReLU(),
-            nn.Dropout(dropout),
-        )
-        self.rnn = nn.GRU(
-            hidden,
-            hidden,
-            layers,
-            batch_first=True,
-            bidirectional=True,
-            dropout=dropout,
-        )
-        self.heads = nn.ModuleDict(
-            {
-                "hit": nn.Linear(2 * hidden, 1),
-                "hitter": nn.Linear(2 * hidden, len(HITTERS)),
-                "family": nn.Linear(2 * hidden, len(FAMILIES)),
-                "side": nn.Linear(2 * hidden, len(SIDES)),
-            }
-        )
-
-    def forward(self, x):
-        hidden = self.stem(x.transpose(1, 2)).transpose(1, 2)
-        hidden, _ = self.rnn(hidden)
-        return {name: head(hidden) for name, head in self.heads.items()}
 
 
 def loss_fn(outputs, hit, valid, classes, weights):
@@ -343,7 +263,9 @@ def main():
         weights = class_weights(data["train"], device)
         optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-2)
         steps = args.epochs * math.ceil(len(data["train"]) / args.batch_size)
-        schedule = torch.optim.lr_scheduler.OneCycleLR(optimizer, 2e-3, total_steps=steps)
+        schedule = torch.optim.lr_scheduler.OneCycleLR(
+            optimizer, 2e-3, total_steps=steps
+        )
         best, history = -1, []
         for epoch in range(1, args.epochs + 1):
             model.train()

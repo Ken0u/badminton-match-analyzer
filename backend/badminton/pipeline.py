@@ -14,6 +14,7 @@ import os
 import time
 from pathlib import Path
 
+from . import event_model
 from .actor_linking import link_player_runs
 from .calibration_context import court_run_context
 from .config import WEIGHTS
@@ -145,6 +146,7 @@ def processing_recipe(video, times, annotations, settings):
         "context_signature": context_signature(annotations, 0, len(times)),
         "source_files": code,
         "local_side_files": local_side,
+        "event_model_sha256": event_model.checkpoint_sha256(),
         "library_versions": versions,
     }
 
@@ -537,7 +539,16 @@ def process_match(
                 input_provenance = validate_contact_inputs(
                     video, shuttle, players, times
                 )
-                candidates = propose_contacts(shuttle, players, video, times)
+                learned = event_model.available(video)
+                # A trained singles model, when installed, replaces the
+                # hand-written motion rules for contact suggestions.
+                candidates = (
+                    event_model.contact_candidates(
+                        event_model.predict_events(video, players, shuttle)
+                    )
+                    if learned
+                    else propose_contacts(shuttle, players, video, times)
+                )
                 result = {
                     "schema_version": 1,
                     "stage": "contacts",
@@ -546,8 +557,10 @@ def process_match(
                     "video_sha256": video["sha256"],
                     "start_frame": first,
                     "end_frame": last,
-                    "method": CONTACT_METHOD,
-                    "recipe": proposal_recipe(),
+                    "method": event_model.METHOD if learned else CONTACT_METHOD,
+                    "recipe": {"event_model_sha256": event_model.checkpoint_sha256()}
+                    if learned
+                    else proposal_recipe(),
                     "interval_bounds": "inclusive",
                     "player_run_id": player_id,
                     "shuttle_run_id": shuttle_id,
@@ -583,7 +596,37 @@ def process_match(
                 targets = recognition_targets(
                     inference_doc, contact_run, include_reviewed=False
                 )
-                if settings["recognize"] and video["mode"] == "singles" and targets:
+                learned = event_model.stroke_candidates(targets, contact_run)
+                if settings["recognize"] and learned:
+                    write_json(
+                        output,
+                        {
+                            "schema_version": 1,
+                            "stage": "recognition",
+                            "video_id": video["id"],
+                            "video_sha256": video["sha256"],
+                            "annotation_revision": annotations.revision,
+                            "model": event_model.METHOD,
+                            "checkpoint_sha256": event_model.checkpoint_sha256(),
+                            "start_frame": first,
+                            "end_frame": last,
+                            "player_run_id": player_id,
+                            "shuttle_run_id": shuttle_id,
+                            "contacts_run_id": contact_id,
+                            "score_meaning": "uncalibrated softmax; a suggestion to review",
+                            "candidates": learned,
+                            "candidate_count": len(learned),
+                            "predicted_count": len(learned),
+                            "side_prediction_count": len(learned),
+                            "camera_review_signature": camera_review_signature(
+                                inference_doc, first, last
+                            ),
+                            "court_context": court_run_context(players),
+                            "calibration_signature": players["calibration_signature"],
+                        },
+                    )
+                    callback(1)
+                elif settings["recognize"] and video["mode"] == "singles" and targets:
                     recognize_strokes(
                         video,
                         times,
