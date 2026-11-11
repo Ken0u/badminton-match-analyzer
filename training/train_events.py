@@ -12,11 +12,16 @@ matches are never used for training or model selection and are only scored
 when --final is passed.
 
 ShuttleSet adds stroke types AI CUP does not label separately: the block (a
-soft return of a smash or drive to the net), push, net kill, cross-court net
-shot and wrist smash. An AI CUP label therefore accepts any of the finer
-classes it may contain (see AICUP_ACCEPTS). ShuttleSet hit frames are hand-entered and sit a
-couple of frames before the contact, so with --teacher each one is moved to
-the nearest contact an earlier checkpoint finds.
+soft return of a smash or drive to the net), push and net kill. An AI CUP
+label therefore accepts any of the finer classes it may contain (see
+AICUP_ACCEPTS). ShuttleSet's wrist smash counts as a smash and its cross-court
+net shot as a net shot: as classes of their own the model could not tell them
+from the plain stroke. ShuttleSet hit frames are hand-entered and sit a couple
+of frames before the contact, so with --teacher each one is moved to the
+nearest contact an earlier checkpoint finds.
+
+Validation scores of the raw weights swing widely between epochs, so a running
+average of the weights is what gets scored and saved.
 
     python training/train_events.py --features /data/features \
         --shuttleset /data/shuttleset/features --teacher /data/model_v2/events.pt \
@@ -25,6 +30,7 @@ the nearest contact an earlier checkpoint finds.
 """
 
 import argparse
+import copy
 import gzip
 import json
 import math
@@ -68,7 +74,7 @@ SHUTTLESET_FAMILY = {
     "short service": "serve",
     "long service": "serve",
     "net shot": "net",
-    "cross-court net shot": "cross-court net",
+    "cross-court net shot": "net",
     "return net": "block",
     "smash": "smash",
     "lob": "lift",
@@ -82,20 +88,17 @@ SHUTTLESET_FAMILY = {
     "passive drop": "drop",
     "push": "push",
     "rush": "net kill",
-    "wrist smash": "wrist smash",
+    "wrist smash": "smash",
 }
 # Finer classes an AI CUP label may contain; its "other" is push or net kill.
 AICUP_ACCEPTS = {
-    "net": ("block", "cross-court net"),
-    "smash": ("wrist smash",),
+    "net": ("block",),
     "other": ("push", "net kill"),
 }
 # The earlier, coarser classes, for comparison with earlier checkpoints.
 COARSE = {
     "push": "other",
     "net kill": "other",
-    "wrist smash": "other",
-    "cross-court net": "net",
 }
 HEADS = ("hitter", "family", "side", "serve")
 REQUESTED = ("clear", "drive", "smash", "net", "drop", "lift", "block")
@@ -103,6 +106,8 @@ FINE = tuple(name for name in FAMILIES if name not in ("serve", "other"))
 # Published ShuttleSet hit frames precede the detected contact by about this.
 SHUTTLESET_LEAD_S = 0.08
 SNAP_S = 0.2
+# Share of the running weight average kept at each step (about six epochs).
+AVERAGE_DECAY = 0.999
 # COCO keypoint left/right pairs, swapped when a clip is mirrored.
 MIRROR = [0, 2, 1, 4, 3, 6, 5, 8, 7, 10, 9, 12, 11, 14, 13, 16, 15]
 GROUPS = (
@@ -416,6 +421,15 @@ def score(items, predictions, threshold, tolerance):
             for index, name in enumerate(FAMILIES)
             if any(p == index for _, p in families)
         },
+        # Labelled class, then how often each class was predicted for it.
+        "family_confusion": {
+            name: {
+                FAMILIES[guess]: sum(t == index and p == guess for t, p in families)
+                for guess in sorted({p for t, p in families if t == index})
+            }
+            for index, name in enumerate(FAMILIES)
+            if any(t == index for t, _ in families)
+        },
         # Strict end-to-end: right time, hitter, family and side together.
         "complete_event_f1": f1(complete),
     }
@@ -493,6 +507,8 @@ def main():
 
     if not args.final:
         model = EventModel().to(device)
+        average = copy.deepcopy(model)
+        updates = 0
         weights = class_weights(train, device)
         optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-2)
         steps = args.epochs * math.ceil(len(train) / args.batch_size)
@@ -516,10 +532,17 @@ def main():
                 optimizer.step()
                 schedule.step()
                 losses.append(loss.item())
+                updates += 1
+                keep = min(AVERAGE_DECAY, updates / (updates + 10))
+                with torch.no_grad():
+                    for kept, value in zip(average.parameters(), model.parameters()):
+                        kept.lerp_(value, 1 - keep)
+                    for kept, value in zip(average.buffers(), model.buffers()):
+                        kept.copy_(value)
             if epoch % 5 == 0 or epoch == args.epochs:
                 options = []
                 for threshold in (0.3, 0.4, 0.5, 0.6, 0.7):
-                    result = evaluate(model, "validation", threshold, 2)
+                    result = evaluate(average, "validation", threshold, 2)
                     mean = float(
                         np.mean([r["complete_event_f1"] for r in result.values()])
                     )
@@ -561,7 +584,7 @@ def main():
                     best = mean
                     torch.save(
                         {
-                            "state": model.state_dict(),
+                            "state": average.state_dict(),
                             "threshold": threshold,
                             "epoch": epoch,
                             "families": FAMILIES,

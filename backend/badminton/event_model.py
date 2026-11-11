@@ -27,8 +27,6 @@ FAMILIES = (
     "block",
     "push",
     "net kill",
-    "cross-court net",
-    "wrist smash",
 )
 SIDES = ("forehand", "backhand")
 SERVES = ("short", "long")
