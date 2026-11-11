@@ -3,7 +3,7 @@ import copy
 import cv2
 import numpy as np
 import pytest
-from badminton.court_detection import court_consensus, detect_court
+from badminton.court_detection import court_consensus, detect_court, recheck_frames
 
 
 def render_court(width=960, height=540, color=(35, 115, 80), angle=0):
@@ -128,6 +128,28 @@ def test_moving_or_insufficiently_covered_view_abstains(change):
     result = court_consensus(observations, 0, 100)
     assert result["corners"] is None
     assert observations == before
+
+
+def test_one_misfit_beside_an_agreeing_fit_does_not_discard_the_view():
+    observations = samples()
+    for corner in observations[0]["corners"]:
+        corner[1] *= 0.7
+    assert court_consensus(observations, 0, 100)["corners"] is None
+    assert recheck_frames(observations, 0, 100) == [6]
+    observations.insert(1, {**copy.deepcopy(observations[1]), "frame": 6})
+    result = court_consensus(observations, 0, 100)
+    assert result["status"] == "detected"
+    assert result["disagreeing_frames"] == [0]
+    assert result["source_frame"] != 0
+
+
+def test_disagreement_that_persists_beside_the_fit_still_abstains():
+    observations = samples()
+    for corner in observations[-1]["corners"]:
+        corner[0] += 0.03
+    assert recheck_frames(observations, 0, 100) == [93]
+    observations.insert(4, {**copy.deepcopy(observations[-1]), "frame": 93})
+    assert court_consensus(observations, 0, 100)["corners"] is None
 
 
 def test_duplicate_or_outside_source_frames_rejected():
