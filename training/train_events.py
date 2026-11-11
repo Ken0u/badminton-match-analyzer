@@ -52,7 +52,7 @@ from badminton.event_model import (
     resample,
     with_motion,
 )
-from badminton.event_network import EventModel
+from badminton.event_network import EventModel, from_checkpoint
 from torch import nn
 
 FAMILY = {name: index for index, name in enumerate(FAMILIES)}
@@ -186,7 +186,7 @@ def shuttleset_clip(document):
 def snap(items, teacher, device):
     """Move ShuttleSet hits onto the contacts an earlier checkpoint finds."""
     saved = torch.load(teacher, map_location=device, weights_only=True)
-    model = EventModel(families=len(saved.get("families", FAMILIES[:8]))).to(device)
+    model = from_checkpoint(saved).to(device)
     model.load_state_dict(saved["state"], strict=False)
     model.eval()
     reach = round(SNAP_S * TRAINED_FPS)
@@ -252,7 +252,56 @@ def mirror(inputs):
     return out
 
 
-def batch(items, device, augment=False):
+def jitter(inputs):
+    """Shift and zoom the whole view and hide the shuttle for short spells.
+
+    Broadcasts frame the court differently and the shuttle tracker loses the
+    shuttle near the players; neither should change what stroke was played.
+    """
+    values = inputs[:, : 2 * PLAYER + 3].copy()
+    zoom = random.uniform(0.85, 1.15)
+    shift = (random.uniform(-0.05, 0.05), random.uniform(-0.05, 0.05))
+
+    def moved(column, axis, keep):
+        return np.where(keep, (column - 0.5) * zoom + 0.5 + shift[axis], column)
+
+    for start in (0, PLAYER):
+        block = values[:, start : start + PLAYER]
+        present = block[:, 55] > 0
+        points = block[:, :51].reshape(-1, 17, 3).copy()
+        seen = (points[:, :, 2] > 0) & present[:, None]
+        for axis in (0, 1):
+            points[:, :, axis] = moved(points[:, :, axis], axis, seen)
+        block[:, :51] = points.reshape(-1, 51)
+        for column in range(51, 55):
+            block[:, column] = moved(block[:, column], (column - 51) % 2, present)
+    ball = values[:, 2 * PLAYER :]
+    seen = ball[:, 2] > 0
+    for axis in (0, 1):
+        ball[:, axis] = moved(ball[:, axis], axis, seen)
+    if random.random() < 0.5:
+        for _ in range(random.randint(1, 3)):
+            start = random.randrange(len(values))
+            ball[start : start + random.randint(2, 8)] = 0
+    return with_motion(values)
+
+
+def batches(items, size, bucket):
+    """Shuffled batches; with bucket, clips of similar length share a batch."""
+    order = random.sample(items, len(items))
+    if bucket:
+        span = size * 20
+        order = [
+            item
+            for start in range(0, len(order), span)
+            for item in sorted(order[start : start + span], key=lambda i: len(i[1]))
+        ]
+    groups = [order[start : start + size] for start in range(0, len(order), size)]
+    random.shuffle(groups)
+    return groups
+
+
+def batch(items, device, augment=False, strong=False):
     length = max(len(inputs) for _, inputs, _ in items)
     x = np.zeros((len(items), length, FEATURES), np.float32)
     hit = np.zeros((len(items), length), np.float32)
@@ -262,6 +311,8 @@ def batch(items, device, augment=False):
     for row, (_, inputs, hits) in enumerate(items):
         if augment and random.random() < 0.5:
             inputs = mirror(inputs)
+        if augment and strong:
+            inputs = jitter(inputs)
         x[row, : len(inputs)] = inputs
         valid[row, : len(inputs)] = 1
         for frame, *labels, mask in hits:
@@ -355,15 +406,20 @@ def balanced(pairs, count):
 
 
 def score(items, predictions, threshold, tolerance):
-    tp = fp = fn = complete = 0
+    tp = fp = fn = complete = late = 0
     hitters, families, sides, serves = [], [], [], []
+    found = {}
     for (_, _, hits), predicted in zip(items, predictions):
         frames = peaks(predicted["hit"], threshold)
         used = set()
+        final = max(hit[0] for hit in hits)
+        late += sum(f > final + tolerance for f in frames)
         for frame, hitter, family, side, serve, mask in hits:
             options = [
                 f for f in frames if f not in used and abs(f - frame) <= tolerance
             ]
+            if family >= 0:
+                found.setdefault(family, []).append(bool(options))
             if not options:
                 fn += 1
                 continue
@@ -398,6 +454,13 @@ def score(items, predictions, threshold, tolerance):
         "contact_precision": tp / max(1, tp + fp),
         "contact_recall": tp / max(1, tp + fn),
         "contact_f1": f1(tp),
+        # Was a labelled contact of each class found at all, whatever it was called.
+        "contact_recall_by_family": {
+            FAMILIES[index]: float(np.mean(found[index])) for index in sorted(found)
+        },
+        # Suggestions after a rally's last labelled contact: swings at a dead shuttle.
+        "contacts_after_last_hit": late,
+        "clips": len(items),
         "hitter_accuracy_on_matched": float(np.mean([t == p for t, p in hitters]))
         if hitters
         else float("nan"),
@@ -462,6 +525,15 @@ def main():
     parser.add_argument("--epochs", type=int, default=120)
     parser.add_argument("--batch-size", type=int, default=16)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--norm", choices=("batch", "step"), default="batch")
+    parser.add_argument("--hidden", type=int, default=192)
+    parser.add_argument("--layers", type=int, default=2)
+    parser.add_argument(
+        "--bucket", action="store_true", help="batch clips of similar length"
+    )
+    parser.add_argument(
+        "--jitter", action="store_true", help="vary framing and hide the shuttle"
+    )
     parser.add_argument(
         "--final", action="store_true", help="score the held-out test venues"
     )
@@ -506,7 +578,8 @@ def main():
         return result
 
     if not args.final:
-        model = EventModel().to(device)
+        network = {"hidden": args.hidden, "layers": args.layers, "norm": args.norm}
+        model = EventModel(**network).to(device)
         average = copy.deepcopy(model)
         updates = 0
         weights = class_weights(train, device)
@@ -518,11 +591,10 @@ def main():
         best, history = -1, []
         for epoch in range(1, args.epochs + 1):
             model.train()
-            order = random.sample(train, len(train))
             losses = []
-            for start in range(0, len(order), args.batch_size):
+            for group in batches(train, args.batch_size, args.bucket):
                 x, hit, valid, classes, accept = batch(
-                    order[start : start + args.batch_size], device, augment=True
+                    group, device, augment=True, strong=args.jitter
                 )
                 x = x + 0.003 * torch.randn_like(x) * (x != 0)
                 loss = loss_fn(model(x), hit, valid, classes, accept, weights)
@@ -588,6 +660,7 @@ def main():
                             "threshold": threshold,
                             "epoch": epoch,
                             "families": FAMILIES,
+                            "network": network,
                             "serves": SERVES,
                             "features": FEATURES,
                         },
@@ -596,7 +669,7 @@ def main():
         (args.output / "history.json").write_text(json.dumps(history, indent=1))
 
     saved = torch.load(checkpoint, map_location=device, weights_only=True)
-    model = EventModel(families=len(saved["families"])).to(device)
+    model = from_checkpoint(saved).to(device)
     model.load_state_dict(saved["state"])
     report = {"epoch": saved["epoch"], "threshold": saved["threshold"]}
     for fold in ("validation", "test") if args.final else ("validation",):
