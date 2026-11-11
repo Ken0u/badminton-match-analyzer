@@ -36,6 +36,11 @@ FEATURES = 2 * PLAYER + 6
 TRAINED_FPS = 30.0
 CHECKPOINT = "events.pt"
 METHOD = "learned singles event model v3"
+# Limits for drop_implausible: seconds, and a share of the frame height.
+REPEAT_S = 0.5
+RALLY_GAP_S = 2.0
+SETTLE_S = 0.8
+SETTLE_TRAVEL = 0.08
 
 
 def checkpoint_path():
@@ -308,7 +313,65 @@ def predict_events(video, player_run, shuttle_run):
     for event in events:
         if event["frame"] not in best or event["score"] > best[event["frame"]]["score"]:
             best[event["frame"]] = event
-    return [best[frame] for frame in sorted(best)]
+    return drop_implausible(
+        [best[frame] for frame in sorted(best)], shuttle_rows, fps, height
+    )
+
+
+def drop_implausible(events, shuttle_rows, fps, height):
+    """Remove suggested contacts that the shuttle track or turn order rules out.
+
+    One player cannot hit twice within REPEAT_S, so of two such suggestions at
+    the same court end the stronger is kept. A rally's last suggestion (nothing
+    follows within RALLY_GAP_S) is dropped when the shuttle is still tracked
+    afterwards but barely leaves where it was: it landed, and the player swung
+    or lunged without reaching it. With too few sightings nothing is judged.
+    The limits were chosen on one match and are not validated beyond it.
+    """
+    kept = []
+    for event in events:
+        previous = kept[-1] if kept else None
+        if (
+            previous is not None
+            and previous["court_end"] == event["court_end"]
+            and event["time_s"] - previous["time_s"] < REPEAT_S
+        ):
+            if event["score"] > previous["score"]:
+                kept[-1] = event
+            continue
+        kept.append(event)
+    seen = {
+        r["frame"]: (r["shuttle"]["x"], r["shuttle"]["y"])
+        for r in shuttle_rows
+        if r["shuttle"].get("visible") and r["shuttle"].get("x") is not None
+    }
+    result = []
+    for index, event in enumerate(kept):
+        following = kept[index + 1]["time_s"] if index + 1 < len(kept) else None
+        if following is None or following - event["time_s"] > RALLY_GAP_S:
+            frame = event["frame"]
+            origin = next(
+                (
+                    seen[f]
+                    for f in (frame, frame - 1, frame + 1, frame - 2, frame + 2)
+                    if f in seen
+                ),
+                None,
+            )
+            after = [
+                seen[f]
+                for f in range(frame + 1, frame + round(SETTLE_S * fps) + 1)
+                if f in seen
+            ]
+            if (
+                origin is not None
+                and len(after) >= 2
+                and max(float(np.hypot(x - origin[0], y - origin[1])) for x, y in after)
+                < SETTLE_TRAVEL * height
+            ):
+                continue
+        result.append(event)
+    return result
 
 
 def contact_candidates(events):

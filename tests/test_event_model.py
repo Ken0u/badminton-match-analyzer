@@ -144,3 +144,55 @@ def test_views_without_a_court_are_suggested_as_non_play():
         row["calibration_valid"] = False
     unknown = event_model.view_scenes({"frames": frames})
     assert {s["scene"] for s in unknown} == {"unknown"}
+
+
+def _suggestion(frame, court_end, score=0.9):
+    return {
+        "frame": frame,
+        "time_s": frame / 25,
+        "court_end": court_end,
+        "score": score,
+    }
+
+
+def _track(points):
+    return [
+        {"frame": frame, "shuttle": {"visible": True, "x": x, "y": y}}
+        for frame, (x, y) in points.items()
+    ]
+
+
+def test_last_suggestion_is_dropped_when_the_shuttle_has_landed():
+    flying = {f: (100 + 12 * f, 300) for f in range(0, 31)}
+    resting = {f: (600 + (f - 100) * 0.5, 400) for f in range(98, 121)}
+    events = [_suggestion(10, "far"), _suggestion(100, "near")]
+    kept = event_model.drop_implausible(events, _track(flying | resting), 25, 720)
+    assert [e["frame"] for e in kept] == [10]
+
+
+def test_last_suggestion_is_kept_when_the_shuttle_leaves_or_is_unseen():
+    leaving = {f: (600 + (f - 100) * 9, 400) for f in range(98, 121)}
+    events = [_suggestion(100, "near")]
+    assert event_model.drop_implausible(events, _track(leaving), 25, 720) == events
+    assert (
+        event_model.drop_implausible(events, _track({100: (600, 400)}), 25, 720)
+        == events
+    )
+
+
+def test_mid_rally_suggestion_is_not_judged_by_shuttle_travel():
+    resting = dict.fromkeys(range(98, 121), (600, 400))
+    events = [_suggestion(100, "near"), _suggestion(130, "far")]
+    kept = event_model.drop_implausible(events, _track(resting), 25, 720)
+    assert [e["frame"] for e in kept] == [100, 130]
+
+
+def test_one_court_end_cannot_hit_twice_in_quick_succession():
+    events = [
+        _suggestion(100, "near", 0.8),
+        _suggestion(108, "near", 0.95),
+        _suggestion(125, "far"),
+        _suggestion(150, "near"),
+    ]
+    kept = event_model.drop_implausible(events, [], 25, 720)
+    assert [e["frame"] for e in kept] == [108, 125, 150]
