@@ -228,7 +228,7 @@ def predict_events(video, player_run, shuttle_run):
     """Suggest contacts for one processed window. Returns a list of dicts."""
     import torch
 
-    from .event_network import EventModel
+    from .event_network import from_checkpoint
 
     player_rows, shuttle_rows = player_run["frames"], shuttle_run["frames"]
     if [r["frame"] for r in player_rows] != [r["frame"] for r in shuttle_rows]:
@@ -237,7 +237,7 @@ def predict_events(video, player_run, shuttle_run):
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     # A checkpoint names the stroke classes it was trained with.
     families = tuple(saved.get("families", FAMILIES[:8]))
-    model = EventModel(families=len(families)).to(device).eval()
+    model = from_checkpoint(saved).to(device).eval()
     # Checkpoints trained before serve types existed lack that output.
     serve_types = "heads.serve.weight" in saved["state"]
     model.load_state_dict(saved["state"], strict=serve_types)
