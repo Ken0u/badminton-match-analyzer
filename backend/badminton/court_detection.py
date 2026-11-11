@@ -16,6 +16,8 @@ import numpy as np
 from .video import iter_frames
 
 METHOD = "local contrast badminton marking template v1"
+# How close an agreeing fit must be for a disagreeing one to count as a misfit.
+RECHECK_FRAMES = 6
 SIDELINE = (6.10 - 5.18) / 2 / 6.10
 SHORT = 0.5 - 1.98 / 13.40
 LONG = 0.76 / 13.40
@@ -250,19 +252,90 @@ def court_consensus(samples, start, end):
         raise ValueError(
             "Detected court samples require four finite normalized corners"
         )
+    group = _agreeing(quads)
+    frames = [s["frame"] for s in valid]
+    if (
+        group is None
+        or len(group) < 3
+        or len(group) * 2 <= len(valid)
+        or (frames[group[-1]] - frames[group[0]]) / max(1, end - start - 1) < 0.6
+    ):
+        return {"status": "changing_geometry", "corners": None}
+    # A fit that disagrees is a one-off misfit only if the agreed court is seen
+    # again right beside it; otherwise the camera may really have moved.
+    stray = [frames[i] for i in range(len(valid)) if i not in set(group)]
     if any(
-        np.linalg.norm(a - b, axis=1).max() > 0.012
-        for a, b in itertools.combinations(quads, 2)
+        min(abs(frame - frames[i]) for i in group) > RECHECK_FRAMES for frame in stray
     ):
         return {"status": "changing_geometry", "corners": None}
     # Use an actual observed fit, rather than inventing blended line geometry.
-    center = np.median(quads, axis=0)
-    chosen = int(np.argmin(np.linalg.norm(quads - center, axis=2).mean(axis=1)))
-    return {
+    agreed = quads[group]
+    center = np.median(agreed, axis=0)
+    chosen = group[int(np.argmin(np.linalg.norm(agreed - center, axis=2).mean(axis=1)))]
+    result = {
         "status": "detected",
         "corners": quads[chosen].tolist(),
         "source_frame": valid[chosen]["frame"],
     }
+    if stray:
+        result["disagreeing_frames"] = stray
+    return result
+
+
+def _agreeing(quads):
+    """Indices of the largest set of fits that all agree with each other."""
+    close = np.array(
+        [[np.linalg.norm(a - b, axis=1).max() <= 0.012 for b in quads] for a in quads]
+    )
+    members = np.flatnonzero(close[int(close.sum(axis=1).argmax())])
+    # A slow drift links neighbours without the ends agreeing: not one court.
+    return members.tolist() if close[np.ix_(members, members)].all() else None
+
+
+def recheck_frames(samples, start, end):
+    """Frames beside fits that disagree with most others, to test for a misfit."""
+    valid = [s for s in samples if s["status"] == "detected"]
+    if len(valid) < 4:
+        return []
+    group = _agreeing(np.asarray([s["corners"] for s in valid], dtype=float))
+    if group is None or len(valid) - len(group) > 2:
+        return []
+    taken = {s["frame"] for s in samples}
+    chosen = []
+    for position, sample in enumerate(valid):
+        if position in group:
+            continue
+        for frame in (
+            sample["frame"] + RECHECK_FRAMES,
+            sample["frame"] - RECHECK_FRAMES,
+        ):
+            if start <= frame < end and frame not in taken:
+                chosen.append(frame)
+                taken.add(frame)
+                break
+    return chosen
+
+
+def _sample(video, root, timestamps, index):
+    with closing(iter_frames(video, root, timestamps, index, index + 1)) as frames:
+        actual, timestamp, frame = next(frames)
+        if (
+            actual != index
+            or not math.isfinite(timestamp)
+            or abs(timestamp - timestamps[index]) > 0.00002
+        ):
+            raise ValueError("Court sample does not match its source frame timestamp")
+        rgb = frame.to_ndarray(format="rgb24")
+        detection = (
+            detect_court(rgb)
+            if min(rgb.shape[:2]) >= 128
+            else {
+                "status": "not_detected",
+                "corners": None,
+                "reason": "resolution_below_128px",
+            }
+        )
+        return {"frame": actual, "time_s": timestamp, **detection}
 
 
 def calibrate_ranges(video, root, timestamps, ranges, progress):
@@ -276,38 +349,14 @@ def calibrate_ranges(video, root, timestamps, ranges, progress):
                 .tolist()
             )
         )
-        samples = []
-        for index in indices:
-            with closing(
-                iter_frames(video, root, timestamps, index, index + 1)
-            ) as frames:
-                actual, timestamp, frame = next(frames)
-                if (
-                    actual != index
-                    or not math.isfinite(timestamp)
-                    or abs(timestamp - timestamps[index]) > 0.00002
-                ):
-                    raise ValueError(
-                        "Court sample does not match its source frame timestamp"
-                    )
-                rgb = frame.to_ndarray(format="rgb24")
-                detection = (
-                    detect_court(rgb)
-                    if min(rgb.shape[:2]) >= 128
-                    else {
-                        "status": "not_detected",
-                        "corners": None,
-                        "reason": "resolution_below_128px",
-                    }
-                )
-                samples.append(
-                    {
-                        "frame": actual,
-                        "time_s": timestamp,
-                        **detection,
-                    }
-                )
+        samples = [_sample(video, root, timestamps, index) for index in indices]
         result = court_consensus(samples, start, end)
+        if result["status"] == "changing_geometry":
+            extra = recheck_frames(samples, start, end)
+            if extra:
+                samples += [_sample(video, root, timestamps, i) for i in extra]
+                samples.sort(key=lambda s: s["frame"])
+                result = court_consensus(samples, start, end)
         if result["corners"] is not None:
             calibrations.append(
                 {

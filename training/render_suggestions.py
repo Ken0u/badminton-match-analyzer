@@ -94,9 +94,14 @@ def main():
                 cv2.circle(image, (int(x), int(y)), 5 - back // 2, (0, 255, 255), -1)
         while pending < len(strokes) and strokes[pending]["frame"] + hold < index:
             pending += 1
+        # Each court end has one label position, so only its newest contact is
+        # shown; an older one still on hold would be drawn underneath it.
+        newest = {}
         for stroke in strokes[pending:]:
             if stroke["frame"] > index:
                 break
+            newest[stroke["learned"]["court_end"]] = stroke
+        for stroke in newest.values():
             info = stroke["learned"]
             color = COLORS[info["court_end"]]
             age = index - stroke["frame"]
