@@ -97,8 +97,13 @@ S2_TYPES = {
 }
 # A published foot position names a tracked player within this share of the
 # frame height, and only if no other player is nearly as close.
+# DShuttleNet marks a stroke about two frames after the contact that S2
+# Doubles and the singles sets mark (measured on its match 2).
+LABEL_SHIFT = {"dshuttlenet": -2}
+DSHUTTLENET_SPLITS = Path(__file__).with_name("dshuttlenet_splits.json")
 REACH = 0.07
 MARGIN = 0.02
+DOUBLES = ("s2doubles", "dshuttlenet", "probe")
 # Frame size of each doubles rally, for the partner rule.
 SIZES = {}
 
@@ -144,15 +149,16 @@ def doubles_clip(document):
         return None, []
     values, _ = doubles_observations(rows, document["shuttle"], width, height, fps)
     hits = []
+    shift = LABEL_SHIFT.get(document.get("dataset"), 0)
     for event in document["events"]:
         frame = event["frame"]
-        if not 0 <= frame < len(values):
+        if not (0 <= frame < len(values) and 0 <= frame + shift < len(values)):
             continue
         family, either, serve = S2_TYPES.get(event["source_type"], (None, (), None))
         feet = event["feet"].get(event["player"]) if event["player"] else None
         hits.append(
             (
-                frame,
+                frame + shift,
                 hitter_slot(values, frame, feet, width, height),
                 FAMILY[family] if family else -1,
                 -1 if event["backhand"] is None else int(event["backhand"]),
@@ -163,12 +169,27 @@ def doubles_clip(document):
     return with_motion(values), hits
 
 
-def load_doubles(folder, fold=None):
-    """Rallies by split; `fold` puts every rally in that one instead."""
+def dshuttlenet_split(match):
+    listed = json.loads(DSHUTTLENET_SPLITS.read_text(encoding="utf-8"))
+    return next(
+        (fold for fold in ("validation", "test") if match in listed[fold]), "train"
+    )
+
+
+def load_doubles(folders, fold=None):
+    """Rallies by split; `fold` puts every rally in that one instead.
+
+    DShuttleNet rallies take their split from dshuttlenet_splits.json.
+    """
     data = {"train": [], "validation": [], "test": [], "probe": []}
-    for path in sorted(Path(folder).glob("*.json.gz")):
+    paths = sorted(p for folder in folders for p in Path(folder).glob("*.json.gz"))
+    for path in paths:
         with gzip.open(path, "rt", encoding="utf-8") as source:
             document = json.load(source)
+        if document.get("dataset") == "dshuttlenet":
+            document["split"] = dshuttlenet_split(document["match_id"])
+        if abs(float(document["video"]["fps"]) - TRAINED_FPS) > 0.5:
+            continue
         inputs, hits = doubles_clip(document)
         video = document["video"]
         SIZES[document["clip_id"]] = (video["width"], video["height"])
@@ -275,6 +296,9 @@ def timing(items, predictions, threshold, reach=8):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--doubles", type=Path, help="S2 Doubles feature folder")
+    parser.add_argument(
+        "--dshuttlenet", type=Path, nargs="*", help="DShuttleNet feature folders"
+    )
     parser.add_argument("--features", type=Path, help="AI CUP singles features")
     parser.add_argument("--shuttleset", type=Path, help="ShuttleSet feature folder")
     parser.add_argument(
@@ -316,11 +340,13 @@ def main():
     torch.manual_seed(args.seed)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    if not (args.doubles or args.singles_only or args.probe):
+    if not (args.doubles or args.dshuttlenet or args.singles_only or args.probe):
         raise SystemExit("Give --doubles, or --singles-only to train without it")
-    sets = {"s2doubles": load_doubles(args.doubles or Path("-"))}
+    sets = {"s2doubles": load_doubles([args.doubles] if args.doubles else [])}
+    if args.dshuttlenet:
+        sets["dshuttlenet"] = load_doubles(args.dshuttlenet)
     if args.probe:
-        sets["probe"] = load_doubles(args.probe, "probe")
+        sets["probe"] = load_doubles([args.probe], "probe")
     if args.features or args.shuttleset:
         groups = json.loads(GROUPS.read_text(encoding="utf-8"))["source_groups"]
         folds = {
@@ -341,7 +367,7 @@ def main():
             }
     known = [
         h[1] >= 0
-        for name in ("s2doubles", "probe")
+        for name in DOUBLES
         for fold in sets.get(name, {}).values()
         for i in fold
         for h in i[2]
@@ -358,10 +384,19 @@ def main():
         for i in sets.get(name, {}).get("train", [])
     ]
     if args.singles_only:
-        train, chosen_on = singles, [n for n in sets if n != "s2doubles"]
+        train, chosen_on = singles, [n for n in sets if n not in DOUBLES]
     else:
-        train = singles + sets["s2doubles"]["train"] * (args.repeat if singles else 1)
-        chosen_on = ["s2doubles"]
+        doubles = [
+            item
+            for name in ("s2doubles", "dshuttlenet")
+            for item in sets.get(name, {}).get("train", [])
+        ]
+        train = singles + doubles * (args.repeat if singles else 1)
+        chosen_on = [
+            name
+            for name in ("s2doubles", "dshuttlenet")
+            if sets.get(name, {}).get("validation")
+        ]
     args.output.mkdir(parents=True, exist_ok=True)
     checkpoint = args.output / "events.pt"
 
@@ -375,7 +410,7 @@ def main():
             result[name] = score(items, predictions, threshold, tolerance)
             if name == "probe":
                 result[name]["timing"] = timing(items, predictions, threshold)
-            if name in ("s2doubles", "probe"):
+            if name in DOUBLES:
                 result[name]["hitter"] = hitter_report(
                     items, predictions, threshold, tolerance
                 )
