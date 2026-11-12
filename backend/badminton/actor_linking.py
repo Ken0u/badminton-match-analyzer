@@ -34,6 +34,129 @@ def _iou(left, right):
     return area / union if union > 0 else 0
 
 
+# A separate, weaker inference than the overlap links above: when the track of
+# one player breaks, the players at that court end are counted and the only one
+# unaccounted for is taken to be the same person. No appearance is compared.
+CONTINUITY_RECIPE = {
+    "method": "missing player at a court end v1",
+    "maximum_gap_s": 2.0,
+    "maximum_move": 0.35,
+    "minimum_track_frames": 5,
+    "players_per_end": {"singles": 1, "doubles": 2},
+    "court_end": "far when most co-present players stand lower in the image",
+    "scope": "one calibrated camera view; never across a cut",
+    "ambiguous": "two tracks ending before two begin are reported, not joined",
+}
+
+
+def _join_breaks(video, actors):
+    """Join an actor that ends to the one that replaces it at the same court end.
+
+    actors: dicts with actor_id, camera, frames (set), feet {frame: (x, y)} and
+    below (shares of co-present players standing lower in the image). A join
+    needs exactly one recently ended candidate while every other player
+    expected at that end is still being tracked.
+    """
+    per_end = CONTINUITY_RECIPE["players_per_end"].get(video.get("mode"))
+    rate = video.get("fps")
+    if per_end is None or not rate:
+        return None
+    reach = CONTINUITY_RECIPE["maximum_gap_s"] * float(rate)
+    least = CONTINUITY_RECIPE["minimum_track_frames"]
+    for actor in actors:
+        actor["first"], actor["last"] = min(actor["frames"]), max(actor["frames"])
+        actor["court_end"] = (
+            None
+            if not actor["below"]
+            else "far"
+            if median(actor["below"]) > 0.5
+            else "near"
+        )
+    joins, ambiguous, successor = [], [], {}
+    views = defaultdict(list)
+    for actor in actors:
+        if actor["court_end"]:
+            views[actor["camera"], actor["court_end"]].append(actor)
+    for (_, court_end), group in sorted(views.items()):
+        group.sort(key=lambda a: (a["first"], a["actor_id"]))
+        for born in group:
+            if len(born["frames"]) < least:
+                continue
+            ended = [
+                a
+                for a in group
+                if a["last"] < born["first"]
+                and born["first"] - a["last"] <= reach
+                and len(a["frames"]) >= least
+                and a["actor_id"] not in successor
+            ]
+            if not ended:
+                continue
+            others = sum(
+                a is not born
+                and a["first"] < born["first"] <= a["last"]
+                and len(a["frames"]) >= least
+                for a in group
+            )
+            record = {
+                "to": born["actor_id"],
+                "court_end": court_end,
+                "frame": born["first"],
+            }
+            if len(ended) != 1 or others != per_end - 1:
+                ambiguous.append(
+                    record
+                    | {
+                        "candidates": [a["actor_id"] for a in ended],
+                        "other_players_tracked": others,
+                    }
+                )
+                continue
+            before = ended[0]["feet"][ended[0]["last"]]
+            after = born["feet"][born["first"]]
+            move = math.hypot(
+                (after[0] - before[0]) / video["width"],
+                (after[1] - before[1]) / video["height"],
+            )
+            if move > CONTINUITY_RECIPE["maximum_move"]:
+                ambiguous.append(
+                    record | {"candidates": [ended[0]["actor_id"]], "move": move}
+                )
+                continue
+            successor[ended[0]["actor_id"]] = born["actor_id"]
+            joins.append(
+                record
+                | {
+                    "from": ended[0]["actor_id"],
+                    "gap_frames": born["first"] - ended[0]["last"] - 1,
+                    "move": move,
+                }
+            )
+    head = {}
+    for actor in sorted(actors, key=lambda a: (a["first"], a["actor_id"])):
+        origin = actor["actor_id"]
+        head.setdefault(origin, origin)
+        if origin in successor:
+            head[successor[origin]] = head[origin]
+    order, players = [], {}
+    for actor in sorted(actors, key=lambda a: (a["first"], a["actor_id"])):
+        first = head[actor["actor_id"]]
+        if first not in order:
+            order.append(first)
+        players[actor["actor_id"]] = {
+            "continuity_id": first,
+            "continuity_label": f"Player track {order.index(first) + 1}",
+            "court_end": actor["court_end"],
+        }
+    return {
+        "recipe": CONTINUITY_RECIPE,
+        "joins": joins,
+        "ambiguous": ambiguous,
+        "player_track_count": len(order),
+        "players": players,
+    }
+
+
 def _node(key):
     return {"run_id": key[0], "track_id": key[1]}
 
@@ -128,9 +251,19 @@ def link_player_runs(video, runs, progress=None):
                         raise ValueError(
                             "A tracker ID crosses camera segments; rerun player tracking"
                         )
-                    node = nodes.setdefault(key, {"camera": camera, "frames": set()})
+                    node = nodes.setdefault(
+                        key,
+                        {"camera": camera, "frames": set(), "feet": {}, "below": []},
+                    )
                     node["frames"].add(index)
+                    node["feet"][index] = ((box[0] + box[2]) / 2, box[3])
                     people.append((key, box))
+                for key, box in people:
+                    if len(people) > 1:
+                        nodes[key]["below"].append(
+                            sum(other[3] > box[3] for _, other in people)
+                            / (len(people) - 1)
+                        )
                 conflicts.update(
                     frozenset((a[0], b[0]))
                     for a, b in itertools.combinations(people, 2)
@@ -248,7 +381,7 @@ def link_player_runs(video, runs, progress=None):
         members.values(),
         key=lambda group: (min(min(nodes[k]["frames"]) for k in group), min(group)),
     )
-    actors, tracks = [], []
+    actors, tracks, observed_actors = [], [], []
     for number, group in enumerate(groups, 1):
         camera = nodes[min(group)]["camera"]
         if len({nodes[k]["camera"] for k in group}) != 1:
@@ -258,6 +391,17 @@ def link_player_runs(video, runs, progress=None):
             f"{video['sha256']}:{camera}:{anchor[0]}:{anchor[1]}".encode()
         ).hexdigest()[:20]
         linked = len({key[0] for key in group}) > 1
+        observed_actors.append(
+            {
+                "actor_id": identity,
+                "camera": camera,
+                "frames": set().union(*(nodes[k]["frames"] for k in group)),
+                "feet": {
+                    f: v for k in sorted(group) for f, v in nodes[k]["feet"].items()
+                },
+                "below": [v for k in sorted(group) for v in nodes[k]["below"]],
+            }
+        )
         actors.append(
             {
                 "actor_id": identity,
@@ -289,11 +433,17 @@ def link_player_runs(video, runs, progress=None):
                     "conflicting_overlap": key in ambiguous,
                 }
             )
+    continuity = _join_breaks(video, observed_actors)
+    if continuity:
+        players = continuity.pop("players")
+        for item in actors + tracks:
+            item.update(players[item["actor_id"]])
     if progress:
         progress(1)
     return {
         "schema_version": 1,
         "stage": "identities",
+        "continuity": continuity,
         "method": METHOD,
         "recipe": RECIPE,
         "video_id": video["id"],

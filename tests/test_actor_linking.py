@@ -222,3 +222,65 @@ def test_processing_source_order_and_run_ids_must_be_unambiguous():
         link_player_runs(VIDEO, [("a", run(0, 40)), ("a", run(30, 60))])
     with pytest.raises(ValueError):
         link_player_runs(VIDEO, [("b", run(30, 60)), ("a", run(0, 40))])
+
+
+DOUBLES = VIDEO | {"mode": "doubles", "fps": 25}
+FOUR = [
+    [100, 80, 140, 160],
+    [300, 90, 340, 170],
+    [120, 200, 180, 320],
+    [320, 210, 380, 330],
+]
+
+
+def doubles_run(numbers):
+    """One 100-frame view; numbers(frame) gives the four tracker IDs, or None."""
+    raw = run(0, 100, (1, 2, 3, 4), boxes=FOUR)
+    for row in raw["frames"]:
+        chosen = numbers(row["frame"])
+        row["players"] = [
+            {"track_id": number, "confidence": 0.9, "box": box[:]}
+            for number, box in zip(chosen, FOUR)
+            if number is not None
+        ]
+    return raw
+
+
+def test_a_broken_track_is_joined_to_the_only_missing_player_at_that_end():
+    # The first far player is lost for frames 40-44 and returns as track 9.
+    def numbers(frame):
+        first = 1 if frame < 40 else None if frame < 45 else 9
+        return (first, 2, 3, 4)
+
+    result = link_player_runs(DOUBLES, [("a", doubles_run(numbers))])
+    continuity = result["continuity"]
+    assert result["actor_count"] == 5 and continuity["player_track_count"] == 4
+    assert [
+        (j["court_end"], j["frame"], j["gap_frames"]) for j in continuity["joins"]
+    ] == [("far", 45, 5)]
+    before, after = track(result, "a", 1), track(result, "a", 9)
+    assert before["actor_id"] != after["actor_id"]
+    assert before["continuity_id"] == after["continuity_id"]
+    assert before["court_end"] == "far" and track(result, "a", 3)["court_end"] == "near"
+    assert len({t["continuity_id"] for t in result["tracks"]}) == 4
+
+
+def test_both_partners_breaking_at_once_is_reported_and_not_joined():
+    def numbers(frame):
+        if frame < 40:
+            return (1, 2, 3, 4)
+        return (None, None, 3, 4) if frame < 45 else (8, 9, 3, 4)
+
+    continuity = link_player_runs(DOUBLES, [("a", doubles_run(numbers))])["continuity"]
+    assert continuity["joins"] == [] and continuity["player_track_count"] == 6
+    assert {len(a["candidates"]) for a in continuity["ambiguous"]} == {2}
+
+
+def test_a_long_gap_or_an_unknown_mode_joins_nothing():
+    def numbers(frame):
+        first = 1 if frame < 20 else None if frame < 90 else 9
+        return (first, 2, 3, 4)
+
+    late = link_player_runs(DOUBLES, [("a", doubles_run(numbers))])["continuity"]
+    assert late["joins"] == [] and late["ambiguous"] == []
+    assert link_player_runs(VIDEO, [("a", run(0, 60))])["continuity"] is None
