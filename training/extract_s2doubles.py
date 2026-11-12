@@ -116,20 +116,23 @@ def compact_shuttle(run):
     ]
 
 
-def main():
+def arguments(dataset):
     parser = argparse.ArgumentParser()
     parser.add_argument("--work", type=Path, required=True)
     parser.add_argument(
-        "--source", type=Path, default=Path("data/datasets/s2doubles/source")
+        "--source", type=Path, default=Path(f"data/datasets/{dataset}/source")
     )
     parser.add_argument(
-        "--videos", type=Path, default=Path("data/datasets/s2doubles/videos")
+        "--videos", type=Path, default=Path(f"data/datasets/{dataset}/videos")
     )
     parser.add_argument("--matches", type=int, nargs="*")
     parser.add_argument("--limit", type=int, help="rallies per match")
     parser.add_argument("--player-model", default="small")
-    args = parser.parse_args()
+    return parser.parse_args()
 
+
+def extract(args, rallies, dataset="s2doubles", prefix="s2", splits=SPLITS):
+    """Track every rally in `rallies` ((match, set, rally) -> stroke rows)."""
     work = args.work.resolve()
     features = work / "features"
     for folder in (features, work / "videos", work / "processed"):
@@ -147,15 +150,14 @@ def main():
     from badminton.storage import Store
     from badminton.tracking import track_players
 
-    rallies = read_rallies(args.source)
     store = Store(DATA)
     failures, began = [], time.time()
-    for match in sorted(args.matches or SPLITS):
+    for match in sorted(args.matches or {key[0] for key in rallies}):
         own = sorted(key for key in rallies if key[0] == match)[: args.limit]
         todo = [
             key
             for key in own
-            if not (features / "s2-{}-{}-{}.json.gz".format(*key)).exists()
+            if not (features / "{}-{}-{}-{}.json.gz".format(prefix, *key)).exists()
         ]
         if not todo:
             continue
@@ -205,7 +207,7 @@ def main():
             flush=True,
         )
         for count, key in enumerate(todo, 1):
-            name = "s2-{}-{}-{}".format(*key)
+            name = "{}-{}-{}-{}".format(prefix, *key)
             rows = rallies[key]
             first = int(rows[0]["start_frame"])
             last = max(int(row["end_frame"]) for row in rows)
@@ -259,12 +261,12 @@ def main():
                 )
                 shuttle = json.loads(shuttle_file.read_text(encoding="utf-8"))
                 document = {
-                    "dataset": "s2doubles",
+                    "dataset": dataset,
                     "clip_id": name,
                     "match_id": key[0],
                     "set_id": key[1],
                     "rally_id": key[2],
-                    "split": SPLITS.get(key[0], "test"),
+                    "split": splits.get(key[0], "test"),
                     "start_frame": start,
                     "video": {
                         k: video[k]
@@ -306,6 +308,11 @@ def main():
     done = len(list(features.glob("*.json.gz")))
     print(f"finished: {done} feature files, {len(failures)} failures {failures}")
     return 1 if failures and not done else 0
+
+
+def main():
+    args = arguments("s2doubles")
+    return extract(args, read_rallies(args.source))
 
 
 if __name__ == "__main__":

@@ -84,6 +84,16 @@ S2_TYPES = {
     "切球": ("drop", (), None),
     "長球": ("clear", (), None),
     "推撲球": ("other", ("push", "net kill"), None),
+    # DShuttleNet's nine types.
+    "short serve": ("serve", (), "short"),
+    "long serve": ("serve", (), "long"),
+    "net shot": ("net", ("block",), None),
+    "drive": ("drive", (), None),
+    "lift": ("lift", (), None),
+    "smash": ("smash", (), None),
+    "drop": ("drop", (), None),
+    "clear": ("clear", (), None),
+    "push": ("other", ("push", "net kill"), None),
 }
 # A published foot position names a tracked player within this share of the
 # frame height, and only if no other player is nearly as close.
@@ -126,7 +136,11 @@ def doubles_clip(document):
     rows = document["players"]
     if abs(fps - TRAINED_FPS) > 0.5:
         raise ValueError("S2 Doubles features must be at the trained frame rate")
-    if np.mean([bool(r.get("calibration_valid")) for r in rows]) < 0.5:
+    # Judge the court by the labelled stretch: the margin before and after a
+    # short rally is mostly other camera views.
+    frames = [e["frame"] for e in document["events"]] or [0]
+    played = rows[max(0, min(frames)) : max(frames) + 1] or rows
+    if np.mean([bool(r.get("calibration_valid")) for r in played]) < 0.5:
         return None, []
     values, _ = doubles_observations(rows, document["shuttle"], width, height, fps)
     hits = []
@@ -149,16 +163,18 @@ def doubles_clip(document):
     return with_motion(values), hits
 
 
-def load_doubles(folder):
-    data = {"train": [], "validation": [], "test": []}
-    for path in sorted(Path(folder).glob("s2-*.json.gz")):
+def load_doubles(folder, fold=None):
+    """Rallies by split; `fold` puts every rally in that one instead."""
+    data = {"train": [], "validation": [], "test": [], "probe": []}
+    for path in sorted(Path(folder).glob("*.json.gz")):
         with gzip.open(path, "rt", encoding="utf-8") as source:
             document = json.load(source)
         inputs, hits = doubles_clip(document)
         video = document["video"]
         SIZES[document["clip_id"]] = (video["width"], video["height"])
-        if hits and document["split"] in data:
-            data[document["split"]].append((document["clip_id"], inputs, hits))
+        split = fold or document["split"]
+        if hits and split in data:
+            data[split].append((document["clip_id"], inputs, hits))
     return data
 
 
@@ -234,6 +250,28 @@ def hitter_report(items, predictions, threshold, tolerance=2):
     }
 
 
+def timing(items, predictions, threshold, reach=8):
+    """How many frames found contacts sit after the labelled ones."""
+    offsets = []
+    for (_, _, hits), predicted in zip(items, predictions):
+        frames = peaks(predicted["hit"], threshold)
+        for frame, *_ in hits:
+            near = [f - frame for f in frames if abs(f - frame) <= reach]
+            if near:
+                offsets.append(min(near, key=abs))
+    if not offsets:
+        return {}
+    values = np.array(offsets)
+    return {
+        "labels_with_a_contact_nearby": len(offsets),
+        "median_offset_frames": float(np.median(values)),
+        "mean_offset_frames": float(values.mean()),
+        "share_within_frames": {
+            str(t): float((abs(values) <= t).mean()) for t in (1, 2, 3, 4, 6)
+        },
+    }
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--doubles", type=Path, help="S2 Doubles feature folder")
@@ -254,6 +292,11 @@ def main():
         help="times each doubles rally is seen per epoch when singles is mixed in",
     )
     parser.add_argument("--init", type=Path, help="checkpoint to continue from")
+    parser.add_argument(
+        "--probe",
+        type=Path,
+        help="only score the saved model on this folder of other doubles features",
+    )
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--epochs", type=int, default=120)
     parser.add_argument("--batch-size", type=int, default=16)
@@ -273,9 +316,11 @@ def main():
     torch.manual_seed(args.seed)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    if not (args.doubles or args.singles_only):
+    if not (args.doubles or args.singles_only or args.probe):
         raise SystemExit("Give --doubles, or --singles-only to train without it")
     sets = {"s2doubles": load_doubles(args.doubles or Path("-"))}
+    if args.probe:
+        sets["probe"] = load_doubles(args.probe, "probe")
     if args.features or args.shuttleset:
         groups = json.loads(GROUPS.read_text(encoding="utf-8"))["source_groups"]
         folds = {
@@ -295,7 +340,11 @@ def main():
                 fold: [widen(i) for i in items] for fold, items in data.items()
             }
     known = [
-        h[1] >= 0 for fold in sets["s2doubles"].values() for i in fold for h in i[2]
+        h[1] >= 0
+        for name in ("s2doubles", "probe")
+        for fold in sets.get(name, {}).values()
+        for i in fold
+        for h in i[2]
     ]
     print(
         {name: {k: len(v) for k, v in data.items()} for name, data in sets.items()},
@@ -319,18 +368,20 @@ def main():
     def evaluate(model, fold, threshold, tolerance):
         result = {}
         for name, data in sets.items():
-            items = data[fold]
+            items = data.get(fold, [])
             if not items:
                 continue
             predictions = predict(model, items, device)
             result[name] = score(items, predictions, threshold, tolerance)
-            if name == "s2doubles":
+            if name == "probe":
+                result[name]["timing"] = timing(items, predictions, threshold)
+            if name in ("s2doubles", "probe"):
                 result[name]["hitter"] = hitter_report(
                     items, predictions, threshold, tolerance
                 )
         return result
 
-    if not args.final:
+    if not (args.final or args.probe):
         if not train:
             raise SystemExit("No training rallies found")
         network = {
@@ -445,11 +496,14 @@ def main():
     model = from_checkpoint(saved).to(device)
     model.load_state_dict(saved["state"])
     report = {"epoch": saved["epoch"], "threshold": saved["threshold"]}
-    for fold in ("validation", "test") if args.final else ("validation",):
+    folds = ("validation", "test") if args.final else ("validation",)
+    for fold in ("probe",) if args.probe else folds:
         report[fold] = [
             evaluate(model, fold, saved["threshold"], tolerance) for tolerance in (2, 4)
         ]
     name = "final_report.json" if args.final else "validation_report.json"
+    if args.probe:
+        name = "probe_report.json"
     (args.output / name).write_text(json.dumps(report, indent=1))
     print(json.dumps(report, indent=1))
 
