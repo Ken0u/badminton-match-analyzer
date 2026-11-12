@@ -21,6 +21,16 @@ from badminton.storage import Store
 
 HOLD_S = 1.2
 COLORS = {"far": (0, 200, 255), "near": (80, 80, 255)}
+TRACK_COLORS = (
+    (60, 60, 255),
+    (60, 220, 60),
+    (255, 140, 40),
+    (0, 215, 255),
+    (255, 60, 220),
+    (255, 255, 80),
+    (150, 80, 255),
+    (40, 160, 255),
+)
 
 
 def load(store, video_id):
@@ -36,6 +46,19 @@ def load(store, video_id):
         ).read_text(encoding="utf-8")
     )
     players, shuttle, strokes, skipped = {}, {}, [], set()
+    # Tracker numbers restart in every processing window; the identities stage
+    # joins the same person across windows under one actor label.
+    actors = {}
+    if plan.get("identities"):
+        linked = json.loads(
+            (folder / "runs" / f"{plan['identities']['run_id']}.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        actors = {
+            (t["run_id"], t["track_id"]): int(t["label"].split()[-1])
+            for t in linked["tracks"]
+        }
     for part in plan["parts"]:
         runs = {
             name: json.loads(
@@ -51,9 +74,13 @@ def load(store, video_id):
         last = runs["contacts"].get(
             "analysis_core_end_frame", runs["contacts"]["end_frame"]
         )
+        run_id = part["stages"]["players"]["run_id"]
         for row in runs["players"]["frames"]:
             if first <= row["frame"] < last:
-                players[row["frame"]] = row["players"]
+                players[row["frame"]] = [
+                    person | {"actor": actors.get((run_id, person.get("track_id")))}
+                    for person in row["players"]
+                ]
         for row in runs["shuttle"]["frames"]:
             if first <= row["frame"] < last and row["shuttle"].get("visible"):
                 shuttle[row["frame"]] = (row["shuttle"]["x"], row["shuttle"]["y"])
@@ -70,6 +97,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("video_id")
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument(
+        "--tracks",
+        action="store_true",
+        help="colour each player box by its linked track and print its number",
+    )
     args = parser.parse_args()
     store = Store(DATA)
     video = store.video(args.video_id)
@@ -87,6 +119,21 @@ def main():
         image = frame.to_ndarray(format="bgr24")
         for person in players.get(index, []):
             x1, y1, x2, y2 = (int(v) for v in person["box"])
+            track = person.get("actor") or person.get("track_id")
+            if args.tracks and track is not None:
+                # A track keeps its colour, so a swap between partners shows.
+                color = TRACK_COLORS[track % len(TRACK_COLORS)]
+                cv2.rectangle(image, (x1, y1), (x2, y2), color, 2)
+                cv2.putText(
+                    image,
+                    str(track),
+                    (x1, max(18, y1 - 6)),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    color,
+                    2,
+                )
+                continue
             cv2.rectangle(image, (x1, y1), (x2, y2), (200, 200, 200), 1)
         for back in range(8):
             if index - back in shuttle:
