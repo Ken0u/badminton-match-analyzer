@@ -1,0 +1,5 @@
+{
+ "note": "Whole tournaments per split. Test is every 2025 tournament, validation the later 2024 ones; the same pairs appear on both sides. Matches not listed are trained on.",
+ "validation": [33, 34, 35, 37, 51, 52],
+ "test": [54, 55, 57, 59, 61, 62, 63]
+}
