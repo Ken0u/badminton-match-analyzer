@@ -232,3 +232,17 @@ def test_brief_or_moving_court_inside_a_view_stays_uncalibrated():
     assert all(b <= 400 or a >= 400 for a, b, _ in parts)
     assert all(a < b for a, b, _ in parts)
     assert all(parts[i][1] <= parts[i + 1][0] for i in range(len(parts) - 1))
+
+
+def test_fit_scatter_near_the_tolerance_is_still_one_court():
+    # The middle fit agrees with both ends; the ends just miss each other.
+    observations = samples()
+    for index, shift in ((0, -0.007), (4, 0.007)):
+        for corner in observations[index]["corners"]:
+            corner[1] += shift
+    assert court_consensus(observations, 0, 100)["corners"] is None
+    extra = recheck_frames(observations, 0, 100)
+    assert len(extra) == 1
+    observations.append({**copy.deepcopy(observations[1]), "frame": extra[0]})
+    observations.sort(key=lambda s: s["frame"])
+    assert court_consensus(observations, 0, 100)["status"] == "detected"

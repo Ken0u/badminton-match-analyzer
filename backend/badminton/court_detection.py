@@ -295,9 +295,19 @@ def _agreeing(quads):
             for a in quads
         ]
     )
-    members = np.flatnonzero(close[int(close.sum(axis=1).argmax())])
-    # A slow drift links neighbours without the ends agreeing: not one court.
-    return members.tolist() if close[np.ix_(members, members)].all() else None
+    # Fits of a still court scatter by about the tolerance itself, so one fit
+    # can agree with two that do not agree with each other. Grow a set from
+    # each fit, taking the best-connected fits first, and keep the largest.
+    order = np.argsort(-close.sum(axis=1), kind="stable")
+    best = []
+    for seed in range(len(quads)):
+        members = [seed]
+        for other in order:
+            if other != seed and close[other, members].all():
+                members.append(int(other))
+        if len(members) > len(best):
+            best = sorted(members)
+    return best or None
 
 
 def recheck_frames(samples, start, end):
