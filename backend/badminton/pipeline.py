@@ -185,7 +185,7 @@ def processing_recipe(video, times, annotations, settings):
         "context_signature": context_signature(annotations, 0, len(times)),
         "source_files": code,
         "local_side_files": local_side,
-        "event_model_sha256": event_model.checkpoint_sha256(),
+        "event_model_sha256": event_model.checkpoint_sha256(video.get("mode")),
         "library_versions": versions,
     }
 
@@ -594,8 +594,8 @@ def process_match(
                     video, shuttle, players, times
                 )
                 learned = event_model.available(video)
-                # A trained singles model, when installed, replaces the
-                # hand-written motion rules for contact suggestions.
+                # A trained model for the video's mode, when installed, replaces
+                # the hand-written motion rules for contact suggestions.
                 candidates = (
                     event_model.contact_candidates(
                         event_model.predict_events(video, players, shuttle)
@@ -611,8 +611,12 @@ def process_match(
                     "video_sha256": video["sha256"],
                     "start_frame": first,
                     "end_frame": last,
-                    "method": event_model.METHOD if learned else CONTACT_METHOD,
-                    "recipe": {"event_model_sha256": event_model.checkpoint_sha256()}
+                    "method": event_model.method(video) if learned else CONTACT_METHOD,
+                    "recipe": {
+                        "event_model_sha256": event_model.checkpoint_sha256(
+                            video["mode"]
+                        )
+                    }
                     if learned
                     else proposal_recipe(),
                     "interval_bounds": "inclusive",
@@ -666,8 +670,10 @@ def process_match(
                             "video_id": video["id"],
                             "video_sha256": video["sha256"],
                             "annotation_revision": annotations.revision,
-                            "model": event_model.METHOD,
-                            "checkpoint_sha256": event_model.checkpoint_sha256(),
+                            "model": event_model.method(video),
+                            "checkpoint_sha256": event_model.checkpoint_sha256(
+                                video["mode"]
+                            ),
                             "start_frame": first,
                             "end_frame": last,
                             "player_run_id": player_id,

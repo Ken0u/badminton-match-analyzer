@@ -7,5 +7,7 @@ def no_locally_installed_event_model(monkeypatch, tmp_path):
     from badminton import event_model
 
     monkeypatch.setattr(
-        event_model, "checkpoint_path", lambda: tmp_path / "absent-events.pt"
+        event_model,
+        "checkpoint_path",
+        lambda mode="singles": tmp_path / "absent-events.pt",
     )
