@@ -1,4 +1,4 @@
-"""Learned contact, hitter, stroke-family and side suggestions for singles.
+"""Learned contact, hitter, stroke-family and side suggestions.
 
 One temporal model reads the players' poses and the shuttle track across a
 camera view and marks racket contacts with who hit, what stroke and which side,
@@ -6,6 +6,10 @@ and whether a serve was short or long. Views where no court was found (replays
 from other angles, close-ups, the crowd) are labelled non-play and skipped.
 It is trained by training/train_events.py and used only when its checkpoint
 (events.pt) is present in the weights folder. Outputs are review suggestions.
+
+Doubles has its own checkpoint (events_doubles.pt, training/train_doubles.py)
+with four player slots, two at each court end (see event_doubles.py); its
+hitter output names one of the four tracked players.
 """
 
 import hashlib
@@ -34,8 +38,10 @@ COURT_ENDS = ("far", "near")
 PLAYER = 17 * 3 + 5
 FEATURES = 2 * PLAYER + 6
 TRAINED_FPS = 30.0
-CHECKPOINT = "events.pt"
+CHECKPOINTS = {"singles": "events.pt", "doubles": "events_doubles.pt"}
+CHECKPOINT = CHECKPOINTS["singles"]
 METHOD = "learned singles event model v3"
+METHODS = {"singles": METHOD, "doubles": "learned doubles event model v1"}
 # Limits for drop_implausible: seconds, and a share of the frame height.
 REPEAT_S = 0.5
 RALLY_GAP_S = 2.0
@@ -43,17 +49,24 @@ SETTLE_S = 0.8
 SETTLE_TRAVEL = 0.08
 
 
-def checkpoint_path():
-    return WEIGHTS / CHECKPOINT
+def checkpoint_path(mode="singles"):
+    return WEIGHTS / CHECKPOINTS[mode]
 
 
-def checkpoint_sha256():
-    path = checkpoint_path()
+def checkpoint_sha256(mode="singles"):
+    if mode not in CHECKPOINTS:
+        return None
+    path = checkpoint_path(mode)
     return hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
 
 
 def available(video):
-    return video.get("mode") == "singles" and checkpoint_path().is_file()
+    mode = video.get("mode")
+    return mode in CHECKPOINTS and checkpoint_path(mode).is_file()
+
+
+def method(video):
+    return METHODS[video.get("mode")]
 
 
 def _player_vector(person, width, height):
@@ -111,17 +124,21 @@ def observations(player_rows, shuttle_points, width, height):
 
 
 def with_motion(values):
-    """Append per-step shuttle velocity across gaps of at most three steps."""
-    inputs = np.zeros((len(values), FEATURES), np.float32)
-    inputs[:, : 2 * PLAYER + 3] = values
+    """Append per-step shuttle velocity across gaps of at most three steps.
+
+    The shuttle is the last three columns, after however many player slots.
+    """
+    base = values.shape[1] - 3
+    inputs = np.zeros((len(values), base + 6), np.float32)
+    inputs[:, : base + 3] = values
     previous = None
     for index in range(len(values)):
-        x, y, seen = values[index, 2 * PLAYER :]
+        x, y, seen = values[index, base:]
         if not seen:
             continue
         if previous is not None and index - previous[0] <= 3:
             gap = index - previous[0]
-            inputs[index, 2 * PLAYER + 3 :] = (
+            inputs[index, base + 3 :] = (
                 (x - previous[1]) / gap,
                 (y - previous[2]) / gap,
                 1,
@@ -152,7 +169,10 @@ def resample(values, times, rate=TRAINED_FPS):
     weight = np.clip((grid - times[left]) / span, 0, 1).astype(np.float32)[:, None]
     nearest = np.where(weight[:, 0] < 0.5, left, right)
     out = values[nearest].copy()
-    for start, flag in ((0, 55), (PLAYER, PLAYER + 55), (2 * PLAYER, 2 * PLAYER + 2)):
+    # Each player slot, then the shuttle in the last three columns.
+    shuttle = values.shape[1] - 3
+    blocks = [(base, base + 55) for base in range(0, shuttle, PLAYER)]
+    for start, flag in (*blocks, (shuttle, shuttle + 2)):
         stop = flag + 1
         both = (values[left, flag] > 0) & (values[right, flag] > 0)
         mixed = (
@@ -239,7 +259,11 @@ def predict_events(video, player_run, shuttle_run):
     player_rows, shuttle_rows = player_run["frames"], shuttle_run["frames"]
     if [r["frame"] for r in player_rows] != [r["frame"] for r in shuttle_rows]:
         raise ValueError("Player and shuttle runs must cover the same frames")
-    saved = torch.load(checkpoint_path(), map_location="cpu", weights_only=True)
+    mode = video.get("mode")
+    doubles = mode == "doubles"
+    if doubles:
+        from .event_doubles import choose_partner, doubles_observations
+    saved = torch.load(checkpoint_path(mode), map_location="cpu", weights_only=True)
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
     # A checkpoint names the stroke classes it was trained with.
     families = tuple(saved.get("families", FAMILIES[:8]))
@@ -262,10 +286,13 @@ def predict_events(video, player_run, shuttle_run):
             if stop - start < 8 or player_rows[start]["frame"] in skipped:
                 continue
             rows = player_rows[start:stop]
-            values, tracks = observations(
-                rows, [r["shuttle"] for r in shuttle_rows[start:stop]], width, height
-            )
-            if not values[:, [55, PLAYER + 55]].any():
+            balls = [r["shuttle"] for r in shuttle_rows[start:stop]]
+            if doubles:
+                values, tracks = doubles_observations(rows, balls, width, height, fps)
+            else:
+                values, tracks = observations(rows, balls, width, height)
+            slots = (values.shape[1] - 3) // PLAYER
+            if not values[:, [s * PLAYER + 55 for s in range(slots)]].any():
                 continue
             if abs(fps - TRAINED_FPS) > 0.5:
                 values, nearest = resample(values, [r["time_s"] for r in rows])
@@ -280,7 +307,18 @@ def predict_events(video, player_run, shuttle_run):
             }
             for step in _peaks(hit, threshold):
                 row = rows[int(nearest[step])]
-                end = int(scores["hitter"][step].argmax())
+                # Slots are ordered far then near; doubles has two per end.
+                slot = int(scores["hitter"][step].argmax())
+                per_end = slots // len(COURT_ENDS)
+                end = slot // per_end
+                if doubles:
+                    # The network names the end; the partner comes from a rule.
+                    by_end = scores["hitter"][step].reshape(-1, per_end).sum(-1)
+                    end = int(by_end.argmax())
+                    chosen = choose_partner(
+                        values, step, COURT_ENDS[end], width, height
+                    )
+                    slot = end * per_end if chosen is None else chosen
                 family = int(scores["family"][step].argmax())
                 side = int(scores["side"][step].argmax())
                 serve = int(scores["serve"][step].argmax())
@@ -291,8 +329,22 @@ def predict_events(video, player_run, shuttle_run):
                         "time_s": row["time_s"],
                         "score": float(hit[step]),
                         "court_end": COURT_ENDS[end],
-                        "court_end_score": float(scores["hitter"][step][end]),
-                        "track_id": tracks[int(nearest[step])][end],
+                        "court_end_score": float(
+                            scores["hitter"][step][
+                                end * per_end : (end + 1) * per_end
+                            ].sum()
+                        ),
+                        "track_id": next(
+                            (
+                                tracks[index][slot]
+                                for offset in (0, -1, 1, -2, 2, -3, 3)
+                                if 0
+                                <= (index := int(nearest[step]) + offset)
+                                < len(rows)
+                                and tracks[index][slot] is not None
+                            ),
+                            None,
+                        ),
                         "kind": "serve" if families[family] == "serve" else "shot",
                         "family": families[family],
                         "family_score": float(scores["family"][step][family]),

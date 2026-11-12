@@ -238,7 +238,8 @@ def load(features, folds, shuttleset=None):
 
 def mirror(inputs):
     out = inputs.copy()
-    for start in (0, PLAYER):
+    players = (inputs.shape[1] - 6) // PLAYER
+    for start in range(0, players * PLAYER, PLAYER):
         block = out[:, start : start + PLAYER]
         present = block[:, 55:56]
         points = block[:, :51].reshape(-1, 17, 3)[:, MIRROR].copy()
@@ -246,7 +247,7 @@ def mirror(inputs):
         block[:, :51] = points.reshape(-1, 51)
         x1, x2 = block[:, 51].copy(), block[:, 53].copy()
         block[:, 51], block[:, 53] = (1 - x2) * present[:, 0], (1 - x1) * present[:, 0]
-    tail = out[:, 2 * PLAYER :]
+    tail = out[:, players * PLAYER :]
     tail[:, 0] = (1 - tail[:, 0]) * tail[:, 2]
     tail[:, 3] = -tail[:, 3]
     return out
@@ -258,14 +259,15 @@ def jitter(inputs):
     Broadcasts frame the court differently and the shuttle tracker loses the
     shuttle near the players; neither should change what stroke was played.
     """
-    values = inputs[:, : 2 * PLAYER + 3].copy()
+    players = (inputs.shape[1] - 6) // PLAYER
+    values = inputs[:, : players * PLAYER + 3].copy()
     zoom = random.uniform(0.85, 1.15)
     shift = (random.uniform(-0.05, 0.05), random.uniform(-0.05, 0.05))
 
     def moved(column, axis, keep):
         return np.where(keep, (column - 0.5) * zoom + 0.5 + shift[axis], column)
 
-    for start in (0, PLAYER):
+    for start in range(0, players * PLAYER, PLAYER):
         block = values[:, start : start + PLAYER]
         present = block[:, 55] > 0
         points = block[:, :51].reshape(-1, 17, 3).copy()
@@ -275,7 +277,7 @@ def jitter(inputs):
         block[:, :51] = points.reshape(-1, 51)
         for column in range(51, 55):
             block[:, column] = moved(block[:, column], (column - 51) % 2, present)
-    ball = values[:, 2 * PLAYER :]
+    ball = values[:, players * PLAYER :]
     seen = ball[:, 2] > 0
     for axis in (0, 1):
         ball[:, axis] = moved(ball[:, axis], axis, seen)
@@ -303,7 +305,7 @@ def batches(items, size, bucket):
 
 def batch(items, device, augment=False, strong=False):
     length = max(len(inputs) for _, inputs, _ in items)
-    x = np.zeros((len(items), length, FEATURES), np.float32)
+    x = np.zeros((len(items), length, items[0][1].shape[1]), np.float32)
     hit = np.zeros((len(items), length), np.float32)
     valid = np.zeros((len(items), length), np.float32)
     classes = np.full((len(items), length, len(HEADS)), -1, np.int64)
