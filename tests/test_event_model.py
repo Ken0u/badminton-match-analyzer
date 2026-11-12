@@ -132,12 +132,21 @@ def test_views_without_a_court_are_suggested_as_non_play():
     for index, row in enumerate(frames):
         # Second camera view starts at frame 10 and never shows the court.
         row["camera_segment_start_frame"] = 0 if index < 10 else 10
-        row["calibration_valid"] = index < 9 or index >= 20
+        row["calibration_valid"] = index < 10 or index >= 20
     scenes = event_model.view_scenes({"frames": frames}, cuts={20})
     assert [(s["start_frame"], s["end_frame"], s["scene"]) for s in scenes] == [
         (0, 10, "live"),
         (10, 20, "non_play"),
         (20, 30, "live"),
+    ]
+    # A fade into a replay is no cut, but the court is lost: the view splits.
+    for index, row in enumerate(frames):
+        row["camera_segment_start_frame"] = 0
+        row["calibration_valid"] = index >= 18
+    faded = event_model.view_scenes({"frames": frames})
+    assert [(s["start_frame"], s["end_frame"], s["scene"]) for s in faded] == [
+        (0, 18, "non_play"),
+        (18, 30, "live"),
     ]
     # With no court information at all, nothing is judged or skipped.
     for row in frames:

@@ -173,7 +173,11 @@ def _peaks(probability, threshold, radius=4):
 
 
 def _views(player_rows, cuts):
-    """Split frames into runs that share one camera view."""
+    """Split frames into runs that share one camera view.
+
+    A view also ends where the court starts or stops being found: a fade into
+    a replay is not a cut, but the court is lost there.
+    """
     start = 0
     for index in range(1, len(player_rows) + 1):
         if index == len(player_rows) or (
@@ -181,6 +185,8 @@ def _views(player_rows, cuts):
             or player_rows[index].get("camera_segment_start_frame")
             != player_rows[index - 1].get("camera_segment_start_frame")
             or player_rows[index]["frame"] != player_rows[index - 1]["frame"] + 1
+            or bool(player_rows[index].get("calibration_valid"))
+            != bool(player_rows[index - 1].get("calibration_valid"))
         ):
             yield start, index
             start = index
