@@ -55,8 +55,11 @@ def load(store, video_id):
                 encoding="utf-8"
             )
         )
+        # A track that breaks mid-rally is shown under the player it rejoins.
         actors = {
-            (t["run_id"], t["track_id"]): int(t["label"].split()[-1])
+            (t["run_id"], t["track_id"]): int(
+                t.get("continuity_label", t["label"]).split()[-1]
+            )
             for t in linked["tracks"]
         }
     for part in plan["parts"]:
