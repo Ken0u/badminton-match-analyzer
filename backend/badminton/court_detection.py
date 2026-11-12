@@ -18,6 +18,11 @@ from .video import iter_frames
 METHOD = "local contrast badminton marking template v1"
 # How close an agreeing fit must be for a disagreeing one to count as a misfit.
 RECHECK_FRAMES = 6
+# A court that is seen for only part of a view: how closely its first and last
+# frames are located, and the shortest stretch worth keeping.
+EDGE_FRAMES = 8
+MIN_PARTIAL_FRAMES = 30
+AGREEMENT = 0.012
 SIDELINE = (6.10 - 5.18) / 2 / 6.10
 SHORT = 0.5 - 1.98 / 13.40
 LONG = 0.76 / 13.40
@@ -285,7 +290,10 @@ def court_consensus(samples, start, end):
 def _agreeing(quads):
     """Indices of the largest set of fits that all agree with each other."""
     close = np.array(
-        [[np.linalg.norm(a - b, axis=1).max() <= 0.012 for b in quads] for a in quads]
+        [
+            [np.linalg.norm(a - b, axis=1).max() <= AGREEMENT for b in quads]
+            for a in quads
+        ]
     )
     members = np.flatnonzero(close[int(close.sum(axis=1).argmax())])
     # A slow drift links neighbours without the ends agreeing: not one court.
@@ -314,6 +322,70 @@ def recheck_frames(samples, start, end):
                 taken.add(frame)
                 break
     return chosen
+
+
+def _same_court(first, second):
+    gap = np.asarray(first["corners"], float) - np.asarray(second["corners"], float)
+    return bool(np.linalg.norm(gap, axis=1).max() <= AGREEMENT)
+
+
+def partial_courts(samples, start, end, sample_at):
+    """Stretches of a view in which one court is seen, when the whole view fails.
+
+    A broadcast that fades into a replay gives no camera cut, so one view can
+    hold a replay and the rally after it. Each run of neighbouring samples that
+    agree on a court is widened by halving the gap to the nearest sample that
+    does not, and is accepted only if court_consensus accepts it on its own.
+    Returns (start, end, consensus) for each stretch and every sample taken.
+    """
+    taken = {s["frame"]: s for s in samples}
+
+    def agrees(frame, anchor):
+        if frame not in taken:
+            taken[frame] = sample_at(frame)
+        found = taken[frame]
+        return found["status"] == "detected" and _same_court(found, anchor)
+
+    runs = []
+    for sample in sorted(samples, key=lambda s: s["frame"]):
+        if sample["status"] != "detected":
+            runs.append(None)
+        elif runs and runs[-1] and _same_court(sample, runs[-1][0]):
+            runs[-1].append(sample)
+        else:
+            runs.append([sample])
+    ordered = sorted(taken)
+    parts, floor = [], start
+    for run in filter(None, runs):
+        anchor = run[0]
+        first, last = run[0]["frame"], run[-1]["frame"]
+        before = max((f for f in ordered if f < first), default=first)
+        after = min((f for f in ordered if f > last), default=last)
+        while first - before > EDGE_FRAMES:
+            middle = (first + before) // 2
+            if agrees(middle, anchor):
+                first = middle
+            else:
+                before = middle
+        while after - last > EDGE_FRAMES:
+            middle = (last + after) // 2
+            if agrees(middle, anchor):
+                last = middle
+            else:
+                after = middle
+        first = max(first, floor)
+        if last + 1 - first < MIN_PARTIAL_FRAMES:
+            continue
+        # Agreement was only tested at the edges; look inside the stretch too.
+        for frame in np.rint(np.linspace(first, last, 5)).astype(int).tolist():
+            if frame not in taken:
+                taken[frame] = sample_at(frame)
+        inside = [taken[f] for f in sorted(taken) if first <= f <= last]
+        result = court_consensus(inside, first, last + 1)
+        if result["corners"] is not None:
+            parts.append((first, last + 1, result))
+            floor = last + 1
+    return parts, [taken[f] for f in sorted(taken)]
 
 
 def _sample(video, root, timestamps, index):
@@ -357,14 +429,30 @@ def calibrate_ranges(video, root, timestamps, ranges, progress):
                 samples += [_sample(video, root, timestamps, i) for i in extra]
                 samples.sort(key=lambda s: s["frame"])
                 result = court_consensus(samples, start, end)
-        if result["corners"] is not None:
-            calibrations.append(
-                {
-                    "start_frame": start,
-                    "end_frame": end,
-                    "corners": [{"x": x, "y": y} for x, y in result["corners"]],
-                }
+        parts = [(start, end, result)] if result["corners"] is not None else []
+        if not parts and any(s["status"] == "detected" for s in samples):
+            parts, samples = partial_courts(
+                samples,
+                start,
+                end,
+                lambda index: _sample(video, root, timestamps, index),
             )
+            if parts:
+                result = {
+                    **result,
+                    "partial": [
+                        {"start_frame": a, "end_frame": b, **found}
+                        for a, b, found in parts
+                    ],
+                }
+        calibrations += [
+            {
+                "start_frame": a,
+                "end_frame": b,
+                "corners": [{"x": x, "y": y} for x, y in found["corners"]],
+            }
+            for a, b, found in parts
+        ]
         reviews.append(
             {"start_frame": start, "end_frame": end, **result, "samples": samples}
         )
