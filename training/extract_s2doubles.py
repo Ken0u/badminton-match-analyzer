@@ -307,7 +307,7 @@ def extract(args, rallies, dataset="s2doubles", prefix="s2", splits=SPLITS):
                 traceback.print_exc()
     done = len(list(features.glob("*.json.gz")))
     print(f"finished: {done} feature files, {len(failures)} failures {failures}")
-    return 1 if failures and not done else 0
+    return 1 if failures else 0
 
 
 def main():
