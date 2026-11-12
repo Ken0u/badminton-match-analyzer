@@ -5,16 +5,18 @@
 # videos until /data/dshuttlenet/videos_done exists and nothing is left. Safe
 # to rerun after a spot interruption: finished rallies and matches are skipped.
 # Features land in /data/dshuttlenet/w<worker>/features.
-#   bash dshuttlenet_workers.sh [workers]
+# A second call with a first worker number adds workers to a running batch.
+#   bash dshuttlenet_workers.sh [workers] [first worker number]
 set -uo pipefail
 cd /data
 source venv/bin/activate
 WORKERS="${1:-6}"
+FIRST="${2:-1}"
 BASE=/data/dshuttlenet
 export BADMINTON_WEIGHTS_DIR=/data/work/weights
 mkdir -p "$BASE/done"
 # Claims left by an interrupted run would hide unfinished matches.
-rm -rf "$BASE/locks"
+[ "$FIRST" = 1 ] && rm -rf "$BASE/locks"
 mkdir -p "$BASE/locks"
 
 worker() {
@@ -37,11 +39,13 @@ worker() {
   done
 }
 
-for i in $(seq 1 "$WORKERS"); do
+for i in $(seq "$FIRST" "$((FIRST + WORKERS - 1))"); do
   worker "$i" &
   sleep 7
 done
 wait
+# Workers added later may still be busy.
+while pgrep -f '[e]xtract_dshuttlenet.py' >/dev/null; do sleep 30; done
 echo "extraction finished: $(ls "$BASE"/w*/features | grep -c json.gz) rallies" \
   | tee -a "$BASE/worker1.log"
 sudo shutdown -h now
