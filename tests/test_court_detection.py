@@ -3,7 +3,12 @@ import copy
 import cv2
 import numpy as np
 import pytest
-from badminton.court_detection import court_consensus, detect_court, recheck_frames
+from badminton.court_detection import (
+    court_consensus,
+    detect_court,
+    partial_courts,
+    recheck_frames,
+)
 
 
 def render_court(width=960, height=540, color=(35, 115, 80), angle=0):
@@ -165,3 +170,65 @@ def test_two_equally_supported_courts_are_ambiguous():
     assert result["status"] == "ambiguous"
     assert len(result["candidates"]) >= 2
     assert result["corners"] is None
+
+
+COURT = [[0.35, 0.12], [0.65, 0.12], [0.87, 0.9], [0.13, 0.9]]
+
+
+def fading_view(court_from, court_to, moved_from=None):
+    """A view whose court is visible only in [court_from, court_to)."""
+    asked = []
+
+    def sample_at(frame):
+        asked.append(frame)
+        if not court_from <= frame < court_to:
+            return {"frame": frame, "status": "not_detected", "corners": None}
+        corners = copy.deepcopy(COURT)
+        if moved_from is not None and frame >= moved_from:
+            for corner in corners:
+                corner[0] += 0.03
+        return {"frame": frame, "status": "detected", "corners": corners}
+
+    return sample_at, asked
+
+
+def test_court_seen_for_part_of_a_view_is_kept_for_that_part():
+    # A replay fades into the rally at frame 260 of a 500-frame view.
+    sample_at, asked = fading_view(260, 500)
+    first = [sample_at(frame) for frame in (0, 125, 250, 374, 499)]
+    assert court_consensus(first, 0, 500)["corners"] is None
+    parts, taken = partial_courts(first, 0, 500, sample_at)
+    assert len(parts) == 1
+    start, end, found = parts[0]
+    assert 260 <= start <= 268 and end == 500
+    assert found["status"] == "detected" and found["corners"] == COURT
+    assert [s["frame"] for s in taken] == sorted(set(asked))
+
+
+def test_two_rallies_around_a_replay_give_two_stretches():
+    def sample_at(frame):
+        seen = frame < 90 or frame >= 300
+        return {
+            "frame": frame,
+            "status": "detected" if seen else "not_detected",
+            "corners": copy.deepcopy(COURT) if seen else None,
+        }
+
+    first = [sample_at(frame) for frame in (0, 125, 250, 374, 499)]
+    parts, _ = partial_courts(first, 0, 500, sample_at)
+    assert [(a <= 0, 82 <= b <= 90) for a, b, _ in parts[:1]] == [(True, True)]
+    assert 300 <= parts[1][0] <= 308 and parts[1][1] == 500
+
+
+def test_brief_or_moving_court_inside_a_view_stays_uncalibrated():
+    # Seen for under MIN_PARTIAL_FRAMES.
+    sample_at, _ = fading_view(240, 262)
+    first = [sample_at(frame) for frame in (0, 125, 250, 374, 499)]
+    assert partial_courts(first, 0, 500, sample_at)[0] == []
+    # The camera moves inside the visible stretch: each geometry is separate.
+    sample_at, _ = fading_view(200, 500, moved_from=400)
+    first = [sample_at(frame) for frame in (0, 125, 250, 374, 499)]
+    parts, _ = partial_courts(first, 0, 500, sample_at)
+    assert all(b <= 400 or a >= 400 for a, b, _ in parts)
+    assert all(a < b for a, b, _ in parts)
+    assert all(parts[i][1] <= parts[i + 1][0] for i in range(len(parts) - 1))
