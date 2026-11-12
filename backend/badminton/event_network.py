@@ -1,8 +1,8 @@
-"""Network for the learned singles event model (see event_model.py)."""
+"""Network for the learned event models (see event_model.py, event_doubles.py)."""
 
 from torch import nn
 
-from .event_model import COURT_ENDS, FAMILIES, FEATURES, SERVES, SIDES
+from .event_model import FAMILIES, PLAYER, SERVES, SIDES
 
 
 class StepNorm(nn.Module):
@@ -21,13 +21,21 @@ class StepNorm(nn.Module):
 
 
 class EventModel(nn.Module):
+    """players is 2 for singles (far, near) and 4 for doubles (two per end)."""
+
     def __init__(
-        self, hidden=192, layers=2, dropout=0.3, families=len(FAMILIES), norm="batch"
+        self,
+        hidden=192,
+        layers=2,
+        dropout=0.3,
+        families=len(FAMILIES),
+        norm="batch",
+        players=2,
     ):
         super().__init__()
         normalize = {"batch": nn.BatchNorm1d, "step": StepNorm}[norm]
         self.stem = nn.Sequential(
-            nn.Conv1d(FEATURES, hidden, 5, padding=2),
+            nn.Conv1d(players * PLAYER + 6, hidden, 5, padding=2),
             normalize(hidden),
             nn.ReLU(),
             nn.Conv1d(hidden, hidden, 5, padding=2),
@@ -46,7 +54,7 @@ class EventModel(nn.Module):
         self.heads = nn.ModuleDict(
             {
                 "hit": nn.Linear(2 * hidden, 1),
-                "hitter": nn.Linear(2 * hidden, len(COURT_ENDS)),
+                "hitter": nn.Linear(2 * hidden, players),
                 "family": nn.Linear(2 * hidden, families),
                 "side": nn.Linear(2 * hidden, len(SIDES)),
                 "serve": nn.Linear(2 * hidden, len(SERVES)),
