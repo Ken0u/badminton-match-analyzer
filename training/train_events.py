@@ -105,6 +105,8 @@ REQUESTED = ("clear", "drive", "smash", "net", "drop", "lift", "block")
 FINE = tuple(name for name in FAMILIES if name not in ("serve", "other"))
 # Published ShuttleSet hit frames precede the detected contact by about this.
 SHUTTLESET_LEAD_S = 0.08
+# vary_ends: steps shown before the first hit and, at least, after the last.
+START_MIN, START_MAX, END_MIN = 3, 150, 3
 SNAP_S = 0.2
 # Share of the running weight average kept at each step (about six epochs).
 AVERAGE_DECAY = 0.999
@@ -286,6 +288,51 @@ def jitter(inputs):
             start = random.randrange(len(values))
             ball[start : start + random.randint(2, 8)] = 0
     return with_motion(values)
+
+
+def vary_ends(item, rng=random):
+    """Change how long a clip runs before its first hit and after its last.
+
+    Extracted rallies all start the same margin before the serve and stop the
+    same margin after the last stroke, and a model trained on them as they are
+    learns to place the serve by counting steps from the start of the clip. A
+    camera view in a real match shows the serve anywhere from a few frames to
+    many seconds in. The start is cut short, or lengthened by playing the
+    quiet stretch before the serve back and forth; the end is only cut.
+    """
+    clip_id, inputs, hits = item
+    if not hits:
+        return item
+    values = inputs[:, :-3]
+    first, last = min(h[0] for h in hits), max(h[0] for h in hits)
+    tail = len(values) - 1 - last
+    if tail > END_MIN:
+        values = values[: last + 1 + rng.randint(END_MIN, tail)]
+    low = min(START_MIN, first)
+    if rng.random() < 0.5:
+        lead = rng.randint(low, first)
+    else:
+        lead = rng.randint(first, max(first, START_MAX))
+    if lead <= first:
+        values = values[first - lead :]
+    else:
+        quiet = max(1, first - 2)
+        wave = [
+            abs(step % (2 * (quiet - 1)) - (quiet - 1)) if quiet > 1 else 0
+            for step in range(lead - first, 0, -1)
+        ]
+        values = np.concatenate([values[[quiet - 1 - w for w in wave]], values])
+    moved = lead - first
+    return (
+        clip_id,
+        with_motion(values),
+        [(frame + moved, *rest) for frame, *rest in hits],
+    )
+
+
+def steady_ends(item):
+    """vary_ends with a variation that depends only on the clip's name."""
+    return vary_ends(item, random.Random(item[0]))
 
 
 def batches(items, size, bucket):
@@ -537,6 +584,11 @@ def main():
         "--jitter", action="store_true", help="vary framing and hide the shuttle"
     )
     parser.add_argument(
+        "--vary-ends",
+        action="store_true",
+        help="vary how long clips run before the first and after the last hit",
+    )
+    parser.add_argument(
         "--final", action="store_true", help="score the held-out test venues"
     )
     args = parser.parse_args()
@@ -565,6 +617,11 @@ def main():
         device,
         flush=True,
     )
+    if args.vary_ends:
+        # Scored clips get one fixed variation each, so scores can be compared.
+        for folds_ in (data, extra):
+            for fold in ("validation", "test"):
+                folds_[fold] = [steady_ends(item) for item in folds_[fold]]
     train = data["train"] + extra["train"]
     args.output.mkdir(parents=True, exist_ok=True)
     checkpoint = args.output / "events.pt"
@@ -595,6 +652,8 @@ def main():
             model.train()
             losses = []
             for group in batches(train, args.batch_size, args.bucket):
+                if args.vary_ends:
+                    group = [vary_ends(item) for item in group]
                 x, hit, valid, classes, accept = batch(
                     group, device, augment=True, strong=args.jitter
                 )
