@@ -65,6 +65,8 @@ from train_events import (
     predict,
     score,
     snap,
+    steady_ends,
+    vary_ends,
 )
 
 # Published type: class, classes also accepted, serve type.
@@ -174,11 +176,7 @@ def dshuttlenet_split(match):
     # A match S2 Doubles holds out is left out altogether: training on its
     # DShuttleNet copy would teach the model the rallies S2 Doubles scores.
     return next(
-        (
-            fold
-            for fold in ("left_out", "validation", "test")
-            if match in listed[fold]
-        ),
+        (fold for fold in ("left_out", "validation", "test") if match in listed[fold]),
         "train",
     )
 
@@ -339,6 +337,11 @@ def main():
         "--jitter", action="store_true", help="vary framing and hide the shuttle"
     )
     parser.add_argument(
+        "--vary-ends",
+        action="store_true",
+        help="vary how long clips run before the first and after the last hit",
+    )
+    parser.add_argument(
         "--final", action="store_true", help="score the held-out match and venues"
     )
     args = parser.parse_args()
@@ -372,6 +375,12 @@ def main():
             sets[name] = {
                 fold: [widen(i) for i in items] for fold, items in data.items()
             }
+    if args.vary_ends:
+        # Scored clips get one fixed variation each, so scores can be compared.
+        for data in sets.values():
+            for fold in ("validation", "test", "probe"):
+                if fold in data:
+                    data[fold] = [steady_ends(item) for item in data[fold]]
     known = [
         h[1] >= 0
         for name in DOUBLES
@@ -449,6 +458,8 @@ def main():
             model.train()
             losses = []
             for group in batches(train, args.batch_size, True):
+                if args.vary_ends:
+                    group = [vary_ends(item) for item in group]
                 x, hit, valid, classes, accept = batch(
                     [swap_partners(item) for item in group],
                     device,

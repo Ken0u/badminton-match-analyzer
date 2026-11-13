@@ -162,3 +162,33 @@ def test_partner_is_the_one_whose_arm_moves_at_the_shuttle():
     assert tracks[10][choose_partner(values, 10, "far", WIDTH, HEIGHT)] == 1
     values[:, : 2 * PLAYER] = 0
     assert choose_partner(values, 10, "far", WIDTH, HEIGHT) is None
+
+
+def test_varied_clip_ends_keep_each_hit_on_its_own_frame():
+    import random
+    import sys
+    from pathlib import Path
+
+    sys.path.insert(0, str(Path(__file__).parents[1] / "training"))
+    from train_events import END_MIN, START_MAX, START_MIN, vary_ends
+
+    values = np.zeros((120, SLOTS * PLAYER + 3), np.float32)
+    values[:, 0] = np.arange(120)  # each frame carries its own number
+    values[:, -3:] = [[0.5, 0.5, 1]] * 120
+    item = (
+        "clip",
+        with_motion(values),
+        [(48, 0, 0, 0, 0, None), (70, 2, 1, 0, 0, None)],
+    )
+    leads = set()
+    for seed in range(200):
+        _, inputs, hits = vary_ends(item, random.Random(seed))
+        assert inputs.shape[1] == DOUBLES_FEATURES
+        assert [inputs[h[0], 0] for h in hits] == [48, 70]
+        assert hits[1][0] - hits[0][0] == 22
+        assert START_MIN <= hits[0][0] <= START_MAX
+        assert len(inputs) - 1 - hits[1][0] >= END_MIN
+        # Added steps replay the quiet stretch before the serve, never a hit.
+        assert inputs[: max(0, hits[0][0] - 48), 0].max(initial=0) <= 45
+        leads.add(hits[0][0])
+    assert min(leads) < 10 and max(leads) > 100
