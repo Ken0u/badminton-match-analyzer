@@ -171,8 +171,15 @@ def doubles_clip(document):
 
 def dshuttlenet_split(match):
     listed = json.loads(DSHUTTLENET_SPLITS.read_text(encoding="utf-8"))
+    # A match S2 Doubles holds out is left out altogether: training on its
+    # DShuttleNet copy would teach the model the rallies S2 Doubles scores.
     return next(
-        (fold for fold in ("validation", "test") if match in listed[fold]), "train"
+        (
+            fold
+            for fold in ("left_out", "validation", "test")
+            if match in listed[fold]
+        ),
+        "train",
     )
 
 
