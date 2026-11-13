@@ -1,5 +1,6 @@
 {
- "note": "Whole tournaments per split. Test is every 2025 tournament, validation the later 2024 ones; the same pairs appear on both sides. Matches not listed are trained on.",
+ "note": "Whole tournaments per split. Test is every 2025 tournament, validation the later 2024 ones; the same pairs appear on both sides. Matches not listed are trained on. Matches 5, 6 and 7 are the same broadcasts as S2 Doubles matches 1, 2 and 3: 6 and 7 are left out because S2 Doubles validates on match 2 and tests on match 3.",
+ "left_out": [6, 7],
  "validation": [33, 34, 35, 37, 51, 52],
  "test": [54, 55, 57, 59, 61, 62, 63]
 }
