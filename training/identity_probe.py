@@ -25,6 +25,7 @@ import warnings
 from collections import Counter, defaultdict
 from pathlib import Path
 
+import av
 import cv2
 import numpy as np
 
@@ -56,6 +57,31 @@ REID_PARTS = 4
 # Limb pairs whose lengths add up to a body length that bending shortens less
 # than it shortens the box around the player.
 BONES = ((5, 11), (6, 12), (11, 13), (12, 14), (13, 15), (14, 16))
+
+
+class Video:
+    """Frames of a video by number. PyAV reads the codecs the app reads (AV1
+    among them), which OpenCV's own reader does not on every machine."""
+
+    def __init__(self, path):
+        self.container = av.open(str(path))
+        self.stream = self.container.streams.video[0]
+        self.rate = float(self.stream.average_rate)
+        self.start = self.stream.start_time or 0
+
+    def frame(self, number):
+        """The picture (BGR) of frame `number`, or None past the end."""
+        base = self.stream.time_base
+        self.container.seek(
+            self.start + int(number / self.rate / base), stream=self.stream
+        )
+        for frame in self.container.decode(self.stream):
+            if round((frame.pts - self.start) * base * self.rate) >= number:
+                return frame.to_ndarray(format="bgr24")
+        return None
+
+    def release(self):
+        self.container.close()
 
 
 def camera(row):
@@ -158,9 +184,8 @@ def looks_of(rows, played, frame_of, slot_of, capture, model=None):
     chosen = [played[round(i)] for i in np.linspace(0, len(played) - 1, SAMPLES)]
     crops, owners = [], []
     for index in chosen:
-        capture.set(cv2.CAP_PROP_POS_FRAMES, frame_of(index))
-        ok, image = capture.read()
-        if not ok:
+        image = capture.frame(frame_of(index))
+        if image is None:
             continue
         picture, image = image, cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         row = rows[index]
@@ -228,7 +253,7 @@ def load(args):
         for p in sorted(args.videos.glob(f"{args.match}.*"))
         if p.suffix in (".mp4", ".webm", ".mkv")
     )
-    capture = cv2.VideoCapture(str(video))
+    capture = Video(video)
     model = osnet.load(args.reid) if args.reid.exists() else None
     if model is None:
         print(f"no weights at {args.reid}: whole-person looks are left out")
@@ -479,6 +504,9 @@ def main():
     )
     args = parser.parse_args()
     rallies = load(args)
+    tracks = [t for r in rallies for t in r["tracks"]]
+    seen = sum(bool(t["looks"]) for t in tracks)
+    print(f"{seen} of {len(tracks)} player tracks seen in the video")
     vectors(rallies, args.use)
     group(rallies)
     report = score(rallies)
