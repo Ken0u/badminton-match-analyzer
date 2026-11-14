@@ -160,7 +160,7 @@ def truth_letters(document, slots, height):
     return {slot: letter for slot, letter in named.items() if letter not in doubled}
 
 
-def looks_of(rows, played, frame_of, slot_of, capture, model=None):
+def looks_of(rows, played, frame_of, slot_of, capture, model=None, samples=SAMPLES):
     """Sizes, patch colours and whole look of each slot over `played` rows.
 
     `frame_of(index)` is the video frame of a row and `slot_of(row, person)`
@@ -181,7 +181,7 @@ def looks_of(rows, played, frame_of, slot_of, capture, model=None):
                         round(length, 1) if length else None,
                     ]
                 )
-    chosen = [played[round(i)] for i in np.linspace(0, len(played) - 1, SAMPLES)]
+    chosen = [played[round(i)] for i in np.linspace(0, len(played) - 1, samples)]
     crops, owners = [], []
     for index in chosen:
         image = capture.frame(frame_of(index))
@@ -215,7 +215,7 @@ def looks_of(rows, played, frame_of, slot_of, capture, model=None):
     return [t for t in tracks.values() if t["sizes"]]
 
 
-def describe(path, capture, model=None):
+def describe(path, capture, model=None, samples=SAMPLES):
     """Each slot of one labelled rally, with its published letter."""
     with gzip.open(path, "rt", encoding="utf-8") as handle:
         document = json.load(handle)
@@ -238,6 +238,7 @@ def describe(path, capture, model=None):
         lambda row, person: slots.get((camera(row), person.get("track_id"))),
         capture,
         model,
+        samples,
     )
     for track in tracks:
         track["letter"] = letters.get(track["slot"])
@@ -245,7 +246,8 @@ def describe(path, capture, model=None):
 
 
 def load(args):
-    cache = args.cache / f"{args.prefix}-{args.match}.json"
+    tag = "" if args.samples == SAMPLES else f"-n{args.samples}"
+    cache = args.cache / f"{args.prefix}-{args.match}{tag}.json"
     if cache.exists() and not args.refresh:
         return json.loads(cache.read_text(encoding="utf-8"))
     video = next(
@@ -260,7 +262,7 @@ def load(args):
     rallies = []
     files = sorted(args.features.glob(f"{args.prefix}-{args.match}-*.json.gz"))
     for count, path in enumerate(files, 1):
-        rally = describe(path, capture, model)
+        rally = describe(path, capture, model, args.samples)
         if rally:
             rallies.append(rally)
         if count % 10 == 0:
@@ -408,13 +410,25 @@ def group(rallies):
     for team, members in teams.items():
         both = [end for end in members if len(end) == 2]
         extra = partner_directions(both)
+        looks = {
+            id(t): np.concatenate([t["vector"], extra[id(t)]]) for end in both for t in end
+        }
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", RuntimeWarning)
+            # A pair looks different from each end (front or back, light,
+            # distance). Take out each end's average pair look, so that
+            # difference is not read as one partner against the other.
+            for place in (0, 1):
+                here = [end for end in both if end[0]["slot"] // 2 == place]
+                if here:
+                    middle = np.nanmean(
+                        [(looks[id(a)] + looks[id(b)]) / 2 for a, b in here], axis=0
+                    )
+                    for end in here:
+                        for t in end:
+                            looks[id(t)] = looks[id(t)] - middle
             signs, margins = split_two(
-                [
-                    tuple(np.concatenate([t["vector"], extra[id(t)]]) for t in end)
-                    for end in both
-                ]
+                [tuple(looks[id(t)] for t in end) for end in both]
             )
         for end, sign, margin in zip(both, signs, margins):
             first, second = (0, 1) if sign > 0 else (1, 0)
@@ -489,6 +503,9 @@ def main():
     parser.add_argument("--match", type=int, required=True)
     parser.add_argument("--cache", type=Path, default=Path(".cache/identity"))
     parser.add_argument("--refresh", action="store_true")
+    parser.add_argument(
+        "--samples", type=int, default=SAMPLES, help="frames looked at per rally"
+    )
     parser.add_argument(
         "--reid",
         type=Path,
