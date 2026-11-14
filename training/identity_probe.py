@@ -134,30 +134,17 @@ def truth_letters(document, slots, height):
     return {slot: letter for slot, letter in named.items() if letter not in doubled}
 
 
-def describe(path, capture, model=None):
-    """Each slot of one rally: its letter, sizes, patch colours and whole look."""
-    with gzip.open(path, "rt", encoding="utf-8") as handle:
-        document = json.load(handle)
-    width, height = document["video"]["width"], document["video"]["height"]
-    rows = document["players"]
-    slots = assign_slots(rows, width, height, float(document["video"]["fps"]))
-    letters = truth_letters(document, slots, height)
-    marks = [e["frame"] for e in document["events"] if 0 <= e["frame"] < len(rows)]
-    if not marks:
-        return None
-    played = [
-        i for i in range(min(marks), max(marks) + 1) if rows[i].get("calibration_valid")
-    ]
-    if len(played) < SAMPLES:
-        return None
-    tracks = {
-        slot: {"slot": slot, "letter": letters.get(slot), "sizes": [], "looks": []}
-        for slot in range(SLOTS)
-    }
+def looks_of(rows, played, frame_of, slot_of, capture, model=None):
+    """Sizes, patch colours and whole look of each slot over `played` rows.
+
+    `frame_of(index)` is the video frame of a row and `slot_of(row, person)`
+    the slot (0 and 1 far, 2 and 3 near) of a tracked player, or None.
+    """
+    tracks = {slot: {"slot": slot, "sizes": [], "looks": []} for slot in range(SLOTS)}
     for index in played:
         row = rows[index]
         for person in row["players"]:
-            slot = slots.get((camera(row), person.get("track_id")))
+            slot = slot_of(row, person)
             if slot is not None:
                 box = person["box"]
                 length = body_length(person)
@@ -171,14 +158,14 @@ def describe(path, capture, model=None):
     chosen = [played[round(i)] for i in np.linspace(0, len(played) - 1, SAMPLES)]
     crops, owners = [], []
     for index in chosen:
-        capture.set(cv2.CAP_PROP_POS_FRAMES, document["start_frame"] + index)
+        capture.set(cv2.CAP_PROP_POS_FRAMES, frame_of(index))
         ok, image = capture.read()
         if not ok:
             continue
         picture, image = image, cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         row = rows[index]
         for person in row["players"]:
-            slot = slots.get((camera(row), person.get("track_id")))
+            slot = slot_of(row, person)
             if slot is None or len(person.get("keypoints", [])) != 17:
                 continue
             # Another body in front of this one would colour the patches.
@@ -200,11 +187,36 @@ def describe(path, capture, model=None):
         for slot in set(owners):
             own = described[[o == slot for o in owners]].mean(axis=0)
             tracks[slot]["reid"] = [round(float(v), 4) for v in own]
-    return {
-        "clip": document["clip_id"],
-        "set": document["set_id"],
-        "tracks": [t for t in tracks.values() if t["sizes"]],
-    }
+    return [t for t in tracks.values() if t["sizes"]]
+
+
+def describe(path, capture, model=None):
+    """Each slot of one labelled rally, with its published letter."""
+    with gzip.open(path, "rt", encoding="utf-8") as handle:
+        document = json.load(handle)
+    width, height = document["video"]["width"], document["video"]["height"]
+    rows = document["players"]
+    slots = assign_slots(rows, width, height, float(document["video"]["fps"]))
+    letters = truth_letters(document, slots, height)
+    marks = [e["frame"] for e in document["events"] if 0 <= e["frame"] < len(rows)]
+    if not marks:
+        return None
+    played = [
+        i for i in range(min(marks), max(marks) + 1) if rows[i].get("calibration_valid")
+    ]
+    if len(played) < SAMPLES:
+        return None
+    tracks = looks_of(
+        rows,
+        played,
+        lambda index: document["start_frame"] + index,
+        lambda row, person: slots.get((camera(row), person.get("track_id"))),
+        capture,
+        model,
+    )
+    for track in tracks:
+        track["letter"] = letters.get(track["slot"])
+    return {"clip": document["clip_id"], "set": document["set_id"], "tracks": tracks}
 
 
 def load(args):
