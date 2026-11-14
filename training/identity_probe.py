@@ -30,7 +30,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 
-from badminton.event_doubles import SLOTS, assign_slots  # noqa: E402
+from badminton.event_doubles import SLOTS, assign_slots
 
 LETTERS = "ABCD"
 # Frames looked at per rally, and how near a published foot position must be
@@ -81,8 +81,8 @@ def patch_colour(image, person, name):
         across = np.array([lower[1] - upper[1], upper[0] - lower[0]]) / length
         for along in np.linspace(begin, end, 7):
             for side in np.linspace(-length * width / 2, length * width / 2, 5):
-                x, y = upper + (lower - upper) * along + across * side
-                x, y = int(round(x)), int(round(y))
+                spot = upper + (lower - upper) * along + across * side
+                x, y = (int(v) for v in np.rint(spot))
                 if 0 <= y < image.shape[0] and 0 <= x < image.shape[1]:
                     samples.append(image[y, x])
     if len(samples) < 12:
@@ -125,7 +125,7 @@ def truth_letters(document, slots, height):
                 votes[reach[0][1]][letter] += 1
     named = {slot: count.most_common(1)[0][0] for slot, count in votes.items()}
     # Two slots under one letter means the labels did not separate them.
-    doubled = {l for l, n in Counter(named.values()).items() if n > 1}
+    doubled = {name for name, n in Counter(named.values()).items() if n > 1}
     return {slot: letter for slot, letter in named.items() if letter not in doubled}
 
 
