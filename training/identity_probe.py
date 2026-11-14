@@ -29,7 +29,9 @@ import cv2
 import numpy as np
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import osnet
 from badminton.event_doubles import SLOTS, assign_slots
 
 LETTERS = "ABCD"
@@ -48,6 +50,9 @@ PATCHES = {
     "shoes": ([((13,), (15,)), ((14,), (16,))], 1.05, 1.3, 0.25),
 }
 KEYPOINT_CONFIDENCE = 0.4
+# Directions of the whole-person description kept for telling partners apart
+# (4, 8, 16 and 32 were tried on three matches; more only added noise).
+REID_PARTS = 4
 # Limb pairs whose lengths add up to a body length that bending shortens less
 # than it shortens the box around the player.
 BONES = ((5, 11), (6, 12), (11, 13), (12, 14), (13, 15), (14, 16))
@@ -129,8 +134,8 @@ def truth_letters(document, slots, height):
     return {slot: letter for slot, letter in named.items() if letter not in doubled}
 
 
-def describe(path, capture):
-    """Each slot of one rally: its letter, sizes and patch colours."""
+def describe(path, capture, model=None):
+    """Each slot of one rally: its letter, sizes, patch colours and whole look."""
     with gzip.open(path, "rt", encoding="utf-8") as handle:
         document = json.load(handle)
     width, height = document["video"]["width"], document["video"]["height"]
@@ -164,12 +169,13 @@ def describe(path, capture):
                     ]
                 )
     chosen = [played[round(i)] for i in np.linspace(0, len(played) - 1, SAMPLES)]
+    crops, owners = [], []
     for index in chosen:
         capture.set(cv2.CAP_PROP_POS_FRAMES, document["start_frame"] + index)
         ok, image = capture.read()
         if not ok:
             continue
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+        picture, image = image, cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         row = rows[index]
         for person in row["players"]:
             slot = slots.get((camera(row), person.get("track_id")))
@@ -184,6 +190,16 @@ def describe(path, capture):
                 continue
             look = {name: patch_colour(image, person, name) for name in PATCHES}
             tracks[slot]["looks"].append(look)
+            left, top, right, bottom = (int(v) for v in person["box"])
+            crop = picture[max(0, top) : bottom, max(0, left) : right]
+            if model is not None and crop.shape[0] >= 16 and crop.shape[1] >= 8:
+                crops.append(crop)
+                owners.append(slot)
+    if crops:
+        described = osnet.describe(model, crops)
+        for slot in set(owners):
+            own = described[[o == slot for o in owners]].mean(axis=0)
+            tracks[slot]["reid"] = [round(float(v), 4) for v in own]
     return {
         "clip": document["clip_id"],
         "set": document["set_id"],
@@ -201,10 +217,13 @@ def load(args):
         if p.suffix in (".mp4", ".webm", ".mkv")
     )
     capture = cv2.VideoCapture(str(video))
+    model = osnet.load(args.reid) if args.reid.exists() else None
+    if model is None:
+        print(f"no weights at {args.reid}: whole-person looks are left out")
     rallies = []
     files = sorted(args.features.glob(f"{args.prefix}-{args.match}-*.json.gz"))
     for count, path in enumerate(files, 1):
-        rally = describe(path, capture)
+        rally = describe(path, capture, model)
         if rally:
             rallies.append(rally)
         if count % 10 == 0:
@@ -253,6 +272,11 @@ def vectors(rallies, use):
                     else [math.nan] * 3
                 )
             track["vector"] = np.array([v for part in parts for v in part], float)
+            track["whole"] = (
+                np.array(track["reid"], float)
+                if "reid" in use and track.get("reid")
+                else None
+            )
 
 
 def split_two(pairs, rounds=20):
@@ -295,6 +319,31 @@ def split_two(pairs, rounds=20):
     return signs, np.abs(margin)
 
 
+def partner_directions(both):
+    """The whole-person description of each track, cut down for one team.
+
+    It has 512 numbers, far more than there are rallies to weigh them by. The
+    difference between two partners in one rally is free of what they share
+    (the court end, the lighting, the kit), so the directions those
+    differences vary most along are where the partners differ; which way
+    round each difference is does not matter for finding them.
+    """
+    have = [end for end in both if all(t["whole"] is not None for t in end)]
+    if len(have) <= REID_PARTS:
+        return {id(t): np.zeros(0) for end in both for t in end}
+    gaps = np.array([end[0]["whole"] - end[1]["whole"] for end in have])
+    _, _, axes = np.linalg.svd(gaps, full_matrices=False)
+    axes = axes[:REID_PARTS]
+    centre = np.mean([t["whole"] for end in have for t in end], axis=0)
+    return {
+        id(t): (t["whole"] - centre) @ axes.T
+        if t["whole"] is not None
+        else np.full(REID_PARTS, math.nan)
+        for end in both
+        for t in end
+    }
+
+
 def group(rallies):
     """Name every track 0 to 3 (two teams, two partners) from looks alone."""
     # Teams: the pairs at the two ends of one rally are different teams.
@@ -321,9 +370,15 @@ def group(rallies):
     # Partners: within a team, the two at one end are different people.
     for team, members in teams.items():
         both = [end for end in members if len(end) == 2]
+        extra = partner_directions(both)
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", RuntimeWarning)
-            signs, margins = split_two([(e[0]["vector"], e[1]["vector"]) for e in both])
+            signs, margins = split_two(
+                [
+                    tuple(np.concatenate([t["vector"], extra[id(t)]]) for t in end)
+                    for end in both
+                ]
+            )
         for end, sign, margin in zip(both, signs, margins):
             first, second = (0, 1) if sign > 0 else (1, 0)
             end[0]["person"], end[1]["person"] = team * 2 + first, team * 2 + second
@@ -398,11 +453,17 @@ def main():
     parser.add_argument("--cache", type=Path, default=Path(".cache/identity"))
     parser.add_argument("--refresh", action="store_true")
     parser.add_argument(
+        "--reid",
+        type=Path,
+        default=Path("models/weights/reid/osnet_x1_0_msmt17.pth"),
+        help="OSNet weights for the whole-person description",
+    )
+    parser.add_argument(
         "--use",
         nargs="*",
-        default=["length", *PATCHES],
+        default=["length", *PATCHES, "reid"],
         help="evidence to group by: size (box height) or length (summed limbs), "
-        "and any of " + ", ".join(PATCHES),
+        "reid (whole-person description) and any of " + ", ".join(PATCHES),
     )
     args = parser.parse_args()
     rallies = load(args)
