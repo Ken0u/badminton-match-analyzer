@@ -118,7 +118,7 @@ def main():
     rows = load(store, args.video_id)
     found = views(rows)
     model = osnet.load(args.reid) if args.reid.exists() else None
-    capture = cv2.VideoCapture(str(ROOT / video["path"]))
+    capture = probe.Video(ROOT / video["path"])
     rallies = []
     for view in found:
         slots, own = view["slots"], view["rows"]
