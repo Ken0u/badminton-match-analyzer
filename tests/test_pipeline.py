@@ -138,6 +138,8 @@ def stub_person_looks(monkeypatch, video):
 
     monkeypatch.setattr(person_identity, "source_decoder", decoder)
     monkeypatch.setattr(person_identity, "reid_describer", describer)
+    # The stand-in describer needs no weights, whatever is installed.
+    monkeypatch.setattr(pipeline, "persons_unavailable", lambda: None)
 
 
 def execute(ctx, settings=None):
@@ -277,6 +279,47 @@ def test_complete_processing_and_resume_reuse_immutable_registered_artifacts(wor
     } == snapshots
     assert store.annotations(video["id"]).model_dump() == before
     assert all(j["status"] == "completed" for j in store.jobs())
+
+
+def test_missing_identity_weights_skip_only_the_persons_stage(workspace, monkeypatch):
+    _, store, video, _, _ = workspace
+    reason = "Player re-identification weights are not installed (reid/x.pth)"
+    monkeypatch.setattr(pipeline, "persons_unavailable", lambda: reason)
+    result = execute(workspace)
+    assert result["processing_complete"] and result["completed_stages"] == 18
+    plan = pipeline.read_plan(store, video["id"], result["analysis_key"])
+    assert plan["persons"] is None and plan["persons_unavailable"] == reason
+    assert plan["state"] == "completed"
+    # Once the weights are there, resuming runs just the persons stage.
+    monkeypatch.setattr(pipeline, "persons_unavailable", lambda: None)
+    resumed = execute(workspace)
+    assert resumed["reused_stages"] == 17
+    plan = pipeline.read_plan(store, video["id"], resumed["analysis_key"])
+    assert plan["persons"]["run_id"] and plan["persons_unavailable"] is None
+    # A finished persons document stays usable without the weights.
+    monkeypatch.setattr(pipeline, "persons_unavailable", lambda: reason)
+    assert execute(workspace)["reused_stages"] == 18
+
+
+def test_persons_unavailable_checks_registration_presence_and_hash(
+    tmp_path, monkeypatch
+):
+    weights = tmp_path / "weights"
+    monkeypatch.setattr(pipeline, "WEIGHTS", weights)
+    entry = {"name": "reid/w.pth", "sha256": hashlib.sha256(b"ok").hexdigest()}
+    monkeypatch.setattr(pipeline.person_identity, "manifest_entry", lambda: entry)
+    assert "not installed" in pipeline.persons_unavailable()
+    (weights / "reid").mkdir(parents=True)
+    (weights / "reid/w.pth").write_bytes(b"changed")
+    assert "do not match" in pipeline.persons_unavailable()
+    (weights / "reid/w.pth").write_bytes(b"ok")
+    assert pipeline.persons_unavailable() is None
+
+    def unregistered():
+        raise KeyError("player_reid")
+
+    monkeypatch.setattr(pipeline.person_identity, "manifest_entry", unregistered)
+    assert "not registered" in pipeline.persons_unavailable()
 
 
 def test_pause_mid_stage_keeps_finished_work_and_resume_runs_only_missing_stages(

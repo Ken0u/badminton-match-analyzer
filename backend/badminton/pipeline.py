@@ -52,6 +52,32 @@ PERSONS = "person_identity"
 LATER_MODELS = (person_identity.MANIFEST_KEY,)
 
 
+class PersonsUnavailable(RuntimeError):
+    """The persons stage cannot run here; processing continues without it."""
+
+
+def persons_unavailable():
+    """Why the persons stage cannot run on this machine, or None.
+
+    Missing or mismatched re-identification weights do not fail processing:
+    the plan records the reason and MatchAnalysis falls back to per-view ids.
+    """
+    try:
+        entry = person_identity.manifest_entry()
+    except (OSError, KeyError, ValueError):
+        return (
+            "Player re-identification weights are not registered in the model manifest"
+        )
+    path = WEIGHTS / entry["name"]
+    if not path.is_file():
+        return f"Player re-identification weights are not installed ({entry['name']})"
+    if file_sha(path) != entry["sha256"]:
+        return (
+            "Installed player re-identification weights do not match the model manifest"
+        )
+    return None
+
+
 def digest(value):
     return hashlib.sha256(
         json.dumps(
@@ -791,10 +817,14 @@ def process_match(
             write_json(output, result)
 
         identity_run, identity_id = stage("identities", None, identities)
-        stage(
-            "persons",
-            None,
-            lambda output, callback: person_identity.run_stage(
+
+        def persons(output, callback):
+            # Checked only when the stage has to run: a finished persons
+            # document stays usable without the weights.
+            problem = persons_unavailable()
+            if problem:
+                raise PersonsUnavailable(problem)
+            person_identity.run_stage(
                 video,
                 root,
                 store.data,
@@ -804,19 +834,34 @@ def process_match(
                 player_inputs(),
                 output,
                 callback,
-            ),
-            # The linked tracks themselves, not the identities file, whose
-            # hash changes with every code change.
-            inputs={
-                "identity_tracks": digest(identity_run["tracks"]),
-                **{
-                    f"players:{p['window']['index']}": p["stages"]["players"]["sha256"]
-                    for p in plan["parts"]
+            )
+
+        try:
+            stage(
+                "persons",
+                None,
+                persons,
+                # The linked tracks themselves, not the identities file, whose
+                # hash changes with every code change.
+                inputs={
+                    "identity_tracks": digest(identity_run["tracks"]),
+                    **{
+                        f"players:{p['window']['index']}": p["stages"]["players"][
+                            "sha256"
+                        ]
+                        for p in plan["parts"]
+                    },
                 },
-            },
-        )
-        # A cached record must still point at its unchanged document.
-        person_identity.load_document(store.data, video["id"], plan["persons"])
+            )
+        except PersonsUnavailable as error:
+            plan.update(persons=None, persons_unavailable=str(error), active=None)
+            completed += 1
+            plan["completed_stages"] = completed
+            write_json(path, plan)
+        else:
+            plan["persons_unavailable"] = None
+            # A cached record must still point at its unchanged document.
+            person_identity.load_document(store.data, video["id"], plan["persons"])
         # Callers may cancel, edit context or fail even on the final callback.
         # Publish completion only after that callback and a final input check.
         progress(1)
