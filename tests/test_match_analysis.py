@@ -311,7 +311,7 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     text = document.model_dump_json()
     assert MatchAnalysis.model_validate_json(text) == document
     assert (
-        MatchAnalysis.model_json_schema()["properties"]["schema_version"]["const"] == 2
+        MatchAnalysis.model_json_schema()["properties"]["schema_version"]["const"] == 3
     )
     assert document.video.duration_s == 12.0
     assert [p.name for p in document.players] == ["Ann", "Bo"]
@@ -360,8 +360,13 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     no_track = by_frame[250]
     assert (no_track.hitter_id, no_track.hitter_position) == (None, None)
     assert len(no_track.players) == 2
+    # Processing without an outcomes stage: no landing, winner or points.
     assert all(s.landing is None for s in by_frame.values())
     assert all(r.outcome is None for r in document.rallies)
+    assert all(
+        r.score.after == r.score.before and r.score.game == 1 for r in document.rallies
+    )
+    assert document.provenance.outcomes_run_id is None
 
     # The 10 Hz tracks have no position in the frames without a court fit.
     tracks = document.tracks
@@ -393,7 +398,7 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     )
     assert read_match_analysis(tmp_path, "v") == document
     assert read_match_analysis(tmp_path, "other") is None
-    assert json.loads(path.read_text(encoding="utf-8"))["schema_version"] == 2
+    assert json.loads(path.read_text(encoding="utf-8"))["schema_version"] == 3
 
 
 def test_rallies_split_at_serves_gaps_and_cuts():
@@ -665,3 +670,119 @@ def test_swap_overrides_apply_to_one_range_in_order():
     ]
     with pytest.raises(ValueError):
         build_match_analysis(inputs, overrides=[swap | {"persons": ["P1", "P3"]}])
+
+
+def with_outcomes(inputs, rallies, model=None):
+    inputs.plan["outcomes"] = {"run_id": "out"}
+    inputs.runs["out"] = {
+        "stage": "outcomes",
+        "video_id": "v",
+        "method": "test outcomes",
+        "model": model,
+        "rallies": rallies,
+    }
+    return inputs
+
+
+def record(shots, start, end, winner_end, detail, landing=None, end_source="landing"):
+    reason = "winner" if detail == "in" else "error"
+    return {
+        "start_frame": start,
+        "end_frame": end,
+        "start_source": "proposed_serve",
+        "end_source": end_source,
+        "opens_with_serve": False,
+        "shot_frames": shots,
+        "last_hitter_end": "near",
+        "landing": landing,
+        "outcome": None
+        if winner_end is None
+        else {
+            "winner_end": winner_end,
+            "reason": reason,
+            "detail": detail,
+            "confidence": 0.8,
+            "source": "model",
+        },
+    }
+
+
+def test_outcomes_stage_gives_boundaries_landing_winner_team_and_score():
+    landing = {
+        "frame": 70,
+        "kind": "rest",
+        "image": [0.4, 0.3],
+        "court": [2.0, 2.5],
+        "in_court": True,
+        "line_distance": 1.54,
+    }
+    far_out = landing | {"frame": 250, "court": [30.0, -9.0], "in_court": False}
+    inputs = with_outcomes(
+        fixture(),
+        [
+            record([20, 40, 65], 18, 70, "near", "in", landing),
+            record([170, 185], 170, 185, None, None, None, "last_contact"),
+            record([210, 230, 250], 205, 260, "far", "out", far_out),
+        ],
+        {"name": "rally_outcome_v1.json", "sha256": "d" * 64, "title": "mlp"},
+    )
+    document = build_match_analysis(inputs, IDENTITY)
+    first, second, third = document.rallies
+    assert (first.start_frame, first.end_frame, first.end_source) == (18, 70, "landing")
+    assert first.shots[-1].landing.position.model_dump() == {"x": 2.0, "y": 2.5}
+    assert first.shots[-1].landing.in_court and first.shots[0].landing is None
+    # Near end before the cut is P2 (team T2); after it the near player is P1.
+    assert first.outcome.winner_team == "T2" and first.outcome.source == "mlp"
+    assert first.outcome.reason == "winner" and first.outcome.detail == "in"
+    assert second.outcome is None and second.end_source == "last_contact"
+    assert third.outcome.winner_team == "T2" and third.outcome.winner_end == "far"
+    # A landing projected far off the court keeps no position.
+    assert third.shots[-1].landing.position is None
+    assert third.shots[-1].landing.in_court is False
+    scores = [
+        (r.score.before.model_dump(), r.score.after.model_dump())
+        for r in document.rallies
+    ]
+    assert scores == [
+        ({"T1": 0, "T2": 0}, {"T1": 0, "T2": 1}),
+        ({"T1": 0, "T2": 1}, {"T1": 0, "T2": 1}),
+        ({"T1": 0, "T2": 1}, {"T1": 0, "T2": 2}),
+    ]
+    assert document.provenance.outcomes_run_id == "out"
+    assert any(
+        m.stage == "outcomes" and m.name == "mlp" for m in document.provenance.models
+    )
+    # A swap of the two players over the last rally gives its point to T1.
+    swapped = build_match_analysis(
+        inputs,
+        IDENTITY,
+        overrides=[{"persons": ["P1", "P2"], "start_frame": 205, "end_frame": 260}],
+    )
+    assert swapped.rallies[2].outcome.winner_team == "T1"
+    assert swapped.rallies[2].score.after.model_dump() == {"T1": 1, "T2": 1}
+    assert MatchAnalysis.model_validate_json(document.model_dump_json()) == document
+
+
+def test_games_end_at_21_with_two_clear_or_at_30():
+    from badminton.match_analysis import Person, _scored
+
+    persons = [Person(id="P1", team="T1"), Person(id="P2", team="T2")]
+    document = build_match_analysis(fixture(), IDENTITY)
+    template = document.rallies[0]
+    outcome_t1 = {
+        "winner_end": "far",
+        "reason": "winner",
+        "detail": "in",
+        "source": "rule",
+    }
+    from badminton.match_analysis import RallyOutcome
+
+    # First rally's far player is P1 (T1): T1 wins every rally.
+    rallies = [
+        template.model_copy(update={"outcome": RallyOutcome(**outcome_t1)})
+        for _ in range(23)
+    ]
+    scored = _scored(rallies, persons)
+    assert scored[20].score.after.model_dump() == {"T1": 21, "T2": 0}
+    assert scored[21].score.game == 2 and scored[21].score.before.T1 == 0
+    assert scored[22].score.after.T1 == 2

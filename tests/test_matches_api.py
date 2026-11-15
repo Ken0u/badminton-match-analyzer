@@ -230,7 +230,8 @@ def test_missing_identity_weights_still_finish_with_a_warning(flow, monkeypatch)
         match_id = create(client, content).json()["match_id"]
         status, _ = wait(client, match_id)
         assert status["state"] == "needs_names"
-        assert len(status["warnings"]) == 1 and "not installed" in status["warnings"][0]
+        identity_warnings = [w for w in status["warnings"] if "re-identification" in w]
+        assert len(identity_warnings) == 1 and "not installed" in identity_warnings[0]
         document = client.get(f"/api/matches/{match_id}/analysis").json()
         assert document["identity"]["source"] == "per_view_fallback"
         assert document["identity"]["persistent"] is False
@@ -531,17 +532,18 @@ def test_names_guess_and_confirmation_rules():
 
 def test_progress_is_time_weighted_monotonic_and_labelled():
     weights = matches.ProcessingProgress(2)
-    assert len(weights.sequence) == 3 + 2 * len(pipeline.STAGES)
+    assert len(weights.sequence) == 4 + 2 * len(pipeline.STAGES)
     values = [i / 1000 for i in range(1001)]
     mapped = [weights(v) for v in values]
     fractions = [f for f, _ in mapped]
     assert fractions == sorted(fractions)
     assert fractions[0] == 0 and fractions[-1] == pytest.approx(1)
     assert mapped[0][1] == "Scanning the video"
-    assert weights(1.5 / 13)[1] == "Finding players"
-    assert weights(2.5 / 13)[1] == "Tracking the shuttle"
-    assert weights(3.5 / 13)[1] == "Reading strokes"
-    assert weights(12.5 / 13)[1] == "Recognising players"
+    assert weights(1.5 / 14)[1] == "Finding players"
+    assert weights(2.5 / 14)[1] == "Tracking the shuttle"
+    assert weights(3.5 / 14)[1] == "Reading strokes"
+    assert weights(12.5 / 14)[1] == "Recognising players"
+    assert weights(13.5 / 14)[1] == "Reading rally outcomes"
     # Players tracking moves the bar more than a cheap stage of the same count.
     assert (
         weights(2 / 13)[0] - weights(1 / 13)[0]
