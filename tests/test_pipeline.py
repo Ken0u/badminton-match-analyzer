@@ -3,8 +3,9 @@ import hashlib
 import json
 from types import SimpleNamespace
 
+import numpy as np
 import pytest
-from badminton import pipeline
+from badminton import person_identity, pipeline
 from badminton.jobs import JobCancelled, run_local_job
 from badminton.scene_review import corrected_boundaries, reviewed_contacts, reviewed_run
 from badminton.schemas import Calibration, CameraCorrection, Event, SceneRange
@@ -113,7 +114,30 @@ def workspace(tmp_path, monkeypatch):
     monkeypatch.setattr(pipeline, "scan_video", scan)
     monkeypatch.setattr(pipeline, "track_players", players)
     monkeypatch.setattr(pipeline, "track_shuttle", shuttle)
+    stub_person_looks(monkeypatch, video)
     return tmp_path, store, video, times, calls
+
+
+def stub_person_looks(monkeypatch, video):
+    """The synthetic source is not media and CI has no torch: blank frames
+    and a fixed description stand in for decoding and OSNet."""
+
+    def decoder(_video, _root, _times):
+        def decode(frames):
+            for frame in frames:
+                yield frame, np.zeros((video["height"], video["width"], 3), np.uint8)
+
+        return decode
+
+    def describer(_entry):
+        return (
+            lambda: None,
+            lambda crops: np.ones((len(crops), 4)) / 2,
+            lambda: None,
+        )
+
+    monkeypatch.setattr(person_identity, "source_decoder", decoder)
+    monkeypatch.setattr(person_identity, "reid_describer", describer)
 
 
 def execute(ctx, settings=None):
@@ -240,14 +264,14 @@ def test_complete_processing_and_resume_reuse_immutable_registered_artifacts(wor
     _, store, video, _, calls = workspace
     before = store.annotations(video["id"]).model_dump()
     result = execute(workspace)
-    assert result["parts"] == 3 and result["completed_stages"] == 17
+    assert result["parts"] == 3 and result["completed_stages"] == 18
     assert result["reused_stages"] == 0 and not result["fully_annotated"]
     snapshots = {
         p.name: p.read_bytes() for p in (store.data / "test" / "runs").glob("*.json")
     }
     calls.clear()
     resumed = execute(workspace)
-    assert resumed["reused_stages"] == 17 and calls == []
+    assert resumed["reused_stages"] == 18 and calls == []
     assert {
         p.name: p.read_bytes() for p in (store.data / "test" / "runs").glob("*.json")
     } == snapshots
@@ -407,7 +431,7 @@ def test_recover_both_registration_and_manifest_write_interruption(workspace):
         )
     calls.clear()
     recovered = execute(workspace)
-    assert recovered["reused_stages"] == 17 and calls == []
+    assert recovered["reused_stages"] == 18 and calls == []
     assert store.job(registered_id)["status"] == "completed"
     assert (
         pipeline.read_plan(store, "test", result["analysis_key"])["parts"][0]["stages"][
@@ -483,7 +507,7 @@ def test_disabling_recognition_reuses_all_completed_perception(workspace):
     execute(workspace)
     calls.clear()
     result = execute(workspace, SETTINGS | {"recognize": False})
-    assert result["reused_stages"] == 14
+    assert result["reused_stages"] == 15
     assert calls == []
 
 
@@ -546,7 +570,7 @@ def test_overlap_actors_are_checkpointed_without_editing_reviewed_identities(
         for p in plan["parts"]
     }
     assert store.annotations(video["id"]).model_dump() == before
-    assert execute(workspace)["reused_stages"] == 17
+    assert execute(workspace)["reused_stages"] == 18
 
 
 def test_pause_during_actor_linking_preserves_all_finished_perception(
@@ -567,7 +591,7 @@ def test_pause_during_actor_linking_preserves_all_finished_perception(
     calls.clear()
     monkeypatch.setattr(pipeline, "link_player_runs", original)
     resumed = execute(workspace)
-    assert resumed["completed_stages"] == 17 and resumed["reused_stages"] == 16
+    assert resumed["completed_stages"] == 18 and resumed["reused_stages"] == 16
     assert calls == []
 
 
@@ -701,7 +725,7 @@ def test_last_progress_callback_cannot_publish_false_completion(workspace, mutat
         final[-1],
         "interrupted" if mutation in ("context", "cancel") else "failed",
     )
-    assert plan["completed_stages"] == 17
+    assert plan["completed_stages"] == 18
 
 
 @pytest.mark.parametrize("mode", ["singles", "doubles"])
@@ -761,6 +785,6 @@ def test_irrelevant_manual_edit_during_resume_preserves_reuse(workspace):
 
     result = execute_with_progress(workspace, progress)
     assert (
-        result["processing_complete"] and result["reused_stages"] == 17 and calls == []
+        result["processing_complete"] and result["reused_stages"] == 18 and calls == []
     )
     assert store.annotations("test").events[0].id == "reviewed"

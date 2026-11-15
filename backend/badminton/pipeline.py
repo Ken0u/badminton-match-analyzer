@@ -15,10 +15,10 @@ import os
 import time
 from pathlib import Path
 
-from . import event_model
+from . import event_model, person_identity
 from .actor_linking import link_player_runs
 from .calibration_context import court_run_context
-from .config import WEIGHTS
+from .config import MODEL_MANIFEST, WEIGHTS
 from .contacts import METHOD as CONTACT_METHOD
 from .contacts import proposal_recipe, propose_contacts, validate_contact_inputs
 from .jobs import JobCancelled
@@ -41,6 +41,15 @@ STAGES = ("players", "shuttle", "contacts", "rallies", "recognition")
 PERCEPTION = {"segments": "segments", "players": "tracking", "shuttle": "shuttle"}
 # Raise when this file changes how it calls a perception stage.
 PERCEPTION_CALLS = 2
+# Whole-video stages after the windows: actor linking, then one person id per
+# player across camera views (person_identity.py). The persons stage is keyed
+# like perception, by the code it imports and its pinned weights, so other
+# code changes reuse it.
+PERSONS = "person_identity"
+# Model manifest entries that only later stages load. Perception keys hash the
+# manifest without them, so registering such weights keeps finished poses and
+# shuttle tracks.
+LATER_MODELS = (person_identity.MANIFEST_KEY,)
 
 
 def digest(value):
@@ -196,6 +205,20 @@ def plan_path(store, video_id, key):
     return store.data / video_id / "analysis" / key / "manifest.json"
 
 
+def perception_manifest_sha():
+    """The model manifest's hash as perception sees it: without LATER_MODELS.
+
+    The manifest is stored as indented JSON with a final newline, so taking
+    later entries out gives the hash the file had before they were added.
+    """
+    manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
+    if not any(name in manifest for name in LATER_MODELS):
+        return file_sha(MODEL_MANIFEST)
+    for name in LATER_MODELS:
+        manifest.pop(name, None)
+    return hashlib.sha256((json.dumps(manifest, indent=2) + "\n").encode()).hexdigest()
+
+
 def stage_recipe(recipe, name, window, dependencies):
     """Recognition choices must not invalidate expensive unchanged perception."""
     result = {
@@ -211,8 +234,19 @@ def stage_recipe(recipe, name, window, dependencies):
             for path, sha in recipe["source_files"].items()
             if path in used or not path.endswith(".py")
         }
+        if MODEL_MANIFEST.name in result["source_files"]:
+            result["source_files"][MODEL_MANIFEST.name] = perception_manifest_sha()
         result.pop("event_model_sha256", None)
         result["perception_calls"] = PERCEPTION_CALLS
+    if name == "persons":
+        used = imported_sources(PERSONS)
+        result["source_files"] = {
+            path: sha for path, sha in recipe["source_files"].items() if path in used
+        }
+        result.pop("event_model_sha256", None)
+        result["model"] = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8")).get(
+            person_identity.MANIFEST_KEY
+        )
     if name != "segments":
         result["context_signature"] = recipe["context_signature"]
     result["settings"] = (
@@ -301,7 +335,8 @@ def process_match(
         },
     )
     completed, reused = 0, 0
-    total = 2 + len(windows) * len(STAGES)
+    # Segments, actor identities and persons, plus the per-window stages.
+    total = 3 + len(windows) * len(STAGES)
     last_tick = -1
     last_input_check = 0
 
@@ -336,13 +371,13 @@ def process_match(
             last_tick = tick
             progress(tick / 1000)
 
-    def stage(name, part, action):
+    def stage(name, part, action, inputs=None):
         nonlocal completed, reused
         report(0)
         # Fast cache resumes can finish between throttled progress checks.
         check_inputs()
         index = part["window"]["index"] if part else -1
-        dependencies = {}
+        dependencies = dict(inputs or {})
         if name == "identities":
             dependencies = {
                 f"players:{part['window']['index']}": part["stages"]["players"][
@@ -733,23 +768,20 @@ def process_match(
 
             stage("recognition", part, recognize)
 
-        def identities(output, callback):
-            def player_inputs():
-                for part in plan["parts"]:
-                    checkpoint = part["stages"]["players"]
-                    source = (
-                        store.data
-                        / video["id"]
-                        / "runs"
-                        / f"{checkpoint['run_id']}.json"
-                    )
-                    if file_sha(source) != checkpoint["sha256"]:
-                        raise ValueError("Player input changed before actor linking")
-                    yield (
-                        checkpoint["run_id"],
-                        json.loads(source.read_text(encoding="utf-8")),
-                    )
+        def player_inputs():
+            for part in plan["parts"]:
+                checkpoint = part["stages"]["players"]
+                source = (
+                    store.data / video["id"] / "runs" / f"{checkpoint['run_id']}.json"
+                )
+                if file_sha(source) != checkpoint["sha256"]:
+                    raise ValueError("Player input changed before actor linking")
+                yield (
+                    checkpoint["run_id"],
+                    json.loads(source.read_text(encoding="utf-8")),
+                )
 
+        def identities(output, callback):
             result = link_player_runs(video, player_inputs(), callback)
             result["source_context_signature"] = recipe["context_signature"]
             result["input_artifact_hashes"] = {
@@ -758,7 +790,33 @@ def process_match(
             }
             write_json(output, result)
 
-        stage("identities", None, identities)
+        identity_run, identity_id = stage("identities", None, identities)
+        stage(
+            "persons",
+            None,
+            lambda output, callback: person_identity.run_stage(
+                video,
+                root,
+                store.data,
+                times,
+                identity_run,
+                identity_id,
+                player_inputs(),
+                output,
+                callback,
+            ),
+            # The linked tracks themselves, not the identities file, whose
+            # hash changes with every code change.
+            inputs={
+                "identity_tracks": digest(identity_run["tracks"]),
+                **{
+                    f"players:{p['window']['index']}": p["stages"]["players"]["sha256"]
+                    for p in plan["parts"]
+                },
+            },
+        )
+        # A cached record must still point at its unchanged document.
+        person_identity.load_document(store.data, video["id"], plan["persons"])
         # Callers may cancel, edit context or fail even on the final callback.
         # Publish completion only after that callback and a final input check.
         progress(1)
