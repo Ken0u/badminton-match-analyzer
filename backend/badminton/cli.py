@@ -83,6 +83,22 @@ def main():
     rallies.add_argument("video_id")
     rallies.add_argument("--players-run", required=True)
     rallies.add_argument("--shuttle-run", required=True)
+    match = commands.add_parser(
+        "match-analysis",
+        help="Build and store the per-match results document from completed processing",
+    )
+    match.add_argument("video_id", nargs="?")
+    match.add_argument(
+        "--analysis-key", help="Processing plan to read (default: newest completed)"
+    )
+    match.add_argument(
+        "--identity",
+        type=Path,
+        help="JSON with persons and track assignments (default: per-view fallback)",
+    )
+    match.add_argument(
+        "--schema", action="store_true", help="Print the JSON Schema and exit"
+    )
     evaluate = commands.add_parser(
         "evaluate", help="Measure saved runs against explicit human review labels"
     )
@@ -462,6 +478,47 @@ def main():
         except (ConflictError, ValueError) as exc:
             parser.error(str(exc))
         print(json.dumps(summary, indent=2))
+    elif args.command == "match-analysis":
+        from .match_analysis import (
+            MatchAnalysis,
+            build_match_analysis,
+            load_identity,
+            load_match_inputs,
+            write_match_analysis,
+        )
+
+        if args.schema:
+            print(json.dumps(MatchAnalysis.model_json_schema(), indent=2))
+            return
+        if not args.video_id:
+            parser.error("match-analysis needs a video ID")
+        store = Store(DATA)
+        try:
+            document = build_match_analysis(
+                load_match_inputs(store, args.video_id, args.analysis_key),
+                load_identity(args.identity) if args.identity else None,
+            )
+            path = write_match_analysis(DATA, document)
+        except (KeyError, ValueError, OSError) as exc:
+            parser.error(str(exc))
+        shots = [shot for rally in document.rallies for shot in rally.shots]
+        print(
+            json.dumps(
+                {
+                    "path": str(path),
+                    "bytes": path.stat().st_size,
+                    "analysis_key": document.provenance.analysis_key,
+                    "identity": document.identity.source,
+                    "rallies": len(document.rallies),
+                    "shots": len(shots),
+                    "shots_with_hitter": sum(s.hitter_id is not None for s in shots),
+                    "shots_with_position": sum(
+                        s.hitter_position is not None for s in shots
+                    ),
+                },
+                indent=2,
+            )
+        )
     elif args.command == "rallies":
         from .rallies import generate_rallies, validate_rally_inputs
 

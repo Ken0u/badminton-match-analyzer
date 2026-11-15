@@ -224,6 +224,183 @@
         "title": "ContactsRequest",
         "type": "object"
       },
+      "Court": {
+        "additionalProperties": false,
+        "properties": {
+          "geometry": {
+            "$ref": "#/components/schemas/CourtGeometry"
+          },
+          "views": {
+            "items": {
+              "$ref": "#/components/schemas/CourtView"
+            },
+            "title": "Views",
+            "type": "array"
+          }
+        },
+        "title": "Court",
+        "type": "object"
+      },
+      "CourtGeometry": {
+        "additionalProperties": false,
+        "properties": {
+          "doubles_long_service_lines_y": {
+            "default": [
+              0.76,
+              12.64
+            ],
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Doubles Long Service Lines Y",
+            "type": "array"
+          },
+          "length": {
+            "default": 13.4,
+            "title": "Length",
+            "type": "number"
+          },
+          "net_y": {
+            "default": 6.7,
+            "title": "Net Y",
+            "type": "number"
+          },
+          "short_service_lines_y": {
+            "default": [
+              4.72,
+              8.68
+            ],
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Short Service Lines Y",
+            "type": "array"
+          },
+          "singles_sidelines_x": {
+            "default": [
+              0.46,
+              5.64
+            ],
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "number"
+              }
+            ],
+            "title": "Singles Sidelines X",
+            "type": "array"
+          },
+          "units": {
+            "const": "metres",
+            "default": "metres",
+            "title": "Units",
+            "type": "string"
+          },
+          "width": {
+            "default": 6.1,
+            "title": "Width",
+            "type": "number"
+          }
+        },
+        "title": "CourtGeometry",
+        "type": "object"
+      },
+      "CourtPoint": {
+        "additionalProperties": false,
+        "description": "Metres on the court floor (see the module docstring for the frame).",
+        "properties": {
+          "x": {
+            "maximum": 8.1,
+            "minimum": -2,
+            "title": "X",
+            "type": "number"
+          },
+          "y": {
+            "maximum": 15.4,
+            "minimum": -2,
+            "title": "Y",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "CourtPoint",
+        "type": "object"
+      },
+      "CourtView": {
+        "additionalProperties": false,
+        "description": "One camera range with one court fit. Frames are half-open.",
+        "properties": {
+          "corners": {
+            "items": {
+              "$ref": "#/components/schemas/ImagePoint"
+            },
+            "maxItems": 4,
+            "minItems": 4,
+            "title": "Corners",
+            "type": "array"
+          },
+          "end_frame": {
+            "exclusiveMinimum": 0,
+            "title": "End Frame",
+            "type": "integer"
+          },
+          "homography": {
+            "items": {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Homography",
+            "type": "array"
+          },
+          "source": {
+            "enum": [
+              "automatic",
+              "reviewed"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "start_frame": {
+            "minimum": 0,
+            "title": "Start Frame",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "start_frame",
+          "end_frame",
+          "corners",
+          "homography",
+          "source"
+        ],
+        "title": "CourtView",
+        "type": "object"
+      },
       "EvaluationRequest": {
         "additionalProperties": false,
         "properties": {
@@ -535,6 +712,78 @@
         "title": "HTTPValidationError",
         "type": "object"
       },
+      "IdentityInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "assigned_observation_share": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assigned Observation Share"
+          },
+          "assignment_count": {
+            "minimum": 0,
+            "title": "Assignment Count",
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "persistent": {
+            "title": "Persistent",
+            "type": "boolean"
+          },
+          "source": {
+            "enum": [
+              "supplied",
+              "per_view_fallback"
+            ],
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "source",
+          "method",
+          "persistent",
+          "note",
+          "assignment_count"
+        ],
+        "title": "IdentityInfo",
+        "type": "object"
+      },
+      "ImagePoint": {
+        "additionalProperties": false,
+        "description": "Normalized image coordinates: 0..1 of the oriented frame width/height.",
+        "properties": {
+          "x": {
+            "title": "X",
+            "type": "number"
+          },
+          "y": {
+            "title": "Y",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "ImagePoint",
+        "type": "object"
+      },
       "ImportRequest": {
         "additionalProperties": false,
         "properties": {
@@ -552,6 +801,76 @@
           "path"
         ],
         "title": "ImportRequest",
+        "type": "object"
+      },
+      "Landing": {
+        "additionalProperties": false,
+        "description": "Reserved for step 3 (rally outcomes); always null in this version.",
+        "properties": {
+          "position": {
+            "$ref": "#/components/schemas/CourtPoint"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "position",
+          "source"
+        ],
+        "title": "Landing",
+        "type": "object"
+      },
+      "MatchAnalysis": {
+        "additionalProperties": false,
+        "properties": {
+          "court": {
+            "$ref": "#/components/schemas/Court"
+          },
+          "identity": {
+            "$ref": "#/components/schemas/IdentityInfo"
+          },
+          "players": {
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "title": "Players",
+            "type": "array"
+          },
+          "provenance": {
+            "$ref": "#/components/schemas/Provenance"
+          },
+          "rallies": {
+            "items": {
+              "$ref": "#/components/schemas/Rally"
+            },
+            "title": "Rallies",
+            "type": "array"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "tracks": {
+            "$ref": "#/components/schemas/Tracks"
+          },
+          "video": {
+            "$ref": "#/components/schemas/VideoInfo"
+          }
+        },
+        "required": [
+          "video",
+          "players",
+          "identity",
+          "court",
+          "rallies",
+          "tracks",
+          "provenance"
+        ],
+        "title": "MatchAnalysis",
         "type": "object"
       },
       "MediaExportRequest": {
@@ -577,6 +896,201 @@
           "mode"
         ],
         "title": "MediaExportRequest",
+        "type": "object"
+      },
+      "ModelRef": {
+        "additionalProperties": false,
+        "properties": {
+          "checkpoint_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checkpoint Sha256"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "stage": {
+            "title": "Stage",
+            "type": "string"
+          }
+        },
+        "required": [
+          "stage"
+        ],
+        "title": "ModelRef",
+        "type": "object"
+      },
+      "PartRuns": {
+        "additionalProperties": false,
+        "properties": {
+          "contacts_run_id": {
+            "title": "Contacts Run Id",
+            "type": "string"
+          },
+          "core_end_frame": {
+            "exclusiveMinimum": 0,
+            "title": "Core End Frame",
+            "type": "integer"
+          },
+          "core_start_frame": {
+            "minimum": 0,
+            "title": "Core Start Frame",
+            "type": "integer"
+          },
+          "players_run_id": {
+            "title": "Players Run Id",
+            "type": "string"
+          },
+          "recognition_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recognition Run Id"
+          },
+          "shuttle_run_id": {
+            "title": "Shuttle Run Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "core_start_frame",
+          "core_end_frame",
+          "players_run_id",
+          "shuttle_run_id",
+          "contacts_run_id"
+        ],
+        "title": "PartRuns",
+        "type": "object"
+      },
+      "Person": {
+        "additionalProperties": false,
+        "properties": {
+          "handedness": {
+            "anyOf": [
+              {
+                "enum": [
+                  "left",
+                  "right"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Handedness"
+          },
+          "id": {
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4"
+            ],
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "default": "",
+            "maxLength": 100,
+            "title": "Name",
+            "type": "string"
+          },
+          "team": {
+            "enum": [
+              "T1",
+              "T2"
+            ],
+            "title": "Team",
+            "type": "string"
+          },
+          "thumbnail": {
+            "anyOf": [
+              {
+                "maxLength": 512,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail"
+          }
+        },
+        "required": [
+          "id",
+          "team"
+        ],
+        "title": "Person",
+        "type": "object"
+      },
+      "PersonTrack": {
+        "additionalProperties": false,
+        "properties": {
+          "person_id": {
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4"
+            ],
+            "title": "Person Id",
+            "type": "string"
+          },
+          "x": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "X",
+            "type": "array"
+          },
+          "y": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Y",
+            "type": "array"
+          }
+        },
+        "required": [
+          "person_id",
+          "x",
+          "y"
+        ],
+        "title": "PersonTrack",
         "type": "object"
       },
       "Player": {
@@ -620,6 +1134,36 @@
         "title": "Player",
         "type": "object"
       },
+      "PlayerPosition": {
+        "additionalProperties": false,
+        "properties": {
+          "person_id": {
+            "anyOf": [
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Id"
+          },
+          "position": {
+            "$ref": "#/components/schemas/CourtPoint"
+          }
+        },
+        "required": [
+          "position"
+        ],
+        "title": "PlayerPosition",
+        "type": "object"
+      },
       "Point": {
         "additionalProperties": false,
         "properties": {
@@ -643,6 +1187,68 @@
         "title": "Point",
         "type": "object"
       },
+      "Provenance": {
+        "additionalProperties": false,
+        "properties": {
+          "analysis_key": {
+            "title": "Analysis Key",
+            "type": "string"
+          },
+          "builder": {
+            "default": "match analysis builder v1",
+            "title": "Builder",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "identities_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Identities Run Id"
+          },
+          "models": {
+            "items": {
+              "$ref": "#/components/schemas/ModelRef"
+            },
+            "title": "Models",
+            "type": "array"
+          },
+          "parts": {
+            "items": {
+              "$ref": "#/components/schemas/PartRuns"
+            },
+            "title": "Parts",
+            "type": "array"
+          },
+          "segments_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Segments Run Id"
+          }
+        },
+        "required": [
+          "created_at",
+          "analysis_key",
+          "parts",
+          "models"
+        ],
+        "title": "Provenance",
+        "type": "object"
+      },
       "RalliesRequest": {
         "additionalProperties": false,
         "properties": {
@@ -660,6 +1266,120 @@
           "shuttle_run_id"
         ],
         "title": "RalliesRequest",
+        "type": "object"
+      },
+      "Rally": {
+        "additionalProperties": false,
+        "properties": {
+          "end_frame": {
+            "minimum": 0,
+            "title": "End Frame",
+            "type": "integer"
+          },
+          "end_s": {
+            "minimum": 0,
+            "title": "End S",
+            "type": "number"
+          },
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "outcome": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RallyOutcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "server_id": {
+            "anyOf": [
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Server Id"
+          },
+          "shots": {
+            "items": {
+              "$ref": "#/components/schemas/Shot"
+            },
+            "minItems": 1,
+            "title": "Shots",
+            "type": "array"
+          },
+          "start_frame": {
+            "minimum": 0,
+            "title": "Start Frame",
+            "type": "integer"
+          },
+          "start_s": {
+            "minimum": 0,
+            "title": "Start S",
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "start_frame",
+          "end_frame",
+          "start_s",
+          "end_s",
+          "shots"
+        ],
+        "title": "Rally",
+        "type": "object"
+      },
+      "RallyOutcome": {
+        "additionalProperties": false,
+        "description": "Reserved for step 3 (rally outcomes); always null in this version.",
+        "properties": {
+          "reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "winner",
+                  "error"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "winner_team": {
+            "enum": [
+              "T1",
+              "T2"
+            ],
+            "title": "Winner Team",
+            "type": "string"
+          }
+        },
+        "required": [
+          "winner_team",
+          "source"
+        ],
+        "title": "RallyOutcome",
         "type": "object"
       },
       "RecognitionRequest": {
@@ -808,6 +1528,194 @@
         "title": "SceneRange",
         "type": "object"
       },
+      "Shot": {
+        "additionalProperties": false,
+        "properties": {
+          "confidence": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "family": {
+            "anyOf": [
+              {
+                "enum": [
+                  "clear",
+                  "drive",
+                  "smash",
+                  "net",
+                  "drop",
+                  "lift",
+                  "block",
+                  "push",
+                  "net_kill",
+                  "other"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family"
+          },
+          "family_score": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Family Score"
+          },
+          "frame": {
+            "minimum": 0,
+            "title": "Frame",
+            "type": "integer"
+          },
+          "hitter_id": {
+            "anyOf": [
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hitter Id"
+          },
+          "hitter_position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CourtPoint"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "serve",
+                  "shot"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kind"
+          },
+          "landing": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Landing"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "players": {
+            "items": {
+              "$ref": "#/components/schemas/PlayerPosition"
+            },
+            "title": "Players",
+            "type": "array"
+          },
+          "serve_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "short",
+                  "long"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Serve Type"
+          },
+          "shuttle": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ImagePoint"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "side": {
+            "anyOf": [
+              {
+                "enum": [
+                  "forehand",
+                  "backhand"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Side"
+          },
+          "side_score": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Side Score"
+          },
+          "time_s": {
+            "minimum": 0,
+            "title": "Time S",
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "frame",
+          "time_s"
+        ],
+        "title": "Shot",
+        "type": "object"
+      },
       "ShuttlePoint": {
         "additionalProperties": false,
         "properties": {
@@ -858,6 +1766,45 @@
           "visible"
         ],
         "title": "ShuttlePoint",
+        "type": "object"
+      },
+      "ShuttleTrack": {
+        "additionalProperties": false,
+        "properties": {
+          "x": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "X",
+            "type": "array"
+          },
+          "y": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "title": "Y",
+            "type": "array"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ],
+        "title": "ShuttleTrack",
         "type": "object"
       },
       "TrackAssignment": {
@@ -952,6 +1899,41 @@
         "title": "TrackingRequest",
         "type": "object"
       },
+      "Tracks": {
+        "additionalProperties": false,
+        "properties": {
+          "persons": {
+            "items": {
+              "$ref": "#/components/schemas/PersonTrack"
+            },
+            "title": "Persons",
+            "type": "array"
+          },
+          "rate_hz": {
+            "exclusiveMinimum": 0,
+            "title": "Rate Hz",
+            "type": "number"
+          },
+          "sample_frames": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Sample Frames",
+            "type": "array"
+          },
+          "shuttle": {
+            "$ref": "#/components/schemas/ShuttleTrack"
+          }
+        },
+        "required": [
+          "rate_hz",
+          "sample_frames",
+          "persons",
+          "shuttle"
+        ],
+        "title": "Tracks",
+        "type": "object"
+      },
       "ValidationError": {
         "properties": {
           "ctx": {
@@ -990,6 +1972,71 @@
           "type"
         ],
         "title": "ValidationError",
+        "type": "object"
+      },
+      "VideoInfo": {
+        "additionalProperties": false,
+        "properties": {
+          "duration_s": {
+            "exclusiveMinimum": 0,
+            "title": "Duration S",
+            "type": "number"
+          },
+          "fps": {
+            "exclusiveMinimum": 0,
+            "title": "Fps",
+            "type": "number"
+          },
+          "frame_count": {
+            "exclusiveMinimum": 0,
+            "title": "Frame Count",
+            "type": "integer"
+          },
+          "height": {
+            "exclusiveMinimum": 0,
+            "title": "Height",
+            "type": "integer"
+          },
+          "id": {
+            "minLength": 1,
+            "title": "Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "singles",
+              "doubles"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "width": {
+            "exclusiveMinimum": 0,
+            "title": "Width",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "mode",
+          "fps",
+          "frame_count",
+          "duration_s",
+          "width",
+          "height"
+        ],
+        "title": "VideoInfo",
         "type": "object"
       },
       "YoutubeRequest": {
@@ -1699,6 +2746,49 @@
           }
         },
         "summary": "Image"
+      }
+    },
+    "/api/videos/{video_id}/match-analysis": {
+      "get": {
+        "description": "The stored per-match results document; read-only, never rebuilt here.",
+        "operationId": "match_analysis_api_videos__video_id__match_analysis_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "video_id",
+            "required": true,
+            "schema": {
+              "title": "Video Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchAnalysis"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Video unknown or results not built yet"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Match Analysis"
       }
     },
     "/api/videos/{video_id}/media": {
