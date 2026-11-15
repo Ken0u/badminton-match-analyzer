@@ -105,7 +105,8 @@ own separate files and commit only their own paths.
 | 1 | done (b1a0bdf) | `match_analysis.py`, `GET /api/videos/{id}/match-analysis`, `badminton match-analysis` CLI; format in `docs/MATCH_ANALYSIS_FORMAT.md`. Rally boundaries still from a contact-gap rule; `schema.ts` not regenerated yet. |
 | 2a | done (4e1a627, a6d21d2) | `persons` pipeline stage (`person_identity.py`); 100% agreement with the research grouping on `doubles.mp4`; regression rally frames 5838-6344. Not re-scored on the DShuttleNet test matches (needs the VM). |
 | 2b | done (ae83a29..4e3113f) | `matches` API (`docs/MATCHES_API.md`): upload with names, one job to `needs_names`, name confirmation, per-rally swap overrides, persistent-identity fallback when the re-identification weights are missing. Rally boundaries now prefer the rallies stage's serve and end proposals (schema version 2). End-to-end on both videos with cached perception: 26 s doubles, 19 s singles. |
-| 3 to 8 | not started | |
+| 3 | in progress | Rally boundaries, landing point, winner and reason, running score; evaluated on held-out ShuttleSet and doubles matches. VM use approved by the user (2026-11-15). |
+| 4 to 8 | not started | User chose step 3 before 4 and 5. |
 
 Open issues found on the way:
 
