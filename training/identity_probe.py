@@ -358,6 +358,65 @@ def split_two(pairs, rounds=20):
     return signs, np.abs(margin)
 
 
+def agree(pairs, wholes, colour=0.5, links=10):
+    """Order each pair so the first members are alike, by comparing pairs.
+
+    For every two pairs i and j, how much more alike they are kept as they
+    are than crossed (first with second) is measured on the whole-person
+    descriptions (cosine) and, at weight `colour`, on the other evidence
+    (noise-weighted distance). Only each pair's `links` strongest comparisons
+    are kept, so the ordering can follow a gradual change (a change of kit
+    between games) instead of fitting one look per person to the whole match.
+    The signs that agree best with all comparisons are the leading
+    eigenvector, then refined one pair at a time. Returns per pair a sign
+    (+1 keeps the order) and how strongly the rest supports it.
+    """
+    count = len(pairs)
+    if count == 0:
+        return np.zeros(0), np.zeros(0)
+    agreement = np.zeros((count, count))
+    seen = np.array([a is not None and b is not None for a, b in wholes])
+    if seen.any():
+        first = np.zeros((count, len(next(a for a, b in wholes if a is not None))))
+        second = np.zeros_like(first)
+        for i, (a, b) in enumerate(wholes):
+            if seen[i]:
+                first[i], second[i] = a / np.linalg.norm(a), b / np.linalg.norm(b)
+        middle = (first[seen].sum(0) + second[seen].sum(0)) / (2 * seen.sum())
+        first[seen] -= middle
+        second[seen] -= middle
+        agreement += first @ first.T + second @ second.T
+        agreement -= first @ second.T + second @ first.T
+    if colour:
+        first = np.array([a for a, _ in pairs])
+        second = np.array([b for _, b in pairs])
+        noise = np.nanstd((first + second) / 2, axis=0) * math.sqrt(2)
+        noise = np.where(noise > 1e-6, noise, 1.0)
+        first, second = first / noise, second / noise
+
+        def apart(left, right):
+            gap = np.nanmean(np.abs(left[:, None, :] - right[None, :, :]), axis=2)
+            return np.nan_to_num(gap, nan=0.0)
+
+        looks = apart(first, second) + apart(second, first)
+        looks -= apart(first, first) + apart(second, second)
+        looks /= max(1e-9, float(np.std(looks)))
+        agreement += colour * looks * (float(np.std(agreement)) if seen.any() else 1.0)
+    np.fill_diagonal(agreement, 0)
+    if links and links < count - 1:
+        strongest = np.argsort(-np.abs(agreement), axis=1)[:, :links]
+        keep = np.zeros_like(agreement, bool)
+        keep[np.arange(count)[:, None], strongest] = True
+        agreement = np.where(keep | keep.T, agreement, 0)
+    signs = np.where(np.linalg.eigh(agreement)[1][:, -1] >= 0, 1.0, -1.0)
+    for _ in range(50):
+        updated = np.where(agreement @ signs >= 0, 1.0, -1.0)
+        if (updated == signs).all():
+            break
+        signs = updated
+    return signs, np.abs(agreement @ signs)
+
+
 def partner_directions(both):
     """The whole-person description of each track, cut down for one team.
 
@@ -383,8 +442,12 @@ def partner_directions(both):
     }
 
 
-def group(rallies):
-    """Name every track 0 to 3 (two teams, two partners) from looks alone."""
+def group(rallies, teams_by="prototype", partners_by="pairwise"):
+    """Name every track 0 to 3 (two teams, two partners) from looks alone.
+
+    Each split is made by `split_two` ("prototype": one look per person for
+    the whole match) or `agree` ("pairwise": rallies compared with rallies).
+    """
     # Teams: the pairs at the two ends of one rally are different teams.
     ends = []
     for rally in rallies:
@@ -399,7 +462,15 @@ def group(rallies):
             tuple(np.nanmean([t["vector"] for t in end], axis=0) for end in pair)
             for pair in ends
         ]
-        signs, margins = split_two(means)
+        if teams_by == "pairwise":
+
+            def whole(end):
+                seen = [t["whole"] for t in end if t["whole"] is not None]
+                return np.mean(seen, axis=0) if seen else None
+
+            signs, margins = agree(means, [tuple(whole(e) for e in p) for p in ends])
+        else:
+            signs, margins = split_two(means)
     teams = defaultdict(list)
     for (far, near), sign, margin in zip(ends, signs, margins):
         for end, team in ((far, 0 if sign > 0 else 1), (near, 1 if sign > 0 else 0)):
@@ -409,9 +480,15 @@ def group(rallies):
     # Partners: within a team, the two at one end are different people.
     for team, members in teams.items():
         both = [end for end in members if len(end) == 2]
-        extra = partner_directions(both)
+        extra = (
+            partner_directions(both)
+            if partners_by == "prototype"
+            else {id(t): np.zeros(0) for end in both for t in end}
+        )
         looks = {
-            id(t): np.concatenate([t["vector"], extra[id(t)]]) for end in both for t in end
+            id(t): np.concatenate([t["vector"], extra[id(t)]])
+            for end in both
+            for t in end
         }
         with warnings.catch_warnings():
             warnings.simplefilter("ignore", RuntimeWarning)
@@ -427,9 +504,13 @@ def group(rallies):
                     for end in here:
                         for t in end:
                             looks[id(t)] = looks[id(t)] - middle
-            signs, margins = split_two(
-                [tuple(looks[id(t)] for t in end) for end in both]
-            )
+            pairs = [tuple(looks[id(t)] for t in end) for end in both]
+            if partners_by == "pairwise":
+                signs, margins = agree(
+                    pairs, [(a["whole"], b["whole"]) for a, b in both]
+                )
+            else:
+                signs, margins = split_two(pairs)
         for end, sign, margin in zip(both, signs, margins):
             first, second = (0, 1) if sign > 0 else (1, 0)
             end[0]["person"], end[1]["person"] = team * 2 + first, team * 2 + second
@@ -513,6 +594,12 @@ def main():
         help="OSNet weights for the whole-person description",
     )
     parser.add_argument(
+        "--teams", choices=("prototype", "pairwise"), default="prototype"
+    )
+    parser.add_argument(
+        "--partners", choices=("prototype", "pairwise"), default="pairwise"
+    )
+    parser.add_argument(
         "--use",
         nargs="*",
         default=["length", *PATCHES, "reid"],
@@ -525,7 +612,7 @@ def main():
     seen = sum(bool(t["looks"]) for t in tracks)
     print(f"{seen} of {len(tracks)} player tracks seen in the video")
     vectors(rallies, args.use)
-    group(rallies)
+    group(rallies, args.teams, args.partners)
     report = score(rallies)
     print(f"{args.prefix}-{args.match}: {len(rallies)} rallies, using {args.use}")
     print(json.dumps(report, indent=1))

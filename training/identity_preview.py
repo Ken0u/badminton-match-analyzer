@@ -112,6 +112,7 @@ def main():
     parser.add_argument(
         "--reid", type=Path, default=Path("models/weights/reid/osnet_x1_0_msmt17.pth")
     )
+    parser.add_argument("--samples", type=int, default=probe.SAMPLES)
     args = parser.parse_args()
     store = Store(DATA)
     video = store.video(args.video_id)
@@ -129,6 +130,7 @@ def main():
             lambda row, person, slots=slots: slots.get(person["chain"]),
             capture,
             model,
+            args.samples,
         )
         by_slot = {slot: chain for chain, slot in slots.items()}
         for track in tracks:

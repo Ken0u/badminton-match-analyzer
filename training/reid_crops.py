@@ -35,8 +35,9 @@ def crops_of(path, capture, samples):
         document = json.load(handle)
     height = document["video"]["height"]
     rows = document["players"]
-    slots = assign_slots(rows, document["video"]["width"], height,
-                         float(document["video"]["fps"]))
+    slots = assign_slots(
+        rows, document["video"]["width"], height, float(document["video"]["fps"])
+    )
     letters = probe.truth_letters(document, slots, height)
     marks = [e["frame"] for e in document["events"] if 0 <= e["frame"] < len(rows)]
     if not marks or not letters:
@@ -47,7 +48,9 @@ def crops_of(path, capture, samples):
     if len(played) < samples:
         return []
     found = []
-    for index in sorted({played[round(i)] for i in np.linspace(0, len(played) - 1, samples)}):
+    for index in sorted(
+        {played[round(i)] for i in np.linspace(0, len(played) - 1, samples)}
+    ):
         frame = document["start_frame"] + index
         image = capture.frame(frame)
         if image is None:
@@ -86,8 +89,11 @@ def main():
         if (folder / "done").exists():
             continue
         video = next(
-            (p for p in sorted(args.videos.glob(f"{match}.*"))
-             if p.suffix in (".mp4", ".webm", ".mkv")),
+            (
+                p
+                for p in sorted(args.videos.glob(f"{match}.*"))
+                if p.suffix in (".mp4", ".webm", ".mkv")
+            ),
             None,
         )
         files = sorted(args.features.glob(f"ds-{match}-*.json.gz"))
