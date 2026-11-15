@@ -388,7 +388,10 @@ def status(store, video_id):
         state = "queued"
     elif job["status"] == "running":
         state, progress = "running", job.get("progress") or 0.0
-        stage = PAUSING if job.get("cancel_requested") else job.get("message") or ""
+        # Before run_match sets its first label the job says "Processing".
+        message = job.get("message")
+        stage = PREPARING if message in (None, "", "Processing") else message
+        stage = PAUSING if job.get("cancel_requested") else stage
     elif job["status"] == "interrupted":
         state, progress = "paused", job.get("progress") or 0.0
         stage, error = "Paused", job.get("message")
