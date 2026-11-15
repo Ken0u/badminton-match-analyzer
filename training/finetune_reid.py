@@ -42,10 +42,15 @@ def index(crops, matches):
     found = []
     for match in matches:
         for path in sorted((crops / str(match)).glob("*.jpg")):
-            clip, frame, letter, end = path.stem.rsplit("_", 3)
+            clip, _frame, letter, end = path.stem.rsplit("_", 3)
             found.append(
-                {"path": path, "match": match, "letter": letter,
-                 "clip": clip, "end": int(end)}
+                {
+                    "path": path,
+                    "match": match,
+                    "letter": letter,
+                    "clip": clip,
+                    "end": int(end),
+                }
             )
     return found
 
@@ -55,15 +60,23 @@ def prepare(image, train):
     if train:
         # Light changes from end to end and venue to venue; the kit colour
         # itself must stay, so only brightness and contrast move.
-        image = np.clip((image - 0.5) * random.uniform(0.85, 1.15) + 0.5
-                        + random.uniform(-0.08, 0.08), 0, 1)
+        image = np.clip(
+            (image - 0.5) * random.uniform(0.85, 1.15)
+            + 0.5
+            + random.uniform(-0.08, 0.08),
+            0,
+            1,
+        )
         h, w = image.shape[:2]
         scale = random.uniform(0.85, 1.0)
         ch, cw = int(h * scale), int(w * random.uniform(0.85, 1.0))
         top, left = random.randint(0, h - ch), random.randint(0, w - cw)
         image = cv2.resize(image[top : top + ch, left : left + cw], (w, h))
         if random.random() < 0.4:
-            eh, ew = int(h * random.uniform(0.1, 0.35)), int(w * random.uniform(0.2, 0.5))
+            eh, ew = (
+                int(h * random.uniform(0.1, 0.35)),
+                int(w * random.uniform(0.2, 0.5)),
+            )
             y, x = random.randint(0, h - eh), random.randint(0, w - ew)
             image[y : y + eh, x : x + ew] = np.random.rand(eh, ew, 3)
     image = (image[:, :, ::-1] - osnet.MEAN) / osnet.SPREAD
@@ -153,9 +166,11 @@ def check(model, items, device):
         partner = {}
         for i in own:
             for j in own:
-                if (items[i]["clip"] == items[j]["clip"]
-                        and items[i]["end"] == items[j]["end"]
-                        and items[i]["letter"] != items[j]["letter"]):
+                if (
+                    items[i]["clip"] == items[j]["clip"]
+                    and items[i]["end"] == items[j]["end"]
+                    and items[i]["letter"] != items[j]["letter"]
+                ):
                     partner[items[i]["letter"]] = items[j]["letter"]
         for k, n in enumerate(nearest.tolist()):
             right += letters[k] == letters[n]
@@ -206,38 +221,52 @@ def main():
     held = index(args.crops, check_matches)
     for item in held:
         item["person"] = item["match_index"] = -1
-    print(f"{len(train)} training crops of {len(people)} people, "
-          f"{len(held)} check crops", flush=True)
+    print(
+        f"{len(train)} training crops of {len(people)} people, {len(held)} check crops",
+        flush=True,
+    )
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = osnet.load(args.init, device).train()
     head = Head(len(people)).to(device)
     optimiser = torch.optim.AdamW(
-        [{"params": model.parameters(), "lr": args.lr},
-         {"params": head.parameters(), "lr": args.lr * 10}],
+        [
+            {"params": model.parameters(), "lr": args.lr},
+            {"params": head.parameters(), "lr": args.lr * 10},
+        ],
         weight_decay=5e-4,
     )
     schedule = torch.optim.lr_scheduler.OneCycleLR(
-        optimiser, max_lr=[args.lr, args.lr * 10],
-        total_steps=args.epochs * args.steps, pct_start=0.1,
+        optimiser,
+        max_lr=[args.lr, args.lr * 10],
+        total_steps=args.epochs * args.steps,
+        pct_start=0.1,
     )
     scaler = torch.amp.GradScaler(enabled=device == "cuda")
     smooth = nn.CrossEntropyLoss(label_smoothing=0.1)
     loader = DataLoader(
         Crops(train, True),
         batch_sampler=Batches(train, args.matches, args.each, args.steps),
-        num_workers=6, persistent_workers=True,
+        num_workers=6,
+        persistent_workers=True,
     )
     args.out.mkdir(parents=True, exist_ok=True)
     start_all, start_partner = check(model, held, device)
-    print(f"epoch 0: check nearest right {start_all:.3f}, partners {start_partner:.3f}",
-          flush=True)
+    print(
+        f"epoch 0: check nearest right {start_all:.3f}, partners {start_partner:.3f}",
+        flush=True,
+    )
     torch.save(model.state_dict(), args.out / "osnet_doubles.pth")
-    best, history = start_partner, [{"epoch": 0, "all": start_all, "partner": start_partner}]
+    best, history = (
+        start_partner,
+        [{"epoch": 0, "all": start_all, "partner": start_partner}],
+    )
     for epoch in range(1, args.epochs + 1):
         began, losses = time.time(), []
         for images, persons, matches in loader:
-            images, persons, matches = (t.to(device) for t in (images, persons, matches))
+            images, persons, matches = (
+                t.to(device) for t in (images, persons, matches)
+            )
             with torch.autocast("cuda", enabled=device == "cuda"):
                 features = model(images)
                 loss = smooth(head(features.float()), persons) + triplet(
@@ -250,11 +279,19 @@ def main():
             schedule.step()
             losses.append(loss.item())
         every, partner = check(model, held, device)
-        history.append({"epoch": epoch, "loss": float(np.mean(losses)),
-                        "all": every, "partner": partner})
-        print(f"epoch {epoch}: loss {np.mean(losses):.3f}, check nearest right "
-              f"{every:.3f}, partners {partner:.3f} ({time.time() - began:.0f} s)",
-              flush=True)
+        history.append(
+            {
+                "epoch": epoch,
+                "loss": float(np.mean(losses)),
+                "all": every,
+                "partner": partner,
+            }
+        )
+        print(
+            f"epoch {epoch}: loss {np.mean(losses):.3f}, check nearest right "
+            f"{every:.3f}, partners {partner:.3f} ({time.time() - began:.0f} s)",
+            flush=True,
+        )
         if partner > best:
             best = partner
             torch.save(model.state_dict(), args.out / "osnet_doubles.pth")
