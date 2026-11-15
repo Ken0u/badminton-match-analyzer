@@ -49,18 +49,23 @@ shoe colour, body length and a whole-person description (OSNet, fine-tuned
 on DShuttleNet's player letters by `training/finetune_reid.py`), then splits
 each match into two teams and each team into two partners.
 
+Each player is pictured in at least four frames of a rally: frames where a
+player stands clear are added from the tracks, and a player never seen clear
+is pictured where least covered, skipping colour inside the box of whoever
+stands in front. Before this, nearly every partner mix-up was a rally where
+one partner had no usable picture.
+
 All four players right per rally, on DShuttleNet matches never trained on:
 
-| Set | Original description | Fine-tuned |
-|---|---|---|
-| Test (7 matches from 2025, 452 rallies, scored once) | 80% | 86% |
-| Validation (6 matches, 471 rallies) | 77% * | 91% |
+| Set | Original description | Fine-tuned | + every player pictured |
+|---|---|---|---|
+| Test (7 matches from 2025, 452 rallies) | 80% | 86% | 94.5% |
+| Validation (6 matches, 471 rallies) | 77% * | 91% | 94.3% |
 
-\* with the earlier grouping. Validation also chose some settings, so its
-91% is optimistic; the test figure is the honest one. Teams are right for
-99 to 100% of tracks on every test match: what remains is telling partners
-apart (weakest test matches 54 at 76% and 62 at 77%). Most mistakes are made
-confidently, so the preview's "?" catches few of them.
+\* with the earlier grouping. Validation chose some earlier settings; the
+picture change was chosen on training matches only, and the test matches
+were scored once before and once after it. Teams are 99 to 100% right on
+every match. Weakest: validation match 34 (79%) and test match 54 (86%).
 
 ## 5. Statistics in the app (not started)
 
