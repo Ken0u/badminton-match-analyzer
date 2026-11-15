@@ -9,8 +9,9 @@ annotations.
 Rules the document keeps:
 
 - A value the pipeline did not measure is ``null``, never a guess. There is no
-  shuttle speed, height or 3D position, no landing point and no rally outcome
-  yet (``landing`` and ``outcome`` are always ``null``).
+  shuttle speed, height or 3D position. The last shot's landing and the rally
+  outcome come from the pipeline's outcomes stage (rally_outcomes.py); this
+  builder only reads them and turns court ends into teams.
 - Court coordinates are metres on the court floor: x across the court from the
   far-left outer (doubles) sideline, 0 to 6.1; y along the court from the far
   baseline, 0 to 13.4; the net is at y = 6.7. "Far" is the end away from the
@@ -38,8 +39,8 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from .identity import validate_assignments
 from .schemas import StrictModel
 
-SCHEMA_VERSION = 2
-BUILDER = "match analysis builder v2"
+SCHEMA_VERSION = 3
+BUILDER = "match analysis builder v3"
 FILENAME = "match_analysis.json"
 
 COURT_WIDTH_M = 6.1
@@ -74,7 +75,10 @@ RallyStart = Literal[
     "camera_cut",
     "first_contact",
 ]
-RallyEnd = Literal["proposed_rally_end", "last_contact"]
+RallyEnd = Literal["landing", "proposed_rally_end", "last_contact"]
+CourtEnd = Literal["far", "near"]
+# A game ends at 21 points with a two-point lead, or at 30.
+GAME_POINTS, GAME_CAP = 21, 30
 # Per-view fallback identity: a track group must be seen this often, standing
 # (by median) within this margin of the outer lines, to be given a person.
 FALLBACK_MINIMUM_FRAMES = 5
@@ -201,18 +205,60 @@ class Court(StrictModel):
 
 
 class Landing(StrictModel):
-    """Reserved for step 3 (rally outcomes); always null in this version."""
+    """Where the last shot came down, from the shuttle's image track.
 
-    position: CourtPoint
+    ``position`` is the floor point under the image point where the shuttle
+    stopped descending (null when it projects more than COURT_MARGIN_M
+    outside the court); ``kind`` is rest (it then lay still), descent (it
+    stopped going down) or track_end (its track ended in the air, so the
+    position is unreliable). ``in_court`` uses the rally lines: singles or
+    doubles sidelines and the full length.
+    """
+
+    frame: int = Field(ge=0)
+    time_s: float = _finite(ge=0)
+    image: ImagePoint
+    position: CourtPoint | None = None
+    in_court: bool | None = None
+    kind: Literal["rest", "descent", "track_end"]
     source: str
 
 
 class RallyOutcome(StrictModel):
-    """Reserved for step 3 (rally outcomes); always null in this version."""
+    """Who won the rally and how, from the outcomes stage.
 
-    winner_team: Team
-    reason: Literal["winner", "error"] | None = None
+    The reason is the last hitter's: ``winner`` when the last hitter won (the
+    shot landed in), ``error`` when the last hitter lost it (``out``, or
+    ``net``: it did not get over). ``winner_end`` is the court end of the
+    winning side when the rally ended; ``winner_team`` is the team found at
+    that end (null when no identified player was seen there).
+    """
+
+    winner_team: Team | None = None
+    winner_end: CourtEnd
+    last_hitter_end: CourtEnd | None = None
+    reason: Literal["winner", "error"]
+    detail: Literal["in", "out", "net"] | None = None
+    # Uncalibrated: the rule's or the model's support for the call.
+    confidence: float | None = _finite(default=None, ge=0, le=1)
     source: str
+
+
+class TeamScore(StrictModel):
+    T1: int = Field(default=0, ge=0)
+    T2: int = Field(default=0, ge=0)
+
+
+class RallyScore(StrictModel):
+    """Points counted from the start of the video, not the official score.
+
+    A rally whose winning team is unknown leaves the score unchanged. A game
+    ends at 21 (two clear, at most 30); the next rally starts game + 1.
+    """
+
+    game: int = Field(ge=1)
+    before: TeamScore
+    after: TeamScore
 
 
 class PlayerPosition(StrictModel):
@@ -261,6 +307,7 @@ class Rally(StrictModel):
     server_id: PersonId | None = None
     shots: list[Shot] = Field(min_length=1)
     outcome: RallyOutcome | None = None
+    score: RallyScore | None = None
 
     @model_validator(mode="after")
     def ordered(self):
@@ -348,12 +395,13 @@ class Provenance(StrictModel):
     segments_run_id: str | None = None
     identities_run_id: str | None = None
     persons_run_id: str | None = None
+    outcomes_run_id: str | None = None
     parts: list[PartRuns]
     models: list[ModelRef]
 
 
 class MatchAnalysis(StrictModel):
-    schema_version: Literal[2] = 2
+    schema_version: Literal[3] = 3
     video: VideoInfo
     players: list[Person]
     # True once a person confirmed which name belongs to which player; until
@@ -599,7 +647,7 @@ def latest_analysis_key(store, video_id):
 
 def load_match_inputs(store, video_id, analysis_key=None):
     """Read a completed plan and the stage runs it lists, checking their hashes."""
-    from .pipeline import file_sha, read_plan
+    from .pipeline import read_plan
     from .video import timestamps_for
 
     video = store.video(video_id)
@@ -609,6 +657,21 @@ def load_match_inputs(store, video_id, analysis_key=None):
     plan = read_plan(store, video_id, key)
     if not plan.get("processing_complete") or plan.get("video_id") != video_id:
         raise ValueError("The processing plan is not complete for this video")
+    runs = load_plan_runs(store, video_id, plan)
+    identity = None
+    if plan.get("persons"):
+        from .person_identity import load_document
+
+        identity = load_document(store.data, video_id, plan["persons"])
+    return MatchInputs(
+        video, list(timestamps_for(store.data, video_id)), plan, runs, identity
+    )
+
+
+def load_plan_runs(store, video_id, plan, outcomes=True):
+    """The stage runs a plan lists, by run id, each checked against its hash."""
+    from .pipeline import file_sha
+
     runs = {}
 
     def load(checkpoint, stage, required=True):
@@ -631,14 +694,9 @@ def load_match_inputs(store, video_id, analysis_key=None):
             load(part["stages"].get(stage), stage, required=False)
     load(plan.get("segments"), "segments", required=False)
     load(plan.get("identities"), "identities", required=False)
-    identity = None
-    if plan.get("persons"):
-        from .person_identity import load_document
-
-        identity = load_document(store.data, video_id, plan["persons"])
-    return MatchInputs(
-        video, list(timestamps_for(store.data, video_id)), plan, runs, identity
-    )
+    if outcomes:
+        load(plan.get("outcomes"), "outcomes", required=False)
+    return runs
 
 
 # Building -------------------------------------------------------------------
@@ -1112,6 +1170,114 @@ def _rallies(shots, times, segments, serves=(), ends=()):
     return rallies
 
 
+def _stage_rallies(shots, times, run):
+    """Rallies from the outcomes stage's records (boundaries, landing, outcome).
+
+    Shots the stage put in no rally (none, as it uses the same contacts) are
+    left out.
+    """
+    by_frame = {s["frame"]: s for s in shots}
+    rallies = []
+    for record in run.get("rallies", []):
+        members = [by_frame[f] for f in record["shot_frames"] if f in by_frame]
+        if not members:
+            continue
+        items = [
+            Shot(id=f"shot-{s['frame']}", time_s=round(times[s["frame"]], 4), **s)
+            for s in members
+        ]
+        landing = record.get("landing")
+        if landing is not None:
+            x, y = landing["court"]
+            point = (x, y) if on_court((x, y)) else None
+            items[-1] = items[-1].model_copy(
+                update={
+                    "landing": Landing(
+                        frame=landing["frame"],
+                        time_s=round(times[landing["frame"]], 4),
+                        image=ImagePoint(x=landing["image"][0], y=landing["image"][1]),
+                        position=None if point is None else _court_point(point),
+                        in_court=landing["in_court"],
+                        kind=landing["kind"],
+                        source=run.get("method", "outcomes stage"),
+                    )
+                }
+            )
+        outcome = record.get("outcome")
+        if outcome is not None:
+            model = (run.get("model") or {}).get("title")
+            outcome = RallyOutcome(
+                winner_end=outcome["winner_end"],
+                last_hitter_end=record.get("last_hitter_end"),
+                reason=outcome["reason"],
+                detail=outcome.get("detail"),
+                confidence=_score(outcome.get("confidence")),
+                source=model if outcome.get("source") == "model" and model else "rule",
+            )
+        first = items[0]
+        served = first.kind == "serve" or record.get("opens_with_serve")
+        start, end = record["start_frame"], max(record["end_frame"], items[-1].frame)
+        rallies.append(
+            Rally(
+                id=f"rally-{len(rallies) + 1}",
+                start_frame=start,
+                end_frame=end,
+                start_s=round(times[start], 4),
+                end_s=round(times[end], 4),
+                start_source=record["start_source"],
+                end_source=record["end_source"]
+                if end == record["end_frame"]
+                else "last_contact",
+                server_id=first.hitter_id if served else None,
+                shots=items,
+                outcome=outcome,
+            )
+        )
+    return rallies
+
+
+def _end_team(rally, end, teams):
+    """The team seen at a court end during the rally, by majority."""
+    votes = {}
+    for shot in rally.shots:
+        for player in shot.players:
+            if player.person_id is None:
+                continue
+            side = "far" if player.position.y < NET_Y_M else "near"
+            if side == end:
+                team = teams[player.person_id]
+                votes[team] = votes.get(team, 0) + 1
+    if not votes:
+        return None
+    best = max(votes.values())
+    winners = [t for t, v in votes.items() if v == best]
+    return winners[0] if len(winners) == 1 else None
+
+
+def _scored(rallies, persons):
+    """Give outcomes their team and every rally its running score."""
+    teams = {p.id: p.team for p in persons}
+    game, points = 1, {"T1": 0, "T2": 0}
+    result = []
+    for rally in rallies:
+        outcome = rally.outcome
+        if outcome is not None:
+            outcome = outcome.model_copy(
+                update={"winner_team": _end_team(rally, outcome.winner_end, teams)}
+            )
+        before = dict(points)
+        if outcome is not None and outcome.winner_team is not None:
+            points[outcome.winner_team] += 1
+        score = RallyScore(
+            game=game, before=TeamScore(**before), after=TeamScore(**points)
+        )
+        high, low = max(points.values()), min(points.values())
+        if high >= GAME_CAP or (high >= GAME_POINTS and high - low >= 2):
+            game, points = game + 1, {"T1": 0, "T2": 0}
+        result.append(rally.model_copy(update={"outcome": outcome, "score": score}))
+    return result
+
+
 def _person_tracks(inputs, observations, resolve, persons):
     times, duration = inputs.times, inputs.video["duration_s"]
     samples = []
@@ -1143,7 +1309,7 @@ def _person_tracks(inputs, observations, resolve, persons):
     ]
 
 
-def _models(inputs, parts):
+def _models(inputs, parts, outcomes=None):
     first = parts[0]
     players = inputs.runs[first["players"]]
     shuttle = inputs.runs[first["shuttle"]]
@@ -1174,6 +1340,16 @@ def _models(inputs, parts):
                 stage="recognition",
                 name=recognition.get("model") or recognition.get("status"),
                 checkpoint_sha256=recognition.get("checkpoint_sha256"),
+            )
+        )
+    if outcomes is not None:
+        model = outcomes.get("model") or {}
+        models.append(
+            ModelRef(
+                stage="outcomes",
+                # Without its model the stage calls outcomes by the landing rule.
+                name=model.get("title") or "landing rule",
+                checkpoint_sha256=model.get("sha256"),
             )
         )
     return models
@@ -1266,6 +1442,15 @@ def build_match_analysis(
     shuttle = _shuttle_track(inputs, parts)
     shots = _shots(inputs, parts, observations, resolve, shuttle)
     samples, person_tracks = _person_tracks(inputs, observations, resolve, persons)
+    outcomes_id = (plan.get("outcomes") or {}).get("run_id")
+    outcomes = inputs.runs.get(outcomes_id) if outcomes_id else None
+    if outcomes is not None:
+        rallies = _stage_rallies(shots, inputs.times, outcomes)
+    else:
+        outcomes_id = None
+        # Older processing without the outcomes stage: no landing or winner.
+        rallies = _rallies(shots, inputs.times, segments, *_proposals(inputs, parts))
+    rallies = _scored(rallies, persons)
     return MatchAnalysis(
         video=VideoInfo(
             id=video["id"],
@@ -1285,7 +1470,7 @@ def build_match_analysis(
             assigned_observation_share=round(assigned / total, 4) if total else None,
         ),
         court=Court(views=views),
-        rallies=_rallies(shots, inputs.times, segments, *_proposals(inputs, parts)),
+        rallies=rallies,
         tracks=Tracks(
             rate_hz=TRACK_RATE_HZ,
             sample_frames=samples,
@@ -1301,6 +1486,7 @@ def build_match_analysis(
             segments_run_id=(plan.get("segments") or {}).get("run_id"),
             identities_run_id=identities_id,
             persons_run_id=persons_id,
+            outcomes_run_id=outcomes_id,
             parts=[
                 PartRuns(
                     core_start_frame=p["core_start"],
@@ -1313,7 +1499,7 @@ def build_match_analysis(
                 )
                 for p in parts
             ],
-            models=_models(inputs, parts),
+            models=_models(inputs, parts, outcomes),
         ),
     )
 

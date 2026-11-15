@@ -845,18 +845,61 @@
       },
       "Landing": {
         "additionalProperties": false,
-        "description": "Reserved for step 3 (rally outcomes); always null in this version.",
+        "description": "Where the last shot came down, from the shuttle's image track.\n\n``position`` is the floor point under the image point where the shuttle\nstopped descending (null when it projects more than COURT_MARGIN_M\noutside the court); ``kind`` is rest (it then lay still), descent (it\nstopped going down) or track_end (its track ended in the air, so the\nposition is unreliable). ``in_court`` uses the rally lines: singles or\ndoubles sidelines and the full length.",
         "properties": {
+          "frame": {
+            "minimum": 0,
+            "title": "Frame",
+            "type": "integer"
+          },
+          "image": {
+            "$ref": "#/components/schemas/ImagePoint"
+          },
+          "in_court": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "In Court"
+          },
+          "kind": {
+            "enum": [
+              "rest",
+              "descent",
+              "track_end"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
           "position": {
-            "$ref": "#/components/schemas/CourtPoint"
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CourtPoint"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "source": {
             "title": "Source",
             "type": "string"
+          },
+          "time_s": {
+            "minimum": 0,
+            "title": "Time S",
+            "type": "number"
           }
         },
         "required": [
-          "position",
+          "frame",
+          "time_s",
+          "image",
+          "kind",
           "source"
         ],
         "title": "Landing",
@@ -901,8 +944,8 @@
             "type": "array"
           },
           "schema_version": {
-            "const": 2,
-            "default": 2,
+            "const": 3,
+            "default": 3,
             "title": "Schema Version",
             "type": "integer"
           },
@@ -1634,7 +1677,7 @@
             "type": "string"
           },
           "builder": {
-            "default": "match analysis builder v2",
+            "default": "match analysis builder v3",
             "title": "Builder",
             "type": "string"
           },
@@ -1659,6 +1702,17 @@
             },
             "title": "Models",
             "type": "array"
+          },
+          "outcomes_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Outcomes Run Id"
           },
           "parts": {
             "items": {
@@ -1733,6 +1787,7 @@
           },
           "end_source": {
             "enum": [
+              "landing",
               "proposed_rally_end",
               "last_contact"
             ],
@@ -1748,6 +1803,16 @@
             "anyOf": [
               {
                 "$ref": "#/components/schemas/RallyOutcome"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "score": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/RallyScore"
               },
               {
                 "type": "null"
@@ -1817,14 +1882,28 @@
       },
       "RallyOutcome": {
         "additionalProperties": false,
-        "description": "Reserved for step 3 (rally outcomes); always null in this version.",
+        "description": "Who won the rally and how, from the outcomes stage.\n\nThe reason is the last hitter's: ``winner`` when the last hitter won (the\nshot landed in), ``error`` when the last hitter lost it (``out``, or\n``net``: it did not get over). ``winner_end`` is the court end of the\nwinning side when the rally ended; ``winner_team`` is the team found at\nthat end (null when no identified player was seen there).",
         "properties": {
-          "reason": {
+          "confidence": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "detail": {
             "anyOf": [
               {
                 "enum": [
-                  "winner",
-                  "error"
+                  "in",
+                  "out",
+                  "net"
                 ],
                 "type": "string"
               },
@@ -1832,26 +1911,89 @@
                 "type": "null"
               }
             ],
-            "title": "Reason"
+            "title": "Detail"
+          },
+          "last_hitter_end": {
+            "anyOf": [
+              {
+                "enum": [
+                  "far",
+                  "near"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Hitter End"
+          },
+          "reason": {
+            "enum": [
+              "winner",
+              "error"
+            ],
+            "title": "Reason",
+            "type": "string"
           },
           "source": {
             "title": "Source",
             "type": "string"
           },
-          "winner_team": {
+          "winner_end": {
             "enum": [
-              "T1",
-              "T2"
+              "far",
+              "near"
             ],
-            "title": "Winner Team",
+            "title": "Winner End",
             "type": "string"
+          },
+          "winner_team": {
+            "anyOf": [
+              {
+                "enum": [
+                  "T1",
+                  "T2"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Winner Team"
           }
         },
         "required": [
-          "winner_team",
+          "winner_end",
+          "reason",
           "source"
         ],
         "title": "RallyOutcome",
+        "type": "object"
+      },
+      "RallyScore": {
+        "additionalProperties": false,
+        "description": "Points counted from the start of the video, not the official score.\n\nA rally whose winning team is unknown leaves the score unchanged. A game\nends at 21 (two clear, at most 30); the next rally starts game + 1.",
+        "properties": {
+          "after": {
+            "$ref": "#/components/schemas/TeamScore"
+          },
+          "before": {
+            "$ref": "#/components/schemas/TeamScore"
+          },
+          "game": {
+            "minimum": 1,
+            "title": "Game",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "game",
+          "before",
+          "after"
+        ],
+        "title": "RallyScore",
         "type": "object"
       },
       "RecognitionRequest": {
@@ -2339,6 +2481,25 @@
           "overrides"
         ],
         "title": "SwapResult",
+        "type": "object"
+      },
+      "TeamScore": {
+        "additionalProperties": false,
+        "properties": {
+          "T1": {
+            "default": 0,
+            "minimum": 0,
+            "title": "T1",
+            "type": "integer"
+          },
+          "T2": {
+            "default": 0,
+            "minimum": 0,
+            "title": "T2",
+            "type": "integer"
+          }
+        },
+        "title": "TeamScore",
         "type": "object"
       },
       "TrackAssignment": {

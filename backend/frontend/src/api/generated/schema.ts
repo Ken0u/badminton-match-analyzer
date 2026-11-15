@@ -1018,12 +1018,31 @@ export interface components {
         };
         /**
          * Landing
-         * @description Reserved for step 3 (rally outcomes); always null in this version.
+         * @description Where the last shot came down, from the shuttle's image track.
+         *
+         *     ``position`` is the floor point under the image point where the shuttle
+         *     stopped descending (null when it projects more than COURT_MARGIN_M
+         *     outside the court); ``kind`` is rest (it then lay still), descent (it
+         *     stopped going down) or track_end (its track ended in the air, so the
+         *     position is unreliable). ``in_court`` uses the rally lines: singles or
+         *     doubles sidelines and the full length.
          */
         Landing: {
-            position: components["schemas"]["CourtPoint"];
+            /** Frame */
+            frame: number;
+            image: components["schemas"]["ImagePoint"];
+            /** In Court */
+            in_court?: boolean | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "rest" | "descent" | "track_end";
+            position?: components["schemas"]["CourtPoint"] | null;
             /** Source */
             source: string;
+            /** Time S */
+            time_s: number;
         };
         /** MatchAnalysis */
         MatchAnalysis: {
@@ -1043,10 +1062,10 @@ export interface components {
             rallies: components["schemas"]["Rally"][];
             /**
              * Schema Version
-             * @default 2
+             * @default 3
              * @constant
              */
-            schema_version?: 2;
+            schema_version?: 3;
             tracks: components["schemas"]["Tracks"];
             video: components["schemas"]["VideoInfo"];
             /** Warnings */
@@ -1285,7 +1304,7 @@ export interface components {
             analysis_key: string;
             /**
              * Builder
-             * @default match analysis builder v2
+             * @default match analysis builder v3
              */
             builder?: string;
             /** Created At */
@@ -1294,6 +1313,8 @@ export interface components {
             identities_run_id?: string | null;
             /** Models */
             models: components["schemas"]["ModelRef"][];
+            /** Outcomes Run Id */
+            outcomes_run_id?: string | null;
             /** Parts */
             parts: components["schemas"]["PartRuns"][];
             /** Persons Run Id */
@@ -1318,10 +1339,11 @@ export interface components {
              * End Source
              * @enum {string}
              */
-            end_source: "proposed_rally_end" | "last_contact";
+            end_source: "landing" | "proposed_rally_end" | "last_contact";
             /** Id */
             id: string;
             outcome?: components["schemas"]["RallyOutcome"] | null;
+            score?: components["schemas"]["RallyScore"] | null;
             /** Server Id */
             server_id?: ("P1" | "P2" | "P3" | "P4") | null;
             /** Shots */
@@ -1338,18 +1360,48 @@ export interface components {
         };
         /**
          * RallyOutcome
-         * @description Reserved for step 3 (rally outcomes); always null in this version.
+         * @description Who won the rally and how, from the outcomes stage.
+         *
+         *     The reason is the last hitter's: ``winner`` when the last hitter won (the
+         *     shot landed in), ``error`` when the last hitter lost it (``out``, or
+         *     ``net``: it did not get over). ``winner_end`` is the court end of the
+         *     winning side when the rally ended; ``winner_team`` is the team found at
+         *     that end (null when no identified player was seen there).
          */
         RallyOutcome: {
-            /** Reason */
-            reason?: ("winner" | "error") | null;
+            /** Confidence */
+            confidence?: number | null;
+            /** Detail */
+            detail?: ("in" | "out" | "net") | null;
+            /** Last Hitter End */
+            last_hitter_end?: ("far" | "near") | null;
+            /**
+             * Reason
+             * @enum {string}
+             */
+            reason: "winner" | "error";
             /** Source */
             source: string;
             /**
-             * Winner Team
+             * Winner End
              * @enum {string}
              */
-            winner_team: "T1" | "T2";
+            winner_end: "far" | "near";
+            /** Winner Team */
+            winner_team?: ("T1" | "T2") | null;
+        };
+        /**
+         * RallyScore
+         * @description Points counted from the start of the video, not the official score.
+         *
+         *     A rally whose winning team is unknown leaves the score unchanged. A game
+         *     ends at 21 (two clear, at most 30); the next rally starts game + 1.
+         */
+        RallyScore: {
+            after: components["schemas"]["TeamScore"];
+            before: components["schemas"]["TeamScore"];
+            /** Game */
+            game: number;
         };
         /** RecognitionRequest */
         RecognitionRequest: {
@@ -1492,6 +1544,19 @@ export interface components {
             /** Overrides */
             overrides: components["schemas"]["PersonSwap"][];
             rally: components["schemas"]["Rally"];
+        };
+        /** TeamScore */
+        TeamScore: {
+            /**
+             * T1
+             * @default 0
+             */
+            T1?: number;
+            /**
+             * T2
+             * @default 0
+             */
+            T2?: number;
         };
         /** TrackAssignment */
         TrackAssignment: {

@@ -61,6 +61,7 @@ LABELS = {
     "recognition": "Reading strokes",
     "identities": "Recognising players",
     "persons": "Recognising players",
+    "outcomes": "Reading rally outcomes",
 }
 # Rough relative running time of each stage, so the single progress value moves
 # with time rather than with the count of stages.
@@ -73,6 +74,7 @@ WEIGHTS = {
     "recognition": 1.0,
     "identities": 0.5,
     "persons": 2.0,
+    "outcomes": 0.3,
 }
 
 
@@ -476,14 +478,15 @@ class ProcessingProgress:
 
     process_match reports (completed stages + fraction of the current one) /
     total, with the stages in this order: segments, then per window players,
-    shuttle, contacts, rallies, recognition, then identities and persons.
+    shuttle, contacts, rallies, recognition, then identities, persons and
+    outcomes.
     """
 
     def __init__(self, windows):
         from . import pipeline
 
         self.sequence = ["segments", *pipeline.STAGES * windows]
-        self.sequence += ["identities", "persons"]
+        self.sequence += ["identities", "persons", "outcomes"]
         self.before, total = [], 0.0
         for name in self.sequence:
             self.before.append(total)
@@ -491,7 +494,10 @@ class ProcessingProgress:
         self.total = total
 
     def __call__(self, value):
-        position = min(1.0, max(0.0, value)) * len(self.sequence)
+        # Processing reports progress rounded down to 1/1000; read it as the
+        # top of that step so a stage that has just started gets its label.
+        value = min(1.0, max(0.0, value + 0.000999)) if value > 0 else 0.0
+        position = value * len(self.sequence)
         index = min(len(self.sequence) - 1, int(position))
         name = self.sequence[index]
         part = min(1.0, position - index)

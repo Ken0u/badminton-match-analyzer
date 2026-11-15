@@ -266,14 +266,14 @@ def test_complete_processing_and_resume_reuse_immutable_registered_artifacts(wor
     _, store, video, _, calls = workspace
     before = store.annotations(video["id"]).model_dump()
     result = execute(workspace)
-    assert result["parts"] == 3 and result["completed_stages"] == 18
+    assert result["parts"] == 3 and result["completed_stages"] == 19
     assert result["reused_stages"] == 0 and not result["fully_annotated"]
     snapshots = {
         p.name: p.read_bytes() for p in (store.data / "test" / "runs").glob("*.json")
     }
     calls.clear()
     resumed = execute(workspace)
-    assert resumed["reused_stages"] == 18 and calls == []
+    assert resumed["reused_stages"] == 19 and calls == []
     assert {
         p.name: p.read_bytes() for p in (store.data / "test" / "runs").glob("*.json")
     } == snapshots
@@ -286,19 +286,19 @@ def test_missing_identity_weights_skip_only_the_persons_stage(workspace, monkeyp
     reason = "Player re-identification weights are not installed (reid/x.pth)"
     monkeypatch.setattr(pipeline, "persons_unavailable", lambda: reason)
     result = execute(workspace)
-    assert result["processing_complete"] and result["completed_stages"] == 18
+    assert result["processing_complete"] and result["completed_stages"] == 19
     plan = pipeline.read_plan(store, video["id"], result["analysis_key"])
     assert plan["persons"] is None and plan["persons_unavailable"] == reason
     assert plan["state"] == "completed"
     # Once the weights are there, resuming runs just the persons stage.
     monkeypatch.setattr(pipeline, "persons_unavailable", lambda: None)
     resumed = execute(workspace)
-    assert resumed["reused_stages"] == 17
+    assert resumed["reused_stages"] == 18
     plan = pipeline.read_plan(store, video["id"], resumed["analysis_key"])
     assert plan["persons"]["run_id"] and plan["persons_unavailable"] is None
     # A finished persons document stays usable without the weights.
     monkeypatch.setattr(pipeline, "persons_unavailable", lambda: reason)
-    assert execute(workspace)["reused_stages"] == 18
+    assert execute(workspace)["reused_stages"] == 19
 
 
 def test_persons_unavailable_checks_registration_presence_and_hash(
@@ -474,7 +474,7 @@ def test_recover_both_registration_and_manifest_write_interruption(workspace):
         )
     calls.clear()
     recovered = execute(workspace)
-    assert recovered["reused_stages"] == 18 and calls == []
+    assert recovered["reused_stages"] == 19 and calls == []
     assert store.job(registered_id)["status"] == "completed"
     assert (
         pipeline.read_plan(store, "test", result["analysis_key"])["parts"][0]["stages"][
@@ -613,7 +613,7 @@ def test_overlap_actors_are_checkpointed_without_editing_reviewed_identities(
         for p in plan["parts"]
     }
     assert store.annotations(video["id"]).model_dump() == before
-    assert execute(workspace)["reused_stages"] == 18
+    assert execute(workspace)["reused_stages"] == 19
 
 
 def test_pause_during_actor_linking_preserves_all_finished_perception(
@@ -634,7 +634,7 @@ def test_pause_during_actor_linking_preserves_all_finished_perception(
     calls.clear()
     monkeypatch.setattr(pipeline, "link_player_runs", original)
     resumed = execute(workspace)
-    assert resumed["completed_stages"] == 18 and resumed["reused_stages"] == 16
+    assert resumed["completed_stages"] == 19 and resumed["reused_stages"] == 16
     assert calls == []
 
 
@@ -768,7 +768,7 @@ def test_last_progress_callback_cannot_publish_false_completion(workspace, mutat
         final[-1],
         "interrupted" if mutation in ("context", "cancel") else "failed",
     )
-    assert plan["completed_stages"] == 18
+    assert plan["completed_stages"] == 19
 
 
 @pytest.mark.parametrize("mode", ["singles", "doubles"])
@@ -828,6 +828,6 @@ def test_irrelevant_manual_edit_during_resume_preserves_reuse(workspace):
 
     result = execute_with_progress(workspace, progress)
     assert (
-        result["processing_complete"] and result["reused_stages"] == 18 and calls == []
+        result["processing_complete"] and result["reused_stages"] == 19 and calls == []
     )
     assert store.annotations("test").events[0].id == "reviewed"

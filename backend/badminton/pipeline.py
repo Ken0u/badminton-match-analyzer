@@ -15,7 +15,7 @@ import os
 import time
 from pathlib import Path
 
-from . import event_model, person_identity
+from . import event_model, person_identity, rally_outcomes
 from .actor_linking import link_player_runs
 from .calibration_context import court_run_context
 from .config import MODEL_MANIFEST, WEIGHTS
@@ -46,10 +46,14 @@ PERCEPTION_CALLS = 2
 # like perception, by the code it imports and its pinned weights, so other
 # code changes reuse it.
 PERSONS = "person_identity"
+# Last, the outcomes stage (rally_outcomes.py): rally boundaries, last-shot
+# landings and winners from the finished stages. Keyed by the code it imports,
+# its model and every stage output it reads.
+OUTCOMES = "rally_outcomes"
 # Model manifest entries that only later stages load. Perception keys hash the
 # manifest without them, so registering such weights keeps finished poses and
 # shuttle tracks.
-LATER_MODELS = (person_identity.MANIFEST_KEY,)
+LATER_MODELS = (person_identity.MANIFEST_KEY, rally_outcomes.MANIFEST_KEY)
 
 
 class PersonsUnavailable(RuntimeError):
@@ -273,6 +277,12 @@ def stage_recipe(recipe, name, window, dependencies):
         result["model"] = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8")).get(
             person_identity.MANIFEST_KEY
         )
+    if name == "outcomes":
+        used = imported_sources(OUTCOMES)
+        result["source_files"] = {
+            path: sha for path, sha in recipe["source_files"].items() if path in used
+        }
+        result["model"] = rally_outcomes.manifest_entry()
     if name != "segments":
         result["context_signature"] = recipe["context_signature"]
     result["settings"] = (
@@ -361,8 +371,9 @@ def process_match(
         },
     )
     completed, reused = 0, 0
-    # Segments, actor identities and persons, plus the per-window stages.
-    total = 3 + len(windows) * len(STAGES)
+    # Segments, actor identities, persons and outcomes, plus the per-window
+    # stages.
+    total = 4 + len(windows) * len(STAGES)
     last_tick = -1
     last_input_check = 0
 
@@ -486,6 +497,7 @@ def process_match(
                                     "tracks",
                                     "links",
                                     "rejected_links",
+                                    "rallies",
                                 )
                             },
                         },
@@ -574,6 +586,7 @@ def process_match(
                     "tracks",
                     "links",
                     "rejected_links",
+                    "rallies",
                 )
             }
             summary["checkpoint"] = checkpoint
@@ -862,6 +875,21 @@ def process_match(
             plan["persons_unavailable"] = None
             # A cached record must still point at its unchanged document.
             person_identity.load_document(store.data, video["id"], plan["persons"])
+        stage(
+            "outcomes",
+            None,
+            lambda output, callback: rally_outcomes.run_stage(
+                video, store, plan, times, output, callback
+            ),
+            inputs={
+                "segments": plan["segments"]["sha256"],
+                **{
+                    f"{name}:{p['window']['index']}": p["stages"][name]["sha256"]
+                    for p in plan["parts"]
+                    for name in STAGES
+                },
+            },
+        )
         # Callers may cancel, edit context or fail even on the final callback.
         # Publish completion only after that callback and a final input check.
         progress(1)
