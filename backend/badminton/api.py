@@ -19,6 +19,7 @@ from .access import AccessMiddleware
 from .calibration_context import court_context_changed, court_run_context
 from .ingest import inspect_video
 from .jobs import JobCancelled
+from .match_analysis import MatchAnalysis, read_match_analysis
 from .orientation import OrientationError
 from .schemas import Annotations, StrictModel
 from .storage import ConflictError, Store
@@ -369,6 +370,19 @@ def create_app(
     @app.get("/api/videos/{video_id}")
     def video(video_id: str):
         return store.video(video_id)
+
+    @app.get(
+        "/api/videos/{video_id}/match-analysis",
+        response_model=MatchAnalysis,
+        responses={404: {"description": "Video unknown or results not built yet"}},
+    )
+    def match_analysis(video_id: str):
+        """The stored per-match results document; read-only, never rebuilt here."""
+        store.video(video_id)
+        document = read_match_analysis(data, video_id)
+        if document is None:
+            raise HTTPException(404, "Match analysis has not been built yet")
+        return document
 
     @app.get("/api/videos/{video_id}/timestamps")
     def timestamps(video_id: str):
