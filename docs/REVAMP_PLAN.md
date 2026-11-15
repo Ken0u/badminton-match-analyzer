@@ -80,8 +80,8 @@ before it has seen them, so this one confirmation is the minimum.
 7. **3D shuttle path.** Fit a physical trajectory between consecutive
    contacts. Gives shuttle speed, contact height and a 3D view.
 8. **Far-side partner swaps.** Add a head-crop appearance feature to
-   identity. Regression case: `doubles.mp4` 3:53 to 4:14, P1 and P2 swap
-   before the rally starts (far side, distinguishable by hair).
+   identity. Regression case: `doubles.mp4` 3:53 to 4:14 (two rallies), P1
+   and P2 swapped on the far side throughout (distinguishable by hair).
 
 Processing time matters once users wait on one job; the deferred speed-up
 work in `docs/INFERENCE_SPEED_NOTES.md` comes back around step 5.
@@ -114,9 +114,9 @@ Open issues found on the way:
   serves and 2 ends for the 26 rallies of `doubles.mp4` (7 and 4 of 21 on
   singles); the rest come from the contact-gap fallback. Step 3 should
   measure and improve boundaries before rally-level statistics depend on them.
-- The 3:53 to 4:14 rally of `doubles.mp4` comes out as two rallies
-  (frames 5846-5896 and 6110-6273, two camera views, 8.6 s without detected
-  contacts between them), so a swap fix covers only one half.
+- `doubles.mp4` 3:53 to 4:14 is two rallies (confirmed by the user), and the
+  pipeline splits it correctly (frames 5846-5896 and 6110-6273). The far-side
+  P1/P2 swap covers both, so the swap fix is applied once per rally.
 - In doubles views where only one partner is found at an end, that player
   gets no person (61 of 27,832 player-track frames on `doubles.mp4`).
 
