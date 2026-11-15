@@ -104,7 +104,19 @@ own separate files and commit only their own paths.
 |---|---|---|
 | 1 | done (b1a0bdf) | `match_analysis.py`, `GET /api/videos/{id}/match-analysis`, `badminton match-analysis` CLI; format in `docs/MATCH_ANALYSIS_FORMAT.md`. Rally boundaries still from a contact-gap rule; `schema.ts` not regenerated yet. |
 | 2a | done (4e1a627, a6d21d2) | `persons` pipeline stage (`person_identity.py`); 100% agreement with the research grouping on `doubles.mp4`; regression rally frames 5838-6344. Not re-scored on the DShuttleNet test matches (needs the VM). |
-| 2b | in progress | |
+| 2b | done (ae83a29..4e3113f) | `matches` API (`docs/MATCHES_API.md`): upload with names, one job to `needs_names`, name confirmation, per-rally swap overrides, persistent-identity fallback when the re-identification weights are missing. Rally boundaries now prefer the rallies stage's serve and end proposals (schema version 2). End-to-end on both videos with cached perception: 26 s doubles, 19 s singles. |
 | 3 to 8 | not started | |
+
+Open issues found on the way:
+
+- Rally segmentation is not measured. The rallies stage proposes only 14
+  serves and 2 ends for the 26 rallies of `doubles.mp4` (7 and 4 of 21 on
+  singles); the rest come from the contact-gap fallback. Step 3 should
+  measure and improve boundaries before rally-level statistics depend on them.
+- The 3:53 to 4:14 rally of `doubles.mp4` comes out as two rallies
+  (frames 5846-5896 and 6110-6273, two camera views, 8.6 s without detected
+  contacts between them), so a swap fix covers only one half.
+- In doubles views where only one partner is found at an end, that player
+  gets no person (61 of 27,832 player-track frames on `doubles.mp4`).
 
 Known risk for step 5: perception cache keys hash every non-`.py` file in `backend/badminton`, including `static/build-manifest.json`, so a frontend rebuild into the package would force full re-tracking of every video.
