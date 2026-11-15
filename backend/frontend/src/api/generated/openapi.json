@@ -114,6 +114,45 @@
         "title": "Annotations",
         "type": "object"
       },
+      "Body_create_match_api_matches_post": {
+        "properties": {
+          "file": {
+            "contentMediaType": "application/octet-stream",
+            "title": "File",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "singles",
+              "doubles"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "team1": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Team1",
+            "type": "array"
+          },
+          "team2": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Team2",
+            "type": "array"
+          }
+        },
+        "required": [
+          "file",
+          "mode",
+          "team1",
+          "team2"
+        ],
+        "title": "Body_create_match_api_matches_post",
+        "type": "object"
+      },
       "Body_upload_api_upload_post": {
         "properties": {
           "file": {
@@ -747,6 +786,7 @@
           },
           "source": {
             "enum": [
+              "persons_stage",
               "supplied",
               "per_view_fallback"
             ],
@@ -831,6 +871,18 @@
           "identity": {
             "$ref": "#/components/schemas/IdentityInfo"
           },
+          "names_confirmed": {
+            "default": false,
+            "title": "Names Confirmed",
+            "type": "boolean"
+          },
+          "overrides": {
+            "items": {
+              "$ref": "#/components/schemas/PersonSwap"
+            },
+            "title": "Overrides",
+            "type": "array"
+          },
           "players": {
             "items": {
               "$ref": "#/components/schemas/Person"
@@ -849,8 +901,8 @@
             "type": "array"
           },
           "schema_version": {
-            "const": 1,
-            "default": 1,
+            "const": 2,
+            "default": 2,
             "title": "Schema Version",
             "type": "integer"
           },
@@ -859,6 +911,13 @@
           },
           "video": {
             "$ref": "#/components/schemas/VideoInfo"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
           }
         },
         "required": [
@@ -871,6 +930,284 @@
           "provenance"
         ],
         "title": "MatchAnalysis",
+        "type": "object"
+      },
+      "MatchCreated": {
+        "additionalProperties": false,
+        "properties": {
+          "job_id": {
+            "title": "Job Id",
+            "type": "string"
+          },
+          "match_id": {
+            "title": "Match Id",
+            "type": "string"
+          },
+          "reused_video": {
+            "title": "Reused Video",
+            "type": "boolean"
+          },
+          "video_id": {
+            "title": "Video Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "match_id",
+          "video_id",
+          "job_id",
+          "reused_video"
+        ],
+        "title": "MatchCreated",
+        "type": "object"
+      },
+      "MatchPlayer": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4"
+            ],
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "name_source": {
+            "enum": [
+              "guessed",
+              "confirmed"
+            ],
+            "title": "Name Source",
+            "type": "string"
+          },
+          "team": {
+            "enum": [
+              "T1",
+              "T2"
+            ],
+            "title": "Team",
+            "type": "string"
+          },
+          "thumbnail_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumbnail Url"
+          }
+        },
+        "required": [
+          "id",
+          "team",
+          "name",
+          "name_source"
+        ],
+        "title": "MatchPlayer",
+        "type": "object"
+      },
+      "MatchPlayers": {
+        "additionalProperties": false,
+        "properties": {
+          "match_id": {
+            "title": "Match Id",
+            "type": "string"
+          },
+          "names_confirmed": {
+            "title": "Names Confirmed",
+            "type": "boolean"
+          },
+          "players": {
+            "items": {
+              "$ref": "#/components/schemas/MatchPlayer"
+            },
+            "title": "Players",
+            "type": "array"
+          },
+          "state": {
+            "enum": [
+              "queued",
+              "running",
+              "needs_names",
+              "ready",
+              "failed",
+              "paused"
+            ],
+            "title": "State",
+            "type": "string"
+          },
+          "teams": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "propertyNames": {
+              "enum": [
+                "T1",
+                "T2"
+              ]
+            },
+            "title": "Teams",
+            "type": "object"
+          }
+        },
+        "required": [
+          "match_id",
+          "state",
+          "names_confirmed",
+          "teams",
+          "players"
+        ],
+        "title": "MatchPlayers",
+        "type": "object"
+      },
+      "MatchStatus": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "match_id": {
+            "title": "Match Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "singles",
+              "doubles"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "names_confirmed": {
+            "title": "Names Confirmed",
+            "type": "boolean"
+          },
+          "progress": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Progress",
+            "type": "number"
+          },
+          "stage": {
+            "title": "Stage",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "queued",
+              "running",
+              "needs_names",
+              "ready",
+              "failed",
+              "paused"
+            ],
+            "title": "State",
+            "type": "string"
+          },
+          "video_id": {
+            "title": "Video Id",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "match_id",
+          "video_id",
+          "mode",
+          "state",
+          "progress",
+          "stage",
+          "names_confirmed",
+          "warnings"
+        ],
+        "title": "MatchStatus",
+        "type": "object"
+      },
+      "MatchSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "number"
+          },
+          "match_id": {
+            "title": "Match Id",
+            "type": "string"
+          },
+          "mode": {
+            "enum": [
+              "singles",
+              "doubles"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          }
+        },
+        "required": [
+          "match_id",
+          "mode",
+          "created_at"
+        ],
+        "title": "MatchSummary",
         "type": "object"
       },
       "MediaExportRequest": {
@@ -934,6 +1271,31 @@
         "title": "ModelRef",
         "type": "object"
       },
+      "NameConfirmation": {
+        "additionalProperties": false,
+        "properties": {
+          "names": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "enum": [
+                "P1",
+                "P2",
+                "P3",
+                "P4"
+              ]
+            },
+            "title": "Names",
+            "type": "object"
+          }
+        },
+        "required": [
+          "names"
+        ],
+        "title": "NameConfirmation",
+        "type": "object"
+      },
       "PartRuns": {
         "additionalProperties": false,
         "properties": {
@@ -954,6 +1316,17 @@
           "players_run_id": {
             "title": "Players Run Id",
             "type": "string"
+          },
+          "rallies_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rallies Run Id"
           },
           "recognition_run_id": {
             "anyOf": [
@@ -1041,6 +1414,72 @@
           "team"
         ],
         "title": "Person",
+        "type": "object"
+      },
+      "PersonSwap": {
+        "additionalProperties": false,
+        "description": "A user correction: two persons swapped over a frame range (inclusive).",
+        "properties": {
+          "end_frame": {
+            "minimum": 0,
+            "title": "End Frame",
+            "type": "integer"
+          },
+          "kind": {
+            "const": "swap",
+            "default": "swap",
+            "title": "Kind",
+            "type": "string"
+          },
+          "persons": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              }
+            ],
+            "title": "Persons",
+            "type": "array"
+          },
+          "rally_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rally Id"
+          },
+          "start_frame": {
+            "minimum": 0,
+            "title": "Start Frame",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "persons",
+          "start_frame",
+          "end_frame"
+        ],
+        "title": "PersonSwap",
         "type": "object"
       },
       "PersonTrack": {
@@ -1195,7 +1634,7 @@
             "type": "string"
           },
           "builder": {
-            "default": "match analysis builder v1",
+            "default": "match analysis builder v2",
             "title": "Builder",
             "type": "string"
           },
@@ -1227,6 +1666,17 @@
             },
             "title": "Parts",
             "type": "array"
+          },
+          "persons_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Persons Run Id"
           },
           "segments_run_id": {
             "anyOf": [
@@ -1281,6 +1731,14 @@
             "title": "End S",
             "type": "number"
           },
+          "end_source": {
+            "enum": [
+              "proposed_rally_end",
+              "last_contact"
+            ],
+            "title": "End Source",
+            "type": "string"
+          },
           "id": {
             "minLength": 1,
             "title": "Id",
@@ -1330,6 +1788,18 @@
             "minimum": 0,
             "title": "Start S",
             "type": "number"
+          },
+          "start_source": {
+            "enum": [
+              "proposed_serve",
+              "after_proposed_end",
+              "predicted_serve",
+              "contact_gap",
+              "camera_cut",
+              "first_contact"
+            ],
+            "title": "Start Source",
+            "type": "string"
           }
         },
         "required": [
@@ -1338,6 +1808,8 @@
           "end_frame",
           "start_s",
           "end_s",
+          "start_source",
+          "end_source",
           "shots"
         ],
         "title": "Rally",
@@ -1807,6 +2279,68 @@
         "title": "ShuttleTrack",
         "type": "object"
       },
+      "SwapRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "persons": {
+            "maxItems": 2,
+            "minItems": 2,
+            "prefixItems": [
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              },
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              }
+            ],
+            "title": "Persons",
+            "type": "array"
+          }
+        },
+        "required": [
+          "persons"
+        ],
+        "title": "SwapRequest",
+        "type": "object"
+      },
+      "SwapResult": {
+        "additionalProperties": false,
+        "properties": {
+          "applied": {
+            "title": "Applied",
+            "type": "boolean"
+          },
+          "overrides": {
+            "items": {
+              "$ref": "#/components/schemas/PersonSwap"
+            },
+            "title": "Overrides",
+            "type": "array"
+          },
+          "rally": {
+            "$ref": "#/components/schemas/Rally"
+          }
+        },
+        "required": [
+          "applied",
+          "rally",
+          "overrides"
+        ],
+        "title": "SwapResult",
+        "type": "object"
+      },
       "TrackAssignment": {
         "additionalProperties": false,
         "properties": {
@@ -2202,6 +2736,479 @@
           }
         },
         "summary": "Jobs"
+      }
+    },
+    "/api/matches": {
+      "get": {
+        "operationId": "list_matches_api_matches_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MatchSummary"
+                  },
+                  "title": "Response List Matches Api Matches Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Matches"
+      },
+      "post": {
+        "description": "Upload a match with its players' names and start the one job.\n\nNames: singles one per team, doubles two per team (partners). The\nsame video uploaded again reuses the stored video and its finished\nprocessing stages.",
+        "operationId": "create_match_api_matches_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_create_match_api_matches_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchCreated"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "Another job is running, or format mismatch"
+          },
+          "413": {
+            "description": "Video too large"
+          },
+          "422": {
+            "description": "Invalid video or names"
+          }
+        },
+        "summary": "Create Match"
+      }
+    },
+    "/api/matches/{match_id}": {
+      "get": {
+        "description": "State, one overall progress value 0..1 and a stage label.",
+        "operationId": "match_status_api_matches__match_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Unknown match"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Match Status"
+      }
+    },
+    "/api/matches/{match_id}/analysis": {
+      "get": {
+        "description": "The MatchAnalysis document (same as /api/videos/{id}/match-analysis).",
+        "operationId": "match_document_api_matches__match_id__analysis_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchAnalysis"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Unknown match or results not built yet"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Match Document"
+      }
+    },
+    "/api/matches/{match_id}/pause": {
+      "post": {
+        "description": "Ask the running job to stop; finished stages are kept for resuming.",
+        "operationId": "pause_match_api_matches__match_id__pause_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "The match is not processing"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Pause Match"
+      }
+    },
+    "/api/matches/{match_id}/players": {
+      "get": {
+        "description": "Each person found, with team, the guessed or confirmed name and a\npicture.",
+        "operationId": "match_players_api_matches__match_id__players_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchPlayers"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "No results yet"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Match Players"
+      },
+      "put": {
+        "description": "Confirm which entered name belongs to which person (swaps allowed;\ndoubles partners stay on one team). Rebuilds the document.",
+        "operationId": "confirm_match_players_api_matches__match_id__players_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NameConfirmation"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchPlayers"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "No results yet"
+          },
+          "422": {
+            "description": "Names break the entered teams"
+          }
+        },
+        "summary": "Confirm Match Players"
+      }
+    },
+    "/api/matches/{match_id}/players/{person_id}/thumbnail": {
+      "get": {
+        "operationId": "match_player_thumbnail_api_matches__match_id__players__person_id__thumbnail_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "person_id",
+            "required": true,
+            "schema": {
+              "title": "Person Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "No picture of this person"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Match Player Thumbnail"
+      }
+    },
+    "/api/matches/{match_id}/rallies/{rally_id}/swap": {
+      "delete": {
+        "description": "Remove every swap made on this rally.",
+        "operationId": "undo_rally_swaps_api_matches__match_id__rallies__rally_id__swap_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "rally_id",
+            "required": true,
+            "schema": {
+              "title": "Rally Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Unknown match or rally"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Undo Rally Swaps"
+      },
+      "post": {
+        "description": "Swap two persons for one rally (usually partners). The same swap\nagain undoes it. Stored as an override; the document is rebuilt.",
+        "operationId": "swap_rally_players_api_matches__match_id__rallies__rally_id__swap_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "rally_id",
+            "required": true,
+            "schema": {
+              "title": "Rally Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwapRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SwapResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Unknown match or rally"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Swap Rally Players"
+      }
+    },
+    "/api/matches/{match_id}/resume": {
+      "post": {
+        "description": "Run the match job again, reusing every finished stage.",
+        "operationId": "resume_match_api_matches__match_id__resume_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchCreated"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "Already processing or video missing"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Resume Match"
       }
     },
     "/api/upload": {

@@ -68,6 +68,179 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/matches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Matches */
+        get: operations["list_matches_api_matches_get"];
+        put?: never;
+        /**
+         * Create Match
+         * @description Upload a match with its players' names and start the one job.
+         *
+         *     Names: singles one per team, doubles two per team (partners). The
+         *     same video uploaded again reuses the stored video and its finished
+         *     processing stages.
+         */
+        post: operations["create_match_api_matches_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/matches/{match_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Match Status
+         * @description State, one overall progress value 0..1 and a stage label.
+         */
+        get: operations["match_status_api_matches__match_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/matches/{match_id}/analysis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Match Document
+         * @description The MatchAnalysis document (same as /api/videos/{id}/match-analysis).
+         */
+        get: operations["match_document_api_matches__match_id__analysis_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/matches/{match_id}/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pause Match
+         * @description Ask the running job to stop; finished stages are kept for resuming.
+         */
+        post: operations["pause_match_api_matches__match_id__pause_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/matches/{match_id}/players": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Match Players
+         * @description Each person found, with team, the guessed or confirmed name and a
+         *     picture.
+         */
+        get: operations["match_players_api_matches__match_id__players_get"];
+        /**
+         * Confirm Match Players
+         * @description Confirm which entered name belongs to which person (swaps allowed;
+         *     doubles partners stay on one team). Rebuilds the document.
+         */
+        put: operations["confirm_match_players_api_matches__match_id__players_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/matches/{match_id}/players/{person_id}/thumbnail": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Match Player Thumbnail */
+        get: operations["match_player_thumbnail_api_matches__match_id__players__person_id__thumbnail_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/matches/{match_id}/rallies/{rally_id}/swap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Swap Rally Players
+         * @description Swap two persons for one rally (usually partners). The same swap
+         *     again undoes it. Stored as an override; the document is rebuilt.
+         */
+        post: operations["swap_rally_players_api_matches__match_id__rallies__rally_id__swap_post"];
+        /**
+         * Undo Rally Swaps
+         * @description Remove every swap made on this rally.
+         */
+        delete: operations["undo_rally_swaps_api_matches__match_id__rallies__rally_id__swap_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/matches/{match_id}/resume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resume Match
+         * @description Run the match job again, reusing every finished stage.
+         */
+        post: operations["resume_match_api_matches__match_id__resume_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/upload": {
         parameters: {
             query?: never;
@@ -265,6 +438,26 @@ export interface paths {
         };
         /** Image */
         get: operations["image_api_videos__video_id__image__name__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/videos/{video_id}/match-analysis": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Match Analysis
+         * @description The stored per-match results document; read-only, never rebuilt here.
+         */
+        get: operations["match_analysis_api_videos__video_id__match_analysis_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -553,6 +746,20 @@ export interface components {
             /** Track Assignments */
             track_assignments?: components["schemas"]["TrackAssignment"][];
         };
+        /** Body_create_match_api_matches_post */
+        Body_create_match_api_matches_post: {
+            /** File */
+            file: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "singles" | "doubles";
+            /** Team1 */
+            team1: string[];
+            /** Team2 */
+            team2: string[];
+        };
         /** Body_upload_api_upload_post */
         Body_upload_api_upload_post: {
             /** File */
@@ -596,6 +803,98 @@ export interface components {
             player_run_id?: string | null;
             /** Shuttle Run Id */
             shuttle_run_id: string;
+        };
+        /** Court */
+        Court: {
+            geometry?: components["schemas"]["CourtGeometry"];
+            /** Views */
+            views?: components["schemas"]["CourtView"][];
+        };
+        /** CourtGeometry */
+        CourtGeometry: {
+            /**
+             * Doubles Long Service Lines Y
+             * @default [
+             *       0.76,
+             *       12.64
+             *     ]
+             */
+            doubles_long_service_lines_y?: [
+                number,
+                number
+            ];
+            /**
+             * Length
+             * @default 13.4
+             */
+            length?: number;
+            /**
+             * Net Y
+             * @default 6.7
+             */
+            net_y?: number;
+            /**
+             * Short Service Lines Y
+             * @default [
+             *       4.72,
+             *       8.68
+             *     ]
+             */
+            short_service_lines_y?: [
+                number,
+                number
+            ];
+            /**
+             * Singles Sidelines X
+             * @default [
+             *       0.46,
+             *       5.64
+             *     ]
+             */
+            singles_sidelines_x?: [
+                number,
+                number
+            ];
+            /**
+             * Units
+             * @default metres
+             * @constant
+             */
+            units?: "metres";
+            /**
+             * Width
+             * @default 6.1
+             */
+            width?: number;
+        };
+        /**
+         * CourtPoint
+         * @description Metres on the court floor (see the module docstring for the frame).
+         */
+        CourtPoint: {
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
+        /**
+         * CourtView
+         * @description One camera range with one court fit. Frames are half-open.
+         */
+        CourtView: {
+            /** Corners */
+            corners: components["schemas"]["ImagePoint"][];
+            /** End Frame */
+            end_frame: number;
+            /** Homography */
+            homography: number[][];
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "automatic" | "reviewed";
+            /** Start Frame */
+            start_frame: number;
         };
         /** EvaluationRequest */
         EvaluationRequest: {
@@ -679,6 +978,34 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** IdentityInfo */
+        IdentityInfo: {
+            /** Assigned Observation Share */
+            assigned_observation_share?: number | null;
+            /** Assignment Count */
+            assignment_count: number;
+            /** Method */
+            method: string;
+            /** Note */
+            note: string;
+            /** Persistent */
+            persistent: boolean;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "persons_stage" | "supplied" | "per_view_fallback";
+        };
+        /**
+         * ImagePoint
+         * @description Normalized image coordinates: 0..1 of the oriented frame width/height.
+         */
+        ImagePoint: {
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
         /** ImportRequest */
         ImportRequest: {
             /**
@@ -689,6 +1016,138 @@ export interface components {
             /** Path */
             path: string;
         };
+        /**
+         * Landing
+         * @description Reserved for step 3 (rally outcomes); always null in this version.
+         */
+        Landing: {
+            position: components["schemas"]["CourtPoint"];
+            /** Source */
+            source: string;
+        };
+        /** MatchAnalysis */
+        MatchAnalysis: {
+            court: components["schemas"]["Court"];
+            identity: components["schemas"]["IdentityInfo"];
+            /**
+             * Names Confirmed
+             * @default false
+             */
+            names_confirmed?: boolean;
+            /** Overrides */
+            overrides?: components["schemas"]["PersonSwap"][];
+            /** Players */
+            players: components["schemas"]["Person"][];
+            provenance: components["schemas"]["Provenance"];
+            /** Rallies */
+            rallies: components["schemas"]["Rally"][];
+            /**
+             * Schema Version
+             * @default 2
+             * @constant
+             */
+            schema_version?: 2;
+            tracks: components["schemas"]["Tracks"];
+            video: components["schemas"]["VideoInfo"];
+            /** Warnings */
+            warnings?: string[];
+        };
+        /** MatchCreated */
+        MatchCreated: {
+            /** Job Id */
+            job_id: string;
+            /** Match Id */
+            match_id: string;
+            /** Reused Video */
+            reused_video: boolean;
+            /** Video Id */
+            video_id: string;
+        };
+        /** MatchPlayer */
+        MatchPlayer: {
+            /**
+             * Id
+             * @enum {string}
+             */
+            id: "P1" | "P2" | "P3" | "P4";
+            /** Name */
+            name: string;
+            /**
+             * Name Source
+             * @enum {string}
+             */
+            name_source: "guessed" | "confirmed";
+            /**
+             * Team
+             * @enum {string}
+             */
+            team: "T1" | "T2";
+            /** Thumbnail Url */
+            thumbnail_url?: string | null;
+        };
+        /** MatchPlayers */
+        MatchPlayers: {
+            /** Match Id */
+            match_id: string;
+            /** Names Confirmed */
+            names_confirmed: boolean;
+            /** Players */
+            players: components["schemas"]["MatchPlayer"][];
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "queued" | "running" | "needs_names" | "ready" | "failed" | "paused";
+            /** Teams */
+            teams: {
+                [key: string]: string[];
+            };
+        };
+        /** MatchStatus */
+        MatchStatus: {
+            /** Error */
+            error?: string | null;
+            /** Job Id */
+            job_id?: string | null;
+            /** Match Id */
+            match_id: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "singles" | "doubles";
+            /** Name */
+            name?: string | null;
+            /** Names Confirmed */
+            names_confirmed: boolean;
+            /** Progress */
+            progress: number;
+            /** Stage */
+            stage: string;
+            /**
+             * State
+             * @enum {string}
+             */
+            state: "queued" | "running" | "needs_names" | "ready" | "failed" | "paused";
+            /** Video Id */
+            video_id: string;
+            /** Warnings */
+            warnings: string[];
+        };
+        /** MatchSummary */
+        MatchSummary: {
+            /** Created At */
+            created_at: number;
+            /** Match Id */
+            match_id: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "singles" | "doubles";
+            /** Name */
+            name?: string | null;
+        };
         /** MediaExportRequest */
         MediaExportRequest: {
             /**
@@ -698,6 +1157,96 @@ export interface components {
             mode: "plain-rallies" | "annotated-rallies" | "annotated-full";
             /** Revision */
             revision: number;
+        };
+        /** ModelRef */
+        ModelRef: {
+            /** Checkpoint Sha256 */
+            checkpoint_sha256?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Stage */
+            stage: string;
+        };
+        /** NameConfirmation */
+        NameConfirmation: {
+            /** Names */
+            names: {
+                [key: string]: string;
+            };
+        };
+        /** PartRuns */
+        PartRuns: {
+            /** Contacts Run Id */
+            contacts_run_id: string;
+            /** Core End Frame */
+            core_end_frame: number;
+            /** Core Start Frame */
+            core_start_frame: number;
+            /** Players Run Id */
+            players_run_id: string;
+            /** Rallies Run Id */
+            rallies_run_id?: string | null;
+            /** Recognition Run Id */
+            recognition_run_id?: string | null;
+            /** Shuttle Run Id */
+            shuttle_run_id: string;
+        };
+        /** Person */
+        Person: {
+            /** Handedness */
+            handedness?: ("left" | "right") | null;
+            /**
+             * Id
+             * @enum {string}
+             */
+            id: "P1" | "P2" | "P3" | "P4";
+            /**
+             * Name
+             * @default
+             */
+            name?: string;
+            /**
+             * Team
+             * @enum {string}
+             */
+            team: "T1" | "T2";
+            /** Thumbnail */
+            thumbnail?: string | null;
+        };
+        /**
+         * PersonSwap
+         * @description A user correction: two persons swapped over a frame range (inclusive).
+         */
+        PersonSwap: {
+            /** End Frame */
+            end_frame: number;
+            /**
+             * Kind
+             * @default swap
+             * @constant
+             */
+            kind?: "swap";
+            /** Persons */
+            persons: [
+                "P1" | "P2" | "P3" | "P4",
+                "P1" | "P2" | "P3" | "P4"
+            ];
+            /** Rally Id */
+            rally_id?: string | null;
+            /** Start Frame */
+            start_frame: number;
+        };
+        /** PersonTrack */
+        PersonTrack: {
+            /**
+             * Person Id
+             * @enum {string}
+             */
+            person_id: "P1" | "P2" | "P3" | "P4";
+            /** X */
+            x: (number | null)[];
+            /** Y */
+            y: (number | null)[];
         };
         /** Player */
         Player: {
@@ -717,6 +1266,12 @@ export interface components {
              */
             team: "T1" | "T2";
         };
+        /** PlayerPosition */
+        PlayerPosition: {
+            /** Person Id */
+            person_id?: ("P1" | "P2" | "P3" | "P4") | null;
+            position: components["schemas"]["CourtPoint"];
+        };
         /** Point */
         Point: {
             /** X */
@@ -724,12 +1279,77 @@ export interface components {
             /** Y */
             y: number;
         };
+        /** Provenance */
+        Provenance: {
+            /** Analysis Key */
+            analysis_key: string;
+            /**
+             * Builder
+             * @default match analysis builder v2
+             */
+            builder?: string;
+            /** Created At */
+            created_at: string;
+            /** Identities Run Id */
+            identities_run_id?: string | null;
+            /** Models */
+            models: components["schemas"]["ModelRef"][];
+            /** Parts */
+            parts: components["schemas"]["PartRuns"][];
+            /** Persons Run Id */
+            persons_run_id?: string | null;
+            /** Segments Run Id */
+            segments_run_id?: string | null;
+        };
         /** RalliesRequest */
         RalliesRequest: {
             /** Player Run Id */
             player_run_id: string;
             /** Shuttle Run Id */
             shuttle_run_id: string;
+        };
+        /** Rally */
+        Rally: {
+            /** End Frame */
+            end_frame: number;
+            /** End S */
+            end_s: number;
+            /**
+             * End Source
+             * @enum {string}
+             */
+            end_source: "proposed_rally_end" | "last_contact";
+            /** Id */
+            id: string;
+            outcome?: components["schemas"]["RallyOutcome"] | null;
+            /** Server Id */
+            server_id?: ("P1" | "P2" | "P3" | "P4") | null;
+            /** Shots */
+            shots: components["schemas"]["Shot"][];
+            /** Start Frame */
+            start_frame: number;
+            /** Start S */
+            start_s: number;
+            /**
+             * Start Source
+             * @enum {string}
+             */
+            start_source: "proposed_serve" | "after_proposed_end" | "predicted_serve" | "contact_gap" | "camera_cut" | "first_contact";
+        };
+        /**
+         * RallyOutcome
+         * @description Reserved for step 3 (rally outcomes); always null in this version.
+         */
+        RallyOutcome: {
+            /** Reason */
+            reason?: ("winner" | "error") | null;
+            /** Source */
+            source: string;
+            /**
+             * Winner Team
+             * @enum {string}
+             */
+            winner_team: "T1" | "T2";
         };
         /** RecognitionRequest */
         RecognitionRequest: {
@@ -804,6 +1424,36 @@ export interface components {
             /** Start Frame */
             start_frame: number;
         };
+        /** Shot */
+        Shot: {
+            /** Confidence */
+            confidence?: number | null;
+            /** Family */
+            family?: ("clear" | "drive" | "smash" | "net" | "drop" | "lift" | "block" | "push" | "net_kill" | "other") | null;
+            /** Family Score */
+            family_score?: number | null;
+            /** Frame */
+            frame: number;
+            /** Hitter Id */
+            hitter_id?: ("P1" | "P2" | "P3" | "P4") | null;
+            hitter_position?: components["schemas"]["CourtPoint"] | null;
+            /** Id */
+            id: string;
+            /** Kind */
+            kind?: ("serve" | "shot") | null;
+            landing?: components["schemas"]["Landing"] | null;
+            /** Players */
+            players?: components["schemas"]["PlayerPosition"][];
+            /** Serve Type */
+            serve_type?: ("short" | "long") | null;
+            shuttle?: components["schemas"]["ImagePoint"] | null;
+            /** Side */
+            side?: ("forehand" | "backhand") | null;
+            /** Side Score */
+            side_score?: number | null;
+            /** Time S */
+            time_s: number;
+        };
         /** ShuttlePoint */
         ShuttlePoint: {
             /** Frame */
@@ -819,6 +1469,29 @@ export interface components {
             x?: number | null;
             /** Y */
             y?: number | null;
+        };
+        /** ShuttleTrack */
+        ShuttleTrack: {
+            /** X */
+            x: (number | null)[];
+            /** Y */
+            y: (number | null)[];
+        };
+        /** SwapRequest */
+        SwapRequest: {
+            /** Persons */
+            persons: [
+                "P1" | "P2" | "P3" | "P4",
+                "P1" | "P2" | "P3" | "P4"
+            ];
+        };
+        /** SwapResult */
+        SwapResult: {
+            /** Applied */
+            applied: boolean;
+            /** Overrides */
+            overrides: components["schemas"]["PersonSwap"][];
+            rally: components["schemas"]["Rally"];
         };
         /** TrackAssignment */
         TrackAssignment: {
@@ -862,6 +1535,16 @@ export interface components {
              */
             stride?: number;
         };
+        /** Tracks */
+        Tracks: {
+            /** Persons */
+            persons: components["schemas"]["PersonTrack"][];
+            /** Rate Hz */
+            rate_hz: number;
+            /** Sample Frames */
+            sample_frames: number[];
+            shuttle: components["schemas"]["ShuttleTrack"];
+        };
         /** ValidationError */
         ValidationError: {
             /** Context */
@@ -874,6 +1557,28 @@ export interface components {
             msg: string;
             /** Error Type */
             type: string;
+        };
+        /** VideoInfo */
+        VideoInfo: {
+            /** Duration S */
+            duration_s: number;
+            /** Fps */
+            fps: number;
+            /** Frame Count */
+            frame_count: number;
+            /** Height */
+            height: number;
+            /** Id */
+            id: string;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "singles" | "doubles";
+            /** Name */
+            name?: string | null;
+            /** Width */
+            width: number;
         };
         /** YoutubeRequest */
         YoutubeRequest: {
@@ -1000,6 +1705,420 @@ export interface operations {
                 content: {
                     "application/json": unknown;
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_matches_api_matches_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchSummary"][];
+                };
+            };
+        };
+    };
+    create_match_api_matches_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_create_match_api_matches_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchCreated"];
+                };
+            };
+            /** @description Another job is running, or format mismatch */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Video too large */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Invalid video or names */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    match_status_api_matches__match_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchStatus"];
+                };
+            };
+            /** @description Unknown match */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    match_document_api_matches__match_id__analysis_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchAnalysis"];
+                };
+            };
+            /** @description Unknown match or results not built yet */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pause_match_api_matches__match_id__pause_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchStatus"];
+                };
+            };
+            /** @description The match is not processing */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    match_players_api_matches__match_id__players_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchPlayers"];
+                };
+            };
+            /** @description No results yet */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    confirm_match_players_api_matches__match_id__players_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NameConfirmation"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchPlayers"];
+                };
+            };
+            /** @description No results yet */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Names break the entered teams */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    match_player_thumbnail_api_matches__match_id__players__person_id__thumbnail_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+                person_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description No picture of this person */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    swap_rally_players_api_matches__match_id__rallies__rally_id__swap_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+                rally_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SwapRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SwapResult"];
+                };
+            };
+            /** @description Unknown match or rally */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    undo_rally_swaps_api_matches__match_id__rallies__rally_id__swap_delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+                rally_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SwapResult"];
+                };
+            };
+            /** @description Unknown match or rally */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resume_match_api_matches__match_id__resume_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchCreated"];
+                };
+            };
+            /** @description Already processing or video missing */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -1417,6 +2536,44 @@ export interface operations {
                 content: {
                     "application/json": unknown;
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    match_analysis_api_videos__video_id__match_analysis_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                video_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MatchAnalysis"];
+                };
+            };
+            /** @description Video unknown or results not built yet */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
