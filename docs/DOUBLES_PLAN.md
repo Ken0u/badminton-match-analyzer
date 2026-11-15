@@ -37,12 +37,30 @@ with its upload with no frame offset (`training/extract_dshuttlenet.py`).
   keeping each tournament on one side where possible. Retrain.
 - S2 Doubles match 3 stays unopened until a final score is wanted.
 
-## 4. Recognise each player across the match (not started)
+## 4. Recognise each player across the match (first version, not in the app)
 
-A player is followed only within one rally today. Per-person statistics need
-the same four people recognised from rally to rally and after the change of
-ends. Planned evidence: appearance (shirt, build) and the rule that partners
-share an end. DShuttleNet's player ids give labels to test against.
+A player is followed only within one camera view in the app. Per-person
+statistics need the same four people recognised from rally to rally and
+after the change of ends, from looks alone (edited highlights keep only some
+rallies, so rally order and the score are not used).
+
+`training/identity_probe.py` describes each tracked player by clothing and
+shoe colour, body length and a whole-person description (OSNet, fine-tuned
+on DShuttleNet's player letters by `training/finetune_reid.py`), then splits
+each match into two teams and each team into two partners.
+
+All four players right per rally, on DShuttleNet matches never trained on:
+
+| Set | Original description | Fine-tuned |
+|---|---|---|
+| Test (7 matches from 2025, 452 rallies, scored once) | 80% | 86% |
+| Validation (6 matches, 471 rallies) | 77% * | 91% |
+
+\* with the earlier grouping. Validation also chose some settings, so its
+91% is optimistic; the test figure is the honest one. Teams are right for
+99 to 100% of tracks on every test match: what remains is telling partners
+apart (weakest test matches 54 at 76% and 62 at 77%). Most mistakes are made
+confidently, so the preview's "?" catches few of them.
 
 ## 5. Statistics in the app (not started)
 
