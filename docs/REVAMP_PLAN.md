@@ -102,7 +102,9 @@ own separate files and commit only their own paths.
 
 | Step | State | Notes |
 |---|---|---|
-| 1 | in progress | |
-| 2a | in progress | |
-| 2b | waiting on 1 and 2a | |
+| 1 | done (b1a0bdf) | `match_analysis.py`, `GET /api/videos/{id}/match-analysis`, `badminton match-analysis` CLI; format in `docs/MATCH_ANALYSIS_FORMAT.md`. Rally boundaries still from a contact-gap rule; `schema.ts` not regenerated yet. |
+| 2a | done (4e1a627, a6d21d2) | `persons` pipeline stage (`person_identity.py`); 100% agreement with the research grouping on `doubles.mp4`; regression rally frames 5838-6344. Not re-scored on the DShuttleNet test matches (needs the VM). |
+| 2b | in progress | |
 | 3 to 8 | not started | |
+
+Known risk for step 5: perception cache keys hash every non-`.py` file in `backend/badminton`, including `static/build-manifest.json`, so a frontend rebuild into the package would force full re-tracking of every video.
