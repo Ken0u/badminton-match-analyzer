@@ -94,7 +94,8 @@ def main():
     match.add_argument(
         "--identity",
         type=Path,
-        help="JSON with persons and track assignments (default: per-view fallback)",
+        help="JSON with persons and track assignments (default: the persons "
+        "stage's document, else the per-view fallback)",
     )
     match.add_argument(
         "--schema", action="store_true", help="Print the JSON Schema and exit"
@@ -481,11 +482,11 @@ def main():
     elif args.command == "match-analysis":
         from .match_analysis import (
             MatchAnalysis,
-            build_match_analysis,
+            latest_analysis_key,
             load_identity,
-            load_match_inputs,
-            write_match_analysis,
+            match_analysis_path,
         )
+        from .matches import rebuild
 
         if args.schema:
             print(json.dumps(MatchAnalysis.model_json_schema(), indent=2))
@@ -494,11 +495,14 @@ def main():
             parser.error("match-analysis needs a video ID")
         store = Store(DATA)
         try:
-            document = build_match_analysis(
-                load_match_inputs(store, args.video_id, args.analysis_key),
+            # Confirmed names and rally swaps of a match are kept.
+            document = rebuild(
+                store,
+                args.video_id,
+                args.analysis_key or latest_analysis_key(store, args.video_id),
                 load_identity(args.identity) if args.identity else None,
             )
-            path = write_match_analysis(DATA, document)
+            path = match_analysis_path(DATA, args.video_id)
         except (KeyError, ValueError, OSError) as exc:
             parser.error(str(exc))
         shots = [shot for rally in document.rallies for shot in rally.shots]

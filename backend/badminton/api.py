@@ -15,6 +15,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import Field
 
 from . import config
+from . import matches as match_flow
 from .access import AccessMiddleware
 from .calibration_context import court_context_changed, court_run_context
 from .ingest import inspect_video
@@ -210,7 +211,10 @@ def create_app(
         except FileNotFoundError as exc:
             raise HTTPException(404, str(exc)) from exc
 
-    def enqueue(kind, video_id, task, details=None):
+    def enqueue(kind, video_id, task, details=None, *, with_job=False, claimed=None):
+        """Admit and queue one job. ``task(job_id, progress)``, or with
+        ``with_job`` ``task(job, progress)`` so it can set the job's message
+        and details. ``claimed(job)`` runs after admission, before queuing."""
         job = {
             "id": uuid4().hex,
             "kind": kind,
@@ -224,6 +228,13 @@ def create_app(
             store.claim_job(job)
         except ConflictError as exc:
             raise HTTPException(409, str(exc)) from exc
+        if claimed is not None:
+            try:
+                claimed(job)
+            except BaseException as exc:
+                job.update(status="failed", message=str(exc) or type(exc).__name__)
+                store.put_job(job)
+                raise
 
         def run():
             def progress(value):
@@ -233,7 +244,7 @@ def create_app(
             try:
                 job.update(status="running", message="Processing")
                 store.put_job(job)
-                summary = task(job["id"], progress)
+                summary = task(job if with_job else job["id"], progress)
                 job.update(
                     status="completed", progress=1, message="Completed", summary=summary
                 )
@@ -380,6 +391,289 @@ def create_app(
         """The stored per-match results document; read-only, never rebuilt here."""
         store.video(video_id)
         document = read_match_analysis(data, video_id)
+        if document is None:
+            raise HTTPException(404, "Match analysis has not been built yet")
+        return document
+
+    # Matches: upload plus names, one job, name confirmation (docs/MATCHES_API.md)
+
+    def match_job(video_id, ingest=None, record=None):
+        """Admit one analysis job running matches.run_match for this video."""
+
+        def claimed(job):
+            with match_flow.lock():
+                current = record or match_flow.read_record(data, video_id)
+                current["job_id"] = job["id"]
+                current["jobs"] = [*current.get("jobs", []), job["id"]]
+                match_flow.write_record(data, current)
+
+        return enqueue(
+            "analysis",
+            video_id,
+            lambda job, progress: match_flow.run_match(
+                store, root, video_id, job, progress, ingest=ingest
+            ),
+            {"match": True},
+            with_job=True,
+            claimed=claimed,
+        )
+
+    def match_record(match_id):
+        record = match_flow.read_record(data, match_id)
+        if record is None:
+            raise HTTPException(404, "Unknown match")
+        return record
+
+    def require_results(match_id):
+        state = match_flow.status(store, match_id).state
+        if state not in ("needs_names", "ready"):
+            raise HTTPException(409, f"The match is {state}, not finished")
+
+    @app.post(
+        "/api/matches",
+        status_code=202,
+        response_model=match_flow.MatchCreated,
+        responses={
+            409: {"description": "Another job is running, or format mismatch"},
+            413: {"description": "Video too large"},
+            422: {"description": "Invalid video or names"},
+        },
+    )
+    def create_match(
+        file: UploadFile = File(...),
+        mode: Literal["singles", "doubles"] = Form(...),
+        team1: list[str] = Form(...),
+        team2: list[str] = Form(...),
+    ):
+        """Upload a match with its players' names and start the one job.
+
+        Names: singles one per team, doubles two per team (partners). The
+        same video uploaded again reuses the stored video and its finished
+        processing stages.
+        """
+        from .file_cache import file_digest
+        from .media_import import MediaTooLargeError, save_upload
+
+        try:
+            entered = match_flow.entered_names(mode, team1, team2)
+            path = save_upload(
+                file.file,
+                file.filename or "",
+                root / ".media",
+                max_bytes=max_media_bytes,
+            )
+        except MediaTooLargeError as exc:
+            raise HTTPException(413, str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        finally:
+            file.file.close()
+        keep = False
+        try:
+            video_id = file_digest(path)[:16]
+            try:
+                existing = store.video(video_id)
+            except KeyError:
+                existing = None
+            if existing and existing["mode"] != mode:
+                raise HTTPException(
+                    409, f"This video is already stored as a {existing['mode']} match"
+                )
+            reuse = False
+            if existing:
+                try:
+                    resolve_source(existing, root)
+                    reuse = True
+                except (ValueError, FileNotFoundError):
+                    pass
+            name = (
+                existing.get("name")
+                if reuse
+                else (file.filename or "Uploaded match")
+                .replace("\\", "/")
+                .rsplit("/", 1)[-1][:200]
+            )
+            previous = match_flow.read_record(data, video_id) or {}
+            record = match_flow.new_record(video_id, mode, entered, name)
+            record["jobs"] = previous.get("jobs", [])
+
+            def ingest(progress):
+                register_media(
+                    path, mode, progress, {"name": name, "source_type": "upload"}
+                )
+
+            job = match_job(video_id, None if reuse else ingest, record)
+            keep = not reuse
+        finally:
+            if not keep:
+                path.unlink(missing_ok=True)
+        return {
+            "match_id": video_id,
+            "video_id": video_id,
+            "job_id": job["id"],
+            "reused_video": reuse,
+        }
+
+    @app.get("/api/matches", response_model=list[match_flow.MatchSummary])
+    def list_matches():
+        return match_flow.matches(store)
+
+    @app.get(
+        "/api/matches/{match_id}",
+        response_model=match_flow.MatchStatus,
+        responses={404: {"description": "Unknown match"}},
+    )
+    def match_status(match_id: str):
+        """State, one overall progress value 0..1 and a stage label."""
+        match_record(match_id)
+        return match_flow.status(store, match_id)
+
+    @app.post(
+        "/api/matches/{match_id}/pause",
+        status_code=202,
+        response_model=match_flow.MatchStatus,
+        responses={409: {"description": "The match is not processing"}},
+    )
+    def pause_match(match_id: str):
+        """Ask the running job to stop; finished stages are kept for resuming."""
+        record = match_record(match_id)
+        try:
+            store.request_cancel(record.get("job_id") or "")
+        except (ConflictError, KeyError) as exc:
+            raise HTTPException(409, "The match is not processing") from exc
+        return match_flow.status(store, match_id)
+
+    @app.post(
+        "/api/matches/{match_id}/resume",
+        status_code=202,
+        response_model=match_flow.MatchCreated,
+        responses={409: {"description": "Already processing or video missing"}},
+    )
+    def resume_match(match_id: str):
+        """Run the match job again, reusing every finished stage."""
+        match_record(match_id)
+        if match_flow.status(store, match_id).state in ("queued", "running"):
+            raise HTTPException(409, "The match is already processing")
+        try:
+            source(store.video(match_id))
+        except KeyError as exc:
+            raise HTTPException(
+                409, "The video was never stored; upload it again"
+            ) from exc
+        job = match_job(match_id)
+        return {
+            "match_id": match_id,
+            "video_id": match_id,
+            "job_id": job["id"],
+            "reused_video": True,
+        }
+
+    def thumbnail_url(match_id):
+        return lambda person: f"/api/matches/{match_id}/players/{person}/thumbnail"
+
+    @app.get(
+        "/api/matches/{match_id}/players",
+        response_model=match_flow.MatchPlayers,
+        responses={409: {"description": "No results yet"}},
+    )
+    def match_players(match_id: str):
+        """Each person found, with team, the guessed or confirmed name and a
+        picture."""
+        match_record(match_id)
+        try:
+            return match_flow.players(store, match_id, thumbnail_url(match_id))
+        except match_flow.NotReady as exc:
+            raise HTTPException(409, str(exc)) from exc
+
+    @app.put(
+        "/api/matches/{match_id}/players",
+        response_model=match_flow.MatchPlayers,
+        responses={
+            409: {"description": "No results yet"},
+            422: {"description": "Names break the entered teams"},
+        },
+    )
+    def confirm_match_players(match_id: str, body: match_flow.NameConfirmation):
+        """Confirm which entered name belongs to which person (swaps allowed;
+        doubles partners stay on one team). Rebuilds the document."""
+        match_record(match_id)
+        require_results(match_id)
+        try:
+            match_flow.confirm_names(store, match_id, body.names)
+        except match_flow.NotReady as exc:
+            raise HTTPException(409, str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        return match_flow.players(store, match_id, thumbnail_url(match_id))
+
+    @app.get(
+        "/api/matches/{match_id}/players/{person_id}/thumbnail",
+        response_class=FileResponse,
+        responses={404: {"description": "No picture of this person"}},
+    )
+    def match_player_thumbnail(match_id: str, person_id: str):
+        match_record(match_id)
+        document = read_match_analysis(data, match_id)
+        person = next(
+            (p for p in (document.players if document else []) if p.id == person_id),
+            None,
+        )
+        path = match_flow.thumbnail_file(
+            data, match_id, person.thumbnail if person else None
+        )
+        if path is None:
+            raise HTTPException(404, "No picture of this person")
+        return FileResponse(path)
+
+    def swap_response(match_id, rally_id, persons):
+        match_record(match_id)
+        require_results(match_id)
+        try:
+            applied, rally, document = match_flow.swap(
+                store, match_id, rally_id, persons
+            )
+        except match_flow.NotReady as exc:
+            raise HTTPException(409, str(exc)) from exc
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        rebuilt = next(
+            (
+                r
+                for r in document.rallies
+                if (r.start_frame, r.end_frame) == (rally.start_frame, rally.end_frame)
+            ),
+            rally,
+        )
+        return {"applied": applied, "rally": rebuilt, "overrides": document.overrides}
+
+    @app.post(
+        "/api/matches/{match_id}/rallies/{rally_id}/swap",
+        response_model=match_flow.SwapResult,
+        responses={404: {"description": "Unknown match or rally"}},
+    )
+    def swap_rally_players(match_id: str, rally_id: str, body: match_flow.SwapRequest):
+        """Swap two persons for one rally (usually partners). The same swap
+        again undoes it. Stored as an override; the document is rebuilt."""
+        return swap_response(match_id, rally_id, body.persons)
+
+    @app.delete(
+        "/api/matches/{match_id}/rallies/{rally_id}/swap",
+        response_model=match_flow.SwapResult,
+        responses={404: {"description": "Unknown match or rally"}},
+    )
+    def undo_rally_swaps(match_id: str, rally_id: str):
+        """Remove every swap made on this rally."""
+        return swap_response(match_id, rally_id, None)
+
+    @app.get(
+        "/api/matches/{match_id}/analysis",
+        response_model=MatchAnalysis,
+        responses={404: {"description": "Unknown match or results not built yet"}},
+    )
+    def match_document(match_id: str):
+        """The MatchAnalysis document (same as /api/videos/{id}/match-analysis)."""
+        match_record(match_id)
+        document = read_match_analysis(data, match_id)
         if document is None:
             raise HTTPException(404, "Match analysis has not been built yet")
         return document
