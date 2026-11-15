@@ -369,7 +369,7 @@ def agree(pairs, wholes, colour=0.5, links=10):
     between games) instead of fitting one look per person to the whole match.
     The signs that agree best with all comparisons are the leading
     eigenvector, then refined one pair at a time. Returns per pair a sign
-    (+1 keeps the order) and how strongly the rest supports it.
+    (+1 keeps the order) and the share of the comparisons that back it.
     """
     count = len(pairs)
     if count == 0:
@@ -414,7 +414,9 @@ def agree(pairs, wholes, colour=0.5, links=10):
         if (updated == signs).all():
             break
         signs = updated
-    return signs, np.abs(agreement @ signs)
+    # Share of the comparisons that back each pair's order, -1 to 1.
+    support = signs * (agreement @ signs) / np.maximum(1e-9, np.abs(agreement).sum(1))
+    return signs, support
 
 
 def partner_directions(both):

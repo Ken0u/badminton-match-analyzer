@@ -30,9 +30,10 @@ from badminton.storage import Store
 
 COLORS = ((60, 60, 255), (0, 200, 255), (255, 140, 40), (80, 220, 80))
 UNSURE = (200, 200, 200)
-# Below this many noise units between the two ways round, a view's partners
-# are drawn as unsure.
-SURE = 3.0
+# Below this share of the comparisons backing a view's partner order, the
+# partners are drawn as unsure (on six tuning matches: 2% of pairs, 57% of
+# them right; most mistakes are confident ones, so "?" catches few).
+SURE = 0.3
 
 
 def load(store, video_id):
