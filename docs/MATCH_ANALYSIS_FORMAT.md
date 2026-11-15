@@ -1,4 +1,4 @@
-# MatchAnalysis format (schema version 1)
+# MatchAnalysis format (schema version 2)
 
 One JSON document per match. The match page and every statistic read only
 this document; they never read processing plans, stage runs or annotations.
@@ -10,19 +10,24 @@ TypeScript types come from the OpenAPI contract in
 
 - File: `<data dir>/<video id>/match_analysis.json`, next to `metadata.json`
   and `timestamps.json`. Local data; not committed.
-- Build: `python -m badminton.cli match-analysis <video id>
-  [--analysis-key KEY] [--identity persons.json]`. It reads the newest
-  completed full-match processing plan (or the one given), checks the hash of
-  every stage output it reads, and writes the file atomically. It runs no
+- Build: the match job (`POST /api/matches`, see `docs/MATCHES_API.md`)
+  builds it at the end of processing, and again whenever names are confirmed
+  or a rally swap changes. By hand: `python -m badminton.cli match-analysis
+  <video id> [--analysis-key KEY] [--identity persons.json]`. Every build
+  reads one completed full-match processing plan (the newest, or the one
+  given; name and swap edits keep the plan the stored document came from),
+  checks the hash of every stage output it reads, applies the match's
+  confirmed names and swaps, and writes the file atomically. It runs no
   inference. `--schema` prints the JSON Schema.
-- Read: `GET /api/videos/{video_id}/match-analysis` returns the stored file.
-  It never builds on request: 404 means the video is unknown or the document
-  has not been built yet. Step 2b's processing job will build it at the end.
+- Read: `GET /api/matches/{id}/analysis` or
+  `GET /api/videos/{video_id}/match-analysis` return the stored file. They
+  never build on request: 404 means the video is unknown or the document has
+  not been built yet. A file of an older schema version reads as not built.
 
 ## Rules
 
-- **Unknown is `null`**, never a guess. Version 1 has no shuttle speed,
-  height or 3D position; `shot.landing` and `rally.outcome` are always `null`
+- **Unknown is `null`**, never a guess. There is no shuttle speed, height or
+  3D position yet; `shot.landing` and `rally.outcome` are always `null`
   (step 3 fills them).
 - **Frames** are source frame indices; `time_s` and `*_s` are source seconds
   from `timestamps.json`. Ranges are half-open unless noted.
@@ -42,14 +47,17 @@ TypeScript types come from the OpenAPI contract in
 
 | Field | Contents |
 |---|---|
-| `schema_version` | `1` |
+| `schema_version` | `2` |
 | `video` | `id`, `name`, `mode` (singles/doubles), `fps`, `frame_count`, `duration_s`, `width`, `height` |
-| `players` | persons: `id` (`P1`..`P4`), `name` (empty until confirmed), `team` (`T1`/`T2`), `handedness` (`null` = unknown), `thumbnail` (path relative to the video's data folder, or `null`) |
-| `identity` | how person ids were given: `source` (`supplied` or `per_view_fallback`), `method`, `persistent`, `note`, `assignment_count`, `assigned_observation_share` |
+| `players` | persons: `id` (`P1`..`P4`), `name` (empty until confirmed), `team` (`T1`/`T2`), `handedness` (`null` = unknown), `thumbnail` (path relative to the video's data folder, or `null`; the API serves it at `/api/matches/{id}/players/{person}/thumbnail`) |
+| `names_confirmed` | `true` once every player has a confirmed name (see Names) |
+| `identity` | how person ids were given: `source` (`persons_stage`, `supplied` or `per_view_fallback`), `method`, `persistent`, `note`, `assignment_count`, `assigned_observation_share` |
 | `court` | `geometry` (line positions in metres) and `views` |
 | `rallies` | ordered rallies with their shots |
 | `tracks` | per-person court positions at 10 Hz and the shuttle per frame |
-| `provenance` | builder, `created_at`, `analysis_key`, run ids per processing window, models |
+| `overrides` | user swaps applied to person ids (see Overrides) |
+| `warnings` | plain sentences about limits of this document, such as a per-view identity fallback; empty when there are none |
+| `provenance` | builder, `created_at`, `analysis_key`, run ids (segments, identities, persons, and per processing window players, shuttle, contacts, rallies, recognition), models |
 
 ### `court.views[]`
 
@@ -61,14 +69,39 @@ by the third component) and `source` (`automatic` or `reviewed`).
 
 ### `rallies[]`
 
-`id`, `start_frame`/`end_frame` (inclusive: the first and last detected
-contact), `start_s`/`end_s`, `server_id` (hitter of the opening serve, or
+`id`, `start_frame`/`end_frame` (inclusive), `start_s`/`end_s`,
+`start_source`, `end_source`, `server_id` (hitter of the opening serve, or
 `null`), `shots`, `outcome` (`null`; later `winner_team`, `reason`
-winner/error, `source`).
+winner/error, `source`). Rally ids number the rallies in order (`rally-1`,
+...) and can change when a rebuild changes the boundaries.
 
-A new rally starts at each predicted serve, after 4 s without a contact, or at
-a camera cut between two contacts. A rally that does not open with a serve
-has `server_id: null`. The true rally end (landing) is unknown in version 1.
+Boundaries come first from the pipeline's rallies stage, which proposes
+serves (a quiet player context, then a low launch) and rally ends (the
+shuttle settling after flight):
+
+- A serve proposal opens the rally at the earliest contact within 0.5 s of
+  it (the serve contact; the proposal marks the launch a few frames later):
+  `start_source: proposed_serve`, and that contact's hitter is the server.
+  Without such a contact it opens the rally at the proposal frame itself
+  when a contact follows within 4 s; the serve contact was missed, so
+  `server_id` is `null`. A serve proposal with no contact within 4 s after it
+  opens nothing.
+- A rally-end proposal after a contact (within 4 s, same camera view, before
+  the next rally's start) ends the rally at the proposal frame:
+  `end_source: proposed_rally_end`. The next rally then starts at its first
+  contact with `start_source: after_proposed_end`, unless a serve proposal
+  opens it.
+- Where no proposal decides, the fallback applies between two contacts: a
+  predicted serve (`predicted_serve`), more than 4 s without a contact
+  (`contact_gap`) or a camera cut (`camera_cut`). The video's first rally
+  without a proposal has `first_contact`.
+- A rally without a proposed end ends at its last contact
+  (`end_source: last_contact`); the landing time is then unknown.
+
+The rallies stage abstains often (on `doubles.mp4` it proposes 14 serves and
+2 rally ends for 26 rallies; on `singles.mp4` 7 serves and 4 ends for 21), so
+many boundaries still come from the fallback. Statistics that care can filter
+on the sources.
 
 ### `rallies[].shots[]`
 
@@ -101,7 +134,18 @@ A full match stays around half a megabyte (8-minute doubles clip: 0.53 MB).
 
 ## Identity
 
-The builder takes an optional identity input: a roster (`persons`: `id`,
+By default the identity is the pipeline's persons stage
+(`identity.source: persons_stage`, `persistent: true`; see
+`backend/badminton/person_identity.py`): every person keeps one id through
+the whole video, across camera views and end changes. Its ids are unreviewed;
+the name confirmation and the rally swap exist for its mistakes. When the
+re-identification weights are missing or do not match the model manifest,
+processing still finishes without the persons stage, and the builder uses the
+per-view fallback below, with the reason in `identity.note` and in
+`warnings`.
+
+An explicit identity input wins over the persons stage
+(`source: supplied`): a roster (`persons`: `id`,
 `team`, optional `name`, `handedness`, `thumbnail`) and track assignments in
 the `TrackAssignment` shape (`run_id`, `track_id`, `start_frame`,
 `end_frame` half-open, `player_id`) that map each processing window's player
@@ -117,3 +161,26 @@ continuity ids; partners at one end are kept apart by a free slot and their
 side of the court. After an end change or a cut the same id can name a
 different human. `identity.persistent` is `false` and `identity.note` says so;
 per-person statistics over a whole match need a supplied identity.
+
+## Names
+
+Names are entered at upload, by team (partners together), and kept in the
+match record (`<data dir>/<video id>/match.json`), never in the persons
+document. Until they are confirmed every `players[].name` is empty and
+`names_confirmed` is `false`; the API's players endpoint shows the entered
+names as a guess (team 1's names on `T1` in id order, team 2's on `T2`).
+Confirmation gives each entered name to exactly one person, with doubles
+partners on one team; the document is then rebuilt with the names and
+`names_confirmed: true`. Names given with a supplied identity input count as
+confirmed.
+
+## Overrides
+
+`overrides[]` are the user's corrections, kept in
+`<data dir>/<video id>/match_overrides.json` and applied by the builder on
+every build, in list order: `kind` (`swap`), `persons` (the two ids),
+`start_frame`/`end_frame` (inclusive: the rally's frames when the swap was
+made) and `rally_id` (that rally, for reference). Inside the range every
+person id the document gives (hitters, servers, `shots[].players`, tracks)
+is swapped between the two persons. Overrides are frame ranges, so they
+survive rebuilds even when rally ids change; two identical swaps cancel.
