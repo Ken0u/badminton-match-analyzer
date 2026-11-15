@@ -37,9 +37,14 @@ with its upload with no frame offset (`training/extract_dshuttlenet.py`).
   keeping each tournament on one side where possible. Retrain.
 - S2 Doubles match 3 stays unopened until a final score is wanted.
 
-## 4. Recognise each player across the match (first version, not in the app)
+## 4. Recognise each player across the match
 
-A player is followed only within one camera view in the app. Per-person
+In the app since the revamp (step 2a in `docs/REVAMP_PLAN.md`): the
+`persons` pipeline stage (`backend/badminton/person_identity.py`) runs this
+method with the fine-tuned weights and gives every player one id through the
+video. On `doubles.mp4` it agrees with the research grouping on every frame.
+
+Before that, a player was followed only within one camera view. Per-person
 statistics need the same four people recognised from rally to rally and
 after the change of ends, from looks alone (edited highlights keep only some
 rallies, so rally order and the score are not used).
