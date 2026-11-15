@@ -40,6 +40,16 @@ LETTERS = "ABCD"
 # to a tracked player's feet (share of the frame height) to name that player.
 SAMPLES = 8
 REACH = 0.07
+# Pictures wanted of each player per rally. Partners often stand close
+# together, so evenly spaced frames can miss one of them unobstructed
+# entirely; frames where that player stands clear are then added.
+MIN_LOOKS = 4
+# A player never seen clear in a rally (another box covering more than
+# CLEAR of theirs) is pictured in the frames where they are least covered,
+# up to PARTLY, skipping colour samples inside the box of whoever stands in
+# front.
+CLEAR = 0.15
+PARTLY = 0.5
 # Body patches as strips between keypoints (COCO order): the two ends of each
 # strip, how far along it the patch starts and stops, and its width as a share
 # of its length. A strip end given as two keypoints is their midpoint. Limbs
@@ -96,8 +106,9 @@ def overlap(box, other):
     return area / max(1e-6, (box[2] - box[0]) * (box[3] - box[1]))
 
 
-def patch_colour(image, person, name):
-    """Median Lab colour of one body patch, or None if it cannot be seen."""
+def patch_colour(image, person, name, hidden=()):
+    """Median Lab colour of one body patch, or None if it cannot be seen.
+    Points inside any box of `hidden` (bodies in front) are not sampled."""
     strips, begin, end, width = PATCHES[name]
     points = person["keypoints"]
     samples = []
@@ -114,6 +125,8 @@ def patch_colour(image, person, name):
             for side in np.linspace(-length * width / 2, length * width / 2, 5):
                 spot = upper + (lower - upper) * along + across * side
                 x, y = (int(v) for v in np.rint(spot))
+                if any(b[0] <= x <= b[2] and b[1] <= y <= b[3] for b in hidden):
+                    continue
                 if 0 <= y < image.shape[0] and 0 <= x < image.shape[1]:
                     samples.append(image[y, x])
     if len(samples) < 12:
@@ -160,6 +173,58 @@ def truth_letters(document, slots, height):
     return {slot: letter for slot, letter in named.items() if letter not in doubled}
 
 
+def covered(row, person):
+    """The largest share of a player's box that another box covers."""
+    return max(
+        (overlap(person["box"], o["box"]) for o in row["players"] if o is not person),
+        default=0.0,
+    )
+
+
+def clear(row, person, limit=CLEAR):
+    """Whether a player can be pictured: full pose, no other body in front."""
+    return len(person.get("keypoints", [])) == 17 and covered(row, person) <= limit
+
+
+def frames_to_look_at(rows, played, slot_of, samples, wanted=MIN_LOOKS):
+    """Evenly spaced rows, plus rows where a player short of clear views is
+    seen clear, chosen from the tracks alone before any video is decoded."""
+    chosen = {played[round(i)] for i in np.linspace(0, len(played) - 1, samples)}
+    clear_in = defaultdict(list)
+    for index in played:
+        row = rows[index]
+        for person in row["players"]:
+            slot = slot_of(row, person)
+            if slot is not None and clear(row, person):
+                clear_in[slot].append(index)
+    for frames in clear_in.values():
+        have = sum(index in chosen for index in frames)
+        spare = [index for index in frames if index not in chosen]
+        if have < wanted and spare:
+            extra = min(wanted - have, len(spare))
+            chosen |= {spare[round(i)] for i in np.linspace(0, len(spare) - 1, extra)}
+    # Players never clear: their least covered moments, a few frames apart.
+    partly = {}
+    for slot in range(SLOTS):
+        if clear_in.get(slot):
+            continue
+        options = []
+        for index in played:
+            row = rows[index]
+            for person in row["players"]:
+                if slot_of(row, person) == slot and clear(row, person, PARTLY):
+                    options.append((covered(row, person), index))
+        picked = []
+        for _, index in sorted(options):
+            if all(abs(index - other) >= 5 for other in picked):
+                picked.append(index)
+            if len(picked) == wanted:
+                break
+        chosen |= set(picked)
+        partly[slot] = set(picked)
+    return sorted(chosen), partly
+
+
 def looks_of(rows, played, frame_of, slot_of, capture, model=None, samples=SAMPLES):
     """Sizes, patch colours and whole look of each slot over `played` rows.
 
@@ -181,7 +246,7 @@ def looks_of(rows, played, frame_of, slot_of, capture, model=None, samples=SAMPL
                         round(length, 1) if length else None,
                     ]
                 )
-    chosen = [played[round(i)] for i in np.linspace(0, len(played) - 1, samples)]
+    chosen, partly = frames_to_look_at(rows, played, slot_of, samples)
     crops, owners = [], []
     for index in chosen:
         image = capture.frame(frame_of(index))
@@ -191,16 +256,20 @@ def looks_of(rows, played, frame_of, slot_of, capture, model=None, samples=SAMPL
         row = rows[index]
         for person in row["players"]:
             slot = slot_of(row, person)
-            if slot is None or len(person.get("keypoints", [])) != 17:
-                continue
             # Another body in front of this one would colour the patches.
-            if any(
-                overlap(person["box"], other["box"]) > 0.15
-                for other in row["players"]
-                if other is not person
-            ):
+            if slot is None:
                 continue
-            look = {name: patch_colour(image, person, name) for name in PATCHES}
+            hidden = ()
+            if not clear(row, person):
+                if index not in partly.get(slot, ()) or not clear(row, person, PARTLY):
+                    continue
+                # In front: the body whose feet are nearer the camera.
+                hidden = [
+                    o["box"]
+                    for o in row["players"]
+                    if o is not person and o["box"][3] > person["box"][3]
+                ]
+            look = {name: patch_colour(image, person, name, hidden) for name in PATCHES}
             tracks[slot]["looks"].append(look)
             left, top, right, bottom = (int(v) for v in person["box"])
             crop = picture[max(0, top) : bottom, max(0, left) : right]
@@ -246,7 +315,7 @@ def describe(path, capture, model=None, samples=SAMPLES):
 
 
 def load(args):
-    tag = "" if args.samples == SAMPLES else f"-n{args.samples}"
+    tag = ("" if args.samples == SAMPLES else f"-n{args.samples}") + "-fill2"
     cache = args.cache / f"{args.prefix}-{args.match}{tag}.json"
     if cache.exists() and not args.refresh:
         return json.loads(cache.read_text(encoding="utf-8"))
