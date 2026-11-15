@@ -318,7 +318,7 @@ def vectors(rallies, use):
             )
 
 
-def split_two(pairs, rounds=20):
+def split_two(pairs, rounds=20, centre=False):
     """Order each pair of vectors so the first members are alike.
 
     `pairs` is a list of (first, second) vectors whose order means nothing:
@@ -329,6 +329,13 @@ def split_two(pairs, rounds=20):
     one line; the line of best fit gives a first ordering, which is refined by
     fitting the two things themselves. Returns per pair a sign (+1 keeps the
     order) and how many noise units separate the two orderings.
+
+    With `centre`, the average difference is taken out before the line is
+    fitted. Use it when first and second differ in a way that does not flip
+    with the order: the far and near pair of a rally look different because
+    of the end itself (front or back of the shirt, light), and when that is
+    larger than the team difference the line found the end, putting every far
+    pair in one team (DShuttleNet match 37).
     """
     if not pairs:
         return np.zeros(0), np.zeros(0)
@@ -338,6 +345,8 @@ def split_two(pairs, rounds=20):
     noise = np.where(noise > 1e-6, noise, 1.0)
     first, second = first / noise, second / noise
     gaps = np.where(np.isnan(first - second), 0.0, first - second)
+    if centre:
+        gaps = gaps - gaps.mean(axis=0)
     _, _, axes = np.linalg.svd(gaps, full_matrices=False)
     signs = np.where(gaps @ axes[0] >= 0, 1.0, -1.0)
     for _ in range(rounds):
@@ -472,7 +481,7 @@ def group(rallies, teams_by="prototype", partners_by="pairwise"):
 
             signs, margins = agree(means, [tuple(whole(e) for e in p) for p in ends])
         else:
-            signs, margins = split_two(means)
+            signs, margins = split_two(means, centre=True)
     teams = defaultdict(list)
     for (far, near), sign, margin in zip(ends, signs, margins):
         for end, team in ((far, 0 if sign > 0 else 1), (near, 1 if sign > 0 else 0)):
