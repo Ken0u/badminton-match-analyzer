@@ -33,7 +33,7 @@ def test_full_source_api_and_resume_preserve_annotations_and_expose_window_artif
         job = wait(store, identifier)
         assert job["status"] == "completed", job
         result = client.get(f"/api/videos/test/analysis/{identifier}").json()
-        assert result["completed_stages"] == 17
+        assert result["completed_stages"] == 18
         assert result["processing_complete"] and not result["fully_annotated"]
         assert not result["requires_processing_rerun"]
         identity_url = "/api/videos/test/runs/" + result["identities"]["run_id"]
@@ -51,7 +51,7 @@ def test_full_source_api_and_resume_preserve_annotations_and_expose_window_artif
         calls.clear()
         resumed = client.post("/api/videos/test/analysis", json={})
         job = wait(store, resumed.json()["id"])
-        assert job["status"] == "completed" and job["summary"]["reused_stages"] == 17
+        assert job["status"] == "completed" and job["summary"]["reused_stages"] == 18
         assert calls == [] and store.annotations("test").model_dump() == before
         changed = before | {
             "scene_ranges": [

@@ -45,5 +45,15 @@
     "sha256": "209204baf8660c03b3ed8de8f4cc6b4aec2578f412fd7f39edb7cdaffdec4842",
     "publisher": "Project training run on pinned public MMPose descriptors",
     "purpose": "Experimental singles forehand/backhand proposals for the six target families; YOLO transfer unvalidated"
+  },
+  "player_reid": {
+    "name": "reid/osnet_doubles_ft1.pth",
+    "source": "project training run: training/finetune_reid.py on DShuttleNet player letters (training/gcp/reid_finetune.sh), not downloadable",
+    "base": "osnet_x1_0_msmt17.pth (kaiyangzhou/osnet on Hugging Face, MIT licence; Zhou et al., Omni-Scale Feature Learning for Person Re-Identification)",
+    "sha256": "98f689e9ead2228d743120d569c40c53cd4434830cd154e02010df6aa7a007c2",
+    "publisher": "Project training run",
+    "terms": "Fine-tuned on DShuttleNet labels (CC BY-NC-SA 4.0): non-commercial use only",
+    "architecture": "OSNet x1.0, 512-number description (badminton/osnet.py)",
+    "purpose": "Whole-person description for looks-only persistent player identity; doubles all-four-right 94.5% of rallies on the DShuttleNet test matches, singles unvalidated"
   }
 }
