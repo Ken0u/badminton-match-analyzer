@@ -311,7 +311,7 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     text = document.model_dump_json()
     assert MatchAnalysis.model_validate_json(text) == document
     assert (
-        MatchAnalysis.model_json_schema()["properties"]["schema_version"]["const"] == 1
+        MatchAnalysis.model_json_schema()["properties"]["schema_version"]["const"] == 2
     )
     assert document.video.duration_s == 12.0
     assert [p.name for p in document.players] == ["Ann", "Bo"]
@@ -393,7 +393,7 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     )
     assert read_match_analysis(tmp_path, "v") == document
     assert read_match_analysis(tmp_path, "other") is None
-    assert json.loads(path.read_text(encoding="utf-8"))["schema_version"] == 1
+    assert json.loads(path.read_text(encoding="utf-8"))["schema_version"] == 2
 
 
 def test_rallies_split_at_serves_gaps_and_cuts():
@@ -505,3 +505,163 @@ def test_identity_artifact_extra_keys_are_ignored():
     document = build_match_analysis(fixture(), artifact)
     assert document.identity.method == "looks v1"
     assert shots(document)[210].hitter_id == "P1"
+
+
+def with_proposals(inputs, a, b):
+    """Add rallies-stage runs: window A proposes `a`, window B `b`."""
+    for index, (run_id, candidates) in enumerate((("yA", a), ("yB", b))):
+        inputs.plan["parts"][index]["stages"]["rallies"] = {"run_id": run_id}
+        inputs.runs[run_id] = {
+            "stage": "rallies",
+            "video_id": "v",
+            "candidates": [
+                {"kind": kind, "frame": frame} for kind, frame in candidates
+            ],
+        }
+    return inputs
+
+
+def test_rally_boundaries_come_from_proposals_first():
+    inputs = with_proposals(
+        fixture(),
+        # A serve just before contact 20, a rally end after contact 65, a
+        # serve at 100 without a contact, and a halo copy that B owns.
+        [("serve", 18), ("rally_end", 75), ("serve", 100), ("serve", 160)],
+        # A serve next to contact 185 splits a quick exchange.
+        [("serve", 195)],
+    )
+    document = build_match_analysis(inputs, IDENTITY)
+    rallies = [
+        (
+            r.start_frame,
+            r.end_frame,
+            r.start_source,
+            r.end_source,
+            r.server_id,
+            [s.frame for s in r.shots],
+        )
+        for r in document.rallies
+    ]
+    assert rallies == [
+        (20, 75, "proposed_serve", "proposed_rally_end", "P2", [20, 40, 65]),
+        # Contact 170 follows the unmatched serve proposal within 4 s; its
+        # serve contact was not detected, so the server is unknown.
+        (100, 170, "proposed_serve", "last_contact", None, [170]),
+        (185, 185, "proposed_serve", "last_contact", "P2", [185]),
+        # No proposal between 185 and 210: the fallback's predicted serve.
+        (210, 250, "predicted_serve", "last_contact", "P1", [210, 230, 250]),
+    ]
+    assert document.rallies[0].end_s == 3.0
+    assert [p.rallies_run_id for p in document.provenance.parts] == ["yA", "yB"]
+
+
+def test_rally_end_proposal_opens_the_next_rally_and_far_proposals_are_ignored():
+    inputs = with_proposals(
+        fixture(),
+        # 75: after 65 (ends rally 1); 140: 3 s after 65, but rally 1 already
+        # has its end.
+        [("rally_end", 75), ("rally_end", 140)],
+        # 290: 1.6 s after the last contact ends the last rally; no contact
+        # follows the serve at 270, so it opens nothing.
+        [("rally_end", 290), ("serve", 270)],
+    )
+    document = build_match_analysis(inputs, IDENTITY)
+    rallies = [
+        (r.start_frame, r.end_frame, r.start_source, r.end_source)
+        for r in document.rallies
+    ]
+    assert rallies == [
+        (20, 75, "first_contact", "proposed_rally_end"),
+        (170, 185, "after_proposed_end", "last_contact"),
+        (210, 290, "predicted_serve", "proposed_rally_end"),
+    ]
+
+
+def test_rallies_without_proposals_record_the_fallback_sources():
+    document = build_match_analysis(fixture(), IDENTITY)
+    assert [(r.start_source, r.end_source) for r in document.rallies] == [
+        ("first_contact", "last_contact"),
+        ("contact_gap", "last_contact"),
+        ("predicted_serve", "last_contact"),
+    ]
+
+
+def persons_inputs():
+    inputs = fixture()
+    inputs.plan["persons"] = {"run_id": "persons-run", "sha256": "f" * 64}
+    identity = json.loads(json.dumps(IDENTITY))
+    del identity["method"]
+    identity["provenance"] = {"method": "looks-only person grouping v1"}
+    identity["persons"][0]["thumbnail"] = "persons/persons-run/P1.jpg"
+    for person in identity["persons"]:
+        person.pop("name")
+    inputs.identity = identity
+    return inputs
+
+
+def test_persons_stage_document_is_the_identity_by_default():
+    document = build_match_analysis(persons_inputs())
+    identity = document.identity
+    assert (identity.source, identity.persistent) == ("persons_stage", True)
+    assert identity.method == "looks-only person grouping v1"
+    assert "persons stage" in identity.note
+    assert document.provenance.persons_run_id == "persons-run"
+    assert document.players[0].thumbnail == "persons/persons-run/P1.jpg"
+    assert not document.names_confirmed and document.warnings == []
+    assert shots(document)[210].hitter_id == "P1"
+    # A supplied identity still wins.
+    supplied = build_match_analysis(persons_inputs(), IDENTITY)
+    assert supplied.identity.source == "supplied"
+
+
+def test_missing_identity_weights_fall_back_with_a_warning():
+    inputs = fixture()
+    inputs.plan["persons"] = None
+    inputs.plan["persons_unavailable"] = (
+        "Player re-identification weights are not installed (reid/x.pth)"
+    )
+    document = build_match_analysis(inputs)
+    identity = document.identity
+    assert identity.source == "per_view_fallback" and not identity.persistent
+    assert identity.note.startswith("Player re-identification weights are not")
+    assert len(document.warnings) == 1
+    assert "not installed" in document.warnings[0]
+    assert "per camera view" in document.warnings[0]
+    # Without a reason the fallback still warns.
+    assert "per camera view" in build_match_analysis(fixture()).warnings[0]
+
+
+def test_confirmed_names_fill_players():
+    document = build_match_analysis(persons_inputs(), names={"P1": " Ann ", "P2": "Bo"})
+    assert [p.name for p in document.players] == ["Ann", "Bo"]
+    assert document.names_confirmed
+    with pytest.raises(ValueError, match="name every person"):
+        build_match_analysis(persons_inputs(), names={"P1": "Ann"})
+    with pytest.raises(ValueError, match="name every person"):
+        build_match_analysis(persons_inputs(), names={"P1": "Ann", "P2": " "})
+
+
+def test_swap_overrides_apply_to_one_range_in_order():
+    inputs = persons_inputs()
+    plain = build_match_analysis(inputs)
+    swap = {"persons": ["P1", "P2"], "start_frame": 20, "end_frame": 65}
+    document = build_match_analysis(inputs, overrides=[swap])
+    before, after = shots(plain), shots(document)
+    for frame in (20, 40, 65):
+        assert {before[frame].hitter_id, after[frame].hitter_id} == {"P1", "P2"}
+        assert before[frame].hitter_id != after[frame].hitter_id
+        assert {p.person_id for p in after[frame].players} == {"P1", "P2"}
+    assert all(after[f].hitter_id == before[f].hitter_id for f in (170, 210, 230))
+    assert document.rallies[0].server_id == "P1"  # was P2
+    assert document.overrides[0].persons == ("P1", "P2")
+    p1 = {t.person_id: t for t in document.tracks.persons}["P1"]
+    old = {t.person_id: t for t in plain.tracks.persons}["P2"]
+    inside = [i for i, f in enumerate(document.tracks.sample_frames) if 20 <= f <= 65]
+    assert inside and all(p1.y[i] == old.y[i] for i in inside)
+    # The same swap twice is no swap at all.
+    twice = build_match_analysis(inputs, overrides=[swap, swap])
+    assert [s.hitter_id for s in shots(twice).values()] == [
+        s.hitter_id for s in before.values()
+    ]
+    with pytest.raises(ValueError):
+        build_match_analysis(inputs, overrides=[swap | {"persons": ["P1", "P3"]}])

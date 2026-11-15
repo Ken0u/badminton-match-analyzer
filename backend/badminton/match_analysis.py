@@ -10,7 +10,7 @@ Rules the document keeps:
 
 - A value the pipeline did not measure is ``null``, never a guess. There is no
   shuttle speed, height or 3D position, no landing point and no rally outcome
-  in schema version 1 (``landing`` and ``outcome`` are always ``null``).
+  yet (``landing`` and ``outcome`` are always ``null``).
 - Court coordinates are metres on the court floor: x across the court from the
   far-left outer (doubles) sideline, 0 to 6.1; y along the court from the far
   baseline, 0 to 13.4; the net is at y = 6.7. "Far" is the end away from the
@@ -38,8 +38,8 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from .identity import validate_assignments
 from .schemas import StrictModel
 
-SCHEMA_VERSION = 1
-BUILDER = "match analysis builder v1"
+SCHEMA_VERSION = 2
+BUILDER = "match analysis builder v2"
 FILENAME = "match_analysis.json"
 
 COURT_WIDTH_M = 6.1
@@ -60,13 +60,30 @@ IMAGE_DECIMALS = 4
 # these source-frame offsets are tried in order.
 CONTACT_SEARCH = (0, -1, 1, -2, 2, -3, 3)
 SHUTTLE_SEARCH = (0, -1, 1, -2, 2)
-# A new rally starts at a predicted serve, after this long without a contact,
-# or at a camera cut between two contacts.
+# Rally boundaries come first from the rallies stage's serve and rally-end
+# proposals. Where none falls between two contacts, a new rally starts at a
+# predicted serve, after this long without a contact, or at a camera cut.
 RALLY_BREAK_S = 4.0
+# A serve proposal this close to a contact opens the rally at that contact.
+SERVE_MATCH_S = 0.5
+RallyStart = Literal[
+    "proposed_serve",
+    "after_proposed_end",
+    "predicted_serve",
+    "contact_gap",
+    "camera_cut",
+    "first_contact",
+]
+RallyEnd = Literal["proposed_rally_end", "last_contact"]
 # Per-view fallback identity: a track group must be seen this often, standing
 # (by median) within this margin of the outer lines, to be given a person.
 FALLBACK_MINIMUM_FRAMES = 5
 FALLBACK_COURT_MARGIN_M = 0.5
+PERSONS_NOTE = (
+    "Person ids come from the persons stage, which groups every camera view's "
+    "players by how they look, for the whole video. They are unreviewed: "
+    "confirm the names, and swap two persons in a rally where they are mixed up."
+)
 
 PersonId = Literal["P1", "P2", "P3", "P4"]
 Team = Literal["T1", "T2"]
@@ -135,7 +152,9 @@ class Person(StrictModel):
 
 
 class IdentityInfo(StrictModel):
-    source: Literal["supplied", "per_view_fallback"]
+    # persons_stage: the pipeline's whole-video persons stage; supplied: an
+    # identity given to the builder; per_view_fallback: not persistent.
+    source: Literal["persons_stage", "supplied", "per_view_fallback"]
     method: str
     persistent: bool
     note: str
@@ -230,11 +249,15 @@ class Shot(StrictModel):
 
 class Rally(StrictModel):
     id: str = Field(min_length=1)
-    # Inclusive: the first and last detected contact of the rally.
+    # Inclusive. The start is the serve (proposed or predicted) or the first
+    # contact; the end is a proposed rally end (the shuttle settling) or the
+    # last contact. start_source and end_source say which.
     start_frame: int = Field(ge=0)
     end_frame: int = Field(ge=0)
     start_s: float = _finite(ge=0)
     end_s: float = _finite(ge=0)
+    start_source: RallyStart
+    end_source: RallyEnd
     server_id: PersonId | None = None
     shots: list[Shot] = Field(min_length=1)
     outcome: RallyOutcome | None = None
@@ -244,8 +267,10 @@ class Rally(StrictModel):
         frames = [s.frame for s in self.shots]
         if frames != sorted(set(frames)):
             raise ValueError("Rally shots must be in strictly increasing frame order")
-        if (self.start_frame, self.end_frame) != (frames[0], frames[-1]):
-            raise ValueError("A rally spans its first and last contact")
+        if not self.start_frame <= frames[0] or not frames[-1] <= self.end_frame:
+            raise ValueError("A rally spans all of its contacts")
+        if self.end_source == "last_contact" and self.end_frame != frames[-1]:
+            raise ValueError("A rally without a proposed end ends at its last contact")
         if self.end_s < self.start_s:
             raise ValueError("Rally end must not precede its start")
         return self
@@ -293,7 +318,27 @@ class PartRuns(StrictModel):
     players_run_id: str
     shuttle_run_id: str
     contacts_run_id: str
+    rallies_run_id: str | None = None
     recognition_run_id: str | None = None
+
+
+class PersonSwap(StrictModel):
+    """A user correction: two persons swapped over a frame range (inclusive)."""
+
+    kind: Literal["swap"] = "swap"
+    persons: tuple[PersonId, PersonId]
+    start_frame: int = Field(ge=0)
+    end_frame: int = Field(ge=0)
+    # The rally the swap was made on, at the time it was made.
+    rally_id: str | None = None
+
+    @model_validator(mode="after")
+    def valid(self):
+        if self.persons[0] == self.persons[1]:
+            raise ValueError("A swap needs two different persons")
+        if self.end_frame < self.start_frame:
+            raise ValueError("A swap range must not end before it starts")
+        return self
 
 
 class Provenance(StrictModel):
@@ -302,18 +347,26 @@ class Provenance(StrictModel):
     analysis_key: str
     segments_run_id: str | None = None
     identities_run_id: str | None = None
+    persons_run_id: str | None = None
     parts: list[PartRuns]
     models: list[ModelRef]
 
 
 class MatchAnalysis(StrictModel):
-    schema_version: Literal[1] = 1
+    schema_version: Literal[2] = 2
     video: VideoInfo
     players: list[Person]
+    # True once a person confirmed which name belongs to which player; until
+    # then every players[].name is empty.
+    names_confirmed: bool = False
     identity: IdentityInfo
     court: Court
     rallies: list[Rally]
     tracks: Tracks
+    # User corrections applied to person ids, in the order they apply.
+    overrides: list[PersonSwap] = Field(default_factory=list)
+    # Plain sentences about limits of this document (e.g. identity fallback).
+    warnings: list[str] = Field(default_factory=list)
     provenance: Provenance
 
     @model_validator(mode="after")
@@ -328,6 +381,10 @@ class MatchAnalysis(StrictModel):
         ):
             raise ValueError("Teams must have equal player counts")
         known = set(ids)
+        if self.names_confirmed and not all(p.name for p in self.players):
+            raise ValueError("Confirmed names must not be empty")
+        if any(p not in known for o in self.overrides for p in o.persons):
+            raise ValueError("Override refers to an unlisted player")
         frames = []
         for rally in self.rallies:
             if rally.server_id is not None and rally.server_id not in known:
@@ -341,6 +398,10 @@ class MatchAnalysis(StrictModel):
                     raise ValueError("Shot frame exceeds the video")
         if frames != sorted(set(frames)):
             raise ValueError("Shots must be unique and ordered across rallies")
+        if any(
+            a.end_frame >= b.start_frame for a, b in itertools.pairwise(self.rallies)
+        ):
+            raise ValueError("Rallies must not overlap")
         if any(t.person_id not in known for t in self.tracks.persons):
             raise ValueError("Track refers to an unlisted player")
         if len(self.tracks.shuttle.x) != self.video.frame_count:
@@ -408,22 +469,29 @@ def default_persons(mode):
 
 
 class _Resolver:
-    """Look up a person for (run, track, frame) from half-open assignments."""
+    """Look up a person for (run, track, frame) from half-open assignments,
+    then apply the user's swaps (inclusive frame ranges) in order."""
 
-    def __init__(self, records):
+    def __init__(self, records, swaps=()):
         self.index = {}
         for r in records:
             self.index.setdefault((r["run_id"], r["track_id"]), []).append(
                 (r["start_frame"], r["end_frame"], r["player_id"])
             )
+        self.swaps = [(s.start_frame, s.end_frame, *s.persons) for s in swaps]
 
     def __call__(self, run_id, track_id, frame):
         if track_id is None:
             return None
-        for start, end, person in self.index.get((run_id, track_id), ()):
+        person = None
+        for start, end, candidate in self.index.get((run_id, track_id), ()):
             if start <= frame < end:
-                return person
-        return None
+                person = candidate
+                break
+        for start, end, a, b in self.swaps:
+            if start <= frame <= end and person in (a, b):
+                person = b if person == a else a
+        return person
 
 
 # Court geometry -------------------------------------------------------------
@@ -508,6 +576,8 @@ class MatchInputs:
     times: list
     plan: dict
     runs: dict  # run_id -> parsed stage artifact
+    # The persons stage's document (IdentityInput shape), when it ran.
+    identity: dict | None = None
 
 
 def latest_analysis_key(store, video_id):
@@ -557,10 +627,18 @@ def load_match_inputs(store, video_id, analysis_key=None):
     for part in plan["parts"]:
         for stage in ("players", "shuttle", "contacts"):
             load(part["stages"].get(stage), stage)
-        load(part["stages"].get("recognition"), "recognition", required=False)
+        for stage in ("rallies", "recognition"):
+            load(part["stages"].get(stage), stage, required=False)
     load(plan.get("segments"), "segments", required=False)
     load(plan.get("identities"), "identities", required=False)
-    return MatchInputs(video, list(timestamps_for(store.data, video_id)), plan, runs)
+    identity = None
+    if plan.get("persons"):
+        from .person_identity import load_document
+
+        identity = load_document(store.data, video_id, plan["persons"])
+    return MatchInputs(
+        video, list(timestamps_for(store.data, video_id)), plan, runs, identity
+    )
 
 
 # Building -------------------------------------------------------------------
@@ -758,7 +836,13 @@ def _parts(plan):
             "core_end": part["window"]["core_end_frame"],
             **{
                 stage: (part["stages"].get(stage) or {}).get("run_id")
-                for stage in ("players", "shuttle", "contacts", "recognition")
+                for stage in (
+                    "players",
+                    "shuttle",
+                    "contacts",
+                    "rallies",
+                    "recognition",
+                )
             },
         }
         for part in plan["parts"]
@@ -902,33 +986,126 @@ def _shots(inputs, parts, observations, resolve, shuttle):
     return unique
 
 
-def _rallies(shots, times, segments):
-    groups = []
-    for shot in shots:
-        previous = groups[-1][-1] if groups else None
+def _proposals(inputs, parts):
+    """The rallies stage's serve and rally-end proposals each window owns."""
+    serves, ends = [], []
+    for part in parts:
+        if not part["rallies"]:
+            continue
+        for candidate in _owned(inputs.runs[part["rallies"]], part):
+            if candidate.get("kind") == "serve":
+                serves.append(candidate["frame"])
+            elif candidate.get("kind") == "rally_end":
+                ends.append(candidate["frame"])
+    return sorted(set(serves)), sorted(set(ends))
+
+
+def rally_breaks(shots, times, segments, serves=(), ends=()):
+    """Where rallies start and end.
+
+    Returns (starts, closes): starts[i] = (start_frame, start_source,
+    opens_with_serve) for each shot index i that opens a rally; closes[i] =
+    (end_frame, "proposed_rally_end") for each shot index that a proposed
+    rally end closes.
+
+    The rallies stage's proposals come first. A serve proposal opens the
+    rally at the earliest contact within SERVE_MATCH_S of it (the serve
+    contact; the proposal marks the launch a few frames later). Without such
+    a contact it opens a rally at the proposal itself when a contact follows
+    within RALLY_BREAK_S. A rally-end proposal after a contact (within
+    RALLY_BREAK_S, same camera view, before the next rally's start) ends the
+    rally at the proposal. Only where no proposal decides does the fallback
+    apply: a predicted serve, more than RALLY_BREAK_S without a contact, or a
+    camera cut.
+    """
+    frames = [s["frame"] for s in shots]
+    starts, closes = {}, {}
+    for serve in serves:
+        if not frames or not 0 <= serve < len(times):
+            continue
+        near = [
+            i
+            for i, frame in enumerate(frames)
+            if abs(times[frame] - times[serve]) <= SERVE_MATCH_S
+            and segments[frame] == segments[serve]
+        ]
+        if near:
+            index, frame, matched = near[0], frames[near[0]], True
+        else:
+            index = bisect.bisect_right(frames, serve)
+            if (
+                index == len(frames)
+                or times[frames[index]] - times[serve] > RALLY_BREAK_S
+                or segments[frames[index]] != segments[serve]
+            ):
+                continue  # no contact follows this serve: no rally to open
+            frame, matched = serve, False
+        if index in starts:
+            continue
+        starts[index] = (frame, "proposed_serve", matched)
+    for end in ends:
+        index = bisect.bisect_left(frames, end) - 1  # last contact before it
+        if index < 0 or index in closes or not 0 <= end < len(times):
+            continue
         if (
-            previous is None
-            or shot["kind"] == "serve"
-            or times[shot["frame"]] - times[previous["frame"]] > RALLY_BREAK_S
-            or segments[shot["frame"]] != segments[previous["frame"]]
+            times[end] - times[frames[index]] > RALLY_BREAK_S
+            or segments[end] != segments[frames[index]]
         ):
-            groups.append([])
-        groups[-1].append(shot)
+            continue
+        following = index + 1
+        if following < len(frames):
+            if end >= starts.get(following, (frames[following],))[0]:
+                continue
+            starts.setdefault(
+                following, (frames[following], "after_proposed_end", False)
+            )
+        closes[index] = (end, "proposed_rally_end")
+    for index in range(len(frames)):
+        if index in starts:
+            continue
+        if index == 0:
+            starts[0] = (frames[0], "first_contact", False)
+            continue
+        previous = frames[index - 1]
+        if shots[index]["kind"] == "serve":
+            starts[index] = (frames[index], "predicted_serve", True)
+        elif times[frames[index]] - times[previous] > RALLY_BREAK_S:
+            starts[index] = (frames[index], "contact_gap", False)
+        elif segments[frames[index]] != segments[previous]:
+            starts[index] = (frames[index], "camera_cut", False)
+    return starts, closes
+
+
+def _rallies(shots, times, segments, serves=(), ends=()):
+    starts, closes = rally_breaks(shots, times, segments, serves, ends)
+    groups = []
+    for index, shot in enumerate(shots):
+        if index in starts:
+            groups.append({"start": starts[index], "shots": []})
+        groups[-1]["shots"].append((index, shot))
     rallies = []
     for number, group in enumerate(groups, 1):
         items = [
             Shot(id=f"shot-{s['frame']}", time_s=round(times[s["frame"]], 4), **s)
-            for s in group
+            for _, s in group["shots"]
         ]
-        first, last = items[0], items[-1]
+        start, start_source, opens_with_serve = group["start"]
+        end, end_source = closes.get(
+            group["shots"][-1][0], (items[-1].frame, "last_contact")
+        )
+        first = items[0]
+        # A serve proposal at the opening contact confirms it is the serve.
+        served = first.kind == "serve" or opens_with_serve
         rallies.append(
             Rally(
                 id=f"rally-{number}",
-                start_frame=first.frame,
-                end_frame=last.frame,
-                start_s=first.time_s,
-                end_s=last.time_s,
-                server_id=first.hitter_id if first.kind == "serve" else None,
+                start_frame=start,
+                end_frame=end,
+                start_s=round(times[start], 4),
+                end_s=round(times[end], 4),
+                start_source=start_source,
+                end_source=end_source,
+                server_id=first.hitter_id if served else None,
                 shots=items,
             )
         )
@@ -1002,12 +1179,19 @@ def _models(inputs, parts):
     return models
 
 
-def build_match_analysis(inputs, identity=None, *, created_at=None):
+def build_match_analysis(
+    inputs, identity=None, *, names=None, overrides=(), warnings=(), created_at=None
+):
     """Assemble a MatchAnalysis from loaded pipeline outputs.
 
-    ``identity`` is an IdentityInput (or a plain dict of that shape). Without
-    one, the per-view fallback of per_view_identity is used and the document
-    says so in ``identity``.
+    ``identity`` is an IdentityInput (or a plain dict of that shape); by
+    default the persons stage's document from ``inputs.identity``. Without
+    either, the per-view fallback of per_view_identity is used and the
+    document says so in ``identity`` and ``warnings``.
+
+    ``names`` maps every person id to its confirmed name. ``overrides`` are
+    PersonSwap corrections (or dicts of that shape), applied in order to every
+    person id the document gives. ``warnings`` are added to the document's own.
     """
     video, plan = inputs.video, inputs.plan
     if len(inputs.times) != video["frame_count"]:
@@ -1016,6 +1200,12 @@ def build_match_analysis(inputs, identity=None, *, created_at=None):
     views = _court_views(parts, inputs.runs)
     observations, segments = _observations(inputs, parts, views)
     identities_id = (plan.get("identities") or {}).get("run_id")
+    persons_id = None
+    notes = list(warnings)
+    source = "supplied"
+    if identity is None and inputs.identity is not None:
+        identity, source = inputs.identity, "persons_stage"
+        persons_id = (plan.get("persons") or {}).get("run_id")
     if identity is not None:
         identity = IdentityInput.model_validate(identity)
         persons = [Person(**p.model_dump()) for p in identity.persons]
@@ -1025,10 +1215,12 @@ def build_match_analysis(inputs, identity=None, *, created_at=None):
             frame_count=video["frame_count"],
         )
         info = {
-            "source": "supplied",
+            "source": source,
             "method": identity.method,
             "persistent": True,
-            "note": "Person ids come from the supplied track assignments for the whole video.",
+            "note": PERSONS_NOTE
+            if source == "persons_stage"
+            else "Person ids come from the supplied track assignments for the whole video.",
         }
     else:
         persons = default_persons(video["mode"])
@@ -1037,17 +1229,34 @@ def build_match_analysis(inputs, identity=None, *, created_at=None):
         )
         far = "P1" if video["mode"] == "singles" else "P1 and P2"
         near = "P2" if video["mode"] == "singles" else "P3 and P4"
+        unavailable = plan.get("persons_unavailable")
+        reason = (
+            f"{unavailable.rstrip('.')}, so the persons stage did not run. "
+            if unavailable
+            else ""
+        )
         info = {
             "source": "per_view_fallback",
             "method": "court end per camera view v1",
             "persistent": False,
             "note": (
-                f"Not persistent identity. In each camera view {far} are the "
+                reason + f"Not persistent identity. In each camera view {far} are the "
                 f"far-end player(s) and {near} the near-end player(s); after an "
                 "end change or a cut the same id can name a different person."
             ),
         }
-    resolve = _Resolver(records)
+        notes.append(
+            reason + "Player ids are per camera view, not one person through the "
+            "video, so per-player statistics over the whole match are unreliable."
+        )
+    if names is not None:
+        if set(names) != {p.id for p in persons} or not all(
+            isinstance(n, str) and n.strip() for n in names.values()
+        ):
+            raise ValueError("Confirmed names must name every person")
+        persons = [p.model_copy(update={"name": names[p.id].strip()}) for p in persons]
+    swaps = [PersonSwap.model_validate(o) for o in overrides]
+    resolve = _Resolver(records, swaps)
     total = assigned = 0
     for frame, items in enumerate(observations):
         for run_id, track_id, court in items:
@@ -1069,25 +1278,29 @@ def build_match_analysis(inputs, identity=None, *, created_at=None):
             height=video["height"],
         ),
         players=persons,
+        names_confirmed=all(p.name for p in persons),
         identity=IdentityInfo(
             **info,
             assignment_count=len(records),
             assigned_observation_share=round(assigned / total, 4) if total else None,
         ),
         court=Court(views=views),
-        rallies=_rallies(shots, inputs.times, segments),
+        rallies=_rallies(shots, inputs.times, segments, *_proposals(inputs, parts)),
         tracks=Tracks(
             rate_hz=TRACK_RATE_HZ,
             sample_frames=samples,
             persons=person_tracks,
             shuttle=shuttle,
         ),
+        overrides=swaps,
+        warnings=list(dict.fromkeys(notes)),
         provenance=Provenance(
             created_at=created_at
             or datetime.now(timezone.utc).isoformat(timespec="seconds"),
             analysis_key=plan["analysis_key"],
             segments_run_id=(plan.get("segments") or {}).get("run_id"),
             identities_run_id=identities_id,
+            persons_run_id=persons_id,
             parts=[
                 PartRuns(
                     core_start_frame=p["core_start"],
@@ -1095,6 +1308,7 @@ def build_match_analysis(inputs, identity=None, *, created_at=None):
                     players_run_id=p["players"],
                     shuttle_run_id=p["shuttle"],
                     contacts_run_id=p["contacts"],
+                    rallies_run_id=p["rallies"],
                     recognition_run_id=p["recognition"],
                 )
                 for p in parts
@@ -1132,11 +1346,15 @@ def write_match_analysis(data, document):
 
 
 def read_match_analysis(data, video_id):
-    """The stored document, or None when it has not been built."""
+    """The stored document, or None when it has not been built (or was built
+    in an older schema version and needs rebuilding)."""
     path = match_analysis_path(data, video_id)
     if not path.is_file():
         return None
-    return MatchAnalysis.model_validate_json(path.read_text(encoding="utf-8"))
+    text = path.read_text(encoding="utf-8")
+    if json.loads(text).get("schema_version") != SCHEMA_VERSION:
+        return None
+    return MatchAnalysis.model_validate_json(text)
 
 
 def load_identity(path):
