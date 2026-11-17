@@ -620,6 +620,15 @@ class OutcomeModel:
         }
 
 
+def model_from_document(document):
+    """The outcome model a stored JSON document describes (v1 or sequence)."""
+    from . import rally_outcome_model
+
+    if document.get("format") == rally_outcome_model.FORMAT:
+        return rally_outcome_model.SequenceOutcomeModel(document)
+    return OutcomeModel(document)
+
+
 # Timeline -------------------------------------------------------------------
 
 
@@ -670,6 +679,23 @@ def timeline(inputs):
         if not unique or unique[-1]["frame"] != c["frame"]:
             unique.append(c)
     serves, ends = ma._proposals(inputs, parts)
+    # Every player detection with its box and keypoints, for the sequence
+    # outcome model (rally_outcome_model.py).
+    from .rally_outcome_model import person
+
+    people = [[] for _ in range(count)]
+    for part in parts:
+        run = inputs.runs[part["players"]]
+        rows = run["frames"]
+        for frame in range(part["core_start"], min(part["core_end"], count)):
+            row = rows[frame - run["start_frame"]]
+            view = view_at[frame] if row.get("calibration_valid") else None
+            matrix = None if view is None else views[view].homography
+            for entry in row.get("players", []):
+                found = person(entry, video["width"], video["height"], matrix)
+                if found is not None:
+                    key = (part["players"], found[0])
+                    people[frame].append((key, *found[1:]))
     return {
         "mode": video["mode"],
         "fps": float(video["fps"]),
@@ -684,6 +710,7 @@ def timeline(inputs):
         "players": [
             [o[2] for o in items if o[2] is not None] for items in observations
         ],
+        "people": people,
         "contacts": unique,
         "serves": serves,
         "ends": ends,
@@ -807,7 +834,7 @@ def load_model():
             "The installed rally outcome model does not match the model manifest",
         )
     try:
-        return OutcomeModel(json.loads(data)), None
+        return model_from_document(json.loads(data)), None
     except (KeyError, TypeError, ValueError) as error:
         return None, f"The rally outcome model cannot be read: {error}"
 
@@ -859,6 +886,7 @@ __all__ = [
     "in_court",
     "line_distance",
     "load_model",
+    "model_from_document",
     "other",
     "rallies_from_contacts",
     "rule_outcome",

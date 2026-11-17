@@ -108,8 +108,9 @@ def timeline(document, matrix):
         for r in rows
     ]
     from badminton.match_analysis import project
+    from badminton.rally_outcome_model import person as describe
 
-    players = []
+    players, people = [], []
     for row in document["players"]:
         found = []
         for person in row["players"]:
@@ -118,6 +119,9 @@ def timeline(document, matrix):
             if point is not None:
                 found.append(point)
         players.append(found)
+        # With box and keypoints, as rally_outcomes.timeline gives them.
+        described = [describe(p, width, height, matrix) for p in row["players"]]
+        people.append([p for p in described if p is not None])
     return {
         "fps": fps,
         "start_frame": start,
@@ -125,47 +129,52 @@ def timeline(document, matrix):
         "times": times,
         "shuttle": shuttle,
         "players": players,
+        "people": people,
         "aspect": width / height,
         "cuts": list(document.get("cut_frames", [])),
     }
 
 
-def examples(folders):
+def files(folders):
+    return [p for folder in folders for p in sorted(Path(folder).glob("*.json.gz"))]
+
+
+def examples(folders, paths=None):
+    """Labelled rallies of the feature folders (or of just these files)."""
     labels = _Labels()
     matrices = {}
-    for folder in folders:
-        for path in sorted(Path(folder).glob("*.json.gz")):
-            with gzip.open(path, "rt", encoding="utf-8") as handle:
-                document = json.load(handle)
-            dataset, match = document["dataset"], int(document["match_id"])
-            set_id, rally_id = int(document["set_id"]), int(document["rally_id"])
-            if dataset == "dshuttlenet":
-                # The extractor numbered rallies by rally.csv's rally_num in its set.
-                key = (set_id, rally_id)
-            else:
-                key = (set_id, rally_id)
-            label = labels(dataset, match).get(key)
-            if label is None:
-                continue
-            if (dataset, match) not in matrices:
-                matrices[(dataset, match)] = normalized_homography(
-                    dataset,
-                    match,
-                    document["video"]["width"],
-                    document["video"]["height"],
-                )
-            yield {
-                "name": path.name.split(".")[0],
-                "dataset": dataset,
-                "match_id": match,
-                "split": split_of(dataset, match),
-                "label": label,
-                "last_type": (document["events"][-1].get("source_type") or None)
-                if document.get("events")
-                else None,
-                "homography": matrices[(dataset, match)],
-                "timeline": timeline(document, matrices[(dataset, match)]),
-            }
+    for path in files(folders) if paths is None else paths:
+        with gzip.open(path, "rt", encoding="utf-8") as handle:
+            document = json.load(handle)
+        dataset, match = document["dataset"], int(document["match_id"])
+        set_id, rally_id = int(document["set_id"]), int(document["rally_id"])
+        if dataset == "dshuttlenet":
+            # The extractor numbered rallies by rally.csv's rally_num in its set.
+            key = (set_id, rally_id)
+        else:
+            key = (set_id, rally_id)
+        label = labels(dataset, match).get(key)
+        if label is None:
+            continue
+        if (dataset, match) not in matrices:
+            matrices[(dataset, match)] = normalized_homography(
+                dataset,
+                match,
+                document["video"]["width"],
+                document["video"]["height"],
+            )
+        yield {
+            "name": path.name.split(".")[0],
+            "dataset": dataset,
+            "match_id": match,
+            "split": split_of(dataset, match),
+            "label": label,
+            "last_type": (document["events"][-1].get("source_type") or None)
+            if document.get("events")
+            else None,
+            "homography": matrices[(dataset, match)],
+            "timeline": timeline(document, matrices[(dataset, match)]),
+        }
 
 
 def main():
