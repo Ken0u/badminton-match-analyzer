@@ -35,6 +35,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend"))
 import rally_labels
 
 PAD_S = 0.5  # a label rally spans its first serve to last stroke, +- this
+EDGE_S = 3.0  # predictions this far outside the labelled span are not scored
 
 
 def label_window(rally, offset, fps, frame_count):
@@ -45,6 +46,29 @@ def label_window(rally, offset, fps, frame_count):
     if serve < 0 or (end if end is not None else last) >= frame_count:
         return None
     return {**rally, "serve": serve, "last": last, "end": end}
+
+
+def clip_labels(rallies, offset, fps, frame_count):
+    """Label rallies inside the clip, and the frame span that is scored.
+
+    Rallies cut by the clip's edges are not scored; predictions outside the
+    span from the first scored serve to the last scored end (+-EDGE_S) are
+    ignored, so the clip edges make no extras.
+    """
+    inside = [
+        w for r in rallies if (w := label_window(r, offset, fps, frame_count)) is not None
+    ]
+    if not inside:
+        return [], (0, -1)
+    edge = round(EDGE_S * fps)
+    return inside, (
+        min(r["serve"] for r in inside) - edge,
+        max(r["end"] or r["last"] for r in inside) + edge,
+    )
+
+
+def in_span(predictions, span):
+    return [p for p in predictions if span[0] <= p["start_frame"] and p["end_frame"] <= span[1]]
 
 
 def _overlap(a0, a1, b0, b1):
@@ -342,16 +366,12 @@ def main():
         )
         inputs, document = load_clip(data, record)
         fps = document.video.fps
-        labels = [
-            w
-            for r in rally_labels.rallies(record["dataset"], record["match_id"])
-            if (
-                w := label_window(
-                    r, record["start_frame"], fps, document.video.frame_count
-                )
-            )
-            is not None
-        ]
+        labels, span = clip_labels(
+            rally_labels.rallies(record["dataset"], record["match_id"]),
+            record["start_frame"],
+            fps,
+            document.video.frame_count,
+        )
         if args.method == "document":
             predictions = document_rallies(document)
         else:
@@ -360,7 +380,7 @@ def main():
             predictions = stage_rallies(
                 rally_outcomes.analyse(rally_outcomes.timeline(inputs), model)
             )
-        result = evaluate_clip(labels, predictions, fps)
+        result = evaluate_clip(labels, in_span(predictions, span), fps)
         per_dataset.setdefault(record["dataset"], []).append(result)
         summary = summarize([result])
         report["clips"][record["name"]] = {
