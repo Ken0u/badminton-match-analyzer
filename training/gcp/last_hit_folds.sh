@@ -41,7 +41,9 @@ run_one() {
 }
 export -f run_one
 export OUT REPO RECIPE
-xargs -P "$PARALLEL" -L 1 bash -c 'run_one "$@"' _ < "$jobs_file"
+# One job per line (a line may end in a space); its words become arguments.
+# shellcheck disable=SC2016
+xargs -d '\n' -P "$PARALLEL" -n 1 bash -c 'run_one $1' _ < "$jobs_file"
 echo "all finished $(date -u)" >> "$OUT/summary.log"
 touch "$OUT/done"
 # A few minutes for a watcher on the laptop to see the done marker.
