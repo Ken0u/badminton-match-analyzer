@@ -28,14 +28,16 @@ import numpy as np
 from .match_analysis import (
     COURT_LENGTH_M,
     COURT_WIDTH_M,
+    DOUBLES_LONG_SERVICE_LINES_M,
     NET_Y_M,
     RALLY_BREAK_S,
+    SHORT_SERVICE_LINES_M,
     SINGLES_SIDELINES_M,
     project,
     rally_breaks,
 )
 
-METHOD = "rally boundaries and last-shot landing v1"
+METHOD = "rally boundaries and last-shot landing v2"
 # Search for the landing up to this long after the last contact.
 LANDING_SEARCH_S = 3.0
 # A track ends at a gap this long or a jump faster than this (image heights
@@ -53,6 +55,30 @@ STILL_RADIUS = 0.012
 # further descent.
 STILL_STEP = 0.002
 STILL_VISIBLE = 0.6
+# Detections this short are not a track.
+MIN_RUN = 3
+# A hidden shuttle is the same flight when it reappears within this time,
+# lower in the picture and no faster than this (image heights per second).
+BRIDGE_S = 1.5
+BRIDGE_SPEED_PER_S = 2.5
+# A shuttle that left the top of the picture (above TOP_EDGE) may come back
+# within this time and this far sideways (image widths).
+TOP_EDGE = 0.08
+TOP_RETURN_S = 2.5
+TOP_RETURN_DX = 0.2
+# A "shuttle" that stood within STATIC_RADIUS for STATIC_S during the rally
+# (looking back this long before the last contact) is a false detection.
+STATIC_S = 0.5
+STATIC_RADIUS = 0.008
+STATIC_LOOKBACK_S = 15.0
+# A shuttle moving slower than this over the floor (court metres per second,
+# measured over SLIDE_STEP_S) for SLIDE_MIN_S before it stops was sliding.
+SLIDE_SPEED_M_S = 4.0
+SLIDE_STEP_S = 0.09
+SLIDE_MIN_S = 0.15
+# Court y between which a slow shuttle may be one dropping down the net: the
+# net tape projects onto the far court floor, a few metres behind the net.
+NET_SHADOW_M = (3.5, 7.3)
 # Landings this close to the net (metres) are called net.
 NET_BAND_M = 0.4
 ENDS = ("far", "near")
@@ -68,48 +94,258 @@ def court_end(point):
     return "far" if point[1] < NET_Y_M else "near"
 
 
-def in_court(point, mode):
-    """Inside the rally lines: singles or doubles sidelines, full length."""
+def _lines(mode, serve_from=None):
+    """(left, right, far, near) limits of where a shot may land.
+
+    A serve (``serve_from`` is the server's end) must land in the service
+    court: beyond the short service line and, in doubles, before the doubles
+    long service line. The diagonal half is not checked.
+    """
     left, right = (0.0, COURT_WIDTH_M) if mode == "doubles" else SINGLES_SIDELINES_M
-    return left <= point[0] <= right and 0.0 <= point[1] <= COURT_LENGTH_M
+    far, near = 0.0, COURT_LENGTH_M
+    if serve_from == "near":
+        near = SHORT_SERVICE_LINES_M[0]
+        if mode == "doubles":
+            far = DOUBLES_LONG_SERVICE_LINES_M[0]
+    elif serve_from == "far":
+        far = SHORT_SERVICE_LINES_M[1]
+        if mode == "doubles":
+            near = DOUBLES_LONG_SERVICE_LINES_M[1]
+    return left, right, far, near
 
 
-def line_distance(point, mode):
-    """Distance (m) from the nearest rally line; positive inside."""
-    left, right = (0.0, COURT_WIDTH_M) if mode == "doubles" else SINGLES_SIDELINES_M
-    inside = min(point[0] - left, right - point[0], point[1], COURT_LENGTH_M - point[1])
+def in_court(point, mode, serve_from=None):
+    """Inside the rally lines: singles or doubles sidelines, full length.
+
+    With ``serve_from`` (the server's end): inside the lines a serve must
+    land within.
+    """
+    left, right, far, near = _lines(mode, serve_from)
+    return left <= point[0] <= right and far <= point[1] <= near
+
+
+def line_distance(point, mode, serve_from=None):
+    """Distance (m) from the nearest rally (or service) line; positive inside."""
+    left, right, far, near = _lines(mode, serve_from)
+    inside = min(point[0] - left, right - point[0], point[1] - far, near - point[1])
     if inside >= 0:
         return inside
     dx = max(left - point[0], 0, point[0] - right)
-    dy = max(-point[1], 0, point[1] - COURT_LENGTH_M)
+    dy = max(far - point[1], 0, point[1] - near)
     return -math.hypot(dx, dy)
 
 
 # Landing --------------------------------------------------------------------
 
 
-def flight(times, shuttle, after, until, aspect):
-    """The shuttle's continuous track after a contact.
+def _distance(p, q, aspect):
+    return math.hypot((p[0] - q[0]) * aspect, p[1] - q[1])
 
-    Starts just after index ``after`` and stops at a jump no shuttle could
-    make (a false detection elsewhere in the picture), a gap longer than
-    FLIGHT_GAP_S or ``until``. Returns indices into ``times``/``shuttle``.
+
+def _runs(times, shuttle, after, until, aspect):
+    """Shuttle detections after a contact, split into continuous runs.
+
+    A run ends at a gap longer than FLIGHT_GAP_S or a jump faster than
+    MAX_SPEED_PER_S. One to three detections elsewhere in the picture (a
+    false detection, often a player's hand) are skipped when the run goes on
+    behind them.
     """
-    points = []
-    for i in range(after + 1, min(until, len(times))):
+    found = [
+        i for i in range(after + 1, min(until, len(times))) if shuttle[i] is not None
+    ]
+
+    def joins(a, b):
+        dt = max(times[b] - times[a], 1e-6)
+        return (
+            dt <= FLIGHT_GAP_S
+            and _distance(shuttle[a], shuttle[b], aspect) / dt <= MAX_SPEED_PER_S
+        )
+
+    runs, run = [], []
+    for n, i in enumerate(found):
+        if not run or joins(run[-1], i):
+            run.append(i)
+        elif len(run) >= 2 and any(joins(run[-1], j) for j in found[n + 1 : n + 4]):
+            continue
+        else:
+            runs.append(run)
+            run = [i]
+    if run:
+        runs.append(run)
+    return runs
+
+
+def _static_spots(times, shuttle, after, aspect):
+    """Image points where "the shuttle" stood still before the contact.
+
+    The shuttle was in play then, so a detection that stayed in one place for
+    STATIC_S is something else (a mark on the floor, a logo).
+    """
+    spots = []
+    i = bisect.bisect_left(times, times[after] - STATIC_LOOKBACK_S)
+    while i < after:
         p = shuttle[i]
         if p is None:
-            if points and times[i] - times[points[-1]] > FLIGHT_GAP_S:
-                break
+            i += 1
             continue
-        if points:
-            q = shuttle[points[-1]]
-            dt = max(times[i] - times[points[-1]], 1e-6)
-            step = math.hypot((p[0] - q[0]) * aspect, p[1] - q[1])
-            if step / dt > MAX_SPEED_PER_S:
+        j, last, seen = i, i, 0
+        while j < after:
+            q = shuttle[j]
+            if q is None:
+                if times[j] - times[last] > FLIGHT_GAP_S:
+                    break
+            elif _distance(q, p, aspect) <= STATIC_RADIUS:
+                last, seen = j, seen + 1
+            else:
                 break
-        points.append(i)
+            j += 1
+        if times[last] - times[i] >= STATIC_S and seen >= 0.6 * (last - i + 1):
+            spots.append(p)
+            i = j
+        else:
+            i += 1
+    return spots
+
+
+def _still(run, shuttle, aspect):
+    centre = shuttle[run[len(run) // 2]]
+    return all(_distance(shuttle[i], centre, aspect) <= STILL_RADIUS for i in run)
+
+
+def _rests(times, shuttle, index, aspect):
+    stop = bisect.bisect_right(times, times[index] + STILL_S, index, len(times))
+    near = [
+        p
+        for p in shuttle[index:stop]
+        if p is not None and _distance(p, shuttle[index], aspect) <= STILL_RADIUS
+    ]
+    return stop - index >= 3 and len(near) >= STILL_VISIBLE * (stop - index)
+
+
+def _descent(shuttle, points):
+    """(descending, lowest point of the descent, the shuttle rose again)."""
+    low = shuttle[points[0]][1]
+    descending, best = False, None
+    for i in points:
+        y = shuttle[i][1]
+        if not descending:
+            low = min(low, y)
+            if y > low + DESCENT_TOLERANCE:
+                descending, best = True, i
+            continue
+        if y > shuttle[best][1] + STILL_STEP:
+            best = i
+        elif y < shuttle[best][1] - DESCENT_TOLERANCE:
+            return descending, best, True
+    return descending, best, False
+
+
+def flight(times, shuttle, after, until, aspect):
+    """The shuttle's track after a contact, as indices into ``shuttle``.
+
+    The first continuous run of detections, then every later run that can be
+    the same flight: the shuttle left the top of the picture and came back
+    (a clear or lift), or it was hidden for a while and reappears lower in
+    the picture within reach. Runs of fewer than MIN_RUN detections, and runs
+    lying still on a spot that was already "detected" while the rally was
+    being played, are false detections and are dropped. Joining stops once
+    the track has come to rest or has risen again after its descent.
+    """
+    runs = [r for r in _runs(times, shuttle, after, until, aspect) if len(r) >= MIN_RUN]
+    if any(_still(r, shuttle, aspect) for r in runs):
+        spots = _static_spots(times, shuttle, after, aspect)
+        runs = [
+            r
+            for r in runs
+            if not (
+                _still(r, shuttle, aspect)
+                and any(
+                    _distance(shuttle[r[0]], spot, aspect) <= 1.5 * STILL_RADIUS
+                    for spot in spots
+                )
+            )
+        ]
+    if not runs:
+        return []
+    points = list(runs[0])
+    for run in runs[1:]:
+        descending, best, rose = _descent(shuttle, points)
+        if rose or (descending and _rests(times, shuttle, best, aspect)):
+            break
+        a, b = shuttle[points[-1]], shuttle[run[0]]
+        gap = times[run[0]] - times[points[-1]]
+        over_the_top = (
+            a[1] <= TOP_EDGE
+            and b[1] <= 2 * TOP_EDGE
+            and gap <= TOP_RETURN_S
+            and abs(b[0] - a[0]) <= TOP_RETURN_DX
+            and shuttle[run[-1]][1] > b[1]
+        )
+        hidden = (
+            gap <= BRIDGE_S
+            and b[1] >= a[1] - 0.02
+            and _distance(a, b, aspect) / max(gap, 1e-6) <= BRIDGE_SPEED_PER_S
+        )
+        if over_the_top or hidden:
+            points += run
+        elif gap > max(BRIDGE_S, TOP_RETURN_S):
+            break
     return points
+
+
+def _impact(times, shuttle, points, best, homography):
+    """Where a shuttle that slid or bounced on first met the floor.
+
+    Walks back from the end of the descent while the shuttle moves slower
+    than SLIDE_SPEED_M_S over the floor (it is sliding, not flying); the
+    start of that slow stretch is the impact when the shuttle arrived faster
+    and the stretch lasted SLIDE_MIN_S. Not used in the net's shadow, where a
+    slow shuttle is one dropping down the net.
+    """
+    track = [i for i in points if i <= best]
+    # Only the descent: a slow shuttle at the top of its flight is not sliding.
+    top = min(range(len(track)), key=lambda n: (shuttle[track[n]][1], -n))
+    track = track[top:]
+    court = {}
+
+    def speed(a, b):
+        for i in (a, b):
+            if i not in court:
+                matrix = homography(i)
+                court[i] = None if matrix is None else project(matrix, *shuttle[i])
+        if court[a] is None or court[b] is None:
+            return None
+        return math.dist(court[a], court[b]) / max(times[b] - times[a], 1e-6)
+
+    def before(k):
+        j = k - 1
+        while j > 0 and times[track[k]] - times[track[j]] < SLIDE_STEP_S:
+            j -= 1
+        return j
+
+    k = len(track) - 1
+    arrival = None
+    while k > 0:
+        j = before(k)
+        arrival = (
+            speed(track[j], track[k])
+            if times[track[k]] - times[track[j]] <= FLIGHT_GAP_S + SLIDE_STEP_S
+            else None
+        )
+        if arrival is None or arrival > SLIDE_SPEED_M_S:
+            break
+        k = j
+    if (
+        k == len(track) - 1
+        or k == 0
+        or arrival is None
+        or times[best] - times[track[k]] < SLIDE_MIN_S
+    ):
+        return best
+    point = court.get(track[k])
+    if point is None or NET_SHADOW_M[0] < point[1] < NET_SHADOW_M[1]:
+        return best
+    return track[k]
 
 
 def find_landing(times, shuttle, after, until, aspect, homography):
@@ -122,29 +358,18 @@ def find_landing(times, shuttle, after, until, aspect, homography):
 
     A falling shuttle moves down the picture until it reaches the floor, so
     the landing is the lowest image point of the track's descent: the track
-    first rises (or not at all), then descends; the descent ends where the
-    shuttle stops going down by more than DESCENT_TOLERANCE. Kind "rest" when
-    it then lies still for STILL_S, "descent" when the descent ended without
-    a rest, "track_end" when the track never descended (it ended in the air,
-    so its projection is unreliable). Returns None without a track.
+    (see ``flight``) first rises (or not at all), then descends; the descent
+    ends where the shuttle stops going down by more than DESCENT_TOLERANCE.
+    A shuttle that slid or bounced on after it met the floor is put back at
+    the impact (``slid`` is then true). Kind "rest" when it then lies still
+    for STILL_S, "descent" when the descent ended without a rest,
+    "track_end" when the track never descended (it ended in the air, so its
+    projection is unreliable). Returns None without a track.
     """
     points = flight(times, shuttle, after, until, aspect)
     if len(points) < 3:
         return None
-    tolerance = DESCENT_TOLERANCE
-    low = shuttle[points[0]][1]
-    descending, best = False, None
-    for i in points:
-        y = shuttle[i][1]
-        if not descending:
-            low = min(low, y)
-            if y > low + tolerance:
-                descending, best = True, i
-            continue
-        if y > shuttle[best][1] + STILL_STEP:
-            best = i
-        elif y < shuttle[best][1] - tolerance:
-            break
+    descending, best, _ = _descent(shuttle, points)
     if not descending:
         landing = {
             "index": points[-1],
@@ -152,17 +377,11 @@ def find_landing(times, shuttle, after, until, aspect, homography):
             "kind": "track_end",
         }
     else:
-        landing = {"index": best, "image": shuttle[best], "kind": "descent"}
-        stop = bisect.bisect_right(times, times[best] + STILL_S, best, len(times))
-        near = [
-            p
-            for p in shuttle[best:stop]
-            if p is not None
-            and math.hypot((p[0] - shuttle[best][0]) * aspect, p[1] - shuttle[best][1])
-            <= STILL_RADIUS
-        ]
-        if stop - best >= 3 and len(near) >= STILL_VISIBLE * (stop - best):
-            landing["kind"] = "rest"
+        kind = "rest" if _rests(times, shuttle, best, aspect) else "descent"
+        impact = _impact(times, shuttle, points, best, homography)
+        landing = {"index": impact, "image": shuttle[impact], "kind": kind}
+        if impact != best:
+            landing["slid"] = True
     matrix = homography(landing["index"])
     point = None if matrix is None else project(matrix, *landing["image"])
     landing["court"] = point
@@ -172,13 +391,14 @@ def find_landing(times, shuttle, after, until, aspect, homography):
 # Outcome rule ---------------------------------------------------------------
 
 
-def rule_outcome(hitter_end, landing, mode):
+def rule_outcome(hitter_end, landing, mode, serve=False):
     """Transparent call from the last hitter's end and the landing.
 
     - no landing: unknown;
     - on the hitter's own side or within NET_BAND_M of the net: the shot did
       not get over: error, net;
-    - on the opponent's side inside the rally lines: winner (landed in);
+    - on the opponent's side inside the rally lines (for a serve: inside the
+      service lines): winner (landed in);
     - outside them: error, out.
     The reason is the last hitter's: a winner means the last hitter won.
     """
@@ -192,7 +412,7 @@ def rule_outcome(hitter_end, landing, mode):
     side = court_end(point)
     if side == hitter_end or abs(point[1] - NET_Y_M) <= NET_BAND_M:
         return {"winner_end": other(hitter_end), "reason": "error", "detail": "net"}
-    if in_court(point, mode):
+    if in_court(point, mode, hitter_end if serve else None):
         return {"winner_end": hitter_end, "reason": "winner", "detail": "in"}
     return {"winner_end": other(hitter_end), "reason": "error", "detail": "out"}
 
@@ -319,8 +539,12 @@ def outcome_features(
         towards = 1.0 if hitter_end == "far" else -1.0 if hitter_end == "near" else 0.0
         values["depth_m"] = float(np.clip((y - NET_Y_M) * towards, -8, 8))
         values["lateral_m"] = float(np.clip(abs(x - COURT_WIDTH_M / 2), 0, 6))
-        values["line_distance_m"] = float(np.clip(line_distance(point, mode), -3, 3))
-        values["in_court"] = float(in_court(point, mode))
+        # A serve is judged by the service lines.
+        served = hitter_end if group == "serve" else None
+        values["line_distance_m"] = float(
+            np.clip(line_distance(point, mode, served), -3, 3)
+        )
+        values["in_court"] = float(in_court(point, mode, served))
         values["own_side"] = float(values["depth_m"] < 0)
         values["net_distance_m"] = float(min(3.0, abs(y - NET_Y_M)))
         around = [
@@ -512,7 +736,8 @@ def analyse(line, model=None):
             lambda i: _homography(line, i),
         )
         hitter = last["court_end"]
-        outcome = rule_outcome(hitter, landing, line["mode"])
+        served = last["kind"] == "serve"
+        outcome = rule_outcome(hitter, landing, line["mode"], served)
         source = "rule"
         if model is not None:
             predicted = model(line, group, landing)
