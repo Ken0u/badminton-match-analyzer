@@ -225,9 +225,22 @@ def network(hidden, dropout, use_sequence=True):
 
 
 def fit(
-    train, check, hidden, dropout, epochs, seed, use_sequence=True, lr=2e-3, decay=1e-2
+    train,
+    check,
+    hidden,
+    dropout,
+    epochs,
+    seed,
+    use_sequence=True,
+    lr=2e-3,
+    decay=1e-2,
+    keep_last=False,
 ):
-    """Train one network; keep the epoch with the best check-fold loss."""
+    """Train one network; keep the epoch with the best check-fold loss.
+
+    With ``keep_last`` the last epoch is kept instead: the check rallies are
+    then part of the training rows and cannot choose anything.
+    """
     import torch
 
     torch.manual_seed(seed)
@@ -261,7 +274,7 @@ def fit(
         net.eval()
         with torch.no_grad():
             value = float(bce(net(cxs, cgs)[1], cwon))
-        if value < best[0]:
+        if keep_last or value < best[0]:
             state = {k: v.detach().cpu().clone() for k, v in net.state_dict().items()}
             best = (value, state, epoch)
     return {k: v.numpy() for k, v in best[1].items()}, best[0], best[2]
@@ -331,6 +344,12 @@ def main():
         default=1.0,
         help="share of the 'previous' rows (a missed last contact) used in training",
     )
+    parser.add_argument(
+        "--all-training",
+        action="store_true",
+        help="fit on every training match, the check fold included, for the "
+        "fixed number of epochs (after the design is chosen with the fold)",
+    )
     parser.add_argument("--no-sequence", action="store_true", help="summary only")
     parser.add_argument("--workers", type=int, default=1, help="to read the files")
     parser.add_argument(
@@ -345,7 +364,7 @@ def main():
     # Steps beyond this look are the same as never stored.
     is_train = np.array([m["split"] == "train" for m in meta])
     is_check = is_train & np.array([m["match_id"] % 5 == 0 for m in meta])
-    is_fit = is_train & ~is_check
+    is_fit = is_train if args.all_training else is_train & ~is_check
     rng = np.random.default_rng(0)
     previous = np.array([m["variant"] == "previous" for m in meta])
     keep = ~previous | (rng.random(len(meta)) < args.previous)
@@ -385,6 +404,7 @@ def main():
             args.epochs,
             seed,
             not args.no_sequence,
+            keep_last=args.all_training,
         )
         members.append((state, args.hidden))
         print(f"seed {seed}: epoch {epoch}, check loss {loss:.4f}", flush=True)
@@ -413,7 +433,8 @@ def main():
                 out[f"{dataset} {variant}"] = entry
         return out
 
-    result = {"check_fold": report(is_check)}
+    # With --all-training the fold was trained on: its score is not a check.
+    result = {"fitted_fold" if args.all_training else "check_fold": report(is_check)}
     if args.report_validation:
         result["validation"] = report(~is_train)
     print(json.dumps(result, indent=1))
@@ -437,6 +458,7 @@ def main():
             "epochs": args.epochs,
             "seeds": args.seeds,
             "previous": args.previous,
+            "all_training": args.all_training,
             "sequence": not args.no_sequence,
             **result,
         },
