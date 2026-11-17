@@ -4,6 +4,7 @@ import cv2
 import numpy as np
 import pytest
 from badminton.court_detection import (
+    AGREEMENT,
     court_consensus,
     detect_court,
     partial_courts,
@@ -237,7 +238,7 @@ def test_brief_or_moving_court_inside_a_view_stays_uncalibrated():
 def test_fit_scatter_near_the_tolerance_is_still_one_court():
     # The middle fit agrees with both ends; the ends just miss each other.
     observations = samples()
-    for index, shift in ((0, -0.007), (4, 0.007)):
+    for index, shift in ((0, -0.6 * AGREEMENT), (4, 0.6 * AGREEMENT)):
         for corner in observations[index]["corners"]:
             corner[1] += shift
     assert court_consensus(observations, 0, 100)["corners"] is None
@@ -246,3 +247,25 @@ def test_fit_scatter_near_the_tolerance_is_still_one_court():
     observations.append({**copy.deepcopy(observations[1]), "frame": extra[0]})
     observations.sort(key=lambda s: s["frame"])
     assert court_consensus(observations, 0, 100)["status"] == "detected"
+
+
+def test_broadcast_fit_scatter_is_still_one_court():
+    # Fits of a still broadcast camera (DShuttleNet validation match 35, frames
+    # 13223-13381): the far corners scatter by up to 0.017, which the earlier
+    # 0.012 tolerance took for a moving camera.
+    fits = [
+        [0.324, 0.394, 0.671, 0.394, 0.799, 0.911, 0.207, 0.911],
+        [0.328, 0.391, 0.671, 0.386, 0.796, 0.908, 0.203, 0.914],
+        [0.325, 0.405, 0.671, 0.388, 0.797, 0.906, 0.201, 0.917],
+        [0.327, 0.392, 0.671, 0.378, 0.797, 0.906, 0.199, 0.917],
+        [0.327, 0.394, 0.673, 0.394, 0.796, 0.908, 0.204, 0.908],
+    ]
+    observations = [
+        {
+            "frame": frame,
+            "status": "detected",
+            "corners": np.reshape(fit, (4, 2)).tolist(),
+        }
+        for frame, fit in zip((0, 40, 80, 120, 158), fits)
+    ]
+    assert court_consensus(observations, 0, 159)["status"] == "detected"

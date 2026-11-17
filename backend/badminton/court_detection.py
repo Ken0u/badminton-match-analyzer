@@ -22,7 +22,14 @@ RECHECK_FRAMES = 6
 # frames are located, and the shortest stretch worth keeping.
 EDGE_FRAMES = 8
 MIN_PARTIAL_FRAMES = 30
-AGREEMENT = 0.012
+# Largest corner distance (share of the frame) between two fits of one court.
+# Fits of a still camera 0.1 s apart scatter by more than the earlier 0.012:
+# on nine DShuttleNet training matches and the two supplied videos (699
+# pairs, training/court_jitter.py) 3.4% of pairs are over 0.012, 1.7% over
+# 0.025 and still 1.3% over 0.05, so above 0.025 is nearly all real change
+# (cuts, misfits). At 0.012 whole still views of some broadcasts were
+# rejected as moving. A pan of 0.03 still counts as a new court.
+AGREEMENT = 0.025
 SIDELINE = (6.10 - 5.18) / 2 / 6.10
 SHORT = 0.5 - 1.98 / 13.40
 LONG = 0.76 / 13.40
