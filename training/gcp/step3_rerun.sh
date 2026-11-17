@@ -28,12 +28,20 @@ run() {
   echo "$name $id $worker exit $code in $(( ($(date +%s) - began) / 60 )) min" >> "$OUT/logs/summary.log"
 }
 
-# Three at a time, one per store where possible.
-pids=()
+# A store runs one processing job at a time: clips of one store in turn,
+# the stores side by side.
+store_of() {
+  local id
+  id=$(python -c "import json; print(json.load(open('$BASE/claims/$1/result.json'))['video_id'])")
+  for w in "$BASE"/w*; do [ -d "$w/processed/$id" ] && basename "$w"; done | head -1
+}
+declare -A queue
 for name in "$@"; do
-  run "$name" &
-  pids+=($!)
-  if [ "${#pids[@]}" -ge 3 ]; then wait "${pids[0]}"; pids=("${pids[@]:1}"); fi
+  w=$(store_of "$name")
+  queue[$w]="${queue[$w]:-} $name"
+done
+for w in "${!queue[@]}"; do
+  ( for name in ${queue[$w]}; do run "$name"; done ) &
 done
 wait
 echo "rerun finished $(date -u)" >> "$OUT/logs/summary.log"
