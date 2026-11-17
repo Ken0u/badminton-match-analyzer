@@ -22,13 +22,15 @@ def times(n):
 
 
 def flight(start, top, end, frames, rest=15, total=None):
-    """Points from start up to an apex then down to end, then still."""
+    """Points from start up to an apex at image y `top`, down to end, then still."""
     points = []
+    rise = max(1, frames // 3)
     for i in range(frames):
-        t = i / (frames - 1)
-        x = start[0] + (end[0] - start[0]) * t
-        # Rise towards `top` (smaller image y) then fall to `end`.
-        y = (1 - t) ** 2 * start[1] + 2 * (1 - t) * t * top + t**2 * end[1]
+        x = start[0] + (end[0] - start[0]) * i / (frames - 1)
+        if i <= rise:
+            y = start[1] + (top - start[1]) * i / rise
+        else:
+            y = top + (end[1] - top) * (i - rise) / (frames - 1 - rise)
         points.append((x, y))
     points += [end] * rest
     if total is not None:
@@ -81,6 +83,94 @@ def test_a_jump_ends_the_flight_and_a_rise_never_lands():
         times(len(points)), points, 0, len(points), 16 / 9, lambda i: None
     )
     assert no_view["court"] is None
+
+
+def landing_of(points, after=0):
+    return R.find_landing(
+        times(len(points)), points, after, len(points), 16 / 9, lambda i: MATRIX
+    )
+
+
+def test_a_hidden_shuttle_is_found_again_where_it_lies():
+    # The track ends in the air above (2.0, 9.5); the shuttle shows again
+    # half a second later, lying a little lower.
+    start, end = image(3.0, 4.0), image(2.0, 9.0)
+    seen = flight(start, start[1] - 0.05, end, 12, rest=0)
+    points = [None, *seen, *[None] * 15, *[image(2.0, 9.5)] * 15]
+    landing = landing_of(points)
+    assert landing["kind"] == "rest"
+    assert landing["court"] == pytest.approx((2.0, 9.5), abs=0.05)
+    # Something lying higher in the picture is not where this shuttle fell.
+    points = [None, *seen, *[None] * 15, *[image(2.0, 5.0)] * 15]
+    assert landing_of(points)["court"] == pytest.approx((2.0, 9.0), abs=0.05)
+
+
+def test_a_lift_that_leaves_the_top_of_the_picture_comes_back():
+    up = [(0.5, 0.5 - 0.06 * i) for i in range(9)]  # leaves at y = 0.02
+    down = [(0.52, 0.02 + 0.05 * i) for i in range(8)]  # back to y = 0.37
+    points = [None, *up, *[None] * 20, *down, *[(0.52, 0.37)] * 12]
+    landing = landing_of(points)
+    assert landing["kind"] == "rest"
+    assert landing["image"] == pytest.approx((0.52, 0.37))
+    # Without the return the track ended in the air.
+    assert landing_of([None, *up, *[None] * 40])["kind"] == "track_end"
+
+
+def test_false_detections_are_not_followed():
+    start, end = image(3.0, 4.0), image(2.0, 9.5)
+    seen = flight(start, start[1] - 0.05, end, 12, rest=12)
+    # Two detections on a player's hand in the middle of the flight.
+    jumped = list(seen)
+    jumped[5] = jumped[6] = image(5.5, 1.0)
+    assert landing_of([None, *jumped])["court"] == pytest.approx((2.0, 9.5), abs=0.05)
+    # A mark that was "detected" during the rally, and again after the track
+    # ended in the air: not the landing.
+    mark = image(2.2, 9.8)
+    before = [mark] * 20 + [None] * 5
+    points = [*before, None, *seen[:9], *[None] * 12, *[mark] * 15]
+    landing = landing_of(points, after=len(before))
+    assert landing["court"] != pytest.approx(image(2.2, 9.8), abs=0.05)
+    assert landing["index"] <= len(before) + 9
+    # The same detections without the earlier ones are the shuttle at rest.
+    points = [*[None] * 25, None, *seen[:9], *[None] * 12, *[mark] * 15]
+    assert landing_of(points, after=25)["court"] == pytest.approx((2.2, 9.8), abs=0.05)
+
+
+def test_a_shuttle_that_slides_on_lands_at_the_impact():
+    # A smash reaches the floor at (2.0, 10.0) and slides 1.2 m further.
+    fall = [image(3.0 - 0.1 * i, 7.0 + 0.3 * i) for i in range(11)]
+    slide = [image(2.0 - 0.02 * i, 10.0 + 0.08 * i) for i in range(1, 16)]
+    points = [None, *fall, *slide, *[slide[-1]] * 12]
+    landing = landing_of(points)
+    assert landing["slid"] is True and landing["kind"] == "rest"
+    assert landing["court"] == pytest.approx((2.0, 10.0), abs=0.1)
+    # Close behind the net a slow shuttle is one dropping down the net.
+    fall = [image(3.0, 3.0 + 0.3 * i) for i in range(8)]
+    drop = [image(3.0, 5.1 + 0.08 * i) for i in range(1, 16)]
+    points = [None, *fall, *drop, *[drop[-1]] * 12]
+    landing = landing_of(points)
+    assert "slid" not in landing
+    assert landing["court"] == pytest.approx((3.0, 6.3), abs=0.05)
+
+
+def test_a_serve_is_judged_by_the_service_lines():
+    short = {"court": (2.0, 5.0), "kind": "rest"}  # 1.7 m behind the net
+    assert R.rule_outcome("near", short, "doubles")["detail"] == "in"
+    assert R.rule_outcome("near", short, "doubles", serve=True) == {
+        "winner_end": "far",
+        "reason": "error",
+        "detail": "out",
+    }
+    long = {"court": (2.0, 0.4), "kind": "rest"}  # behind the doubles long line
+    assert R.rule_outcome("near", long, "doubles", serve=True)["detail"] == "out"
+    assert R.rule_outcome("near", long, "singles", serve=True)["detail"] == "in"
+    assert (
+        R.rule_outcome("far", {"court": (2.0, 12.9)}, "doubles", True)["detail"]
+        == "out"
+    )
+    assert R.in_court((2.0, 4.0), "doubles", "near")
+    assert R.line_distance((2.0, 5.0), "singles", "near") == pytest.approx(-0.28)
+    assert R.line_distance((2.0, 9.0), "doubles", "far") == pytest.approx(0.32)
 
 
 def test_rule_outcome():
