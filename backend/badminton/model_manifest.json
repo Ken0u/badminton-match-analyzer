@@ -55,5 +55,11 @@
     "terms": "Fine-tuned on DShuttleNet labels (CC BY-NC-SA 4.0): non-commercial use only",
     "architecture": "OSNet x1.0, 512-number description (badminton/osnet.py)",
     "purpose": "Whole-person description for looks-only persistent player identity; doubles all-four-right 94.5% of rallies on the DShuttleNet test matches, singles unvalidated"
+  },
+  "rally_outcome": {
+    "name": "rally_outcome_sequence_v2.json",
+    "sha256": "3d341d8df53526355f3425be9a7257a466031848ee9b2174591e34d9a71d67fd",
+    "publisher": "This project (training/train_rally_sequence.py --all-training)",
+    "purpose": "Rally winner and in/out/net from the shuttle and players around the last contact; trained on ShuttleSet and DShuttleNet broadcast matches; validation winner 90% with the published last hit, 80 to 87% end to end; unvalidated on amateur footage"
   }
 }
