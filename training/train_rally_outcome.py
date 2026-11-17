@@ -170,6 +170,7 @@ def train(rows, valid, hidden, epochs, seed, lr=3e-3, decay=1e-3):
         ],
         "hidden": list(hidden),
         "best_epoch": best[2],
+        # Loss on the epoch-choice fold (training matches), not validation.
         "validation_loss": round(best[0], 4),
         "seed": seed,
     }
@@ -184,6 +185,9 @@ def main():
     parser.add_argument("--hidden", type=int, nargs="*", default=[32, 32])
     parser.add_argument("--epochs", type=int, default=150)
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument(
+        "--sweep", action="store_true", help="try sizes and seeds, keep the best"
+    )
     args = parser.parse_args()
     rows = build(args.features, args.cache)
     # The epoch is chosen on a fifth of the training matches; validation
@@ -198,7 +202,16 @@ def main():
     print(
         f"{len(trainset)} training, {len(picking)} epoch-choice, {len(valid)} validation rallies"
     )
-    document = train(trainset, picking, args.hidden, args.epochs, args.seed)
+    # Several sizes and seeds; the one with the lowest epoch-choice loss is
+    # kept. Validation is not used to choose.
+    candidates = [
+        train(trainset, picking, hidden, args.epochs, seed)
+        for hidden in ([args.hidden] if not args.sweep else ([16], [32, 32], [64, 64]))
+        for seed in ([args.seed] if not args.sweep else (0, 1, 2))
+    ]
+    for c in candidates:
+        print("candidate", c["hidden"], c["seed"], c["best_epoch"], c["validation_loss"])
+    document = min(candidates, key=lambda c: c["validation_loss"])
     model = R.OutcomeModel(document)
     report = {
         "model": {
