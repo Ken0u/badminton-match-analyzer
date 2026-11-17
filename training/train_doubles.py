@@ -181,18 +181,26 @@ def dshuttlenet_split(match):
     )
 
 
-def load_doubles(folders, fold=None):
+def load_doubles(folders, fold=None, holdout=None):
     """Rallies by split; `fold` puts every rally in that one instead.
 
-    DShuttleNet rallies take their split from dshuttlenet_splits.json.
+    DShuttleNet rallies take their split from dshuttlenet_splits.json. With
+    `holdout` (folds, index), the training matches whose id leaves that
+    remainder are moved to a "heldout" split, for out-of-fold scores.
     """
-    data = {"train": [], "validation": [], "test": [], "probe": []}
+    data = {"train": [], "validation": [], "test": [], "probe": [], "heldout": []}
     paths = sorted(p for folder in folders for p in Path(folder).glob("*.json.gz"))
     for path in paths:
         with gzip.open(path, "rt", encoding="utf-8") as source:
             document = json.load(source)
         if document.get("dataset") == "dshuttlenet":
             document["split"] = dshuttlenet_split(document["match_id"])
+            if (
+                holdout
+                and document["split"] == "train"
+                and document["match_id"] % holdout[0] == holdout[1]
+            ):
+                document["split"] = "heldout"
         if abs(float(document["video"]["fps"]) - TRAINED_FPS) > 0.5:
             continue
         inputs, hits = doubles_clip(document)
@@ -237,6 +245,52 @@ def swap_partners(item):
         for frame, hitter, *rest in hits
     ]
     return clip_id, out, hits
+
+
+def ending_weights(items, length, last_weight, after_weight, after_span):
+    """Extra contact-loss weight around each rally's last hit and just after it.
+
+    The doubles model finds the labelled last hit less often on unseen matches
+    than earlier hits, and adds false contacts a few tenths of a second after
+    it. Frames within two of the last hit (the positive target) get
+    last_weight, and frames 3 to after_span after it (where a false contact
+    would sit, target zero) get after_weight; elsewhere the weight is 1.
+    """
+    weights = np.ones((len(items), length), np.float32)
+    for row, (_, inputs, hits) in enumerate(items):
+        if not hits:
+            continue
+        last = max(h[0] for h in hits)
+        weights[row, max(0, last - 2) : min(len(inputs), last + 3)] = last_weight
+        weights[row, last + 3 : min(len(inputs), last + after_span + 1)] = after_weight
+    return weights
+
+
+def ending_loss(outputs, hit, valid, extra):
+    """The contact loss again, on the extra weight above 1 only."""
+    contact = nn.functional.binary_cross_entropy_with_logits(
+        outputs["hit"].squeeze(-1),
+        hit,
+        pos_weight=torch.tensor(8.0, device=hit.device),
+        reduction="none",
+    )
+    return (contact * valid * (extra - 1)).sum() / valid.sum()
+
+
+def dump_predictions(path, items, predictions):
+    """Hit probabilities and labelled hit frames per rally, for rule setting."""
+    rows = [
+        {
+            "clip_id": clip_id,
+            "hits": [int(h[0]) for h in hits],
+            "hitters": [int(h[1]) for h in hits],
+            "hit": np.round(predicted["hit"], 4).tolist(),
+            "hitter": predicted["hitter"].astype(int).tolist(),
+        }
+        for (clip_id, _, hits), predicted in zip(items, predictions)
+    ]
+    with gzip.open(path, "wt", encoding="utf-8") as sink:
+        json.dump(rows, sink)
 
 
 def hitter_report(items, predictions, threshold, tolerance=2):
@@ -344,6 +398,35 @@ def main():
     parser.add_argument(
         "--final", action="store_true", help="score the held-out match and venues"
     )
+    parser.add_argument(
+        "--last-weight",
+        type=float,
+        default=1.0,
+        help="contact-loss weight on a rally's last hit (see ending_weights)",
+    )
+    parser.add_argument(
+        "--after-weight",
+        type=float,
+        default=1.0,
+        help="contact-loss weight just after a rally's last hit",
+    )
+    parser.add_argument(
+        "--after-span", type=int, default=12, help="frames after the last hit"
+    )
+    parser.add_argument(
+        "--holdout",
+        type=int,
+        nargs=2,
+        metavar=("FOLDS", "INDEX"),
+        help="leave the DShuttleNet training matches with id %% FOLDS == INDEX "
+        "out of training and dump predictions on them",
+    )
+    parser.add_argument(
+        "--fixed-threshold",
+        type=float,
+        help="keep the model of the last epoch with this threshold instead of "
+        "choosing epoch and threshold on the validation matches",
+    )
     args = parser.parse_args()
     random.seed(args.seed)
     np.random.seed(args.seed)
@@ -354,7 +437,7 @@ def main():
         raise SystemExit("Give --doubles, or --singles-only to train without it")
     sets = {"s2doubles": load_doubles([args.doubles] if args.doubles else [])}
     if args.dshuttlenet:
-        sets["dshuttlenet"] = load_doubles(args.dshuttlenet)
+        sets["dshuttlenet"] = load_doubles(args.dshuttlenet, holdout=args.holdout)
     if args.probe:
         sets["probe"] = load_doubles([args.probe], "probe")
     if args.features or args.shuttleset:
@@ -453,8 +536,20 @@ def main():
         schedule = torch.optim.lr_scheduler.OneCycleLR(
             optimizer, args.lr, total_steps=steps
         )
-        best, history = -1, []
-        for epoch in range(1, args.epochs + 1):
+        best, history, first = -1, [], 1
+        # A spot VM can be preempted mid-run: state is saved every 10 epochs
+        # and a rerun into the same folder continues from it.
+        resume = args.output / "resume.pt"
+        if resume.is_file():
+            state = torch.load(resume, map_location=device, weights_only=False)
+            model.load_state_dict(state["model"])
+            average.load_state_dict(state["average"])
+            optimizer.load_state_dict(state["optimizer"])
+            schedule.load_state_dict(state["schedule"])
+            best, history, updates = state["best"], state["history"], state["updates"]
+            first = state["epoch"] + 1
+            print(f"resuming after epoch {state['epoch']}", flush=True)
+        for epoch in range(first, args.epochs + 1):
             model.train()
             losses = []
             for group in batches(train, args.batch_size, True):
@@ -467,7 +562,19 @@ def main():
                     strong=args.jitter,
                 )
                 x = x + 0.003 * torch.randn_like(x) * (x != 0)
-                loss = loss_fn(model(x), hit, valid, classes, accept, weights)
+                outputs = model(x)
+                loss = loss_fn(outputs, hit, valid, classes, accept, weights)
+                if args.last_weight != 1 or args.after_weight != 1:
+                    extra = ending_weights(
+                        group,
+                        x.shape[1],
+                        args.last_weight,
+                        args.after_weight,
+                        args.after_span,
+                    )
+                    loss = loss + ending_loss(
+                        outputs, hit, valid, torch.from_numpy(extra).to(device)
+                    )
                 optimizer.zero_grad()
                 loss.backward()
                 nn.utils.clip_grad_norm_(model.parameters(), 1)
@@ -479,9 +586,12 @@ def main():
                 with torch.no_grad():
                     for kept, value in zip(average.parameters(), model.parameters()):
                         kept.lerp_(value, 1 - keep)
-            if epoch % 5 == 0 or epoch == args.epochs:
+            fixed = args.fixed_threshold is not None
+            if (epoch % (10 if fixed else 5) == 0) or epoch == args.epochs:
                 options = []
-                for threshold in (0.3, 0.4, 0.5, 0.6, 0.7):
+                for threshold in (
+                    (args.fixed_threshold,) if fixed else (0.3, 0.4, 0.5, 0.6, 0.7)
+                ):
                     result = evaluate(average, "validation", threshold, 2)
                     mean = float(
                         np.mean(
@@ -526,7 +636,9 @@ def main():
                     ),
                     flush=True,
                 )
-                if mean > best:
+                # With a fixed threshold the validation matches only report:
+                # the last epoch is kept whatever they say.
+                if (epoch == args.epochs) if fixed else mean > best:
                     best = mean
                     torch.save(
                         {
@@ -543,6 +655,21 @@ def main():
                         },
                         checkpoint,
                     )
+            if epoch % 10 == 0 and epoch < args.epochs:
+                torch.save(
+                    {
+                        "model": model.state_dict(),
+                        "average": average.state_dict(),
+                        "optimizer": optimizer.state_dict(),
+                        "schedule": schedule.state_dict(),
+                        "best": best,
+                        "history": history,
+                        "updates": updates,
+                        "epoch": epoch,
+                    },
+                    args.output / "resume.tmp",
+                )
+                (args.output / "resume.tmp").replace(resume)
         (args.output / "history.json").write_text(json.dumps(history, indent=1))
 
     saved = torch.load(checkpoint, map_location=device, weights_only=True)
@@ -559,6 +686,17 @@ def main():
         name = "probe_report.json"
     (args.output / name).write_text(json.dumps(report, indent=1))
     print(json.dumps(report, indent=1))
+    if args.dshuttlenet and not args.final:
+        # Raw hit curves for setting the cut-off and last-contact rules on
+        # matches the model did not learn from (heldout), and for reporting.
+        for fold in ("heldout", "validation"):
+            items = sets["dshuttlenet"].get(fold, [])
+            if items:
+                dump_predictions(
+                    args.output / f"predictions_{fold}.json.gz",
+                    items,
+                    predict(model, items, device),
+                )
 
 
 if __name__ == "__main__":
