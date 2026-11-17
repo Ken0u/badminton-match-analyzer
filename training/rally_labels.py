@@ -28,7 +28,15 @@ Label meanings (checked on the published tables, not on video):
   the last hitter; 出界 out, 掛網 and 未過網 net; 犯規 fault. Landing pixels
   are in the 1280x720 broadcast image; `homography.csv` maps them to a court
   drawn with outer corners at (25, 150) and (325, 810).
-- DShuttleNet `rally.csv`: `score_reason` is the scoring team's view
+- DShuttleNet `rally.csv`: `score_team`, `current_win_score` and
+  `current_lose_score` are counted for the winner (0) and the loser (1) of
+  that SET, not of the match: in a set won by the match's losing pair C/D,
+  team 0 is C/D. `fault_player` is the player who lost the rally (who hit out
+  or into the net, or could not return), which settles the reading of every
+  set: with team 0 read as the set winner the fault player is on the losing
+  side in all but one of 3,900 training and validation rallies; read as A/B
+  it is on the winning side throughout 16 of 114 sets. `set.csv`'s `set_win`
+  agrees except for one set. `score_reason` is the scoring team's view
   (Grounded within Boundaries, Opp Judgment Error: winners; Opp Net Fault,
   Opp Out of Bounds, Opp Failed Return, Opp Faults: the other team's error);
   `land_x/y` pixels map through the match homography to a court with outer
@@ -204,6 +212,27 @@ def dshuttlenet_rallies(match_id, source=DSHUTTLENET):
     for row in _read(source / "shot.csv"):
         if row["rally_id"] in wanted:
             shots[row["rally_id"]].append(row)
+    set_wins = {
+        int(r["set_id"]): _float(r["set_win"])
+        for r in _read(source / "set.csv")
+        if int(r["match_id"]) == match_id
+    }
+    # Per set: is the score's team 0 the pair A/B? The fault player lost the
+    # rally, so team 0 is A/B where score_team differs from the fault
+    # player's pair read as A/B = 0 (see the module text).
+    votes = defaultdict(int)
+    for row in rally_rows:
+        strokes = shots.get(row["rally_id"], [])
+        fault, team = _float(row["fault_player"]), _float(row["score_team"])
+        if not strokes or fault is None or team is None:
+            continue
+        letter = {_float(strokes[0][k]): k for k in "ABCD"}.get(fault)
+        if letter is not None:
+            votes[int(row["set_id"])] += 1 if (letter in "AB") != (team == 0) else -1
+    ab_first = {
+        set_id: votes[set_id] > 0 if votes[set_id] else set_wins.get(set_id) != 1
+        for set_id in sets
+    }
     rallies = []
     for row in rally_rows:
         strokes = sorted(
@@ -224,7 +253,9 @@ def dshuttlenet_rallies(match_id, source=DSHUTTLENET):
 
         ends = [team_end(s, "AB") for s in strokes]
         known = [e for e in ends if e is not None]
-        first_end = max(set(known), key=known.count) if known else None
+        ab_end = max(set(known), key=known.count) if known else None
+        # The end of the score's team 0 (the set's winner).
+        first_end = ab_end if ab_first[int(row["set_id"])] else _other(ab_end)
         score_team = _float(row["score_team"])
         winner_end = None
         if score_team is not None and first_end is not None:
@@ -235,8 +266,8 @@ def dshuttlenet_rallies(match_id, source=DSHUTTLENET):
         letters = {_float(last[k]): k for k in "ABCD"}
         letter = letters.get(hitter)
         hitter_end = None
-        if letter is not None and first_end is not None:
-            hitter_end = first_end if letter in "AB" else _other(first_end)
+        if letter is not None and ab_end is not None:
+            hitter_end = ab_end if letter in "AB" else _other(ab_end)
         # The published reason is the scorer's; ours is the last hitter's.
         if reason is not None and hitter_end is not None and winner_end is not None:
             hitter_won = hitter_end == winner_end
