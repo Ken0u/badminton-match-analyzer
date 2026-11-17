@@ -56,7 +56,9 @@ def clip_labels(rallies, offset, fps, frame_count):
     ignored, so the clip edges make no extras.
     """
     inside = [
-        w for r in rallies if (w := label_window(r, offset, fps, frame_count)) is not None
+        w
+        for r in rallies
+        if (w := label_window(r, offset, fps, frame_count)) is not None
     ]
     if not inside:
         return [], (0, -1)
@@ -68,7 +70,11 @@ def clip_labels(rallies, offset, fps, frame_count):
 
 
 def in_span(predictions, span):
-    return [p for p in predictions if span[0] <= p["start_frame"] and p["end_frame"] <= span[1]]
+    return [
+        p
+        for p in predictions
+        if span[0] <= p["start_frame"] and p["end_frame"] <= span[1]
+    ]
 
 
 def _overlap(a0, a1, b0, b1):
@@ -343,9 +349,9 @@ def main():
     args = parser.parse_args()
     model = None
     if args.model:
-        from badminton.rally_outcomes import OutcomeModel
+        from badminton.rally_outcomes import model_from_document
 
-        model = OutcomeModel(json.loads(args.model.read_text(encoding="utf-8")))
+        model = model_from_document(json.loads(args.model.read_text(encoding="utf-8")))
     records = []
     for path in sorted(args.claims.glob("*/result.json")):
         record = json.loads(path.read_text(encoding="utf-8"))
