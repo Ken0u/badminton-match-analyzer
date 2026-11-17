@@ -189,6 +189,14 @@ def test_last_suggestion_is_kept_when_the_shuttle_leaves_or_is_unseen():
     )
 
 
+def test_last_suggestion_is_kept_when_the_shuttle_rises_a_little():
+    # A soft shot into the net: the shuttle travels under SETTLE_TRAVEL but
+    # climbs up the picture, which a shuttle lying on the floor cannot do.
+    lifted = {f: (600 + (f - 100), 400 - min(f - 100, 10) * 2) for f in range(98, 121)}
+    events = [_suggestion(100, "near")]
+    assert event_model.drop_implausible(events, _track(lifted), 25, 720) == events
+
+
 def test_mid_rally_suggestion_is_not_judged_by_shuttle_travel():
     resting = dict.fromkeys(range(98, 121), (600, 400))
     events = [_suggestion(100, "near"), _suggestion(130, "far")]

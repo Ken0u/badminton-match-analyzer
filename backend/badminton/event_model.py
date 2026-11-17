@@ -46,7 +46,14 @@ METHODS = {"singles": METHOD, "doubles": "learned doubles event model v1"}
 REPEAT_S = 0.5
 RALLY_GAP_S = 2.0
 SETTLE_S = 0.8
-SETTLE_TRAVEL = 0.08
+# A shot into the net or a mishit moves the shuttle only a little, and a
+# shuttle on the floor cannot move up the picture, so a last contact is only
+# dropped when the shuttle stays within SETTLE_TRAVEL and never rises by
+# SETTLE_RISE afterwards. With the earlier limit (0.08, no rise test) the
+# rule removed the true last contact of 7% of singles and 3% of doubles
+# rallies of the training matches; these limits remove 11 of 4,913 (0.2%).
+SETTLE_TRAVEL = 0.04
+SETTLE_RISE = 0.02
 
 
 def checkpoint_path(mode="singles"):
@@ -376,15 +383,26 @@ def predict_events(video, player_run, shuttle_run):
     )
 
 
+def _rise(heights):
+    """The largest climb up the picture (image y decreases) along a track."""
+    lowest, best = -np.inf, 0.0
+    for y in heights:
+        lowest = max(lowest, y)
+        best = max(best, lowest - y)
+    return best
+
+
 def drop_implausible(events, shuttle_rows, fps, height):
     """Remove suggested contacts that the shuttle track or turn order rules out.
 
     One player cannot hit twice within REPEAT_S, so of two such suggestions at
     the same court end the stronger is kept. A rally's last suggestion (nothing
     follows within RALLY_GAP_S) is dropped when the shuttle is still tracked
-    afterwards but barely leaves where it was: it landed, and the player swung
-    or lunged without reaching it. With too few sightings nothing is judged.
-    The limits were chosen on one match and are not validated beyond it.
+    afterwards but barely leaves where it was and does not rise: it landed,
+    and the player swung or lunged without reaching it. With too few
+    sightings nothing is judged. SETTLE_TRAVEL and SETTLE_RISE were set on
+    the training matches' labelled last contacts (see above); the other
+    limits were chosen on one match.
     """
     kept = []
     for event in events:
@@ -426,6 +444,11 @@ def drop_implausible(events, shuttle_rows, fps, height):
                 and len(after) >= 2
                 and max(float(np.hypot(x - origin[0], y - origin[1])) for x, y in after)
                 < SETTLE_TRAVEL * height
+                and _rise(
+                    [seen[f][1] for f in (frame - 2, frame - 1, frame) if f in seen]
+                    + [y for _, y in after]
+                )
+                < SETTLE_RISE * height
             ):
                 continue
         result.append(event)
