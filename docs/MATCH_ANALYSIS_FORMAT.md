@@ -1,4 +1,4 @@
-# MatchAnalysis format (schema version 2)
+# MatchAnalysis format (schema version 3)
 
 One JSON document per match. The match page and every statistic read only
 this document; they never read processing plans, stage runs or annotations.
@@ -27,8 +27,9 @@ TypeScript types come from the OpenAPI contract in
 ## Rules
 
 - **Unknown is `null`**, never a guess. There is no shuttle speed, height or
-  3D position yet; `shot.landing` and `rally.outcome` are always `null`
-  (step 3 fills them).
+  3D position yet. `shot.landing` (last shot of a rally only) and
+  `rally.outcome` come from the pipeline's outcomes stage and are `null`
+  where it could not tell (see "Landing and outcome").
 - **Frames** are source frame indices; `time_s` and `*_s` are source seconds
   from `timestamps.json`. Ranges are half-open unless noted.
 - **Court metres**: x across the court, 0 to 6.1, from the far-left outer
@@ -47,7 +48,7 @@ TypeScript types come from the OpenAPI contract in
 
 | Field | Contents |
 |---|---|
-| `schema_version` | `2` |
+| `schema_version` | `3` |
 | `video` | `id`, `name`, `mode` (singles/doubles), `fps`, `frame_count`, `duration_s`, `width`, `height` |
 | `players` | persons: `id` (`P1`..`P4`), `name` (empty until confirmed), `team` (`T1`/`T2`), `handedness` (`null` = unknown), `thumbnail` (path relative to the video's data folder, or `null`; the API serves it at `/api/matches/{id}/players/{person}/thumbnail`) |
 | `names_confirmed` | `true` once every player has a confirmed name (see Names) |
@@ -71,8 +72,8 @@ by the third component) and `source` (`automatic` or `reviewed`).
 
 `id`, `start_frame`/`end_frame` (inclusive), `start_s`/`end_s`,
 `start_source`, `end_source`, `server_id` (hitter of the opening serve, or
-`null`), `shots`, `outcome` (`null`; later `winner_team`, `reason`
-winner/error, `source`). Rally ids number the rallies in order (`rally-1`,
+`null`), `shots`, `outcome` (see "Landing and outcome"; `null` when
+unknown). Rally ids number the rallies in order (`rally-1`,
 ...) and can change when a rebuild changes the boundaries.
 
 Boundaries come first from the pipeline's rallies stage, which proposes
@@ -119,7 +120,31 @@ on the sources.
 | `hitter_position` | the hitter's feet in metres at contact (nearest frame within 3), or `null` |
 | `players` | every player seen with a court position at the contact frame: `person_id` (or `null`) and `position` |
 | `shuttle` | shuttle image position at contact (nearest frame within 2), or `null` |
-| `landing` | `null` (step 3) |
+| `landing` | last shot of a rally: where it came down (see "Landing and outcome"); otherwise `null` |
+
+### Landing and outcome
+
+The outcomes stage (`rally_outcomes.py`) follows the shuttle's image track
+after the last contact of each rally and projects the point where it comes
+down onto the floor. `landing` has `frame`, `time_s`, `image`, `position`
+(metres; `null` more than 2 m outside the court), `in_court` (rally lines:
+singles or doubles sidelines, full length), `kind` and `source`. Kinds:
+`rest` (the shuttle then lay still), `descent` (it stopped going down),
+`track_end` (the track ended in the air; the position is unreliable). The
+track is followed through short disappearances and over the top of the
+picture, false detections are skipped, and a shuttle that slid or bounced on
+is placed where it first met the floor. The shuttle is tracked in the image
+only, so a shuttle caught in the net or lost in the air projects to the
+wrong place.
+
+`outcome` has `winner_team` (`null` when no identified player stood at the
+winning end), `winner_end`, `last_hitter_end`, `reason` (`winner`: the last
+hitter won; `error`: the last hitter lost it), `detail` (`in`, `out`, `net`
+or `null`), `confidence` (uncalibrated) and `source`: `rule` (the landing
+against the lines; a serve against the service lines) or `model` when a
+rally outcome model is installed (`provenance.models`). It is `null` when
+the last hitter's end or the landing is unknown. Measured accuracy is in
+`docs/REVAMP_PLAN.md`; it is not high enough to trust single rallies.
 
 ### `tracks`
 
