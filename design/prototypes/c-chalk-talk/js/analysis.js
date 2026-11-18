@@ -16,7 +16,7 @@ let NARROW = MQ.matches;
 
 export async function renderAnalysis(v) {
   NARROW = MQ.matches;
-  const onMq = () => location.hash.includes('analysis') && renderAnalysis(v);
+  const onMq = () => location.hash.includes('analysis') && MQ.matches !== NARROW && renderAnalysis(v);
   MQ.addEventListener('change', onMq, { once: true });
   const key = matchKey();
   const { analysis: A, stats: S } = await loadMatch(key);

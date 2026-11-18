@@ -547,11 +547,12 @@ export async function createBoard(host, { analysis, names, reduced }) {
       tgtHero = new THREE.Vector3(0.6, 0, -6.5);
     } else {
       // keep the board clear of the headline column on any landscape shape
-      const k = Math.max(0, 1.75 - aspect);
-      const d = 23 * (1 + k * 0.75);
-      const shift = -5.9 - k * 8;
-      eyeHero = new THREE.Vector3(shift - 0.6 + px * 2.2, d * 0.58 + py * 1.2, d * 0.8);
-      tgtHero = new THREE.Vector3(shift, -0.6, 1.4);
+      // aim at the board and slide the picture right with a view offset, so the
+      // whole board sits in the right-hand column at any landscape shape
+      const f = Math.max(1.1, 1.25 + (1.6 - aspect) * 0.4);
+      const d = 26 * Math.max(1, 1.9 / aspect) * f;
+      eyeHero = new THREE.Vector3(-1.6 + px * 2.2, d * 0.58 + py * 1.2, d * 0.8);
+      tgtHero = new THREE.Vector3(0.6, -0.6, 1.4);
     }
     eyeA.lerpVectors(eyeHero, eyeFlat, p);
     tgtA.lerpVectors(tgtHero, tgtFlat, p);
@@ -564,6 +565,11 @@ export async function createBoard(host, { analysis, names, reduced }) {
     // a gentle roll in the hero pose so the board reads as lying on a bench
     if (p < 1) camera.rotateZ(0.06 * (1 - p) * (portrait ? 0 : 1));
     // tags fade slightly when the board lies flat (more room for strokes)
+    const w = host.clientWidth || 1;
+    const h = host.clientHeight || 1;
+    const off = portrait ? 0 : Math.max(0.2, 0.235 + (1.6 - aspect) * 0.17) * (1 - p);
+    if (off > 0.0005) camera.setViewOffset(w, h, -w * off, 0, w, h);
+    else camera.clearViewOffset();
     renderer.render(scene, camera);
   }
 
