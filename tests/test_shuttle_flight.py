@@ -265,7 +265,9 @@ def test_analyse_places_the_landing_and_can_fit_every_shot():
         "serves": [],
         "ends": [],
     }
-    (rally,) = R.analyse(line, speeds=True)
+    done = []
+    (rally,) = R.analyse(line, speeds=True, progress=done.append)
+    assert done == [1.0]
     landing = rally["landing"]
     down = F.touchdown(np.array([shots[1][1]]))[0]["point"]
     assert landing["placement"] in ("lifted", "image")

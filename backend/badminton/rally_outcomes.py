@@ -1071,7 +1071,7 @@ def shot_flights(line, group, limit, last=None):
     return out
 
 
-def analyse(line, model=None, flight=True, speeds=False):
+def analyse(line, model=None, flight=True, speeds=False, progress=None):
     """Rallies with boundaries, last-shot landing and outcome.
 
     Returns a list of plain dicts (the outcomes stage's ``rallies``):
@@ -1080,7 +1080,8 @@ def analyse(line, model=None, flight=True, speeds=False):
     builder turns ends into teams. With ``flight`` the last shot's 3D flight
     is fitted and places the landing (``placed_landing``); with ``speeds``
     every shot's flight is fitted and stored as "shot_flights", aligned with
-    "shot_frames".
+    "shot_frames". ``progress``, when given, is called with the share of
+    rallies done.
     """
     times, contacts = line["times"], line["contacts"]
     count = len(times)
@@ -1174,17 +1175,20 @@ def analyse(line, model=None, flight=True, speeds=False):
         if outcome is not None:
             record["outcome"] = {**outcome, "source": source}
         result.append(record)
+        if progress is not None:
+            progress((number + 1) / len(groups))
     return result
 
 
 # Pipeline stage -------------------------------------------------------------
 
 MANIFEST_KEY = "rally_outcome"
-# Fit every shot's flight in the stage ("shot_flights" per rally, initial
-# speed and more, for clip statistics). Off: it costs about a third of a
-# second per shot (several minutes for a full match) and step 4 has not
-# started reading it; analyse(speeds=True) gives it on demand.
-SHOT_FLIGHTS = False
+# Fit every shot's flight in the stage ("shot_flights" per rally: initial
+# speed and more, read into MatchAnalysis shots[].flight for clip
+# statistics). It costs about 0.2 to 0.26 s per shot on one core: about a
+# minute for an 8-minute match (doubles.mp4 315 shots +64 s, singles.mp4 258
+# shots +68 s), against 20 minutes or more of perception.
+SHOT_FLIGHTS = True
 
 
 def manifest_entry():
@@ -1228,10 +1232,15 @@ def run_stage(video, store, plan, times, output, progress):
 
     runs = load_plan_runs(store, video["id"], plan, outcomes=False)
     line = timeline(MatchInputs(video, list(times), plan, runs))
-    progress(0.5)
+    progress(0.05)
     model, problem = load_model()
     entry = manifest_entry() if model is not None else None
-    rallies = analyse(line, model, speeds=SHOT_FLIGHTS)
+    rallies = analyse(
+        line,
+        model,
+        speeds=SHOT_FLIGHTS,
+        progress=lambda done: progress(0.05 + 0.95 * done),
+    )
     write_json(
         output,
         {
