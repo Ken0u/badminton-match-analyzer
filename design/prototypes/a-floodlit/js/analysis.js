@@ -227,10 +227,10 @@ function speeds({ data, held, S }) {
       return `<li><span class="sp-l">${labelText(k)}</span>
         <span class="sp-track"><span class="sp-range" style="left:${(s.p10 / MAX) * 100}%;width:${(Math.min(s.p90, MAX) - s.p10) / MAX * 100}%"></span><span class="sp-med" style="left:${(s.median / MAX) * 100}%"></span></span>
         <span class="sp-v">${Math.round(s.median)}<small> km/h</small></span>
-        <span class="sp-n">${s.n} measured${v.speed_bound ? `, ${v.speed_bound} too fast to measure` : ''}</span></li>`;
+        <span class="sp-n">${s.n} estimated${v.speed_bound + v.good - s.n > 0 ? `, ${v.speed_bound + v.good - s.n} with uncertain launch speed` : ''}</span></li>`;
     }).join('')}</ul>
     <div class="sp-axis" aria-hidden="true">${tick.map((t) => `<span style="left:${(t / MAX) * 100}%">${t}</span>`).join('')}</div>
-    <p class="fine">The line is the middle speed, the band covers most shots. The hardest smashes are too fast for this frame rate to clock and are left out, so smash numbers run low.</p>
+    <p class="fine">The line is the middle speed, the band covers most shots. Shots with unresolved launch speeds are excluded.</p>
   </section>`;
 }
 

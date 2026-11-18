@@ -34,13 +34,28 @@ async function route() {
   if (view) main.focus({ preventScroll: true });
 }
 addEventListener('hashchange', route);
+// the hall lights strike once per visit; later screens find them already on
+const hall = document.getElementById('hall');
+hall.addEventListener('animationstart', () => setTimeout(() => hall.classList.add('lit'), 2000), { once: true });
 queueMicrotask(route); // after the whole module has run
 
 /* ================= Landing ================= */
+const PHONE = '(max-width: 760px)';
 async function landing() {
   main.innerHTML = `
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-stage" id="stage"><div class="hero-fallback" style="background-image:url(${asset('poster.jpg')})"></div></div>
+    <div class="hero-stage" id="stage">
+      <div class="hero-fallback" style="background-image:url(${asset('poster.jpg')})"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <aside class="hero-readout" aria-label="The rally being replayed">
+        <p class="readout-what" id="ro-what">Loading a rally</p>
+        <div class="readout-row">
+          <div class="readout-count"><span class="readout-num" id="ro-shot">0</span><span class="readout-unit" id="ro-of"></span></div>
+          <div class="readout-stroke" id="ro-stroke"></div>
+        </div>
+        <p class="readout-hint"><span class="hint-mouse">Drag to look around the hall</span><span class="hint-touch">Swipe sideways to look around</span></p>
+      </aside>
+    </div>
     <div class="hero-copy">
       <h1 id="hero-title" class="hero-title"><span>Every rally,</span><span>back under</span><span>the lights</span></h1>
       <p class="hero-lede">Upload a video of your singles or doubles match. We find the court, follow every player and the shuttle, and give you each rally, stroke and speed to watch back.</p>
@@ -49,14 +64,6 @@ async function landing() {
         <a class="link-quiet" href="#/match/watch">Open the sample match</a>
       </div>
     </div>
-    <aside class="hero-readout" aria-live="off">
-      <p class="readout-what" id="ro-what">Loading a rally</p>
-      <div class="readout-row">
-        <div><span class="readout-num" id="ro-shot">–</span><span class="readout-unit" id="ro-of"></span></div>
-        <div class="readout-stroke" id="ro-stroke"></div>
-      </div>
-      <p class="readout-hint">Drag to look around the hall</p>
-    </aside>
   </section>
   <section class="steps" aria-labelledby="steps-title">
     <h2 id="steps-title" class="section-title">From video to rally-by-rally in three steps</h2>
@@ -73,26 +80,35 @@ async function landing() {
   const shotEl = document.getElementById('ro-shot');
   const ofEl = document.getElementById('ro-of');
   const strokeEl = document.getElementById('ro-stroke');
-  try {
+  let hero = null;
+  const phoneMq = matchMedia(PHONE);
+  async function build() {
+    hero?.destroy();
     const { createHero } = await import('./hero.js');
     await Promise.all([document.fonts.load('800 100px Anybody'), document.fonts.load('600 40px Archivo')]).catch(() => {});
-    const hero = createHero(stage, match, {
+    if (!document.body.contains(stage)) return;
+    hero = createHero(stage, match, {
       still: reducedMotion(),
+      phone: phoneMq.matches,
       onShot: ({ index, total, shot, label, speed }) => {
         shotEl.textContent = index + 1;
         ofEl.textContent = ` of ${total} shots`;
         const who = shot.hitter_id ? firstName(match, shot.hitter_id) : 'Someone';
-        strokeEl.textContent = `${who}, ${label.toLowerCase()}${speed?.kmh ? `, ${speed.kmh} km/h` : speed?.bound ? ', too fast to clock' : ''}`;
+        strokeEl.textContent = `${who}, ${label.toLowerCase()}${speed?.kmh ? `, ${speed.kmh} km/h${speed.settled ? " est. at +0.1 s" : ""}` : speed?.bound ? ', launch speed uncertain' : ''}`;
       },
     });
     const r = hero.rally;
-    const teams = `${teamName(match, 'T1')} v ${teamName(match, 'T2')}`;
-    what.textContent = `Rally ${rallyNumber(r)} of ${teams}, replayed from the tracking`;
+    what.textContent = `Rally ${rallyNumber(r)} of ${teamName(match, 'T1')} v ${teamName(match, 'T2')}, rebuilt from the tracking`;
     stage.classList.add('live');
-    onLeave(() => hero.destroy());
+  }
+  try {
+    await build();
+    const rebuild = () => build().catch(console.error);
+    phoneMq.addEventListener('change', rebuild);
+    onLeave(() => { phoneMq.removeEventListener('change', rebuild); hero?.destroy(); });
   } catch (e) {
     console.error(e);
-    what.textContent = 'The 3D replay needs WebGL; showing a still from the match instead.';
+    what.textContent = 'The 3D replay needs WebGL, so here is a still from the match instead.';
   }
 }
 
@@ -340,6 +356,7 @@ async function matchPage([tab = 'watch']) {
   const rallies = match.analysis.rallies;
   const won = { T1: 0, T2: 0 };
   rallies.forEach((r) => r.outcome?.winner_team && won[r.outcome.winner_team]++);
+  const unknown = rallies.filter((r) => !r.outcome?.winner_team).length;
   const sideBlock = (team, k) => `
     <div class="sb-side sb-${k}">
       <div class="sb-faces">${teamPlayers(match, team).map((p) => `<img src="${asset(`players/${p.id}.jpg`)}" alt="">`).join('')}</div>
@@ -351,7 +368,7 @@ async function matchPage([tab = 'watch']) {
     <header class="scoreboard">
       <h1 id="mp-title" class="visually-hidden">${esc(teamName(match, 'T1'))} v ${esc(teamName(match, 'T2'))}</h1>
       ${sideBlock('T1', 1)}
-      <div class="sb-mid"><span>${rallies.length} rallies</span><span>${Math.round(match.analysis.video.duration_s / 60)} min of video</span></div>
+      <div class="sb-mid"><span>${rallies.length} rallies</span>${unknown ? `<span>${unknown} with no result</span>` : ''}<span>${Math.round(match.analysis.video.duration_s / 60)} min of video</span></div>
       ${sideBlock('T2', 2)}
     </header>
     <nav class="tabs" aria-label="Match views">

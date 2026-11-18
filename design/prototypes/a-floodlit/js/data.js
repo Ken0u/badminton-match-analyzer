@@ -70,8 +70,15 @@ export function shotLabel(shot) {
 export function speedOf(shot) {
   const f = shot && shot.flight;
   if (!f) return null;
-  if (f.quality === 'good' && f.initial_speed_kmh != null) return { kmh: Math.round(f.initial_speed_kmh) };
-  if (f.quality === 'speed_bound') return { bound: true };
+  if (f.quality === 'good' && f.launch_supported !== false) {
+    const speed = f.launch_supported === true ? f.early_speed_kmh : f.initial_speed_kmh;
+    if (Number.isFinite(speed)) return { kmh: Math.round(speed) };
+  }
+  if (f.quality === 'speed_bound' || f.quality === 'good') {
+    if (f.settled_supported === true && Number.isFinite(f.speed_settled_kmh))
+      return { kmh: Math.round(f.speed_settled_kmh), settled: true };
+    return { bound: true };
+  }
   return null;
 }
 export function outcomeText(rally) {
@@ -146,4 +153,75 @@ export const pct = (share) => (share == null ? '–' : `${Math.round(share * 100
 export const enough = (n, min = MIN_N) => n != null && n >= min;
 export function esc(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+}
+
+// Fit one smooth progress curve, never individual noisy detections. Use the
+// lateral image coordinate: image height conflates depth and shuttle height.
+// Perspective weights are approximated at the players' floor positions. For
+// straight-on shots this cue is unobservable, so keep the stroke prior.
+export function estimatePace(match, a, b, prior) {
+  const video = match.analysis.video, xs = match.analysis.tracks?.shuttle?.x;
+  if (!b || !xs || xs.length !== video.frame_count || !a.hitter_position || !b.hitter_position) return null;
+  const view = match.views?.find(v => v.start_frame <= a.frame && b.frame < v.end_frame);
+  const row = view?.inverse?.[2];
+  if (!row || !Number.isFinite(a.shuttle?.x) || !Number.isFinite(b.shuttle?.x)) return null;
+  const span = b.frame-a.frame, dx = b.shuttle.x-a.shuttle.x;
+  if (span < 9 || span > 3*video.fps || Math.abs(span/video.fps-(b.time_s-a.time_s)) > 0.5/video.fps || Math.abs(dx)*video.width < 40) return null;
+  const depth = p => row[0]*p.x + row[1]*p.y + row[2];
+  const ratio = depth(b.hitter_position)/depth(a.hitter_position);
+  if (!(ratio > 0.4 && ratio < 2.5)) return null;
+  const samples = [];
+  for (let k=1;k<span;k++) {
+    const x = xs[a.frame+k]; // native frame, not the 10 Hz player-track index
+    if (Number.isFinite(x)) samples.push([k/span,x]);
+  }
+  if (samples.length < 8 || samples[1][0] > 0.35 || samples.at(-2)[0] < 0.65) return null;
+  const train = samples.filter((_,i) => !(i%2)), check = samples.filter((_,i) => i%2);
+  function error(d, points) {
+    const residuals = points.map(([t,x]) => {
+      const u = Math.expm1(-d*t)/Math.expm1(-d);
+      const v = u*ratio/(1-u+u*ratio);
+      return Math.abs(a.shuttle.x+dx*v-x)*video.width;
+    }).sort((x,y)=>x-y);
+    return residuals[Math.floor(residuals.length/2)];
+  }
+  let best=prior, score=error(prior,train);
+  for(let k=1;k<=24;k++) {
+    const d=k/5, candidate=error(d,train);
+    if(candidate<score) {best=d; score=candidate;}
+  }
+  const validation=error(best,check);
+  return validation < 8 && validation+1 < error(prior,check) ? best : null;
+}
+
+// Estimate the height above the straight racket-to-racket chord. At each
+// depth use the projected width of a court metre as the local image scale.
+// This is a broadcast-view approximation, not a recovered world height.
+export function estimateBow(match, a, b, drag, prior) {
+  const video=match.analysis.video, ys=match.analysis.tracks?.shuttle?.y;
+  if (!b || ys?.length!==video.frame_count || !a.hitter_position || !b.hitter_position ||
+      !Number.isFinite(a.shuttle?.y) || !Number.isFinite(b.shuttle?.y)) return prior;
+  const H=match.views?.find(v=>v.start_frame<=a.frame && b.frame<v.end_frame)?.inverse;
+  const span=b.frame-a.frame;
+  if (!H || span<9 || span>3*video.fps || Math.abs(span/video.fps-(b.time_s-a.time_s))>0.5/video.fps) return prior;
+  const depth=p=>H[2][0]*p.x+H[2][1]*p.y+H[2][2];
+  const A=a.hitter_position, B=b.hitter_position, ratio=depth(B)/depth(A);
+  if (!(ratio>0.4 && ratio<2.5)) return prior;
+  const points=[];
+  for (let k=1;k<span;k++) {
+    if (!Number.isFinite(ys[a.frame+k])) continue;
+    const u=Math.expm1(-drag*k/span)/Math.expm1(-drag), v=u*ratio/(1-u+u*ratio);
+    if (u<0.08 || u>0.92) continue;
+    const x=A.x+(B.x-A.x)*u,y=A.y+(B.y-A.y)*u;
+    const scale=Math.abs(applyH(H,x+1,y)[0]-applyH(H,x,y)[0])*video.width;
+    if (!(scale>8 && scale<video.height/2)) continue;
+    const rise=(a.shuttle.y+(b.shuttle.y-a.shuttle.y)*v-ys[a.frame+k])*video.height;
+    points.push({k, rise, weight:scale*u*(1-u)});
+  }
+  if (points.length<8 || points[1].k/span>0.35 || points.at(-2).k/span<0.5) return prior;
+  const median=arr=>arr.sort((a,b)=>a-b)[Math.floor(arr.length/2)];
+  const bow=median(points.filter((_,i)=>!(i%2)).map(p=>p.rise/p.weight));
+  if (!(bow>=0 && bow<=24)) return prior;
+  const check=points.filter((_,i)=>i%2), err=c=>median(check.map(p=>Math.abs(p.rise-c*p.weight)));
+  return err(bow)<8 && err(bow)+1<err(prior) ? bow : prior;
 }
