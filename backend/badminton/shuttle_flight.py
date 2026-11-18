@@ -242,11 +242,13 @@ def _acceleration(v, vt):
     return a
 
 
-def integrate(state, duration, vt=TERMINAL_VELOCITY, step=STEP_S):
+def integrate(state, duration, vt=None, step=None):
     """RK4 of states [B, 6] (position, velocity) over [0, duration].
 
     Returns (times [N], positions [N, B, 3], velocities [N, B, 3]).
     """
+    vt = TERMINAL_VELOCITY if vt is None else vt
+    step = STEP_S if step is None else step
     state = np.atleast_2d(np.asarray(state, float))
     count = max(1, math.ceil(duration / step))
     out = np.empty((count + 1, *state.shape))
@@ -272,9 +274,10 @@ def integrate(state, duration, vt=TERMINAL_VELOCITY, step=STEP_S):
     return np.arange(count + 1) * step, out[:, :, :3], out[:, :, 3:]
 
 
-def positions_at(state, at, vt=TERMINAL_VELOCITY, step=STEP_S):
+def positions_at(state, at, vt=None, step=None):
     """Positions [B, len(at), 3] of the flights from ``state`` at times ``at``."""
     at = np.asarray(at, float)
+    step = STEP_S if step is None else step
     grid, ps, vs = integrate(state, float(at.max()) + step, vt, step)
     k = np.clip((at // step).astype(int), 0, len(grid) - 2)
     s = ((at - grid[k]) / step)[None, :, None]
@@ -286,7 +289,7 @@ def positions_at(state, at, vt=TERMINAL_VELOCITY, step=STEP_S):
     return h00 * p0 + h10 * v0 + h01 * p1 + h11 * v1
 
 
-def touchdown(state, vt=TERMINAL_VELOCITY, limit_s=4.0, net_after_s=0.0, step=STEP_S):
+def touchdown(state, vt=None, limit_s=4.0, net_after_s=0.0, step=None):
     """Where flights [B, 6] first meet the floor or the net.
 
     Returns a list of dicts (or None when a flight stays up for limit_s):
@@ -295,6 +298,7 @@ def touchdown(state, vt=TERMINAL_VELOCITY, limit_s=4.0, net_after_s=0.0, step=ST
     there (``net`` true); before it, the shuttle was seen flying on, so it
     went over.
     """
+    step = STEP_S if step is None else step
     grid, ps, vs = integrate(state, limit_s, vt, step)
     out = []
     for b in range(ps.shape[1]):

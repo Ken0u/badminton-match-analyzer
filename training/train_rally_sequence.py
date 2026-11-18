@@ -26,6 +26,7 @@ import argparse
 import json
 import sys
 from collections import Counter
+from functools import partial
 from pathlib import Path
 
 import numpy as np
@@ -38,6 +39,9 @@ from badminton import rally_outcome_model as M
 from badminton import rally_outcomes as R
 
 LONG_S = 2.4  # stored per row; shorter looks are cut from it
+# With --flight, rows place the landing with the last shot's 3D flight
+# (rally_outcomes.placed_landing) and add rally_outcomes.FLIGHT_FEATURES.
+FLIGHT = False
 
 
 def target(label):
@@ -88,6 +92,30 @@ def rows_of(example):
             landing = R.find_landing(
                 times, shuttle, after, until, line["aspect"], lambda i: matrix
             )
+            if FLIGHT and landing is not None:
+                search = min(
+                    until,
+                    int(
+                        np.searchsorted(
+                            times, times[after] + R.LANDING_SEARCH_S, "right"
+                        )
+                    ),
+                )
+                fit = R.shot_flight(
+                    times,
+                    shuttle,
+                    after,
+                    search,
+                    line["aspect"],
+                    lambda i: matrix,
+                    hitter,
+                    line["people"],
+                    None if landing["kind"] == "track_end" else landing["index"],
+                    landing["kind"] in R.GROUNDED_KINDS,
+                )
+                landing = R.placed_landing(
+                    landing, fit, lambda i: matrix, line["aspect"]
+                )
             summary = R.outcome_features(
                 times,
                 shuttle,
@@ -98,6 +126,7 @@ def rows_of(example):
                 mode,
                 line["aspect"],
                 family,
+                R.FEATURES_FLIGHT if FLIGHT else R.FEATURES,
             )
             sequence = M.sequence_features(
                 times,
@@ -133,7 +162,9 @@ def rows_of(example):
             }
 
 
-def _rows_of_files(paths):
+def _rows_of_files(paths, flight=False):
+    global FLIGHT
+    FLIGHT = flight
     rows = []
     for example in rally_outcome_features.examples((), paths):
         if example["split"] in ("train", "validation"):
@@ -143,7 +174,7 @@ def _rows_of_files(paths):
     return rows
 
 
-def build(folders, cache, workers=1):
+def build(folders, cache, workers=1, flight=False):
     if cache and cache.is_file():
         data = np.load(cache, allow_pickle=False)
         meta = json.loads(str(data["meta"]))
@@ -155,7 +186,7 @@ def build(folders, cache, workers=1):
         from multiprocessing import Pool
 
         with Pool(workers) as pool:
-            results = pool.imap(_rows_of_files, chunks)
+            results = pool.imap(partial(_rows_of_files, flight=flight), chunks)
             for rows in results:
                 for row in rows:
                     summaries.append(row.pop("summary"))
@@ -164,7 +195,7 @@ def build(folders, cache, workers=1):
                 print(len(meta), "rows", flush=True)
     else:
         for chunk in chunks:
-            for row in _rows_of_files(chunk):
+            for row in _rows_of_files(chunk, flight):
                 summaries.append(row.pop("summary"))
                 sequences.append(row.pop("sequence"))
                 meta.append(row)
@@ -180,6 +211,8 @@ def build(folders, cache, workers=1):
 
 
 def mirror_summary(summary):
+    """Left and right swapped: only the image x changes (lateral distances
+    and line distances are symmetric)."""
     out = summary.copy()
     x = R.FEATURES.index("image_x")
     found = summary[:, R.FEATURES.index("landing_found")] > 0
@@ -187,7 +220,7 @@ def mirror_summary(summary):
     return out
 
 
-def network(hidden, dropout, use_sequence=True):
+def network(hidden, dropout, use_sequence=True, summary_size=len(R.FEATURES)):
     import torch
     from torch import nn
 
@@ -196,7 +229,7 @@ def network(hidden, dropout, use_sequence=True):
             super().__init__()
             self.input = nn.Linear(M.STEP_FEATURES, hidden)
             self.gru = nn.GRU(hidden, hidden, batch_first=True, bidirectional=True)
-            self.summary = nn.Linear(len(R.FEATURES), 32)
+            self.summary = nn.Linear(summary_size, 32)
             self.hidden = nn.Linear(6 * hidden + 32, 64)
             self.classes = nn.Linear(64, len(R.CLASSES))
             self.won = nn.Linear(64, 1)
@@ -245,7 +278,7 @@ def fit(
 
     torch.manual_seed(seed)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    net = network(hidden, dropout, use_sequence).to(device)
+    net = network(hidden, dropout, use_sequence, train[1].shape[1]).to(device)
 
     def tensors(part):
         return [torch.tensor(a).to(device) for a in part]
@@ -287,7 +320,7 @@ def predict(members, sequence, summary, use_sequence=True):
     device = "cuda" if torch.cuda.is_available() else "cpu"
     classes, won = [], []
     for state, hidden in members:
-        net = network(hidden, 0.0, use_sequence).to(device)
+        net = network(hidden, 0.0, use_sequence, summary.shape[1]).to(device)
         net.load_state_dict({k: torch.tensor(v) for k, v in state.items()})
         net.eval()
         with torch.no_grad():
@@ -351,6 +384,18 @@ def main():
         "fixed number of epochs (after the design is chosen with the fold)",
     )
     parser.add_argument("--no-sequence", action="store_true", help="summary only")
+    parser.add_argument(
+        "--flight",
+        action="store_true",
+        help="place the landing with the 3D flight and add its features "
+        "(use a separate --cache)",
+    )
+    parser.add_argument("--name", default="rally outcome sequence v2")
+    parser.add_argument(
+        "--base-features",
+        action="store_true",
+        help="with --flight: leave the flight features out of the network",
+    )
     parser.add_argument("--workers", type=int, default=1, help="to read the files")
     parser.add_argument(
         "--report-validation",
@@ -358,7 +403,15 @@ def main():
         help="also score the validation matches (after the design is fixed)",
     )
     args = parser.parse_args()
-    meta, summary, sequence = build(args.features, args.cache, args.workers)
+    meta, summary, sequence = build(
+        args.features, args.cache, args.workers, args.flight
+    )
+    names = R.FEATURES_FLIGHT if args.flight else R.FEATURES
+    if summary.shape[1] != len(names):
+        raise SystemExit("The cached rows were built with the other feature set")
+    if args.base_features:
+        # Landing placed by the flight, but only the plain landing features.
+        summary, names = summary[:, : len(R.FEATURES)], R.FEATURES
     count = M.steps(args.after)
     sequence = sequence[:, :count].astype(np.float32)
     # Steps beyond this look are the same as never stored.
@@ -442,8 +495,8 @@ def main():
         return  # a comparison only; the stored network always reads the sequence
     document = {
         "format": M.FORMAT,
-        "name": "rally outcome sequence v2",
-        "features": list(R.FEATURES),
+        "name": args.name,
+        "features": list(names),
         "classes": list(R.CLASSES),
         "step_features": M.STEP_FEATURES,
         "after_s": args.after,
@@ -460,6 +513,7 @@ def main():
             "previous": args.previous,
             "all_training": args.all_training,
             "sequence": not args.no_sequence,
+            "flight": args.flight,
             **result,
         },
     }

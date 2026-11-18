@@ -208,8 +208,10 @@ class Landing(StrictModel):
     """Where the last shot came down, from the shuttle's image track.
 
     ``position`` is the floor point under the image point where the shuttle
-    stopped descending (null when it projects more than COURT_MARGIN_M
-    outside the court); ``kind`` is rest (it then lay still), descent (it
+    stopped descending, through the camera recovered from the court view
+    (the shuttle's centre is taken a few centimetres above the floor), or
+    where the fitted 3D flight meets the floor when the track ended in the
+    air (null when it lies more than COURT_MARGIN_M outside the court); ``kind`` is rest (it then lay still), descent (it
     stopped going down) or track_end (its track ended in the air, so the
     position is unreliable). ``in_court`` uses the rally lines: singles or
     doubles sidelines and the full length.
