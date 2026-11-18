@@ -41,7 +41,7 @@ TRAINED_FPS = 30.0
 CHECKPOINTS = {"singles": "events.pt", "doubles": "events_doubles.pt"}
 CHECKPOINT = CHECKPOINTS["singles"]
 METHOD = "learned singles event model v3"
-METHODS = {"singles": METHOD, "doubles": "learned doubles event model v1"}
+METHODS = {"singles": METHOD, "doubles": "learned doubles event model v5"}
 # Limits for drop_implausible: seconds, and a share of the frame height.
 REPEAT_S = 0.5
 RALLY_GAP_S = 2.0
