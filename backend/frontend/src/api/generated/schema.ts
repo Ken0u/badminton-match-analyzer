@@ -241,6 +241,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/matches/{match_id}/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Match Clip Stats
+         * @description Clip statistics (same as /api/videos/{id}/match-stats).
+         */
+        get: operations["match_clip_stats_api_matches__match_id__stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/upload": {
         parameters: {
             query?: never;
@@ -458,6 +478,26 @@ export interface paths {
          * @description The stored per-match results document; read-only, never rebuilt here.
          */
         get: operations["match_analysis_api_videos__video_id__match_analysis_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/videos/{video_id}/match-stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Match Stats
+         * @description Whole-clip statistics of the stored MatchAnalysis document.
+         */
+        get: operations["match_stats_api_videos__video_id__match_stats_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -792,6 +832,65 @@ export interface components {
              */
             notes?: string;
         };
+        /** ClipStats */
+        ClipStats: {
+            /** Analysis Created At */
+            analysis_created_at: string;
+            /** Analysis Key */
+            analysis_key: string;
+            /** Analysis Schema Version */
+            analysis_schema_version: number;
+            clip: components["schemas"]["ClipTotals"];
+            /** Identity Persistent */
+            identity_persistent: boolean;
+            /**
+             * Mode
+             * @enum {string}
+             */
+            mode: "singles" | "doubles";
+            /** Players */
+            players: components["schemas"]["PlayerStats"][];
+            /** Shot Flights */
+            shot_flights: boolean;
+            /**
+             * Stats Version
+             * @default 1
+             * @constant
+             */
+            stats_version?: 1;
+            /** Teams */
+            teams: components["schemas"]["TeamStats"][];
+            /** Video Id */
+            video_id: string;
+            /** Warnings */
+            warnings?: string[];
+        };
+        /** ClipTotals */
+        ClipTotals: {
+            /** Contacts */
+            contacts: number;
+            /** Landings */
+            landings: components["schemas"]["LandingSpot"][];
+            /** Outcome Conflicts */
+            outcome_conflicts: number;
+            outcomes_known: components["schemas"]["Share"];
+            /** Pairs */
+            pairs: components["schemas"]["SequenceCount"][];
+            /** Rallies */
+            rallies: number;
+            rallies_ended_at_landing: components["schemas"]["Share"];
+            rally_seconds: components["schemas"]["Distribution"];
+            rally_shots: components["schemas"]["Distribution"];
+            shots: components["schemas"]["ShotBreakdown"];
+            /** Speeds */
+            speeds?: {
+                [key: string]: components["schemas"]["SpeedStats"];
+            } | null;
+            /** Triples */
+            triples: components["schemas"]["SequenceCount"][];
+            /** Unattributed Contacts */
+            unattributed_contacts: number;
+        };
         /** ContactsRequest */
         ContactsRequest: {
             /**
@@ -896,6 +995,65 @@ export interface components {
             /** Start Frame */
             start_frame: number;
         };
+        /**
+         * DistanceStats
+         * @description Distance covered on the court floor during rallies (feet, metres).
+         *
+         *     ``total_m`` adds every tracked span of every rally (a lower bound when
+         *     coverage is below 1); ``per_minute_m`` is it per tracked minute.
+         *     ``per_rally`` lists every rally; ``rally_m`` summarises the rallies that
+         *     are at least MIN_COVERAGE tracked.
+         */
+        DistanceStats: {
+            /** Coverage */
+            coverage?: number | null;
+            /** Per Minute M */
+            per_minute_m?: number | null;
+            /** Per Rally */
+            per_rally: components["schemas"]["RallyDistance"][];
+            rally_m: components["schemas"]["Summary"];
+            /** Rally S */
+            rally_s: number;
+            /** Total M */
+            total_m: number;
+            /** Tracked S */
+            tracked_s: number;
+        };
+        /**
+         * Distribution
+         * @description A Summary with a histogram: bin i holds edges[i] <= v < edges[i + 1];
+         *     ``below`` and ``above`` count values outside the edges.
+         */
+        Distribution: {
+            /**
+             * Above
+             * @default 0
+             */
+            above?: number;
+            /**
+             * Below
+             * @default 0
+             */
+            below?: number;
+            /** Counts */
+            counts: number[];
+            /** Edges */
+            edges: number[];
+            /** Max */
+            max?: number | null;
+            /** Mean */
+            mean?: number | null;
+            /** Median */
+            median?: number | null;
+            /** Min */
+            min?: number | null;
+            /** N */
+            n: number;
+            /** P10 */
+            p10?: number | null;
+            /** P90 */
+            p90?: number | null;
+        };
         /** EvaluationRequest */
         EvaluationRequest: {
             /** Contacts Run Id */
@@ -973,6 +1131,65 @@ export interface components {
              */
             time_s?: number;
         };
+        /**
+         * FinishStats
+         * @description Rally-ending shots of this side with a known outcome.
+         */
+        FinishStats: {
+            /** By Label */
+            by_label: {
+                [key: string]: components["schemas"]["ShotResult"];
+            };
+            /** Ended */
+            ended: number;
+            errors: components["schemas"]["Share"];
+            winners: components["schemas"]["Share"];
+        };
+        /**
+         * Formation
+         * @description Doubles formation from the 10 Hz tracks during rallies. Attacking and
+         *     defending follow the last shot played (see ATTACKING and DEFENDING).
+         */
+        Formation: {
+            all: components["schemas"]["FormationShare"];
+            attacking: components["schemas"]["FormationShare"];
+            defending: components["schemas"]["FormationShare"];
+            /** Seconds */
+            seconds: number;
+        };
+        /**
+         * FormationShare
+         * @description Samples with both partners tracked and at least FORMATION_MIN_M apart.
+         */
+        FormationShare: {
+            /** Close */
+            close: number;
+            front_back: components["schemas"]["Share"];
+            side_by_side: components["schemas"]["Share"];
+        };
+        /**
+         * Grid
+         * @description Counts on court cells, rows along the court (y), columns across (x).
+         *
+         *     ``counts[row][column]`` covers y_edges[row]..y_edges[row + 1] and
+         *     x_edges[column]..x_edges[column + 1], in metres, with the player turned
+         *     to the near end. ``n`` samples fell on the grid and ``outside`` beyond
+         *     it; ``seconds`` is ``n`` at the track rate.
+         */
+        Grid: {
+            /** Counts */
+            counts: number[][];
+            /** N */
+            n: number;
+            /** Outside */
+            outside: number;
+            /** Seconds */
+            seconds: number;
+            /** X Edges */
+            x_edges: number[];
+            /** Y Edges */
+            y_edges: number[];
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -1021,8 +1238,10 @@ export interface components {
          * @description Where the last shot came down, from the shuttle's image track.
          *
          *     ``position`` is the floor point under the image point where the shuttle
-         *     stopped descending (null when it projects more than COURT_MARGIN_M
-         *     outside the court); ``kind`` is rest (it then lay still), descent (it
+         *     stopped descending, through the camera recovered from the court view
+         *     (the shuttle's centre is taken a few centimetres above the floor), or
+         *     where the fitted 3D flight meets the floor when the track ended in the
+         *     air (null when it lies more than COURT_MARGIN_M outside the court); ``kind`` is rest (it then lay still), descent (it
          *     stopped going down) or track_end (its track ended in the air, so the
          *     position is unreliable). ``in_court`` uses the rally lines: singles or
          *     doubles sidelines and the full length.
@@ -1044,6 +1263,35 @@ export interface components {
             /** Time S */
             time_s: number;
         };
+        /**
+         * LandingSpot
+         * @description Where a rally's last shot came down (the hitter at the near end).
+         */
+        LandingSpot: {
+            /** In Court */
+            in_court?: boolean | null;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "rest" | "descent";
+            /** Label */
+            label: string;
+            /** Person Id */
+            person_id?: ("P1" | "P2" | "P3" | "P4") | null;
+            /** Rally Id */
+            rally_id: string;
+            /** Result */
+            result?: ("winner" | "error") | null;
+            /** Shot Id */
+            shot_id: string;
+            /** Side */
+            side?: ("forehand" | "backhand") | null;
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
         /** MatchAnalysis */
         MatchAnalysis: {
             court: components["schemas"]["Court"];
@@ -1062,10 +1310,10 @@ export interface components {
             rallies: components["schemas"]["Rally"][];
             /**
              * Schema Version
-             * @default 3
+             * @default 4
              * @constant
              */
-            schema_version?: 3;
+            schema_version?: 4;
             tracks: components["schemas"]["Tracks"];
             video: components["schemas"]["VideoInfo"];
             /** Warnings */
@@ -1291,6 +1539,39 @@ export interface components {
             person_id?: ("P1" | "P2" | "P3" | "P4") | null;
             position: components["schemas"]["CourtPoint"];
         };
+        /** PlayerStats */
+        PlayerStats: {
+            /** Contacts */
+            contacts: components["schemas"]["Spot"][];
+            distance: components["schemas"]["DistanceStats"];
+            finish: components["schemas"]["FinishStats"];
+            /** Landings */
+            landings: components["schemas"]["LandingSpot"][];
+            /** Name */
+            name: string;
+            /**
+             * Person Id
+             * @enum {string}
+             */
+            person_id: "P1" | "P2" | "P3" | "P4";
+            positions: components["schemas"]["Grid"];
+            receive: components["schemas"]["ReturnStats"];
+            /** Replies */
+            replies: components["schemas"]["SequenceCount"][];
+            /** Returned At */
+            returned_at: components["schemas"]["Spot"][];
+            serve: components["schemas"]["ServeStats"];
+            shots: components["schemas"]["ShotBreakdown"];
+            /** Speeds */
+            speeds?: {
+                [key: string]: components["schemas"]["SpeedStats"];
+            } | null;
+            /**
+             * Team
+             * @enum {string}
+             */
+            team: "T1" | "T2";
+        };
         /** Point */
         Point: {
             /** X */
@@ -1304,7 +1585,7 @@ export interface components {
             analysis_key: string;
             /**
              * Builder
-             * @default match analysis builder v3
+             * @default match analysis builder v4
              */
             builder?: string;
             /** Created At */
@@ -1321,6 +1602,11 @@ export interface components {
             persons_run_id?: string | null;
             /** Segments Run Id */
             segments_run_id?: string | null;
+            /**
+             * Shot Flights
+             * @default false
+             */
+            shot_flights?: boolean;
         };
         /** RalliesRequest */
         RalliesRequest: {
@@ -1357,6 +1643,17 @@ export interface components {
              * @enum {string}
              */
             start_source: "proposed_serve" | "after_proposed_end" | "predicted_serve" | "contact_gap" | "camera_cut" | "first_contact";
+        };
+        /** RallyDistance */
+        RallyDistance: {
+            /** Coverage */
+            coverage: number;
+            /** Covered */
+            covered: boolean;
+            /** Metres */
+            metres: number;
+            /** Rally Id */
+            rally_id: string;
         };
         /**
          * RallyOutcome
@@ -1422,6 +1719,21 @@ export interface components {
             /** Shuttle Run Id */
             shuttle_run_id: string;
         };
+        /**
+         * ReturnStats
+         * @description The shot after a serve, played by this side.
+         */
+        ReturnStats: {
+            /** Families */
+            families: {
+                [key: string]: components["schemas"]["Share"];
+            };
+            /** Positions */
+            positions: components["schemas"]["Spot"][];
+            /** Returns */
+            returns: number;
+            won: components["schemas"]["Share"];
+        };
         /** ReviewWindow */
         ReviewWindow: {
             /**
@@ -1476,6 +1788,47 @@ export interface components {
             /** Start Frame */
             start_frame: number;
         };
+        /**
+         * SequenceCount
+         * @description Consecutive shot labels within a rally, with how often they occur
+         *     (``count`` of every eligible sequence of that length).
+         */
+        SequenceCount: {
+            /** Count */
+            count: number;
+            /** Labels */
+            labels: string[];
+            /** N */
+            n: number;
+            /** Share */
+            share?: number | null;
+        };
+        /** ServeStats */
+        ServeStats: {
+            faults: components["schemas"]["Share"];
+            /** Positions */
+            positions: components["schemas"]["Spot"][];
+            /** Serve Types */
+            serve_types: {
+                [key: string]: components["schemas"]["Share"];
+            };
+            /** Serves */
+            serves: number;
+            unreturned: components["schemas"]["Share"];
+            won: components["schemas"]["Share"];
+        };
+        /**
+         * Share
+         * @description ``count`` of ``n``; ``share`` is null when ``n`` is 0.
+         */
+        Share: {
+            /** Count */
+            count: number;
+            /** N */
+            n: number;
+            /** Share */
+            share?: number | null;
+        };
         /** Shot */
         Shot: {
             /** Confidence */
@@ -1484,6 +1837,7 @@ export interface components {
             family?: ("clear" | "drive" | "smash" | "net" | "drop" | "lift" | "block" | "push" | "net_kill" | "other") | null;
             /** Family Score */
             family_score?: number | null;
+            flight?: components["schemas"]["ShotFlight"] | null;
             /** Frame */
             frame: number;
             /** Hitter Id */
@@ -1505,6 +1859,86 @@ export interface components {
             side_score?: number | null;
             /** Time S */
             time_s: number;
+        };
+        /**
+         * ShotBreakdown
+         * @description Contacts by kind and label. ``families`` and ``sides`` are shares of
+         *     ``shots`` (contacts recognised as shots); ``serve_types`` of ``serves``.
+         */
+        ShotBreakdown: {
+            /** Contacts */
+            contacts: number;
+            /** Families */
+            families: {
+                [key: string]: components["schemas"]["Share"];
+            };
+            /** Forehand By Family */
+            forehand_by_family: {
+                [key: string]: components["schemas"]["Share"];
+            };
+            /** Serve Types */
+            serve_types: {
+                [key: string]: components["schemas"]["Share"];
+            };
+            /** Serves */
+            serves: number;
+            /** Shots */
+            shots: number;
+            /** Sides */
+            sides: {
+                [key: string]: components["schemas"]["Share"];
+            };
+            /** Unknown Kind */
+            unknown_kind: number;
+        };
+        /**
+         * ShotFlight
+         * @description The shot's 3D flight fitted to the shuttle's image track (outcomes stage).
+         *
+         *     Gravity plus air drag from the hitter to the next contact (the last shot:
+         *     to its landing), through the camera recovered from the court view. Only
+         *     ``quality == "good"`` speeds are measurements; ``speed_bound`` fits hit the
+         *     fit's speed limit and their speed is not known (see FLIGHT_SPEED_BOUND_KMH).
+         */
+        ShotFlight: {
+            /** Apex M */
+            apex_m?: number | null;
+            /** Initial Speed Kmh */
+            initial_speed_kmh: number;
+            /** Inliers */
+            inliers: number;
+            /** Observed S */
+            observed_s?: number | null;
+            /** Points */
+            points: number;
+            /**
+             * Quality
+             * @enum {string}
+             */
+            quality: "good" | "poor_fit" | "speed_bound";
+            /** Rms */
+            rms: number;
+            /** Speed Settled Kmh */
+            speed_settled_kmh?: number | null;
+        };
+        /**
+         * ShotResult
+         * @description One shot label's results. ``played`` counts the shots of the label,
+         *     leaving out rally-ending shots whose outcome is unknown.
+         */
+        ShotResult: {
+            consistency: components["schemas"]["Share"];
+            /** Errors */
+            errors: number;
+            /** Errors Net */
+            errors_net: number;
+            /** Errors Out */
+            errors_out: number;
+            /** Played */
+            played: number;
+            winner_rate: components["schemas"]["Share"];
+            /** Winners */
+            winners: number;
         };
         /** ShuttlePoint */
         ShuttlePoint: {
@@ -1528,6 +1962,69 @@ export interface components {
             x: (number | null)[];
             /** Y */
             y: (number | null)[];
+        };
+        /**
+         * SpeedStats
+         * @description Fitted shot speeds of one label (see docs/CLIP_STATS.md for limits).
+         *
+         *     ``initial_kmh`` and ``apex_m`` use only good fits; ``settled_kmh`` (0.1 s
+         *     after the contact) also uses speed_bound fits, which fix it well. Speed
+         *     min and max are null: single fits do not name a fastest shot.
+         */
+        SpeedStats: {
+            apex_m: components["schemas"]["Summary"];
+            /** Fitted */
+            fitted: number;
+            /** Good */
+            good: number;
+            initial_kmh: components["schemas"]["Distribution"];
+            /** Poor Fit */
+            poor_fit: number;
+            settled_kmh: components["schemas"]["Summary"];
+            /** Shots */
+            shots: number;
+            /** Speed Bound */
+            speed_bound: number;
+        };
+        /**
+         * Spot
+         * @description One shot on a court map (metres, turned; see the module docstring).
+         */
+        Spot: {
+            /** Label */
+            label: string;
+            /** Person Id */
+            person_id?: ("P1" | "P2" | "P3" | "P4") | null;
+            /** Rally Id */
+            rally_id: string;
+            /** Shot Id */
+            shot_id: string;
+            /** Side */
+            side?: ("forehand" | "backhand") | null;
+            /** X */
+            x: number;
+            /** Y */
+            y: number;
+        };
+        /**
+         * Summary
+         * @description Numbers summarised; every value is null when ``n`` is 0.
+         */
+        Summary: {
+            /** Max */
+            max?: number | null;
+            /** Mean */
+            mean?: number | null;
+            /** Median */
+            median?: number | null;
+            /** Min */
+            min?: number | null;
+            /** N */
+            n: number;
+            /** P10 */
+            p10?: number | null;
+            /** P90 */
+            p90?: number | null;
         };
         /** SwapRequest */
         SwapRequest: {
@@ -1557,6 +2054,42 @@ export interface components {
              * @default 0
              */
             T2?: number;
+        };
+        /** TeamStats */
+        TeamStats: {
+            /** Contacts */
+            contacts: components["schemas"]["Spot"][];
+            distance: components["schemas"]["DistanceStats"];
+            finish: components["schemas"]["FinishStats"];
+            formation?: components["schemas"]["Formation"] | null;
+            /** Landings */
+            landings: components["schemas"]["LandingSpot"][];
+            /** Names */
+            names: string[];
+            /** Person Ids */
+            person_ids: ("P1" | "P2" | "P3" | "P4")[];
+            positions: components["schemas"]["Grid"];
+            rallies_won: components["schemas"]["Share"];
+            receive: components["schemas"]["ReturnStats"];
+            /** Replies */
+            replies: components["schemas"]["SequenceCount"][];
+            /** Returned At */
+            returned_at: components["schemas"]["Spot"][];
+            serve: components["schemas"]["ServeStats"];
+            shots: components["schemas"]["ShotBreakdown"];
+            /** Speeds */
+            speeds?: {
+                [key: string]: components["schemas"]["SpeedStats"];
+            } | null;
+            /**
+             * Team
+             * @enum {string}
+             */
+            team: "T1" | "T2";
+            /** Won By Opponent Error */
+            won_by_opponent_error: number;
+            /** Won By Winner */
+            won_by_winner: number;
         };
         /** TrackAssignment */
         TrackAssignment: {
@@ -2196,6 +2729,44 @@ export interface operations {
             };
         };
     };
+    match_clip_stats_api_matches__match_id__stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                match_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClipStats"];
+                };
+            };
+            /** @description Unknown match or results not built yet */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     upload_api_upload_post: {
         parameters: {
             query?: never;
@@ -2631,6 +3202,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MatchAnalysis"];
+                };
+            };
+            /** @description Video unknown or results not built yet */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    match_stats_api_videos__video_id__match_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                video_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClipStats"];
                 };
             };
             /** @description Video unknown or results not built yet */

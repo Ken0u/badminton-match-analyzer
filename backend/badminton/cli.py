@@ -100,6 +100,20 @@ def main():
     match.add_argument(
         "--schema", action="store_true", help="Print the JSON Schema and exit"
     )
+    stats = commands.add_parser(
+        "clip-stats",
+        help="Print whole-clip statistics of the stored match analysis document",
+    )
+    stats.add_argument("video_id", nargs="?")
+    stats.add_argument(
+        "--analysis",
+        type=Path,
+        help="Read this MatchAnalysis JSON file instead of the stored one",
+    )
+    stats.add_argument("--output", type=Path, help="Write the JSON here")
+    stats.add_argument(
+        "--schema", action="store_true", help="Print the JSON Schema and exit"
+    )
     evaluate = commands.add_parser(
         "evaluate", help="Measure saved runs against explicit human review labels"
     )
@@ -523,6 +537,38 @@ def main():
                 indent=2,
             )
         )
+    elif args.command == "clip-stats":
+        from .clip_stats import ClipStats, clip_stats
+        from .match_analysis import MatchAnalysis, read_match_analysis
+
+        if args.schema:
+            print(json.dumps(ClipStats.model_json_schema(), indent=2))
+            return
+        if args.analysis:
+            try:
+                document = MatchAnalysis.model_validate_json(
+                    args.analysis.read_text(encoding="utf-8")
+                )
+            except (OSError, ValueError) as exc:
+                parser.error(str(exc))
+        elif args.video_id:
+            try:
+                document = read_match_analysis(DATA, args.video_id)
+            except ValueError as exc:
+                parser.error(str(exc))
+            if document is None:
+                parser.error(
+                    "No current match analysis for this video; build it with "
+                    "match-analysis first"
+                )
+        else:
+            parser.error("clip-stats needs a video ID or --analysis")
+        text = clip_stats(document).model_dump_json(indent=2)
+        if args.output:
+            args.output.write_text(text + "\n", encoding="utf-8")
+            print(json.dumps({"path": str(args.output), "bytes": len(text) + 1}))
+        else:
+            print(text)
     elif args.command == "rallies":
         from .rallies import generate_rallies, validate_rally_inputs
 

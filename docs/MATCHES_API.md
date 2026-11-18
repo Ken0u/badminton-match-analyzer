@@ -50,6 +50,10 @@ The match id is the video id (the first 16 hex digits of the file's SHA-256).
    `state` becomes `ready`. It can be sent again later.
 6. `GET /api/matches/{id}/analysis`: the document (also at
    `GET /api/videos/{id}/match-analysis`).
+7. `GET /api/matches/{id}/stats`: whole-clip statistics of the stored
+   document (`docs/CLIP_STATS.md`; also at `GET /api/videos/{id}/match-stats`),
+   computed on request and kept while the document is unchanged; 404 until
+   the document is built.
 
 `GET /api/matches` lists matches, newest first.
 

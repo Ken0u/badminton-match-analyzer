@@ -233,6 +233,178 @@
         "title": "CameraCorrection",
         "type": "object"
       },
+      "ClipStats": {
+        "additionalProperties": false,
+        "properties": {
+          "analysis_created_at": {
+            "title": "Analysis Created At",
+            "type": "string"
+          },
+          "analysis_key": {
+            "title": "Analysis Key",
+            "type": "string"
+          },
+          "analysis_schema_version": {
+            "title": "Analysis Schema Version",
+            "type": "integer"
+          },
+          "clip": {
+            "$ref": "#/components/schemas/ClipTotals"
+          },
+          "identity_persistent": {
+            "title": "Identity Persistent",
+            "type": "boolean"
+          },
+          "mode": {
+            "enum": [
+              "singles",
+              "doubles"
+            ],
+            "title": "Mode",
+            "type": "string"
+          },
+          "players": {
+            "items": {
+              "$ref": "#/components/schemas/PlayerStats"
+            },
+            "title": "Players",
+            "type": "array"
+          },
+          "shot_flights": {
+            "title": "Shot Flights",
+            "type": "boolean"
+          },
+          "stats_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Stats Version",
+            "type": "integer"
+          },
+          "teams": {
+            "items": {
+              "$ref": "#/components/schemas/TeamStats"
+            },
+            "title": "Teams",
+            "type": "array"
+          },
+          "video_id": {
+            "title": "Video Id",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "video_id",
+          "mode",
+          "analysis_schema_version",
+          "analysis_created_at",
+          "analysis_key",
+          "identity_persistent",
+          "shot_flights",
+          "clip",
+          "players",
+          "teams"
+        ],
+        "title": "ClipStats",
+        "type": "object"
+      },
+      "ClipTotals": {
+        "additionalProperties": false,
+        "properties": {
+          "contacts": {
+            "minimum": 0,
+            "title": "Contacts",
+            "type": "integer"
+          },
+          "landings": {
+            "items": {
+              "$ref": "#/components/schemas/LandingSpot"
+            },
+            "title": "Landings",
+            "type": "array"
+          },
+          "outcome_conflicts": {
+            "minimum": 0,
+            "title": "Outcome Conflicts",
+            "type": "integer"
+          },
+          "outcomes_known": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "pairs": {
+            "items": {
+              "$ref": "#/components/schemas/SequenceCount"
+            },
+            "title": "Pairs",
+            "type": "array"
+          },
+          "rallies": {
+            "minimum": 0,
+            "title": "Rallies",
+            "type": "integer"
+          },
+          "rallies_ended_at_landing": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "rally_seconds": {
+            "$ref": "#/components/schemas/Distribution"
+          },
+          "rally_shots": {
+            "$ref": "#/components/schemas/Distribution"
+          },
+          "shots": {
+            "$ref": "#/components/schemas/ShotBreakdown"
+          },
+          "speeds": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/SpeedStats"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Speeds"
+          },
+          "triples": {
+            "items": {
+              "$ref": "#/components/schemas/SequenceCount"
+            },
+            "title": "Triples",
+            "type": "array"
+          },
+          "unattributed_contacts": {
+            "minimum": 0,
+            "title": "Unattributed Contacts",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "rallies",
+          "contacts",
+          "rally_shots",
+          "rally_seconds",
+          "rallies_ended_at_landing",
+          "outcomes_known",
+          "shots",
+          "landings",
+          "pairs",
+          "triples",
+          "unattributed_contacts",
+          "outcome_conflicts"
+        ],
+        "title": "ClipTotals",
+        "type": "object"
+      },
       "ContactsRequest": {
         "additionalProperties": false,
         "properties": {
@@ -438,6 +610,179 @@
           "source"
         ],
         "title": "CourtView",
+        "type": "object"
+      },
+      "DistanceStats": {
+        "additionalProperties": false,
+        "description": "Distance covered on the court floor during rallies (feet, metres).\n\n``total_m`` adds every tracked span of every rally (a lower bound when\ncoverage is below 1); ``per_minute_m`` is it per tracked minute.\n``per_rally`` lists every rally; ``rally_m`` summarises the rallies that\nare at least MIN_COVERAGE tracked.",
+        "properties": {
+          "coverage": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Coverage"
+          },
+          "per_minute_m": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Per Minute M"
+          },
+          "per_rally": {
+            "items": {
+              "$ref": "#/components/schemas/RallyDistance"
+            },
+            "title": "Per Rally",
+            "type": "array"
+          },
+          "rally_m": {
+            "$ref": "#/components/schemas/Summary"
+          },
+          "rally_s": {
+            "minimum": 0,
+            "title": "Rally S",
+            "type": "number"
+          },
+          "total_m": {
+            "minimum": 0,
+            "title": "Total M",
+            "type": "number"
+          },
+          "tracked_s": {
+            "minimum": 0,
+            "title": "Tracked S",
+            "type": "number"
+          }
+        },
+        "required": [
+          "total_m",
+          "tracked_s",
+          "rally_s",
+          "rally_m",
+          "per_rally"
+        ],
+        "title": "DistanceStats",
+        "type": "object"
+      },
+      "Distribution": {
+        "additionalProperties": false,
+        "description": "A Summary with a histogram: bin i holds edges[i] <= v < edges[i + 1];\n``below`` and ``above`` count values outside the edges.",
+        "properties": {
+          "above": {
+            "default": 0,
+            "title": "Above",
+            "type": "integer"
+          },
+          "below": {
+            "default": 0,
+            "title": "Below",
+            "type": "integer"
+          },
+          "counts": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Counts",
+            "type": "array"
+          },
+          "edges": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Edges",
+            "type": "array"
+          },
+          "max": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max"
+          },
+          "mean": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean"
+          },
+          "median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median"
+          },
+          "min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min"
+          },
+          "n": {
+            "minimum": 0,
+            "title": "N",
+            "type": "integer"
+          },
+          "p10": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P10"
+          },
+          "p90": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P90"
+          }
+        },
+        "required": [
+          "n",
+          "edges",
+          "counts"
+        ],
+        "title": "Distribution",
         "type": "object"
       },
       "EvaluationRequest": {
@@ -738,6 +1083,145 @@
         "title": "Event",
         "type": "object"
       },
+      "FinishStats": {
+        "additionalProperties": false,
+        "description": "Rally-ending shots of this side with a known outcome.",
+        "properties": {
+          "by_label": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/ShotResult"
+            },
+            "title": "By Label",
+            "type": "object"
+          },
+          "ended": {
+            "minimum": 0,
+            "title": "Ended",
+            "type": "integer"
+          },
+          "errors": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "winners": {
+            "$ref": "#/components/schemas/Share"
+          }
+        },
+        "required": [
+          "ended",
+          "winners",
+          "errors",
+          "by_label"
+        ],
+        "title": "FinishStats",
+        "type": "object"
+      },
+      "Formation": {
+        "additionalProperties": false,
+        "description": "Doubles formation from the 10 Hz tracks during rallies. Attacking and\ndefending follow the last shot played (see ATTACKING and DEFENDING).",
+        "properties": {
+          "all": {
+            "$ref": "#/components/schemas/FormationShare"
+          },
+          "attacking": {
+            "$ref": "#/components/schemas/FormationShare"
+          },
+          "defending": {
+            "$ref": "#/components/schemas/FormationShare"
+          },
+          "seconds": {
+            "minimum": 0,
+            "title": "Seconds",
+            "type": "number"
+          }
+        },
+        "required": [
+          "all",
+          "attacking",
+          "defending",
+          "seconds"
+        ],
+        "title": "Formation",
+        "type": "object"
+      },
+      "FormationShare": {
+        "additionalProperties": false,
+        "description": "Samples with both partners tracked and at least FORMATION_MIN_M apart.",
+        "properties": {
+          "close": {
+            "minimum": 0,
+            "title": "Close",
+            "type": "integer"
+          },
+          "front_back": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "side_by_side": {
+            "$ref": "#/components/schemas/Share"
+          }
+        },
+        "required": [
+          "front_back",
+          "side_by_side",
+          "close"
+        ],
+        "title": "FormationShare",
+        "type": "object"
+      },
+      "Grid": {
+        "additionalProperties": false,
+        "description": "Counts on court cells, rows along the court (y), columns across (x).\n\n``counts[row][column]`` covers y_edges[row]..y_edges[row + 1] and\nx_edges[column]..x_edges[column + 1], in metres, with the player turned\nto the near end. ``n`` samples fell on the grid and ``outside`` beyond\nit; ``seconds`` is ``n`` at the track rate.",
+        "properties": {
+          "counts": {
+            "items": {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            "title": "Counts",
+            "type": "array"
+          },
+          "n": {
+            "minimum": 0,
+            "title": "N",
+            "type": "integer"
+          },
+          "outside": {
+            "minimum": 0,
+            "title": "Outside",
+            "type": "integer"
+          },
+          "seconds": {
+            "minimum": 0,
+            "title": "Seconds",
+            "type": "number"
+          },
+          "x_edges": {
+            "items": {
+              "type": "number"
+            },
+            "title": "X Edges",
+            "type": "array"
+          },
+          "y_edges": {
+            "items": {
+              "type": "number"
+            },
+            "title": "Y Edges",
+            "type": "array"
+          }
+        },
+        "required": [
+          "x_edges",
+          "y_edges",
+          "counts",
+          "n",
+          "outside",
+          "seconds"
+        ],
+        "title": "Grid",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -845,7 +1329,7 @@
       },
       "Landing": {
         "additionalProperties": false,
-        "description": "Where the last shot came down, from the shuttle's image track.\n\n``position`` is the floor point under the image point where the shuttle\nstopped descending (null when it projects more than COURT_MARGIN_M\noutside the court); ``kind`` is rest (it then lay still), descent (it\nstopped going down) or track_end (its track ended in the air, so the\nposition is unreliable). ``in_court`` uses the rally lines: singles or\ndoubles sidelines and the full length.",
+        "description": "Where the last shot came down, from the shuttle's image track.\n\n``position`` is the floor point under the image point where the shuttle\nstopped descending, through the camera recovered from the court view\n(the shuttle's centre is taken a few centimetres above the floor), or\nwhere the fitted 3D flight meets the floor when the track ended in the\nair (null when it lies more than COURT_MARGIN_M outside the court); ``kind`` is rest (it then lay still), descent (it\nstopped going down) or track_end (its track ended in the air, so the\nposition is unreliable). ``in_court`` uses the rally lines: singles or\ndoubles sidelines and the full length.",
         "properties": {
           "frame": {
             "minimum": 0,
@@ -905,6 +1389,108 @@
         "title": "Landing",
         "type": "object"
       },
+      "LandingSpot": {
+        "additionalProperties": false,
+        "description": "Where a rally's last shot came down (the hitter at the near end).",
+        "properties": {
+          "in_court": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "In Court"
+          },
+          "kind": {
+            "enum": [
+              "rest",
+              "descent"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "person_id": {
+            "anyOf": [
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Id"
+          },
+          "rally_id": {
+            "title": "Rally Id",
+            "type": "string"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "enum": [
+                  "winner",
+                  "error"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Result"
+          },
+          "shot_id": {
+            "title": "Shot Id",
+            "type": "string"
+          },
+          "side": {
+            "anyOf": [
+              {
+                "enum": [
+                  "forehand",
+                  "backhand"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Side"
+          },
+          "x": {
+            "title": "X",
+            "type": "number"
+          },
+          "y": {
+            "title": "Y",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "label",
+          "rally_id",
+          "shot_id",
+          "kind"
+        ],
+        "title": "LandingSpot",
+        "type": "object"
+      },
       "MatchAnalysis": {
         "additionalProperties": false,
         "properties": {
@@ -944,8 +1530,8 @@
             "type": "array"
           },
           "schema_version": {
-            "const": 3,
-            "default": 3,
+            "const": 4,
+            "default": 4,
             "title": "Schema Version",
             "type": "integer"
           },
@@ -1646,6 +2232,110 @@
         "title": "PlayerPosition",
         "type": "object"
       },
+      "PlayerStats": {
+        "additionalProperties": false,
+        "properties": {
+          "contacts": {
+            "items": {
+              "$ref": "#/components/schemas/Spot"
+            },
+            "title": "Contacts",
+            "type": "array"
+          },
+          "distance": {
+            "$ref": "#/components/schemas/DistanceStats"
+          },
+          "finish": {
+            "$ref": "#/components/schemas/FinishStats"
+          },
+          "landings": {
+            "items": {
+              "$ref": "#/components/schemas/LandingSpot"
+            },
+            "title": "Landings",
+            "type": "array"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "person_id": {
+            "enum": [
+              "P1",
+              "P2",
+              "P3",
+              "P4"
+            ],
+            "title": "Person Id",
+            "type": "string"
+          },
+          "positions": {
+            "$ref": "#/components/schemas/Grid"
+          },
+          "receive": {
+            "$ref": "#/components/schemas/ReturnStats"
+          },
+          "replies": {
+            "items": {
+              "$ref": "#/components/schemas/SequenceCount"
+            },
+            "title": "Replies",
+            "type": "array"
+          },
+          "returned_at": {
+            "items": {
+              "$ref": "#/components/schemas/Spot"
+            },
+            "title": "Returned At",
+            "type": "array"
+          },
+          "serve": {
+            "$ref": "#/components/schemas/ServeStats"
+          },
+          "shots": {
+            "$ref": "#/components/schemas/ShotBreakdown"
+          },
+          "speeds": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/SpeedStats"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Speeds"
+          },
+          "team": {
+            "enum": [
+              "T1",
+              "T2"
+            ],
+            "title": "Team",
+            "type": "string"
+          }
+        },
+        "required": [
+          "shots",
+          "contacts",
+          "returned_at",
+          "landings",
+          "positions",
+          "distance",
+          "serve",
+          "receive",
+          "finish",
+          "replies",
+          "person_id",
+          "team",
+          "name"
+        ],
+        "title": "PlayerStats",
+        "type": "object"
+      },
       "Point": {
         "additionalProperties": false,
         "properties": {
@@ -1677,7 +2367,7 @@
             "type": "string"
           },
           "builder": {
-            "default": "match analysis builder v3",
+            "default": "match analysis builder v4",
             "title": "Builder",
             "type": "string"
           },
@@ -1742,6 +2432,11 @@
               }
             ],
             "title": "Segments Run Id"
+          },
+          "shot_flights": {
+            "default": false,
+            "title": "Shot Flights",
+            "type": "boolean"
           }
         },
         "required": [
@@ -1878,6 +2573,38 @@
           "shots"
         ],
         "title": "Rally",
+        "type": "object"
+      },
+      "RallyDistance": {
+        "additionalProperties": false,
+        "properties": {
+          "coverage": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Coverage",
+            "type": "number"
+          },
+          "covered": {
+            "title": "Covered",
+            "type": "boolean"
+          },
+          "metres": {
+            "minimum": 0,
+            "title": "Metres",
+            "type": "number"
+          },
+          "rally_id": {
+            "title": "Rally Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "rally_id",
+          "metres",
+          "coverage",
+          "covered"
+        ],
+        "title": "RallyDistance",
         "type": "object"
       },
       "RallyOutcome": {
@@ -2038,6 +2765,42 @@
         "title": "RecognitionRequest",
         "type": "object"
       },
+      "ReturnStats": {
+        "additionalProperties": false,
+        "description": "The shot after a serve, played by this side.",
+        "properties": {
+          "families": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Families",
+            "type": "object"
+          },
+          "positions": {
+            "items": {
+              "$ref": "#/components/schemas/Spot"
+            },
+            "title": "Positions",
+            "type": "array"
+          },
+          "returns": {
+            "minimum": 0,
+            "title": "Returns",
+            "type": "integer"
+          },
+          "won": {
+            "$ref": "#/components/schemas/Share"
+          }
+        },
+        "required": [
+          "returns",
+          "families",
+          "positions",
+          "won"
+        ],
+        "title": "ReturnStats",
+        "type": "object"
+      },
       "ReviewWindow": {
         "additionalProperties": false,
         "properties": {
@@ -2142,6 +2905,127 @@
         "title": "SceneRange",
         "type": "object"
       },
+      "SequenceCount": {
+        "additionalProperties": false,
+        "description": "Consecutive shot labels within a rally, with how often they occur\n(``count`` of every eligible sequence of that length).",
+        "properties": {
+          "count": {
+            "minimum": 0,
+            "title": "Count",
+            "type": "integer"
+          },
+          "labels": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Labels",
+            "type": "array"
+          },
+          "n": {
+            "minimum": 0,
+            "title": "N",
+            "type": "integer"
+          },
+          "share": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Share"
+          }
+        },
+        "required": [
+          "labels",
+          "count",
+          "n"
+        ],
+        "title": "SequenceCount",
+        "type": "object"
+      },
+      "ServeStats": {
+        "additionalProperties": false,
+        "properties": {
+          "faults": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "positions": {
+            "items": {
+              "$ref": "#/components/schemas/Spot"
+            },
+            "title": "Positions",
+            "type": "array"
+          },
+          "serve_types": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Serve Types",
+            "type": "object"
+          },
+          "serves": {
+            "minimum": 0,
+            "title": "Serves",
+            "type": "integer"
+          },
+          "unreturned": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "won": {
+            "$ref": "#/components/schemas/Share"
+          }
+        },
+        "required": [
+          "serves",
+          "serve_types",
+          "positions",
+          "won",
+          "faults",
+          "unreturned"
+        ],
+        "title": "ServeStats",
+        "type": "object"
+      },
+      "Share": {
+        "additionalProperties": false,
+        "description": "``count`` of ``n``; ``share`` is null when ``n`` is 0.",
+        "properties": {
+          "count": {
+            "minimum": 0,
+            "title": "Count",
+            "type": "integer"
+          },
+          "n": {
+            "minimum": 0,
+            "title": "N",
+            "type": "integer"
+          },
+          "share": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Share"
+          }
+        },
+        "required": [
+          "count",
+          "n"
+        ],
+        "title": "Share",
+        "type": "object"
+      },
       "Shot": {
         "additionalProperties": false,
         "properties": {
@@ -2193,6 +3077,16 @@
               }
             ],
             "title": "Family Score"
+          },
+          "flight": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShotFlight"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "frame": {
             "minimum": 0,
@@ -2330,6 +3224,198 @@
         "title": "Shot",
         "type": "object"
       },
+      "ShotBreakdown": {
+        "additionalProperties": false,
+        "description": "Contacts by kind and label. ``families`` and ``sides`` are shares of\n``shots`` (contacts recognised as shots); ``serve_types`` of ``serves``.",
+        "properties": {
+          "contacts": {
+            "minimum": 0,
+            "title": "Contacts",
+            "type": "integer"
+          },
+          "families": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Families",
+            "type": "object"
+          },
+          "forehand_by_family": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Forehand By Family",
+            "type": "object"
+          },
+          "serve_types": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Serve Types",
+            "type": "object"
+          },
+          "serves": {
+            "minimum": 0,
+            "title": "Serves",
+            "type": "integer"
+          },
+          "shots": {
+            "minimum": 0,
+            "title": "Shots",
+            "type": "integer"
+          },
+          "sides": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Sides",
+            "type": "object"
+          },
+          "unknown_kind": {
+            "minimum": 0,
+            "title": "Unknown Kind",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "contacts",
+          "serves",
+          "shots",
+          "unknown_kind",
+          "families",
+          "sides",
+          "forehand_by_family",
+          "serve_types"
+        ],
+        "title": "ShotBreakdown",
+        "type": "object"
+      },
+      "ShotFlight": {
+        "additionalProperties": false,
+        "description": "The shot's 3D flight fitted to the shuttle's image track (outcomes stage).\n\nGravity plus air drag from the hitter to the next contact (the last shot:\nto its landing), through the camera recovered from the court view. Only\n``quality == \"good\"`` speeds are measurements; ``speed_bound`` fits hit the\nfit's speed limit and their speed is not known (see FLIGHT_SPEED_BOUND_KMH).",
+        "properties": {
+          "apex_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Apex M"
+          },
+          "initial_speed_kmh": {
+            "minimum": 0,
+            "title": "Initial Speed Kmh",
+            "type": "number"
+          },
+          "inliers": {
+            "minimum": 0,
+            "title": "Inliers",
+            "type": "integer"
+          },
+          "observed_s": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Observed S"
+          },
+          "points": {
+            "minimum": 0,
+            "title": "Points",
+            "type": "integer"
+          },
+          "quality": {
+            "enum": [
+              "good",
+              "poor_fit",
+              "speed_bound"
+            ],
+            "title": "Quality",
+            "type": "string"
+          },
+          "rms": {
+            "minimum": 0,
+            "title": "Rms",
+            "type": "number"
+          },
+          "speed_settled_kmh": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Speed Settled Kmh"
+          }
+        },
+        "required": [
+          "initial_speed_kmh",
+          "quality",
+          "rms",
+          "points",
+          "inliers"
+        ],
+        "title": "ShotFlight",
+        "type": "object"
+      },
+      "ShotResult": {
+        "additionalProperties": false,
+        "description": "One shot label's results. ``played`` counts the shots of the label,\nleaving out rally-ending shots whose outcome is unknown.",
+        "properties": {
+          "consistency": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "errors": {
+            "minimum": 0,
+            "title": "Errors",
+            "type": "integer"
+          },
+          "errors_net": {
+            "minimum": 0,
+            "title": "Errors Net",
+            "type": "integer"
+          },
+          "errors_out": {
+            "minimum": 0,
+            "title": "Errors Out",
+            "type": "integer"
+          },
+          "played": {
+            "minimum": 0,
+            "title": "Played",
+            "type": "integer"
+          },
+          "winner_rate": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "winners": {
+            "minimum": 0,
+            "title": "Winners",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "played",
+          "winners",
+          "errors",
+          "errors_out",
+          "errors_net",
+          "consistency",
+          "winner_rate"
+        ],
+        "title": "ShotResult",
+        "type": "object"
+      },
       "ShuttlePoint": {
         "additionalProperties": false,
         "properties": {
@@ -2421,6 +3507,207 @@
         "title": "ShuttleTrack",
         "type": "object"
       },
+      "SpeedStats": {
+        "additionalProperties": false,
+        "description": "Fitted shot speeds of one label (see docs/CLIP_STATS.md for limits).\n\n``initial_kmh`` and ``apex_m`` use only good fits; ``settled_kmh`` (0.1 s\nafter the contact) also uses speed_bound fits, which fix it well. Speed\nmin and max are null: single fits do not name a fastest shot.",
+        "properties": {
+          "apex_m": {
+            "$ref": "#/components/schemas/Summary"
+          },
+          "fitted": {
+            "minimum": 0,
+            "title": "Fitted",
+            "type": "integer"
+          },
+          "good": {
+            "minimum": 0,
+            "title": "Good",
+            "type": "integer"
+          },
+          "initial_kmh": {
+            "$ref": "#/components/schemas/Distribution"
+          },
+          "poor_fit": {
+            "minimum": 0,
+            "title": "Poor Fit",
+            "type": "integer"
+          },
+          "settled_kmh": {
+            "$ref": "#/components/schemas/Summary"
+          },
+          "shots": {
+            "minimum": 0,
+            "title": "Shots",
+            "type": "integer"
+          },
+          "speed_bound": {
+            "minimum": 0,
+            "title": "Speed Bound",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "shots",
+          "fitted",
+          "good",
+          "speed_bound",
+          "poor_fit",
+          "initial_kmh",
+          "settled_kmh",
+          "apex_m"
+        ],
+        "title": "SpeedStats",
+        "type": "object"
+      },
+      "Spot": {
+        "additionalProperties": false,
+        "description": "One shot on a court map (metres, turned; see the module docstring).",
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "person_id": {
+            "anyOf": [
+              {
+                "enum": [
+                  "P1",
+                  "P2",
+                  "P3",
+                  "P4"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Id"
+          },
+          "rally_id": {
+            "title": "Rally Id",
+            "type": "string"
+          },
+          "shot_id": {
+            "title": "Shot Id",
+            "type": "string"
+          },
+          "side": {
+            "anyOf": [
+              {
+                "enum": [
+                  "forehand",
+                  "backhand"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Side"
+          },
+          "x": {
+            "title": "X",
+            "type": "number"
+          },
+          "y": {
+            "title": "Y",
+            "type": "number"
+          }
+        },
+        "required": [
+          "x",
+          "y",
+          "label",
+          "rally_id",
+          "shot_id"
+        ],
+        "title": "Spot",
+        "type": "object"
+      },
+      "Summary": {
+        "additionalProperties": false,
+        "description": "Numbers summarised; every value is null when ``n`` is 0.",
+        "properties": {
+          "max": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max"
+          },
+          "mean": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mean"
+          },
+          "median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Median"
+          },
+          "min": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min"
+          },
+          "n": {
+            "minimum": 0,
+            "title": "N",
+            "type": "integer"
+          },
+          "p10": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P10"
+          },
+          "p90": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "P90"
+          }
+        },
+        "required": [
+          "n"
+        ],
+        "title": "Summary",
+        "type": "object"
+      },
       "SwapRequest": {
         "additionalProperties": false,
         "properties": {
@@ -2500,6 +3787,142 @@
           }
         },
         "title": "TeamScore",
+        "type": "object"
+      },
+      "TeamStats": {
+        "additionalProperties": false,
+        "properties": {
+          "contacts": {
+            "items": {
+              "$ref": "#/components/schemas/Spot"
+            },
+            "title": "Contacts",
+            "type": "array"
+          },
+          "distance": {
+            "$ref": "#/components/schemas/DistanceStats"
+          },
+          "finish": {
+            "$ref": "#/components/schemas/FinishStats"
+          },
+          "formation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Formation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "landings": {
+            "items": {
+              "$ref": "#/components/schemas/LandingSpot"
+            },
+            "title": "Landings",
+            "type": "array"
+          },
+          "names": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Names",
+            "type": "array"
+          },
+          "person_ids": {
+            "items": {
+              "enum": [
+                "P1",
+                "P2",
+                "P3",
+                "P4"
+              ],
+              "type": "string"
+            },
+            "title": "Person Ids",
+            "type": "array"
+          },
+          "positions": {
+            "$ref": "#/components/schemas/Grid"
+          },
+          "rallies_won": {
+            "$ref": "#/components/schemas/Share"
+          },
+          "receive": {
+            "$ref": "#/components/schemas/ReturnStats"
+          },
+          "replies": {
+            "items": {
+              "$ref": "#/components/schemas/SequenceCount"
+            },
+            "title": "Replies",
+            "type": "array"
+          },
+          "returned_at": {
+            "items": {
+              "$ref": "#/components/schemas/Spot"
+            },
+            "title": "Returned At",
+            "type": "array"
+          },
+          "serve": {
+            "$ref": "#/components/schemas/ServeStats"
+          },
+          "shots": {
+            "$ref": "#/components/schemas/ShotBreakdown"
+          },
+          "speeds": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/SpeedStats"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Speeds"
+          },
+          "team": {
+            "enum": [
+              "T1",
+              "T2"
+            ],
+            "title": "Team",
+            "type": "string"
+          },
+          "won_by_opponent_error": {
+            "minimum": 0,
+            "title": "Won By Opponent Error",
+            "type": "integer"
+          },
+          "won_by_winner": {
+            "minimum": 0,
+            "title": "Won By Winner",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "shots",
+          "contacts",
+          "returned_at",
+          "landings",
+          "positions",
+          "distance",
+          "serve",
+          "receive",
+          "finish",
+          "replies",
+          "team",
+          "person_ids",
+          "names",
+          "rallies_won",
+          "won_by_winner",
+          "won_by_opponent_error"
+        ],
+        "title": "TeamStats",
         "type": "object"
       },
       "TrackAssignment": {
@@ -3372,6 +4795,49 @@
         "summary": "Resume Match"
       }
     },
+    "/api/matches/{match_id}/stats": {
+      "get": {
+        "description": "Clip statistics (same as /api/videos/{id}/match-stats).",
+        "operationId": "match_clip_stats_api_matches__match_id__stats_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "match_id",
+            "required": true,
+            "schema": {
+              "title": "Match Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClipStats"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Unknown match or results not built yet"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Match Clip Stats"
+      }
+    },
     "/api/upload": {
       "post": {
         "operationId": "upload_api_upload_post",
@@ -3957,6 +5423,49 @@
           }
         },
         "summary": "Match Analysis"
+      }
+    },
+    "/api/videos/{video_id}/match-stats": {
+      "get": {
+        "description": "Whole-clip statistics of the stored MatchAnalysis document.",
+        "operationId": "match_stats_api_videos__video_id__match_stats_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "video_id",
+            "required": true,
+            "schema": {
+              "title": "Video Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClipStats"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "description": "Video unknown or results not built yet"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Match Stats"
       }
     },
     "/api/videos/{video_id}/media": {
