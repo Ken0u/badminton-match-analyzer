@@ -1,6 +1,7 @@
 import copy
 import hashlib
 import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import numpy as np
@@ -404,6 +405,43 @@ def test_recipe_uses_inference_context_and_settings_not_event_labels(workspace):
         != base
     )
     assert pipeline.processing_recipe(video | {"fps": 25}, times, doc, SETTINGS) != base
+
+
+def test_frontend_build_never_changes_processing_keys(tmp_path):
+    package = tmp_path / "badminton"
+    (package / "static" / "assets").mkdir(parents=True)
+    (package / "tracking.py").write_text("x = 1")
+    (package / "models.json").write_text("{}")
+    manifest = package / "static" / "build-manifest.json"
+    manifest.write_text('{"input_fingerprint": "a"}')
+    (package / "static" / "app.js").write_text("a")
+    base = pipeline.package_source_files(package)
+    assert base == {
+        "models.json": pipeline.file_sha(package / "models.json"),
+        "static/build-manifest.json": pipeline.PINNED_SOURCE_FILES[
+            "static/build-manifest.json"
+        ],
+        "tracking.py": pipeline.file_sha(package / "tracking.py"),
+    }
+    # A rebuild rewrites the manifest and adds assets, including JSON.
+    manifest.write_text('{"input_fingerprint": "b"}')
+    (package / "static" / "assets" / "chunk.json").write_text("[]")
+    (package / "static" / "app.js").write_text("b")
+    assert pipeline.package_source_files(package) == base
+    (package / "tracking.py").write_text("x = 2")
+    assert pipeline.package_source_files(package) != base
+
+
+def test_pinned_frontend_entry_keeps_existing_cache_keys():
+    """Caches made before the exclusion hashed this manifest at the pinned value."""
+    package = Path(pipeline.__file__).parent
+    files = pipeline.package_source_files(package)
+    assert [p for p in files if p.startswith("static/")] == [
+        "static/build-manifest.json"
+    ]
+    assert files["static/build-manifest.json"] == (
+        "eb032f0f30bad63db594edaa45532e3c265e32725fd9352b75d3284bfb3e6271"
+    )
 
 
 def test_cancel_request_is_not_lost_to_an_older_progress_snapshot(workspace):
