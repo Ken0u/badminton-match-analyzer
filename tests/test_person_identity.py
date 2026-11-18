@@ -265,6 +265,60 @@ def test_rows_outside_core_range_or_live_play_are_not_used():
     assert 10 not in rows and 11 not in rows and len(rows) == 34
 
 
+@pytest.mark.parametrize("mode", ["singles", "doubles"])
+def test_a_brief_new_tracker_id_inside_a_players_track_gets_the_same_person(mode):
+    # The tracker gives one player a new ID for a few frames, then the old ID
+    # again; actor linking joins both into one chain (DShuttleNet match 52).
+    video, identity_run, player_run, _ = synthetic_video(mode, 4)
+    long = identity_run["tracks"][0]
+    for row in player_run["frames"][8:12]:
+        for person in row["players"]:
+            if person["track_id"] == long["track_id"]:
+                person["track_id"] = 77
+    identity_run["tracks"].append(
+        long | {"track_id": 77, "start_frame": 8, "end_frame": 12}
+    )
+    document = pid.identify_persons(
+        video, identity_run, [("run1", player_run)], painter(player_run), describe
+    )
+    mine = [
+        a for a in document["assignments"] if a["track_id"] in (long["track_id"], 77)
+    ]
+    assert {a["player_id"] for a in mine} == {mine[0]["player_id"]}
+    assert sorted((a["track_id"], a["start_frame"], a["end_frame"]) for a in mine) == [
+        (long["track_id"], 0, 8),
+        (long["track_id"], 12, 24),
+        (77, 8, 12),
+    ]
+    plain = [
+        {k: v for k, v in a.items() if k != "certainty"}
+        for a in document["assignments"]
+    ]
+    assert validate_assignments(plain, frame_count=identity_run["end_frame"])
+
+
+def test_without_overlaps_cuts_only_the_same_persons_tracks_of_one_run():
+    def item(run, track, start, end, person):
+        return {
+            "run_id": run,
+            "track_id": track,
+            "start_frame": start,
+            "end_frame": end,
+            "player_id": person,
+        }
+
+    kept = [item("r1", 1, 0, 50, "P1"), item("r1", 2, 0, 50, "P2")]
+    kept.append(item("r2", 3, 20, 30, "P1"))
+    assert sorted(map(str, pid.without_overlaps(kept))) == sorted(map(str, kept))
+    cut = pid.without_overlaps(
+        [item("r1", 1, 0, 50, "P1"), item("r1", 2, 40, 60, "P1")]
+    )
+    assert sorted((a["track_id"], a["start_frame"], a["end_frame"]) for a in cut) == [
+        (1, 0, 40),
+        (2, 40, 60),
+    ]
+
+
 def test_grouping_needs_no_video_when_no_view_has_both_ends():
     video, identity_run, player_run, _ = synthetic_video("doubles", 2)
     for row in player_run["frames"]:
