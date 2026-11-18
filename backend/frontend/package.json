@@ -14,8 +14,11 @@
     "contract:check": "node scripts/contract.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/anybody": "5.3.0",
+    "@fontsource-variable/archivo": "5.3.0",
     "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "react-dom": "19.3.1",
+    "three": "0.160.0"
   },
   "devDependencies": {
     "@types/react": "19.3.0",

@@ -12,6 +12,7 @@ try {
       "tests/library.test.mjs",
       "tests/editor.test.mjs",
       "tests/exports.test.mjs",
+      "tests/floodlit.test.mjs",
     ],
   ]) {
     const result = spawnSync(process.execPath, args, {

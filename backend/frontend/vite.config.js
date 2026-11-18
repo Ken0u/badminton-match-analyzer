@@ -37,12 +37,16 @@ export default defineConfig(({ mode }) => ({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    // three.js alone is about 520 kB; it loads only with the landing replay.
+    chunkSizeWarningLimit: 600,
     license: { fileName: "THIRD_PARTY_NOTICES.txt" },
     rollupOptions: {
       output: {
         entryFileNames: "app.js",
+        // The entry stylesheet keeps its stable root name; each screen's
+        // lazily loaded stylesheet is hashed like any other asset.
         assetFileNames: (asset) =>
-          asset.names?.some((name) => name.endsWith(".css"))
+          asset.names?.includes("index.css")
             ? "style.css"
             : "assets/[name]-[hash][extname]",
         chunkFileNames: "assets/[name]-[hash].js",

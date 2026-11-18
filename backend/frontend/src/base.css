@@ -1,0 +1,6 @@
+/* Shared by every route before its own stylesheet arrives. Floodlit is dark,
+   so its pages start dark instead of flashing white while they load. */
+html[data-app="floodlit"] {
+  background: #131c25;
+  color-scheme: dark;
+}
