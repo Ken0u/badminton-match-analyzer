@@ -732,6 +732,39 @@ def choose_thumbnails(rallies, best, labels):
     return chosen
 
 
+def without_overlaps(assignments):
+    """One person's tracks of one run, cut so that their ranges do not overlap.
+
+    Actor linking can join two tracker IDs of one window into one player when
+    the tracker briefly gave the player a new ID and then the old one again
+    (the two are never seen in the same frame, but the long track's range
+    spans the short one; DShuttleNet match 52, tracks 2 and 38). A shorter
+    track keeps its range; a longer one gives up the frames it shares with
+    it, so those frames go to the track that was seen there.
+    """
+    groups = defaultdict(list)
+    for item in assignments:
+        groups[(item["run_id"], item["player_id"])].append(item)
+    result = []
+    for items in groups.values():
+        taken = []
+        for item in sorted(
+            items,
+            key=lambda a: (a["end_frame"] - a["start_frame"], a["start_frame"]),
+        ):
+            pieces = [(item["start_frame"], item["end_frame"])]
+            for start, end in taken:
+                pieces = [
+                    piece
+                    for low, high in pieces
+                    for piece in ((low, min(high, start)), (max(low, end), high))
+                    if piece[0] < piece[1]
+                ]
+            result += [item | {"start_frame": s, "end_frame": e} for s, e in pieces]
+            taken.append((item["start_frame"], item["end_frame"]))
+    return result
+
+
 def build_document(mode, rallies, identity_run, labels, provenance):
     """The persons and TrackAssignment records of one video."""
     per_end = PLAYERS_PER_END[mode]
@@ -764,6 +797,7 @@ def build_document(mode, rallies, identity_run, labels, provenance):
                 "certainty": certainty,
             }
         )
+    assignments = without_overlaps(assignments)
     assignments.sort(key=lambda a: (a["start_frame"], a["run_id"], a["track_id"]))
     # The same checks a reviewed identity map passes.
     validate_assignments(
