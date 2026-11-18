@@ -171,15 +171,32 @@ def imported_sources(module):
     return {p.relative_to(package).as_posix() for p in found if package in p.parents}
 
 
-def processing_recipe(video, times, annotations, settings):
-    package = Path(__file__).parent
+# The frontend build in `static/` is not a processing input. Before it was
+# left out, every cache key hashed `static/build-manifest.json` at this value
+# (unchanged from 2026-11-03 until the step 5 frontend), so the entry stays
+# pinned to it: existing caches stay reusable and a rebuild changes no key.
+PINNED_SOURCE_FILES = {
+    "static/build-manifest.json": (
+        "eb032f0f30bad63db594edaa45532e3c265e32725fd9352b75d3284bfb3e6271"
+    ),
+}
+
+
+def package_source_files(package):
+    """Hashes of the package's code and data files that processing depends on."""
     code = {
         p.relative_to(package).as_posix(): file_sha(p)
         for p in sorted(package.rglob("*"))
         if p.is_file()
         and "__pycache__" not in p.parts
+        and p.relative_to(package).parts[0] != "static"
         and p.suffix in (".py", ".json", ".pt")
     }
+    return dict(sorted((code | PINNED_SOURCE_FILES).items()))
+
+
+def processing_recipe(video, times, annotations, settings):
+    code = package_source_files(Path(__file__).parent)
     # An optional locally installed side head overrides the packaged head.
     local_side = {
         p.name: file_sha(p)
