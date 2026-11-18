@@ -105,9 +105,9 @@ body[data-view='landing'] .topbar { position: absolute; left: 0; right: 0; backg
 .topnav-cta:hover { border-color: var(--flood); }
 body[data-view='upload'] .topnav-cta { display: none; }
 
-/* ---------- the hall lights, hung under the top bar on the upload and names screens ---------- */
+/* ---------- the hall lights, hung under the top bar on the names screen ---------- */
 .hall { display: none; position: absolute; left: 0; right: 0; top: 100%; height: 75vh; pointer-events: none; justify-content: space-around; padding: 0 8vw; }
-body[data-view='upload'] .hall, body[data-view='names'] .hall { display: flex; }
+body[data-view='names'] .hall { display: flex; }
 .hall i { position: relative; width: clamp(40px, 6vw, 80px); height: 4px; background: #fff3d6; border-radius: 0 0 2px 2px;
   box-shadow: 0 0 14px 3px rgba(255, 230, 176, 0.55); animation: lamp-strike 0.9s ease-out both; }
 .hall i::after { content: ''; position: absolute; left: 50%; top: 4px; width: 30vw; height: 75vh; translate: -50% 0;
