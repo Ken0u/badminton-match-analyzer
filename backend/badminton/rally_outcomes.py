@@ -14,10 +14,16 @@ proposals), so the same code scores published labels in training/.
 Court frame as in MatchAnalysis: x 0..6.1 across from the far-left outer
 sideline, y 0..13.4 from the far baseline, net at y = 6.7.
 
-Limits, stated in the document too: the shuttle is tracked only in the image,
-so a landing is the image point where the shuttle comes to rest (or, failing
-that, where its track ends), projected onto the floor. A shuttle caught high
-in the net or one whose track ends in the air projects to the wrong place.
+The shuttle is tracked only in the image, so a landing is the image point
+where the shuttle comes to rest (or, failing that, where its track ends). The
+camera behind the court view's floor homography (shuttle_flight.py) places
+that point: the shuttle's centre is still a few centimetres above the floor
+when it lands, so the point is taken on the camera ray at that height
+(``placed_landing``). The last shot's 3D flight is also fitted (drag model,
+from the hitter to the floor or the net); it places the landing when the
+track ended in the air and the fit is sure, gives the outcome model its
+features, and gives every shot an initial speed (``shot_flights``). A
+shuttle caught high in the net still projects to the wrong place.
 """
 
 import bisect
@@ -25,6 +31,7 @@ import math
 
 import numpy as np
 
+from . import shuttle_flight
 from .match_analysis import (
     COURT_LENGTH_M,
     COURT_WIDTH_M,
@@ -37,7 +44,7 @@ from .match_analysis import (
     rally_breaks,
 )
 
-METHOD = "rally boundaries and last-shot landing v2"
+METHOD = "rally boundaries and last-shot landing v3 (camera and 3D flight)"
 # Search for the landing up to this long after the last contact.
 LANDING_SEARCH_S = 3.0
 # A track ends at a gap this long or a jump faster than this (image heights
@@ -388,6 +395,156 @@ def find_landing(times, shuttle, after, until, aspect, homography):
     return landing
 
 
+# 3D flight --------------------------------------------------------------------
+
+_CAMERAS = {}
+
+
+def camera_for(matrix, aspect):
+    """The camera behind a floor homography (cached), or None."""
+    if matrix is None:
+        return None
+    key = (round(aspect, 6), tuple(round(float(v), 12) for row in matrix for v in row))
+    if key not in _CAMERAS:
+        if len(_CAMERAS) > 512:
+            _CAMERAS.clear()
+        _CAMERAS[key] = shuttle_flight.camera_from_homography(matrix, aspect)
+    return _CAMERAS[key]
+
+
+def hitter_position(people, index, hitter_end, shuttle_point, camera):
+    """Court point (feet) of the player at ``hitter_end`` who played the shot.
+
+    ``people[index]`` are rally_outcome_model.person tuples (track, court,
+    box, keypoints) or plain court points. With several players at that end,
+    the one whose box is nearest the shuttle in the image (or, without
+    boxes, nearest under the shuttle) is taken.
+    """
+    if hitter_end not in ENDS or people is None or not 0 <= index < len(people):
+        return None
+    found = []
+    for item in people[index]:
+        if isinstance(item, tuple) and len(item) == 4:
+            _key, court, box, _kp = item
+        else:
+            court, box = item, None
+        if court is None or court_end(court) != hitter_end:
+            continue
+        found.append((court, box))
+    if not found:
+        return None
+    if len(found) == 1 or shuttle_point is None:
+        return tuple(found[0][0])
+
+    def distance(entry):
+        court, box = entry
+        if box is not None:
+            x1, y1, x2, y2 = box
+            dx = max(x1 - shuttle_point[0], 0, shuttle_point[0] - x2)
+            dy = max(y1 - shuttle_point[1], 0, shuttle_point[1] - y2)
+            return math.hypot(dx, dy)
+        above = None if camera is None else camera.at_height(*shuttle_point, 1.9)
+        return 0.0 if above is None else math.dist(court, above[:2])
+
+    return tuple(min(found, key=distance)[0])
+
+
+FLIGHT_POINTS_MIN = shuttle_flight.MIN_POINTS
+# The shuttle turns at the racket: the flight starts at the sharpest turn of
+# the image track this many frames around the detected contact.
+TURN_WINDOW = (-3, 4)
+TURN_MIN_DEG = 50.0
+
+
+def contact_turn(times, shuttle, after, aspect):
+    """Index where the shuttle's image track turns most near contact ``after``.
+
+    The contact detector can be a frame or two early or late; the flight
+    starts where the shuttle changed direction (at least TURN_MIN_DEG).
+    Returns ``after`` when no such turn is seen.
+    """
+    best, best_angle = after, TURN_MIN_DEG
+    count = len(shuttle)
+
+    def seen(i):
+        return 0 <= i < count and shuttle[i] is not None
+
+    for i in range(after + TURN_WINDOW[0], after + TURN_WINDOW[1] + 1):
+        if not seen(i):
+            continue
+        before = next((j for j in range(i - 1, i - 4, -1) if seen(j)), None)
+        later = next((k for k in range(i + 1, i + 4) if seen(k)), None)
+        if before is None or later is None:
+            continue
+        p, q, r = shuttle[before], shuttle[i], shuttle[later]
+        a = ((q[0] - p[0]) * aspect, q[1] - p[1])
+        b = ((r[0] - q[0]) * aspect, r[1] - q[1])
+        na, nb = math.hypot(*a), math.hypot(*b)
+        if na < 1e-4 or nb < 1e-4:
+            continue
+        cos = max(-1.0, min(1.0, (a[0] * b[0] + a[1] * b[1]) / (na * nb)))
+        angle = math.degrees(math.acos(cos))
+        if angle > best_angle:
+            best, best_angle = i, angle
+    return best
+
+
+def shot_flight(
+    times,
+    shuttle,
+    after,
+    until,
+    aspect,
+    homography,
+    hitter_end=None,
+    people=None,
+    end_index=None,
+    grounded=False,
+):
+    """3D flight of the shot played at index ``after`` (see shuttle_flight).
+
+    The flight starts at the shuttle's turn near the contact
+    (``contact_turn``). The fitted points are the shuttle track of
+    ``flight`` up to ``until`` (the next contact, or the end of the landing
+    search; callers stop it at a camera cut), cut at ``end_index`` (the
+    image landing, so a shuttle sliding on the floor is not fitted); with
+    ``grounded`` the last of them is taken to be on the floor. The
+    contact's camera view is used. Returns None without a camera or with too
+    short a track, else the fit with "landing" (court x, y where it meets
+    the floor or the net) added.
+    """
+    matrix = homography(after)
+    camera = camera_for(matrix, aspect)
+    if camera is None:
+        return None
+    start = contact_turn(times, shuttle, after, aspect)
+    if start >= until:
+        return None
+    points = flight(times, shuttle, start, until, aspect)
+    if shuttle[start] is not None:
+        points = [start, *points]
+    if end_index is not None:
+        points = [i for i in points if i <= end_index]
+    if len(points) < FLIGHT_POINTS_MIN:
+        return None
+    at = [times[i] - times[start] for i in points]
+    observed = [shuttle[i] for i in points]
+    feet = hitter_position(people, after, hitter_end, observed[0], camera)
+    towards = {"far": 1, "near": -1}.get(hitter_end)
+    fit = shuttle_flight.fit_flight(
+        camera, at, observed, feet, towards, grounded=grounded
+    )
+    if fit is None:
+        return None
+    fit["start_index"] = start
+    fit["hitter"] = None if feet is None else [float(v) for v in feet]
+    down = fit["touchdown"]
+    fit["landing"] = None if down is None else down["point"][:2]
+    fit["net"] = None if down is None else down["net"]
+    fit["camera"] = camera.describe()
+    return fit
+
+
 # Outcome rule ---------------------------------------------------------------
 
 
@@ -503,18 +660,81 @@ FAMILY_GROUPS = {
     ),
 }
 CLASSES = ("winner_in", "error_out", "error_net")
+# What the last shot's fitted 3D flight adds (models trained with them list
+# them after FEATURES). The flight's own landing is described like the
+# landing above; "flight_sigma_m" is its uncertainty.
+FLIGHT_FEATURES = (
+    "flight_found",
+    "flight_sigma_m",
+    "flight_rms",
+    "flight_depth_m",
+    "flight_lateral_m",
+    "flight_line_distance_m",
+    "flight_in_court",
+    "flight_net",
+    "flight_extrapolated_s",
+    "flight_initial_speed",
+    "flight_landing_speed",
+    "flight_landing_angle",
+    "flight_apex_m",
+)
+FEATURES_FLIGHT = FEATURES + FLIGHT_FEATURES
+FEATURE_SETS = (FEATURES, FEATURES_FLIGHT)
+
+
+def _flight_values(values, flight, hitter_end, mode, served):
+    """FLIGHT_FEATURES of a flight_summary (all zero without a landing)."""
+    if not flight or flight.get("landing") is None:
+        return
+    x, y = flight["landing"]
+    if not (abs(x) < 50 and abs(y) < 50):
+        return
+    towards = 1.0 if hitter_end == "far" else -1.0 if hitter_end == "near" else 0.0
+    values["flight_found"] = 1.0
+    values["flight_sigma_m"] = float(min(3.0, flight.get("sigma_m") or 3.0))
+    values["flight_rms"] = float(min(5.0, flight["rms"] * 100))
+    values["flight_depth_m"] = float(np.clip((y - NET_Y_M) * towards, -8, 8))
+    values["flight_lateral_m"] = float(np.clip(abs(x - COURT_WIDTH_M / 2), 0, 6))
+    values["flight_line_distance_m"] = float(
+        np.clip(line_distance((x, y), mode, served), -3, 3)
+    )
+    values["flight_in_court"] = float(in_court((x, y), mode, served))
+    values["flight_net"] = float(bool(flight.get("net")))
+    values["flight_extrapolated_s"] = float(
+        np.clip(flight.get("extrapolated_s") or 0.0, -1, 2)
+    )
+    values["flight_initial_speed"] = float(
+        min(4.0, (flight.get("initial_speed_kmh") or 0.0) / 100)
+    )
+    values["flight_landing_speed"] = float(
+        min(3.0, (flight.get("landing_speed_m_s") or 0.0) / 10)
+    )
+    values["flight_landing_angle"] = float(
+        (flight.get("landing_angle_deg") or 0.0) / 90
+    )
+    values["flight_apex_m"] = float(min(10.0, flight.get("apex_m") or 0.0))
 
 
 def outcome_features(
-    times, shuttle, players, after, landing, hitter_end, mode, aspect, family=None
+    times,
+    shuttle,
+    players,
+    after,
+    landing,
+    hitter_end,
+    mode,
+    aspect,
+    family=None,
+    names=FEATURES,
 ):
     """Fixed-length description of how the last shot ended.
 
     ``players[i]`` are the court positions seen at index i. Depth is measured
     from the net towards the opponent's baseline (negative: the shot stayed
-    on the hitter's side).
+    on the hitter's side). ``names`` is FEATURES or FEATURES_FLIGHT; the
+    flight features read the landing's "flight" (placed_landing).
     """
-    values = dict.fromkeys(FEATURES, 0.0)
+    values = dict.fromkeys(FEATURES_FLIGHT, 0.0)
     values["doubles"] = float(mode == "doubles")
     values["hitter_known"] = float(hitter_end in ENDS)
     horizon = bisect.bisect_right(times, times[after] + 1.5)
@@ -524,7 +744,7 @@ def outcome_features(
     if group is not None:
         values[f"family_{group}"] = 1.0
     if landing is None:
-        return [values[k] for k in FEATURES]
+        return [float(values[k]) for k in names]
     index = landing["index"]
     values["landing_found"] = 1.0
     values[f"kind_{landing['kind']}"] = 1.0
@@ -562,7 +782,14 @@ def outcome_features(
     track = [shuttle[j] for j in flight(times, shuttle, after, index + 1, aspect)][-4:]
     if len(track) >= 2:
         values["final_dy"] = float(np.clip((track[-1][1] - track[0][1]) * 10, -2, 2))
-    return [float(values[k]) for k in FEATURES]
+    _flight_values(
+        values,
+        landing.get("flight"),
+        hitter_end,
+        mode,
+        hitter_end if group == "serve" else None,
+    )
+    return [float(values[k]) for k in names]
 
 
 class OutcomeModel:
@@ -570,10 +797,11 @@ class OutcomeModel:
 
     def __init__(self, document):
         if (
-            tuple(document["features"]) != FEATURES
+            tuple(document["features"]) not in FEATURE_SETS
             or tuple(document["classes"]) != CLASSES
         ):
             raise ValueError("Rally outcome model does not match this code's features")
+        self.features = tuple(document["features"])
         self.mean = np.asarray(document["mean"], float)
         self.scale = np.asarray(document["scale"], float)
         self.layers = [
@@ -606,6 +834,7 @@ class OutcomeModel:
             line["mode"],
             line["aspect"],
             "serve" if last["kind"] == "serve" else last["family"],
+            self.features,
         )
         p = self.probabilities(features)
         best = int(np.argmax(p))
@@ -722,13 +951,130 @@ def _homography(line, index):
     return None if view is None else line["homographies"][view]
 
 
-def analyse(line, model=None):
+# How the landing is placed (chosen on the training matches; see
+# docs/REVAMP_PLAN.md, step 3, sixth pass). The image landing
+# (``find_landing``) is the shuttle's centre, which is still above the floor
+# when the shuttle touches it: it is put on the camera ray at LIFT_M and
+# dropped to the floor. The fitted 3D flight replaces it when the fit is sure
+# of its landing (``sigma_m`` at most FLIGHT_SIGMA_M) and the landing is of
+# one of FLIGHT_KINDS. With GROUNDED_KINDS the fit takes the last image point
+# to be the shuttle on the floor.
+LIFT_M = 0.05
+FLIGHT_SIGMA_M = 0.35
+FLIGHT_KINDS = ("track_end",)
+GROUNDED_KINDS = ("rest",)
+
+
+def placed_landing(landing, fit, homography, aspect):
+    """The landing with its court point refined by the camera and the flight.
+
+    Adds "court_image" (the plain projection of the image landing),
+    "placement" (image, lifted or flight) and "flight" (flight_summary of
+    the fit, or None). Returns ``landing`` unchanged without a court point.
+    """
+    if landing is None or landing.get("court") is None:
+        return landing
+    out = dict(landing, court_image=landing["court"], placement="image")
+    camera = camera_for(homography(landing["index"]), aspect)
+    if camera is not None and landing["kind"] != "track_end" and LIFT_M:
+        point = camera.at_height(*landing["image"], LIFT_M)
+        if point is not None:
+            out["court"] = (float(point[0]), float(point[1]))
+            out["placement"] = "lifted"
+    out["flight"] = flight_summary(fit)
+    if (
+        fit is not None
+        and fit.get("landing") is not None
+        and fit.get("sigma_m") is not None
+        and fit["sigma_m"] <= FLIGHT_SIGMA_M
+        and landing["kind"] in FLIGHT_KINDS
+    ):
+        out["court"] = tuple(float(v) for v in fit["landing"])
+        out["placement"] = "flight"
+    return out
+
+
+def flight_summary(fit):
+    """The stored part of a shot_flight result (None without a fit)."""
+    if fit is None:
+        return None
+
+    def r(value, digits):
+        return None if value is None else round(float(value), digits)
+
+    return {
+        "initial_speed_kmh": r(fit["initial_speed_kmh"], 1),
+        "start": [r(v, 3) for v in fit["start"]],
+        "start_frame": fit.get("start_index"),
+        "apex_m": r(fit.get("apex_m"), 2),
+        "landing": None
+        if fit.get("landing") is None
+        else [r(v, 3) for v in fit["landing"]],
+        "net": fit.get("net"),
+        "landing_speed_m_s": r(fit.get("landing_speed_m_s"), 2),
+        "landing_angle_deg": r(fit.get("landing_angle_deg"), 1),
+        "sigma_m": r(fit.get("sigma_m"), 3),
+        "rms": r(fit["rms"], 5),
+        "points": fit["points"],
+        "inliers": fit["inliers"],
+        "observed_s": r(fit["observed_s"], 3),
+        "extrapolated_s": r(fit.get("extrapolated_s"), 3),
+    }
+
+
+def _people(line):
+    people = line.get("people")
+    return people if people is not None else line.get("players")
+
+
+def shot_flights(line, group, limit):
+    """Per-shot 3D flights of a rally, aligned with its contacts.
+
+    Each shot is fitted from its contact to the next contact (the last shot
+    up to ``limit``), never across a camera cut. Entries are flight_summary
+    dicts or None.
+    """
+    times, contacts = line["times"], line["contacts"]
+    count = len(times)
+    out = []
+    for n, index in enumerate(group["shots"]):
+        contact = contacts[index]
+        frame = contact["frame"]
+        until = (
+            contacts[group["shots"][n + 1]]["frame"]
+            if n + 1 < len(group["shots"])
+            else limit
+        )
+        until = min(until, count)
+        segment = line["segments"][frame]
+        until = next(
+            (f for f in range(frame + 1, until) if line["segments"][f] != segment),
+            until,
+        )
+        fit = shot_flight(
+            times,
+            line["shuttle"],
+            frame,
+            until,
+            line["aspect"],
+            lambda i: _homography(line, i),
+            contact["court_end"],
+            _people(line),
+        )
+        out.append(flight_summary(fit))
+    return out
+
+
+def analyse(line, model=None, flight=True, speeds=False):
     """Rallies with boundaries, last-shot landing and outcome.
 
     Returns a list of plain dicts (the outcomes stage's ``rallies``):
     start/end frame and source, the contact frames, the last hitter's court
     end, the landing and the outcome. Winners are given by court end; the
-    builder turns ends into teams.
+    builder turns ends into teams. With ``flight`` the last shot's 3D flight
+    is fitted and places the landing (``placed_landing``); with ``speeds``
+    every shot's flight is fitted and stored as "shot_flights", aligned with
+    "shot_frames".
     """
     times, contacts = line["times"], line["contacts"]
     count = len(times)
@@ -763,6 +1109,22 @@ def analyse(line, model=None):
             lambda i: _homography(line, i),
         )
         hitter = last["court_end"]
+        if flight and landing is not None:
+            fit = shot_flight(
+                times,
+                line["shuttle"],
+                frame,
+                min(limit, count),
+                line["aspect"],
+                lambda i: _homography(line, i),
+                hitter,
+                _people(line),
+                None if landing["kind"] == "track_end" else landing["index"],
+                landing["kind"] in GROUNDED_KINDS,
+            )
+            landing = placed_landing(
+                landing, fit, lambda i: _homography(line, i), line["aspect"]
+            )
         served = last["kind"] == "serve"
         outcome = rule_outcome(hitter, landing, line["mode"], served)
         source = "rule"
@@ -784,6 +1146,8 @@ def analyse(line, model=None):
             "landing": None,
             "outcome": None,
         }
+        if speeds:
+            record["shot_flights"] = shot_flights(line, group, min(limit, count))
         if landing is not None and landing.get("court") is not None:
             point = landing["court"]
             record["landing"] = {
@@ -794,6 +1158,12 @@ def analyse(line, model=None):
                 "in_court": in_court(point, line["mode"]),
                 "line_distance": round(line_distance(point, line["mode"]), 3),
             }
+            if "placement" in landing:
+                record["landing"]["placement"] = landing["placement"]
+                record["landing"]["court_image"] = [
+                    round(v, 3) for v in landing["court_image"]
+                ]
+                record["landing"]["flight"] = landing["flight"]
         if outcome is not None:
             record["outcome"] = {**outcome, "source": source}
         result.append(record)

@@ -133,9 +133,16 @@ singles or doubles sidelines, full length), `kind` and `source`. Kinds:
 `track_end` (the track ended in the air; the position is unreliable). The
 track is followed through short disappearances and over the top of the
 picture, false detections are skipped, and a shuttle that slid or bounced on
-is placed where it first met the floor. The shuttle is tracked in the image
-only, so a shuttle caught in the net or lost in the air projects to the
-wrong place.
+is placed where it first met the floor. A camera (focal length and pose) is
+recovered from each court view's floor homography: the landing point is taken
+on the camera ray a few centimetres above the floor (the shuttle's centre
+when it lands) and dropped to the floor. When the track ended in the air, a
+3D flight fitted to the track (gravity and air drag, from the hitter) places
+the landing if the fit is sure of it. A shuttle caught in the net still
+projects to the wrong place. The outcomes stage's stored records also keep
+the fitted flight (`landing.flight`: initial speed, apex height, landing
+speed and angle, uncertainty); shuttle speed is not part of this document
+yet.
 
 `outcome` has `winner_team` (`null` when no identified player stood at the
 winning end), `winner_end`, `last_hitter_end`, `reason` (`winner`: the last

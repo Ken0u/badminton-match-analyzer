@@ -22,7 +22,7 @@ from .match_analysis import COURT_LENGTH_M, COURT_WIDTH_M, NET_Y_M, on_court, pr
 from .rally_outcomes import (
     CLASSES,
     ENDS,
-    FEATURES,
+    FEATURE_SETS,
     flight,
     other,
     outcome_features,
@@ -304,12 +304,13 @@ class SequenceOutcomeModel:
     def __init__(self, document):
         if (
             document.get("format") != FORMAT
-            or tuple(document["features"]) != FEATURES
+            or tuple(document["features"]) not in FEATURE_SETS
             or tuple(document["classes"]) != CLASSES
             or document["step_features"] != STEP_FEATURES
         ):
             raise ValueError("Rally outcome model does not match this code's features")
         self.name = document.get("name", "rally outcome sequence model")
+        self.features = tuple(document["features"])
         self.after_s = float(document.get("after_s", AFTER_S))
         self.mean = np.asarray(document["mean"], float)
         self.scale = np.asarray(document["scale"], float)
@@ -360,6 +361,7 @@ class SequenceOutcomeModel:
             line["mode"],
             line["aspect"],
             family,
+            self.features,
         )
         sequence = sequence_features(
             times,
