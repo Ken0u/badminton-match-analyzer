@@ -16,7 +16,8 @@ def broadcast_camera(centre=(3.05, 22.4, 7.5), target=(3.05, 6.0, 0.0), focal=1.
     forward = (target - centre) / np.linalg.norm(target - centre)
     right = np.array([1.0, 0, 0]) - forward * forward[0]
     right /= np.linalg.norm(right)
-    down = np.cross(forward, right)
+    # The court frame (x right, y towards the camera, z up) is left-handed.
+    down = np.cross(right, forward)
     rotation = np.stack([right, down, forward])
     return F.Camera(focal, rotation, -rotation @ centre, ASPECT)
 
@@ -225,3 +226,54 @@ def test_flight_features_extend_the_outcome_features():
         "layers": [[np.zeros((n, 3)).tolist(), [1.0, 0.0, 0.0]]],
     }
     assert R.OutcomeModel(document).features == R.FEATURES_FLIGHT
+
+
+def test_analyse_places_the_landing_and_can_fit_every_shot():
+    truth = broadcast_camera()
+    matrix = homography_of(truth)
+    fps, n = 30, 200
+    times = [i / fps for i in range(n)]
+    shuttle = [None] * n
+    first = [3.0, 11.5, 2.6, 1.0, -22.0, 14.0]
+    # The far player meets the clear 1.33 s later and hits it back.
+    met = F.positions_at(np.array([first]), [40 / fps])[0, 0]
+    shots = ((20, first), (60, [*met, 0.0, 20.0, 12.0]))
+    for (frame, state), stop in zip(shots, (60, n), strict=True):
+        positions = F.positions_at(np.array([state]), np.arange(0, stop - frame) / fps)[
+            0
+        ]
+        for k, p in enumerate(positions):
+            if p[2] > 0:
+                shuttle[frame + k] = tuple(truth.project(p[None])[0][0])
+            else:
+                # The shuttle then lies where it landed.
+                shuttle[frame + k] = shuttle[frame + k - 1]
+    line = {
+        "mode": "singles",
+        "fps": fps,
+        "aspect": ASPECT,
+        "times": times,
+        "shuttle": shuttle,
+        "segments": [0] * n,
+        "view_at": [0] * n,
+        "homographies": [matrix],
+        "players": [[(3.0, 11.5), (3.0, 2.0)] for _ in range(n)],
+        "contacts": [
+            {"frame": 20, "kind": "serve", "family": None, "court_end": "near"},
+            {"frame": 60, "kind": "shot", "family": "clear", "court_end": "far"},
+        ],
+        "serves": [],
+        "ends": [],
+    }
+    (rally,) = R.analyse(line, speeds=True)
+    landing = rally["landing"]
+    down = F.touchdown(np.array([shots[1][1]]))[0]["point"]
+    assert landing["placement"] in ("lifted", "image")
+    assert math.dist(landing["court"], down[:2]) < 0.3
+    assert landing["flight"]["initial_speed_kmh"] > 80
+    truths = [np.linalg.norm(state[3:]) * 3.6 for _, state in shots]
+    speeds = [f["initial_speed_kmh"] for f in rally["shot_flights"]]
+    assert len(speeds) == 2
+    assert all(abs(v - t) < 0.15 * t for v, t in zip(speeds, truths, strict=True))
+    (plain,) = R.analyse(line, flight=False)
+    assert "placement" not in plain["landing"] and "shot_flights" not in plain
