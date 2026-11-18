@@ -1004,6 +1004,7 @@ def flight_summary(fit):
 
     return {
         "initial_speed_kmh": r(fit["initial_speed_kmh"], 1),
+        "speed_settled_kmh": r(fit.get("speed_settled_kmh"), 1),
         "start": [r(v, 3) for v in fit["start"]],
         "start_frame": fit.get("start_index"),
         "apex_m": r(fit.get("apex_m"), 2),
@@ -1027,12 +1028,14 @@ def _people(line):
     return people if people is not None else line.get("players")
 
 
-def shot_flights(line, group, limit):
+def shot_flights(line, group, limit, last=None):
     """Per-shot 3D flights of a rally, aligned with its contacts.
 
     Each shot is fitted from its contact to the next contact (the last shot
-    up to ``limit``), never across a camera cut. Entries are flight_summary
-    dicts or None.
+    up to ``limit``), never across a camera cut. ``last``, when given, is
+    the last shot's fit made for its landing (it stops at the landing, so a
+    shuttle lying on the floor is not fitted) and is used as it is. Entries
+    are flight_summary dicts or None.
     """
     times, contacts = line["times"], line["contacts"]
     count = len(times)
@@ -1040,6 +1043,9 @@ def shot_flights(line, group, limit):
     for n, index in enumerate(group["shots"]):
         contact = contacts[index]
         frame = contact["frame"]
+        if n + 1 == len(group["shots"]) and last is not None:
+            out.append(flight_summary(last))
+            continue
         until = (
             contacts[group["shots"][n + 1]]["frame"]
             if n + 1 < len(group["shots"])
@@ -1109,6 +1115,7 @@ def analyse(line, model=None, flight=True, speeds=False):
             lambda i: _homography(line, i),
         )
         hitter = last["court_end"]
+        fit = None
         if flight and landing is not None:
             fit = shot_flight(
                 times,
@@ -1147,7 +1154,7 @@ def analyse(line, model=None, flight=True, speeds=False):
             "outcome": None,
         }
         if speeds:
-            record["shot_flights"] = shot_flights(line, group, min(limit, count))
+            record["shot_flights"] = shot_flights(line, group, min(limit, count), fit)
         if landing is not None and landing.get("court") is not None:
             point = landing["court"]
             record["landing"] = {
@@ -1173,6 +1180,11 @@ def analyse(line, model=None, flight=True, speeds=False):
 # Pipeline stage -------------------------------------------------------------
 
 MANIFEST_KEY = "rally_outcome"
+# Fit every shot's flight in the stage ("shot_flights" per rally, initial
+# speed and more, for clip statistics). Off: it costs about a third of a
+# second per shot (several minutes for a full match) and step 4 has not
+# started reading it; analyse(speeds=True) gives it on demand.
+SHOT_FLIGHTS = False
 
 
 def manifest_entry():
@@ -1219,7 +1231,7 @@ def run_stage(video, store, plan, times, output, progress):
     progress(0.5)
     model, problem = load_model()
     entry = manifest_entry() if model is not None else None
-    rallies = analyse(line, model)
+    rallies = analyse(line, model, speeds=SHOT_FLIGHTS)
     write_json(
         output,
         {

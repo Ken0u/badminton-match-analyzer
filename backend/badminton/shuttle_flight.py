@@ -48,6 +48,7 @@ SIGMA_GROUNDED_M = 0.1
 # find the flight, then narrower ones to settle on it.
 ROBUST_SCALES = (0.03, 0.015, 0.01)
 MIN_POINTS = 5
+SETTLED_S = 0.1
 
 
 # Camera ---------------------------------------------------------------------
@@ -574,6 +575,11 @@ def fit_flight(
             math.degrees(math.atan2(-vel[2], horizontal))
         )
         result["extrapolated_s"] = float(down["time_s"] - at[-1])
+    # The speed a tenth of a second after the contact: at 30 frames per
+    # second the first frames after a smash barely fix the speed at the
+    # racket, but they fix this one well.
+    _, _, early = integrate(x[None], SETTLED_S)
+    result["speed_settled_kmh"] = float(np.linalg.norm(early[-1, 0]) * 3.6)
     end = positions_at(x[None], at[-1:])[0, 0]
     result["end_point"] = [float(v) for v in end]
     _grid_t, ps, _ = integrate(x[None], min(4.0, (down or {}).get("time_s", 2.0)))
