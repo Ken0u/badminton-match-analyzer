@@ -22,3 +22,4 @@ node_modules/
 test-results/
 playwright-report/
 
+design/prototypes/data/
