@@ -18,9 +18,10 @@ from . import config
 from . import matches as match_flow
 from .access import AccessMiddleware
 from .calibration_context import court_context_changed, court_run_context
+from .clip_stats import ClipStats, clip_stats
 from .ingest import inspect_video
 from .jobs import JobCancelled
-from .match_analysis import MatchAnalysis, read_match_analysis
+from .match_analysis import MatchAnalysis, match_analysis_path, read_match_analysis
 from .orientation import OrientationError
 from .schemas import Annotations, StrictModel
 from .storage import ConflictError, Store
@@ -395,6 +396,39 @@ def create_app(
             raise HTTPException(404, "Match analysis has not been built yet")
         return document
 
+    stats_cache = {}
+
+    def stored_stats(video_id):
+        """Clip statistics of the stored document (docs/CLIP_STATS.md), computed
+        on request and kept while the file is unchanged; 404 when not built."""
+        path = match_analysis_path(data, video_id)
+        try:
+            info = path.stat()
+        except OSError:
+            info = None
+        signature = None if info is None else (info.st_mtime_ns, info.st_size)
+        cached = stats_cache.get(video_id)
+        if signature is not None and cached and cached[0] == signature:
+            return cached[1]
+        document = read_match_analysis(data, video_id)
+        if document is None:
+            raise HTTPException(404, "Match analysis has not been built yet")
+        stats = clip_stats(document)
+        if len(stats_cache) > 32:
+            stats_cache.clear()
+        stats_cache[video_id] = (signature, stats)
+        return stats
+
+    @app.get(
+        "/api/videos/{video_id}/match-stats",
+        response_model=ClipStats,
+        responses={404: {"description": "Video unknown or results not built yet"}},
+    )
+    def match_stats(video_id: str):
+        """Whole-clip statistics of the stored MatchAnalysis document."""
+        store.video(video_id)
+        return stored_stats(video_id)
+
     # Matches: upload plus names, one job, name confirmation (docs/MATCHES_API.md)
 
     def match_job(video_id, ingest=None, record=None):
@@ -677,6 +711,16 @@ def create_app(
         if document is None:
             raise HTTPException(404, "Match analysis has not been built yet")
         return document
+
+    @app.get(
+        "/api/matches/{match_id}/stats",
+        response_model=ClipStats,
+        responses={404: {"description": "Unknown match or results not built yet"}},
+    )
+    def match_clip_stats(match_id: str):
+        """Clip statistics (same as /api/videos/{id}/match-stats)."""
+        match_record(match_id)
+        return stored_stats(match_id)
 
     @app.get("/api/videos/{video_id}/timestamps")
     def timestamps(video_id: str):
