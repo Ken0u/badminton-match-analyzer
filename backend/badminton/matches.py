@@ -74,7 +74,8 @@ WEIGHTS = {
     "recognition": 1.0,
     "identities": 0.5,
     "persons": 2.0,
-    "outcomes": 0.3,
+    # About 80 s for an 8-minute match, most of it fitting every shot's flight.
+    "outcomes": 10.0,
 }
 
 

@@ -8,10 +8,11 @@ annotations.
 
 Rules the document keeps:
 
-- A value the pipeline did not measure is ``null``, never a guess. There is no
-  shuttle speed, height or 3D position. The last shot's landing and the rally
-  outcome come from the pipeline's outcomes stage (rally_outcomes.py); this
-  builder only reads them and turns court ends into teams.
+- A value the pipeline did not measure is ``null``, never a guess. The last
+  shot's landing, the rally outcome and each shot's fitted 3D flight (initial
+  speed) come from the pipeline's outcomes stage (rally_outcomes.py); this
+  builder only reads them, rates each flight's fit and turns court ends into
+  teams. There is no shuttle 3D position track.
 - Court coordinates are metres on the court floor: x across the court from the
   far-left outer (doubles) sideline, 0 to 6.1; y along the court from the far
   baseline, 0 to 13.4; the net is at y = 6.7. "Far" is the end away from the
@@ -39,8 +40,8 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from .identity import validate_assignments
 from .schemas import StrictModel
 
-SCHEMA_VERSION = 3
-BUILDER = "match analysis builder v3"
+SCHEMA_VERSION = 4
+BUILDER = "match analysis builder v4"
 FILENAME = "match_analysis.json"
 
 COURT_WIDTH_M = 6.1
@@ -88,6 +89,15 @@ PERSONS_NOTE = (
     "players by how they look, for the whole video. They are unreviewed: "
     "confirm the names, and swap two persons in a rally where they are mixed up."
 )
+
+# A shot's fitted flight is "poor_fit" when its image residual (inliers, image
+# heights) is above FLIGHT_RMS_MAX or fewer than FLIGHT_INLIERS_MIN points
+# agree with it, and "speed_bound" when its initial speed reached the fit's
+# bound (shuttle_flight.MAX_SPEED_M_S, 450 km/h): at 30 frames per second
+# the first frames after a hard hit do not fix the speed at the racket.
+FLIGHT_RMS_MAX = 0.01
+FLIGHT_INLIERS_MIN = 5
+FLIGHT_SPEED_BOUND_KMH = 440.0
 
 PersonId = Literal["P1", "P2", "P3", "P4"]
 Team = Literal["T1", "T2"]
@@ -263,6 +273,31 @@ class RallyScore(StrictModel):
     after: TeamScore
 
 
+class ShotFlight(StrictModel):
+    """The shot's 3D flight fitted to the shuttle's image track (outcomes stage).
+
+    Gravity plus air drag from the hitter to the next contact (the last shot:
+    to its landing), through the camera recovered from the court view. Only
+    ``quality == "good"`` speeds are measurements; ``speed_bound`` fits hit the
+    fit's speed limit and their speed is not known (see FLIGHT_SPEED_BOUND_KMH).
+    """
+
+    # Speed leaving the racket, km/h (as fitted; see quality).
+    initial_speed_kmh: float = _finite(ge=0)
+    # Speed 0.1 s after the contact, km/h: well fixed even for hard hits, but
+    # drag caps it near 120 km/h, so it does not separate the fastest shots.
+    speed_settled_kmh: float | None = _finite(default=None, ge=0)
+    # Highest point of the fitted flight above the floor, metres.
+    apex_m: float | None = _finite(default=None)
+    quality: Literal["good", "poor_fit", "speed_bound"]
+    # Fit diagnostics: residual of the inliers (image heights), points fitted
+    # and points within 3 residual scales, seconds of track observed.
+    rms: float = _finite(ge=0)
+    points: int = Field(ge=0)
+    inliers: int = Field(ge=0)
+    observed_s: float | None = _finite(default=None)
+
+
 class PlayerPosition(StrictModel):
     person_id: PersonId | None = None
     position: CourtPoint
@@ -285,6 +320,8 @@ class Shot(StrictModel):
     players: list[PlayerPosition] = Field(default_factory=list)
     shuttle: ImagePoint | None = None
     landing: Landing | None = None
+    # Null when the outcomes stage fitted no flight for this shot.
+    flight: ShotFlight | None = None
 
     @model_validator(mode="after")
     def consistent(self):
@@ -398,12 +435,15 @@ class Provenance(StrictModel):
     identities_run_id: str | None = None
     persons_run_id: str | None = None
     outcomes_run_id: str | None = None
+    # True when the outcomes stage fitted every shot's flight; otherwise every
+    # shots[].flight is null because it was not attempted.
+    shot_flights: bool = False
     parts: list[PartRuns]
     models: list[ModelRef]
 
 
 class MatchAnalysis(StrictModel):
-    schema_version: Literal[3] = 3
+    schema_version: Literal[4] = 4
     video: VideoInfo
     players: list[Person]
     # True once a person confirmed which name belongs to which player; until
@@ -1172,8 +1212,33 @@ def _rallies(shots, times, segments, serves=(), ends=()):
     return rallies
 
 
+def flight_from_summary(summary):
+    """ShotFlight from an outcomes-stage flight summary (None without a fit)."""
+    if not summary or summary.get("initial_speed_kmh") is None:
+        return None
+    speed = float(summary["initial_speed_kmh"])
+    rms, inliers = float(summary["rms"]), int(summary["inliers"])
+    if rms > FLIGHT_RMS_MAX or inliers < FLIGHT_INLIERS_MIN:
+        quality = "poor_fit"
+    elif speed >= FLIGHT_SPEED_BOUND_KMH:
+        quality = "speed_bound"
+    else:
+        quality = "good"
+    return ShotFlight(
+        initial_speed_kmh=round(speed, 1),
+        speed_settled_kmh=summary.get("speed_settled_kmh"),
+        apex_m=summary.get("apex_m"),
+        quality=quality,
+        rms=round(rms, 5),
+        points=int(summary["points"]),
+        inliers=inliers,
+        observed_s=summary.get("observed_s"),
+    )
+
+
 def _stage_rallies(shots, times, run):
-    """Rallies from the outcomes stage's records (boundaries, landing, outcome).
+    """Rallies from the outcomes stage's records (boundaries, landing, outcome,
+    and each shot's flight when the stage fitted them).
 
     Shots the stage put in no rally (none, as it uses the same contacts) are
     left out.
@@ -1181,11 +1246,20 @@ def _stage_rallies(shots, times, run):
     by_frame = {s["frame"]: s for s in shots}
     rallies = []
     for record in run.get("rallies", []):
+        flights = record.get("shot_flights") or []
+        if len(flights) != len(record["shot_frames"]):
+            flights = [None] * len(record["shot_frames"])
+        fitted = dict(zip(record["shot_frames"], flights))
         members = [by_frame[f] for f in record["shot_frames"] if f in by_frame]
         if not members:
             continue
         items = [
-            Shot(id=f"shot-{s['frame']}", time_s=round(times[s["frame"]], 4), **s)
+            Shot(
+                id=f"shot-{s['frame']}",
+                time_s=round(times[s["frame"]], 4),
+                flight=flight_from_summary(fitted.get(s["frame"])),
+                **s,
+            )
             for s in members
         ]
         landing = record.get("landing")
@@ -1489,6 +1563,8 @@ def build_match_analysis(
             identities_run_id=identities_id,
             persons_run_id=persons_id,
             outcomes_run_id=outcomes_id,
+            shot_flights=outcomes is not None
+            and any("shot_flights" in r for r in outcomes.get("rallies", [])),
             parts=[
                 PartRuns(
                     core_start_frame=p["core_start"],

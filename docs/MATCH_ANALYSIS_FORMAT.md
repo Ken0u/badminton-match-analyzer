@@ -1,4 +1,4 @@
-# MatchAnalysis format (schema version 3)
+# MatchAnalysis format (schema version 4)
 
 One JSON document per match. The match page and every statistic read only
 this document; they never read processing plans, stage runs or annotations.
@@ -26,10 +26,11 @@ TypeScript types come from the OpenAPI contract in
 
 ## Rules
 
-- **Unknown is `null`**, never a guess. There is no shuttle speed, height or
-  3D position yet. `shot.landing` (last shot of a rally only) and
-  `rally.outcome` come from the pipeline's outcomes stage and are `null`
-  where it could not tell (see "Landing and outcome").
+- **Unknown is `null`**, never a guess. There is no shuttle 3D position
+  track. `shot.landing` (last shot of a rally only), `shot.flight` (each
+  shot's fitted 3D flight and speed) and `rally.outcome` come from the
+  pipeline's outcomes stage and are `null` where it could not tell (see
+  "Landing and outcome" and "Shot flight").
 - **Frames** are source frame indices; `time_s` and `*_s` are source seconds
   from `timestamps.json`. Ranges are half-open unless noted.
 - **Court metres**: x across the court, 0 to 6.1, from the far-left outer
@@ -48,7 +49,7 @@ TypeScript types come from the OpenAPI contract in
 
 | Field | Contents |
 |---|---|
-| `schema_version` | `3` |
+| `schema_version` | `4` |
 | `video` | `id`, `name`, `mode` (singles/doubles), `fps`, `frame_count`, `duration_s`, `width`, `height` |
 | `players` | persons: `id` (`P1`..`P4`), `name` (empty until confirmed), `team` (`T1`/`T2`), `handedness` (`null` = unknown), `thumbnail` (path relative to the video's data folder, or `null`; the API serves it at `/api/matches/{id}/players/{person}/thumbnail`) |
 | `names_confirmed` | `true` once every player has a confirmed name (see Names) |
@@ -121,6 +122,7 @@ on the sources.
 | `players` | every player seen with a court position at the contact frame: `person_id` (or `null`) and `position` |
 | `shuttle` | shuttle image position at contact (nearest frame within 2), or `null` |
 | `landing` | last shot of a rally: where it came down (see "Landing and outcome"); otherwise `null` |
+| `flight` | the shot's fitted 3D flight and speed (see "Shot flight"), or `null` |
 
 ### Landing and outcome
 
@@ -141,8 +143,8 @@ when it lands) and dropped to the floor. When the track ended in the air, a
 the landing if the fit is sure of it. A shuttle caught in the net still
 projects to the wrong place. The outcomes stage's stored records also keep
 the fitted flight (`landing.flight`: initial speed, apex height, landing
-speed and angle, uncertainty); shuttle speed is not part of this document
-yet.
+speed and angle, uncertainty); the document gives every shot's speed in
+`shot.flight` instead.
 
 `outcome` has `winner_team` (`null` when no identified player stood at the
 winning end), `winner_end`, `last_hitter_end`, `reason` (`winner`: the last
@@ -153,6 +155,34 @@ rally outcome model is installed (`provenance.models`). It is `null` when
 the last hitter's end or the landing is unknown. Measured accuracy is in
 `docs/REVAMP_PLAN.md`; it is not high enough to trust single rallies.
 
+### Shot flight
+
+The outcomes stage fits a 3D flight (gravity and air drag, through the
+camera recovered from the court view) to the shuttle's image track from each
+contact to the next one (the last shot: to its landing), never across a
+camera cut. `shot.flight` has `initial_speed_kmh` (leaving the racket),
+`speed_settled_kmh` (0.1 s after the contact), `apex_m` (highest point above
+the floor), the fit's `rms` (image heights), `points`, `inliers` and
+`observed_s`, and `quality`:
+
+- `good`: the speed is a measurement;
+- `speed_bound`: the fit reached its speed limit (440 km/h or more of the
+  450 km/h bound). At 30 frames per second the first frames after a hard hit
+  do not fix the speed at the racket, so the initial speed is not known
+  (about one smash in six on the validation clips). `speed_settled_kmh` is
+  still well fixed;
+- `poor_fit`: residual above 0.01 image heights or fewer than 5 agreeing
+  points; neither speed is a measurement.
+
+`flight` is `null` when no flight could be fitted (no court view, too short
+a track). `provenance.shot_flights` says whether the stage fitted flights at
+all; when it is `false`, every `flight` is `null` because none was tried.
+Speeds order the shot families as expected (net shots and serves slowest,
+then block, push, drive, lift, drop, clear and smash), but smash and clear
+overlap and single values are rough; the drag caps `speed_settled_kmh` near
+120 km/h, so it does not separate the fastest shots either. See
+`docs/CLIP_STATS.md` for what the statistics use.
+
 ### `tracks`
 
 - `rate_hz`: 10. Sample `k` is time `k / 10` s; `sample_frames[k]` is the
@@ -162,7 +192,8 @@ the last hitter's end or the landing is unknown. Measured accuracy is in
 - `shuttle`: `x`/`y` arrays with one value per source frame (index = frame),
   `null` when not detected.
 
-A full match stays around half a megabyte (8-minute doubles clip: 0.53 MB).
+A full match stays around half a megabyte (8-minute doubles clip: 0.59 MB
+with shot flights, which add about 0.15 kB per shot).
 
 ## Identity
 

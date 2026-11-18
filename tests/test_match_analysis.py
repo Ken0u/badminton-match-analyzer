@@ -311,7 +311,7 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     text = document.model_dump_json()
     assert MatchAnalysis.model_validate_json(text) == document
     assert (
-        MatchAnalysis.model_json_schema()["properties"]["schema_version"]["const"] == 3
+        MatchAnalysis.model_json_schema()["properties"]["schema_version"]["const"] == 4
     )
     assert document.video.duration_s == 12.0
     assert [p.name for p in document.players] == ["Ann", "Bo"]
@@ -361,7 +361,8 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     assert (no_track.hitter_id, no_track.hitter_position) == (None, None)
     assert len(no_track.players) == 2
     # Processing without an outcomes stage: no landing, winner or points.
-    assert all(s.landing is None for s in by_frame.values())
+    assert all(s.landing is None and s.flight is None for s in by_frame.values())
+    assert not document.provenance.shot_flights
     assert all(r.outcome is None for r in document.rallies)
     assert all(
         r.score.after == r.score.before and r.score.game == 1 for r in document.rallies
@@ -398,7 +399,7 @@ def test_schema_round_trip_and_unknowns_stay_null(tmp_path):
     )
     assert read_match_analysis(tmp_path, "v") == document
     assert read_match_analysis(tmp_path, "other") is None
-    assert json.loads(path.read_text(encoding="utf-8"))["schema_version"] == 3
+    assert json.loads(path.read_text(encoding="utf-8"))["schema_version"] == 4
 
 
 def test_rallies_split_at_serves_gaps_and_cuts():
@@ -760,6 +761,48 @@ def test_outcomes_stage_gives_boundaries_landing_winner_team_and_score():
     )
     assert swapped.rallies[2].outcome.winner_team == "T1"
     assert swapped.rallies[2].score.after.model_dump() == {"T1": 1, "T2": 1}
+    assert MatchAnalysis.model_validate_json(document.model_dump_json()) == document
+
+
+def flight(speed, rms=0.004, inliers=12):
+    return {
+        "initial_speed_kmh": speed,
+        "speed_settled_kmh": min(speed, 120.0) * 0.6,
+        "start": [3.0, 11.0, 1.9],
+        "start_frame": 0,
+        "apex_m": 3.2,
+        "landing": [3.0, 2.0],
+        "net": False,
+        "landing_speed_m_s": 6.5,
+        "landing_angle_deg": 60.0,
+        "sigma_m": 0.4,
+        "rms": rms,
+        "points": 14,
+        "inliers": inliers,
+        "observed_s": 0.6,
+        "extrapolated_s": 0.2,
+    }
+
+
+def test_shot_flights_are_read_and_rated():
+    first = record([20, 40, 65], 18, 70, "near", "in")
+    first["shot_flights"] = [flight(40.0), flight(449.9), None]
+    second = record([170, 185], 170, 185, None, None, None, "last_contact")
+    second["shot_flights"] = [flight(120.0, rms=0.02), flight(150.0, inliers=4)]
+    third = record([210, 230, 250], 205, 260, "far", "out")
+    third["shot_flights"] = [flight(90.0)]  # misaligned: ignored
+    inputs = with_outcomes(fixture(), [first, second, third])
+    document = build_match_analysis(inputs, IDENTITY)
+    by_frame = shots(document)
+    assert document.provenance.shot_flights
+    good = by_frame[20].flight
+    assert (good.quality, good.initial_speed_kmh, good.apex_m) == ("good", 40.0, 3.2)
+    assert good.speed_settled_kmh == pytest.approx(24.0)
+    assert by_frame[40].flight.quality == "speed_bound"
+    assert by_frame[65].flight is None
+    assert by_frame[170].flight.quality == "poor_fit"
+    assert by_frame[185].flight.quality == "poor_fit"
+    assert all(by_frame[f].flight is None for f in (210, 230, 250))
     assert MatchAnalysis.model_validate_json(document.model_dump_json()) == document
 
 
