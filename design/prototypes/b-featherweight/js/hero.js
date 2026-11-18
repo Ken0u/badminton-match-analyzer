@@ -351,10 +351,11 @@ export function createHero(canvas, flight, { onFrame } = {}) {
   // camera framing
   const mid = start.clone().lerp(end, 0.5);
   mid.y = 1.4;
+  mid.x = 0;
+  mid.z = 0;
   const dir0 = new THREE.Vector3(0.28, 0.1, 1).normalize();
-  const along = end.clone().sub(start).setY(0).normalize();
-  const sideways = new THREE.Vector3(along.z, 0, -along.x);
-  if (sideways.x < 0) sideways.negate();
+  // always frame from the side of the court, whatever the shot's direction
+  const sideways = new THREE.Vector3(1, 0, 0);
   const dir1 = sideways.clone().multiplyScalar(1).add(new THREE.Vector3(0, 0.42, 0)).normalize();
   let d1 = 18;
   let w = 1;
@@ -370,7 +371,7 @@ export function createHero(canvas, flight, { onFrame } = {}) {
     camera.aspect = w / h;
     camera.fov = narrow ? 40 : 28;
     const hfov = 2 * Math.atan(Math.tan((camera.fov * Math.PI) / 360) * camera.aspect);
-    d1 = Math.max(16, (narrow ? 7.6 : 11.5) / Math.tan(hfov / 2));
+    d1 = Math.max(16, (narrow ? 7.6 : 14) / Math.tan(hfov / 2));
     scene.fog.near = d1 * 1.2;
     scene.fog.far = d1 * 2.6;
     camera.updateProjectionMatrix();
@@ -445,7 +446,7 @@ export function createHero(canvas, flight, { onFrame } = {}) {
     camera.lookAt(target);
     // shift the resting shuttle off centre so it sits beside the headline
     if (narrow) camera.setViewOffset(w, h, 0, h * lerp(0.13, 0.06, pull), w, h);
-    else camera.setViewOffset(w, h, w * lerp(-0.17, 0.12, pull), h * lerp(-0.04, 0.15, pull), w, h);
+    else camera.setViewOffset(w, h, w * lerp(-0.17, 0.12, pull), h * lerp(-0.04, 0.2, pull), w, h);
 
     renderer.render(scene, camera);
 
