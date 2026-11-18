@@ -1,6 +1,6 @@
 // Watch: the real video with an overlay drawn like court lines and light.
 import {
-  asset, nameOf, firstName, teamOf, teamName, teamPlayers, sideNumber, shotLabel, labelText, speedOf, clock,
+  reducedMotion, asset, nameOf, firstName, teamOf, teamName, teamPlayers, sideNumber, shotLabel, labelText, speedOf, clock,
   applyH, viewAt, positionAt, rallyEnd, rallyNumber, getState, setState, esc,
 } from './data.js';
 import { courtLines, courtSegments } from './court.js';
@@ -35,7 +35,8 @@ export function renderWatch(root, match, { toast }) {
       </div>
       <div class="hud" id="hud">
         <div class="hud-cell hud-stroke"><span class="hud-k">Last stroke</span><span class="hud-v" id="h-stroke">–</span><span class="hud-s" id="h-who"></span></div>
-        <div class="hud-cell hud-speed" id="h-speed-cell"><span class="hud-k">Shot speed, approx.</span><span class="hud-v" id="h-speed">–</span><span class="hud-s" id="h-speed-note"></span></div>
+        <div class="hud-cell hud-speed" id="h-speed-cell"><span class="hud-k">Shot speed, approx.</span><span class="hud-v" id="h-speed">–</span>
+          <span class="gauge" aria-hidden="true"><span class="gauge-fill" id="h-gauge"></span></span><span class="hud-s" id="h-speed-note"></span></div>
         <div class="hud-cell hud-rally"><span class="hud-k" id="h-rally-k">Rally</span><span class="hud-v"><span id="h-shots">–</span><small> shots</small></span><span class="hud-s" id="h-time"></span></div>
         <div class="hud-cell hud-won">
           <span class="hud-k">Rallies won so far</span>
@@ -136,10 +137,17 @@ export function renderWatch(root, match, { toast }) {
     }).join('');
   }
 
+  // the spotlight follows a smoothed position, so tracking jitter does not shake it
+  const spot = { id: null, x: 0, y: 0, t: -1 };
   function drawHitter(view, shot, t, strength) {
-    if (!view || !shot?.hitter_id || strength <= 0) { ovHit.innerHTML = ''; return; }
-    const pos = positionAt(match, shot.hitter_id, t) || shot.hitter_position;
-    if (!pos) { ovHit.innerHTML = ''; return; }
+    if (!view || !shot?.hitter_id || strength <= 0) { ovHit.innerHTML = ''; spot.id = null; return; }
+    const raw = positionAt(match, shot.hitter_id, t) || shot.hitter_position;
+    if (!raw) { ovHit.innerHTML = ''; return; }
+    const dt = t - spot.t;
+    if (spot.id !== shot.hitter_id || dt < 0 || dt > 0.5) { spot.x = raw.x; spot.y = raw.y; }
+    else { const k = 1 - Math.exp(-dt / 0.18); spot.x += (raw.x - spot.x) * k; spot.y += (raw.y - spot.y) * k; }
+    spot.id = shot.hitter_id; spot.t = t;
+    const pos = { x: spot.x, y: spot.y };
     const pts = [];
     for (let i = 0; i < 32; i++) {
       const a = (i / 32) * Math.PI * 2;
@@ -179,7 +187,44 @@ export function renderWatch(root, match, { toast }) {
     stroke: $('h-stroke'), who: $('h-who'), speed: $('h-speed'), speedNote: $('h-speed-note'), speedCell: $('h-speed-cell'),
     shots: $('h-shots'), time: $('h-time'), rallyK: $('h-rally-k'), w1: $('h-w1'), w2: $('h-w2'), cur: $('cur'), head: $('tl-head'),
   };
+  H.gauge = $('h-gauge');
   let currentRallyId = null;
+  let shownShot = null, countRaf = 0;
+  const GAUGE_MAX = 300; // km/h at the right end of the little gauge
+  /** A new shot: the number counts up and the gauge fills; too-fast shots peg the gauge. */
+  function showSpeed(shot) {
+    const sp = speedOf(shot);
+    cancelAnimationFrame(countRaf);
+    const cell = H.speedCell;
+    cell.className = 'hud-cell hud-speed';
+    if (sp?.kmh) {
+      const end = sp.kmh;
+      H.speedNote.textContent = sp.settled ? 'estimated at +0.1 s; launch speed uncertain' : 'estimated leaving the racket';
+      H.gauge.style.width = `${Math.min(end / GAUGE_MAX, 1) * 100}%`;
+      if (reducedMotion() || video.paused) { H.speed.innerHTML = `${end}<small> km/h</small>`; }
+      else {
+        const t0 = performance.now();
+        const step = (now) => {
+          const k = Math.min((now - t0) / 420, 1);
+          H.speed.innerHTML = `${Math.round(end * (1 - Math.pow(1 - k, 3)))}<small> km/h</small>`;
+          if (k < 1) countRaf = requestAnimationFrame(step);
+        };
+        countRaf = requestAnimationFrame(step);
+      }
+      void cell.offsetWidth; cell.classList.add('fresh');
+    } else if (sp?.bound) {
+      cell.classList.add('dim');
+      H.speed.textContent = 'Uncertain';
+      H.speedNote.textContent = 'The track does not resolve launch speed.';
+      H.gauge.style.width = '0';
+      void cell.offsetWidth; cell.classList.add('fresh');
+    } else {
+      cell.classList.add('dim');
+      H.speed.textContent = '–';
+      H.speedNote.textContent = 'not measured for this shot';
+      H.gauge.style.width = '0';
+    }
+  }
 
   function update() {
     const t = video.currentTime || 0;
@@ -219,14 +264,10 @@ export function renderWatch(root, match, { toast }) {
     if (shot) {
       H.stroke.textContent = labelText(shotLabel(shot));
       H.who.textContent = [shot.hitter_id ? nameOf(match, shot.hitter_id) : null, shot.side].filter(Boolean).join(', ');
-      const sp = speedOf(shot);
-      H.speedCell.classList.toggle('dim', !sp);
-      if (sp?.kmh) { H.speed.innerHTML = `${sp.kmh}<small> km/h</small>`; H.speedNote.textContent = 'leaving the racket'; }
-      else if (sp?.bound) { H.speed.textContent = 'Too fast'; H.speedNote.textContent = 'faster than this video can measure'; }
-      else { H.speed.textContent = '–'; H.speedNote.textContent = 'not measured for this shot'; }
+      if (shot.id !== shownShot) { shownShot = shot.id; showSpeed(shot); }
     } else {
       H.stroke.textContent = '–'; H.who.textContent = ''; H.speed.textContent = '–'; H.speedNote.textContent = '';
-      H.speedCell.classList.add('dim');
+      H.speedCell.className = 'hud-cell hud-speed dim'; H.gauge.style.width = '0'; shownShot = null;
     }
 
     // rallies won up to the playhead
@@ -278,6 +319,28 @@ export function renderWatch(root, match, { toast }) {
   video.addEventListener('click', toggle);
   const seek = (s) => { video.currentTime = Math.min(Math.max(s, 0), DUR - 0.1); update(); };
   scrub.addEventListener('input', () => seek(Number(scrub.value)));
+  // Timeline: a tap jumps to the start of the rally under the finger (or the nearest one); a drag scrubs.
+  const tl = $('timeline');
+  let press = null;
+  const timeAt = (e) => { const r = tl.getBoundingClientRect(); return Math.min(Math.max((e.clientX - r.left) / r.width, 0), 1) * DUR; };
+  tl.addEventListener('pointerdown', (e) => { press = { x: e.clientX, moved: false }; tl.setPointerCapture(e.pointerId); });
+  tl.addEventListener('pointermove', (e) => {
+    if (!press) return;
+    if (Math.abs(e.clientX - press.x) > 6) press.moved = true;
+    if (press.moved) seek(timeAt(e));
+  });
+  tl.addEventListener('pointerup', (e) => {
+    if (!press) return;
+    const t = timeAt(e);
+    if (!press.moved) {
+      const slack = DUR * 0.012;
+      const hit = rallies.find((r) => t >= r.start_s - slack && t <= rallyEnd(r) + slack)
+        || rallies.reduce((best, r) => (Math.abs(r.start_s - t) < Math.abs(best.start_s - t) ? r : best), rallies[0]);
+      seek(hit.start_s - 0.8);
+    }
+    press = null;
+  });
+  tl.addEventListener('pointercancel', () => { press = null; });
   const jumpRally = (dir) => {
     const t = video.currentTime;
     const list = dir > 0 ? rallies.filter((r) => r.start_s > t + 0.5) : rallies.filter((r) => r.start_s < t - 1.5).reverse();
