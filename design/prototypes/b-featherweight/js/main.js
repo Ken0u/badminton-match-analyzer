@@ -75,7 +75,7 @@ async function landing(root) {
         </div>
       </div>
       <div class="readout" data-readout>
-        <p class="readout-kicker" data-kicker>The fastest shot in the sample match</p>
+        <p class="readout-kicker" data-kicker>One of the hardest shots in the sample match</p>
         <div class="readout-num"><span class="num" data-speed>0</span><span class="unit">km/h</span></div>
         <svg class="decay" viewBox="0 0 260 96" aria-hidden="true">
           <line class="axis" x1="0" y1="88" x2="260" y2="88"/>
@@ -165,7 +165,7 @@ async function landing(root) {
       dot.setAttribute('cx', 0);
       dot.setAttribute('cy', Y(speed).toFixed(1));
     }
-    kickerEl.textContent = fl > 0 ? `Off the racket at ${Math.round(vmax)} km/h. ${p >= 0.88 ? 'On arrival:' : 'Now:'}` : 'The fastest shot in the sample match';
+    kickerEl.textContent = fl > 0 ? `Off the racket at about ${Math.round(vmax)} km/h. ${p >= 0.88 ? 'On arrival:' : 'Now:'}` : 'One of the hardest shots in the sample match';
     capEl.innerHTML = p >= 0.9 ? finalCap : 'Measured from the video by fitting a flight with gravity and drag. Speeds are approximate.';
     launchLabel.textContent = p >= 0.9 ? 'Launch it again' : 'Launch the shuttle';
   }

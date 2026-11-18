@@ -62,20 +62,29 @@ export function teamName(analysis, team) {
   return teamMembers(analysis, team).map((id) => nameOf(analysis, id)).join(' & ');
 }
 
-/** The data's fastest shot with a good flight fit (a smash when there is one). */
+/**
+ * A believable fast shot for the hero. Single flight fits can be well off and
+ * the fastest "good" fits sit near the fit's bound, so take the fastest good
+ * smash at or below the clip's 90th percentile of good smash speeds (and no
+ * more than 300 km/h). Falls back to any good shot under the same rule.
+ */
 export function fastestShot(analysis) {
-  let best = null;
+  const all = [];
   analysis.rallies.forEach((rally) => {
     rally.shots.forEach((shot, i) => {
       const f = shot.flight;
-      if (!f || f.quality !== 'good' || f.initial_speed_kmh == null) return;
-      if (!shot.hitter_position) return;
-      if (!best || f.initial_speed_kmh > best.shot.flight.initial_speed_kmh) {
-        best = { shot, rally, next: rally.shots[i + 1] || null };
-      }
+      if (!f || f.quality !== 'good' || f.initial_speed_kmh == null || !shot.hitter_position) return;
+      all.push({ shot, rally, next: rally.shots[i + 1] || null, v: f.initial_speed_kmh });
     });
   });
-  return best;
+  const pick = (list) => {
+    if (!list.length) return null;
+    const sorted = list.map((c) => c.v).sort((a, b) => a - b);
+    const p90 = sorted[Math.min(sorted.length - 1, Math.floor(0.9 * (sorted.length - 1)))];
+    const cap = Math.min(p90, 300);
+    return list.filter((c) => c.v <= cap).sort((a, b) => b.v - a.v)[0] || null;
+  };
+  return pick(all.filter((c) => c.shot.family === 'smash')) || pick(all);
 }
 
 // ---------- geometry ----------
