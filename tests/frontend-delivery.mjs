@@ -477,7 +477,7 @@ if (requestedModes.includes("--exports")) {
             `SPA fallback swallowed ${route}`,
           );
         }
-        for (const route of ["/", "/library"]) {
+        for (const route of ["/library"]) {
           await page.goto(fixture.base + route);
           await page.getByTestId("library").waitFor();
           await page
@@ -531,15 +531,15 @@ if (requestedModes.includes("--exports")) {
           assetCount: assetNames.length,
           unknownRoutesRemain404: true,
           sourceAndAssetHashes: true,
-          defaultLibrary: true,
+          libraryRoute: "/library",
         };
       },
     );
 
     await check("imports and library handoff", async () => {
-      // Exercise imports through the same FastAPI-served default library users open.
+      // Exercise imports through the FastAPI-served library at its own route.
       assert.deepEqual(await api("/api/videos"), []);
-      await page.goto(fixture.base);
+      await page.goto(fixture.base + "/library");
       await page.getByTestId("library").waitFor();
       await page
         .getByLabel("Video file", { exact: true })
@@ -633,7 +633,7 @@ if (requestedModes.includes("--exports")) {
         await api(`/api/videos/${oriented.id}/annotations`),
         before,
       );
-      await page.goto(fixture.base);
+      await page.goto(fixture.base + "/library");
       await page
         .getByRole("button", { name: `Select ${oriented.name}`, exact: true })
         .click();

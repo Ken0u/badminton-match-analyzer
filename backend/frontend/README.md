@@ -1,10 +1,37 @@
 # React frontend workspace
 
-The production build serves the match library at `/` and `/library`, and the
-complete review workflow at `/editor`. FastAPI owns those routes and serves the
+The production build serves Floodlit, the match analyzer itself, at `/`: upload
+with names, processing progress, name confirmation and the match page (Watch
+and Analysis), all on the matches API (`docs/MATCHES_API.md`). The previous
+match library (`/library`) and review editor (`/editor`) stay reachable at
+their own routes, off the main path. FastAPI owns those routes and serves the
 same static build; Node is never required at application runtime. Software
 checks and successful processing do not establish automatic annotation
-accuracy, so every annotation remains reviewable.
+accuracy.
+
+## Floodlit
+
+Code is in `src/floodlit/`, ported from the approved prototype in
+`design/prototypes/a-floodlit/` (the reference for look, copy and behaviour).
+Screens use hash routes: `#/` (landing with the 3D replay), `#/matches`,
+`#/upload`, `#/match/<id>/processing`, `#/match/<id>/names`,
+`#/match/<id>/watch` and `#/match/<id>/analysis`.
+
+- `model.ts`: pure helpers (names, labels, speeds, homographies, tracks);
+  `api.ts`: the matches API calls, the XHR upload with progress, error text.
+- `hero.js`: the landing replay in three.js, kept as JavaScript from the
+  prototype (`hero.d.ts` types it). It replays the newest ready match, else
+  `sample-rally.json`, one rally of the doubles sample derived by
+  `scripts/sample-rally.mjs` (re-run it only to change the sample).
+- `Watch.tsx` draws the overlay, HUD and mini court imperatively per frame;
+  React owns the structure, the rally list and the per-rally swap, which
+  calls the swap endpoints and then reloads the document and statistics.
+- Each route loads its own code and stylesheet (`main.tsx`), so Floodlit and
+  the older screens never restyle each other. three.js (pinned) and the
+  Anybody and Archivo variable fonts (`@fontsource-variable`, pinned) are
+  bundled; nothing loads from a CDN.
+- Rebuilding into `backend/badminton/static` does not change processing cache
+  keys (`pipeline.package_source_files` leaves `static/` out).
 
 ## Reproduce
 
@@ -176,7 +203,7 @@ restarted/upgraded here.
 
 ## Match library
 
-The root route and `/library` open the library/import/job workflow. Static hosts
+`/library` opens the older library/import/job workflow. Static hosts
 must serve `index.html` for `/library` and `/library/`; FastAPI provides this
 fallback in production.
 
