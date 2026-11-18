@@ -216,17 +216,21 @@ time to a fraction of a frame or a faster camera.
 
 ## On the supplied videos
 
-Stats version 1 on the two supplied videos, processed with the installed
-models (doubles event model v5, outcome model v3) and shot flights:
+Stats version 1 on the two supplied videos as re-processed on 2026-11-17
+(doubles event model v5, singles event model v3, outcome model v3), with the
+outcomes stage re-run with shot flights:
 
-- `doubles.mp4` (8 min, 26 rallies, 315 contacts): rallies median 9.5 shots
-  and 6.9 s; distance per player 252 to 294 m over 210 s of rallies (73 to
-  85 m per minute), a median 7 to 9 m per rally; teams front-back 60 to 67%
-  of the time when attacking and side by side 81 to 89% when defending;
-  most common pair lift then smash (36 of 289); speed medians block 46,
-  drive 96, lift 117, smash 165 km/h (5 of 51 smash fits at the bound).
+- `doubles.mp4` (8 min, 27 rallies, 318 contacts): rallies median 9 shots
+  and 6.6 s; distance per player 253 to 295 m over 212 s of rallies (73 to
+  85 m per minute), a median 7 to 9 m per rally; teams front-back 60 to 66%
+  of the time when attacking and side by side 79 to 83% when defending;
+  most common pair lift then smash (35 of 291); speed medians block 46,
+  drive 96, lift 118, smash 165 km/h (5 of 53 smash fits at the bound).
 - `singles.mp4` (8 min, 21 rallies, 258 contacts): rallies median 12 shots
   and 10.9 s; distance per player 371 and 390 m over 230 s (97 and 102 m per
   minute), a median 18 to 19 m per rally; net shots the most common family
-  (81 of 241 shots); speed medians net 33, lift 93,
-  smash 204 km/h (5 of 35 at the bound).
+  (81 of 241 shots); speed medians net 33, lift 93, smash 204 km/h (5 of 35
+  at the bound).
+
+Fitting the flights took 70 s (singles) and 64 to 110 s (doubles, the
+higher figure with other jobs running) per match.
