@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Featherweight</title>
+  <meta name="description" content="Upload a badminton match video and get every rally, stroke and shot speed back.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M9.5 18.5L4 4.5M14 18V3M18.5 18.5L24 4.5M4 4.5c3-1 17-1 20 0' fill='none' stroke='%2312233a'/%3E%3Cpath d='M7 13h14' stroke='%231f3dff' stroke-width='1.6'/%3E%3Cpath d='M9 18.5h10v2.5a5 5 0 0 1-10 0z' fill='%23b4834f'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/app.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar">
+    <a class="wordmark" href="#/" aria-label="Featherweight, home">
+      <svg viewBox="0 0 28 28" aria-hidden="true">
+        <path class="wm-feather" d="M9.5 18.5L4 4.5M11 18L9 3.5M14 18V3M17 18l2-14.5M18.5 18.5L24 4.5M4 4.5c3-1 17-1 20 0"/>
+        <path class="wm-thread" d="M7 13h14"/>
+        <path class="wm-cork" d="M9 18.5h10v2.5a5 5 0 0 1-10 0z"/>
+      </svg>
+      <span>featherweight</span>
+    </a>
+    <nav class="topnav" aria-label="Main">
+      <a href="#/match/watch" data-nav="match">Sample match</a>
+      <a class="btn btn-small" href="#/upload" data-nav="upload">Analyse a match</a>
+    </nav>
+  </header>
+  <main id="main" tabindex="-1"></main>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
