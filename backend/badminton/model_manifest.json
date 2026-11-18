@@ -57,9 +57,9 @@
     "purpose": "Whole-person description for looks-only persistent player identity; doubles all-four-right 94.5% of rallies on the DShuttleNet test matches, singles unvalidated"
   },
   "rally_outcome": {
-    "name": "rally_outcome_sequence_v2.json",
-    "sha256": "3d341d8df53526355f3425be9a7257a466031848ee9b2174591e34d9a71d67fd",
-    "publisher": "This project (training/train_rally_sequence.py --all-training)",
-    "purpose": "Rally winner and in/out/net from the shuttle and players around the last contact; trained on ShuttleSet and DShuttleNet broadcast matches; validation winner 90% with the published last hit, 80 to 87% end to end; unvalidated on amateur footage"
+    "name": "rally_outcome_sequence_v3.json",
+    "sha256": "4addf9a70a82aec0fa25e835937192178a667e44d6e13ecabc844068402018b0",
+    "publisher": "This project (training/train_rally_sequence.py --all-training --flight, 5 seeds)",
+    "purpose": "Rally winner and in/out/net from the shuttle and players around the last contact, the camera-placed landing and the last shot's 3D flight fit; trained on ShuttleSet and DShuttleNet broadcast matches; validation winner 90.5% singles and 91.5% doubles with the published last hit, 89.6% singles and 87.0% doubles end to end; unvalidated on amateur footage"
   }
 }
