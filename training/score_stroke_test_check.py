@@ -399,6 +399,74 @@ def singles_aicup(fold, dev):
     return result
 
 
+TEACHER = ROOT / "models/weights/events_v2.pt"
+TEACHER_SHA = "5ec2e7bd3fa1af3e8c14294b6b833c3972837aaf3ce83ea59057caf32f4318fc"
+
+
+def singles_shuttleset(fold, dev, folder):
+    """ShuttleSet as the validation replay: teacher snap, then steady ends."""
+    assert sha(TEACHER) == TEACHER_SHA
+    model, net = singles_models(dev)
+    ids = set(shuttleset_matches()[fold])
+    raw = []
+    for p in sorted(Path(folder).glob("ss-*.json.gz")):
+        if int(p.name.split("-")[1]) not in ids:
+            continue
+        doc = gz(p)
+        if doc["split"] != fold:
+            continue
+        x, h = te.shuttleset_clip(doc)
+        if h:
+            raw.append((doc["clip_id"], x, h))
+    match = lambda c: c.split("-")[1]  # noqa: E731
+    # Secondary, as train_stroke_sequence.collect: no snap, raw ends, +/-4.
+    pa = te.predict(model, raw, dev)
+    pb = te.predict(net, raw, dev)
+    result = {
+        "rallies": len(raw),
+        "matches": sorted({match(c) for c, _, _ in raw}, key=int),
+        "transfer_pm4": transfer(raw, pa, pb),
+    }
+    items = [te.steady_ends(i) for i in te.snap(raw, TEACHER, dev)]
+    pa, ta = timed_predict(model, items, dev)
+    pb, tb = timed_predict(net, items, dev)
+    rows = [(c, h, a, b) for (c, _, h), a, b in zip(items, pa, pb)]
+    frames = sum(len(x) for _, x, _ in items)
+    result["timing"] = {
+        "frames": frames,
+        "installed_s": ta,
+        "candidate_s": tb,
+        "extra_ms_per_1000_frames": 1000 * (tb - ta) / frames * 1000,
+    }
+    result["historical"] = {}
+    for tol in (2, 4):
+        result["historical"][str(tol)] = {
+            "installed": summary(rows, 2, tol),
+            "candidate": summary(rows, 3, tol),
+            "paired_by_unit": paired(rows, tol, match),
+        }
+    return result
+
+
+def dshuttlenet_test_paths(folder):
+    """Test rally files; a name with conflicting extractions is left out."""
+    test = set(json.loads(td.DSHUTTLENET_SPLITS.read_text())["test"])
+    found = defaultdict(list)
+    for p in sorted(Path(folder).rglob("ds-*.json.gz")):
+        if int(p.name.split("-")[1]) in test:
+            found[p.name].append(p)
+    take, conflicts = [], []
+    for name, paths in sorted(found.items()):
+        bodies = {
+            hashlib.sha256(gzip.decompress(p.read_bytes())).hexdigest() for p in paths
+        }
+        if len(bodies) == 1:
+            take.append(paths[0])
+        else:
+            conflicts.append(name)
+    return take, conflicts
+
+
 # ---------------------------------------------------------------- doubles
 
 
@@ -639,15 +707,198 @@ def test(_, progress):
     return {"report": str(REPORT)}
 
 
+# Remaining corpora, added once to the first look. The frozen protocol file
+# is read, never rewritten; only this script's own hash may differ from it.
+FETCHED = OUT / "features"
+VALIDATION_MORE = OUT / "validation-reproduction-more.json"
+COMPLETE = OUT / "test-report-complete.json"
+
+
+def frozen_protocol():
+    protocol = json.loads(PROTOCOL.read_text())
+    now = check_pins()
+    then = protocol["hashes"]
+    assert {k: v for k, v in now.items() if k != "this_script"} == {
+        k: v for k, v in then.items() if k != "this_script"
+    }
+    return protocol, now["this_script"]
+
+
+def validate_more(_, progress):
+    """This code path on ShuttleSet and DShuttleNet validation must reproduce."""
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    torch.set_num_threads(2)
+    frozen_protocol()
+    ss = singles_shuttleset("validation", dev, SHUTTLESET)
+    progress(0.4)
+    hist = json.loads(
+        (
+            ROOT / ".cache/stroke-sequence-v1/historical-validation-replay.json"
+        ).read_text()
+    )["results"]["shuttleset"]["comparisons"]
+    seq = json.loads((ROOT / ".cache/stroke-sequence-v1/report.json").read_text())
+    tr = ss["transfer_pm4"]
+    pairs = [
+        [
+            [
+                tr["installed"]["correct"],
+                tr["candidate"]["correct"],
+                tr["installed"]["known"],
+            ],
+            [
+                seq["metrics"]["installed"]["correct"],
+                seq["metrics"]["ensemble"]["correct"],
+                seq["metrics"]["installed"]["known"],
+            ],
+        ]
+    ]
+    for tol, h in zip(("2", "4"), hist):
+        g = ss["historical"][tol]
+        pairs.append(
+            [
+                [
+                    g["installed"]["historical_family_macro_f1_on_matched"],
+                    g["candidate"]["historical_family_macro_f1_on_matched"],
+                    g["installed"]["complete_event_f1"],
+                    g["candidate"]["complete_event_f1"],
+                    {
+                        m: [v["fixed"], v["introduced"], v["matched_known"]]
+                        for m, v in g["paired_by_unit"].items()
+                    },
+                ],
+                [
+                    h["installed"]["family_macro_f1_on_matched"],
+                    h["candidate"]["family_macro_f1_on_matched"],
+                    h["installed"]["complete_event_f1"],
+                    h["candidate"]["complete_event_f1"],
+                    {
+                        m: [v["fixed"], v["introduced"], v["matched_known"]]
+                        for m, v in h["groups"].items()
+                    },
+                ],
+            ]
+        )
+    files = json.loads(EXPERT_PROTOCOL.read_text())["files"]
+    paths = []
+    for fold, ds, _, rel, digest in files:
+        if fold == "validation" and ds == "ds":
+            assert sha(ROOT / rel) == digest
+            paths.append(ROOT / rel)
+    rows, audit = doubles_rows(paths, dev, Counter())
+    progress(0.9)
+    got = doubles_score(rows)["2"]
+    archived = json.loads(
+        (ROOT / ".cache/doubles-stroke-window-v1/report.json").read_text()
+    )["corpora"]["ds"]["2"]
+    pairs.append(
+        [
+            [
+                got["installed"]["matched_correct"],
+                got["candidate"]["matched_correct"],
+                got["installed"]["matched_known"],
+                round(got["installed"]["six_macro_f1"], 10),
+                round(got["candidate"]["six_macro_f1"], 10),
+                {
+                    u.split("-")[1]: [v["installed_correct"], v["candidate_correct"]]
+                    for u, v in got["paired_by_unit"].items()
+                },
+            ],
+            [
+                archived["v5"]["matched_correct"],
+                archived["new"]["matched_correct"],
+                archived["v5"]["matched_known"],
+                round(archived["v5"]["six_macro"], 10),
+                round(archived["new"]["six_macro"], 10),
+                archived["per_match_correct"],
+            ],
+        ]
+    )
+    exact = all(a == b for a, b in pairs)
+    VALIDATION_MORE.write_text(
+        json.dumps(
+            {"exact": exact, "reproduced_vs_archived": pairs, "ds_audit": audit},
+            indent=1,
+        )
+    )
+    print(json.dumps(pairs), "exact", exact, flush=True)
+    assert exact, "validation reproduction differs; not opening test"
+    return {"exact": exact}
+
+
+def complete(_, progress):
+    assert json.loads(VALIDATION_MORE.read_text())["exact"]
+    assert REPORT.exists(), "first look missing"
+    assert not COMPLETE.exists(), "remaining test corpora were already scored once"
+    protocol, script = frozen_protocol()
+    first = json.loads(REPORT.read_text())
+    assert first["protocol_sha"] == sha(PROTOCOL)
+    dev = "cuda" if torch.cuda.is_available() else "cpu"
+    torch.set_num_threads(2)
+    ss_test = protocol["inventory"]["shuttleset_test_matches"]
+    found = {
+        m: len(list((FETCHED / "shuttleset").glob(f"ss-{m}-*.json.gz")))
+        for m in ss_test
+    }
+    assert all(found.values()), found
+    ss = singles_shuttleset("test", dev, FETCHED / "shuttleset")
+    assert ss["matches"] == [str(m) for m in ss_test], ss["matches"]
+    progress(0.5)
+    paths, conflicts = dshuttlenet_test_paths(FETCHED / "dshuttlenet")
+    timer = Counter()
+    rows, audit = doubles_rows(paths, dev, timer)
+    ds = doubles_score(rows)
+    units = sorted({"-".join(r[0].split("-")[:2]) for r in rows})
+    expected = [f"ds-{m}" for m in protocol["inventory"]["dshuttlenet_test_matches"]]
+    assert units == sorted(expected), units
+    ai = first["singles"]["aicup_test"]["historical"]
+    s2 = first["doubles"]["s2_test_match3"]
+    report = {
+        "protocol_sha": sha(PROTOCOL),
+        "first_look_sha": sha(REPORT),
+        "script_sha": script,
+        "device": torch.cuda.get_device_name() if dev == "cuda" else dev,
+        "singles": {
+            "shuttleset_test": ss,
+            "aicup_test": "from first look (test-report.json)",
+            "verdict_shuttleset_only": verdict({"shuttleset": ss["historical"]}, True),
+            "verdict_combined": verdict(
+                {"aicup": ai, "shuttleset": ss["historical"]}, complete=True
+            ),
+        },
+        "doubles": {
+            "dshuttlenet_test": ds,
+            "dshuttlenet_files": len(paths),
+            "dshuttlenet_conflicts_excluded_both_arms": conflicts,
+            "dshuttlenet_audit": audit,
+            "timing": {
+                "rallies": len(rows),
+                "windows_s": timer["windows_s"],
+                "expert_and_blend_s": timer["expert_s"],
+            },
+            "s2_test_match3": "from first look (test-report.json)",
+            "verdict_dshuttlenet_only": verdict({"dshuttlenet": ds}, True),
+            "verdict_combined": verdict({"s2": s2, "dshuttlenet": ds}, complete=True),
+        },
+    }
+    COMPLETE.write_text(json.dumps(report, indent=1))
+    return {"report": str(COMPLETE)}
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("step", choices=("protocol", "validate", "test"))
+    steps = ("protocol", "validate", "test", "validate-more", "complete")
+    ap.add_argument("step", choices=steps)
     step = ap.parse_args().step
     if step == "protocol":
         doc = write_protocol()
         print(json.dumps(doc["missing_on_this_machine"], indent=1))
     else:
-        task = validate if step == "validate" else test
+        task = {
+            "validate": validate,
+            "test": test,
+            "validate-more": validate_more,
+            "complete": complete,
+        }[step]
         print(
             run_local_job(
                 Store(DATA), f"stroke_test_check_{step}", "stroke-test-check", task
