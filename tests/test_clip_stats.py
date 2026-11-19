@@ -7,6 +7,7 @@ from badminton.clip_stats import (
     clip_stats,
     distance_of,
     label,
+    speed_table,
     turned,
 )
 from badminton.match_analysis import (
@@ -604,3 +605,20 @@ def test_endpoints(tmp_path):
         assert client.get("/api/matches/v/stats").json() == response.json()
         schema = client.get("/openapi.json").json()["components"]["schemas"]
         assert "ClipStats" in schema and "ShotFlight" in schema
+
+
+def test_launch_diagnostics_never_hide_or_replace_speeds():
+    flights = [
+        flight(90).model_copy(update={"launch_supported": True, "early_speed_kmh": 85}),
+        flight(200).model_copy(
+            update={"launch_supported": False, "settled_supported": False}
+        ),
+        flight(450, "speed_bound", 119).model_copy(update={"settled_supported": True}),
+    ]
+    stats = speed_table(
+        [shot(i, "P1", family="drive", flight=f) for i, f in enumerate(flights)]
+    )["drive"]
+    assert (stats.shots, stats.good, stats.speed_bound) == (3, 2, 1)
+    # Good fits give their fitted launch speed, whatever the diagnostics say.
+    assert stats.initial_kmh.n == 2 and stats.initial_kmh.median == 145
+    assert stats.settled_kmh.n == 3

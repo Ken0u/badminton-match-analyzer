@@ -696,6 +696,8 @@ def speed_table(shots):
             good=len(good),
             speed_bound=sum(f.quality == "speed_bound" for f in flights),
             poor_fit=sum(f.quality == "poor_fit" for f in flights),
+            # The launch-support diagnostics on a flight never hide a speed:
+            # good fits give the launch speed, speed-bound ones the settled one.
             initial_kmh=distribution(
                 [f.initial_speed_kmh for f in good], SPEED_EDGES, 1
             ).model_copy(update=NO_EXTREMES),

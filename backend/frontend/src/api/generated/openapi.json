@@ -3305,6 +3305,18 @@
             ],
             "title": "Apex M"
           },
+          "early_speed_kmh": {
+            "anyOf": [
+              {
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Early Speed Kmh"
+          },
           "initial_speed_kmh": {
             "minimum": 0,
             "title": "Initial Speed Kmh",
@@ -3314,6 +3326,44 @@
             "minimum": 0,
             "title": "Inliers",
             "type": "integer"
+          },
+          "launch_supported": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Launch Supported"
+          },
+          "net_check": {
+            "anyOf": [
+              {
+                "enum": [
+                  "clear",
+                  "near_tape",
+                  "below_net"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Net Check"
+          },
+          "net_clearance_m": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Net Clearance M"
           },
           "observed_s": {
             "anyOf": [
@@ -3344,6 +3394,17 @@
             "minimum": 0,
             "title": "Rms",
             "type": "number"
+          },
+          "settled_supported": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Settled Supported"
           },
           "speed_settled_kmh": {
             "anyOf": [

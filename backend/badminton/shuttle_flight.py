@@ -290,6 +290,94 @@ def positions_at(state, at, vt=None, step=None):
     return h00 * p0 + h10 * v0 + h01 * p1 + h11 * v1
 
 
+def early_track_speed(camera, state, at, observed, inliers, *, resolved_clock=False):
+    """Conditional launch estimate from timed early displacements, in km/h.
+
+    Keep the full-flight depth, start point and direction. Compare drag-aware
+    candidate speeds in the original camera rather than turning pixels into
+    metres with a constant scale. Missing contact frames cannot fix launch
+    speed. These gates measure local observability, not radar accuracy.
+    """
+    at = np.asarray(at)
+    use = np.asarray(inliers) & (at >= 0) & (at <= 0.16)
+    t, obs = at[use], np.asarray(observed)[use]
+    first_limit = 0.035 if resolved_clock else 0.02
+    if len(t) < 4 or t[0] > first_limit or t[1] > 0.06 or t[-1] < 0.08:
+        return None
+    # Keep the calculation bounded for high-rate video.
+    if len(t) > 16:
+        keep = np.linspace(0, len(t) - 1, 16).round().astype(int)
+        t, obs = t[keep], obs[keep]
+    i, j = np.triu_indices(len(t), 1)
+    keep = (t[j] - t[i] >= 0.035) & (t[j] - t[i] <= 0.125)
+    i, j = i[keep], j[keep]
+    if len(i) < 3:
+        return None
+    scales = np.linspace(0.70, 1.30, 31)
+    states = np.tile(state, (len(scales), 1)).astype(float)
+    states[:, 3:] *= scales[:, None]
+    uv, depth = camera.project(positions_at(states, t))
+    if np.any(depth <= 0) or not np.isfinite(uv).all():
+        return None
+    delta = (uv[:, j] - uv[:, i]) * [camera.aspect, 1]
+    measured = (obs[j] - obs[i]) * [camera.aspect, 1]
+
+    def norm(x):
+        return np.linalg.norm(x, axis=-1)
+
+    # Can a +/-10% change in launch speed be distinguished above image noise?
+    sensitive = norm(delta[20] - delta[10]) >= 2 * SIGMA_IMAGE
+    if resolved_clock:
+        # Late pairs contain little launch information after rapid deceleration.
+        # Use informative baselines only, with at least two distinct anchors
+        # so a single noisy first detection cannot determine the speed.
+        if sensitive.sum() < 3 or len(np.unique(i[sensitive])) < 2:
+            return None
+        delta, measured = delta[:, sensitive], measured[sensitive]
+    elif np.median(norm(delta[20] - delta[10])) < 2 * SIGMA_IMAGE:
+        return None
+    residual = norm(delta - measured)
+    score = np.median(residual, axis=1)
+    # A small preference for the global estimate resists chasing detector jitter.
+    k = int(np.argmin(score + SIGMA_IMAGE * np.abs(scales - 1)))
+    if k in (0, len(scales) - 1) or score[k] > 2 * SIGMA_IMAGE:
+        return None
+    speed = float(np.linalg.norm(states[k, 3:]) * 3.6)
+    return speed if 0 < speed < 440 else None
+
+
+# A conservative triage band, not a confidence interval or a tape-call rule.
+NET_REVIEW_MARGIN_M = 0.10
+
+
+def continuing_net_check(state, duration):
+    """Check a single fitted centre trajectory only up to the next contact.
+
+    None means unassessed, not clear. Use the across-court coordinate at the
+    crossing to exclude round-the-post paths. Never infer a rally outcome.
+    """
+    if not math.isfinite(duration) or duration <= 0:
+        return None
+    grid, positions, _ = integrate(state, duration)
+    points = positions[:, 0]
+    for i in np.flatnonzero(np.diff(points[:, 1]) != 0):
+        a, b = points[i], points[i + 1]
+        u = (NET_Y - a[1]) / (b[1] - a[1])
+        if not 0 <= u <= 1 or grid[i] + u * (grid[i + 1] - grid[i]) > duration:
+            continue
+        x, _, height = a + u * (b - a)
+        if not (0 <= x <= 6.1 and math.isfinite(height)):
+            return None
+        clearance = float(height - NET_HEIGHT)
+        status = "near_tape"
+        if clearance < -NET_REVIEW_MARGIN_M:
+            status = "below_net"
+        elif clearance > NET_REVIEW_MARGIN_M:
+            status = "clear"
+        return {"net_check": status, "net_clearance_m": round(clearance, 4)}
+    return None
+
+
 def touchdown(state, vt=None, limit_s=4.0, net_after_s=0.0, step=None):
     """Where flights [B, 6] first meet the floor or the net.
 
@@ -345,7 +433,9 @@ def touchdown(state, vt=None, limit_s=4.0, net_after_s=0.0, step=None):
     return out
 
 
-def _residuals(params, camera, at, observed, hitter, weights, grounded=False):
+def _residuals(
+    params, camera, at, observed, hitter, weights, grounded=False, reception=None
+):
     """Image residuals [B, 2N] (scaled by SIGMA_IMAGE), the flight staying
     above the floor at every observation [B, N], and the priors."""
     params = np.atleast_2d(params)
@@ -367,6 +457,27 @@ def _residuals(params, camera, at, observed, hitter, weights, grounded=False):
             (params[:, 0] - hitter[0]) / SIGMA_HITTER_M,
             (params[:, 1] - hitter[1]) / SIGMA_HITTER_M,
         ]
+    if reception is not None:
+        # Only for a continuing, opposed exchange with observed endpoints.
+        # Feet are not racket contact: keep this a weak horizontal prior.
+        feet, duration = reception
+        grid, ps, _ = integrate(params, duration)
+        end = positions_at(params, np.array([duration]))[:, 0]
+        priors.extend((end[:, k] - feet[k]) / SIGMA_HITTER_M for k in (0, 1))
+        # Smooth (unrounded) crossing residual in either playing direction.
+        # No crossing or round-the-post is not evidence of an under-tape shot.
+        a, b = ps[:-1], ps[1:]
+        dy = b[..., 1] - a[..., 1]
+        u = (NET_Y - a[..., 1]) / np.where(dy != 0, dy, 1)
+        valid = (
+            (dy != 0) & (u >= 0) & (u <= 1) & (grid[:-1, None] + u * STEP_S <= duration)
+        )
+        cross = a + u[..., None] * (b - a)
+        valid &= (cross[..., 0] >= 0) & (cross[..., 0] <= 6.1)
+        priors.append(
+            np.where(valid, np.minimum(cross[..., 2] - NET_HEIGHT, 0), 0).min(axis=0)
+            / 0.025
+        )
     if grounded:
         priors.append(pos[:, -1, 2] / SIGMA_GROUNDED_M)
     return np.concatenate([r, np.stack(priors, 1)], 1)
@@ -412,7 +523,15 @@ def _bounded(params):
 
 
 def _batched_lm(
-    camera, at, observed, hitter, weights, x0, iterations=15, grounded=False
+    camera,
+    at,
+    observed,
+    hitter,
+    weights,
+    x0,
+    iterations=15,
+    grounded=False,
+    reception=None,
 ):
     """Levenberg-Marquardt, one integration per iteration.
 
@@ -426,7 +545,9 @@ def _batched_lm(
         batch = np.vstack(
             [np.vstack([p[None], p[None] + np.diag(eps)]) for p in points]
         )
-        rs = _residuals(batch, camera, at, observed, hitter, weights, grounded)
+        rs = _residuals(
+            batch, camera, at, observed, hitter, weights, grounded, reception
+        )
         rs = rs.reshape(len(points), 7, -1)
         jacs = ((rs[:, 1:] - rs[:, :1]) / eps[None, :, None]).transpose(0, 2, 1)
         return rs[:, 0], jacs
@@ -470,7 +591,15 @@ def _batched_lm(
 
 
 def fit_flight(
-    camera, at, observed, hitter=None, towards=None, iterations=2, grounded=False
+    camera,
+    at,
+    observed,
+    hitter=None,
+    towards=None,
+    iterations=2,
+    grounded=False,
+    reception=None,
+    resolved_clock=False,
 ):
     """Fit one shot's flight to its image track.
 
@@ -525,6 +654,42 @@ def fit_flight(
         weights = 1 / (1 + (errors(x) / scale) ** 2)
         x, _, jac = _batched_lm(camera, at, observed, hitter, weights, x, 10, grounded)
     err = errors(x)
+    initially_capped = np.linalg.norm(x[3:]) * 3.6 >= 440.0
+    if reception is not None and not grounded and len(at) >= 7:
+        feet, duration = reception
+        before = continuing_net_check(x, duration)
+        low = before is not None and before["net_clearance_m"] < 0
+        if (
+            (low or initially_capped)
+            and 0 <= duration - at[-1] <= 0.10
+            and at[0] <= 0.10
+        ):
+            w = 1 / (1 + (err / ROBUST_SCALES[-1]) ** 2)
+            trial, _, trial_jac = _batched_lm(
+                camera, at, observed, hitter, w, x, reception=reception
+            )
+            after = continuing_net_check(trial, duration)
+            trial_err = errors(trial)
+
+            # Compare the SAME detections (including outliers). Don't trade a
+            # worse image fit or a vanished crossing for a plausible speed.
+            def receiver_distance(state):
+                return np.linalg.norm(
+                    positions_at(state[None], [duration])[0, 0, :2] - feet
+                )
+
+            if (
+                after is not None
+                and before is not None
+                and after["net_clearance_m"] >= min(0, before["net_clearance_m"])
+                and (not low or after["net_clearance_m"] > before["net_clearance_m"])
+                and (low or np.linalg.norm(trial[3:]) < np.linalg.norm(x[3:]))
+                and receiver_distance(trial) < receiver_distance(x)
+                and np.sum(trial_err <= 3 * SIGMA_IMAGE)
+                >= np.sum(err <= 3 * SIGMA_IMAGE)
+                and np.sqrt(np.mean(trial_err**2)) <= np.sqrt(np.mean(err**2)) + 0.001
+            ):
+                x, jac, err = trial, trial_jac, trial_err
     inliers = err <= 3 * SIGMA_IMAGE
     rms = (
         float(np.sqrt(np.mean(err[inliers] ** 2)))
@@ -579,6 +744,20 @@ def fit_flight(
     # second the first frames after a smash barely fix the speed at the
     # racket, but they fix this one well.
     _, _, early = integrate(x[None], SETTLED_S)
+    result["launch_bound"] = bool(initially_capped)
+    timed_speed = (
+        None
+        if initially_capped or speed * 3.6 >= 440
+        else early_track_speed(
+            camera, x, at, observed, inliers, resolved_clock=resolved_clock
+        )
+    )
+    result["launch_supported"] = timed_speed is not None
+    result["early_speed_kmh"] = timed_speed
+    result["settled_supported"] = bool(
+        np.any(inliers & (at >= SETTLED_S - 0.06) & (at < SETTLED_S))
+        and np.any(inliers & (at >= SETTLED_S) & (at <= SETTLED_S + 0.06))
+    )
     result["speed_settled_kmh"] = float(np.linalg.norm(early[-1, 0]) * 3.6)
     end = positions_at(x[None], at[-1:])[0, 0]
     result["end_point"] = [float(v) for v in end]

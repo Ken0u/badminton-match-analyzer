@@ -1903,10 +1903,18 @@ export interface components {
         ShotFlight: {
             /** Apex M */
             apex_m?: number | null;
+            /** Early Speed Kmh */
+            early_speed_kmh?: number | null;
             /** Initial Speed Kmh */
             initial_speed_kmh: number;
             /** Inliers */
             inliers: number;
+            /** Launch Supported */
+            launch_supported?: boolean | null;
+            /** Net Check */
+            net_check?: ("clear" | "near_tape" | "below_net") | null;
+            /** Net Clearance M */
+            net_clearance_m?: number | null;
             /** Observed S */
             observed_s?: number | null;
             /** Points */
@@ -1918,6 +1926,8 @@ export interface components {
             quality: "good" | "poor_fit" | "speed_bound";
             /** Rms */
             rms: number;
+            /** Settled Supported */
+            settled_supported?: boolean | null;
             /** Speed Settled Kmh */
             speed_settled_kmh?: number | null;
         };

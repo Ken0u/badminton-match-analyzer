@@ -167,12 +167,29 @@ the floor), the fit's `rms` (image heights), `points`, `inliers` and
 
 - `good`: the speed is a measurement;
 - `speed_bound`: the fit reached its speed limit (440 km/h or more of the
-  450 km/h bound). At 30 frames per second the first frames after a hard hit
+  450 km/h bound), or reached it before the weak receiver prior (below)
+  pulled it down. At 30 frames per second the first frames after a hard hit
   do not fix the speed at the racket, so the initial speed is not known
   (about one smash in six on the validation clips). `speed_settled_kmh` is
   still well fixed;
-- `poor_fit`: residual above 0.01 image heights or fewer than 5 agreeing
-  points; neither speed is a measurement.
+- `poor_fit`: residual above 0.01 image heights, fewer than 5 agreeing
+  points, or `net_check` is `below_net`; neither speed is a measurement.
+
+The flight's clock starts at the contact time between frames where the
+incoming and outgoing image tracks intersect (`docs/SHUTTLE_LAUNCH_TIMING.md`),
+else at the frame of the sharpest turn; on synthetic tracks this removed most
+of the fit's low bias at the racket (signed error -66 to -14 km/h). For a
+shot that continues to an opponent at the other end in the same camera view,
+`net_check` compares the fitted flight with the net: `net_clearance_m` is the
+centre height at the crossing minus the 1.53 m tape, and the check is
+`clear`, `near_tape` (within 10 cm) or `below_net` (more than 10 cm low, a
+bad fit, not a fault call). It is `null` for last shots, uncheckable
+crossings and documents fitted before the check
+(`docs/CONTINUING_FLIGHT_NET_QUALITY.md`). `launch_supported`,
+`early_speed_kmh` and `settled_supported` are diagnostics of a strict local
+test of the first 0.16 s of track; they never hide or replace a speed (on
+the development clips that test passed for none of 20 shots). All five are
+optional and `null` on older documents, so the schema version stays 4.
 
 `flight` is `null` when no flight could be fitted (no court view, too short
 a track). `provenance.shot_flights` says whether the stage fitted flights at

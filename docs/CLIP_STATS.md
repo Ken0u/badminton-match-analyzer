@@ -190,7 +190,10 @@ flight" there). `speeds[label]` gives `shots`, `fitted` (with a flight),
 over good fits only, 20 km/h bins), `settled_kmh` (0.1 s after the contact,
 over good and speed-bound fits, which fix it well) and `apex_m` (good fits).
 Speed summaries leave `min` and `max` null: single fits are too rough to name
-a fastest or slowest shot.
+a fastest or slowest shot. The flight's launch diagnostics
+(`launch_supported`, `early_speed_kmh`, `settled_supported`) are not used:
+they never drop or replace a speed. A continuing shot whose fit passes below
+the net is `poor_fit` and so counts only in `poor_fit`.
 
 What speeds are good for: comparing shot types and players within one clip
 (the same camera), by median. On the validation clips the medians come in
@@ -201,8 +204,10 @@ frames per second 14 to 19% of smash fits stop at the fit's 450 km/h bound; thos
 the bound and is biased low. A few fits of slow shots come out far too fast
 (a short serve at 220 km/h), so the 90th percentile is rough too.
 `settled_kmh` is well measured but drag caps it near 120 km/h, so it does
-not separate the fastest shots either. Better smash speeds need the contact
-time to a fraction of a frame or a faster camera.
+not separate the fastest shots either. The fit now takes the contact time
+to a fraction of a frame where the tracks allow it
+(`docs/SHUTTLE_LAUNCH_TIMING.md`); the medians above are from before that
+change (see "On the supplied videos" for after).
 
 ## Not included
 
@@ -234,3 +239,26 @@ outcomes stage re-run with shot flights:
 
 Fitting the flights took 70 s (singles) and 64 to 110 s (doubles, the
 higher figure with other jobs running) per match.
+
+Re-run of the outcomes stage on 2026-11-19 with the sub-frame contact clock
+and the net check (`docs/SHUTTLE_LAUNCH_TIMING.md`,
+`docs/CONTINUING_FLIGHT_NET_QUALITY.md`); names, swaps, rally counts and
+winners unchanged. Shares are of fitted shots, medians of good fits, before
+and after:
+
+| | doubles before | doubles after | singles before | singles after |
+|---|---:|---:|---:|---:|
+| fitted shots | 296 | 296 | 251 | 250 |
+| good | 93.6% | 91.6% | 95.2% | 91.2% |
+| speed_bound | 2.0% | 1.7% | 2.0% | 0.8% |
+| poor_fit (below the net) | 4.4% | 6.8% (9) | 2.8% | 8.0% (13) |
+| smash median, km/h | 165 | 199 | 204 | 252 |
+| drive | 96 | 116 | 96 | 96 |
+| lift | 118 | 110 | 93 | 92 |
+| drop | 101 | 101 | 71 | 127 |
+| block | 46 | 47 | 49 | 51 |
+| net | 38 | 39 | 33 | 33 |
+
+Hard shots come out faster, as the synthetic check predicts for removing
+the late clock; there are no reference speeds for these videos, so whether
+each median is closer to the truth is not measured.
