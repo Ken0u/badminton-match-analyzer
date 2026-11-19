@@ -61,5 +61,40 @@
     "sha256": "4addf9a70a82aec0fa25e835937192178a667e44d6e13ecabc844068402018b0",
     "publisher": "This project (training/train_rally_sequence.py --all-training --flight, 5 seeds)",
     "purpose": "Rally winner and in/out/net from the shuttle and players around the last contact, the camera-placed landing and the last shot's 3D flight fit; trained on ShuttleSet and DShuttleNet broadcast matches; validation winner 90.5% singles and 91.5% doubles with the published last hit, 89.6% singles and 87.0% doubles end to end; unvalidated on amateur footage"
+  },
+  "singles_event_ensemble": {
+    "name": "events_singles_ensemble_v1.ts",
+    "source": "project training run: .cache/stroke-sequence-v1/singles_family_ensemble.ts (training/export_stroke_family_ensemble.py), not downloadable",
+    "sha256": "654d3abe534d40f0bf3985d6941426be5635719aad5d23b14d84bc19c7bf4b17",
+    "base": "events.pt 4d2a8b54973396f4254108141e47c8a17858b0ba595be21e60b6336f74b5e981 (contact, hitter, side and serve outputs)",
+    "publisher": "Project training run",
+    "terms": "Trained on ShuttleSet and AI CUP features; research data terms apply",
+    "format": "TorchScript; returns (hit, hitter, family, side, serve) logits for one 30 fps singles view",
+    "threshold": 0.7,
+    "family_order": [
+      "serve",
+      "clear",
+      "drive",
+      "smash",
+      "net",
+      "drop",
+      "lift",
+      "other",
+      "block",
+      "push",
+      "net kill"
+    ],
+    "purpose": "Singles stroke families as the mean of three frozen family heads; one frozen held-out test check passed (ShuttleSet test matches 39-44 at +/-2 frames: 1687 vs 1666 of 1998 known matched contacts, six-family macro F1 .8227 vs .8144; AI CUP test groups also passed); independent whole-match accuracy unvalidated"
+  },
+  "doubles_stroke_window": {
+    "name": "events_doubles_window_v1.pt",
+    "source": "project training run: .cache/doubles-stroke-window-v1/expert.pt (training/train_doubles_stroke_window.py), not downloadable",
+    "sha256": "f216de7e4f957846d2ae3128c6e8b37e4879b82b2072a4441b86b58ea4b12585",
+    "base": "events_doubles.pt bfec7cf6b97963e219375ebdeeac2aa62645cc3ec2a9ec631ca8de2e3ffa98d6",
+    "publisher": "Project training run",
+    "terms": "Fine-tuned on DShuttleNet features (CC BY-NC-SA 4.0): non-commercial use only",
+    "architecture": "badminton/stroke_window.py; family logits blended 0.65 events_doubles.pt + 0.35 window at calibrated contacts",
+    "blend": 0.35,
+    "purpose": "Doubles stroke families from a four-player window around each contact; one frozen held-out test check passed (DShuttleNet test matches at +/-2 frames: 3173 vs 3090 of 4057 known matched contacts, six-family macro F1 .8033 vs .7743; S2 Doubles match 3 also passed); independent whole-match accuracy unvalidated"
   }
 }

@@ -1,4 +1,7 @@
+import hashlib
+
 import numpy as np
+import pytest
 from badminton import event_model
 from badminton.event_model import FEATURES, PLAYER
 
@@ -213,3 +216,104 @@ def test_one_court_end_cannot_hit_twice_in_quick_succession():
     ]
     kept = event_model.drop_implausible(events, [], 25, 720)
     assert [e["frame"] for e in kept] == [108, 125, 150]
+
+
+try:
+    import torch as _torch
+
+    class _FixedSingles(_torch.nn.Module):
+        """One contact mid-view, always a drop (index 5 of FAMILIES)."""
+
+        def forward(self, x):
+            steps = x.shape[1]
+            hit = _torch.full((1, steps, 1), -10.0)
+            hit[0, steps // 2, 0] = 10.0
+            family = _torch.zeros(1, steps, 11)
+            family[:, :, 5] = 3.0
+            other = _torch.zeros(1, steps, 2)
+            return hit, other, family, other, other
+
+except ImportError:  # pragma: no cover - torch is an optional extra
+    _FixedSingles = None
+
+
+def _scripted_singles(path):
+    torch = pytest.importorskip("torch")
+    torch.jit.script(_FixedSingles()).save(str(path))
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _upgrade(monkeypatch, path, sha):
+    monkeypatch.setattr(event_model, "upgrade_path", lambda mode="singles": path)
+    monkeypatch.setattr(
+        event_model,
+        "upgrade_entry",
+        lambda mode: (
+            {
+                "sha256": sha,
+                "threshold": 0.7,
+                "family_order": list(event_model.FAMILIES),
+            }
+            if mode == "singles"
+            else None
+        ),
+    )
+
+
+def test_without_an_upgrade_the_plain_checkpoints_keep_their_names():
+    for mode in ("singles", "doubles"):
+        assert event_model.upgrade(mode) is None
+        assert event_model.method({"mode": mode}) == event_model.BASE_METHODS[mode]
+        assert event_model.model_files(mode) == {}
+
+
+def test_singles_upgrade_is_loaded_with_torchscript(monkeypatch, tmp_path):
+    pytest.importorskip("torch")
+    path = tmp_path / "events_singles_ensemble_v1.ts"
+    sha = _scripted_singles(path)
+    _upgrade(monkeypatch, path, sha)
+    video = {"mode": "singles", "width": 1280, "height": 720, "fps": 30.0}
+    # Self-contained: usable without events.pt, which it replaces.
+    assert event_model.available(video)
+    assert event_model.method(video) == event_model.METHODS["singles"]
+    assert event_model.checkpoint_sha256("singles") == sha
+    assert event_model.model_files("singles") == {path.name: sha}
+    frames = [
+        {
+            "frame": i,
+            "time_s": i / 30,
+            "calibration_valid": True,
+            "camera_segment_start_frame": 0,
+            "players": [person(1, 300), person(2, 650)],
+        }
+        for i in range(40)
+    ]
+    shuttle = [
+        {"frame": i, "shuttle": {"visible": True, "x": 600 + 5 * i, "y": 400.0}}
+        for i in range(40)
+    ]
+    events = event_model.predict_events(video, {"frames": frames}, {"frames": shuttle})
+    assert [(e["frame"], e["family"]) for e in events] == [(20, "drop")]
+    assert sum(events[0]["family_scores"].values()) == pytest.approx(1)
+
+
+def test_an_upgrade_that_differs_from_the_manifest_is_refused(monkeypatch, tmp_path):
+    pytest.importorskip("torch")
+    path = tmp_path / "events_singles_ensemble_v1.ts"
+    _scripted_singles(path)
+    _upgrade(monkeypatch, path, "0" * 64)
+    with pytest.raises(ValueError, match="does not match the model manifest"):
+        event_model.available({"mode": "singles"})
+
+
+def test_manifest_registers_the_installed_upgrades():
+    for mode, name in event_model.UPGRADES.items():
+        entry = event_model.upgrade_entry(mode)
+        assert entry["name"] == name and len(entry["sha256"]) == 64
+        path = event_model.WEIGHTS / name
+        if path.is_file():
+            assert hashlib.sha256(path.read_bytes()).hexdigest() == entry["sha256"]
+    singles = event_model.upgrade_entry("singles")
+    assert tuple(singles["family_order"]) == event_model.FAMILIES
+    assert singles["threshold"] == 0.7
+    assert event_model.upgrade_entry("doubles")["blend"] == 0.35

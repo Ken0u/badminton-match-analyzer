@@ -53,7 +53,11 @@ OUTCOMES = "rally_outcomes"
 # Model manifest entries that only later stages load. Perception keys hash the
 # manifest without them, so registering such weights keeps finished poses and
 # shuttle tracks.
-LATER_MODELS = (person_identity.MANIFEST_KEY, rally_outcomes.MANIFEST_KEY)
+LATER_MODELS = (
+    person_identity.MANIFEST_KEY,
+    rally_outcomes.MANIFEST_KEY,
+    *event_model.MANIFEST_KEYS.values(),
+)
 
 
 class PersonsUnavailable(RuntimeError):
@@ -242,6 +246,7 @@ def processing_recipe(video, times, annotations, settings):
         "source_files": code,
         "local_side_files": local_side,
         "event_model_sha256": event_model.checkpoint_sha256(video.get("mode")),
+        "event_model_files": event_model.model_files(video.get("mode")),
         "library_versions": versions,
     }
 
@@ -284,6 +289,7 @@ def stage_recipe(recipe, name, window, dependencies):
         if MODEL_MANIFEST.name in result["source_files"]:
             result["source_files"][MODEL_MANIFEST.name] = perception_manifest_sha()
         result.pop("event_model_sha256", None)
+        result.pop("event_model_files", None)
         result["perception_calls"] = PERCEPTION_CALLS
     if name == "persons":
         used = imported_sources(PERSONS)
@@ -291,6 +297,7 @@ def stage_recipe(recipe, name, window, dependencies):
             path: sha for path, sha in recipe["source_files"].items() if path in used
         }
         result.pop("event_model_sha256", None)
+        result.pop("event_model_files", None)
         result["model"] = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8")).get(
             person_identity.MANIFEST_KEY
         )
@@ -706,7 +713,8 @@ def process_match(
                     "recipe": {
                         "event_model_sha256": event_model.checkpoint_sha256(
                             video["mode"]
-                        )
+                        ),
+                        "event_model_files": event_model.model_files(video["mode"]),
                     }
                     if learned
                     else proposal_recipe(),
@@ -765,6 +773,7 @@ def process_match(
                             "checkpoint_sha256": event_model.checkpoint_sha256(
                                 video["mode"]
                             ),
+                            "model_files": event_model.model_files(video["mode"]),
                             "start_frame": first,
                             "end_frame": last,
                             "player_run_id": player_id,

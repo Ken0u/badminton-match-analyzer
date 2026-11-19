@@ -494,3 +494,41 @@ def test_identical_inputs_give_identical_documents():
     assert first == second
     labels = {a["player_id"] for a in first["assignments"]}
     assert labels == {"P1", "P2", "P3", "P4"}
+
+
+def test_installing_event_model_upgrades_keeps_perception_and_persons(
+    tmp_path, monkeypatch
+):
+    from badminton import event_model
+
+    manifest = tmp_path / "model_manifest.json"
+    models = {"player_pose": {"name": "p.pt", "sha256": "3" * 64}}
+    manifest.write_bytes((json.dumps(models, indent=2) + "\n").encode())
+    monkeypatch.setattr(pipeline, "MODEL_MANIFEST", manifest)
+    base = recipe(**{"model_manifest.json": pipeline.file_sha(manifest)})
+    stages = ("players", "shuttle", "segments", "persons", "contacts", "rallies")
+
+    def keys(r):
+        return {
+            name: pipeline.digest(pipeline.stage_recipe(r, name, {"index": 0}, {}))
+            for name in stages
+        }
+
+    before = keys(base | {"event_model_files": {"events.pt": "e"}})
+    for key in event_model.MANIFEST_KEYS.values():
+        models[key] = {"name": f"{key}.pt", "sha256": "5" * 64}
+    manifest.write_bytes((json.dumps(models, indent=2) + "\n").encode())
+    after = keys(
+        recipe(
+            **{
+                "model_manifest.json": pipeline.file_sha(manifest),
+                "event_model.py": "changed",
+                "stroke_window.py": "new",
+            }
+        )
+        | {"event_model_sha256": "f", "event_model_files": {"upgrade.ts": "f"}}
+    )
+    for name in ("players", "shuttle", "segments", "persons"):
+        assert after[name] == before[name], name
+    for name in ("contacts", "rallies"):
+        assert after[name] != before[name], name
