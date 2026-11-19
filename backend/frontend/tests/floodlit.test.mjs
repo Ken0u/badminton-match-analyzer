@@ -17,7 +17,7 @@ import {
   teamName,
 } from "../.test-build/floodlit/model.js";
 import { parseRoute } from "../.test-build/floodlit/shell.js";
-import { uploadProblem } from "../.test-build/floodlit/Upload.js";
+import { checkLink, uploadProblem } from "../.test-build/floodlit/Upload.js";
 import { partnersSplit } from "../.test-build/floodlit/Names.js";
 import { STAGE_DETAIL } from "../.test-build/floodlit/Processing.js";
 import { errorText } from "../.test-build/floodlit/api.js";
@@ -63,6 +63,7 @@ test("each state opens where the match stands", () => {
   for (const s of ["queued", "running", "failed", "paused"])
     assert.equal(matchHome("a", s), "#/match/a/processing");
   for (const stage of [
+    "Downloading the video",
     "Finding players",
     "Tracking the shuttle",
     "Building the analysis",
@@ -187,7 +188,7 @@ test("upload checks every name before sending", () => {
   const file = { name: "m.mp4" };
   assert.equal(
     uploadProblem(null, "singles", { T1: ["a"], T2: ["b"] }),
-    "Choose a video first.",
+    "Choose a video or paste a YouTube link first.",
   );
   assert.match(
     uploadProblem(file, "doubles", { T1: ["a", ""], T2: ["b", "c"] }),
@@ -205,6 +206,52 @@ test("upload checks every name before sending", () => {
   assert.equal(
     uploadProblem(file, "singles", { T1: ["a", "x"], T2: ["b", "x"] }),
     "",
+  );
+});
+
+test("a pasted YouTube link is tidied and obvious mistakes are named", () => {
+  const ok = (raw, url) =>
+    assert.deepEqual(checkLink(raw), { url, problem: "" });
+  ok(
+    "https://www.youtube.com/watch?v=abcdefghijk",
+    "https://www.youtube.com/watch?v=abcdefghijk",
+  );
+  ok("  youtu.be/abcdefghijk?si=x ", "https://youtu.be/abcdefghijk?si=x");
+  ok(
+    "http://m.youtube.com/watch?v=abcdefghijk&t=30",
+    "https://m.youtube.com/watch?v=abcdefghijk&t=30",
+  );
+  ok(
+    "https://youtube.com/shorts/abcdefghijk",
+    "https://youtube.com/shorts/abcdefghijk",
+  );
+  ok("", "");
+  const bad = (raw, pattern) => assert.match(checkLink(raw).problem, pattern);
+  bad("https://vimeo.com/123", /not a YouTube link/);
+  bad("ftp://youtu.be/abcdefghijk", /not a YouTube link/);
+  bad("https://www.youtube.com/watch?v=abcdefghijk&list=PL1", /playlist/);
+  bad("https://www.youtube.com/playlist?list=PL1", /playlist/);
+  bad("https://www.youtube.com/@club", /one video/);
+  bad("https://youtu.be/short", /one video/);
+  bad("https://exa mple", /does not look like a link/);
+  // The link stands in for the file; a bad link is the first problem named.
+  const names = { T1: ["a"], T2: ["b"] };
+  assert.equal(
+    uploadProblem(null, "singles", names, "youtu.be/abcdefghijk"),
+    "",
+  );
+  assert.match(
+    uploadProblem(null, "singles", names, "https://vimeo.com/1"),
+    /YouTube/,
+  );
+  assert.match(
+    uploadProblem(
+      null,
+      "singles",
+      { T1: ["a"], T2: [""] },
+      "youtu.be/abcdefghijk",
+    ),
+    /every name/,
   );
 });
 

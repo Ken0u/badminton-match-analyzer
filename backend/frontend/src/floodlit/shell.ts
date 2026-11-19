@@ -29,8 +29,11 @@ export function parseRoute(hash: string): Route {
   }
   return { view: "missing" };
 }
-export function go(hash: string) {
-  if (location.hash !== hash) location.hash = hash;
+/** Change the route; ``replace`` keeps the history entry (a renamed match). */
+export function go(hash: string, replace = false) {
+  if (location.hash === hash) return;
+  if (replace) location.replace(hash);
+  else location.hash = hash;
 }
 
 export const ToastContext = createContext<(text: string) => void>(() => {});
