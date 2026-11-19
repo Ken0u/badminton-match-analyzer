@@ -180,6 +180,28 @@ export interface MatchCreated {
   reused_video: boolean;
 }
 
+/** Start a match from a YouTube link; the analyzer downloads it in the job. */
+export async function startFromLink(
+  url: string,
+  mode: Mode,
+  team1: string[],
+  team2: string[],
+  signal: AbortSignal,
+): Promise<MatchCreated> {
+  const body = new FormData();
+  body.set("url", url);
+  body.set("mode", mode);
+  for (const name of team1) body.append("team1", name);
+  for (const name of team2) body.append("team2", name);
+  const record = object(
+    await client.request("post", "/api/matches", { body, signal }),
+    "reply",
+  );
+  if (typeof record.match_id !== "string")
+    throw new Error("The server sent an unexpected reply");
+  return record as unknown as MatchCreated;
+}
+
 /** Upload with real transfer progress (XHR), parsed by the shared typed client. */
 export function uploadMatch(
   file: File,

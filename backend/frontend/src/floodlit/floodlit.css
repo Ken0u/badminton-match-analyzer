@@ -236,6 +236,31 @@ body[data-view='names'] .hall { display: flex; }
 .drop-sub { position: relative; color: #d7e4dc; max-width: 44ch; font-size: 15px; }
 .drop.has-file .drop-main::before { content: ''; display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--flood); box-shadow: 0 0 12px var(--flood); margin-right: 12px; vertical-align: middle; }
 #use-sample { justify-self: start; margin-top: -22px; }
+/* The video: a file on the drop court, or a YouTube link under the net line. */
+.source { display: grid; gap: 16px; min-width: 0; }
+.drop.is-quiet { opacity: 0.55; }
+.drop.is-quiet:hover, .drop.is-quiet.over { opacity: 1; }
+.src-or { display: flex; align-items: center; gap: 14px; color: var(--text-dim); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; }
+.src-or::before, .src-or::after { content: ''; flex: 1; height: 2px; background: repeating-linear-gradient(90deg, var(--line-mid) 0 6px, transparent 6px 10px); }
+.link-in { display: grid; gap: 8px; min-width: 0; }
+.link-in > label { font-family: var(--display); font-variation-settings: 'wdth' 80; font-weight: 700; font-size: 20px; color: var(--line); }
+.link-row { display: flex; align-items: center; min-width: 0; background: var(--hall-2); border-bottom: 2px solid var(--line-mid); border-radius: 2px 2px 0 0; transition: background 0.2s, border-color 0.2s; }
+.link-row:focus-within { border-bottom-color: var(--flood); background: var(--hall-3); }
+.link-in.is-bad .link-row { border-bottom-color: var(--err); }
+.link-row > svg { flex: none; width: 24px; height: 24px; margin-left: 12px; }
+.link-row > svg rect { fill: none; stroke: var(--line-mid); stroke-width: 1.6; }
+.link-row > svg path { fill: var(--line-mid); }
+.link-row:focus-within > svg rect { stroke: var(--flood); }
+.link-row:focus-within > svg path { fill: var(--flood); }
+.link-row input { flex: 1; min-width: 0; font: inherit; font-size: 17px; color: var(--line); background: transparent; border: 0; padding: 11px 12px; text-overflow: ellipsis; }
+.link-row input::placeholder { color: var(--text-dim); opacity: 0.7; }
+.link-row input:focus { outline: none; }
+.link-clear { flex: none; display: grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; color: var(--text-dim); cursor: pointer; }
+.link-clear svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; }
+.link-clear:hover, .link-clear:focus-visible { color: var(--line); }
+.link-clear:focus-visible { outline: 2px solid var(--flood); outline-offset: -4px; }
+.link-note { margin: 0; font-size: 14px; color: var(--text-dim); }
+.link-in.is-bad .link-note { color: var(--err); }
 
 fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 legend { font-family: var(--display); font-variation-settings: 'wdth' 80; font-weight: 700; font-size: 24px; margin-bottom: 14px; padding: 0; }

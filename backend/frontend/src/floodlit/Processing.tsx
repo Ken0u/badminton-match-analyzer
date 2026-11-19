@@ -7,6 +7,8 @@ const LAMPS = 5;
 /** What each stage label from the server means, in a sentence. */
 export const STAGE_DETAIL: Record<string, string> = {
   "Waiting to start": "It starts as soon as the analyzer is free.",
+  "Downloading the video":
+    "Fetching the video from YouTube onto the analyzer's computer",
   "Preparing the video": "Reading the file and the time of every frame",
   "Scanning the video":
     "Finding camera cuts and the court lines in every angle",
@@ -43,6 +45,11 @@ export function Processing({ id }: { id: string }) {
       }
       matchStatus(id, ctl.signal).then(
         (s) => {
+          // A link match takes its video's id once the video is downloaded.
+          if (s.match_id !== id) {
+            go(`#/match/${s.match_id}/processing`, true);
+            return;
+          }
           setStatus(s);
           setError("");
           if (s.state === "running" || s.state === "queued") next();
@@ -120,7 +127,9 @@ export function Processing({ id }: { id: string }) {
         ? "Opening the match."
         : "Next, check who is who."
       : state === "failed"
-        ? "Finished work is kept, so resuming carries on from where it stopped."
+        ? status.video_id === null
+          ? "The video was not downloaded. Resuming tries the download again."
+          : "Finished work is kept, so resuming carries on from where it stopped."
         : (STAGE_DETAIL[status.stage] ?? "");
 
   return (
