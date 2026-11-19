@@ -1,5 +1,7 @@
 """The matches flow: upload plus names, one job, name confirmation, swaps."""
 
+import hashlib
+import io
 import json
 import threading
 import time
@@ -7,9 +9,10 @@ import time
 import av
 import numpy as np
 import pytest
-from badminton import matches, pipeline
+from badminton import matches, media_import, pipeline
 from badminton.api import create_app
 from badminton.match_analysis import build_match_analysis, write_match_analysis
+from badminton.media_import import MediaImportError, save_upload
 from badminton.storage import Store
 from badminton.video import timestamps_for, write_json
 from fastapi.testclient import TestClient
@@ -304,6 +307,168 @@ def test_create_rejects_bad_names_before_queuing(flow):
         assert Store(data).jobs() == []
         assert not (root / ".media").exists() or not any((root / ".media").iterdir())
         assert client.get("/api/matches/unknown").status_code == 404
+
+
+# A match from a YouTube link (the downloader is always a stand-in) ----------
+
+LINK = "https://youtu.be/abcdefghijk?si=share"
+CANONICAL = "https://www.youtube.com/watch?v=abcdefghijk"
+
+
+def create_link(client, url=LINK, mode="singles", team1=("Ann",), team2=("Bo",)):
+    return client.post(
+        "/api/matches",
+        data={"mode": mode, "team1": list(team1), "team2": list(team2), "url": url},
+    )
+
+
+@pytest.fixture
+def downloads(flow, monkeypatch):
+    """A downloader stand-in that 'downloads' the flow's clip, optionally
+    failing or pausing halfway."""
+    _, _, content, _ = flow
+    state = {"calls": [], "fail": None, "halfway": None, "release": None}
+
+    def download(url, media_root, max_bytes, progress):
+        state["calls"].append(url)
+        if state["fail"]:
+            raise MediaImportError(state["fail"])
+        progress(0.5)
+        if state["halfway"] is not None:
+            state["halfway"].set()
+            assert state["release"].wait(10)
+        path = save_upload(io.BytesIO(content), "video.mp4", media_root, max_bytes)
+        progress(1)
+        return path, {
+            "source_type": "youtube",
+            "url": url,
+            "id": url.rsplit("=", 1)[1],
+            "title": "Club final",
+        }
+
+    monkeypatch.setattr(media_import, "download_youtube", download)
+    return state
+
+
+def test_link_match_downloads_first_then_runs_like_an_upload(flow, downloads):
+    root, data, content, calls = flow
+    downloads["halfway"], downloads["release"] = threading.Event(), threading.Event()
+    video_id = hashlib.sha256(content).hexdigest()[:16]
+    with TestClient(create_app(root, data)) as client:
+        response = create_link(client)
+        assert response.status_code == 202, response.text
+        created = response.json()
+        link = created["match_id"]
+        assert link == matches.link_id(CANONICAL) and link != video_id
+        assert created["video_id"] is None and not created["reused_video"]
+        assert downloads["halfway"].wait(10)
+        try:
+            running = client.get(f"/api/matches/{link}").json()
+            assert running["state"] == "running"
+            assert running["stage"] == "Downloading the video"
+            assert running["progress"] == pytest.approx(matches.DOWNLOAD_SHARE / 2)
+            assert running["video_id"] is None
+            assert running["source_url"] == CANONICAL
+            assert running["name"] == "YouTube video abcdefghijk"
+            listed = client.get("/api/matches").json()
+            assert [m["match_id"] for m in listed] == [link]
+        finally:
+            downloads["release"].set()
+        status, seen = wait(client, link)
+        # Once downloaded the match is the video's; the link id answers for it.
+        assert status["state"] == "needs_names", status
+        assert status["match_id"] == status["video_id"] == video_id
+        assert status["name"] == "Club final"
+        assert status["source_url"] == CANONICAL
+        progress = [s["progress"] for s in seen]
+        assert progress == sorted(progress)
+        assert calls == ["segments", "players", "shuttle"]
+        assert downloads["calls"] == [CANONICAL]
+        job = Store(data).job(created["job_id"])
+        assert job["video_id"] == video_id and job["status"] == "completed"
+        assert [m["match_id"] for m in client.get("/api/matches").json()] == [video_id]
+        players = client.get(f"/api/matches/{link}/players")
+        assert players.status_code == 200 and players.json()["match_id"] == video_id
+        record = json.loads((data / video_id / "match.json").read_text())
+        assert record["source_url"] == CANONICAL and record["link_id"] == link
+        assert record["jobs"] == [created["job_id"]]
+        video = client.get(f"/api/videos/{video_id}").json()
+        assert video["source"]["url"] == CANONICAL
+        assert video["source_type"] == "youtube"
+
+        # The same link again reuses the stored video: no second download.
+        calls.clear()
+        again = create_link(client, CANONICAL, team1=["Cy"], team2=["Di"])
+        assert again.status_code == 202, again.text
+        assert again.json()["match_id"] == video_id and again.json()["reused_video"]
+        status, _ = wait(client, video_id)
+        assert status["state"] == "needs_names" and calls == []
+        assert downloads["calls"] == [CANONICAL]
+        assert len(list((root / ".media").iterdir())) == 1
+        wrong = create_link(client, mode="doubles", team1=["A", "B"], team2=["C", "D"])
+        assert wrong.status_code == 409
+
+
+def test_link_is_checked_before_any_job(flow, downloads):
+    root, data, content, _ = flow
+    with TestClient(create_app(root, data)) as client:
+        for url, message in (
+            ("https://example.com/watch?v=abcdefghijk", "HTTPS YouTube video"),
+            ("http://youtu.be/abcdefghijk", "HTTPS YouTube video"),
+            ("https://www.youtube.com/watch?v=abcdefghijk&list=PL1", "playlist"),
+            ("https://www.youtube.com/@club", "HTTPS YouTube video"),
+        ):
+            response = create_link(client, url)
+            assert response.status_code == 422, url
+            assert message in response.json()["detail"]
+        both = client.post(
+            "/api/matches",
+            files={"file": ("Final.mp4", content, "video/mp4")},
+            data={"mode": "singles", "team1": ["Ann"], "team2": ["Bo"], "url": LINK},
+        )
+        assert both.status_code == 422
+        assert both.json()["detail"] == (
+            "Send either a video file or a YouTube link, not both"
+        )
+        neither = client.post(
+            "/api/matches", data={"mode": "singles", "team1": ["Ann"], "team2": ["Bo"]}
+        )
+        assert neither.status_code == 422
+        assert neither.json()["detail"] == (
+            "Choose a video file or paste a YouTube link"
+        )
+        assert create_link(client, team2=["ann"]).status_code == 422
+        assert Store(data).jobs() == [] and downloads["calls"] == []
+        assert client.get("/api/matches").json() == []
+
+
+def test_failed_download_fails_the_match_and_resume_downloads_again(flow, downloads):
+    root, data, _, _ = flow
+    downloads["fail"] = (
+        "Choose a publicly accessible video that does not require signing in"
+    )
+    with TestClient(create_app(root, data)) as client:
+        link = create_link(client).json()["match_id"]
+        status, _ = wait(client, link)
+        assert status["state"] == "failed" and status["stage"] == "Failed"
+        assert status["error"] == downloads["fail"]
+        assert status["match_id"] == link and status["video_id"] is None
+        assert client.get("/api/videos").json() == []
+        assert client.get(f"/api/matches/{link}/players").status_code == 409
+
+        downloads["fail"] = None
+        resumed = client.post(f"/api/matches/{link}/resume")
+        assert resumed.status_code == 202, resumed.text
+        assert resumed.json()["match_id"] == link
+        status, _ = wait(client, link)
+        assert status["state"] == "needs_names", status
+        assert downloads["calls"] == [CANONICAL, CANONICAL]
+        # Resuming by either id now carries on the video's match.
+        video_id = status["match_id"]
+        again = client.post(f"/api/matches/{link}/resume")
+        assert again.status_code == 202 and again.json()["match_id"] == video_id
+        wait(client, video_id)
+        assert downloads["calls"] == [CANONICAL, CANONICAL]
 
 
 # Names, swaps and thumbnails on a built document ----------------------------
