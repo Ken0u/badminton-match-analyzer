@@ -192,3 +192,92 @@ def test_varied_clip_ends_keep_each_hit_on_its_own_frame():
         assert inputs[: max(0, hits[0][0] - 48), 0].max(initial=0) <= 45
         leads.add(hits[0][0])
     assert min(leads) < 10 and max(leads) > 100
+
+
+def test_window_zeroes_steps_in_another_segment_or_without_a_court():
+    from badminton.stroke_window import windows
+
+    x = with_motion(np.random.default_rng(1).random((60, SLOTS * PLAYER + 3), "f"))
+    segment = (np.arange(60) >= 40).astype(int)
+    valid = np.ones(60, bool)
+    valid[5] = False
+    z = windows(x, [20, 30], [0, 3], segment, valid)
+    assert z.shape == (2, 40, 81)
+    # The first window starts at step 0 and passes step 5, which has no
+    # court; the second ends at step 54, past the cut at 40.
+    before = np.rint(np.linspace(0, 20, 16)).astype(int)
+    assert 5 in before and not z[0, :16][before == 5].any()
+    assert z[0, :16][before != 5].any(axis=1).all()
+    assert (z[1, -1] == 0).all() and z[1, 15].any()
+    assert not windows(x, [20], [0], segment, np.zeros(60, bool)).any()
+
+
+def test_stroke_window_is_blended_into_families_at_calibrated_contacts():
+    torch = pytest.importorskip("torch")
+    from badminton import event_model, stroke_window
+    from badminton.event_network import EventModel
+
+    torch.manual_seed(0)
+    model = EventModel(hidden=16, layers=1, norm="step", players=SLOTS).eval()
+    window = stroke_window.expert_network(81, len(FAMILIES)).eval()
+    frames = rows(40)
+    balls = [{"visible": True, "x": 600 + 4 * i, "y": 400 - 2 * i} for i in range(40)]
+    values, _ = doubles_observations(frames, balls, WIDTH, HEIGHT, FPS)
+    valid = np.ones(40, bool)
+
+    def run(net, ok):
+        return event_model.infer_view(
+            model, net, values, ok, 0.0, True, WIDTH, HEIGHT, "cpu"
+        )
+
+    _, plain, steps, slots = run(None, valid)
+    _, mixed, steps2, slots2 = run(window, valid)
+    assert steps and (steps, slots) == (steps2, slots2)
+    z = stroke_window.windows(
+        with_motion(values), steps, slots, np.zeros(40, int), valid
+    )
+    with torch.inference_mode():
+        expert = window(torch.from_numpy(z)).numpy()
+    # Blending logits equals blending log-probabilities (softmax ignores shifts).
+    logits = (1 - stroke_window.BLEND) * np.log(plain["family"][steps])
+    expected = torch.softmax(
+        torch.from_numpy(logits + stroke_window.BLEND * expert), -1
+    ).numpy()
+    np.testing.assert_allclose(mixed["family"][steps], expected, atol=1e-5)
+    for name in ("hitter", "side", "serve"):
+        np.testing.assert_array_equal(mixed[name], plain[name])
+    # Without a court calibration the event model's family is kept.
+    _, kept, _, _ = run(window, np.zeros(40, bool))
+    np.testing.assert_allclose(kept["family"], plain["family"], atol=1e-6)
+
+
+def test_doubles_upgrade_names_both_files(monkeypatch, tmp_path):
+    torch = pytest.importorskip("torch")
+    import hashlib
+
+    from badminton import event_model, stroke_window
+
+    base, extra = tmp_path / "events_doubles.pt", tmp_path / "window.pt"
+    base.write_bytes(b"base")
+    torch.save(
+        {
+            "state": stroke_window.expert_network(81, len(FAMILIES)).state_dict(),
+            "dim": 81,
+        },
+        extra,
+    )
+    sha = hashlib.sha256(extra.read_bytes()).hexdigest()
+    monkeypatch.setattr(event_model, "checkpoint_path", lambda mode="singles": base)
+    monkeypatch.setattr(event_model, "upgrade_path", lambda mode="singles": extra)
+    monkeypatch.setattr(
+        event_model,
+        "upgrade_entry",
+        lambda mode: {"sha256": sha} if mode == "doubles" else None,
+    )
+    video = {"mode": "doubles"}
+    assert event_model.method(video) == event_model.METHODS["doubles"]
+    assert (
+        event_model.checkpoint_sha256("doubles") == hashlib.sha256(b"base").hexdigest()
+    )
+    assert set(event_model.model_files("doubles")) == {base.name, extra.name}
+    assert stroke_window.load(extra, len(FAMILIES), "cpu").training is False

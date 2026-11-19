@@ -10,13 +10,22 @@ It is trained by training/train_events.py and used only when its checkpoint
 Doubles has its own checkpoint (events_doubles.pt, training/train_doubles.py)
 with four player slots, two at each court end (see event_doubles.py); its
 hitter output names one of the four tracked players.
+
+Stroke families come from an installed upgrade when one is present (UPGRADES,
+registered in model_manifest.json under MANIFEST_KEYS). Singles: a TorchScript
+model whose contact, hitter, side and serve outputs are events.pt's and whose
+family logits are the mean of three frozen family heads. Doubles: the
+four-player stroke window (stroke_window.py) blended into events_doubles.pt's
+family logits at calibrated contacts. Both passed one frozen held-out test
+check (.cache/stroke-test-check) against the plain checkpoints.
 """
 
 import hashlib
+import json
 
 import numpy as np
 
-from .config import WEIGHTS
+from .config import MODEL_MANIFEST, WEIGHTS
 
 # New classes go at the end: earlier checkpoints keep their output order.
 FAMILIES = (
@@ -40,8 +49,25 @@ FEATURES = 2 * PLAYER + 6
 TRAINED_FPS = 30.0
 CHECKPOINTS = {"singles": "events.pt", "doubles": "events_doubles.pt"}
 CHECKPOINT = CHECKPOINTS["singles"]
-METHOD = "learned singles event model v3"
-METHODS = {"singles": METHOD, "doubles": "learned doubles event model v5"}
+UPGRADES = {
+    "singles": "events_singles_ensemble_v1.ts",
+    "doubles": "events_doubles_window_v1.pt",
+}
+MANIFEST_KEYS = {
+    "singles": "singles_event_ensemble",
+    "doubles": "doubles_stroke_window",
+}
+# The plain checkpoints' names, used when no upgrade is installed.
+BASE_METHODS = {
+    "singles": "learned singles event model v3",
+    "doubles": "learned doubles event model v5",
+}
+METHOD = "learned singles event model v4 (family ensemble)"
+METHODS = {
+    "singles": METHOD,
+    "doubles": "learned doubles event model v6 (four-player stroke window)",
+}
+TORCHSCRIPT_OUTPUTS = ("hit", "hitter", "family", "side", "serve")
 # Limits for drop_implausible: seconds, and a share of the frame height.
 REPEAT_S = 0.5
 RALLY_GAP_S = 2.0
@@ -60,20 +86,106 @@ def checkpoint_path(mode="singles"):
     return WEIGHTS / CHECKPOINTS[mode]
 
 
+def upgrade_path(mode="singles"):
+    return WEIGHTS / UPGRADES[mode]
+
+
+def upgrade_entry(mode):
+    """The upgrade's model manifest entry, or None when none is registered."""
+    manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
+    return manifest.get(MANIFEST_KEYS[mode])
+
+
+def _sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def upgrade(mode):
+    """The installed upgrade's path for a mode, or None.
+
+    A registered upgrade whose file differs from the manifest is an error, not
+    a silent fall back to the plain checkpoint.
+    """
+    if mode not in UPGRADES:
+        return None
+    path = upgrade_path(mode)
+    entry = upgrade_entry(mode)
+    if entry is None or not path.is_file():
+        return None
+    if _sha(path) != entry["sha256"]:
+        raise ValueError(f"{path.name} does not match the model manifest")
+    return path
+
+
+def model_files(mode="singles"):
+    """Every weights file the event stage loads for a mode, with its hash."""
+    if mode not in CHECKPOINTS:
+        return {}
+    extra = upgrade(mode)
+    paths = [] if extra is not None and mode == "singles" else [checkpoint_path(mode)]
+    paths += [extra] if extra is not None else []
+    return {p.name: _sha(p) for p in paths if p.is_file()}
+
+
 def checkpoint_sha256(mode="singles"):
+    """The main weights file's hash: the singles upgrade replaces events.pt."""
     if mode not in CHECKPOINTS:
         return None
-    path = checkpoint_path(mode)
-    return hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+    path = upgrade(mode) if mode == "singles" else None
+    path = path or checkpoint_path(mode)
+    return _sha(path) if path.is_file() else None
 
 
 def available(video):
     mode = video.get("mode")
-    return mode in CHECKPOINTS and checkpoint_path(mode).is_file()
+    return mode in CHECKPOINTS and (
+        checkpoint_path(mode).is_file() or (mode == "singles" and upgrade(mode))
+    )
 
 
 def method(video):
-    return METHODS[video.get("mode")]
+    mode = video.get("mode")
+    return METHODS[mode] if upgrade(mode) else BASE_METHODS[mode]
+
+
+class _Named:
+    """Name a TorchScript model's tuple of outputs like EventModel's dict."""
+
+    def __init__(self, network):
+        self.network = network
+
+    def __call__(self, x):
+        return dict(zip(TORCHSCRIPT_OUTPUTS, self.network(x)))
+
+
+def load_models(mode, device):
+    """(model, threshold, families, serve_types, window) for one mode.
+
+    window is the doubles stroke window network, or None.
+    """
+    import torch
+
+    from .event_network import from_checkpoint
+
+    extra = upgrade(mode)
+    if mode == "singles" and extra is not None:
+        entry = upgrade_entry(mode)
+        network = torch.jit.load(str(extra), map_location=device).eval()
+        families = tuple(entry["family_order"])
+        return _Named(network), float(entry["threshold"]), families, True, None
+    saved = torch.load(checkpoint_path(mode), map_location="cpu", weights_only=True)
+    # A checkpoint names the stroke classes it was trained with.
+    families = tuple(saved.get("families", FAMILIES[:8]))
+    model = from_checkpoint(saved).to(device).eval()
+    # Checkpoints trained before serve types existed lack that output.
+    serve_types = "heads.serve.weight" in saved["state"]
+    model.load_state_dict(saved["state"], strict=serve_types)
+    window = None
+    if mode == "doubles" and extra is not None:
+        from . import stroke_window
+
+        window = stroke_window.load(extra, len(families), device)
+    return model, float(saved["threshold"]), families, serve_types, window
 
 
 def _player_vector(person, width, height):
@@ -257,11 +369,70 @@ def view_scenes(player_run, cuts=()):
     return scenes
 
 
+def infer_view(
+    model,
+    window,
+    values,
+    valid,
+    threshold,
+    doubles,
+    width,
+    height,
+    device,
+    segment=None,
+):
+    """Run the event model (and stroke window) on one view at the trained rate.
+
+    values: observations without motion; valid: court calibration per step;
+    segment: camera segment per step (a view has none inside it, so zeros).
+    Returns hit probability, softmax scores per head, the contact steps and
+    each one's hitter slot.
+    """
+    import torch
+
+    inputs = with_motion(values)
+    slots = (values.shape[1] - 3) // PLAYER
+    with torch.inference_mode():
+        out = model(torch.from_numpy(inputs)[None].to(device))
+    hit = torch.sigmoid(out["hit"][0, :, 0]).cpu().numpy()
+    scores = {
+        name: torch.softmax(out[name][0].float(), -1).cpu().numpy()
+        for name in ("hitter", "family", "side", "serve")
+    }
+    steps = _peaks(hit, threshold)
+    per_end = slots // len(COURT_ENDS)
+    chosen_slots = []
+    for step in steps:
+        # Slots are ordered far then near; doubles has two per end.
+        slot = int(scores["hitter"][step].argmax())
+        if doubles:
+            from .event_doubles import choose_partner
+
+            # The network names the end; the partner comes from a rule.
+            by_end = scores["hitter"][step].reshape(-1, per_end).sum(-1)
+            end = int(by_end.argmax())
+            chosen = choose_partner(values, step, COURT_ENDS[end], width, height)
+            slot = end * per_end if chosen is None else chosen
+        chosen_slots.append(slot)
+    if window is not None and steps:
+        from . import stroke_window
+
+        segment = np.zeros(len(inputs), int) if segment is None else segment
+        valid = np.asarray(valid, bool)
+        blended = stroke_window.blend(
+            window,
+            out["family"][0, steps].float().cpu().numpy(),
+            stroke_window.windows(inputs, steps, chosen_slots, segment, valid),
+            valid[steps],
+            device,
+        )
+        scores["family"][steps] = torch.softmax(torch.from_numpy(blended), -1).numpy()
+    return hit, scores, steps, chosen_slots
+
+
 def predict_events(video, player_run, shuttle_run):
     """Suggest contacts for one processed window. Returns a list of dicts."""
     import torch
-
-    from .event_network import from_checkpoint
 
     player_rows, shuttle_rows = player_run["frames"], shuttle_run["frames"]
     if [r["frame"] for r in player_rows] != [r["frame"] for r in shuttle_rows]:
@@ -269,16 +440,9 @@ def predict_events(video, player_run, shuttle_run):
     mode = video.get("mode")
     doubles = mode == "doubles"
     if doubles:
-        from .event_doubles import choose_partner, doubles_observations
-    saved = torch.load(checkpoint_path(mode), map_location="cpu", weights_only=True)
+        from .event_doubles import doubles_observations
     device = "cuda:0" if torch.cuda.is_available() else "cpu"
-    # A checkpoint names the stroke classes it was trained with.
-    families = tuple(saved.get("families", FAMILIES[:8]))
-    model = from_checkpoint(saved).to(device).eval()
-    # Checkpoints trained before serve types existed lack that output.
-    serve_types = "heads.serve.weight" in saved["state"]
-    model.load_state_dict(saved["state"], strict=serve_types)
-    threshold = float(saved["threshold"])
+    model, threshold, families, serve_types, window = load_models(mode, device)
     cuts = run_cuts(player_run, shuttle_run)
     skipped = {
         s["start_frame"]
@@ -305,27 +469,16 @@ def predict_events(video, player_run, shuttle_run):
                 values, nearest = resample(values, [r["time_s"] for r in rows])
             else:
                 nearest = np.arange(len(rows))
-            with torch.inference_mode():
-                out = model(torch.from_numpy(with_motion(values))[None].to(device))
-            hit = torch.sigmoid(out["hit"][0, :, 0]).cpu().numpy()
-            scores = {
-                name: torch.softmax(out[name][0].float(), -1).cpu().numpy()
-                for name in ("hitter", "family", "side", "serve")
-            }
-            for step in _peaks(hit, threshold):
+            valid = np.array(
+                [bool(rows[int(i)].get("calibration_valid")) for i in nearest]
+            )
+            hit, scores, steps, chosen_slots = infer_view(
+                model, window, values, valid, threshold, doubles, width, height, device
+            )
+            per_end = slots // len(COURT_ENDS)
+            for step, slot in zip(steps, chosen_slots):
                 row = rows[int(nearest[step])]
-                # Slots are ordered far then near; doubles has two per end.
-                slot = int(scores["hitter"][step].argmax())
-                per_end = slots // len(COURT_ENDS)
                 end = slot // per_end
-                if doubles:
-                    # The network names the end; the partner comes from a rule.
-                    by_end = scores["hitter"][step].reshape(-1, per_end).sum(-1)
-                    end = int(by_end.argmax())
-                    chosen = choose_partner(
-                        values, step, COURT_ENDS[end], width, height
-                    )
-                    slot = end * per_end if chosen is None else chosen
                 family = int(scores["family"][step].argmax())
                 side = int(scores["side"][step].argmax())
                 serve = int(scores["serve"][step].argmax())
@@ -370,7 +523,7 @@ def predict_events(video, player_run, shuttle_run):
                     }
                 )
     finally:
-        del model
+        del model, window
         if device.startswith("cuda"):
             torch.cuda.empty_cache()
     # Resampling can map two steps onto one source frame; keep the stronger.
