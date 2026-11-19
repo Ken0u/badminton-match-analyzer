@@ -279,3 +279,42 @@ def test_analyse_places_the_landing_and_can_fit_every_shot():
     assert all(abs(v - t) < 0.15 * t for v, t in zip(speeds, truths, strict=True))
     (plain,) = R.analyse(line, flight=False)
     assert "placement" not in plain["landing"] and "shot_flights" not in plain
+
+
+def test_reception_penalty_respects_posts_and_duration():
+    cam = broadcast_camera()
+    at = np.array([0, 0.04, 0.08])
+    for x, sign, duration, penalized in (
+        (3, 1, 0.08, True),
+        (3, -1, 0.08, True),
+        (6.3, 1, 0.08, False),
+        (3, 1, 0.005, False),
+    ):
+        state = np.array([[x, F.NET_Y - sign * 0.2, 1.1, 0, sign * 12, 0]])
+        obs = cam.project(F.positions_at(state, at)[0])[0]
+        result = F._residuals(
+            state, cam, at, obs, None, np.ones(3), reception=((x, 6.5), duration)
+        )
+        assert (result[0, -1] < 0) == penalized
+
+
+def test_early_speed_uses_drag_and_timestamps_not_constant_pixel_speed():
+    camera = broadcast_camera()
+    true = np.array([1.8, 9.0, 2.3, 14.0, -18.0, 4.0])
+    at = np.array([0.0, 0.028, 0.056, 0.093, 0.127, 0.155])
+    _, obs = observe(camera, true, at)
+    seed = true.copy()
+    seed[3:] /= 1.12
+    # A small systematic image offset cancels in the displacements.
+    estimate = F.early_track_speed(
+        camera, seed, at, obs + np.array([0.001, -0.001]), np.ones(len(at), bool)
+    )
+    assert abs(estimate - np.linalg.norm(true[3:]) * 3.6) < 1.0
+    valid = np.ones(len(at), bool)
+    valid[0] = False
+    assert F.early_track_speed(camera, seed, at, obs, valid) is None
+    # No real displacement in a track that otherwise looks dense.
+    assert (
+        F.early_track_speed(camera, seed, at, obs * 0 + 0.5, np.ones(len(at), bool))
+        is None
+    )

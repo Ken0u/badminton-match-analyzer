@@ -92,9 +92,11 @@ PERSONS_NOTE = (
 
 # A shot's fitted flight is "poor_fit" when its image residual (inliers, image
 # heights) is above FLIGHT_RMS_MAX or fewer than FLIGHT_INLIERS_MIN points
-# agree with it, and "speed_bound" when its initial speed reached the fit's
-# bound (shuttle_flight.MAX_SPEED_M_S, 450 km/h): at 30 frames per second
-# the first frames after a hard hit do not fix the speed at the racket.
+# agree with it, or (continuing shots) its centre passes more than 10 cm below
+# the net tape ("below_net"). It is "speed_bound" when its initial speed
+# reached the fit's bound (shuttle_flight.MAX_SPEED_M_S, 450 km/h), now or
+# before the receiver prior pulled it down ("launch_bound"): at 30 frames per
+# second the first frames after a hard hit do not fix the speed at the racket.
 FLIGHT_RMS_MAX = 0.01
 FLIGHT_INLIERS_MIN = 5
 FLIGHT_SPEED_BOUND_KMH = 440.0
@@ -284,12 +286,25 @@ class ShotFlight(StrictModel):
 
     # Speed leaving the racket, km/h (as fitted; see quality).
     initial_speed_kmh: float = _finite(ge=0)
+    # Diagnostics only (None on older fits), never used to hide or replace a
+    # speed: whether the first ~0.16 s of track alone fix the launch speed
+    # under a strict local test, and that local estimate when they do.
+    launch_supported: bool | None = None
+    early_speed_kmh: float | None = _finite(default=None, ge=0)
     # Speed 0.1 s after the contact, km/h: well fixed even for hard hits, but
     # drag caps it near 120 km/h, so it does not separate the fastest shots.
     speed_settled_kmh: float | None = _finite(default=None, ge=0)
+    # Diagnostic: whether inlier frames bracket 0.1 s (None on older fits).
+    settled_supported: bool | None = None
     # Highest point of the fitted flight above the floor, metres.
     apex_m: float | None = _finite(default=None)
     quality: Literal["good", "poor_fit", "speed_bound"]
+    # Fitted centre height at the net crossing minus the tape (1.53 m), only
+    # for a continuing, opposed, same-camera exchange; "below_net" (more than
+    # 10 cm low) makes the fit poor_fit. Legacy fits and uncheckable crossings
+    # are None (unassessed, not clear). The raw apex/speeds are retained.
+    net_check: Literal["clear", "near_tape", "below_net"] | None = None
+    net_clearance_m: float | None = _finite(default=None)
     # Fit diagnostics: residual of the inliers (image heights), points fitted
     # and points within 3 residual scales, seconds of track observed.
     rms: float = _finite(ge=0)
@@ -1218,15 +1233,24 @@ def flight_from_summary(summary):
         return None
     speed = float(summary["initial_speed_kmh"])
     rms, inliers = float(summary["rms"]), int(summary["inliers"])
-    if rms > FLIGHT_RMS_MAX or inliers < FLIGHT_INLIERS_MIN:
+    if (
+        summary.get("net_check") == "below_net"
+        or rms > FLIGHT_RMS_MAX
+        or inliers < FLIGHT_INLIERS_MIN
+    ):
         quality = "poor_fit"
-    elif speed >= FLIGHT_SPEED_BOUND_KMH:
+    elif summary.get("launch_bound") or speed >= FLIGHT_SPEED_BOUND_KMH:
         quality = "speed_bound"
     else:
         quality = "good"
     return ShotFlight(
+        net_check=summary.get("net_check"),
+        net_clearance_m=summary.get("net_clearance_m"),
         initial_speed_kmh=round(speed, 1),
+        launch_supported=summary.get("launch_supported"),
+        early_speed_kmh=summary.get("early_speed_kmh"),
         speed_settled_kmh=summary.get("speed_settled_kmh"),
+        settled_supported=summary.get("settled_supported"),
         apex_m=summary.get("apex_m"),
         quality=quality,
         rms=round(rms, 5),

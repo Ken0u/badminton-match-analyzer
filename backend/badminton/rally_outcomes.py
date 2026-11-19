@@ -489,6 +489,70 @@ def contact_turn(times, shuttle, after, aspect):
     return best
 
 
+def _impact_clock(times, shuttle, turn, aspect, lo, hi):
+    """Resolve a between-frame turn only when both image tracks support it.
+
+    Test either side of the discrete turn. The incoming track is locally
+    linear; the outgoing extrapolation includes curvature (rapid drag).
+    Agreement must be localized in time, not just a small pixel residual.
+    Never create a synthetic detection at the estimated impact.
+    """
+    plausible = []
+    for left in (turn - 1, turn):
+        if left - 2 < lo or left + 4 >= hi:
+            continue
+        pts = shuttle[left - 2 : left + 5]
+        if any(p is None for p in pts):
+            continue
+        t = np.asarray(times[left - 2 : left + 5]) - times[left]
+        dt = np.diff(t)
+        if not np.all((dt > 0) & (dt <= 0.05)) or max(dt) > 2 * min(dt):
+            continue
+        xy = np.asarray(pts) * [aspect, 1]
+        inbound = (xy[2] - xy[0]) / (t[2] - t[0])
+        if np.linalg.norm(xy[0] + inbound * (t[1] - t[0]) - xy[1]) > 0.004:
+            continue
+        v = (xy[4] - xy[3]) / dt[3]
+        w = (xy[5] - xy[4]) / dt[4]
+        # Over four early samples approximate projected displacement with a
+        # rational curve: successive secant speeds fall as drag acts. Unlike
+        # a quadratic, its tangent does not turn back under deceleration.
+        vv = v @ v
+        if vv == 0:
+            continue
+        ratio = (w @ v) / vv
+        if not 0.4 <= ratio <= 1.15:
+            continue
+        bend = (1 / ratio - 1) / (t[5] - t[3])
+
+        def outgoing(q):
+            return xy[3] + v * (q - t[3]) * (1 + bend * dt[3]) / (1 + bend * (q - t[3]))
+
+        # Reject a mixed incoming/outgoing triple, a spurious corner, or
+        # extrapolation near a pole. The fourth point was not used to fit.
+        if (
+            1 - bend * dt[2] < 0.45
+            or np.linalg.norm(outgoing(t[6]) - xy[6]) > 0.006
+            or np.dot(inbound, v)
+            > math.cos(math.radians(TURN_MIN_DEG))
+            * np.linalg.norm(inbound)
+            * np.linalg.norm(v)
+        ):
+            continue
+        q = np.linspace(0, t[3], 41)[:, None]
+        incoming = xy[2] + q * inbound
+        predicted = outgoing(q)
+        error = np.linalg.norm(incoming - predicted, axis=1)
+        plausible.extend(
+            (e, times[left] + delta) for e, delta in zip(error, q[:, 0]) if e <= 0.004
+        )
+    if not plausible:
+        return None
+    best_error, best = min(plausible)
+    support = [t for e, t in plausible if e <= best_error + 0.002]
+    return float(best) if max(support) - min(support) <= 0.010 else None
+
+
 def shot_flight(
     times,
     shuttle,
@@ -500,6 +564,8 @@ def shot_flight(
     people=None,
     end_index=None,
     grounded=False,
+    receiver_end=None,
+    segments=None,
 ):
     """3D flight of the shot played at index ``after`` (see shuttle_flight).
 
@@ -517,25 +583,73 @@ def shot_flight(
     camera = camera_for(matrix, aspect)
     if camera is None:
         return None
-    start = contact_turn(times, shuttle, after, aspect)
-    if start >= until:
+
+    # Restrict timing evidence to this continuous, calibrated camera view.
+    def same_view(i):
+        if segments is not None and segments[i] != segments[after]:
+            return False
+        other = homography(i)
+        return matrix is other or np.array_equal(matrix, other)
+
+    lo = after
+    while lo > max(0, after - 7) and same_view(lo - 1):
+        lo -= 1
+    original_until = until
+    limit = min(
+        until, len(times), end_index + 1 if end_index is not None else len(times)
+    )
+    until = next((i for i in range(after + 1, limit) if not same_view(i)), limit)
+    if until < limit:
+        grounded = False  # the originally observed landing was across the cut
+    if until <= after:
         return None
+    hi = min(until, after + 9)
+    start = lo + contact_turn(times[lo:hi], shuttle[lo:hi], after - lo, aspect)
+    clock = _impact_clock(times, shuttle, start, aspect, lo, hi)
     points = flight(times, shuttle, start, until, aspect)
     if shuttle[start] is not None:
         points = [start, *points]
-    if end_index is not None:
-        points = [i for i in points if i <= end_index]
     if len(points) < FLIGHT_POINTS_MIN:
         return None
-    at = [times[i] - times[start] for i in points]
+    if clock is not None:
+        outgoing = [i for i in points if times[i] >= clock]
+        if len(outgoing) >= FLIGHT_POINTS_MIN:
+            points = outgoing
+        else:
+            clock = None
+    origin = times[start] if clock is None else clock
+    at = [times[i] - origin for i in points]
     observed = [shuttle[i] for i in points]
     feet = hitter_position(people, after, hitter_end, observed[0], camera)
     towards = {"far": 1, "near": -1}.get(hitter_end)
+    reception = None
+    if (
+        receiver_end in ENDS
+        and until == original_until
+        and until < len(times)
+        and same_view(until)
+        and shuttle[until] is not None
+    ):
+        receiver = hitter_position(people, until, receiver_end, shuttle[until], camera)
+        if receiver is not None:
+            reception = (receiver, times[until] - origin)
     fit = shuttle_flight.fit_flight(
-        camera, at, observed, feet, towards, grounded=grounded
+        camera,
+        at,
+        observed,
+        feet,
+        towards,
+        grounded=grounded,
+        resolved_clock=clock is not None,
+        **({"reception": reception} if reception else {}),
     )
     if fit is None:
         return None
+    fit["time_origin_s"] = origin
+    fit["continuous_until"] = until
+    if clock is None:
+        fit["early_speed_kmh"] = None
+        fit["launch_supported"] = False
     fit["start_index"] = start
     fit["hitter"] = None if feet is None else [float(v) for v in feet]
     down = fit["touchdown"]
@@ -1003,10 +1117,21 @@ def flight_summary(fit):
         return None if value is None else round(float(value), digits)
 
     return {
+        **{
+            k: fit[k]
+            for k in ("launch_bound", "settled_supported", "launch_supported")
+            if k in fit
+        },
         "initial_speed_kmh": r(fit["initial_speed_kmh"], 1),
         "speed_settled_kmh": r(fit.get("speed_settled_kmh"), 1),
+        **(
+            {"early_speed_kmh": r(fit["early_speed_kmh"], 1)}
+            if "early_speed_kmh" in fit
+            else {}
+        ),
         "start": [r(v, 3) for v in fit["start"]],
         "start_frame": fit.get("start_index"),
+        **({"time_origin_s": fit["time_origin_s"]} if "time_origin_s" in fit else {}),
         "apex_m": r(fit.get("apex_m"), 2),
         "landing": None
         if fit.get("landing") is None
@@ -1057,6 +1182,25 @@ def shot_flights(line, group, limit, last=None):
             (f for f in range(frame + 1, until) if line["segments"][f] != segment),
             until,
         )
+        receiver_end = None
+        if (
+            n + 1 < len(group["shots"])
+            and until < count
+            and line.get("view_at") is not None
+        ):
+            nxt = contacts[group["shots"][n + 1]]
+            if (
+                until == nxt["frame"]
+                and contact["court_end"] in ENDS
+                and nxt["court_end"] == other(contact["court_end"])
+                and all(v == segment for v in line["segments"][frame : until + 1])
+                and line["view_at"][frame] is not None
+                and all(
+                    v == line["view_at"][frame]
+                    for v in line["view_at"][frame : until + 1]
+                )
+            ):
+                receiver_end = nxt["court_end"]
         fit = shot_flight(
             times,
             line["shuttle"],
@@ -1066,8 +1210,26 @@ def shot_flights(line, group, limit, last=None):
             lambda i: _homography(line, i),
             contact["court_end"],
             _people(line),
+            segments=line["segments"],
+            **({"receiver_end": receiver_end} if receiver_end else {}),
         )
-        out.append(flight_summary(fit))
+        summary = flight_summary(fit)
+        if fit is not None and n + 1 < len(group["shots"]):
+            receiver = contacts[group["shots"][n + 1]]
+            if (
+                until == receiver["frame"]
+                and fit.get("continuous_until", until) == until
+                and segment == line["segments"][until]
+                and contact["court_end"] in ENDS
+                and receiver["court_end"] == other(contact["court_end"])
+            ):
+                check = shuttle_flight.continuing_net_check(
+                    fit["start"] + fit["velocity"],
+                    times[until] - fit.get("time_origin_s", times[fit["start_index"]]),
+                )
+                if check is not None:
+                    summary.update(check)
+        out.append(summary)
     return out
 
 
@@ -1129,6 +1291,7 @@ def analyse(line, model=None, flight=True, speeds=False, progress=None):
                 _people(line),
                 None if landing["kind"] == "track_end" else landing["index"],
                 landing["kind"] in GROUNDED_KINDS,
+                segments=line["segments"],
             )
             landing = placed_landing(
                 landing, fit, lambda i: _homography(line, i), line["aspect"]
