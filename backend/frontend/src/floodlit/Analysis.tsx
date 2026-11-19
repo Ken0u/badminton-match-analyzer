@@ -664,7 +664,7 @@ function speeds({ data, held, stats }: Ctx) {
           const p10 = s.p10 ?? s.median ?? 0,
             p90 = s.p90 ?? s.median ?? 0,
             median = s.median ?? 0;
-          const uncertain = v.speed_bound + v.good - s.n;
+          const tooFast = v.speed_bound;
           return (
             <li key={k}>
               <span className="sp-l">{labelText(k)}</span>
@@ -687,9 +687,7 @@ function speeds({ data, held, stats }: Ctx) {
               </span>
               <span className="sp-n">
                 {s.n} estimated
-                {uncertain > 0
-                  ? `, ${uncertain} with uncertain launch speed`
-                  : ""}
+                {tooFast > 0 ? `, ${tooFast} too fast to measure` : ""}
               </span>
             </li>
           );

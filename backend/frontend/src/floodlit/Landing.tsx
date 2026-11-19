@@ -101,9 +101,9 @@ export function Landing() {
         of: ` of ${total} shots`,
         stroke: `${who}, ${label.toLowerCase()}${
           speed?.kmh
-            ? `, ${speed.kmh} km/h${speed.settled ? " est. at +0.1 s" : ""}`
+            ? `, ${speed.kmh} km/h`
             : speed?.bound
-              ? ", launch speed uncertain"
+              ? ", too fast to measure"
               : ""
         }`,
       });

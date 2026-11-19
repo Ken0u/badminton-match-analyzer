@@ -272,18 +272,16 @@ export function Watch({
       cell.className = "hud-cell hud-speed";
       if (sp?.kmh) {
         const end = sp.kmh;
-        H.speedNote.textContent = sp.settled
-          ? "estimated at +0.1 s; launch speed uncertain"
-          : "estimated leaving the racket";
+        H.speedNote.textContent = "estimated leaving the racket";
         H.gauge.style.width = `${Math.min(end / GAUGE_MAX, 1) * 100}%`;
         H.speed.innerHTML = `${end}<small> km/h</small>`;
         void cell.offsetWidth;
         cell.classList.add("fresh");
       } else if (sp?.bound) {
-        cell.classList.add("dim");
-        H.speed.textContent = "Uncertain";
-        H.speedNote.textContent = "The track does not resolve launch speed.";
-        H.gauge.style.width = "0";
+        // Too fast for this video's frame rate: the gauge pegs, no number.
+        H.speed.textContent = "Too fast";
+        H.speedNote.textContent = "faster than this video can measure";
+        H.gauge.style.width = "100%";
         void cell.offsetWidth;
         cell.classList.add("fresh");
       } else {
