@@ -1204,7 +1204,7 @@ export function createHero(container, match, { still = false, phone = false, onS
     const label = labelText(f.label);
     if (sp && !still && !quiet && !study) {
       labels.forEach((L) => (L.age = Math.max(L.age, 1.45))); // one speed in the air at a time
-      const s = labelSprite(sp.bound ? 'Speed uncertain' : `${sp.kmh} km/h`, sp.settled ? 'est. at +0.1 s' : label.toLowerCase(), sp.bound ? '#ffe6b0' : '#ffffff');
+      const s = labelSprite(sp.bound ? 'Too fast' : `${sp.kmh} km/h`, label.toLowerCase(), sp.bound ? '#ffe6b0' : '#ffffff');
       if (phone) s.scale.multiplyScalar(1.35);
       s.position.copy(f.from).add(new THREE.Vector3(0, 0.9, 0));
       scene.add(s); labels.push({ s, age: 0, y: s.position.y });

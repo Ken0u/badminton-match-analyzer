@@ -78,20 +78,16 @@ test("names fall back to the id and clash to full names", () => {
   assert.equal(teamName(named, "T1"), "Ann Lee & Ann Park");
 });
 
-test("speeds: measured, settled estimate, uncertain or none", () => {
+test("speeds: fitted launch speed, too fast, or none", () => {
   const flight = (f) => ({
     flight: { quality: "good", initial_speed_kmh: 151.4, ...f },
   });
   assert.deepEqual(speedOf(flight({})), { kmh: 151 });
+  // Launch-support diagnostics never hide or replace the fitted speed.
   assert.deepEqual(
     speedOf(flight({ launch_supported: true, early_speed_kmh: 140.6 })),
-    {
-      kmh: 141,
-    },
+    { kmh: 151 },
   );
-  assert.deepEqual(speedOf(flight({ launch_supported: false })), {
-    bound: true,
-  });
   assert.deepEqual(
     speedOf(
       flight({
@@ -100,11 +96,12 @@ test("speeds: measured, settled estimate, uncertain or none", () => {
         speed_settled_kmh: 99.6,
       }),
     ),
-    { kmh: 100, settled: true },
+    { kmh: 151 },
   );
-  assert.deepEqual(speedOf(flight({ quality: "speed_bound" })), {
-    bound: true,
-  });
+  assert.deepEqual(
+    speedOf(flight({ quality: "speed_bound", settled_supported: true })),
+    { bound: true },
+  );
   assert.equal(speedOf(flight({ quality: "poor_fit" })), null);
   assert.equal(speedOf({ flight: null }), null);
   assert.equal(

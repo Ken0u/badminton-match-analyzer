@@ -18,12 +18,7 @@ export type MatchState = MatchStatus["state"];
 export type MatchPlayers = Schemas["MatchPlayers"];
 export type MatchSummary = Schemas["MatchSummary"];
 export type Mode = MatchStatus["mode"];
-/** Flight fields a newer document may carry; all optional. */
-export type Flight = Schemas["ShotFlight"] & {
-  launch_supported?: boolean | null;
-  early_speed_kmh?: number | null;
-  settled_supported?: boolean | null;
-};
+export type Flight = Schemas["ShotFlight"];
 export type Matrix = number[][];
 export type View = CourtView & { inverse: Matrix };
 export interface Point {
@@ -128,25 +123,19 @@ export function shotLabel(shot: Pick<Shot, "kind" | "serve_type" | "family">) {
 }
 export interface Speed {
   kmh?: number;
-  settled?: boolean;
   bound?: boolean;
 }
-/** The speed to show for a shot: measured, settled estimate, uncertain, or none. */
+/** The speed to show for a shot: the fitted launch speed of a good fit,
+ * "too fast to measure" at the fit's speed bound, else none. The flight's
+ * launch-support diagnostics never hide or replace the number. */
 export function speedOf(
   shot?: { flight?: Flight | null } | null,
 ): Speed | null {
   const f = shot?.flight;
   if (!f) return null;
-  if (f.quality === "good" && f.launch_supported !== false) {
-    const speed =
-      f.launch_supported === true ? f.early_speed_kmh : f.initial_speed_kmh;
-    if (Number.isFinite(speed)) return { kmh: Math.round(speed as number) };
-  }
-  if (f.quality === "speed_bound" || f.quality === "good") {
-    if (f.settled_supported === true && Number.isFinite(f.speed_settled_kmh))
-      return { kmh: Math.round(f.speed_settled_kmh as number), settled: true };
-    return { bound: true };
-  }
+  if (f.quality === "good" && Number.isFinite(f.initial_speed_kmh))
+    return { kmh: Math.round(f.initial_speed_kmh) };
+  if (f.quality === "speed_bound") return { bound: true };
   return null;
 }
 export function outcomeText(rally: Pick<Rally, "outcome">) {
