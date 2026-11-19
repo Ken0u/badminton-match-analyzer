@@ -117,9 +117,16 @@
       "Body_create_match_api_matches_post": {
         "properties": {
           "file": {
-            "contentMediaType": "application/octet-stream",
-            "title": "File",
-            "type": "string"
+            "anyOf": [
+              {
+                "contentMediaType": "application/octet-stream",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "File"
           },
           "mode": {
             "enum": [
@@ -142,10 +149,20 @@
             },
             "title": "Team2",
             "type": "array"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
           }
         },
         "required": [
-          "file",
           "mode",
           "team1",
           "team2"
@@ -1577,8 +1594,15 @@
             "type": "boolean"
           },
           "video_id": {
-            "title": "Video Id",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Video Id"
           }
         },
         "required": [
@@ -1759,6 +1783,17 @@
             "title": "Progress",
             "type": "number"
           },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
           "stage": {
             "title": "Stage",
             "type": "string"
@@ -1776,8 +1811,15 @@
             "type": "string"
           },
           "video_id": {
-            "title": "Video Id",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Video Id"
           },
           "warnings": {
             "items": {
@@ -4405,7 +4447,7 @@
         "summary": "List Matches"
       },
       "post": {
-        "description": "Upload a match with its players' names and start the one job.\n\nNames: singles one per team, doubles two per team (partners). The\nsame video uploaded again reuses the stored video and its finished\nprocessing stages.",
+        "description": "Start a match from an uploaded video or a YouTube link (exactly one)\nwith its players' names, and start the one job.\n\nNames: singles one per team, doubles two per team (partners). The\nsame video uploaded again reuses the stored video and its finished\nprocessing stages. A link is checked at once; the job downloads it\nfirst (stage \"Downloading the video\") unless a video from the same\nlink is already stored.",
         "operationId": "create_match_api_matches_post",
         "requestBody": {
           "content": {
@@ -4435,7 +4477,7 @@
             "description": "Video too large"
           },
           "422": {
-            "description": "Invalid video or names"
+            "description": "Invalid video, link or names"
           }
         },
         "summary": "Create Match"
@@ -4443,7 +4485,7 @@
     },
     "/api/matches/{match_id}": {
       "get": {
-        "description": "State, one overall progress value 0..1 and a stage label.",
+        "description": "State, one overall progress value 0..1 and a stage label. A link\nmatch's id answers with its video's match once downloaded.",
         "operationId": "match_status_api_matches__match_id__get",
         "parameters": [
           {
@@ -4815,7 +4857,7 @@
     },
     "/api/matches/{match_id}/resume": {
       "post": {
-        "description": "Run the match job again, reusing every finished stage.",
+        "description": "Run the match job again, reusing every finished stage. A link\nmatch whose download did not finish downloads again.",
         "operationId": "resume_match_api_matches__match_id__resume_post",
         "parameters": [
           {

@@ -80,11 +80,14 @@ export interface paths {
         put?: never;
         /**
          * Create Match
-         * @description Upload a match with its players' names and start the one job.
+         * @description Start a match from an uploaded video or a YouTube link (exactly one)
+         *     with its players' names, and start the one job.
          *
          *     Names: singles one per team, doubles two per team (partners). The
          *     same video uploaded again reuses the stored video and its finished
-         *     processing stages.
+         *     processing stages. A link is checked at once; the job downloads it
+         *     first (stage "Downloading the video") unless a video from the same
+         *     link is already stored.
          */
         post: operations["create_match_api_matches_post"];
         delete?: never;
@@ -102,7 +105,8 @@ export interface paths {
         };
         /**
          * Match Status
-         * @description State, one overall progress value 0..1 and a stage label.
+         * @description State, one overall progress value 0..1 and a stage label. A link
+         *     match's id answers with its video's match once downloaded.
          */
         get: operations["match_status_api_matches__match_id__get"];
         put?: never;
@@ -232,7 +236,8 @@ export interface paths {
         put?: never;
         /**
          * Resume Match
-         * @description Run the match job again, reusing every finished stage.
+         * @description Run the match job again, reusing every finished stage. A link
+         *     match whose download did not finish downloads again.
          */
         post: operations["resume_match_api_matches__match_id__resume_post"];
         delete?: never;
@@ -789,7 +794,7 @@ export interface components {
         /** Body_create_match_api_matches_post */
         Body_create_match_api_matches_post: {
             /** File */
-            file: string;
+            file?: string | null;
             /**
              * Mode
              * @enum {string}
@@ -799,6 +804,8 @@ export interface components {
             team1: string[];
             /** Team2 */
             team2: string[];
+            /** Url */
+            url?: string | null;
         };
         /** Body_upload_api_upload_post */
         Body_upload_api_upload_post: {
@@ -1328,7 +1335,7 @@ export interface components {
             /** Reused Video */
             reused_video: boolean;
             /** Video Id */
-            video_id: string;
+            video_id: string | null;
         };
         /** MatchPlayer */
         MatchPlayer: {
@@ -1389,6 +1396,8 @@ export interface components {
             names_confirmed: boolean;
             /** Progress */
             progress: number;
+            /** Source Url */
+            source_url?: string | null;
             /** Stage */
             stage: string;
             /**
@@ -1397,7 +1406,7 @@ export interface components {
              */
             state: "queued" | "running" | "needs_names" | "ready" | "failed" | "paused";
             /** Video Id */
-            video_id: string;
+            video_id: string | null;
             /** Warnings */
             warnings: string[];
         };
@@ -2381,7 +2390,7 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Invalid video or names */
+            /** @description Invalid video, link or names */
             422: {
                 headers: {
                     [name: string]: unknown;

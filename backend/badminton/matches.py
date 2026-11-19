@@ -6,6 +6,11 @@ runs full-match processing including the persons stage, and builds the
 MatchAnalysis document. After the job the match waits for the names to be
 confirmed (state ``needs_names``), then it is ``ready``.
 
+A match started from a YouTube link has no video id until the video is
+downloaded, which is the job's first stage. Until then it is kept under a link
+id (16 hex digits of the link's hash, see ``link_id``); after the download the
+match moves to the video id and the link record points there (``moved_to``).
+
 Per-video files, next to match_analysis.json in the data folder (local data,
 never inside the package, so no perception cache key changes):
 
@@ -16,6 +21,7 @@ Neither file edits pipeline artifacts, the persons document or annotations; the
 builder applies names and swaps when it writes the document.
 """
 
+import hashlib
 import json
 import threading
 import time
@@ -48,6 +54,9 @@ SETTINGS = {"player_model": "small", "auto_calibrate": True, "recognize": True}
 # One progress value for the whole job: ingest, processing, building.
 INGEST_SHARE = 0.03
 BUILD_SHARE = 0.02
+# A link match downloads first; the download takes this share of the job.
+DOWNLOAD_SHARE = 0.1
+DOWNLOADING = "Downloading the video"
 PREPARING = "Preparing the video"
 BUILDING = "Building the analysis"
 WAITING = "Waiting to start"
@@ -97,16 +106,21 @@ def lock():
 
 class MatchCreated(StrictModel):
     match_id: str
-    video_id: str
+    # None for a link match until its video is downloaded.
+    video_id: str | None
     job_id: str
     reused_video: bool
 
 
 class MatchStatus(StrictModel):
+    # A link match's id changes to the video id once the video is downloaded;
+    # asking with the old id answers with the new one.
     match_id: str
-    video_id: str
+    video_id: str | None
     mode: Literal["singles", "doubles"]
     name: str | None = None
+    # The YouTube link a link match was started from, else None.
+    source_url: str | None = None
     state: MatchState
     # The whole job, 0..1: ingest, every processing stage, and the build.
     progress: float = Field(ge=0, le=1)
@@ -220,17 +234,35 @@ def read_record(data, video_id):
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def resolve(data, match_id):
+    """The match's record, following a downloaded link match to its video."""
+    record = read_record(data, match_id)
+    if record is not None and record.get("moved_to"):
+        record = read_record(data, record["moved_to"])
+    return record
+
+
+def link_id(url):
+    """A link match's id until its video is downloaded: 16 hex digits like a
+    video id, from the canonical link, so the same link gets the same id."""
+    return hashlib.sha256(f"youtube:{url}".encode()).hexdigest()[:16]
+
+
 def write_record(data, record):
     record["updated_at"] = time.time()
     write_json(_path(data, record["video_id"], RECORD), record)
 
 
-def new_record(video_id, mode, entered, name):
+def new_record(video_id, mode, entered, name, source_url=None, link=False):
+    """``link``: a link match still waiting for its download (``video_id`` is
+    then the link id)."""
     return {
         "schema_version": 1,
         "video_id": video_id,
         "mode": mode,
         "name": name,
+        "source_url": source_url,
+        "link": link,
         "entered": entered,
         "confirmed": None,
         "job_id": None,
@@ -245,6 +277,28 @@ def read_overrides(data, video_id):
         return []
     document = json.loads(path.read_text(encoding="utf-8"))
     return [PersonSwap.model_validate(o) for o in document["overrides"]]
+
+
+def move_to_video(data, link, video):
+    """After a link match's download: the match carries on under the video id
+    (``video`` is the stored video document) and the link record points there.
+    Earlier jobs of the same video are kept with the link's."""
+    with _lock:
+        record = read_record(data, link)
+        previous = read_record(data, video["id"]) or {}
+        jobs = previous.get("jobs", [])
+        moved = {
+            **record,
+            "video_id": video["id"],
+            "name": video.get("name") or record.get("name"),
+            "link": False,
+            "link_id": link,
+            "jobs": [*jobs, *(j for j in record.get("jobs", []) if j not in jobs)],
+        }
+        write_record(data, moved)
+        record["moved_to"] = video["id"]
+        write_record(data, record)
+    return video["id"]
 
 
 def write_overrides(data, video_id, overrides):
@@ -368,11 +422,13 @@ def swap(store, video_id, rally_id, persons=None):
 # Status ---------------------------------------------------------------------
 
 
-def status(store, video_id):
+def status(store, match_id):
     """The match's state, one progress value and a stage label."""
-    record = read_record(store.data, video_id)
+    record = resolve(store.data, match_id)
     if record is None:
-        raise KeyError(video_id)
+        raise KeyError(match_id)
+    video_id = record["video_id"]
+    link = bool(record.get("link"))
     job = None
     if record.get("job_id"):
         try:
@@ -393,7 +449,8 @@ def status(store, video_id):
         state, progress = "running", job.get("progress") or 0.0
         # Before run_match sets its first label the job says "Processing".
         message = job.get("message")
-        stage = PREPARING if message in (None, "", "Processing") else message
+        first = DOWNLOADING if link else PREPARING
+        stage = first if message in (None, "", "Processing") else message
         stage = PAUSING if job.get("cancel_requested") else stage
     elif job["status"] == "interrupted":
         state, progress = "paused", job.get("progress") or 0.0
@@ -412,9 +469,10 @@ def status(store, video_id):
         )
     return MatchStatus(
         match_id=video_id,
-        video_id=video_id,
+        video_id=None if link else video_id,
         mode=record["mode"],
         name=record.get("name"),
+        source_url=record.get("source_url"),
         state=state,
         progress=round(min(1.0, max(0.0, progress)), 3),
         stage=stage,
@@ -459,6 +517,8 @@ def matches(store):
     found = []
     for path in store.data.glob(f"*/{RECORD}"):
         record = json.loads(path.read_text(encoding="utf-8"))
+        if record.get("moved_to"):
+            continue  # a downloaded link match, listed under its video
         found.append(
             MatchSummary(
                 match_id=record["video_id"],
@@ -505,11 +565,15 @@ class ProcessingProgress:
         return (self.before[index] + WEIGHTS[name] * part) / self.total, LABELS[name]
 
 
-def run_match(store, root, video_id, job, progress, *, ingest=None):
-    """The match job: ingest (when the video is new), processing, the build.
+def run_match(store, root, video_id, job, progress, *, ingest=None, fetch=None):
+    """The match job: download (a link match), ingest (when the video is new),
+    processing, the build.
 
     ``job`` is the caller's admitted analysis job document; its ``message``
-    carries the stage label and its ``details`` the processing key.
+    carries the stage label and its ``details`` the processing key. For a link
+    match ``video_id`` is the link id and ``fetch(downloading, preparing)``
+    downloads and stores the video, reporting each part's progress 0..1, and
+    returns the stored video document; the match then moves to its id.
     """
     from . import pipeline
 
@@ -520,7 +584,19 @@ def run_match(store, root, video_id, job, progress, *, ingest=None):
         last[0] = max(last[0], min(1.0, value))
         progress(last[0])
 
-    report(0, PREPARING)
+    start = DOWNLOAD_SHARE if fetch is not None else 0.0
+    if fetch is not None:
+        report(0, DOWNLOADING)
+        video = fetch(
+            lambda value: report(start * value, DOWNLOADING),
+            lambda value: report(start + INGEST_SHARE * value, PREPARING),
+        )
+        video_id = move_to_video(store.data, video_id, video)
+        # Processing checks that the job is this video's (report saves it).
+        job["video_id"] = video_id
+        report(start + INGEST_SHARE, PREPARING)
+    else:
+        report(0, PREPARING)
     if ingest is not None:
         ingest(lambda value: report(INGEST_SHARE * value, PREPARING))
     video = store.video(video_id)
@@ -530,11 +606,11 @@ def run_match(store, root, video_id, job, progress, *, ingest=None):
     key = pipeline.digest(pipeline.processing_recipe(video, times, snapshot, settings))
     job["details"] = {"analysis_key": key, "settings": settings, "match": True}
     weights = ProcessingProgress(len(pipeline.plan_windows(video, times)))
-    span = 1 - INGEST_SHARE - BUILD_SHARE
+    span = 1 - start - INGEST_SHARE - BUILD_SHARE
 
     def processing(value):
         fraction, label = weights(value)
-        report(INGEST_SHARE + span * fraction, label)
+        report(start + INGEST_SHARE + span * fraction, label)
 
     summary = pipeline.process_match(
         video,

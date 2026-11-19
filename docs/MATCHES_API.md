@@ -1,12 +1,17 @@
 # Matches API
 
-Upload a video with the player names, wait for one job, confirm the names,
-then read the `MatchAnalysis` document (`docs/MATCH_ANALYSIS_FORMAT.md`).
+Upload a video (or give a YouTube link) with the player names, wait for one
+job, confirm the names, then read the `MatchAnalysis` document
+(`docs/MATCH_ANALYSIS_FORMAT.md`).
 Code: `backend/badminton/matches.py` (record, names, swaps, job body) and the
 `/api/matches` routes in `backend/badminton/api.py`. Types for the frontend
 come from the generated contract in `backend/frontend/src/api/generated/`.
 
 The match id is the video id (the first 16 hex digits of the file's SHA-256).
+A match from a YouTube link has a link id (16 hex digits of the link's hash)
+until its video is downloaded; then it becomes the video's match, and every
+`/api/matches/{id}` route given the link id answers for the video's match
+(`match_id` in the status is then the video id; clients switch to it).
 
 ## Flow
 
@@ -20,7 +25,23 @@ The match id is the video id (the first 16 hex digits of the file's SHA-256).
      the names over. A video stored with the other mode gives `409`.
    - Only one job runs at a time across the app (shared Store admission):
      `409` while another runs.
-2. One job runs: ingest (new videos only), full-match processing
+   - Instead of `file`, send `url`: a public YouTube video link (`https`,
+     `youtube.com/watch?v=`, `youtu.be/`, `/shorts/` or `/live/`; no
+     playlist). Send exactly one of `file` and `url` (`422` for both or
+     neither). The link is checked at once (`422` with a plain message, no
+     job); the download itself runs inside the job as its first stage,
+     Downloading the video, with the downloader's progress. `video_id` is
+     `null` in the reply until then. If a video downloaded from the same link
+     is already stored, it is reused and nothing is downloaded
+     (`reused_video: true`, the match id is the video id at once). The link
+     is kept as `source_url` in `match.json` and as `source.url` in the
+     video's metadata.
+   - A download that fails (private, unavailable, live, too large, or the
+     downloader cannot read it) ends the job `failed` with the downloader's
+     message in `error`; resume downloads again. Pausing during the download
+     takes effect when the download has finished.
+2. One job runs: the download (link matches only), ingest (new videos only),
+   full-match processing
    (`pipeline.process_match`: camera cuts, automatic court detection, players,
    shuttle, contacts, rally proposals, strokes, actor linking, persons), then
    the `MatchAnalysis` build. Nothing needs a manual step; annotations are
@@ -31,9 +52,11 @@ The match id is the video id (the first 16 hex digits of the file's SHA-256).
    |---|---|
    | `state` | `queued`, `running`, `needs_names`, `ready`, `failed`, `paused` |
    | `progress` | the whole job, 0..1, weighted by typical stage time |
-   | `stage` | label: Preparing the video, Scanning the video, Finding players, Tracking the shuttle, Reading strokes, Recognising players, Building the analysis (and Waiting to start, Pausing, Paused, Confirm the player names, Done, Failed) |
+   | `stage` | label: Downloading the video (link matches), Preparing the video, Scanning the video, Finding players, Tracking the shuttle, Reading strokes, Recognising players, Building the analysis (and Waiting to start, Pausing, Paused, Confirm the player names, Done, Failed) |
    | `error` | why it failed or paused, else `null` |
    | `warnings` | the document's warnings, e.g. identity weights missing |
+   | `video_id` | the video id; `null` while a link match downloads |
+   | `source_url` | the YouTube link a link match came from, else `null` |
    | `names_confirmed`, `job_id`, `mode`, `name` | as named |
 
    Processing works in 60 s windows, so the label cycles Finding players,
@@ -73,7 +96,8 @@ by the builder on every rebuild, so they survive reprocessing. Allowed only in
 `POST /api/matches/{id}/pause` asks the running job to stop at its next check
 (`stage` shows Pausing, then `state` `paused`); finished stages are kept.
 `POST /api/matches/{id}/resume` starts the job again for a paused, failed or
-finished match and reuses every finished stage. The old
+finished match and reuses every finished stage (a link match whose download
+did not finish downloads again). The old
 `/api/videos/{id}/analysis/{job_id}` and `/pause` endpoints work on the same
 job, which is an ordinary `analysis` job.
 
@@ -88,5 +112,7 @@ carries a warning. After installing the weights, resume runs just that stage.
 
 Per video, in the data folder (never inside the package, so perception cache
 keys are unaffected): `match.json` (mode, entered names, confirmed names, job
-ids), `match_overrides.json` (swaps) and `match_analysis.json` (the document).
+ids, `source_url`), `match_overrides.json` (swaps) and `match_analysis.json`
+(the document). A link match waits in `<data>/<link id>/match.json`; after the
+download that record only points to the video (`moved_to`).
 The persons document and pipeline artifacts are never edited.

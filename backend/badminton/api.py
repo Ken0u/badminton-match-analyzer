@@ -431,8 +431,9 @@ def create_app(
 
     # Matches: upload plus names, one job, name confirmation (docs/MATCHES_API.md)
 
-    def match_job(video_id, ingest=None, record=None):
-        """Admit one analysis job running matches.run_match for this video."""
+    def match_job(video_id, ingest=None, record=None, fetch=None):
+        """Admit one analysis job running matches.run_match for this video
+        (for a link match, ``video_id`` is the link id and ``fetch`` set)."""
 
         def claimed(job):
             with match_flow.lock():
@@ -445,7 +446,7 @@ def create_app(
             "analysis",
             video_id,
             lambda job, progress: match_flow.run_match(
-                store, root, video_id, job, progress, ingest=ingest
+                store, root, video_id, job, progress, ingest=ingest, fetch=fetch
             ),
             {"match": True},
             with_job=True,
@@ -453,10 +454,70 @@ def create_app(
         )
 
     def match_record(match_id):
-        record = match_flow.read_record(data, match_id)
+        """The match's record; a downloaded link match's id gives its video's."""
+        record = match_flow.resolve(data, match_id)
         if record is None:
             raise HTTPException(404, "Unknown match")
         return record
+
+    def link_fetch(url, mode):
+        """The first stage of a link match: download, then store the video."""
+
+        def fetch(downloading, preparing):
+            from .media_import import download_youtube
+
+            path, provenance = download_youtube(
+                url, root / ".media", max_bytes=max_media_bytes, progress=downloading
+            )
+            return register_media(path, mode, preparing, provenance)
+
+        return fetch
+
+    def create_link_match(url, mode, entered):
+        """Start a match from a YouTube link: a video already downloaded from
+        the same link is reused, else the job downloads it first."""
+        from .media_import import canonical_youtube_url
+
+        try:
+            url = canonical_youtube_url(url)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        for existing in store.videos():
+            if (existing.get("source") or {}).get("url") != url:
+                continue
+            try:
+                resolve_source(existing, root)
+            except (ValueError, FileNotFoundError):
+                continue
+            if existing["mode"] != mode:
+                raise HTTPException(
+                    409, f"This video is already stored as a {existing['mode']} match"
+                )
+            video_id = existing["id"]
+            previous = match_flow.read_record(data, video_id) or {}
+            record = match_flow.new_record(
+                video_id, mode, entered, existing.get("name"), source_url=url
+            )
+            record["jobs"] = previous.get("jobs", [])
+            job = match_job(video_id, record=record)
+            return {
+                "match_id": video_id,
+                "video_id": video_id,
+                "job_id": job["id"],
+                "reused_video": True,
+            }
+        link = match_flow.link_id(url)
+        previous = match_flow.read_record(data, link) or {}
+        name = f"YouTube video {url.rsplit('=', 1)[1]}"
+        record = match_flow.new_record(link, mode, entered, name, url, link=True)
+        record["jobs"] = previous.get("jobs", [])
+        job = match_job(link, record=record, fetch=link_fetch(url, mode))
+        return {
+            "match_id": link,
+            "video_id": None,
+            "job_id": job["id"],
+            "reused_video": False,
+        }
 
     def require_results(match_id):
         state = match_flow.status(store, match_id).state
@@ -470,26 +531,45 @@ def create_app(
         responses={
             409: {"description": "Another job is running, or format mismatch"},
             413: {"description": "Video too large"},
-            422: {"description": "Invalid video or names"},
+            422: {"description": "Invalid video, link or names"},
         },
     )
     def create_match(
-        file: UploadFile = File(...),
         mode: Literal["singles", "doubles"] = Form(...),
         team1: list[str] = Form(...),
         team2: list[str] = Form(...),
+        file: UploadFile | None = File(None),
+        url: str | None = Form(None),
     ):
-        """Upload a match with its players' names and start the one job.
+        """Start a match from an uploaded video or a YouTube link (exactly one)
+        with its players' names, and start the one job.
 
         Names: singles one per team, doubles two per team (partners). The
         same video uploaded again reuses the stored video and its finished
-        processing stages.
+        processing stages. A link is checked at once; the job downloads it
+        first (stage "Downloading the video") unless a video from the same
+        link is already stored.
         """
         from .file_cache import file_digest
         from .media_import import MediaTooLargeError, save_upload
 
+        url = url.strip() if url and url.strip() else None
+        if file is not None and url is not None:
+            file.file.close()
+            raise HTTPException(
+                422, "Send either a video file or a YouTube link, not both"
+            )
+        if file is None and url is None:
+            raise HTTPException(422, "Choose a video file or paste a YouTube link")
         try:
             entered = match_flow.entered_names(mode, team1, team2)
+        except ValueError as exc:
+            if file is not None:
+                file.file.close()
+            raise HTTPException(422, str(exc)) from exc
+        if url is not None:
+            return create_link_match(url, mode, entered)
+        try:
             path = save_upload(
                 file.file,
                 file.filename or "",
@@ -558,7 +638,8 @@ def create_app(
         responses={404: {"description": "Unknown match"}},
     )
     def match_status(match_id: str):
-        """State, one overall progress value 0..1 and a stage label."""
+        """State, one overall progress value 0..1 and a stage label. A link
+        match's id answers with its video's match once downloaded."""
         match_record(match_id)
         return match_flow.status(store, match_id)
 
@@ -575,7 +656,7 @@ def create_app(
             store.request_cancel(record.get("job_id") or "")
         except (ConflictError, KeyError) as exc:
             raise HTTPException(409, "The match is not processing") from exc
-        return match_flow.status(store, match_id)
+        return match_flow.status(store, record["video_id"])
 
     @app.post(
         "/api/matches/{match_id}/resume",
@@ -584,10 +665,22 @@ def create_app(
         responses={409: {"description": "Already processing or video missing"}},
     )
     def resume_match(match_id: str):
-        """Run the match job again, reusing every finished stage."""
-        match_record(match_id)
+        """Run the match job again, reusing every finished stage. A link
+        match whose download did not finish downloads again."""
+        record = match_record(match_id)
+        match_id = record["video_id"]
         if match_flow.status(store, match_id).state in ("queued", "running"):
             raise HTTPException(409, "The match is already processing")
+        if record.get("link"):
+            job = match_job(
+                match_id, fetch=link_fetch(record["source_url"], record["mode"])
+            )
+            return {
+                "match_id": match_id,
+                "video_id": None,
+                "job_id": job["id"],
+                "reused_video": False,
+            }
         try:
             source(store.video(match_id))
         except KeyError as exc:
@@ -613,7 +706,7 @@ def create_app(
     def match_players(match_id: str):
         """Each person found, with team, the guessed or confirmed name and a
         picture."""
-        match_record(match_id)
+        match_id = match_record(match_id)["video_id"]
         try:
             return match_flow.players(store, match_id, thumbnail_url(match_id))
         except match_flow.NotReady as exc:
@@ -630,7 +723,7 @@ def create_app(
     def confirm_match_players(match_id: str, body: match_flow.NameConfirmation):
         """Confirm which entered name belongs to which person (swaps allowed;
         doubles partners stay on one team). Rebuilds the document."""
-        match_record(match_id)
+        match_id = match_record(match_id)["video_id"]
         require_results(match_id)
         try:
             match_flow.confirm_names(store, match_id, body.names)
@@ -646,7 +739,7 @@ def create_app(
         responses={404: {"description": "No picture of this person"}},
     )
     def match_player_thumbnail(match_id: str, person_id: str):
-        match_record(match_id)
+        match_id = match_record(match_id)["video_id"]
         document = read_match_analysis(data, match_id)
         person = next(
             (p for p in (document.players if document else []) if p.id == person_id),
@@ -660,7 +753,7 @@ def create_app(
         return FileResponse(path)
 
     def swap_response(match_id, rally_id, persons):
-        match_record(match_id)
+        match_id = match_record(match_id)["video_id"]
         require_results(match_id)
         try:
             applied, rally, document = match_flow.swap(
@@ -706,7 +799,7 @@ def create_app(
     )
     def match_document(match_id: str):
         """The MatchAnalysis document (same as /api/videos/{id}/match-analysis)."""
-        match_record(match_id)
+        match_id = match_record(match_id)["video_id"]
         document = read_match_analysis(data, match_id)
         if document is None:
             raise HTTPException(404, "Match analysis has not been built yet")
@@ -719,7 +812,7 @@ def create_app(
     )
     def match_clip_stats(match_id: str):
         """Clip statistics (same as /api/videos/{id}/match-stats)."""
-        match_record(match_id)
+        match_id = match_record(match_id)["video_id"]
         return stored_stats(match_id)
 
     @app.get("/api/videos/{video_id}/timestamps")
