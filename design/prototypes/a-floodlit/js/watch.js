@@ -1,6 +1,6 @@
 // Watch: the real video with an overlay drawn like court lines and light.
 import {
-  reducedMotion, asset, nameOf, firstName, teamOf, teamName, teamPlayers, sideNumber, shotLabel, labelText, speedOf, clock,
+  asset, nameOf, firstName, teamOf, teamName, teamPlayers, sideNumber, shotLabel, labelText, speedOf, clock,
   applyH, viewAt, positionAt, rallyEnd, rallyNumber, getState, setState, esc,
 } from './data.js';
 import { courtLines, courtSegments } from './court.js';
@@ -189,34 +189,23 @@ export function renderWatch(root, match, { toast }) {
   };
   H.gauge = $('h-gauge');
   let currentRallyId = null;
-  let shownShot = null, countRaf = 0;
+  let shownShot = null;
   const GAUGE_MAX = 300; // km/h at the right end of the little gauge
-  /** A new shot: the number counts up and the gauge fills; too-fast shots peg the gauge. */
+  /** A new shot: show the estimate immediately; only the gauge animates; too-fast shots peg the gauge. */
   function showSpeed(shot) {
     const sp = speedOf(shot);
-    cancelAnimationFrame(countRaf);
     const cell = H.speedCell;
     cell.className = 'hud-cell hud-speed';
     if (sp?.kmh) {
       const end = sp.kmh;
-      H.speedNote.textContent = sp.settled ? 'estimated at +0.1 s; launch speed uncertain' : 'estimated leaving the racket';
+      H.speedNote.textContent = 'estimated leaving the racket';
       H.gauge.style.width = `${Math.min(end / GAUGE_MAX, 1) * 100}%`;
-      if (reducedMotion() || video.paused) { H.speed.innerHTML = `${end}<small> km/h</small>`; }
-      else {
-        const t0 = performance.now();
-        const step = (now) => {
-          const k = Math.min((now - t0) / 420, 1);
-          H.speed.innerHTML = `${Math.round(end * (1 - Math.pow(1 - k, 3)))}<small> km/h</small>`;
-          if (k < 1) countRaf = requestAnimationFrame(step);
-        };
-        countRaf = requestAnimationFrame(step);
-      }
+      H.speed.innerHTML = `${end}<small> km/h</small>`;
       void cell.offsetWidth; cell.classList.add('fresh');
     } else if (sp?.bound) {
-      cell.classList.add('dim');
-      H.speed.textContent = 'Uncertain';
-      H.speedNote.textContent = 'The track does not resolve launch speed.';
-      H.gauge.style.width = '0';
+      H.speed.textContent = 'Too fast';
+      H.speedNote.textContent = 'faster than this video can measure';
+      H.gauge.style.width = '100%';
       void cell.offsetWidth; cell.classList.add('fresh');
     } else {
       cell.classList.add('dim');

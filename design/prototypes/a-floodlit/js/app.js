@@ -94,7 +94,7 @@ async function landing() {
         shotEl.textContent = index + 1;
         ofEl.textContent = ` of ${total} shots`;
         const who = shot.hitter_id ? firstName(match, shot.hitter_id) : 'Someone';
-        strokeEl.textContent = `${who}, ${label.toLowerCase()}${speed?.kmh ? `, ${speed.kmh} km/h${speed.settled ? " est. at +0.1 s" : ""}` : speed?.bound ? ', launch speed uncertain' : ''}`;
+        strokeEl.textContent = `${who}, ${label.toLowerCase()}${speed?.kmh ? `, ${speed.kmh} km/h` : speed?.bound ? ', too fast to measure' : ''}`;
       },
     });
     const r = hero.rally;
