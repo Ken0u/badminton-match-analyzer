@@ -70,15 +70,9 @@ export function shotLabel(shot) {
 export function speedOf(shot) {
   const f = shot && shot.flight;
   if (!f) return null;
-  if (f.quality === 'good' && f.launch_supported !== false) {
-    const speed = f.launch_supported === true ? f.early_speed_kmh : f.initial_speed_kmh;
-    if (Number.isFinite(speed)) return { kmh: Math.round(speed) };
-  }
-  if (f.quality === 'speed_bound' || f.quality === 'good') {
-    if (f.settled_supported === true && Number.isFinite(f.speed_settled_kmh))
-      return { kmh: Math.round(f.speed_settled_kmh), settled: true };
-    return { bound: true };
-  }
+  // Launch-support diagnostics on the flight never hide or replace the speed.
+  if (f.quality === 'good' && Number.isFinite(f.initial_speed_kmh)) return { kmh: Math.round(f.initial_speed_kmh) };
+  if (f.quality === 'speed_bound') return { bound: true };
   return null;
 }
 export function outcomeText(rally) {
