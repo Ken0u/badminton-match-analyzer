@@ -99,7 +99,7 @@ def run(_, progress):
     progress(0.25)
     net = Adapter(torch.jit.load(str(candidate), map_location=dev)).eval()
     for name, raw in [("aicup", ai), ("shuttleset", ss)]:
-        # Replay v6 deterministic validation clip ends (bce0ba5).
+        # Replay v6 deterministic validation clip ends (a4fc91c).
         vary = True
         items = [te.steady_ends(item) for item in raw]
         pred = te.predict(model, items, dev)
