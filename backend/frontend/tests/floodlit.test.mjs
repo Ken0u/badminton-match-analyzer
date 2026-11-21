@@ -1,4 +1,6 @@
 import test from "node:test";
+import { replayActor, replaySamples } from "../src/floodlit/replay-track.js";
+import { READY, gripAt, strokeKeys, swingPose } from "../src/floodlit/strokes.js";
 import assert from "node:assert/strict";
 import {
   applyH,
@@ -295,4 +297,86 @@ test("errors read as plain sentences", () => {
     "That file is too large for the server.",
   );
   assert.match(errorText(new TypeError("Failed to fetch")), /Could not reach/);
+});
+
+test("replay swings have distinct finishes and carry the racket face through impact", () => {
+  const finishes = new Set();
+  for (const label of ["smash", "clear", "drop", "drive", "net", "lift", "block", "push", "net_kill", "serve", "serve_short", "serve_long"]) {
+    const keys = strokeKeys(label, false);
+    const at = t => swingPose(label, false, t);
+    assert.deepEqual(at(keys[0][0]), READY);
+    assert.deepEqual(at(keys.at(-1)[0]), READY);
+    finishes.add(JSON.stringify(at(0.08)));
+    const eps = 1e-5;
+    const rateIn = (at(0).roll - at(-eps).roll) / eps;
+    const rateOut = (at(eps).roll - at(0).roll) / eps;
+    assert.ok(rateIn > 0 && Math.abs(rateIn - rateOut) < 0.02, label);
+    assert.notEqual(at(-0.05).rx, at(0.05).rx, label);
+  }
+  assert.equal(finishes.size, 12);
+  assert.notDeepEqual(swingPose("drive", false, 0), swingPose("drive", true, 0));
+  assert.deepEqual(swingPose("unclassified", false, 0), swingPose("unknown", false, 0));
+});
+
+test("the idle racket is edge-on; block preparation uses the thumb bevel even before a forehand change", () => {
+  const idle = gripAt(undefined, undefined, Infinity);
+  assert.ok(Math.abs(Math.cos(idle.angle)) < 0.20);
+  for (const side of ["forehand", "backhand", "unknown"]) {
+    assert.deepEqual(gripAt("block", side, -1), idle);
+    assert.deepEqual(gripAt("block", side, 1), idle);
+    assert.equal(gripAt("block", side, -0.18).thumb, 1);
+  }
+  assert.deepEqual(gripAt("block", "forehand", 0), gripAt("push", "forehand", 0));
+  assert.equal(gripAt("block", "unknown", 0).thumb, 1);
+  assert.equal(gripAt("push", "backhand", 0).thumb, 1);
+});
+
+test("overheads turn through contact, blocks lower the head, and pushes extend without a wrist flick", () => {
+  for (const label of ["smash", "clear"]) {
+    const roll = t => swingPose(label, false, t).roll;
+    assert.ok(roll(0) - roll(-0.065) > 1);
+    assert.ok(roll(0.10) > roll(0));
+  }
+  const down = swingPose("block", true, -0.19);
+  assert.ok(Math.cos(down.sx + down.ex + down.rx) > 0.5);
+  for (const backhand of [false, true]) {
+    const pre = swingPose("push", backhand, -0.13), post = swingPose("push", backhand, 0.085);
+    assert.ok(post.ex - pre.ex > 0.65);
+    assert.ok(Math.abs(post.rx - pre.rx) < 0.04);
+    assert.ok(Math.abs(post.roll - pre.roll) < 0.30);
+  }
+});
+
+test("a doubles rear player covers a tracking gap and honors only their labeled shot positions", () => {
+  const rear = { x: Array(25).fill(null), y: Array(25).fill(null) };
+  rear.x[24] = 4; rear.y[24] = 1;
+  const front = { x: Array.from({length:25}, (_,i) => 2+i/12), y: Array(25).fill(4) };
+  const players = [{id:"rear",team:"A"},{id:"front",team:"A"}];
+  const match = { analysis:{players,tracks:{rate_hz:10}}, trackIndex:new Map([["rear",rear],["front",front]]) };
+  const shots = [{hitter_id:null,time_s:0.3,hitter_position:{x:6,y:6}},
+    {hitter_id:"front",time_s:0.4,hitter_position:{x:6,y:5}},
+    {hitter_id:"rear",time_s:1.3,hitter_position:{x:3,y:1.5}},
+    {hitter_id:"rear",time_s:2.4,hitter_position:{x:1,y:5}}];
+  const path = replaySamples(match, "rear", 0, 24, shots, {x:3,y:6});
+  assert.notEqual(path[0].x, path[6].x);
+  assert.ok(path.every(p => p.y < 4));
+  assert.deepEqual(path[13], shots[2].hitter_position);
+  assert.deepEqual(path[24], {x:4,y:1});
+  assert.equal(rear.x[13], null);
+  players.pop(); // No doubles partner: interpolate actual anchors, don't stage coverage.
+  const solo = replaySamples(match, "rear", 0, 24, shots, {x:3,y:6});
+  assert.deepEqual(solo[0], shots[2].hitter_position);
+  assert.ok(solo[18].x > 3 && solo[18].x < 4);
+});
+
+test("a smash with an anonymous contact gets the remaining avatar, not a guessed hitter label", () => {
+  const roster = ["A", "B", "C", "D"].map(id => ({id}));
+  const players = ["A", "D", null, "B"].map((person_id,i) => ({person_id,position:{x:i,y:2}}));
+  const shot = { family:"smash", hitter_id:null, hitter_position:{x:2,y:2}, players };
+  assert.equal(replayActor(shot, roster), "C");
+  assert.equal(shot.hitter_id, null);
+  assert.equal(replayActor({...shot, hitter_id:"D"}, roster), "D");
+  assert.equal(replayActor({...shot, players:players.slice(1)}, roster), null);
+  assert.equal(replayActor({...shot, players:[...players.slice(0,3),players[0]]}, roster), null);
+  assert.equal(replayActor({...shot, hitter_position:{x:2.1,y:2}}, roster), null);
 });

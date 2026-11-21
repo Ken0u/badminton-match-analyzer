@@ -1,6 +1,6 @@
 // The landing hero: one real rally replayed on a court in a floodlit hall.
-// Ported unchanged in behaviour from the approved prototype
-// (design/prototypes/a-floodlit/js/hero.js); only imports and font names differ.
+import { READY, gripAt, strokeKeys, swingPose } from './strokes.js';
+import { replayActor, replaySamples } from './replay-track.js';
 import * as THREE from 'three';
 import { positionAt, shotLabel, labelText, speedOf, teamOf, estimatePace, estimateBow } from './model';
 
@@ -14,6 +14,7 @@ const toScene = (p, h = 0) => new THREE.Vector3(p.x - COURT_W / 2, h, p.y - COUR
 /** Racket height at contact by stroke, in metres. */
 const CONTACT_H = { smash: 2.55, clear: 2.4, drop: 2.3, net_kill: 1.9, drive: 1.35, push: 1.0, block: 0.8,
   lift: 0.6, net: 0.65, other: 1.3, serve_short: 1.0, serve_long: 1.0, serve: 1.0, unknown: 1.2 };
+const TOUCH = new Set(['block', 'net', 'serve_short']);
 const HIGH = new Set(['lift', 'clear', 'serve_long']);
 
 export function pickRally(match) {
@@ -62,7 +63,7 @@ function buildFlights(match, rally) {
     apex = Math.min(Math.max(apex, Math.max(h0, h1)), 9);
     const drag = HIGH.has(a.label) ? 2.2 : 1.3;
     const measuredDrag = estimatePace(match, s, shots[i+1], drag);
-    flights.push({ shot: s, label: a.label, from: a.pos, to: b, t0: s.time_s, t1, apex, netFault: i === shots.length - 1 && rally.outcome?.detail === 'net', drag: measuredDrag ?? drag });
+    flights.push({ shot: s, actor: replayActor(s, match.analysis.players), label: a.label, from: a.pos, to: b, t0: s.time_s, t1, apex, netFault: i === shots.length - 1 && rally.outcome?.detail === 'net', drag: measuredDrag ?? drag });
   }
   return flights;
 }
@@ -290,61 +291,11 @@ function coneMaterial() {
 /* ---------- athletes ---------- */
 const smooth = (x) => x * x * (3 - 2 * x);
 const lerp = (a, b, k) => a + (b - a) * k;
-/** Arm poses: shoulder pitch and roll, elbow bend, wrist cock, trunk twist. */
-const READY = { sx: -0.98, sz: -0.26, ex: -1.17, rx: -0.67, tw: 0 };
-const SWINGS = {
-  over: [ // smash, clear, drop: racket drops behind the head, then up and through
-    [-0.5, READY], [-0.19, { sx: -1.99, sz: -1.08, ex: -2.05, rx: -0.81, tw: 0.68 }],
-    [-0.085, { sx: -2.88, sz: -0.62, ex: -1.47, rx: -0.83, tw: 0.36 }],
-    [0, { sx: -2.85, sz: -0.15, ex: -0.15, rx: -0.1, tw: -0.1 }], [0.2, { sx: -0.7, sz: 0.35, ex: -0.35, rx: 0.3, tw: -0.45 }], [0.65, READY]],
-  side: [ // drive, push, block: a flat swing across the body
-    [-0.4, READY], [-0.12, { sx: -1.45, sz: -1.3, ex: -1.3, rx: -0.6, tw: 0.45 }],
-    [0, { sx: -1.55, sz: -0.25, ex: -0.25, rx: -0.2, tw: 0 }], [0.18, { sx: -1.35, sz: 0.55, ex: -0.7, rx: 0.1, tw: -0.4 }], [0.55, READY]],
-  under: [ // lift, net, serve: from low behind to up in front
-    [-0.4, READY], [-0.14, { sx: 0.35, sz: -0.5, ex: -0.5, rx: 0.5, tw: 0.3 }],
-    [0, { sx: -0.9, sz: -0.25, ex: -0.25, rx: -0.4, tw: 0 }], [0.2, { sx: -2.0, sz: 0.1, ex: -0.9, rx: -0.6, tw: -0.25 }], [0.6, READY]],
-};
-// Short strokes should not borrow a full lift/drive backswing. Each meets
-// the shuttle out front and recovers without throwing the arm past the chest.
-const TOUCH = {
-  serve_short: [[-0.32, READY], [-0.09, { sx:-0.67, sz:-0.24, ex:-0.83, rx:0.44, tw:0.04 }],
-    [0, { sx:-0.73, sz:-0.22, ex:-0.64, rx:0.38, tw:0 }], [0.10, { sx:-0.78, sz:-0.20, ex:-0.61, rx:0.33, tw:-0.03 }], [0.32, READY]],
-  block: [[-0.24, READY], [-0.075, { sx:-1.16, sz:-0.37, ex:-1.12, rx:-0.53, tw:0.07 }],
-    [0, { sx:-1.38, sz:-0.32, ex:-0.63, rx:-0.35, tw:0 }], [0.11, { sx:-1.41, sz:-0.26, ex:-0.72, rx:-0.31, tw:-0.05 }], [0.30, READY]],
-  net: [[-0.31, READY], [-0.09, { sx:-0.78, sz:-0.31, ex:-0.73, rx:-0.28, tw:0.10 }],
-    [0, { sx:-1.03, sz:-0.27, ex:-0.39, rx:-0.30, tw:0 }], [0.11, { sx:-1.11, sz:-0.24, ex:-0.46, rx:-0.34, tw:-0.03 }], [0.31, READY]],
-};
 function swingKind(label) {
   if (['smash', 'clear', 'drop', 'net_kill'].includes(label)) return 'over';
   if (['drive', 'push', 'block', 'other', 'unknown'].includes(label)) return 'side';
   return 'under';
 }
-// Elbow stays in front; open the forearm into a short extension, then rebound.
-const BACKHAND_DRIVE = [[-0.32, READY],
-  [-0.10, { sx:-1.12, sz:0.16, ex:-1.03, rx:-0.34, tw:-0.16 }],
-  [0, { sx:-1.43, sz:0.12, ex:-0.57, rx:-0.16, tw:0.04 }],
-  [0.075, { sx:-1.51, sz:0.17, ex:-0.41, rx:-0.08, tw:0.12 }], [0.32, READY]];
-const strokeKeys = (kind, label, backhand) => label === 'drive' && backhand ? BACKHAND_DRIVE : TOUCH[label] || SWINGS[kind];
-function swingPose(kind, dt, label, backhand) {
-  const keys = strokeKeys(kind, label, backhand);
-  if (dt <= keys[0][0] || dt >= keys[keys.length - 1][0]) return null;
-  for (let i = 0; i < keys.length - 1; i++) {
-    const [t0, a] = keys[i], [t1, b] = keys[i + 1];
-    if (dt >= t0 && dt <= t1) {
-      // Accelerate into impact and carry speed through it instead of pausing there.
-      const u = (dt - t0) / (t1 - t0);
-      const k = t1 === 0 ? u * u : t0 === 0 ? 1 - (1 - u) ** 2 : smooth(u);
-      // Lead with the turn and upper arm. Elbow opens next; the racket
-      // releases last. All joints still reach their contact keys together.
-      const hit = t1 === 0, trunk = hit ? u * (2 - u) : k;
-      const shoulder = hit ? u : k, elbow = hit ? u ** 1.65 : k;
-      const wrist = hit ? u ** 2.75 : k;
-      return { sx: lerp(a.sx, b.sx, shoulder), sz: lerp(a.sz, b.sz, shoulder), ex: lerp(a.ex, b.ex, elbow), rx: lerp(a.rx, b.rx, wrist), tw: lerp(a.tw, b.tw, trunk) };
-    }
-  }
-  return null;
-}
-
 function makeAthlete(color) {
   const flat = (c, extra = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.7, flatShading: true, ...extra });
   const kit = flat(color, { emissive: color, emissiveIntensity: 0.1, roughness: 0.55 });
@@ -387,20 +338,23 @@ function makeAthlete(color) {
     const elbow = new THREE.Group(); elbow.position.y = -0.29; shoulder.add(elbow);
     elbow.add(at(cyl(0.04, 0.033, 0.26, skin), -0.13));
     elbow.add(at(new THREE.Mesh(new THREE.IcosahedronGeometry(0.04, 0), skin), -0.28));
-    let wrist = null;
+    let wrist = null, handle = null, thumb = null;
     if (racket) {
       wrist = new THREE.Group(); wrist.position.y = -0.28; elbow.add(wrist);
+      handle = new THREE.Group(); wrist.add(handle);
       // Grip sits diagonally through the palm, with a visible butt cap below it.
-      wrist.add(at(cyl(0.015, 0.018, 0.19, grip, 8), -0.035));
-      wrist.add(at(cyl(0.022, 0.018, 0.018, shoe, 8), 0.059));
+      handle.add(at(cyl(0.015, 0.018, 0.19, grip, 8), -0.035));
+      handle.add(at(cyl(0.022, 0.018, 0.018, shoe, 8), 0.059));
       const palm = at(new THREE.Mesh(new THREE.IcosahedronGeometry(0.043, 1), skin), -0.014);
       palm.scale.set(0.81, 1.18, 0.78); palm.rotation.z = 0.28; wrist.add(palm);
-      wrist.add(at(cyl(0.006, 0.006, 0.24, frame, 5), -0.28));
-      const hoop = at(new THREE.Mesh(new THREE.TorusGeometry(0.105, 0.009, 5, 22), frame), -0.53); hoop.scale.y = 1.28; wrist.add(hoop);
+      thumb = at(new THREE.Mesh(new THREE.IcosahedronGeometry(0.020, 1), skin), -0.030, 0.022, 0.018);
+      thumb.scale.set(0.69, 1.48, 0.73); wrist.add(thumb);
+      handle.add(at(cyl(0.006, 0.006, 0.24, frame, 5), -0.28));
+      const hoop = at(new THREE.Mesh(new THREE.TorusGeometry(0.105, 0.009, 5, 22), frame), -0.53); hoop.scale.y = 1.28; handle.add(hoop);
       const bed = at(new THREE.Mesh(new THREE.CircleGeometry(0.1, 18), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.16, side: THREE.DoubleSide, depthWrite: false })), -0.53);
-      bed.scale.y = 1.28; wrist.add(bed);
+      bed.scale.y = 1.28; handle.add(bed);
     }
-    return { shoulder, elbow, wrist };
+    return { shoulder, elbow, wrist, handle, thumb };
   };
   const rArm = arm(-1, true); // racket in the right hand (handedness is unknown in the data)
   const lArm = arm(1, false);
@@ -421,20 +375,10 @@ function curveIndex(t, start, hz, last) {
   const i = Math.min(Math.floor(f), last - 1);
   return [i, f - i];
 }
-function presentationTrack(match, id, start, end, fallback) {
-  const hz = match.analysis.tracks.rate_hz, tr = match.trackIndex.get(id);
+function presentationTrack(match, id, start, end, fallback, shots) {
+  const hz = match.analysis.tracks.rate_hz;
   const first = Math.floor(start * hz), last = Math.max(first + 1, Math.ceil(end * hz));
-  const points = []; let prev;
-  for (let k = first; k <= last; k++) {
-    if (!Number.isFinite(tr?.x[k]) || !Number.isFinite(tr?.y[k])) continue;
-    const point = toScene({ x: tr.x[k], y: tr.y[k] });
-    // Bridge actual neighbours. Never visit the start-of-rally fallback
-    // in the middle of an occlusion just because a sample is missing.
-    for (let j = points.length; j <= k - first; j++) points.push(prev
-      ? prev.point.clone().lerp(point, (j + first - prev.k) / (k - prev.k)) : point.clone());
-    prev = { point, k };
-  }
-  while (points.length <= last - first) points.push(prev ? prev.point.clone() : toScene(fallback));
+  const points = replaySamples(match, id, first, last, shots, fallback).map(p => toScene(p));
   // Limit implausible reacquisitions in both directions, without making
   // the whole replay trail the recorded movement by a filter delay.
   const pass = (dir) => {
@@ -498,7 +442,7 @@ function turning(a, t, base) {
     * smooth(clamp((rearSpeed / Math.max(speed, 0.01) - 0.20) / 0.40, 0, 1));
   const run = (1 - retreat) * smooth(clamp((speed - 0.86) / 1.65, 0, 1)) * (1 - lateral * 0.88);
   const chase = clamp(Math.atan2(vx, Math.max(0.55, Math.abs(vz))), -1.05, 1.05) * run;
-  const power = TOUCH[label] ? 0.12 : kind === 'over' ? 1 : label === 'drive' ? 0.64 : kind === 'under' ? 0.46 : 0.35;
+  const power = TOUCH.has(label) ? 0.12 : kind === 'over' ? 1 : label === 'drive' ? 0.64 : kind === 'under' ? 0.46 : 0.35;
   const wind = pulse(dt + 0.19, 0.29, 0.18), release = pulse(dt - 0.065, 0.13, 0.32);
   // Only the receiver prepares during the incoming high flight. Hold the
   // side-on stance through a pause in the track, then unwind into the hit.
@@ -683,19 +627,10 @@ function poseAthlete(a, t) {
     leg.foot.quaternion.copy(leg.hip.quaternion).multiply(leg.knee.quaternion).invert();
     leg.foot.rotateY(toe); leg.foot.rotateX(foot.pitch);
   }
-  // Overheads share a preparation; the drop checks its follow-through,
-  // whereas the smash turns the shoulders and finishes across the body.
-  const swingTime = label === 'drop' && dt > 0 ? dt * 1.45 : dt;
-  const pose = (kind && swingPose(kind, swingTime, label, contact.backhand)) || READY;
-  if (label === 'drop' && pose !== READY && dt > 0) {
-    // Check the follow-through, not the preparation. Fade the check away
-    // before recovery so the shoulder still blends all the way to ready.
-    const check = pulse(swingTime - 0.20, 0.20, 0.42);
-    pose.sx -= 0.74 * check; pose.tw += 0.20 * check;
-  }
+  const pose = kind ? swingPose(label, contact.backhand, dt) : READY;
   const finish = label === 'smash' ? pulse(dt - 0.14, 0.14, 0.30) : 0;
   // A block or net touch has almost no backswing; keep the racket out front.
-  const compact = ['block', 'push', 'net', 'serve_short'].includes(label);
+  const compact = ['net', 'serve_short'].includes(label);
   const reach = compact ? pulse(dt, 0.3, 0.36) : 0;
   const r = a.rArm;
   r.shoulder.rotation.set(lerp(pose.sx, kind === 'under' ? -0.88 : -1.45, reach * 0.7), 0, pose.sz + 0.38 * finish);
@@ -703,11 +638,15 @@ function poseAthlete(a, t) {
   // forearm through impact rather than rotating the entire arm as one lever.
   const across = sign < 0 ? load : 0;
   r.shoulder.rotation.x += 0.30 * armDrive;
-  r.shoulder.rotation.y = 0.94 * across + sign * power * (-0.22 * prep + 0.25 * finish);
+  r.shoulder.rotation.y = (label === 'push' || label === 'block' ? 0.48 : 0.94) * across + sign * power * (-0.22 * prep + 0.25 * finish);
   // Directional finish begins after contact: it cannot displace the sweet spot.
   r.shoulder.rotation.y += (contact?.azimuth || 0) * 0.65 * pulse(dt - 0.12, 0.12, 0.23);
-  r.elbow.rotation.set(pose.ex, sign * power * (-0.35 * prep + 0.40 * load), 0);
-  r.wrist.rotation.set(pose.rx, sign * power * (-0.48 * prep + 0.60 * load), across * 0.24);
+  const grip = gripAt(label, contact?.flight.shot.side, dt);
+  r.handle.rotation.y = grip.angle;
+  // Thumb wraps diagonally in the V grip and extends up the bevel for support.
+  r.thumb.rotation.z = lerp(1.05, 0.14, grip.thumb);
+  r.elbow.rotation.set(pose.ex, sign * pose.roll, 0);
+  r.wrist.rotation.set(pose.rx, 0, sign * pose.tilt + across * 0.24);
   // Show the receiving shape early rather than carrying the racket down
   // until the swing starts: elbow away from ribs, head up by the shoulder,
   // free arm sighting the flight. Hand the arm back to the keyed swing.
@@ -721,7 +660,7 @@ function poseAthlete(a, t) {
   r.wrist.rotation.y += 0.35 * guard;
   // A covering player carries the hand forward around waist height. Do
   // not blend this over a receiver's setup or the hitter's follow-through.
-  const keys = strokeKeys(kind, label, contact?.backhand);
+  const keys = contact && strokeKeys(label, contact.backhand);
   const engaged = keys ? smooth(clamp((dt - keys[0][0] + 0.12) / 0.12, 0, 1))
     * smooth(clamp((keys[keys.length - 1][0] + 0.12 - dt) / 0.12, 0, 1)) : 0;
   const carry = Math.max(0.50, retreat, run, lateral * Math.abs(travel)) * (1 - Math.max(engaged, guard));
@@ -794,20 +733,21 @@ function doublesFormation(match, start, end) {
 function prepareAthlete(a, id, flights, match, rally, formation = doublesFormation(match, rally.start_s, flights[flights.length-1].t1)) {
   a.roleAt = formation.get(id);
   // each athlete's own contacts, so the swing starts before the shuttle arrives
-  a.contacts = flights.flatMap((f, i) => f.shot.hitter_id === id ? [{ t: f.t0, incoming: flights[i - 1]?.t0 ?? -Infinity,
+  a.contacts = flights.flatMap((f, i) => f.actor === id ? [{ t: f.t0, incoming: flights[i - 1]?.t0 ?? -Infinity,
     flight: f, kind: swingKind(f.label), label: f.label, backhand: f.shot.side === 'backhand' }] : []);
-  a.lobs = flights.slice(1).flatMap((f, i) => f.shot.hitter_id === id && HIGH.has(flights[i].label) && swingKind(f.label) === 'over'
+  a.lobs = flights.slice(1).flatMap((f, i) => f.actor === id && HIGH.has(flights[i].label) && swingKind(f.label) === 'over'
     ? [{ start: flights[i].t0, end: f.t0 }] : []);
-  a.opponents = flights.filter(f => f.shot.hitter_id && teamOf(match, f.shot.hitter_id) !== teamOf(match, id)).map(f => f.t0);
-  const own = flights.find(f => f.shot.hitter_id === id);
+  a.opponents = flights.filter(f => f.actor && teamOf(match, f.actor) !== teamOf(match, id)).map(f => f.t0);
+  const own = flights.find(f => f.actor === id);
   const fallback = positionAt(match, id, rally.start_s) || own?.shot.hitter_position || { x: COURT_W / 2, y: COURT_L / 2 };
   // Snapshot positions before racket alignment replaces the flight endpoints.
-  a.targets = flights.filter(f => f.shot.hitter_id && teamOf(match, f.shot.hitter_id) !== teamOf(match, id))
+  a.targets = flights.filter(f => f.actor && teamOf(match, f.actor) !== teamOf(match, id))
     .map(f => ({ t: f.t0, x: f.from.x, z: f.from.z }));
   a.heading = fallback.y < COURT_L / 2 ? 0 : Math.PI;
   a.forward = Math.cos(a.heading);
   a.idlePhase = match.analysis.players.findIndex(p => p.id === id) * 2.4;
-  a.track = presentationTrack(match, id, rally.start_s, flights[flights.length - 1].t1, fallback);
+  a.track = presentationTrack(match, id, rally.start_s, flights[flights.length - 1].t1, fallback,
+    flights.map(f => ({ time_s: f.t0, hitter_id: f.actor, hitter_position: f.shot.hitter_position })));
   // Fit preparation and recovery between consecutive strokes. Both motions
   // reach ready at their midpoint, even during rapid drive exchanges.
   for (const [i, c] of a.contacts.entries()) {
@@ -818,7 +758,7 @@ function prepareAthlete(a, id, flights, match, rally, formation = doublesFormati
       const room = Math.min(c.t - (a.contacts[i-1]?.t ?? -Infinity), (a.contacts[i+1]?.t ?? Infinity) - c.t);
       c.elevation = depth > 1.8 && room > 0.7 ? lerp(0.20, 0.46, smooth(clamp((depth - 1.8) / 2.3, 0, 1))) : 0;
     }
-    const keys = strokeKeys(c.kind, c.label, c.backhand);
+    const keys = strokeKeys(c.label, c.backhand);
     c.before = Math.max(1, -keys[0][0] / Math.max(0.01, c.t - c.incoming), -2 * keys[0][0] / (c.t - (a.contacts[i - 1]?.t ?? -Infinity)));
     c.after = Math.max(1, 2 * keys[keys.length - 1][0] / ((a.contacts[i + 1]?.t ?? Infinity) - c.t));
   }
@@ -838,18 +778,18 @@ function prepareAthlete(a, id, flights, match, rally, formation = doublesFormati
     poseAthlete(a, c.t);
     // Stage a reachable contact relative to the player, not a global +X
     // offset. Both court ends use the same forehand/backhand convention.
-    const over = c.kind === 'over', touch = !!TOUCH[c.label];
-    const sideReach = c.backhand ? 0.29 : over ? -0.32 : -0.42;
+    const over = c.kind === 'over', touch = TOUCH.has(c.label);
+    const sideReach = c.label === 'push' || c.label === 'block' ? (c.backhand ? 0.12 : -0.20) : c.backhand ? 0.29 : over ? -0.32 : -0.42;
     const frontReach = over ? (c.label === 'smash' ? 0.49 : 0.35) : touch ? 0.70 : 0.79;
     const target = a.root.position.clone();
     target.x += sideReach * a.forward; target.z += frontReach * a.forward;
     target.y = (CONTACT_H[c.label] ?? 1.2) + a.airHeight;
     const shoulder = a.rArm.shoulder.position;
-    const from = a.spine.worldToLocal(a.rArm.wrist.localToWorld(bed.set(0,-0.53,0))).sub(shoulder).normalize();
+    const from = a.spine.worldToLocal(a.rArm.handle.localToWorld(bed.set(0,-0.53,0))).sub(shoulder).normalize();
     const to = a.spine.worldToLocal(target).sub(shoulder).normalize();
     c.aim = new THREE.Quaternion().setFromUnitVectors(from, to);
     poseAthlete(a,c.t);
-    a.rArm.wrist.localToWorld(bed.set(0,-0.53,0));
+    a.rArm.handle.localToWorld(bed.set(0,-0.53,0));
     const side = -a.forward;
     c.netOffset = side * Math.max(0, 0.44-side*bed.z);
   }
@@ -863,7 +803,7 @@ function aimOutgoing(a, c) {
   c.azimuth = clamp(Math.atan2(a.forward * v.x, Math.max(0.001, a.forward * v.z)), -1.15, 1.15);
   c.faceRoll = 0;
   poseAthlete(a, c.t);
-  v.applyQuaternion(a.rArm.wrist.getWorldQuaternion(a.steering).invert());
+  v.applyQuaternion(a.rArm.handle.getWorldQuaternion(a.steering).invert());
   const roll = Math.atan2(v.x, v.z);
   c.faceRoll = roll - Math.round(roll / Math.PI) * Math.PI;
 }
@@ -1012,10 +952,10 @@ export function createHero(container, match, { still = false, phone = false, onS
     players.set(id, a);
   }
   for (const [i, f] of flights.entries()) {
-    const a = players.get(f.shot.hitter_id);
+    const a = players.get(f.actor);
     if (!a) continue; // keep the positional estimate for an unidentified hitter
     poseAthlete(a, f.t0);
-    a.rArm.wrist.localToWorld(f.from.set(0, -0.53, 0));
+    a.rArm.handle.localToWorld(f.from.set(0, -0.53, 0));
     if (i) flights[i - 1].to.copy(f.from);
   }
   const shuttleScale = phone ? 3.4 : 2.8;
@@ -1198,7 +1138,7 @@ export function createHero(container, match, { still = false, phone = false, onS
 
   function contact(i, quiet = false) {
     const f = flights[i];
-    const a = players.get(f.shot.hitter_id);
+    const a = players.get(f.actor);
     if (a && !quiet) a.flash = 1;
     const sp = speedOf(f.shot);
     const label = labelText(f.label);
