@@ -1,0 +1,48 @@
+{
+  "repository": "dootz1/badminton-match-analyzer-models",
+  "revision": "main",
+  "models": [
+    {
+      "path": "events.pt",
+      "sha256": "4d2a8b54973396f4254108141e47c8a17858b0ba595be21e60b6336f74b5e981",
+      "purpose": "Singles event model: contacts, hitter, shot family, side and serve",
+      "license": "CC-BY-4.0",
+      "data": "AI CUP 2023 (CC BY 4.0), ShuttleSet (MIT)"
+    },
+    {
+      "path": "events_singles_ensemble_v1.ts",
+      "sha256": "654d3abe534d40f0bf3985d6941426be5635719aad5d23b14d84bc19c7bf4b17",
+      "purpose": "Singles shot-family ensemble on top of the event model",
+      "license": "CC-BY-4.0",
+      "data": "AI CUP 2023 (CC BY 4.0), ShuttleSet (MIT)"
+    },
+    {
+      "path": "events_doubles.pt",
+      "sha256": "bfec7cf6b97963e219375ebdeeac2aa62645cc3ec2a9ec631ca8de2e3ffa98d6",
+      "purpose": "Doubles event model: contacts, hitter, shot family, side and serve",
+      "license": "CC-BY-NC-SA-4.0",
+      "data": "DShuttleNet (CC BY-NC-SA 4.0), S2 Doubles (no license), pretrained on AI CUP 2023 and ShuttleSet"
+    },
+    {
+      "path": "events_doubles_window_v1.pt",
+      "sha256": "f216de7e4f957846d2ae3128c6e8b37e4879b82b2072a4441b86b58ea4b12585",
+      "purpose": "Doubles four-player stroke window blended into the doubles event model",
+      "license": "CC-BY-NC-SA-4.0",
+      "data": "DShuttleNet (CC BY-NC-SA 4.0), S2 Doubles match 2 (no license)"
+    },
+    {
+      "path": "rally_outcome_sequence_v3.json",
+      "sha256": "4addf9a70a82aec0fa25e835937192178a667e44d6e13ecabc844068402018b0",
+      "purpose": "Rally winner and in/out/net from the end of each rally",
+      "license": "CC-BY-NC-SA-4.0",
+      "data": "ShuttleSet (MIT), DShuttleNet (CC BY-NC-SA 4.0)"
+    },
+    {
+      "path": "reid/osnet_doubles_ft1.pth",
+      "sha256": "98f689e9ead2228d743120d569c40c53cd4434830cd154e02010df6aa7a007c2",
+      "purpose": "Player re-identification for one identity per person across the match",
+      "license": "CC-BY-NC-SA-4.0",
+      "data": "OSNet x1.0 MSMT17 (MIT) fine-tuned on DShuttleNet (CC BY-NC-SA 4.0)"
+    }
+  ]
+}

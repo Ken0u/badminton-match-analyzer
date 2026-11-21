@@ -5,7 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "badminton-match-analyzer"
 version = "0.24.0"
-description = "Local badminton video inspection, tracking, and annotation"
+description = "Automatic badminton match analysis from video: tracking, shots, rally outcomes and statistics"
+license = "MIT"
+license-files = ["LICENSE"]
 requires-python = ">=3.10"
 dependencies = [
   "fastapi>=0.115,<1",

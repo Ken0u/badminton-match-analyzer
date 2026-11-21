@@ -42,7 +42,7 @@ WORKDIR /app
 COPY pyproject.toml uv.lock README.md ./
 COPY backend/badminton ./backend/badminton
 COPY --from=frontend /build/backend/badminton/static ./backend/badminton/static
-COPY scripts/download_models.py ./scripts/download_models.py
+COPY scripts/download_models.py scripts/project_models.json ./scripts/
 COPY docs ./docs
 RUN /usr/local/bin/python -m pip install --no-cache-dir uv==0.9.4 \
     && uv sync --locked --no-dev --no-editable --extra youtube --extra download \

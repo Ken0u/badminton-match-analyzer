@@ -1,24 +1,70 @@
-"""Fetch pinned player, shuttle, and stroke checkpoints with provenance."""
+"""Fetch pinned player, shuttle, stroke and project-trained checkpoints."""
 
 import argparse
 import hashlib
 import json
 import zipfile
+from pathlib import Path
+from urllib.parse import quote
 from urllib.request import urlopen
 
 from badminton.config import MODEL_MANIFEST, WEIGHTS
+
+PROJECT_MODELS = Path(__file__).with_name("project_models.json")
+
+
+def _sha(path):
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def project_models(folder=None, index=PROJECT_MODELS, opener=urlopen):
+    """Install this project's trained models from its Hugging Face repository."""
+    folder = Path(folder or WEIGHTS)
+    spec = json.loads(Path(index).read_text(encoding="utf-8"))
+    base = f"https://huggingface.co/{spec['repository']}/resolve/{spec['revision']}"
+    installed = []
+    for entry in spec["models"]:
+        target = folder / entry["path"]
+        if not target.exists():
+            target.parent.mkdir(parents=True, exist_ok=True)
+            temp = target.with_name(target.name + ".download")
+            with opener(f"{base}/{quote(entry['path'])}", timeout=60) as response:
+                with temp.open("wb") as out:
+                    for chunk in iter(lambda: response.read(1024 * 1024), b""):
+                        out.write(chunk)
+            if _sha(temp) != entry["sha256"]:
+                temp.unlink()
+                raise RuntimeError(f"{entry['path']} did not match its pinned checksum")
+            temp.replace(target)
+        elif _sha(target) != entry["sha256"]:
+            raise RuntimeError(
+                f"Local {entry['path']} did not match its pinned checksum"
+            )
+        installed.append(entry["path"])
+    return installed
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--kind", choices=["player", "shuttle", "stroke", "all"], default="player"
+        "--kind",
+        choices=["player", "shuttle", "stroke", "project", "all"],
+        default="player",
     )
     parser.add_argument("--player-model", choices=["small", "nano"], default="small")
     args = parser.parse_args()
     manifest = json.loads(MODEL_MANIFEST.read_text(encoding="utf-8"))
     folder = WEIGHTS
     folder.mkdir(parents=True, exist_ok=True)
+    if args.kind in ("project", "all"):
+        for path in project_models(folder):
+            print(f"Installed {path}")
+        if args.kind == "project":
+            return
     for kind in ["player", "shuttle", "stroke"] if args.kind == "all" else [args.kind]:
         entry = manifest[
             {
