@@ -4,10 +4,8 @@ Treat this repository as if you own it. Work freely: decide the approach,
 edit, refactor, add tests, run jobs, and commit on a plain branch without
 asking first. Report what was done afterwards instead of asking beforehand.
 
-This replaces the dispatcher, grant and review protocol in `AGENTS.md`
-for Claude sessions. The technical guidance in `AGENTS.md` (video
-processing, learning and evaluation rules, verification commands) still
-applies.
+Follow the technical guidance in `AGENTS.md` (video processing, learning
+and evaluation rules, verification commands).
 
 Still ask first for things that reach outside the repository or cannot be
 undone:

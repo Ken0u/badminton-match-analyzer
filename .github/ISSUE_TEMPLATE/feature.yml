@@ -1,10 +1,10 @@
 name: Feature proposal
-description: Suggest a new outcome for the autonomous planner
+description: Suggest a new feature or improvement
 title: ""
 body:
   - type: markdown
     attributes:
-      value: "Trusted collaborator proposals are triaged against approved milestones. Major scope changes need a human decision; an issue does not authorize credentials, spending, destructive work, or model promotion."
+      value: "Describe what you would like the analyzer to do. Never paste credentials, private videos or model weights."
   - type: textarea
     id: problem
     attributes:

@@ -215,11 +215,8 @@ requires an empty catalog and uses GET requests only. Never point test fixtures
 at an existing catalog. The package/container probes do not download models or
 run inference.
 
-Candidate publication follows the existing approved `public` policy in
-`.github/automation.json`; the private Project dashboard is separate. Phase 5's
-receipt requirement uses that current visibility, as explicitly approved on its
-owning issue. Keep the exact source SHA, package hashes and review/CPU image digests
-with each candidate. Publication does not upgrade a running application.
+Keep the exact source SHA, package hashes and image digests with each build you
+distribute. Publishing a build does not upgrade a running application.
 
 The default UI cutover is a code release and changes no annotation/source-clock
 schema. If an operator later authorizes deployment, preserve the state volume and
@@ -228,11 +225,7 @@ image digest or wheel. A rollback selects that previous complete code artifact
 against the same preserved data; it does not copy obsolete frontend files over a
 new backend or rewrite annotations. Stop and verify ownership of the deployed
 instance before replacing it. This development task does not perform that upgrade
-or rollback. Under [repository guidance](../AGENTS.md) and the
-[collaboration protocol](COLLABORATION.md), sensitive frozen task scope requires
-explicit configured-owner authorization and exact CI. Agent and non-author human
-code reviews are optional when trusted configuration explicitly disables required
-agent review; running-instance deployment/upgrade authorization remains separate. The
+or rollback. The
 [phase 5 checkpoint](https://github.com/Ken0u/badminton-match-analyzer/issues/98#issuecomment-6293143852)
 records controller recovery, exact merged-main checks and complete public
 candidate delivery; original specifications and reviews remain preserved as
