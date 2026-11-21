@@ -1,0 +1,130 @@
+{
+  "purpose": "Reserved external singles source; never train, calibrate, select epochs, tune or screen models on this match or its derivatives. No predictions opened. Not yet an adjudicated benchmark.",
+  "source": {
+    "match_id": "0004",
+    "path": "finebadminton-20K/0004_updated.json",
+    "sha256": "bae00970b64d3f78e63ba3daa37573895dab73ecaa3f3b802903c748372a4304",
+    "media_path": "videos/0004.mp4",
+    "media_sha256": "d405158dda42995f78191a68b99edb38ebd749c11b4fc1f32c9eef4cf29467f2",
+    "media_bytes": 673186202
+  },
+  "dataset_revision": "72cae601e08c83ee8ec7e19f8fd7850e9158af7d",
+  "original_match": "2024 VICTOR China Open women's singles final, Wang Zhi Yi vs Tomoka Miyazaki",
+  "broadcast_id": "imww-fBdtlw",
+  "identification": "Broadcast draw graphic at 40 s and BWF TV title agree. Match postdates the AI CUP 2023 and ShuttleSet singles corpora. Upstream model exposure unresolved.",
+  "prior_review": "Source identity and participant metadata only for this reservation; not independent annotation. Prior exposures outside this run not certified.",
+  "conditions_before_scoring": [
+    "Freeze selected models, matching, exclusions, taxonomy and fallback.",
+    "Obtain predictions-blind independent source adjudication and source-clock checks, and additional distinct matches.",
+    "Retain missing inputs and unknown labels; do not equate action intervals with exact contacts."
+  ],
+  "additional_reserved_matches": [
+    {
+      "source": {
+        "match_id": "0003",
+        "path": "finebadminton-20K/0003_updated.json",
+        "sha256": "4b7d414657665f008d33a38ffeedb46a195d8efa1e0df307d37f9110ab0ec50d",
+        "media_path": "videos/0003.mp4",
+        "media_sha256": "caf1434a2fe82b563b2c82cff2128620b8c075fdba5323c488d3a16c8821d337",
+        "media_bytes": 887534124
+      },
+      "original_match": "2024 VICTOR China Open, Changzhou, men's singles round 1, Lei Lan Xi vs Viktor Axelsen",
+      "identification": "Source order of play at 10 s names both players, city, year and event. Round-one draw at 40 s confirms pairing."
+    },
+    {
+      "source": {
+        "match_id": "0061",
+        "path": "finebadminton-20K/0061_updated.json",
+        "sha256": "72ddced6ccf6daac5f2d2f9891d9e1f1cf5a66436bd8363b3c075925a0361dc2",
+        "media_path": "videos/0061.mp4",
+        "media_sha256": "78ec5ededf5aba34fc76a1eebd96dab4f53f51c163984e8bcfebea111a68e525",
+        "media_bytes": 754839593
+      },
+      "original_match": "2024 HYLO Open, Saarbruecken, men's singles: Christo Popov vs Toma Junior Popov",
+      "identification": "Venue/draw/scoreboard and corresponding named player pair in the hash-verified source metadata. No event predictions."
+    },
+    {
+      "source": {
+        "match_id": "0062",
+        "path": "finebadminton-20K/0062_updated.json",
+        "sha256": "5a20fdf6b80a71166503b0412050d4c297b9ba2fb22c76ce5ccb28613cd85059",
+        "media_path": "videos/0062.mp4",
+        "media_sha256": "4adea9c472d77ec23a38a712e1e4703ba7abc2efc3f40c81a2420a341c81d658",
+        "media_bytes": 652039915
+      },
+      "original_match": "2024 HYLO Open, Saarbruecken, women's singles: Mia Blichfeldt vs Malvika Bansod",
+      "identification": "Venue/draw/scoreboard and corresponding named player pair in the hash-verified source metadata. No event predictions."
+    }
+  ],
+  "capture_group": "Two distinct tournament capture contexts: China Open 2024 (0003, 0004) and HYLO Open 2024 (0061, 0062). Four matches are not four independent tournaments.",
+  "timestamp_screen": {
+    "0003": {
+      "packet_count_with_pts": 137860,
+      "stream_frame_count": 0,
+      "stream_rate": "30",
+      "time_base": "1/15360",
+      "first_pts": 0,
+      "last_pts": 70583808,
+      "steps": {
+        "512": 137859
+      },
+      "declared_fps": [
+        "30.0"
+      ],
+      "published_rallies": 50,
+      "out_of_range_rally_bounds": 0
+    },
+    "0004": {
+      "packet_count_with_pts": 123300,
+      "stream_frame_count": 0,
+      "stream_rate": "30",
+      "time_base": "1/15360",
+      "first_pts": 0,
+      "last_pts": 63129088,
+      "steps": {
+        "512": 123299
+      },
+      "declared_fps": [
+        "30.0"
+      ],
+      "published_rallies": 39,
+      "out_of_range_rally_bounds": 0
+    },
+    "0061": {
+      "packet_count_with_pts": 103650,
+      "stream_frame_count": 103650,
+      "stream_rate": "30",
+      "time_base": "1/15360",
+      "first_pts": 0,
+      "last_pts": 53068288,
+      "steps": {
+        "512": 103649
+      },
+      "declared_fps": [
+        "30.0"
+      ],
+      "published_rallies": 30,
+      "out_of_range_rally_bounds": 0
+    },
+    "0062": {
+      "packet_count_with_pts": 103050,
+      "stream_frame_count": 103050,
+      "stream_rate": "30",
+      "time_base": "1/15360",
+      "first_pts": 0,
+      "last_pts": 52761088,
+      "steps": {
+        "512": 103049
+      },
+      "declared_fps": [
+        "30.0"
+      ],
+      "published_rallies": 30,
+      "out_of_range_rally_bounds": 0
+    }
+  },
+  "timestamp_limit": "Packet presentation timestamps lie on the declared 30 fps grid. This is not complete frame decoding, certification of annotation ordinals or verification of stroke contact timing.",
+  "quarantine": {
+    "finebadminton_0032": "Likely same underlying match as ShuttleSet validation 37: matching player pair and 23 consecutive rallies with identical stroke counts despite different video hashes. Exclude from training and independent evaluation, including derivatives."
+  }
+}
