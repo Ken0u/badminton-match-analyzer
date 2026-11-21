@@ -113,11 +113,6 @@ The default cutover and retirement of replaced assets followed the full parity
 matrix and frozen performance budgets. Phase #98 owns Python package discovery,
 built assets, Docker and CI wiring; [deployment documentation](DEPLOYMENT.md)
 describes the reversible code-release rollback without changing annotations.
-Future sensitive workflow/deployment scope requires explicit configured-owner
-authorization of the frozen task, as specified by [AGENTS.md](../AGENTS.md) and
-the [collaboration protocol](COLLABORATION.md). Exact CI remains required; agent
-and non-author human code reviews are optional when `require_agent_review` is
-explicitly false in trusted configuration.
 Original issue specifications and historical reviews remain audit evidence.
 
 Each implementation requires an isolated granted worktree, current CI and

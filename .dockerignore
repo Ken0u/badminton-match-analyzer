@@ -5,7 +5,6 @@
 .codex
 .aws
 .cache
-/PROGRESS.md
 build
 .pytest_cache
 .ruff_cache
